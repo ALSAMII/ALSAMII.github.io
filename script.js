@@ -315,7 +315,20 @@ function backdropIndexFor(dayString) {
   var vol = document.getElementById("volSlider");
 
   var muted = false;               /* music is on by default */
-  audio.volume = vol.value / 100;
+
+  /* Ears hear loudness logarithmically, so a slider mapped straight
+     to audio.volume feels dead across its top half. Squaring the
+     value spreads the audible change evenly along the bar. */
+  function levelFor(v) {
+    var x = Math.max(0, Math.min(100, v)) / 100;
+    return x * x;
+  }
+
+  function applyVolume() {
+    audio.volume = levelFor(vol.value);
+  }
+
+  applyVolume();
 
   var waveOn = document.getElementById("waveOn");
   var waveOff = document.getElementById("waveOff");
@@ -358,8 +371,17 @@ function backdropIndexFor(dayString) {
   });
 
   vol.addEventListener("input", function () {
-    audio.volume = vol.value / 100;
-    if (vol.value > 0 && muted) { muted = false; play(); paint(); }
-    else if (vol.value > 0 && audio.paused) play();
+    applyVolume();
+    var silent = Number(vol.value) === 0;
+
+    /* Sliding to zero mutes (and shows the crossed speaker);
+       sliding back up brings the music straight back. */
+    if (silent !== muted) {
+      muted = silent;
+      if (muted) audio.pause(); else play();
+      paint();
+    } else if (!muted && audio.paused) {
+      play();
+    }
   });
 })();
