@@ -32,7 +32,7 @@ const STORIES = [
     num: 3,
     title: "The Painless Reel",
     words: "16 pages",
-    synopsis: "Synopsis to come."
+    synopsis: "In the back room of an unmarked parlor on Vine, a lonely man discovers a drug called Halo \u2014 sold to people who no longer want to be themselves for an hour. Halo doesn't show you lights, or gods, or your own childhood. It gives you someone else's worst night, lived from inside a man who felt none of the things a person is supposed to feel while doing it."
   },
 
   {
@@ -53,7 +53,7 @@ const STORIES = [
     num: 6,
     title: "Undertow",
     words: "15,100 words",
-    synopsis: "Synopsis to come."
+    synopsis: "Dr. Halcyon is a Shaper \u2014 a therapist who, through a drug called Le-The, can enter a patient's mind directly and walk them down through the layers of the self: the reflective surface, the culture-built current beneath it, and, at the very bottom, the untouched riverbed where a person's original wound was first carved. Then the Institute takes on a patient so dangerous three other clinics have refused him \u2014 a man whose own mind has designated him, from his intake scan alone, Undertow."
   },
 
   {
