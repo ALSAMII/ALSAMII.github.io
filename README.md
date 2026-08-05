@@ -12,8 +12,9 @@ stories.js      YOUR STORY LIST — the file you'll edit most
 index.html      the page text (theme, about, author's notes, email)
 style.css       all the styling (colours, fonts, layout)
 script.js       behaviour — you never need to touch it
-pdfs/           your stories, one PDF each (three examples included)
-assets/         the backdrop illustration + optional extras
+pdfs/           your stories, one PDF each, numbered: 01.pdf, 02.pdf ...
+covers/         a cover image per story, numbered to match: 01.jpg ...
+assets/         the background artwork + favicon + optional extras
 ```
 
 ## Look at it now
@@ -32,8 +33,10 @@ Open `index.html` in a text editor and change:
 
 ## Add a story
 
-1. Export your story as a PDF and drop it into `pdfs/`. Name it in
-   lowercase with hyphens: `the-long-way-round.pdf`.
+1. Export the story as a PDF into `pdfs/` and drop a cover image
+   into `covers/`, both named by the story's position in the list:
+   story 4 = `pdfs/04.pdf` + `covers/04.jpg`. With numbered names,
+   the site finds both files on its own.
 2. Open `stories.js` and copy one `{ ... }` block. Paste it wherever
    you want the story in the list (top = first on the site) and fill
    in the four fields:
@@ -41,7 +44,6 @@ Open `index.html` in a text editor and change:
    ```js
    {
      title: "The Long Way Round",
-     pdf: "pdfs/the-long-way-round.pdf",
      words: "820 words",
      synopsis: "One or two sentences shown when a reader hovers."
    },
@@ -54,11 +56,10 @@ Open `index.html` in a text editor and change:
 
 ## The two optional atmosphere slots
 
-**Backdrop image.** Drop any image at `assets/backdrop.jpg` and it becomes
-the background, automatically darkened and vignetted to keep the text
-readable. A dark forest, a library, a painting — moody images work best.
-Without one, the site uses its built-in candlelit gradient, which already
-looks intentional.
+**Backdrop image.** Your artwork is installed at `assets/backdrop.jpg`;
+replace that file to change the scene — it's automatically darkened and
+vignetted to keep the text readable. If it's ever deleted, the site falls
+back to the built-in illustration at `assets/backdrop.svg`.
 
 **Ambient sound.** Drop an audio file at `assets/ambient.mp3` — rain,
 fireplace, wind — and the speaker icon in the header starts working.

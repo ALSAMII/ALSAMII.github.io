@@ -4,9 +4,13 @@
    add stories in stories.js instead.
 
    What it does:
-   1. Builds the sidebar list from the STORIES array
-   2. Hovering a story shows its synopsis on the stage
-      (on phones, tapping the eye expands it inline instead)
+   1. Builds the sidebar list from the STORIES array.
+      Files are found by number automatically: story 01 uses
+      pdfs/01.pdf and covers/01.jpg unless a story block in
+      stories.js names its own "pdf" or "cover".
+   2. Hovering a story shows its cover + synopsis in the panel
+      under the list (on phones, tapping the eye expands it
+      inline under the title instead)
    3. The top nav swaps the stage between Home / About / Notes
    4. The speaker button plays assets/ambient.mp3, if present
    ============================================================ */
@@ -17,8 +21,6 @@
   var panels = document.querySelectorAll(".panel");
   var navLinks = document.querySelectorAll("[data-stage]");
   var canHover = window.matchMedia("(hover: hover)").matches;
-
-  /* Which panel is "pinned" — shown when nothing is hovered */
   var pinned = "panel-home";
 
   function show(id) {
@@ -43,8 +45,30 @@
 
   var list = document.querySelector(".shelf ol");
 
+  var cpImg = document.getElementById("cpImg");
+  var cpMeta = document.getElementById("cpMeta");
+  var cpText = document.getElementById("cpText");
+  var cpLink = document.getElementById("cpLink");
+  var coverPanel = document.getElementById("coverPanel");
+
+  /* If a cover image is missing, hide the frame rather than
+     showing a broken-image icon. */
+  cpImg.addEventListener("error", function () { cpImg.style.display = "none"; });
+
+  function showInPanel(s, num, pdf, cover) {
+    cpImg.style.display = "";
+    cpImg.src = cover;
+    cpImg.alt = s.title + " — cover";
+    cpMeta.textContent = num + " \u00b7 " + s.title + (s.words ? " \u00b7 " + s.words : "");
+    cpText.textContent = s.synopsis;
+    cpLink.setAttribute("href", pdf);
+    coverPanel.classList.add("show");
+  }
+
   STORIES.forEach(function (s, i) {
-    var num = String(i + 1).padStart(2, "0");
+    var num = String(s.num || i + 1).padStart(2, "0");
+    var pdf = s.pdf || "pdfs/" + num + ".pdf";
+    var cover = s.cover || "covers/" + num + ".jpg";
 
     var li = document.createElement("li");
     li.className = "story";
@@ -60,12 +84,12 @@
     title.className = "title";
     title.textContent = s.title;
 
-    var pdf = document.createElement("a");
-    pdf.className = "icon-btn";
-    pdf.href = s.pdf;
-    pdf.title = "Read the PDF";
-    pdf.setAttribute("aria-label", s.title + " — PDF");
-    pdf.innerHTML = PDF_ICON;
+    var pdfBtn = document.createElement("a");
+    pdfBtn.className = "icon-btn";
+    pdfBtn.href = pdf;
+    pdfBtn.title = "Read the PDF";
+    pdfBtn.setAttribute("aria-label", s.title + " — PDF");
+    pdfBtn.innerHTML = PDF_ICON;
 
     var eye = document.createElement("button");
     eye.className = "icon-btn eye";
@@ -75,43 +99,46 @@
     eye.setAttribute("aria-label", s.title + " — synopsis");
     eye.innerHTML = EYE_ICON;
 
-    row.append(numEl, title, pdf, eye);
+    row.append(numEl, title, pdfBtn, eye);
 
+    /* Inline synopsis used on phones: little cover + text */
     var syn = document.createElement("div");
     syn.className = "synopsis";
-    syn.textContent = s.synopsis;
+    var synImg = document.createElement("img");
+    synImg.src = cover;
+    synImg.alt = "";
+    synImg.addEventListener("error", function () { synImg.remove(); });
+    var synText = document.createElement("span");
+    synText.textContent = s.synopsis;
+    syn.append(synImg, synText);
 
     li.append(row, syn);
     list.append(li);
 
     /* ---- 2. Synopsis behaviour for this story -------------- */
 
-    function stageSynopsis() {
-      document.getElementById("synMeta").textContent =
-        "Synopsis \u00b7 " + num + (s.words ? " \u00b7 " + s.words : "");
-      document.getElementById("synTitle").textContent = s.title;
-      document.getElementById("synText").textContent = s.synopsis;
-      document.getElementById("synLink").setAttribute("href", s.pdf);
-      show("panel-synopsis");
-    }
-
     if (canHover) {
-      /* Desktop: hover (or keyboard focus) shows it on the stage,
-         leaving returns to whatever panel was pinned. */
-      li.addEventListener("mouseenter", stageSynopsis);
-      li.addEventListener("mouseleave", function () { show(pinned); });
-      li.addEventListener("focusin", stageSynopsis);
-      li.addEventListener("focusout", function (e) {
-        if (!li.contains(e.relatedTarget)) show(pinned);
-      });
+      /* Desktop: hovering (or keyboard focus) fills the panel
+         under the list. It stays until another story replaces
+         it, so the reader can move the mouse to the panel. */
+      li.addEventListener("mouseenter", function () { showInPanel(s, num, pdf, cover); });
+      li.addEventListener("focusin", function () { showInPanel(s, num, pdf, cover); });
     } else {
-      /* Touch: the eye expands the synopsis inline, under the row. */
+      /* Touch: the eye expands the synopsis inline. */
       eye.addEventListener("click", function () {
         var open = li.classList.toggle("open");
         eye.setAttribute("aria-expanded", open ? "true" : "false");
       });
     }
   });
+
+  /* Start with the first story's cover on display. */
+  if (canHover && STORIES.length) {
+    var f0 = STORIES[0];
+    var n0 = String(f0.num || 1).padStart(2, "0");
+    showInPanel(f0, n0, f0.pdf || "pdfs/" + n0 + ".pdf",
+                f0.cover || "covers/" + n0 + ".jpg");
+  }
 
   /* ---- 3. Nav ---------------------------------------------- */
 
@@ -142,7 +169,6 @@
       audio.play().then(function () {
         toggle.setAttribute("aria-pressed", "true");
       }).catch(function () {
-        /* No assets/ambient.mp3 yet — quietly do nothing. */
         toggle.setAttribute("aria-pressed", "false");
       });
     } else {

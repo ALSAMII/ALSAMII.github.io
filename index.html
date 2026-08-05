@@ -58,6 +58,15 @@
            To add or edit stories, open stories.js — not this file. -->
       <ol></ol>
       <p class="more">More stories coming soon&hellip;</p>
+
+      <!-- Book cover + synopsis for the story you hover
+           (or tap, on a phone). Filled in by script.js. -->
+      <div class="cover-panel" id="coverPanel" aria-live="polite">
+        <img id="cpImg" alt="">
+        <p class="cp-meta caps" id="cpMeta"></p>
+        <p class="cp-text" id="cpText"></p>
+        <p><a class="cp-link caps" id="cpLink" href="#">Read the story &mdash; PDF</a></p>
+      </div>
     </aside>
 
     <!-- ─── The stage ──────────────────────────────────────────
@@ -74,19 +83,20 @@
         carry, what we lose, and what still remains.</p>
         <hr class="rule">
         <p class="eyebrow caps">A Note From the Author</p>
-        <p class="note">I write to remember what others forget.
-        These stories are not answers, but echoes&mdash;invitations
-        to listen to the spaces between what is said.<br>
-        Thank you for being here.</p>
+        <p class="note">I write short books about the thoughts
+        I can't finish out loud.</p>
       </div>
 
       <div class="panel" id="panel-about">
         <p class="eyebrow caps">About</p>
         <!-- CHANGE THIS: a few sentences about you -->
-        <p class="note">Chew Z writes short fiction about coastlines,
-        habits, and the things people put down on purpose. This is where
-        the stories live, each one a few minutes long, offered as a PDF
-        you can keep.</p>
+        <p class="note">Chew Z writes dark literary novellas set in a
+        shared world called the Reach&mdash;slow-burning, noir-inflected,
+        grounded in a world neither better nor worse than this one. Each
+        book puts one altered state at its center&mdash;a drug, a ritual,
+        a fast, a song&mdash;and follows a small cast into what that
+        state makes undeniable. Published by Roya Publication, numbered
+        in sequence.</p>
         <hr class="rule">
         <p class="caps"><a class="syn-link" href="mailto:you@example.com">Write to me</a></p>
       </div>
@@ -94,19 +104,19 @@
       <div class="panel" id="panel-notes">
         <p class="eyebrow caps">Author's Notes</p>
         <!-- CHANGE THIS: notes on the work, process, influences -->
-        <p class="note">Most of these began as a single sentence carried
-        around for months. I keep them short because a short story should
-        end the way a tide does&mdash;on time, and without apology. Notes
-        on individual pieces will gather here as the shelf fills.</p>
+        <p class="note">I write short books about the thoughts I
+        can't finish out loud.</p>
+        <p class="note">Mostly I'm interested in what comfort costs us,
+        what the body knows that the mind can talk itself out of, and
+        how thin the line is between a group that protects you and one
+        that owns you. I don't write dystopias&mdash;the world in these
+        books is exactly as compromised as this one. I don't offer
+        answers either. I'm suspicious of anyone who would. I'd rather
+        hand you the question and let you set it down when you're
+        finished.</p>
+        <p class="signature caps">&mdash; Chew Z</p>
       </div>
 
-      <!-- Filled in by script.js when you hover a story -->
-      <div class="panel" id="panel-synopsis">
-        <p class="eyebrow caps" id="synMeta"></p>
-        <h3 class="syn-title" id="synTitle"></h3>
-        <p class="syn-text" id="synText"></p>
-        <p><a class="syn-link caps" id="synLink" href="#">Read the story &mdash; PDF</a></p>
-      </div>
 
     </section>
   </main>

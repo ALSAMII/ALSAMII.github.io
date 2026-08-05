@@ -90,7 +90,7 @@ body {
    ============================================================ */
 
 .frame {
-  min-height: 100svh;
+  height: 100svh;
   display: grid;
   grid-template-rows: auto 1fr auto;
   padding: 0 clamp(1.25rem, 4vw, 3.5rem);
@@ -192,13 +192,22 @@ body {
 /* --- Story list ------------------------------------------- */
 
 .shelf {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0.5rem 0 0.75rem;
+}
+
+.shelf ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--hairline) transparent;
-  padding: 0.5rem 0 2rem;
+  flex: 1 1 auto;
+  min-height: 9rem;
 }
-
-.shelf ol { margin: 0; padding: 0; list-style: none; }
 
 .story { border-bottom: 1px solid var(--hairline); }
 .story:first-child { border-top: 1px solid var(--hairline); }
@@ -259,7 +268,8 @@ body {
 }
 
 .more {
-  padding: 1.5rem 0.25rem;
+  flex: none;
+  padding: 1rem 0.25rem;
   color: var(--faded);
   font-style: normal;
 }
@@ -391,7 +401,9 @@ body {
 }
 
 @media (max-width: 56rem) {
-  .frame { min-height: auto; }
+  .frame { height: auto; min-height: auto; }
+  .shelf { overflow: visible; display: block; }
+  .shelf ol { overflow: visible; }
 
   .masthead { flex-wrap: wrap; }
 
@@ -409,3 +421,67 @@ body {
   .panel, .panel.is-active { transition: none; transform: none; }
   * { transition-duration: 0.01ms !important; }
 }
+
+/* ============================================================
+   Cover panel — the book and its synopsis, under the list
+   ============================================================ */
+
+.cover-panel {
+  flex: 0 1 auto;
+  min-height: 23rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+  margin-top: 0.75rem;
+  padding: 0 0.25rem 0.75rem;
+  max-width: 20rem;
+  opacity: 0;
+  transform: translateY(0.4rem);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.cover-panel.show { opacity: 1; transform: none; }
+
+.cover-panel img {
+  display: block;
+  width: min(7rem, 50%);
+  border: 1px solid rgba(216, 208, 192, 0.22);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  margin: 0.25rem 0 1.125rem;
+}
+
+.cover-panel .cp-meta { color: var(--ember); margin: 0 0 0.875rem; }
+
+.cover-panel .cp-text {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--parchment);
+  margin: 0 0 1rem;
+}
+
+.cp-link {
+  color: var(--ember);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ember-soft);
+  padding-bottom: 0.2rem;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.cp-link:hover { color: var(--parchment); border-bottom-color: var(--parchment); }
+
+/* On phones the synopsis expands inline instead; give the
+   little cover in it the same treatment. */
+.story.open .synopsis img {
+  display: block;
+  width: 7.5rem;
+  border: 1px solid var(--hairline);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.55);
+  margin: 0.25rem 0 1rem;
+}
+@media (max-width: 56rem) {
+  .cover-panel { display: none; }
+}
+
+/* Spacing for multi-paragraph notes and the signature line */
+.panel .note + .note { margin-top: 1.25rem; }
+.panel .signature { color: var(--ember); margin: 2rem 0 0; }
