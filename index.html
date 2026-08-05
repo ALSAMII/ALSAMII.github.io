@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chew Z — Short Fiction</title>
+<meta name="description" content="Short fiction by Chew Z.">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="atmosphere" aria-hidden="true"></div>
+
+<div class="frame">
+
+  <!-- ══════════════════════════ HEADER ══════════════════════ -->
+  <header class="masthead">
+    <div class="brand">
+      <p class="name">CHEW&thinsp;Z</p>
+      <p class="tag caps">Short Fiction</p>
+    </div>
+
+    <nav aria-label="Site" class="caps">
+      <a href="#" data-stage="home" aria-current="true">Stories</a>
+      <a href="#" data-stage="about">About</a>
+      <a href="#" data-stage="notes">Author's Notes</a>
+      <button class="sound" id="soundToggle" aria-pressed="false"
+              title="Ambient sound (add assets/ambient.mp3 to enable)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <path d="M11 5 6 9H2v6h4l5 4V5z"/>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+          <path d="M18.5 5.5a9.4 9.4 0 0 1 0 13"/>
+        </svg>
+        <span class="visually-hidden">Toggle ambient sound</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ══════════════════════════ MAIN ════════════════════════ -->
+  <main class="hall">
+
+    <!-- ─── Story list ─────────────────────────────────────────
+         To add a story:
+         1. Drop its PDF into the pdfs/ folder
+         2. Copy one <li class="story"> block, paste it in,
+            and change the number, title, PDF filename,
+            and the synopsis text.
+         ──────────────────────────────────────────────────────── -->
+    <aside class="shelf" id="stories" aria-label="Stories">
+      <!-- The list is built automatically from stories.js.
+           To add or edit stories, open stories.js — not this file. -->
+      <ol></ol>
+      <p class="more">More stories coming soon&hellip;</p>
+    </aside>
+
+    <!-- ─── The stage ──────────────────────────────────────────
+         One panel is visible at a time. Hovering a story swaps
+         in its synopsis; the nav swaps in About or the Notes.
+         ──────────────────────────────────────────────────────── -->
+    <section class="stage" aria-live="polite">
+
+      <div class="panel is-active" id="panel-home">
+        <p class="lede">Across time, place, and memory, these stories
+        explore the quiet tragedies and stubborn graces of being human.
+        From forgotten cities to unseen realms, from the weight of choice
+        to the mercy of oblivion&mdash;these are fictions about what we
+        carry, what we lose, and what still remains.</p>
+        <hr class="rule">
+        <p class="eyebrow caps">A Note From the Author</p>
+        <p class="note">I write to remember what others forget.
+        These stories are not answers, but echoes&mdash;invitations
+        to listen to the spaces between what is said.<br>
+        Thank you for being here.</p>
+      </div>
+
+      <div class="panel" id="panel-about">
+        <p class="eyebrow caps">About</p>
+        <!-- CHANGE THIS: a few sentences about you -->
+        <p class="note">Chew Z writes short fiction about coastlines,
+        habits, and the things people put down on purpose. This is where
+        the stories live, each one a few minutes long, offered as a PDF
+        you can keep.</p>
+        <hr class="rule">
+        <p class="caps"><a class="syn-link" href="mailto:you@example.com">Write to me</a></p>
+      </div>
+
+      <div class="panel" id="panel-notes">
+        <p class="eyebrow caps">Author's Notes</p>
+        <!-- CHANGE THIS: notes on the work, process, influences -->
+        <p class="note">Most of these began as a single sentence carried
+        around for months. I keep them short because a short story should
+        end the way a tide does&mdash;on time, and without apology. Notes
+        on individual pieces will gather here as the shelf fills.</p>
+      </div>
+
+      <!-- Filled in by script.js when you hover a story -->
+      <div class="panel" id="panel-synopsis">
+        <p class="eyebrow caps" id="synMeta"></p>
+        <h3 class="syn-title" id="synTitle"></h3>
+        <p class="syn-text" id="synText"></p>
+        <p><a class="syn-link caps" id="synLink" href="#">Read the story &mdash; PDF</a></p>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ══════════════════════════ FOOTER ══════════════════════ -->
+  <footer class="floor">
+    <p class="caps">All stories &copy; Chew&thinsp;Z. All rights reserved.</p>
+    <nav class="caps" aria-label="Footer">
+      <a href="mailto:you@example.com">Contact</a>
+      <a href="mailto:you@example.com?subject=Subscribe">Subscribe</a>
+    </nav>
+  </footer>
+
+</div>
+
+<audio id="ambient" src="assets/ambient.mp3" loop preload="none"></audio>
+<script src="stories.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
