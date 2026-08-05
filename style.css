@@ -742,14 +742,14 @@ body {
   align-items: center;
   gap: 1rem;
 }
-.feature.trio .feature-text { flex: 1 1 19rem; max-width: 23rem; }
+.feature.trio .feature-text { flex: 1 1 21rem; max-width: 29rem; }
 .feature.trio .feature-syn {
-  font-size: 1.0625rem;
-  line-height: 1.65;
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  line-height: 1.7;
 }
 
 .easel-set img {
-  width: min(9.5rem, 12vw);
+  width: clamp(6.25rem, 8.25vw, 8.75rem);
   border: 0;
   box-shadow: 0 26px 52px rgba(0, 0, 0, 0.7);
   -webkit-mask-image:
@@ -798,4 +798,10 @@ body {
 @media (max-width: 72rem) {
   .feature #easelImg,
   .feature .easel-set { display: none !important; }
+}
+
+/* Long trilogy text + three covers need real width; below it,
+   the trilogy feature runs text-only */
+@media (max-width: 82rem) {
+  .feature.trio .easel-set { display: none; }
 }
