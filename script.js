@@ -31,10 +31,17 @@
   var hideTimer = null;
 
   function showPanel(id) {
+    var wasFeature = feature.classList.contains("show");
     feature.classList.remove("show");
-    panels.forEach(function (p) {
-      p.classList.toggle("is-active", p.id === id);
-    });
+    var activate = function () {
+      if (feature.classList.contains("show")) return; /* superseded */
+      panels.forEach(function (p) {
+        p.classList.toggle("is-active", p.id === id);
+      });
+    };
+    /* If the cover was up, let it fade before the text arrives,
+       so the two never sit on top of each other. */
+    if (wasFeature) setTimeout(activate, 300); else activate();
   }
 
   function showFeature(s, num, pdf, cover) {
