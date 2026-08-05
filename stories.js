@@ -71,6 +71,20 @@ const STORIES = [
   },
 
   {
+    num: 9,
+    title: "The Kindred Stone",
+    words: "21,100 words",
+    synopsis: "In Millhaven, an Examiner named David Cole spends his career auditing the empathic authenticity of Siyavash \u2014 the suffering figure at the heart of the Asha Order, a communion of grief and endurance practiced through fist-sized devices called Stones. When a Loomborn named Iris Kell produces a bonding trace too textured for the instruments to call either genuine or false, David's investigation carries him from a quiet neighborhood zendo to the unlicensed stone trade at the edge of the city, and finally onto the hill itself, unfiltered, alone, and barred by his own bureau from ever going there at all."
+  },
+
+  {
+    num: 10,
+    title: "The Gospel of Broken Skin",
+    words: "8,000 words",
+    synopsis: "Wren, an ER technician who has spent a decade stitching a numbed city back together, meets Ezra Coyne the night he arrives smiling from a wreck he should not have survived. What follows is her slow initiation into a nameless group who have built an entire discipline around sensation as the last unfakeable proof of being alive \u2014 a philosophy of presence, and a threshold, that keeps demanding to be crossed further."
+  },
+
+  {
     num: 11,
     title: "The Marriage of Stones",
     words: "14,400 words",
@@ -82,6 +96,19 @@ const STORIES = [
     title: "Semazen",
     words: "12,700 words",
     synopsis: "A hospice aide, worn down by a decade of sitting with the dying, inherits a dying woman's fragments of a lost Sufi practice and teaches himself, badly and without lineage, to whirl. He discovers the turn doesn't bring him peace \u2014 it makes him a conduit, drawing grief out of anyone who sits near him and grounding it through his own body into the floor."
+  },
+
+  {
+    num: 13,
+    title: "A Stranger's Favorite Song",
+    words: "22,200 words",
+    synopsis: "Kian cannot answer the three questions everyone asks at his father's memorial: what song he loved, what food he loved, what place he loved. He realizes, standing in the good chair reserved for a son, that he has spent a lifetime loving a man he barely knew."
+  },
+
+  {
+    num: 14,
+    title: "Fourteenth Retrial",
+    synopsis: "Synopsis to come."
   },
 
   {
@@ -103,6 +130,20 @@ const STORIES = [
     title: "Natural Noise",
     words: "17,400 words",
     synopsis: "Teo keeps bees on the rise above Halden, a small town he was sent to a year ago for what the Halden Apiary Trust calls a period of restorative work \u2014 and he cannot, no matter how honestly he tries, remember why. What starts as a private curiosity, a borrowed dish of slime mold reaching toward a feeding hour it has no business remembering, widens over a slow season into ants whose trails move overnight, a swarm he chases through town with his own heart in his throat, and a hive whose every hexagon turns out to have been built by nobody at all."
+  },
+
+  {
+    num: 18,
+    title: "Between Kenoma and Pleroma",
+    words: "11,900 words",
+    synopsis: "When his sister Nour vanishes into an unmarked commune called Pleroma, Aram follows her past a cattle guard and a road that simply stops being maintained, into a valley that has quietly inverted almost every norm he understands as human. Crime is treated as sickness; sickness is nursed, not punished."
+  },
+
+  {
+    num: 19,
+    title: "The Gardener's Century",
+    words: "28,000 words",
+    synopsis: "For three centuries, the B'not Anahita have planted their patient influence into the bloodlines of the powerful \u2014 not through force, but through intimacy, cultivated across generations by women trained from childhood in the discipline of desire. In the winter of 1972, a Qedesha named Nahid arrives at a decaying Habsburg-era bathhouse in communist Romania under the name Livia, sent to imprint the heir of a once-great banking family whose quiet influence the state has never managed to erase."
   },
 
   {
@@ -128,14 +169,14 @@ const STORIES = [
 
   {
     num: 23,
-    title: "Folie Generale",
+    title: "Folie Générale",
     words: "15,900 words",
     synopsis: "Bellhaven merges its emergency and non-emergency telephone lines. The memo is two pages long, properly authorised, correctly modelled, and four million dollars cheaper. Nobody who reads it disagrees with a word. The merge adds forty seconds of hold time. A heatwave arrives. Hold goes to six minutes, then nineteen, then fifty-one \u2014 and a forty-year-old triage rule that treats a single caller as low-confidence begins, quietly and correctly, to deprioritise every true emergency in a city where nobody has looked up in years."
   },
 
   {
     num: 24,
-    title: "Folie Imposee",
+    title: "Folie Imposée",
     words: "16,200 words",
     synopsis: "You find the number on a wall. Two words in white paint under an underpass, sprayed the way a football score is sprayed: NO ETA. Nothing is wrong with you. You are thirty-one, employed, housed, insured, and so alone you could not describe it, because describing it would require somebody to describe it to."
   },
