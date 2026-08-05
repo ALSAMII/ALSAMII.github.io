@@ -200,9 +200,9 @@ const STORIES = [
 
 
 /* ============================================================
-   TRILOGIES — groups of books shown under one header in the
+   TRIPTYCHS — groups of books shown under one header in the
    list. Hovering the header shows all three covers together
-   with the trilogy synopsis. "books" are the series numbers.
+   with the triptych synopsis. "books" are the series numbers.
    ============================================================ */
 
 const TRILOGIES = [
