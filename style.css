@@ -183,10 +183,7 @@ body {
 .sound[aria-pressed="true"] { color: var(--ember); }
 .sound svg { display: block; width: 1.25rem; height: 1.25rem; }
 
-/* Speaker shows a cross when muted */
-.sound .ico-off { display: none; }
-.sound.muted .ico-on { display: none; }
-.sound.muted .ico-off { display: block; }
+/* Speaker dims when muted (the cross itself is drawn by script) */
 .sound.muted { color: var(--faded); }
 
 /* ============================================================

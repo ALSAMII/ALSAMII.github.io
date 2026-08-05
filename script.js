@@ -317,7 +317,13 @@ function backdropIndexFor(dayString) {
   var muted = false;               /* music is on by default */
   audio.volume = vol.value / 100;
 
+  var waveOn = document.getElementById("waveOn");
+  var waveOff = document.getElementById("waveOff");
+
   function paint() {
+    /* set inline so the swap works even if the stylesheet is stale */
+    waveOn.style.display = muted ? "none" : "";
+    waveOff.style.display = muted ? "" : "none";
     toggle.classList.toggle("muted", muted);
     toggle.setAttribute("aria-pressed", muted ? "false" : "true");
     toggle.title = muted ? "Play music" : "Mute music";
