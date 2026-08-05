@@ -24,31 +24,44 @@
   var canHover = window.matchMedia("(hover: hover)").matches;
 
   var easel = document.getElementById("easelImg");
+  var feature = document.getElementById("feature");
+  var ftMeta = document.getElementById("ftMeta");
+  var ftText = document.getElementById("ftText");
+  var ftLink = document.getElementById("ftLink");
+  var hideTimer = null;
 
   function showPanel(id) {
-    easel.classList.remove("show");
+    feature.classList.remove("show");
     panels.forEach(function (p) {
       p.classList.toggle("is-active", p.id === id);
     });
   }
 
-  function showEasel(cover, title) {
+  function showFeature(s, num, pdf, cover) {
+    clearTimeout(hideTimer);
     panels.forEach(function (p) { p.classList.remove("is-active"); });
+    ftMeta.textContent = num + " · " + s.title + (s.words ? " · " + s.words : "");
+    ftText.textContent = s.synopsis;
+    ftLink.setAttribute("href", pdf);
     easel.style.display = "";
-    easel.alt = title + " — cover";
-    if (easel.getAttribute("src") !== cover) {
-      easel.classList.remove("show");
-      easel.src = cover;                 /* .show returns on load */
-    } else {
-      easel.classList.add("show");
-    }
+    easel.alt = s.title + " — cover";
+    if (easel.getAttribute("src") !== cover) easel.src = cover;
+    feature.classList.add("show");
   }
 
-  easel.addEventListener("load", function () { easel.classList.add("show"); });
+  /* Leaving a book starts a short grace period, so the reader can
+     move the mouse onto the feature and click the PDF link. */
+  function scheduleHide() {
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () { showPanel("panel-home"); }, 400);
+  }
+
+  feature.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
+  feature.addEventListener("mouseleave", scheduleHide);
+
   easel.addEventListener("error", function () {
-    /* Missing cover: fall back to the theme text quietly */
+    /* Missing cover: show the synopsis alone */
     easel.style.display = "none";
-    showPanel("panel-home");
   });
 
   /* ---- 1. Build the list from stories.js ------------------- */
@@ -66,24 +79,6 @@
     '-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
 
   var list = document.querySelector(".shelf ol");
-
-  var cpImg = document.getElementById("cpImg");
-  var cpMeta = document.getElementById("cpMeta");
-  var cpText = document.getElementById("cpText");
-  var cpLink = document.getElementById("cpLink");
-  var coverPanel = document.getElementById("coverPanel");
-
-  cpImg.addEventListener("error", function () { cpImg.style.display = "none"; });
-
-  function fillSidebar(s, num, pdf, cover) {
-    cpImg.style.display = "";
-    cpImg.src = cover;
-    cpImg.alt = "";
-    cpMeta.textContent = num + " \u00b7 " + s.title + (s.words ? " \u00b7 " + s.words : "");
-    cpText.textContent = s.synopsis;
-    cpLink.setAttribute("href", pdf);
-    coverPanel.classList.add("show");
-  }
 
   STORIES.forEach(function (s, i) {
     var num = String(s.num || i + 1).padStart(2, "0");
@@ -138,18 +133,14 @@
 
     if (canHover) {
       li.addEventListener("mouseenter", function () {
-        fillSidebar(s, num, pdf, cover);
-        showEasel(cover, s.title);
+        showFeature(s, num, pdf, cover);
       });
-      li.addEventListener("mouseleave", function () {
-        showPanel("panel-home");
-      });
+      li.addEventListener("mouseleave", scheduleHide);
       li.addEventListener("focusin", function () {
-        fillSidebar(s, num, pdf, cover);
-        showEasel(cover, s.title);
+        showFeature(s, num, pdf, cover);
       });
       li.addEventListener("focusout", function (e) {
-        if (!li.contains(e.relatedTarget)) showPanel("panel-home");
+        if (!li.contains(e.relatedTarget)) scheduleHide();
       });
     } else {
       eye.addEventListener("click", function () {
@@ -159,14 +150,6 @@
     }
   });
 
-  /* The sidebar starts on the first book (text only, no easel). */
-  if (canHover && STORIES.length) {
-    var f0 = STORIES[0];
-    var n0 = String(f0.num || 1).padStart(2, "0");
-    fillSidebar(f0, n0, f0.pdf || "pdfs/" + n0 + ".pdf",
-                f0.cover || "covers/" + n0 + ".jpg");
-  }
-
   /* ---- 3. Nav: About / Author's Notes on hover -------------- */
 
   var stageFor = { home: "panel-home", about: "panel-about", notes: "panel-notes" };
@@ -175,7 +158,10 @@
     var target = stageFor[link.dataset.stage];
 
     if (canHover) {
-      link.addEventListener("mouseenter", function () { showPanel(target); });
+      link.addEventListener("mouseenter", function () {
+        clearTimeout(hideTimer);
+        showPanel(target);
+      });
       link.addEventListener("mouseleave", function () { showPanel("panel-home"); });
       link.addEventListener("focus", function () { showPanel(target); });
       link.addEventListener("blur", function () { showPanel("panel-home"); });

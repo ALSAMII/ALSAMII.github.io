@@ -75,9 +75,16 @@
          ──────────────────────────────────────────────────────── -->
     <section class="stage" aria-live="polite">
 
-      <!-- The easel: the hovered book's cover, standing large
-           beside the text. Filled in by script.js. -->
-      <img class="easel" id="easelImg" alt="">
+      <!-- The feature: hovered book's synopsis on the left,
+           its cover large on the right. Filled in by script.js. -->
+      <div class="feature" id="feature">
+        <div class="feature-text">
+          <p class="caps feature-meta" id="ftMeta"></p>
+          <p class="feature-syn" id="ftText"></p>
+          <p><a class="cp-link caps" id="ftLink" href="#">Read the story &mdash; PDF</a></p>
+        </div>
+        <img class="easel" id="easelImg" alt="">
+      </div>
 
       <div class="panel is-active" id="panel-home">
         <p class="lede">Across time, place, and memory, these stories

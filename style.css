@@ -282,29 +282,56 @@ body {
   min-height: 0;
 }
 
-/* The hovered book's cover, large in the middle of the page */
-.easel {
+/* The hovered book: synopsis on the left, cover on the right */
+.feature {
   grid-area: 1 / 1;
   place-self: center;
-  max-height: 70vh;
-  max-width: min(26rem, 70%);
-  width: auto;
-  border: 1px solid rgba(216, 208, 192, 0.25);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.78);
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  max-width: 94%;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(0.8rem) scale(0.985);
+  transform: translateY(0.8rem);
   transition: opacity 0.45s ease, transform 0.45s ease,
               visibility 0s linear 0.45s;
   z-index: 1;
 }
 
-.easel.show {
+.feature.show {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
   transform: none;
   transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
+}
+
+.feature-text { max-width: 24rem; }
+
+.feature-meta { color: var(--ember); margin: 0 0 1.25rem; }
+
+.feature-syn {
+  font-family: var(--serif);
+  font-size: clamp(1.1875rem, 1.7vw, 1.4375rem);
+  line-height: 1.75;
+  color: var(--parchment);
+  margin: 0 0 1.75rem;
+}
+
+/* The cover: no frame — its edges feather away into the room */
+.easel {
+  max-height: 68vh;
+  max-width: min(26rem, 44vw);
+  width: auto;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
 }
 
 .panel {
@@ -494,15 +521,12 @@ body {
 }
 .cp-link:hover { color: var(--parchment); border-bottom-color: var(--parchment); }
 
-/* On desktop the easel carries the cover; the sidebar panel is
-   text only. On phones the easel is off and the inline synopsis
-   keeps its small cover. */
-@media (min-width: 56.01rem) {
-  .cover-panel img { display: none !important; }
-  .cover-panel { min-height: 16rem; }
-}
+/* The synopsis now lives beside the cover in the stage, so the
+   sidebar panel retires everywhere. Phones keep the inline
+   tap-to-expand synopsis and hide the feature. */
+.cover-panel { display: none; }
 @media (max-width: 56rem) {
-  .easel { display: none; }
+  .feature { display: none; }
 }
 
 /* On phones the synopsis expands inline instead; give the
