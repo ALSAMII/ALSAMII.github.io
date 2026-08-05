@@ -1,18 +1,19 @@
 /* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
-   add stories in stories.js instead.
+   add books in stories.js instead.
 
    What it does:
    1. Builds the sidebar list from the STORIES array.
-      Files are found by number automatically: story 01 uses
-      pdfs/01.pdf and covers/01.jpg unless a story block in
-      stories.js names its own "pdf" or "cover".
-   2. Hovering a story shows its cover + synopsis in the panel
-      under the list (on phones, tapping the eye expands it
-      inline under the title instead)
-   3. The top nav swaps the stage between Home / About / Notes
-   4. The speaker button plays assets/ambient.mp3, if present
+      Files are found by each book's series number: book 27
+      uses pdfs/27.pdf and covers/27.jpg (zero-padded under 10).
+   2. Hovering a book shows its synopsis under the list and its
+      cover LARGE in the middle of the page; moving away brings
+      the theme text back. (On phones, tapping the eye expands
+      the synopsis inline instead.)
+   3. Hovering About or Author's Notes in the nav reveals those
+      texts; moving away brings the theme text back.
+   4. The speaker button plays assets/ambient.mp3, if present.
    ============================================================ */
 
 (function () {
@@ -21,13 +22,34 @@
   var panels = document.querySelectorAll(".panel");
   var navLinks = document.querySelectorAll("[data-stage]");
   var canHover = window.matchMedia("(hover: hover)").matches;
-  var pinned = "panel-home";
 
-  function show(id) {
+  var easel = document.getElementById("easelImg");
+
+  function showPanel(id) {
+    easel.classList.remove("show");
     panels.forEach(function (p) {
       p.classList.toggle("is-active", p.id === id);
     });
   }
+
+  function showEasel(cover, title) {
+    panels.forEach(function (p) { p.classList.remove("is-active"); });
+    easel.style.display = "";
+    easel.alt = title + " — cover";
+    if (easel.getAttribute("src") !== cover) {
+      easel.classList.remove("show");
+      easel.src = cover;                 /* .show returns on load */
+    } else {
+      easel.classList.add("show");
+    }
+  }
+
+  easel.addEventListener("load", function () { easel.classList.add("show"); });
+  easel.addEventListener("error", function () {
+    /* Missing cover: fall back to the theme text quietly */
+    easel.style.display = "none";
+    showPanel("panel-home");
+  });
 
   /* ---- 1. Build the list from stories.js ------------------- */
 
@@ -51,14 +73,12 @@
   var cpLink = document.getElementById("cpLink");
   var coverPanel = document.getElementById("coverPanel");
 
-  /* If a cover image is missing, hide the frame rather than
-     showing a broken-image icon. */
   cpImg.addEventListener("error", function () { cpImg.style.display = "none"; });
 
-  function showInPanel(s, num, pdf, cover) {
+  function fillSidebar(s, num, pdf, cover) {
     cpImg.style.display = "";
     cpImg.src = cover;
-    cpImg.alt = s.title + " — cover";
+    cpImg.alt = "";
     cpMeta.textContent = num + " \u00b7 " + s.title + (s.words ? " \u00b7 " + s.words : "");
     cpText.textContent = s.synopsis;
     cpLink.setAttribute("href", pdf);
@@ -101,7 +121,6 @@
 
     row.append(numEl, title, pdfBtn, eye);
 
-    /* Inline synopsis used on phones: little cover + text */
     var syn = document.createElement("div");
     syn.className = "synopsis";
     var synImg = document.createElement("img");
@@ -115,16 +134,24 @@
     li.append(row, syn);
     list.append(li);
 
-    /* ---- 2. Synopsis behaviour for this story -------------- */
+    /* ---- 2. Hover behaviour for this book ------------------ */
 
     if (canHover) {
-      /* Desktop: hovering (or keyboard focus) fills the panel
-         under the list. It stays until another story replaces
-         it, so the reader can move the mouse to the panel. */
-      li.addEventListener("mouseenter", function () { showInPanel(s, num, pdf, cover); });
-      li.addEventListener("focusin", function () { showInPanel(s, num, pdf, cover); });
+      li.addEventListener("mouseenter", function () {
+        fillSidebar(s, num, pdf, cover);
+        showEasel(cover, s.title);
+      });
+      li.addEventListener("mouseleave", function () {
+        showPanel("panel-home");
+      });
+      li.addEventListener("focusin", function () {
+        fillSidebar(s, num, pdf, cover);
+        showEasel(cover, s.title);
+      });
+      li.addEventListener("focusout", function (e) {
+        if (!li.contains(e.relatedTarget)) showPanel("panel-home");
+      });
     } else {
-      /* Touch: the eye expands the synopsis inline. */
       eye.addEventListener("click", function () {
         var open = li.classList.toggle("open");
         eye.setAttribute("aria-expanded", open ? "true" : "false");
@@ -132,30 +159,40 @@
     }
   });
 
-  /* Start with the first story's cover on display. */
+  /* The sidebar starts on the first book (text only, no easel). */
   if (canHover && STORIES.length) {
     var f0 = STORIES[0];
     var n0 = String(f0.num || 1).padStart(2, "0");
-    showInPanel(f0, n0, f0.pdf || "pdfs/" + n0 + ".pdf",
+    fillSidebar(f0, n0, f0.pdf || "pdfs/" + n0 + ".pdf",
                 f0.cover || "covers/" + n0 + ".jpg");
   }
 
-  /* ---- 3. Nav ---------------------------------------------- */
+  /* ---- 3. Nav: About / Author's Notes on hover -------------- */
 
   var stageFor = { home: "panel-home", about: "panel-about", notes: "panel-notes" };
 
   navLinks.forEach(function (link) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      pinned = stageFor[link.dataset.stage];
-      show(pinned);
-      navLinks.forEach(function (l) {
-        l.setAttribute("aria-current", l === link ? "true" : "false");
+    var target = stageFor[link.dataset.stage];
+
+    if (canHover) {
+      link.addEventListener("mouseenter", function () { showPanel(target); });
+      link.addEventListener("mouseleave", function () { showPanel("panel-home"); });
+      link.addEventListener("focus", function () { showPanel(target); });
+      link.addEventListener("blur", function () { showPanel("panel-home"); });
+      link.addEventListener("click", function (e) { e.preventDefault(); });
+    } else {
+      /* Touch: tapping swaps the stage, as before */
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        showPanel(target);
+        navLinks.forEach(function (l) {
+          l.setAttribute("aria-current", l === link ? "true" : "false");
+        });
+        if (link.dataset.stage === "home") {
+          document.getElementById("stories").scrollIntoView({ behavior: "smooth" });
+        }
       });
-      if (link.dataset.stage === "home" && !canHover) {
-        document.getElementById("stories").scrollIntoView({ behavior: "smooth" });
-      }
-    });
+    }
   });
 
   /* ---- 4. Ambient sound ------------------------------------ */

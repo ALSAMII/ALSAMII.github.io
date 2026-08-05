@@ -282,6 +282,31 @@ body {
   min-height: 0;
 }
 
+/* The hovered book's cover, large in the middle of the page */
+.easel {
+  grid-area: 1 / 1;
+  place-self: center;
+  max-height: 70vh;
+  max-width: min(26rem, 70%);
+  width: auto;
+  border: 1px solid rgba(216, 208, 192, 0.25);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.78);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(0.8rem) scale(0.985);
+  transition: opacity 0.45s ease, transform 0.45s ease,
+              visibility 0s linear 0.45s;
+  z-index: 1;
+}
+
+.easel.show {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
+}
+
 .panel {
   grid-area: 1 / 1;           /* all panels stack in one cell */
   align-self: center;
@@ -468,6 +493,17 @@ body {
   transition: color 0.25s ease, border-color 0.25s ease;
 }
 .cp-link:hover { color: var(--parchment); border-bottom-color: var(--parchment); }
+
+/* On desktop the easel carries the cover; the sidebar panel is
+   text only. On phones the easel is off and the inline synopsis
+   keeps its small cover. */
+@media (min-width: 56.01rem) {
+  .cover-panel img { display: none !important; }
+  .cover-panel { min-height: 16rem; }
+}
+@media (max-width: 56rem) {
+  .easel { display: none; }
+}
 
 /* On phones the synopsis expands inline instead; give the
    little cover in it the same treatment. */
