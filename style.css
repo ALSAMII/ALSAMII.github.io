@@ -348,8 +348,10 @@ body {
   grid-area: 1 / 1;           /* all panels stack in one cell */
   align-self: center;
   justify-self: center;
-  max-width: 34rem;
-  padding: 2rem 1rem;
+  max-width: 37rem;
+  padding: 1.25rem 1rem;
+  max-height: 100%;
+  overflow-y: auto;
   text-align: center;
   opacity: 0;
   visibility: hidden;
@@ -370,9 +372,9 @@ body {
   font-family: var(--serif);
   font-weight: 600;
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
-  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
-  line-height: 1.75;
-  letter-spacing: 0.03em;
+  font-size: clamp(1.375rem, 2.3vw, 1.625rem);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
   margin: 0;
 }
 
@@ -391,8 +393,8 @@ body {
   font-style: italic;
   font-weight: 600;
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
-  font-size: clamp(1.125rem, 2vw, 1.3125rem);
-  line-height: 1.8;
+  font-size: clamp(1.3125rem, 2.1vw, 1.5rem);
+  line-height: 1.75;
   margin: 0;
 }
 
@@ -408,8 +410,8 @@ body {
 
 .panel .syn-text {
   font-family: var(--serif);
-  font-size: clamp(1.125rem, 2vw, 1.3125rem);
-  line-height: 1.8;
+  font-size: clamp(1.3125rem, 2.1vw, 1.5rem);
+  line-height: 1.75;
   color: var(--parchment);
   margin: 0 0 2rem;
 }
@@ -456,12 +458,6 @@ body {
 :focus-visible {
   outline: 1px solid var(--ember);
   outline-offset: 4px;
-}
-
-/* On wide screens the scene owns the upper half; the text
-   settles into the lower half, as in the reference design. */
-@media (min-width: 56.01rem) {
-  .panel { padding-top: clamp(4rem, 22vh, 14rem); }
 }
 
 @media (max-width: 56rem) {
@@ -555,8 +551,8 @@ body {
 }
 
 /* Spacing for multi-paragraph notes and the signature line */
-.panel .note + .note { margin-top: 1.25rem; }
-.panel .signature { color: var(--ember); margin: 2rem 0 0; }
+.panel .note + .note { margin-top: 0.9rem; }
+.panel .signature { color: var(--ember); margin: 1.5rem 0 0; }
 
 
 /* ============================================================
@@ -804,4 +800,12 @@ body {
    the trilogy feature runs text-only */
 @media (max-width: 82rem) {
   .feature.trio .easel-set { display: none; }
+}
+
+/* Space between stage paragraphs; type eases down on short windows */
+.panel .lede + .lede { margin-top: 1em; }
+@media (max-height: 51rem) {
+  .panel .lede { font-size: clamp(1.125rem, 2.3vh, 1.4375rem); }
+  .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
+  .panel .rule { margin: 1.5rem auto; }
 }
