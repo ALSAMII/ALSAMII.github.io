@@ -312,18 +312,30 @@ function backdropIndexFor(dayString) {
 
   var audio = document.getElementById("ambient");
   var toggle = document.getElementById("soundToggle");
+  var vol = document.getElementById("volSlider");
+
+  audio.volume = vol.value / 100;
+
+  function startMusic() {
+    audio.play().then(function () {
+      toggle.setAttribute("aria-pressed", "true");
+    }).catch(function () {
+      toggle.setAttribute("aria-pressed", "false");
+    });
+  }
 
   toggle.addEventListener("click", function () {
-    if (audio.paused) {
-      audio.volume = 0.35;
-      audio.play().then(function () {
-        toggle.setAttribute("aria-pressed", "true");
-      }).catch(function () {
-        toggle.setAttribute("aria-pressed", "false");
-      });
-    } else {
+    if (audio.paused) startMusic();
+    else {
       audio.pause();
       toggle.setAttribute("aria-pressed", "false");
     }
+  });
+
+  /* Dragging the volume adjusts the music — and wakes it if
+     it isn't playing yet. */
+  vol.addEventListener("input", function () {
+    audio.volume = vol.value / 100;
+    if (audio.paused && vol.value > 0) startMusic();
   });
 })();

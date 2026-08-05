@@ -293,8 +293,10 @@ body {
   grid-area: 1 / 1;
   place-self: center;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: clamp(2rem, 4vw, 4.5rem);
+  gap: clamp(1.5rem, 3.5vw, 4.5rem);
   max-width: 94%;
   opacity: 0;
   visibility: hidden;
@@ -313,7 +315,7 @@ body {
   transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
 }
 
-.feature-text { max-width: 24rem; }
+.feature-text { flex: 1 1 19rem; max-width: 24rem; }
 
 .feature-meta { color: var(--ember); margin: 0 0 1.25rem; }
 
@@ -329,8 +331,8 @@ body {
 
 /* The cover: no frame — its edges feather away into the room */
 .easel {
-  max-height: 68vh;
-  max-width: min(26rem, 44vw);
+  max-height: 62vh;
+  max-width: min(24rem, 36vw);
   width: auto;
   -webkit-mask-image:
     linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
@@ -352,8 +354,8 @@ body {
   opacity: 0;
   visibility: hidden;
   transform: translateY(0.5rem);
-  transition: opacity 0.45s ease, transform 0.45s ease,
-              visibility 0s linear 0.45s;
+  transition: opacity 0.2s ease, transform 0.2s ease,
+              visibility 0s linear 0.2s;
 }
 
 .panel.is-active {
@@ -563,7 +565,7 @@ body {
 
 .roya {
   display: block;
-  height: clamp(3.25rem, 5.5vh, 4.25rem);
+  height: clamp(4rem, 6.75vh, 5.25rem);
   width: auto;
   border-radius: 4px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
@@ -778,4 +780,22 @@ body {
 .trilogy.open .synopsis .minis img {
   width: 5rem;
   border: 1px solid var(--hairline);
+}
+
+/* Music volume, beside the speaker */
+.vol {
+  width: 5.5rem;
+  accent-color: var(--ember);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.25s ease;
+}
+.vol:hover, .vol:focus-visible { opacity: 1; }
+@media (max-width: 56rem) { .vol { width: 4.5rem; } }
+
+/* Mid-width windows: not enough room for text and cover side by
+   side — the feature runs text-only, covers return on full desktop */
+@media (max-width: 72rem) {
+  .feature #easelImg,
+  .feature .easel-set { display: none !important; }
 }
