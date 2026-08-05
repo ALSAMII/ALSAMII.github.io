@@ -69,7 +69,7 @@ body {
     radial-gradient(26rem 20rem at 82% 72%,
       rgba(212, 150, 70, 0.16), transparent 70%),
     radial-gradient(120% 90% at 50% 45%,
-      rgba(11, 9, 7, 0.38), rgba(11, 9, 7, 0.84) 82%);
+      rgba(11, 9, 7, 0.44), rgba(11, 9, 7, 0.85) 82%);
 }
 
 /* Film grain */
@@ -182,6 +182,12 @@ body {
 .sound:hover { color: var(--parchment); }
 .sound[aria-pressed="true"] { color: var(--ember); }
 .sound svg { display: block; width: 1.25rem; height: 1.25rem; }
+
+/* Speaker shows a cross when muted */
+.sound .ico-off { display: none; }
+.sound.muted .ico-on { display: none; }
+.sound.muted .ico-off { display: block; }
+.sound.muted { color: var(--faded); }
 
 /* ============================================================
    Main: sidebar + stage
@@ -345,6 +351,7 @@ body {
 }
 
 .panel {
+  position: relative;
   grid-area: 1 / 1;           /* all panels stack in one cell */
   align-self: center;
   justify-self: center;
@@ -809,3 +816,22 @@ body {
   .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
   .panel .rule { margin: 1.5rem auto; }
 }
+
+/* ============================================================
+   A feathered pool of shade behind the stage text — dims and
+   softly blurs the artwork right where the words sit, and
+   fades to nothing at its edges.
+   ============================================================ */
+
+.panel::before,
+.feature-text::before {
+  content: "";
+  position: absolute;
+  inset: -3rem -4.5rem;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side,
+      rgba(7, 5, 4, 0.66) 30%, rgba(7, 5, 4, 0) 100%);
+}
+
+.feature-text { position: relative; }

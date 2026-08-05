@@ -123,7 +123,7 @@ function backdropIndexFor(dayString) {
     clearTimeout(hideTimer);
     panels.forEach(function (p) { p.classList.remove("is-active"); });
     feature.classList.add("trio");
-    ftMeta.textContent = "A Trilogy · " + t.title;
+    ftMeta.textContent = "A Triptych · " + t.title;
     ftText.textContent = t.synopsis;
     ftLink.style.display = "none";
     t.books.forEach(function (n, i) {
@@ -173,7 +173,7 @@ function backdropIndexFor(dayString) {
 
     var label = document.createElement("p");
     label.className = "t-label caps";
-    label.textContent = "A Trilogy";
+    label.textContent = "A Triptych";
 
     var title = document.createElement("h2");
     title.className = "t-title";
@@ -314,28 +314,46 @@ function backdropIndexFor(dayString) {
   var toggle = document.getElementById("soundToggle");
   var vol = document.getElementById("volSlider");
 
+  var muted = false;               /* music is on by default */
   audio.volume = vol.value / 100;
 
-  function startMusic() {
-    audio.play().then(function () {
-      toggle.setAttribute("aria-pressed", "true");
-    }).catch(function () {
-      toggle.setAttribute("aria-pressed", "false");
-    });
+  function paint() {
+    toggle.classList.toggle("muted", muted);
+    toggle.setAttribute("aria-pressed", muted ? "false" : "true");
+    toggle.title = muted ? "Play music" : "Mute music";
   }
 
+  function play() {
+    return audio.play().catch(function () { /* awaiting a gesture */ });
+  }
+
+  /* Browsers won't let audio start unprompted, so if the initial
+     attempt is blocked we arm it: the visitor's first click, tap,
+     or keypress anywhere starts the music. */
+  function arm() {
+    if (!audio.paused || muted) return;
+    var go = function () {
+      document.removeEventListener("pointerdown", go);
+      document.removeEventListener("keydown", go);
+      if (!muted) play();
+    };
+    document.addEventListener("pointerdown", go);
+    document.addEventListener("keydown", go);
+  }
+
+  paint();
+  play().then(function () { if (audio.paused) arm(); });
+  arm();
+
   toggle.addEventListener("click", function () {
-    if (audio.paused) startMusic();
-    else {
-      audio.pause();
-      toggle.setAttribute("aria-pressed", "false");
-    }
+    muted = !muted;
+    if (muted) audio.pause(); else play();
+    paint();
   });
 
-  /* Dragging the volume adjusts the music — and wakes it if
-     it isn't playing yet. */
   vol.addEventListener("input", function () {
     audio.volume = vol.value / 100;
-    if (audio.paused && vol.value > 0) startMusic();
+    if (vol.value > 0 && muted) { muted = false; play(); paint(); }
+    else if (vol.value > 0 && audio.paused) play();
   });
 })();
