@@ -26,7 +26,6 @@
     </div>
 
     <nav aria-label="Site" class="caps">
-      <a href="#" data-stage="home" aria-current="true">Stories</a>
       <a href="#" data-stage="about">About</a>
       <a href="#" data-stage="notes">Author's Notes</a>
       <button class="sound" id="soundToggle" aria-pressed="false"
@@ -40,6 +39,7 @@
         </svg>
         <span class="visually-hidden">Toggle ambient sound</span>
       </button>
+      <img class="roya" src="assets/roya.svg" alt="Roya Publication">
     </nav>
   </header>
 
@@ -86,30 +86,15 @@
         <img class="easel" id="easelImg" alt="">
       </div>
 
-      <div class="panel is-active" id="panel-home">
-        <p class="lede">Across time, place, and memory, these stories
-        explore the quiet tragedies and stubborn graces of being human.
-        From forgotten cities to unseen realms, from the weight of choice
-        to the mercy of oblivion&mdash;these are fictions about what we
-        carry, what we lose, and what still remains.</p>
-        <hr class="rule">
-        <p class="eyebrow caps">A Note From the Author</p>
-        <p class="note">I write short books about the thoughts
-        I can't finish out loud.</p>
-      </div>
-
-      <div class="panel" id="panel-about">
-        <p class="eyebrow caps">About</p>
-        <!-- CHANGE THIS: a few sentences about you -->
-        <p class="note">Chew Z writes dark literary novellas set in a
-        shared world called the Reach&mdash;slow-burning, noir-inflected,
-        grounded in a world neither better nor worse than this one. Each
-        book puts one altered state at its center&mdash;a drug, a ritual,
+      <div class="panel is-active" id="panel-about">
+        <p class="lede">Dark literary novellas set in a shared world
+        called the Reach&mdash;slow-burning, noir-inflected, grounded
+        in a world neither better nor worse than this one. Each book
+        puts one altered state at its center&mdash;a drug, a ritual,
         a fast, a song&mdash;and follows a small cast into what that
-        state makes undeniable. Published by Roya Publication, numbered
-        in sequence.</p>
+        state makes undeniable.</p>
         <hr class="rule">
-        <p class="caps"><a class="syn-link" href="mailto:you@example.com">Write to me</a></p>
+        <p class="eyebrow caps">Published by Roya Publication, numbered in sequence</p>
       </div>
 
       <div class="panel" id="panel-notes">
@@ -135,10 +120,10 @@
   <!-- ══════════════════════════ FOOTER ══════════════════════ -->
   <footer class="floor">
     <p class="caps">All stories &copy; Chew&thinsp;Z. All rights reserved.</p>
-    <nav class="caps" aria-label="Footer">
-      <a href="mailto:you@example.com">Contact</a>
-      <a href="mailto:you@example.com?subject=Subscribe">Subscribe</a>
-    </nav>
+    <div class="subscribe-block caps">
+      <span class="soon">Coming soon</span>
+      <span>Subscribe</span>
+    </div>
   </footer>
 
 </div>

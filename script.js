@@ -53,7 +53,7 @@
      move the mouse onto the feature and click the PDF link. */
   function scheduleHide() {
     clearTimeout(hideTimer);
-    hideTimer = setTimeout(function () { showPanel("panel-home"); }, 400);
+    hideTimer = setTimeout(function () { showPanel("panel-about"); }, 400);
   }
 
   feature.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
@@ -152,7 +152,7 @@
 
   /* ---- 3. Nav: About / Author's Notes on hover -------------- */
 
-  var stageFor = { home: "panel-home", about: "panel-about", notes: "panel-notes" };
+  var stageFor = { about: "panel-about", notes: "panel-notes" };
 
   navLinks.forEach(function (link) {
     var target = stageFor[link.dataset.stage];
@@ -162,9 +162,9 @@
         clearTimeout(hideTimer);
         showPanel(target);
       });
-      link.addEventListener("mouseleave", function () { showPanel("panel-home"); });
+      link.addEventListener("mouseleave", function () { showPanel("panel-about"); });
       link.addEventListener("focus", function () { showPanel(target); });
-      link.addEventListener("blur", function () { showPanel("panel-home"); });
+      link.addEventListener("blur", function () { showPanel("panel-about"); });
       link.addEventListener("click", function (e) { e.preventDefault(); });
     } else {
       /* Touch: tapping swaps the stage, as before */
@@ -174,9 +174,6 @@
         navLinks.forEach(function (l) {
           l.setAttribute("aria-current", l === link ? "true" : "false");
         });
-        if (link.dataset.stage === "home") {
-          document.getElementById("stories").scrollIntoView({ behavior: "smooth" });
-        }
       });
     }
   });
