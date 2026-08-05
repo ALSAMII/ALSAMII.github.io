@@ -107,8 +107,9 @@ const STORIES = [
 
   {
     num: 14,
-    title: "Fourteenth Retrial",
-    synopsis: "Synopsis to come."
+    title: "Fourteenth Trial",
+    words: "11,900 words",
+    synopsis: "Two actors sign the same contract, in different rooms, on the same afternoon \u2014 one desperate, one starving for a break neither has earned yet. Six weeks later they'll wear different collars on the same set: a full-scale reconstruction of a Nazi concentration camp, marketed as the most immersive character study ever filmed. What neither man reads on page thirty-three is that only one collar has been treated."
   },
 
   {
