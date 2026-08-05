@@ -8,10 +8,10 @@
 :root {
   /* Colours ------------------------------------------------ */
   --night:      #0b0907;                    /* page base */
-  --parchment:  #d8d0c0;                    /* main text */
-  --faded:      #8d8371;                    /* secondary text */
-  --ember:      #c79a5e;                    /* candlelight accent */
-  --ember-soft: rgba(199, 154, 94, 0.55);
+  --parchment:  #e4dcc9;                    /* main text */
+  --faded:      #9c9280;                    /* secondary text */
+  --ember:      #d8a65f;                    /* candlelight accent */
+  --ember-soft: rgba(216, 166, 95, 0.55);
   --hairline:   rgba(216, 208, 192, 0.13);  /* dividers */
 
   /* Type --------------------------------------------------- */
@@ -33,6 +33,7 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* ============================================================
@@ -109,7 +110,7 @@ body {
 /* Small spaced-caps labels used everywhere ----------------- */
 .caps {
   font-family: var(--sans);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.6875rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -225,7 +226,7 @@ body {
 .story .title {
   margin: 0;
   font-family: var(--sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.0625rem;
   letter-spacing: 0.02em;
   color: var(--parchment);
@@ -313,9 +314,11 @@ body {
 
 .feature-syn {
   font-family: var(--serif);
-  font-size: clamp(1.1875rem, 1.7vw, 1.4375rem);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
   line-height: 1.75;
   color: var(--parchment);
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
   margin: 0 0 1.75rem;
 }
 
@@ -358,7 +361,8 @@ body {
 
 .panel .lede {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 600;
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
   font-size: clamp(1.25rem, 2.2vw, 1.5rem);
   line-height: 1.75;
   letter-spacing: 0.03em;
@@ -378,7 +382,8 @@ body {
 .panel .note {
   font-family: var(--serif);
   font-style: italic;
-  font-weight: 500;
+  font-weight: 600;
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
   font-size: clamp(1.125rem, 2vw, 1.3125rem);
   line-height: 1.8;
   margin: 0;
