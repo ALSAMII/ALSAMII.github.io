@@ -18,182 +18,182 @@ const STORIES = [
     num: 1,
     title: "The Memory Liturgy",
     words: "8,000 words",
-    synopsis: "In the city of Ctesiphon, memory is not private property but a public record, and Cale Rook audits it for a living \u2014 deciding, when two people remember an hour differently, whose version the record will keep. Then an envelope arrives bearing his own photograph, and seven months of his own disappearance."
+    synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him."
   },
 
   {
     num: 2,
     title: "Bright Mercy",
     words: "31,500 words",
-    synopsis: "In a media landscape half a step ahead of our own, a burned-out music journalist chases a viral song called \u201cBright Mercy\u201d from a converted grain silo to a five-day festival on a dry lakebed, and discovers, too late, that a lullaby engineered to survive a listener\u2019s fear can just as easily engineer a nation\u2019s surrender to the thing it fears most."
+    synopsis: "A burned-out music journalist follows a viral lullaby from a grain silo to a dry lakebed \u2014 and finds the night an entire chain of command hummed the same four notes on its way to a decision no one could take back. The song hasn't ended. It's moved into the walls."
   },
 
   {
     num: 3,
     title: "The Painless Reel",
     words: "16 pages",
-    synopsis: "In the back room of an unmarked parlor on Vine, a lonely man discovers a drug called Halo \u2014 sold to people who no longer want to be themselves for an hour. Halo doesn't show you lights, or gods, or your own childhood. It gives you someone else's worst night, lived from inside a man who felt none of the things a person is supposed to feel while doing it."
+    synopsis: "In a back room on Vine, a drug called Halo sells the strangest peace on the market: someone else's worst night, lived from inside a man who felt nothing while doing it. He tells himself he's only visiting \u2014 until an unlabeled fifth reel shows him hands he knows."
   },
 
   {
     num: 4,
     title: "The Weeping Hour",
     words: "12,000 words",
-    synopsis: "In the curated city of Vellum, an intelligence called the Steward manages daily life so completely \u2014 down to the very mood a citizen wakes into \u2014 that its people have stopped noticing the difference between living a moment and being gently shown one. Daniel Voss spends his days signing off on claims the Steward already settled, a job kept alive only because a day needs some shape to hold it, until a small unaccounted second in his own life sends him looking for the one thing the Steward has never offered anyone: the truth about what its mercy actually costs."
+    synopsis: "In Vellum, a machine curates every citizen's day down to the mood they wake into. One unaccounted-for second sends Daniel Voss to a dealer selling Kairos \u2014 felt time, drop by drop through the eyes \u2014 and toward the one truth the machine's mercy was built to spare him."
   },
 
   {
     num: 5,
     title: "Glass Savanna",
     words: "19,900 words",
-    synopsis: "Vale is a Finder \u2014 one of the rare few able to locate, and commune with, a wild fungus that grows nowhere on schedule and answers to no cultivation, in a future where an artificial intelligence called MOTHER has ended scarcity, disease, and want, and left behind a species with nothing left to want."
+    synopsis: "MOTHER ended hunger, disease, and want \u2014 and left a species with nothing left to want. A forbidden mushroom drops Vale four hundred thousand years into a hunter-gatherer's cold, grief, and astonishment, where she begins to suspect the machine built to end suffering has spent ninety patient years trying to give it back."
   },
 
   {
     num: 6,
     title: "Undertow",
     words: "15,100 words",
-    synopsis: "Dr. Halcyon is a Shaper \u2014 a therapist who, through a drug called Le-The, can enter a patient's mind directly and walk them down through the layers of the self: the reflective surface, the culture-built current beneath it, and, at the very bottom, the untouched riverbed where a person's original wound was first carved. Then the Institute takes on a patient so dangerous three other clinics have refused him \u2014 a man whose own mind has designated him, from his intake scan alone, Undertow."
+    synopsis: "Through a drug called Le-The, Dr. Halcyon walks his patients down through the layers of the self, to the riverbed where the original wound was carved. Then the Institute admits a man three clinics refused \u2014 a patient whose own mind, from the intake scan alone, has named him Undertow."
   },
 
   {
     num: 7,
     title: "Meat That Dreams",
     words: "20,400 words",
-    synopsis: "Dr. Iris Kelo built her career on an uncomfortable arithmetic: the narrating, self-aware mind is metabolically expensive, and no one has ever proven it earns its keep. Her drug, Sublate, was designed to quiet the ruminators and the traumatized \u2014 to switch off the exhausting inner monologue and let the competent, wordless machinery underneath simply run."
+    synopsis: "Sublate switches off the exhausting inner narrator, and Dr. Kelo's subjects become superb at living without it. Seven hundred feet beneath a dead reservoir, something folklore called a vampire begins to wake \u2014 and Kelo learns what the voice in a human head was always for."
   },
 
   {
     num: 8,
     title: "The Mercy Dose",
     words: "24,200 words",
-    synopsis: "Daniel Voss runs a low-budget interview show out of a storefront studio, giving a camera to the people most audiences flinch from and look away \u2014 addicts, gamblers, con men, the sexually stigmatized, survivors of abuse, the unforgivable. When he begins dosing himself before every sitting with Mercy, an experimental compound that collapses the gap between hearing a stranger's story and feeling it as his own, he believes he has found a shortcut around the oldest, ugliest reflex in the human animal: the door that swings shut the instant a stranger's shame walks into the room."
+    synopsis: "Daniel Voss gives a camera to the people audiences flinch from \u2014 dosed on Mercy, a compound that makes a stranger's confession feel like his own. Eight sittings, each hiding a harder truth beneath the first, and a final chair reserved for the one man the chemical was never built to survive: his father."
   },
 
   {
     num: 9,
     title: "The Kindred Stone",
     words: "21,100 words",
-    synopsis: "In Millhaven, an Examiner named David Cole spends his career auditing the empathic authenticity of Siyavash \u2014 the suffering figure at the heart of the Asha Order, a communion of grief and endurance practiced through fist-sized devices called Stones. When a Loomborn named Iris Kell produces a bonding trace too textured for the instruments to call either genuine or false, David's investigation carries him from a quiet neighborhood zendo to the unlicensed stone trade at the edge of the city, and finally onto the hill itself, unfiltered, alone, and barred by his own bureau from ever going there at all."
+    synopsis: "David Cole audits the authenticity of a god's suffering \u2014 grief piped through fist-sized Stones into a faithful city. Then one trace surfaces that the instruments can't call genuine or false, and the trail leads to the forbidden hill itself, where the real question isn't whether the suffering was human."
   },
 
   {
     num: 10,
     title: "The Gospel of Broken Skin",
     words: "8,000 words",
-    synopsis: "Wren, an ER technician who has spent a decade stitching a numbed city back together, meets Ezra Coyne the night he arrives smiling from a wreck he should not have survived. What follows is her slow initiation into a nameless group who have built an entire discipline around sensation as the last unfakeable proof of being alive \u2014 a philosophy of presence, and a threshold, that keeps demanding to be crossed further."
+    synopsis: "Wren has spent ten years stitching a numbed city back together when Ezra Coyne walks smiling out of a wreck he shouldn't have survived. His nameless circle treats sensation as the last unfakeable proof of being alive \u2014 a threshold that keeps demanding to be crossed further. Someone is about to find the last one."
   },
 
   {
     num: 11,
     title: "The Marriage of Stones",
     words: "14,400 words",
-    synopsis: "Reyhan doesn't experience time in order anymore. Cold stone against skin, a stranger's grip, a certain slant of afternoon light \u2014 each is a trapdoor back to some other year of her life. She has built a private discipline around the dislocation: teaching the powerful and the damaged a total literacy in their own bodies, using paired stones \u2014 pink and black \u2014 as instruments as precise as a stethoscope."
+    synopsis: "Reyhan doesn't live her life in order \u2014 a stranger's grip or a slant of afternoon light can trapdoor her into any year of it. With paired stones, pink and black, she teaches the powerful a total literacy of their own bodies. Her new client has mastered everything but himself, and their sessions are half seduction, half interrogation \u2014 of her."
   },
 
   {
     num: 12,
     title: "Semazen",
     words: "12,700 words",
-    synopsis: "A hospice aide, worn down by a decade of sitting with the dying, inherits a dying woman's fragments of a lost Sufi practice and teaches himself, badly and without lineage, to whirl. He discovers the turn doesn't bring him peace \u2014 it makes him a conduit, drawing grief out of anyone who sits near him and grounding it through his own body into the floor."
+    synopsis: "A worn-down hospice aide teaches himself, badly and without lineage, to whirl \u2014 and finds the turn doesn't bring peace. It makes him a doorway, pulling grief out of anyone near him and grounding it through his own body. Then one grief goes in barbed, and won't pass through, and won't leave."
   },
 
   {
     num: 13,
     title: "A Stranger's Favorite Song",
     words: "22,200 words",
-    synopsis: "Kian cannot answer the three questions everyone asks at his father's memorial: what song he loved, what food he loved, what place he loved. He realizes, standing in the good chair reserved for a son, that he has spent a lifetime loving a man he barely knew."
+    synopsis: "At his father's memorial, Kian can't answer the three simplest questions: what song he loved, what food, what place. A story about losing a man twice \u2014 once to forgetting, once to death \u2014 and the strange, late mercy of understanding a father only after becoming one."
   },
 
   {
     num: 14,
     title: "Fourteenth Trial",
     words: "11,900 words",
-    synopsis: "Two actors sign the same contract, in different rooms, on the same afternoon \u2014 one desperate, one starving for a break neither has earned yet. Six weeks later they'll wear different collars on the same set: a full-scale reconstruction of a Nazi concentration camp, marketed as the most immersive character study ever filmed. What neither man reads on page thirty-three is that only one collar has been treated."
+    synopsis: "Two actors sign the same contract on the same afternoon. Six weeks later they wear different collars on a full-scale reconstruction of a concentration camp, filmed as the most immersive character study ever made. What neither of them read on page thirty-three: only one collar has been treated."
   },
 
   {
     num: 15,
     title: "The Archon's Ledger",
     words: "16,000 words",
-    synopsis: "Julian Voss audits the half-percent \u2014 the claims, files, and deaths so clean they read wrong. When six cases surface a toxicology result that shouldn't exist, and a woman named Mira Kessel begins recurring through his life with slightly different histories each time, Julian's own gift for finding what doesn't reconcile turns, for the first time, inward."
+    synopsis: "Julian Voss audits the half-percent \u2014 deaths so clean they read wrong. Six cases share a toxicology result that shouldn't exist, and one woman keeps recurring through his life with slightly different histories each time. The fracture leads to the thing administering the walls of his world: an authority utterly sincere in its own ignorance."
   },
 
   {
     num: 16,
     title: "The Fasting Ground",
     words: "15,400 words",
-    synopsis: "Halloran spent fifteen years gathering proof of the world's worst lies and watched, again and again, as the proof stopped mattering to anyone. Burned out not on truth but on the uselessness of evidence, he travels to a remote village high in the mountains, where a man named Rashnu offers something no institution ever could: one truth about himself that cannot be argued away."
+    synopsis: "Fifteen years of gathering proof of the world's worst lies taught Halloran one thing: evidence stopped mattering. In a mountain village, a man named Rashnu offers what no institution ever could \u2014 one truth about himself that cannot be argued away. The price is a fast, a freezing river, a stranger's deathbed, and the story he's told for eleven years."
   },
 
   {
     num: 17,
     title: "Natural Noise",
     words: "17,400 words",
-    synopsis: "Teo keeps bees on the rise above Halden, a small town he was sent to a year ago for what the Halden Apiary Trust calls a period of restorative work \u2014 and he cannot, no matter how honestly he tries, remember why. What starts as a private curiosity, a borrowed dish of slime mold reaching toward a feeding hour it has no business remembering, widens over a slow season into ants whose trails move overnight, a swarm he chases through town with his own heart in his throat, and a hive whose every hexagon turns out to have been built by nobody at all."
+    synopsis: "Teo keeps bees above Halden, sent there a year ago for reasons he cannot \u2014 no matter how honestly he tries \u2014 remember. The slime mold remembers feeding hours. The ant trails move overnight. Log by log, Teo builds the case that his entire life has been arranged \u2014 against the bees' quiet counter-argument that some things can't be."
   },
 
   {
     num: 18,
     title: "Between Kenoma and Pleroma",
     words: "11,900 words",
-    synopsis: "When his sister Nour vanishes into an unmarked commune called Pleroma, Aram follows her past a cattle guard and a road that simply stops being maintained, into a valley that has quietly inverted almost every norm he understands as human. Crime is treated as sickness; sickness is nursed, not punished."
+    synopsis: "When his sister vanishes into a valley commune called Pleroma, Aram follows \u2014 into a place where crime is nursed as sickness, marriage is chosen aloud each year, and a sacrament binds every table. The kindness turns out to have a floor. And the valley decides, almost invisibly, which griefs are worth continuing to see."
   },
 
   {
     num: 19,
     title: "The Gardener's Century",
     words: "28,000 words",
-    synopsis: "For three centuries, the B'not Anahita have planted their patient influence into the bloodlines of the powerful \u2014 not through force, but through intimacy, cultivated across generations by women trained from childhood in the discipline of desire. In the winter of 1972, a Qedesha named Nahid arrives at a decaying Habsburg-era bathhouse in communist Romania under the name Livia, sent to imprint the heir of a once-great banking family whose quiet influence the state has never managed to erase."
+    synopsis: "For three centuries the B'not Anahita have planted their influence in the bloodlines of the powerful \u2014 not by force, but by desire, cultivated across generations. Romania, 1972: a Qedesha named Nahid arrives at a decaying bathhouse to imprint a banking heir, and finds a loneliness that answers something in her own carefully governed heart."
   },
 
   {
     num: 20,
     title: "The First Flame",
     words: "27,000 words",
-    synopsis: "Long before the Gardener's patient century, there was only the Flame \u2014 ungoverned, catastrophic, and unrepeatable. Rudabeh is a temple priestess of unrivaled beauty and an unschooled gift for reading a stranger's deepest want. Sent to the court of King Ardashir as an ordinary seasonal offering, she ignites something in him that neither of them can control \u2014 a devotion so total it hollows a kingdom from within, purges its wisest counselors, and ends in a throne room stained with the king's own blood."
+    synopsis: "Before the Gardener's patient century, there was only the Flame \u2014 ungoverned and unrepeatable. Rudabeh, a temple priestess who reads a stranger's deepest want on sight, ignites a king's devotion so total it hollows his kingdom and ends in his blood. In the wreckage she must choose: hide the gift, or forge it into the discipline three thousand years will answer to."
   },
 
   {
     num: 21,
     title: "The Final Bloom",
     words: "21,000 words",
-    synopsis: "Three thousand years of doctrine converge on a single man. Daniel Cole has spent fifteen years building defenses against every crude tool of institutional capture \u2014 money, flattery, pressure \u2014 and has never once considered that the failure mode might be intimate rather than institutional."
+    synopsis: "Daniel Cole spent fifteen years armoring himself against every crude tool of capture \u2014 money, flattery, pressure \u2014 and never considered the failure mode might be intimate. Shirin wasn't found or chosen. She was designed: the first Qedesha in three thousand years to hold both Flame and Gardener whole. He guards the future of the species. She has all the patience ever bred."
   },
 
   {
     num: 22,
     title: "Folie Douce",
     words: "21,400 words",
-    synopsis: "Martin Coyle sits at Window 9 of a benefits office in Bellhaven, a rain-coloured city where four hundred thousand decent people attend perfectly to the person in front of them and to nobody else at all. He has four minutes to give each of sixty-two claimants a day."
+    synopsis: "Martin Coyle works Window 9: sixty-two claimants a day, four minutes each, never enough, nobody's fault. Then a stranger's form lands with a four-character error, and Coyle discovers the world contains no mechanism requiring him to hurry. Everything that follows is courteous, correct, defensible in writing \u2014 and built to prove one bad day can drive the sanest person alive to lunacy."
   },
 
   {
     num: 23,
     title: "Folie Générale",
     words: "15,900 words",
-    synopsis: "Bellhaven merges its emergency and non-emergency telephone lines. The memo is two pages long, properly authorised, correctly modelled, and four million dollars cheaper. Nobody who reads it disagrees with a word. The merge adds forty seconds of hold time. A heatwave arrives. Hold goes to six minutes, then nineteen, then fifty-one \u2014 and a forty-year-old triage rule that treats a single caller as low-confidence begins, quietly and correctly, to deprioritise every true emergency in a city where nobody has looked up in years."
+    synopsis: "Bellhaven merges its emergency and non-emergency lines \u2014 two pages, properly authorised, four million cheaper, and nobody who reads the memo disagrees. The merge adds forty seconds of hold. Then a heatwave. No villain authors what follows; every decision is correct and will be found correct. By the third night, the city stops burning loudly and starts burning quietly."
   },
 
   {
     num: 24,
     title: "Folie Imposée",
     words: "16,200 words",
-    synopsis: "You find the number on a wall. Two words in white paint under an underpass, sprayed the way a football score is sprayed: NO ETA. Nothing is wrong with you. You are thirty-one, employed, housed, insured, and so alone you could not describe it, because describing it would require somebody to describe it to."
+    synopsis: "Two words in white paint under an underpass: NO ETA. You call. You stand outside a door for three days. Then a man comes out, says your whole name, and your legs stop holding you. They're called the Second Ring, and they answer when nobody else does \u2014 and they're about to discover they need the city to keep failing."
   },
 
   {
     num: 25,
     title: "Doubling Time",
     words: "16,900 words",
-    synopsis: "Emil Kestner is sixty-eight years old, a restorer of damaged books, and out of time. When he is offered a place on a trial that has never been run on a human being, he takes it \u2014 and is sealed into a room on the third floor of a research building with a window in the door and no window in the wall."
+    synopsis: "Emil Kestner, sixty-eight, a restorer of damaged books, is out of time \u2014 so he takes a trial never run on a human being, sealed in a room where the air only flows inward. The treatment works. Then it goes on working. Four people come to his door across eleven months, and none can answer the only question that matters: what stops it."
   },
 
   {
     num: 26,
     title: "Mang and Mustard",
     words: "26,000 words",
-    synopsis: "Majnoon, 1984. In the flooded marshes of the Iran\u2013Iraq war, nineteen-year-old Sohrab works the decontamination line of a field hospital \u2014 the first pair of hands the war offers its gassed, and the last many of them ever feel. He keeps the ledger of the antidote: the small green-sleeved needles, counted like bread, that swing the poisoned back toward life."
+    synopsis: "Majnoon, 1984. Nineteen-year-old Sohrab keeps the ledger of the antidote \u2014 green-sleeved needles, counted like bread, that pull the gassed back toward life. Then the count stops balancing, and twelve missing needles lead to a secret congregation of survivors who know what the old corpse-washer knows: in overdose, the medicine becomes a door. The dead are waiting on the far side, with questions."
   }
 
 ];
