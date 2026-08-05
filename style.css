@@ -545,10 +545,19 @@ body {
    little cover in it the same treatment. */
 .story.open .synopsis img {
   display: block;
-  width: 7.5rem;
-  border: 1px solid var(--hairline);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.55);
-  margin: 0.25rem 0 1rem;
+  width: 9rem;
+  border: 0;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.62);
+  margin: 0.25rem 0 1.25rem;
+  /* feather the edges into the scene, as on desktop */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
 }
 @media (max-width: 56rem) {
   .cover-panel { display: none; }
@@ -779,8 +788,17 @@ body {
   margin-bottom: 1rem;
 }
 .trilogy.open .synopsis .minis img {
-  width: 5rem;
-  border: 1px solid var(--hairline);
+  width: 5.5rem;
+  border: 0;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.6);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
 }
 
 /* Music volume, beside the speaker */
@@ -833,3 +851,24 @@ body {
 }
 
 .feature-text { position: relative; }
+
+/* Phone: the expanded synopsis sits over the artwork, so give it
+   the same feathered pool of shade the stage text gets. */
+@media (max-width: 56rem) {
+  .story.open,
+  .trilogy.open { position: relative; }
+
+  .story.open::before,
+  .trilogy.open::before {
+    content: "";
+    position: absolute;
+    inset: -1rem -2rem;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(closest-side,
+        rgba(7, 5, 4, 0.82) 42%, rgba(7, 5, 4, 0) 100%);
+  }
+
+  .story.open .synopsis,
+  .trilogy.open .synopsis { color: var(--parchment); }
+}
