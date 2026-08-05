@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chew Z — Short Fiction</title>
+<meta name="description" content="Short fiction by Chew Z.">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="atmosphere" aria-hidden="true"></div>
+
+<div class="frame">
+
+  <!-- ══════════════════════════ HEADER ══════════════════════ -->
+  <header class="masthead">
+    <div class="brand">
+      <p class="name">CHEW&thinsp;Z</p>
+      <p class="tag caps">Short Fiction</p>
+    </div>
+
+    <nav aria-label="Site" class="caps">
+      <a href="#" data-stage="about">About</a>
+      <a href="#" data-stage="notes">Author's Notes</a>
+      <button class="sound" id="soundToggle" aria-pressed="false"
+              title="Ambient sound (add assets/ambient.mp3 to enable)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <path d="M11 5 6 9H2v6h4l5 4V5z"/>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+          <path d="M18.5 5.5a9.4 9.4 0 0 1 0 13"/>
+        </svg>
+        <span class="visually-hidden">Toggle ambient sound</span>
+      </button>
+      <img class="roya" src="assets/roya.svg" alt="Roya Publication">
+    </nav>
+  </header>
+
+  <!-- ══════════════════════════ MAIN ════════════════════════ -->
+  <main class="hall">
+
+    <!-- ─── Story list ─────────────────────────────────────────
+         To add a story:
+         1. Drop its PDF into the pdfs/ folder
+         2. Copy one <li class="story"> block, paste it in,
+            and change the number, title, PDF filename,
+            and the synopsis text.
+         ──────────────────────────────────────────────────────── -->
+    <aside class="shelf" id="stories" aria-label="Stories">
+      <!-- The list is built automatically from stories.js.
+           To add or edit stories, open stories.js — not this file. -->
+      <ol></ol>
+      <p class="more">More stories coming soon&hellip;</p>
+
+      <!-- Book cover + synopsis for the story you hover
+           (or tap, on a phone). Filled in by script.js. -->
+      <div class="cover-panel" id="coverPanel" aria-live="polite">
+        <img id="cpImg" alt="">
+        <p class="cp-meta caps" id="cpMeta"></p>
+        <p class="cp-text" id="cpText"></p>
+        <p><a class="cp-link caps" id="cpLink" href="#">Read the story &mdash; PDF</a></p>
+      </div>
+    </aside>
+
+    <!-- ─── The stage ──────────────────────────────────────────
+         One panel is visible at a time. Hovering a story swaps
+         in its synopsis; the nav swaps in About or the Notes.
+         ──────────────────────────────────────────────────────── -->
+    <section class="stage" aria-live="polite">
+
+      <!-- The feature: hovered book's synopsis on the left,
+           its cover large on the right. Filled in by script.js. -->
+      <div class="feature" id="feature">
+        <div class="feature-text">
+          <p class="caps feature-meta" id="ftMeta"></p>
+          <p class="feature-syn" id="ftText"></p>
+          <p><a class="cp-link caps" id="ftLink" href="#">Read the story &mdash; PDF</a></p>
+        </div>
+        <img class="easel" id="easelImg" alt="">
+      </div>
+
+      <div class="panel is-active" id="panel-about">
+        <p class="lede">Dark literary novellas set in a shared world
+        called the Reach&mdash;slow-burning, noir-inflected, grounded
+        in a world neither better nor worse than this one. Each book
+        puts one altered state at its center&mdash;a drug, a ritual,
+        a fast, a song&mdash;and follows a small cast into what that
+        state makes undeniable.</p>
+        <hr class="rule">
+        <p class="eyebrow caps">Published by Roya Publication, numbered in sequence</p>
+      </div>
+
+      <div class="panel" id="panel-notes">
+        <p class="eyebrow caps">Author's Notes</p>
+        <!-- CHANGE THIS: notes on the work, process, influences -->
+        <p class="note">I write short books about the thoughts I
+        can't finish out loud.</p>
+        <p class="note">Mostly I'm interested in what comfort costs us,
+        what the body knows that the mind can talk itself out of, and
+        how thin the line is between a group that protects you and one
+        that owns you. I don't write dystopias&mdash;the world in these
+        books is exactly as compromised as this one. I don't offer
+        answers either. I'm suspicious of anyone who would. I'd rather
+        hand you the question and let you set it down when you're
+        finished.</p>
+        <p class="signature caps">&mdash; Chew Z</p>
+      </div>
+
+
+    </section>
+  </main>
+
+  <!-- ══════════════════════════ FOOTER ══════════════════════ -->
+  <footer class="floor">
+    <p class="caps">All stories &copy; Chew&thinsp;Z. All rights reserved.</p>
+    <div class="subscribe-block caps">
+      <span class="soon">Coming soon</span>
+      <span>Subscribe</span>
+    </div>
+  </footer>
+
+</div>
+
+<audio id="ambient" src="assets/ambient.mp3" loop preload="none"></audio>
+<script src="stories.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
