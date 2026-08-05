@@ -53,10 +53,12 @@ body {
 
 .atmosphere {
   z-index: -1;
-  background:
-    url("assets/backdrop.jpg") center / cover no-repeat,
-    url("assets/backdrop.svg") center / cover no-repeat,
-    var(--night);
+  /* No scene here on purpose: script.js sets the backdrop for this
+     visit. Painting one in CSS would flash before the swap. */
+  background: var(--night);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /* Gradient light: a cold glow upper-centre, a warm candle

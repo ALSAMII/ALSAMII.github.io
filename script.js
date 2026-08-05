@@ -55,14 +55,11 @@ var BACKDROPS = [
 
     var atmos = document.querySelector(".atmosphere");
     if (atmos) {
-      /* Only swap the scene once the image is confirmed to exist —
-         if it's missing, the default backdrop simply stays. */
-      var probe = new Image();
-      probe.onload = function () {
-        atmos.style.backgroundImage =
-          'url("' + BACKDROPS[idx] + '"), url("assets/backdrop.svg")';
-      };
-      probe.src = BACKDROPS[idx];
+      /* Set immediately — no waiting, so nothing else can flash
+         first. The second layer is a fallback the browser paints
+         only if the chosen scene is missing. */
+      atmos.style.backgroundImage =
+        'url("' + BACKDROPS[idx] + '"), url("' + BACKDROPS[0] + '")';
     }
   }
 
