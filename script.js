@@ -1,4 +1,30 @@
 /* ============================================================
+   DAILY BACKDROP ROTATION
+   One image from this list is chosen per day — the pick is
+   random but holds for the whole day, changing at midnight.
+   To add a scene: drop the image into assets/backdrops/ and
+   add its path to this list. To retire one, remove its line.
+   ============================================================ */
+
+var BACKDROPS = [
+  "assets/backdrops/01.jpg",
+  "assets/backdrops/02.jpg",
+  "assets/backdrops/03.jpg",
+  "assets/backdrops/04.jpg",
+  "assets/backdrops/05.jpg",
+  "assets/backdrops/06.jpg",
+  "assets/backdrops/07.jpg"
+];
+
+function backdropIndexFor(dayString) {
+  var h = 0;
+  for (var i = 0; i < dayString.length; i++) {
+    h = (h * 31 + dayString.charCodeAt(i)) >>> 0;
+  }
+  return h % BACKDROPS.length;
+}
+
+/* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
    add books in stories.js instead.
@@ -18,6 +44,24 @@
 
 (function () {
   "use strict";
+
+  /* ---- Backdrop of the day --------------------------------- */
+  if (BACKDROPS.length) {
+    var now = new Date();
+    var key = function (d) {
+      return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+    };
+    var idx = backdropIndexFor(key(now));
+    var yesterday = new Date(now.getTime() - 86400000);
+    if (BACKDROPS.length > 1 && idx === backdropIndexFor(key(yesterday))) {
+      idx = (idx + 1) % BACKDROPS.length;   /* never repeat two days running */
+    }
+    var atmos = document.querySelector(".atmosphere");
+    if (atmos) {
+      atmos.style.backgroundImage =
+        'url("' + BACKDROPS[idx] + '"), url("assets/backdrop.svg")';
+    }
+  }
 
   var panels = document.querySelectorAll(".panel");
   var navLinks = document.querySelectorAll("[data-stage]");
