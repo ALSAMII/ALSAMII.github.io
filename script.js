@@ -58,8 +58,14 @@ function backdropIndexFor(dayString) {
     }
     var atmos = document.querySelector(".atmosphere");
     if (atmos) {
-      atmos.style.backgroundImage =
-        'url("' + BACKDROPS[idx] + '"), url("assets/backdrop.svg")';
+      /* Only swap the scene once the image is confirmed to exist —
+         if it's missing, the default backdrop simply stays. */
+      var probe = new Image();
+      probe.onload = function () {
+        atmos.style.backgroundImage =
+          'url("' + BACKDROPS[idx] + '"), url("assets/backdrop.svg")';
+      };
+      probe.src = BACKDROPS[idx];
     }
   }
 
