@@ -74,7 +74,18 @@ function backdropIndexFor(dayString) {
   var canHover = window.matchMedia("(hover: hover)").matches;
 
   var easel = document.getElementById("easelImg");
+  var easelSet = document.getElementById("easelSet");
+  var setImgs = easelSet.querySelectorAll("img");
   var feature = document.getElementById("feature");
+
+  var TRIOS = (typeof TRILOGIES !== "undefined") ? TRILOGIES : [];
+  var trioByFirst = {}, inTrio = {};
+  TRIOS.forEach(function (t) {
+    trioByFirst[t.books[0]] = t;
+    t.books.forEach(function (n) { inTrio[n] = true; });
+  });
+
+  function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
   var ftMeta = document.getElementById("ftMeta");
   var ftText = document.getElementById("ftText");
   var ftLink = document.getElementById("ftLink");
@@ -96,6 +107,8 @@ function backdropIndexFor(dayString) {
 
   function showFeature(s, num, pdf, cover) {
     clearTimeout(hideTimer);
+    feature.classList.remove("trio");
+    ftLink.style.display = "";
     panels.forEach(function (p) { p.classList.remove("is-active"); });
     ftMeta.textContent = num + " · " + s.title + (s.words ? " · " + s.words : "");
     ftText.textContent = s.synopsis;
@@ -103,6 +116,22 @@ function backdropIndexFor(dayString) {
     easel.style.display = "";
     easel.alt = s.title + " — cover";
     if (easel.getAttribute("src") !== cover) easel.src = cover;
+    feature.classList.add("show");
+  }
+
+  function showTrilogy(t) {
+    clearTimeout(hideTimer);
+    panels.forEach(function (p) { p.classList.remove("is-active"); });
+    feature.classList.add("trio");
+    ftMeta.textContent = "A Trilogy · " + t.title;
+    ftText.textContent = t.synopsis;
+    ftLink.style.display = "none";
+    t.books.forEach(function (n, i) {
+      setImgs[i].style.display = "";
+      setImgs[i].alt = "";
+      setImgs[i].onerror = function () { setImgs[i].style.display = "none"; };
+      setImgs[i].src = coverFor(n);
+    });
     feature.classList.add("show");
   }
 
@@ -137,13 +166,57 @@ function backdropIndexFor(dayString) {
 
   var list = document.querySelector(".shelf ol");
 
+  function buildTrilogyHead(t) {
+    var li = document.createElement("li");
+    li.className = "trilogy";
+    li.tabIndex = 0;
+
+    var label = document.createElement("p");
+    label.className = "t-label caps";
+    label.textContent = "A Trilogy";
+
+    var title = document.createElement("h2");
+    title.className = "t-title";
+    title.textContent = t.title;
+
+    var syn = document.createElement("div");
+    syn.className = "synopsis";
+    var minis = document.createElement("div");
+    minis.className = "minis";
+    t.books.forEach(function (n) {
+      var im = document.createElement("img");
+      im.src = coverFor(n);
+      im.alt = "";
+      im.addEventListener("error", function () { im.remove(); });
+      minis.append(im);
+    });
+    var txt = document.createElement("span");
+    txt.textContent = t.synopsis;
+    syn.append(minis, txt);
+
+    li.append(label, title, syn);
+    list.append(li);
+
+    if (canHover) {
+      li.addEventListener("mouseenter", function () { showTrilogy(t); });
+      li.addEventListener("mouseleave", scheduleHide);
+      li.addEventListener("focusin", function () { showTrilogy(t); });
+      li.addEventListener("focusout", function (e) {
+        if (!li.contains(e.relatedTarget)) scheduleHide();
+      });
+    } else {
+      li.addEventListener("click", function () { li.classList.toggle("open"); });
+    }
+  }
+
   STORIES.forEach(function (s, i) {
+    if (trioByFirst[s.num]) buildTrilogyHead(trioByFirst[s.num]);
     var num = String(s.num || i + 1).padStart(2, "0");
     var pdf = s.pdf || "pdfs/" + num + ".pdf";
     var cover = s.cover || "covers/" + num + ".jpg";
 
     var li = document.createElement("li");
-    li.className = "story";
+    li.className = "story" + (inTrio[s.num] ? " in-trilogy" : "");
 
     var row = document.createElement("div");
     row.className = "story-row";

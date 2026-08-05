@@ -197,3 +197,24 @@ const STORIES = [
   }
 
 ];
+
+
+/* ============================================================
+   TRILOGIES — groups of books shown under one header in the
+   list. Hovering the header shows all three covers together
+   with the trilogy synopsis. "books" are the series numbers.
+   ============================================================ */
+
+const TRILOGIES = [
+  {
+    title: "Daughters of Anahita",
+    books: [19, 20, 21],
+    synopsis: "They don't buy men. They don't threaten them. They wait \u2014 and they have been waiting for three thousand years. The Gardener's Century: a dying bathhouse in communist Romania, an heir with nothing left but his name, and a woman planting something that won't bloom until everyone in the room is dead. The First Flame: the night it all began, when one ungoverned beauty burned a kingdom to ash \u2014 and patience was invented to make sure it never happened by accident again. The Final Bloom: a near future where gene-editing and ambient AI have made that patience absolute, and the order's most perfect instrument is aimed at the last incorruptible man on Earth. He will figure out exactly what is being done to him. It will not save him."
+  },
+  {
+    title: "Les Folies",
+    books: [22, 23, 24],
+    synopsis: "One city, three books, no villains. A clerk, then a crowd, then a congregation \u2014 each does everything correctly, and the result is wrong every time. Nobody breaks a law, nobody raises a voice, and by the final rule, you may already have agreed to it."
+  }
+];
+

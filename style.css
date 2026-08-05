@@ -583,3 +583,199 @@ body {
   color: var(--ember);
   opacity: 0.85;
 }
+
+/* ============================================================
+   Trilogies — header rows in the list, triple-cover feature
+   ============================================================ */
+
+.trilogy { border-bottom: 1px solid var(--hairline); }
+
+.trilogy .story-row {
+  grid-template-columns: auto 1fr auto;
+  padding: 1.2rem 0.25rem 1rem;
+}
+
+.trilogy .t-range { color: var(--ember); letter-spacing: 0.2em; }
+
+.trilogy .t-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.3125rem;
+  letter-spacing: 0.01em;
+  color: var(--parchment);
+  transition: color 0.25s ease;
+}
+
+.trilogy:hover .t-title,
+.trilogy:focus-within .t-title { color: var(--ember); }
+
+.trilogy .t-tag { color: var(--faded); }
+
+/* books inside a trilogy tuck in slightly under their header */
+.story.grouped .story-row { padding-left: 1.4rem; }
+
+/* the trilogy stage: covers in a row, synopsis beneath */
+.tri-feature {
+  grid-area: 1 / 1;
+  place-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: min(46rem, 92%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(0.8rem);
+  transition: opacity 0.45s ease, transform 0.45s ease,
+              visibility 0s linear 0.45s;
+  z-index: 1;
+}
+
+.tri-feature.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
+}
+
+.tri-meta { color: var(--ember); margin: 0 0 1.5rem; }
+
+.tri-covers {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  margin-bottom: 1.75rem;
+}
+
+.tri-covers img {
+  height: clamp(11rem, 26vh, 15rem);
+  width: auto;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}
+
+.tri-syn {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  line-height: 1.7;
+  color: var(--parchment);
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
+  margin: 0;
+}
+
+/* phones: trilogy expands inline like a book */
+.trilogy .synopsis { display: none; }
+.trilogy.open .synopsis {
+  display: block;
+  margin: 0 0.25rem;
+  padding: 0 0 1.25rem;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--parchment);
+}
+.trilogy.open .synopsis .tri-mini {
+  display: flex;
+  gap: 0.625rem;
+  margin: 0.25rem 0 1rem;
+}
+.trilogy.open .synopsis .tri-mini img {
+  width: 4.75rem;
+  border: 1px solid var(--hairline);
+}
+@media (max-width: 56rem) {
+  .tri-feature { display: none; }
+}
+
+/* ============================================================
+   Trilogies: sidebar headings and the three-cover feature
+   ============================================================ */
+
+.trilogy {
+  border-bottom: 1px solid var(--hairline);
+  padding: 1.4rem 0.25rem 1rem;
+  cursor: default;
+}
+
+.trilogy .t-label {
+  margin: 0 0 0.35rem;
+  color: var(--ember);
+  font-size: 0.5625rem;
+}
+
+.trilogy .t-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.3125rem;
+  letter-spacing: 0.02em;
+  color: var(--parchment);
+  transition: color 0.25s ease;
+}
+
+.trilogy:hover .t-title,
+.trilogy:focus-within .t-title { color: var(--ember); }
+
+/* member books sit indented beneath their heading */
+.story.in-trilogy .story-row { padding-left: 1.25rem; }
+
+/* the trilogy's three covers, standing together */
+.easel-set { display: none; }
+
+.feature.trio { flex-wrap: wrap; justify-content: center; }
+.feature.trio #easelImg { display: none; }
+.feature.trio .easel-set {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.feature.trio .feature-text { flex: 1 1 19rem; max-width: 23rem; }
+.feature.trio .feature-syn {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.easel-set img {
+  width: min(9.5rem, 12vw);
+  border: 0;
+  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.7);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}
+
+/* phones: tapping the heading unfolds covers + synopsis inline */
+.trilogy .synopsis { display: none; }
+.trilogy.open .synopsis {
+  display: block;
+  padding: 1rem 0 0.5rem;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--faded);
+}
+.trilogy.open .synopsis .minis {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.trilogy.open .synopsis .minis img {
+  width: 5rem;
+  border: 1px solid var(--hairline);
+}
