@@ -8,12 +8,8 @@
 
 var BACKDROPS = [
   "assets/backdrops/01.jpg",
-  "assets/backdrops/02.jpg",
   "assets/backdrops/03.jpg",
-  "assets/backdrops/04.jpg",
-  "assets/backdrops/05.jpg",
-  "assets/backdrops/06.jpg",
-  "assets/backdrops/07.jpg"
+  "assets/backdrops/06.jpg"
 ];
 
 
