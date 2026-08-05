@@ -1,7 +1,7 @@
 /* ============================================================
-   DAILY BACKDROP ROTATION
-   One image from this list is chosen per day — the pick is
-   random but holds for the whole day, changing at midnight.
+   BACKDROP ROTATION
+   A scene is chosen at random every time the page loads, never
+   repeating the one shown immediately before it.
    To add a scene: drop the image into assets/backdrops/ and
    add its path to this list. To retire one, remove its line.
    ============================================================ */
@@ -16,13 +16,7 @@ var BACKDROPS = [
   "assets/backdrops/07.jpg"
 ];
 
-function backdropIndexFor(dayString) {
-  var h = 0;
-  for (var i = 0; i < dayString.length; i++) {
-    h = (h * 31 + dayString.charCodeAt(i)) >>> 0;
-  }
-  return h % BACKDROPS.length;
-}
+
 
 /* ============================================================
    This file builds the story list from stories.js and runs
@@ -45,17 +39,20 @@ function backdropIndexFor(dayString) {
 (function () {
   "use strict";
 
-  /* ---- Backdrop of the day --------------------------------- */
+  /* ---- Backdrop for this visit ----------------------------- */
   if (BACKDROPS.length) {
-    var now = new Date();
-    var key = function (d) {
-      return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
-    };
-    var idx = backdropIndexFor(key(now));
-    var yesterday = new Date(now.getTime() - 86400000);
-    if (BACKDROPS.length > 1 && idx === backdropIndexFor(key(yesterday))) {
-      idx = (idx + 1) % BACKDROPS.length;   /* never repeat two days running */
-    }
+    var idx = Math.floor(Math.random() * BACKDROPS.length);
+
+    /* Avoid showing the same scene twice in a row on refresh. */
+    try {
+      var last = sessionStorage.getItem("lastBackdrop");
+      if (BACKDROPS.length > 1 && last !== null && Number(last) === idx) {
+        idx = (idx + 1 + Math.floor(Math.random() * (BACKDROPS.length - 1)))
+              % BACKDROPS.length;
+      }
+      sessionStorage.setItem("lastBackdrop", String(idx));
+    } catch (e) { /* private browsing — a plain random pick is fine */ }
+
     var atmos = document.querySelector(".atmosphere");
     if (atmos) {
       /* Only swap the scene once the image is confirmed to exist —
@@ -69,6 +66,8 @@ function backdropIndexFor(dayString) {
     }
   }
 
+  /* ---- 1. Build the list from stories.js ------------------- */
+
   var panels = document.querySelectorAll(".panel");
   var navLinks = document.querySelectorAll("[data-stage]");
   var canHover = window.matchMedia("(hover: hover)").matches;
@@ -77,6 +76,10 @@ function backdropIndexFor(dayString) {
   var easelSet = document.getElementById("easelSet");
   var setImgs = easelSet.querySelectorAll("img");
   var feature = document.getElementById("feature");
+  var ftMeta = document.getElementById("ftMeta");
+  var ftText = document.getElementById("ftText");
+  var ftLink = document.getElementById("ftLink");
+  var hideTimer = null;
 
   var TRIOS = (typeof TRILOGIES !== "undefined") ? TRILOGIES : [];
   var trioByFirst = {}, inTrio = {};
@@ -86,10 +89,6 @@ function backdropIndexFor(dayString) {
   });
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
-  var ftMeta = document.getElementById("ftMeta");
-  var ftText = document.getElementById("ftText");
-  var ftLink = document.getElementById("ftLink");
-  var hideTimer = null;
 
   function showPanel(id) {
     var wasFeature = feature.classList.contains("show");
@@ -110,7 +109,7 @@ function backdropIndexFor(dayString) {
     feature.classList.remove("trio");
     ftLink.style.display = "";
     panels.forEach(function (p) { p.classList.remove("is-active"); });
-    ftMeta.textContent = num + " · " + s.title + (s.words ? " · " + s.words : "");
+    ftMeta.textContent = num + " \u00b7 " + s.title + (s.words ? " \u00b7 " + s.words : "");
     ftText.textContent = s.synopsis;
     ftLink.setAttribute("href", pdf);
     easel.style.display = "";
@@ -123,7 +122,7 @@ function backdropIndexFor(dayString) {
     clearTimeout(hideTimer);
     panels.forEach(function (p) { p.classList.remove("is-active"); });
     feature.classList.add("trio");
-    ftMeta.textContent = "A Triptych · " + t.title;
+    ftMeta.textContent = "A Triptych \u00b7 " + t.title;
     ftText.textContent = t.synopsis;
     ftLink.style.display = "none";
     t.books.forEach(function (n, i) {
@@ -149,8 +148,6 @@ function backdropIndexFor(dayString) {
     /* Missing cover: show the synopsis alone */
     easel.style.display = "none";
   });
-
-  /* ---- 1. Build the list from stories.js ------------------- */
 
   var PDF_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
