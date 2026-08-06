@@ -509,27 +509,29 @@
 
   /* ---- 5. Ambient sound ------------------------------------ */
 
-  /* Add as many tracks as you like; one is picked at random per
-     visit, independently of the backdrop. A single-entry list just
-     plays that track every time. */
-  var TRACKS = [
-    "assets/ambient.mp3"
-  ];
+  /* Each scene has its own track, keyed by the data-scene the head
+     script set. A scene with no entry here simply plays nothing.
+     The <audio> tag carries loop, so a track repeats until muted. */
+  var TRACK_FOR_SCENE = {
+    "0": "assets/ambient.mp3",           /* the window room */
+    "1": "assets/ambient-tearoom.mp3"    /* the tea room in the rain */
+  };
 
   var audio = document.getElementById("ambient");
   var toggle = document.getElementById("soundToggle");
   var vol = document.getElementById("volSlider");
 
-  if (TRACKS.length) {
-    var t = Math.floor(Math.random() * TRACKS.length);
-    try {
-      var lastT = sessionStorage.getItem("lastTrack");
-      if (TRACKS.length > 1 && lastT !== null && Number(lastT) === t) {
-        t = (t + 1) % TRACKS.length;
-      }
-      sessionStorage.setItem("lastTrack", String(t));
-    } catch (e) { /* private browsing */ }
-    if (audio.getAttribute("src") !== TRACKS[t]) audio.src = TRACKS[t];
+  var scene = document.documentElement.getAttribute("data-scene") || "0";
+  var track = TRACK_FOR_SCENE[scene] || "";
+
+  if (track) {
+    audio.src = track;
+  } else {
+    /* Nothing for this scene — stop the tag reaching for a file that
+       isn't there, and retire the controls rather than leave dead ones. */
+    audio.removeAttribute("src");
+    toggle.hidden = true;
+    vol.hidden = true;
   }
 
   var muted = false;               /* music is on by default */
