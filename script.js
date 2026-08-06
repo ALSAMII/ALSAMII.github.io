@@ -534,7 +534,8 @@
     vol.hidden = true;
   }
 
-  var muted = false;               /* music is on by default */
+  var muted = true;                /* silence by default — the speaker
+                                      button is the invitation */
 
   /* Ears hear loudness logarithmically, so a slider mapped straight
      to audio.volume feels dead across its top half. Squaring the
@@ -566,23 +567,10 @@
     return audio.play().catch(function () { /* awaiting a gesture */ });
   }
 
-  /* Browsers won't let audio start unprompted, so if the initial
-     attempt is blocked we arm it: the visitor's first click, tap,
-     or keypress anywhere starts the music. */
-  function arm() {
-    if (!audio.paused || muted) return;
-    var go = function () {
-      document.removeEventListener("pointerdown", go);
-      document.removeEventListener("keydown", go);
-      if (!muted) play();
-    };
-    document.addEventListener("pointerdown", go);
-    document.addEventListener("keydown", go);
-  }
-
+  /* Nothing plays until asked. The first press of the speaker
+     button is the gesture browsers require, so playback starts
+     reliably from there. */
   paint();
-  play().then(function () { if (audio.paused) arm(); });
-  arm();
 
   toggle.addEventListener("click", function () {
     muted = !muted;
