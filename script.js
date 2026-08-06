@@ -85,6 +85,10 @@
            (rounded === 1 ? " hour read" : " hours read");
   }
 
+  /* The stage rests on the Author's Notes. Hovering a book or the
+     About link swaps them out; letting go brings them back. */
+  var DEFAULT_PANEL = "panel-notes";
+
   var pinned = null;   /* the book or triptych currently held on the stage */
 
   function showPanel(id) {
@@ -141,7 +145,7 @@
   function scheduleHide() {
     clearTimeout(hideTimer);
     hideTimer = setTimeout(function () {
-      if (pinned) restorePinned(); else showPanel("panel-about");
+      if (pinned) restorePinned(); else showPanel(DEFAULT_PANEL);
     }, 400);
   }
 
@@ -207,7 +211,7 @@
   function unpin() {
     pinned = null;
     markPinned();
-    showPanel("panel-about");
+    showPanel(DEFAULT_PANEL);
     if (history.replaceState) {
       history.replaceState(null, "", location.pathname + location.search);
     }
@@ -484,11 +488,11 @@
         showPanel(target);
       });
       link.addEventListener("mouseleave", function () {
-        if (pinned) restorePinned(); else showPanel("panel-about");
+        if (pinned) restorePinned(); else showPanel(DEFAULT_PANEL);
       });
       link.addEventListener("focus", function () { showPanel(target); });
       link.addEventListener("blur", function () {
-        if (pinned) restorePinned(); else showPanel("panel-about");
+        if (pinned) restorePinned(); else showPanel(DEFAULT_PANEL);
       });
       link.addEventListener("click", function (e) { e.preventDefault(); });
     } else {
