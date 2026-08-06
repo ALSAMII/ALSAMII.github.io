@@ -30,6 +30,27 @@
      browser wouldn't find it until style.css is parsed. Preloading
      it here stops the flat-black flash on a cold load. -->
 <link rel="preload" as="image" href="assets/bg/bg-window.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/bg/bg-tearoom.webp" type="image/webp">
+
+<!-- Which scene this visit gets. Runs here, in the head, so the
+     choice is made before anything paints — picking it later would
+     show one room and then swap to another. To add a scene: drop the
+     files into assets/bg/, add a rule in style.css, and raise the
+     count below. -->
+<script>
+  (function () {
+    var SCENES = 2;
+    var i = Math.floor(Math.random() * SCENES);
+    try {
+      var last = sessionStorage.getItem("lastScene");
+      if (SCENES > 1 && last !== null && Number(last) === i) {
+        i = (i + 1) % SCENES;          /* never the same room twice running */
+      }
+      sessionStorage.setItem("lastScene", String(i));
+    } catch (e) { /* private browsing — a plain random pick is fine */ }
+    document.documentElement.setAttribute("data-scene", String(i));
+  })();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

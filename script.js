@@ -509,9 +509,28 @@
 
   /* ---- 5. Ambient sound ------------------------------------ */
 
+  /* Add as many tracks as you like; one is picked at random per
+     visit, independently of the backdrop. A single-entry list just
+     plays that track every time. */
+  var TRACKS = [
+    "assets/ambient.mp3"
+  ];
+
   var audio = document.getElementById("ambient");
   var toggle = document.getElementById("soundToggle");
   var vol = document.getElementById("volSlider");
+
+  if (TRACKS.length) {
+    var t = Math.floor(Math.random() * TRACKS.length);
+    try {
+      var lastT = sessionStorage.getItem("lastTrack");
+      if (TRACKS.length > 1 && lastT !== null && Number(lastT) === t) {
+        t = (t + 1) % TRACKS.length;
+      }
+      sessionStorage.setItem("lastTrack", String(t));
+    } catch (e) { /* private browsing */ }
+    if (audio.getAttribute("src") !== TRACKS[t]) audio.src = TRACKS[t];
+  }
 
   var muted = false;               /* music is on by default */
 

@@ -55,46 +55,50 @@ body {
   z-index: -1;
   background-color: var(--night);
 
-  /* Two layers: a soft fade that dissolves the top and bottom edges
-     of the photo into --night, over the photo itself. Without it the
-     fit-by-width sizing leaves visible flat bands. */
+  /* A soft fade that dissolves the top and bottom edges of the photo
+     into --night. Sits above the scene, so every scene gets it. */
+  --edge-fade: linear-gradient(to bottom,
+    #0b0907 0%, rgba(11, 9, 7, 0) 13%,
+    rgba(11, 9, 7, 0) 87%, #0b0907 100%);
 
-  /* Floor — every browser understands this line. */
-  background-image:
-    linear-gradient(to bottom,
-      #0b0907 0%, rgba(11, 9, 7, 0) 13%,
-      rgba(11, 9, 7, 0) 87%, #0b0907 100%),
-    url("assets/bg/bg-window.jpg");
+  /* Default scene — also the floor if the head script never runs. */
+  background-image: var(--edge-fade), url("assets/bg/bg-window.jpg");
+  background-image: var(--edge-fade), image-set(
+    url("assets/bg/bg-window.webp") type("image/webp"),
+    url("assets/bg/bg-window.jpg")  type("image/jpeg")
+  );
 
-  /* Upgrades — used only if the browser parses them. */
-  background-image:
-    linear-gradient(to bottom,
-      #0b0907 0%, rgba(11, 9, 7, 0) 13%,
-      rgba(11, 9, 7, 0) 87%, #0b0907 100%),
-    -webkit-image-set(
-      url("assets/bg/bg-window.webp") 1x,
-      url("assets/bg/bg-window.jpg")  1x
-    );
-  background-image:
-    linear-gradient(to bottom,
-      #0b0907 0%, rgba(11, 9, 7, 0) 13%,
-      rgba(11, 9, 7, 0) 87%, #0b0907 100%),
-    image-set(
-      url("assets/bg/bg-window.webp") type("image/webp"),
-      url("assets/bg/bg-window.jpg")  type("image/jpeg")
-    );
-
-  /* Fit the scene by WIDTH so the whole room stays in frame — the
-     chair on the left, the bookshelf on the right. `cover` used to
-     zoom until the image filled the height, which cropped both off.
-     On a tall window this leaves the room floating in --night above
-     and below; the vignette in ::before softens those edges.
-     Want it larger and tighter again? Change 100% to 115% or so. */
   /* fade layer fills the viewport; photo fits by width */
   background-size: 100% 100%, 100% auto;
   background-position: center center, center center;
   background-repeat: no-repeat, no-repeat;
 }
+
+/* ---- The scenes -------------------------------------------------
+   One rule each. The head script sets data-scene at random on every
+   load, so the room changes with each refresh. To add a scene: put
+   the pair in assets/bg/, copy a block below with the next number,
+   and raise SCENES in index.html. */
+
+html[data-scene="0"] .atmosphere {
+  background-image: var(--edge-fade), url("assets/bg/bg-window.jpg");
+  background-image: var(--edge-fade), image-set(
+    url("assets/bg/bg-window.webp") type("image/webp"),
+    url("assets/bg/bg-window.jpg")  type("image/jpeg")
+  );
+}
+
+html[data-scene="1"] .atmosphere {
+  background-image: var(--edge-fade), url("assets/bg/bg-tearoom.jpg");
+  background-image: var(--edge-fade), image-set(
+    url("assets/bg/bg-tearoom.webp") type("image/webp"),
+    url("assets/bg/bg-tearoom.jpg")  type("image/jpeg")
+  );
+  /* 1.75:1 — nearly the shape of a window, so it can fill the frame */
+  background-size: 100% 100%, cover;
+  background-position: center center, center 45%;
+}
+
 
 /* Gradient light: a cold glow upper-centre, a warm candle
    glow low-right, and a heavy vignette all round. */
@@ -483,11 +487,14 @@ body {
 
   .floor { flex-wrap: wrap; justify-content: center; text-align: center; }
 
-  /* Portrait is far too narrow to fit the room by width — it would
-     become a thin strip. Phones keep `cover`, framed on the window. */
-  .atmosphere {
+  /* Portrait is far too narrow to fit a room by width — it would
+     become a thin strip. Phones fill the frame instead. The
+     [data-scene] here is deliberate: it matches the specificity of
+     the scene rules above so this still wins on a phone. */
+  .atmosphere,
+  html[data-scene] .atmosphere {
     background-size: 100% 100%, cover;
-    background-position: center center, 52% 38%;
+    background-position: center center, 52% 42%;
   }
 }
 
