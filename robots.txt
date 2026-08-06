@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alsamii.github.io/sitemap.xml
+Sitemap: https://www.chewzfiction.com/sitemap.xml

@@ -16,7 +16,7 @@
 
 const fs = require("fs");
 
-const SITE = "https://alsamii.github.io";
+const SITE = "https://www.chewzfiction.com";
 const AUTHOR = "Chew Z";
 
 /* stories.js declares plain consts, so evaluate it and take them out. */
