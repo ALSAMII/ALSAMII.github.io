@@ -24,6 +24,7 @@
 <meta name="twitter:image" content="https://alsamii.github.io/assets/bg/bg-window.jpg">
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="Chew Z — Short Fiction" href="feed.xml">
 
 <!-- The backdrop is a CSS background on a z-index:-1 layer, so the
      browser wouldn't find it until style.css is parsed. Preloading
@@ -54,6 +55,7 @@
     <nav aria-label="Site" class="caps">
       <a href="#" data-stage="notes">Author's Notes</a>
       <a href="#" data-stage="about">About</a>
+      <button class="linklike" id="galleryOpen" type="button">All Covers</button>
       <button class="sound" id="soundToggle" aria-pressed="false"
               title="Ambient sound (add assets/ambient.mp3 to enable)">
         <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -86,8 +88,9 @@
             The list below is built from that array at load.
          ──────────────────────────────────────────────────────── -->
     <aside class="shelf" id="stories" aria-label="Stories">
+      <div class="filters caps" id="filters" role="group" aria-label="Filter by altered state"></div>
       <ol></ol>
-      <p class="more">More stories coming soon&hellip;</p>
+      <p class="more" id="shelfCount"></p>
     </aside>
 
     <!-- ─── The stage ──────────────────────────────────────────
@@ -154,14 +157,33 @@
   <footer class="floor">
     <p class="caps">All stories &copy; Chew&thinsp;Z. All rights reserved.</p>
     <div class="subscribe-block caps">
-      <span class="soon">Coming soon</span>
-      <span>Subscribe</span>
+      <a href="feed.xml">RSS</a>
+      <span class="soon">Newsletter coming soon</span>
     </div>
   </footer>
 
 </div>
 
 <audio id="ambient" src="assets/ambient.mp3" loop preload="auto" autoplay></audio>
+
+<!-- ══════════════════ ALL COVERS ══════════════════
+     A grid of every cover, opened from the header. Built by
+     script.js from the same STORIES array as the list. -->
+<div class="gallery" id="gallery" role="dialog" aria-modal="true"
+     aria-labelledby="galleryTitle" hidden>
+  <div class="gallery-bar">
+    <p class="caps" id="galleryTitle">All Covers</p>
+    <button class="gallery-close" id="galleryClose" type="button"
+            aria-label="Close the gallery">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</div>
+
 <script src="stories.js"></script>
 <script src="script.js"></script>
 </body>

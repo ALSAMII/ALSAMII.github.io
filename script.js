@@ -46,6 +46,47 @@
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
 
+  /* ---- Deep links -----------------------------------------
+     Every book gets its own address: #04-the-weeping-hour.
+     Clicking a title pins that book and writes the hash, so the
+     link can be shared and re-opened straight onto the story. */
+
+  function slugFor(s) {
+    return String(s.num).padStart(2, "0") + "-" +
+      s.title.toLowerCase()
+        .replace(/['\u2019]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+  }
+
+  function trioSlug(t) {
+    return "triptych-" + t.title.toLowerCase()
+      .replace(/['\u2019]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  /* ---- Reading time ---------------------------------------
+     "31,500 words" tells a writer something; "about 2 hours"
+     tells a reader something. 250 wpm is the usual estimate for
+     fiction; a page is counted as roughly 275 words. */
+
+  function readingTime(words) {
+    if (!words) return "";
+    var n = parseInt(String(words).replace(/[^0-9]/g, ""), 10);
+    if (!n) return "";
+    if (/page/i.test(words)) n = n * 275;
+    var mins = Math.round(n / 250);
+    if (mins < 60) return mins + " min read";
+    var hrs = mins / 60;
+    /* Round to the nearest half hour — false precision helps nobody. */
+    var rounded = Math.round(hrs * 2) / 2;
+    return "about " + (rounded % 1 ? rounded.toFixed(1) : rounded) +
+           (rounded === 1 ? " hour read" : " hours read");
+  }
+
+  var pinned = null;   /* the book or triptych currently held on the stage */
+
   function showPanel(id) {
     var wasFeature = feature.classList.contains("show");
     feature.classList.remove("show");
@@ -65,7 +106,9 @@
     feature.classList.remove("trio");
     ftLink.style.display = "";
     panels.forEach(function (p) { p.classList.remove("is-active"); });
-    ftMeta.textContent = num + " \u00b7 " + s.title + (s.words ? " \u00b7 " + s.words : "");
+    ftMeta.textContent = num + " \u00b7 " + s.title +
+      (s.words ? " \u00b7 " + s.words : "") +
+      (readingTime(s.words) ? " \u00b7 " + readingTime(s.words) : "");
     ftText.textContent = s.synopsis;
     ftLink.setAttribute("href", pdf);
     ftLink.setAttribute("target", "_blank");
@@ -93,10 +136,13 @@
   }
 
   /* Leaving a book starts a short grace period, so the reader can
-     move the mouse onto the feature and click the PDF link. */
+     move the mouse onto the feature and click the PDF link. If a book
+     is pinned, the stage falls back to it instead of the theme text. */
   function scheduleHide() {
     clearTimeout(hideTimer);
-    hideTimer = setTimeout(function () { showPanel("panel-about"); }, 400);
+    hideTimer = setTimeout(function () {
+      if (pinned) restorePinned(); else showPanel("panel-about");
+    }, 400);
   }
 
   feature.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
@@ -120,6 +166,65 @@
     '-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
 
   var list = document.querySelector(".shelf ol");
+
+  /* ---- Pinning + the address bar --------------------------- */
+
+  var byNum = {}, bySlug = {};
+  STORIES.forEach(function (s) {
+    byNum[s.num] = s;
+    bySlug[slugFor(s)] = { kind: "book", data: s };
+  });
+  TRIOS.forEach(function (t) { bySlug[trioSlug(t)] = { kind: "trio", data: t }; });
+
+  function restorePinned() {
+    if (!pinned) return;
+    if (pinned.kind === "trio") { showTrilogy(pinned.data); return; }
+    var s = pinned.data;
+    var n = String(s.num).padStart(2, "0");
+    showFeature(s, n, s.pdf || "pdfs/" + n + ".pdf", s.cover || coverFor(s.num));
+  }
+
+  function markPinned() {
+    document.querySelectorAll(".is-pinned").forEach(function (el) {
+      el.classList.remove("is-pinned");
+    });
+    if (!pinned || !pinned.el) return;
+    pinned.el.classList.add("is-pinned");
+  }
+
+  function pin(entry, el, writeHash) {
+    pinned = { kind: entry.kind, data: entry.data, el: el || null };
+    markPinned();
+    restorePinned();
+    if (writeHash) {
+      var slug = entry.kind === "trio"
+        ? trioSlug(entry.data) : slugFor(entry.data);
+      if (history.replaceState) history.replaceState(null, "", "#" + slug);
+      else location.hash = slug;
+    }
+  }
+
+  function unpin() {
+    pinned = null;
+    markPinned();
+    showPanel("panel-about");
+    if (history.replaceState) {
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+  }
+
+  function openFromHash() {
+    var slug = decodeURIComponent(String(location.hash).replace(/^#/, ""));
+    if (!slug) return false;
+    var entry = bySlug[slug];
+    if (!entry) return false;
+    var el = document.querySelector('[data-slug="' + slug + '"]');
+    pin(entry, el, false);
+    if (el && el.scrollIntoView) el.scrollIntoView({ block: "center" });
+    /* Touch has no stage, so unfold the synopsis inline instead. */
+    if (!canHover && el) el.classList.add("open");
+    return true;
+  }
 
   function buildTrilogyHead(t) {
     var li = document.createElement("li");
@@ -150,7 +255,20 @@
     syn.append(minis, txt);
 
     li.append(label, title, syn);
+    li.dataset.slug = trioSlug(t);
+    li.dataset.tag = "__trio";
     list.append(li);
+
+    li.addEventListener("click", function (e) {
+      if (e.target.closest("a")) return;
+      if (pinned && pinned.kind === "trio" && pinned.data === t) {
+        if (!canHover) li.classList.remove("open");
+        unpin();
+      } else {
+        pin({ kind: "trio", data: t }, li, true);
+        if (!canHover) li.classList.add("open");
+      }
+    });
 
     if (canHover) {
       li.addEventListener("mouseenter", function () { showTrilogy(t); });
@@ -159,8 +277,9 @@
       li.addEventListener("focusout", function (e) {
         if (!li.contains(e.relatedTarget)) scheduleHide();
       });
-    } else {
-      li.addEventListener("click", function () { li.classList.toggle("open"); });
+      li.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); li.click(); }
+      });
     }
   }
 
@@ -182,7 +301,12 @@
 
     var title = document.createElement("h2");
     title.className = "title";
-    title.textContent = s.title;
+    var titleBtn = document.createElement("button");
+    titleBtn.type = "button";
+    titleBtn.className = "title-btn";
+    titleBtn.textContent = s.title;
+    titleBtn.setAttribute("aria-label", s.title + " — show on the stage");
+    title.append(titleBtn);
 
     var pdfBtn = document.createElement("a");
     pdfBtn.className = "icon-btn";
@@ -222,7 +346,28 @@
     syn.append(synImg, synText);
 
     li.append(row, syn);
+    li.dataset.slug = slugFor(s);
+    li.dataset.tag = s.tag || "";
     list.append(li);
+
+    /* Clicking the title pins the book to the stage and puts its
+       address in the bar, so the link can be copied and shared.
+       Clicking it again lets go. */
+    titleBtn.addEventListener("click", function () {
+      if (pinned && pinned.kind === "book" && pinned.data === s) {
+        if (!canHover) {
+          li.classList.remove("open");
+          if (eye) eye.setAttribute("aria-expanded", "false");
+        }
+        unpin();
+      } else {
+        pin({ kind: "book", data: s }, li, true);
+        if (!canHover) {
+          li.classList.add("open");
+          if (eye) eye.setAttribute("aria-expanded", "true");
+        }
+      }
+    });
 
     /* ---- 2. Hover behaviour for this book ------------------ */
 
@@ -245,7 +390,158 @@
     }
   });
 
-  /* ---- 3. Nav: About / Author's Notes on hover -------------- */
+  /* ---- 3. Filter chips ------------------------------------
+     Each book turns on one altered state; that's a more useful
+     axis through 26 titles than the running order alone. */
+
+  var filterBar = document.getElementById("filters");
+  var activeTag = "";
+
+  function applyFilter(tag) {
+    activeTag = tag;
+
+    list.querySelectorAll("li").forEach(function (li) {
+      var t = li.dataset.tag || "";
+      /* Triptych headings stay only when nothing is filtered — their
+         member books scatter across categories otherwise. */
+      var keep = !tag || (t === tag);
+      if (t === "__trio") keep = !tag;
+      li.hidden = !keep;
+    });
+
+    filterBar.querySelectorAll("button").forEach(function (b) {
+      var on = (b.dataset.tag || "") === tag;
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+
+    buildGallery();
+    updateCount();
+  }
+
+  function buildFilters() {
+    var counts = {};
+    STORIES.forEach(function (s) {
+      if (s.tag) counts[s.tag] = (counts[s.tag] || 0) + 1;
+    });
+
+    var tags = Object.keys(counts).sort(function (a, b) {
+      return counts[b] - counts[a] || a.localeCompare(b);
+    });
+
+    function chip(label, tag) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.dataset.tag = tag;
+      b.textContent = label;
+      b.setAttribute("aria-pressed", tag === activeTag ? "true" : "false");
+      b.addEventListener("click", function () {
+        applyFilter(tag === activeTag ? "" : tag);
+      });
+      filterBar.append(b);
+    }
+
+    chip("All", "");
+    tags.forEach(function (t) { chip(t, t); });
+    filterBar.querySelector("button").classList.add("on");
+  }
+
+  function updateCount() {
+    var el = document.getElementById("shelfCount");
+    if (!el) return;
+    var shown = activeTag
+      ? STORIES.filter(function (s) { return s.tag === activeTag; }).length
+      : STORIES.length;
+    el.textContent = activeTag
+      ? shown + " of " + STORIES.length + " stories"
+      : STORIES.length + " stories \u00b7 more coming";
+  }
+
+  /* ---- 4. All Covers --------------------------------------- */
+
+  var gallery = document.getElementById("gallery");
+  var galleryGrid = document.getElementById("galleryGrid");
+  var galleryOpen = document.getElementById("galleryOpen");
+  var galleryClose = document.getElementById("galleryClose");
+  var lastFocus = null;
+
+  function buildGallery() {
+    galleryGrid.textContent = "";
+    STORIES.forEach(function (s) {
+      if (activeTag && s.tag !== activeTag) return;
+
+      var n = String(s.num).padStart(2, "0");
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "gcard";
+      card.setAttribute("aria-label", s.title + " — show on the stage");
+
+      var img = document.createElement("img");
+      img.src = s.cover || coverFor(s.num);
+      img.alt = s.title + " — cover";
+      img.loading = "lazy";
+      img.addEventListener("error", function () { card.classList.add("no-art"); });
+
+      var cap = document.createElement("span");
+      cap.className = "gcard-title";
+      cap.textContent = n + " \u00b7 " + s.title;
+
+      var meta = document.createElement("span");
+      meta.className = "gcard-meta caps";
+      meta.textContent = [s.tag, readingTime(s.words)]
+        .filter(Boolean).join(" \u00b7 ");
+
+      card.append(img, cap, meta);
+      card.addEventListener("click", function () {
+        closeGallery();
+        var li = document.querySelector('[data-slug="' + slugFor(s) + '"]');
+        pin({ kind: "book", data: s }, li, true);
+        if (li && li.scrollIntoView) li.scrollIntoView({ block: "center" });
+        if (!canHover && li) li.classList.add("open");
+      });
+      galleryGrid.append(card);
+    });
+  }
+
+  function openGallery() {
+    lastFocus = document.activeElement;
+    gallery.hidden = false;
+    document.body.classList.add("gallery-on");
+    requestAnimationFrame(function () { gallery.classList.add("show"); });
+    galleryClose.focus();
+  }
+
+  function closeGallery() {
+    gallery.classList.remove("show");
+    document.body.classList.remove("gallery-on");
+    setTimeout(function () { gallery.hidden = true; }, 300);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  galleryOpen.addEventListener("click", openGallery);
+  galleryClose.addEventListener("click", closeGallery);
+  gallery.addEventListener("click", function (e) {
+    if (e.target === gallery) closeGallery();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!gallery.hidden) closeGallery();
+    else if (pinned) unpin();
+  });
+
+  buildFilters();
+  buildGallery();
+  updateCount();
+
+  /* Open straight onto a shared link, and follow the back button. */
+  openFromHash();
+  window.addEventListener("hashchange", function () {
+    if (!openFromHash()) unpin();
+  });
+
+  /* ---- 5. Nav: About / Author's Notes on hover -------------- */
 
   var stageFor = { about: "panel-about", notes: "panel-notes" };
 
@@ -257,9 +553,13 @@
         clearTimeout(hideTimer);
         showPanel(target);
       });
-      link.addEventListener("mouseleave", function () { showPanel("panel-about"); });
+      link.addEventListener("mouseleave", function () {
+        if (pinned) restorePinned(); else showPanel("panel-about");
+      });
       link.addEventListener("focus", function () { showPanel(target); });
-      link.addEventListener("blur", function () { showPanel("panel-about"); });
+      link.addEventListener("blur", function () {
+        if (pinned) restorePinned(); else showPanel("panel-about");
+      });
       link.addEventListener("click", function (e) { e.preventDefault(); });
     } else {
       /* Touch: tapping swaps the stage, as before */
@@ -273,7 +573,7 @@
     }
   });
 
-  /* ---- 4. Ambient sound ------------------------------------ */
+  /* ---- 6. Ambient sound ------------------------------------ */
 
   var audio = document.getElementById("ambient");
   var toggle = document.getElementById("soundToggle");
