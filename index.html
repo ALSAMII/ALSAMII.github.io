@@ -4,9 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chew Z — Short Fiction</title>
-<meta name="description" content="Short fiction by Chew Z.">
+<meta name="description" content="Short noir novellas about people who find out something true about themselves and can't put it back. A numbered series from Roya Publication.">
+<link rel="canonical" href="https://alsamii.github.io/">
+<meta name="theme-color" content="#0b0907">
+
+<!-- How the site looks when someone shares the link ---------- -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chew Z">
+<meta property="og:url" content="https://alsamii.github.io/">
+<meta property="og:title" content="Chew Z — Short Fiction">
+<meta property="og:description" content="Short noir novellas about people who find out something true about themselves and can't put it back.">
+<meta property="og:image" content="https://alsamii.github.io/assets/backdrop.jpg">
+<meta property="og:image:width" content="2556">
+<meta property="og:image:height" content="1117">
+<meta property="og:image:alt" content="A dark reading room: a leather chair, a candle, and a window onto a misty forest where a stag stands.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chew Z — Short Fiction">
+<meta name="twitter:description" content="Short noir novellas about people who find out something true about themselves and can't put it back.">
+<meta name="twitter:image" content="https://alsamii.github.io/assets/backdrop.jpg">
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<!-- The backdrop is a CSS background on a z-index:-1 layer, so the
+     browser wouldn't find it until style.css is parsed. Preloading
+     it here stops the flat-black flash on a cold load. -->
+<link rel="preload" as="image" href="assets/backdrop.webp" type="image/webp" fetchpriority="high">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -58,25 +81,13 @@
 
     <!-- ─── Story list ─────────────────────────────────────────
          To add a story:
-         1. Drop its PDF into the pdfs/ folder
-         2. Copy one <li class="story"> block, paste it in,
-            and change the number, title, PDF filename,
-            and the synopsis text.
+         1. Drop pdfs/NN.pdf and covers/NN.jpg into their folders
+         2. Add a { } block to stories.js — not to this file.
+            The list below is built from that array at load.
          ──────────────────────────────────────────────────────── -->
     <aside class="shelf" id="stories" aria-label="Stories">
-      <!-- The list is built automatically from stories.js.
-           To add or edit stories, open stories.js — not this file. -->
       <ol></ol>
       <p class="more">More stories coming soon&hellip;</p>
-
-      <!-- Book cover + synopsis for the story you hover
-           (or tap, on a phone). Filled in by script.js. -->
-      <div class="cover-panel" id="coverPanel" aria-live="polite">
-        <img id="cpImg" alt="">
-        <p class="cp-meta caps" id="cpMeta"></p>
-        <p class="cp-text" id="cpText"></p>
-        <p><a class="cp-link caps" id="cpLink" href="#">Read the story &mdash; PDF</a></p>
-      </div>
     </aside>
 
     <!-- ─── The stage ──────────────────────────────────────────
@@ -97,13 +108,6 @@
         <div class="easel-set" id="easelSet" aria-hidden="true">
           <img alt=""><img alt=""><img alt="">
         </div>
-      </div>
-
-      <!-- A trilogy: three covers side by side over one synopsis -->
-      <div class="tri-feature" id="triFeature">
-        <p class="caps tri-meta" id="triMeta"></p>
-        <div class="tri-covers" id="triCovers"></div>
-        <p class="tri-syn" id="triSyn"></p>
       </div>
 
       <div class="panel is-active" id="panel-about">
