@@ -201,6 +201,20 @@ const STORIES = [
     title: "The Clear Ones",
     words: "18,600 words",
     synopsis: "Kharkiv oblast, winter 1932. The grain is gone, the roads are closed, and one door in the raion town stays lit: the state gold store, where the starving buy back their own bread with wedding rings and the crosses their grandmothers buried in 1918. Danylo keeps the scale \u2014 item, weight, fineness, receipt \u2014 and by night a second book, for the words engraved inside the rings. Then he begins to sort the eyes in his queue, and finds a third kind: serene, courteous, asking for nothing. Every one of them is dead within days."
+  },
+
+  {
+    num: 28,
+    title: "Marsh and Machete",
+    words: "20,100 words",
+    synopsis: "Rwanda, April 1994. On a hill above the papyrus marshes, Vestine has traded the same greeting with her neighbour every market morning for ten years \u2014 muraho, you are still there. Then a plane comes down, the radio's warm-voiced Cousin announces the household has work to do, and her own house is informed, courteously, that it is not until Thursday. In the marsh she learns the season's one surviving discipline: mud for clothing, water for a roof, ten motionless hours a day among the floating dead."
+  },
+
+  {
+    num: 29,
+    title: "The Quiet Ones",
+    words: "18,900 words",
+    synopsis: "Romania, 1989. Decree 770 has forced a birth rate for a generation, and the surplus children are warehoused in institutions with a beautiful name \u2014 leag\u0103ne, cradles \u2014 at one caregiver to forty infants. Lidia is a decree child herself, aged out at eighteen and hired back as a night attendant: the machine staffing itself with its own product. Her unauthorised notebook records the two things the state's files cannot hold \u2014 the silence of wards where hundreds of infants have each concluded that crying reaches no one, and the rocking."
   }
 
 ];
