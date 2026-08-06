@@ -764,41 +764,6 @@ body {
 }
 
 /* ============================================================
-   Filter chips — the altered state each book turns on
-   ============================================================ */
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0 0.25rem 0.9rem;
-  flex: none;
-}
-
-.chip {
-  font: inherit;
-  font-size: 0.6875rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--faded);
-  background: none;
-  border: 1px solid var(--hairline);
-  border-radius: 999px;
-  padding: 0.3rem 0.7rem;
-  cursor: pointer;
-  transition: color 0.25s ease, border-color 0.25s ease,
-              background-color 0.25s ease;
-}
-
-.chip:hover { color: var(--parchment); border-color: var(--ember-soft); }
-
-.chip.on {
-  color: var(--ember);
-  border-color: var(--ember-soft);
-  background: rgba(216, 166, 95, 0.07);
-}
-
-/* ============================================================
    Titles are buttons now, so a click can pin a book to the
    stage and give it its own address.
    ============================================================ */

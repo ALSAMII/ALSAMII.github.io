@@ -256,7 +256,6 @@
 
     li.append(label, title, syn);
     li.dataset.slug = trioSlug(t);
-    li.dataset.tag = "__trio";
     list.append(li);
 
     li.addEventListener("click", function (e) {
@@ -347,7 +346,6 @@
 
     li.append(row, syn);
     li.dataset.slug = slugFor(s);
-    li.dataset.tag = s.tag || "";
     list.append(li);
 
     /* Clicking the title pins the book to the stage and puts its
@@ -390,75 +388,7 @@
     }
   });
 
-  /* ---- 3. Filter chips ------------------------------------
-     Each book turns on one altered state; that's a more useful
-     axis through 26 titles than the running order alone. */
-
-  var filterBar = document.getElementById("filters");
-  var activeTag = "";
-
-  function applyFilter(tag) {
-    activeTag = tag;
-
-    list.querySelectorAll("li").forEach(function (li) {
-      var t = li.dataset.tag || "";
-      /* Triptych headings stay only when nothing is filtered — their
-         member books scatter across categories otherwise. */
-      var keep = !tag || (t === tag);
-      if (t === "__trio") keep = !tag;
-      li.hidden = !keep;
-    });
-
-    filterBar.querySelectorAll("button").forEach(function (b) {
-      var on = (b.dataset.tag || "") === tag;
-      b.classList.toggle("on", on);
-      b.setAttribute("aria-pressed", on ? "true" : "false");
-    });
-
-    buildGallery();
-    updateCount();
-  }
-
-  function buildFilters() {
-    var counts = {};
-    STORIES.forEach(function (s) {
-      if (s.tag) counts[s.tag] = (counts[s.tag] || 0) + 1;
-    });
-
-    var tags = Object.keys(counts).sort(function (a, b) {
-      return counts[b] - counts[a] || a.localeCompare(b);
-    });
-
-    function chip(label, tag) {
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "chip";
-      b.dataset.tag = tag;
-      b.textContent = label;
-      b.setAttribute("aria-pressed", tag === activeTag ? "true" : "false");
-      b.addEventListener("click", function () {
-        applyFilter(tag === activeTag ? "" : tag);
-      });
-      filterBar.append(b);
-    }
-
-    chip("All", "");
-    tags.forEach(function (t) { chip(t, t); });
-    filterBar.querySelector("button").classList.add("on");
-  }
-
-  function updateCount() {
-    var el = document.getElementById("shelfCount");
-    if (!el) return;
-    var shown = activeTag
-      ? STORIES.filter(function (s) { return s.tag === activeTag; }).length
-      : STORIES.length;
-    el.textContent = activeTag
-      ? shown + " of " + STORIES.length + " stories"
-      : STORIES.length + " stories \u00b7 more coming";
-  }
-
-  /* ---- 4. All Covers --------------------------------------- */
+  /* ---- 3. All Covers --------------------------------------- */
 
   var gallery = document.getElementById("gallery");
   var galleryGrid = document.getElementById("galleryGrid");
@@ -469,8 +399,6 @@
   function buildGallery() {
     galleryGrid.textContent = "";
     STORIES.forEach(function (s) {
-      if (activeTag && s.tag !== activeTag) return;
-
       var n = String(s.num).padStart(2, "0");
       var card = document.createElement("button");
       card.type = "button";
@@ -489,8 +417,7 @@
 
       var meta = document.createElement("span");
       meta.className = "gcard-meta caps";
-      meta.textContent = [s.tag, readingTime(s.words)]
-        .filter(Boolean).join(" \u00b7 ");
+      meta.textContent = readingTime(s.words);
 
       card.append(img, cap, meta);
       card.addEventListener("click", function () {
@@ -531,9 +458,12 @@
     else if (pinned) unpin();
   });
 
-  buildFilters();
   buildGallery();
-  updateCount();
+
+  var countEl = document.getElementById("shelfCount");
+  if (countEl) {
+    countEl.textContent = STORIES.length + " stories \u00b7 more coming";
+  }
 
   /* Open straight onto a shared link, and follow the back button. */
   openFromHash();
@@ -541,7 +471,7 @@
     if (!openFromHash()) unpin();
   });
 
-  /* ---- 5. Nav: About / Author's Notes on hover -------------- */
+  /* ---- 4. Nav: About / Author's Notes on hover -------------- */
 
   var stageFor = { about: "panel-about", notes: "panel-notes" };
 
@@ -573,7 +503,7 @@
     }
   });
 
-  /* ---- 6. Ambient sound ------------------------------------ */
+  /* ---- 5. Ambient sound ------------------------------------ */
 
   var audio = document.getElementById("ambient");
   var toggle = document.getElementById("soundToggle");
