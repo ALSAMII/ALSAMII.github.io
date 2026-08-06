@@ -54,14 +54,20 @@ body {
 .atmosphere {
   z-index: -1;
   background-color: var(--night);
+
+  /* Floor — every browser understands this line. */
+  background-image: url("assets/backdrop.jpg");
+
+  /* Upgrades — used only if the browser parses them. */
   background-image: -webkit-image-set(
-    url("assets/backdrop.webp") type("image/webp"),
-    url("assets/backdrop.jpg")  type("image/jpeg")
+    url("assets/backdrop.webp") 1x,
+    url("assets/backdrop.jpg")  1x
   );
   background-image: image-set(
     url("assets/backdrop.webp") type("image/webp"),
     url("assets/backdrop.jpg")  type("image/jpeg")
   );
+
   background-position: center 42%;   /* keeps the stag near the stage text */
   background-size: cover;
   background-repeat: no-repeat;
