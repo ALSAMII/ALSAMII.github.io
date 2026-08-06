@@ -514,7 +514,7 @@
      The <audio> tag carries loop, so a track repeats until muted. */
   var TRACK_FOR_SCENE = {
     "0": "assets/ambient.mp3",           /* the window room */
-    "1": "assets/ambient-tearoom.mp3"    /* the tea room in the rain */
+    "1": "assets/ambient.mp3"            /* the tea room in the rain */
   };
 
   var audio = document.getElementById("ambient");
