@@ -55,18 +55,34 @@ body {
   z-index: -1;
   background-color: var(--night);
 
+  /* Two layers: a soft fade that dissolves the top and bottom edges
+     of the photo into --night, over the photo itself. Without it the
+     fit-by-width sizing leaves visible flat bands. */
+
   /* Floor — every browser understands this line. */
-  background-image: url("assets/bg/bg-window.jpg");
+  background-image:
+    linear-gradient(to bottom,
+      #0b0907 0%, rgba(11, 9, 7, 0) 13%,
+      rgba(11, 9, 7, 0) 87%, #0b0907 100%),
+    url("assets/bg/bg-window.jpg");
 
   /* Upgrades — used only if the browser parses them. */
-  background-image: -webkit-image-set(
-    url("assets/bg/bg-window.webp") 1x,
-    url("assets/bg/bg-window.jpg")  1x
-  );
-  background-image: image-set(
-    url("assets/bg/bg-window.webp") type("image/webp"),
-    url("assets/bg/bg-window.jpg")  type("image/jpeg")
-  );
+  background-image:
+    linear-gradient(to bottom,
+      #0b0907 0%, rgba(11, 9, 7, 0) 13%,
+      rgba(11, 9, 7, 0) 87%, #0b0907 100%),
+    -webkit-image-set(
+      url("assets/bg/bg-window.webp") 1x,
+      url("assets/bg/bg-window.jpg")  1x
+    );
+  background-image:
+    linear-gradient(to bottom,
+      #0b0907 0%, rgba(11, 9, 7, 0) 13%,
+      rgba(11, 9, 7, 0) 87%, #0b0907 100%),
+    image-set(
+      url("assets/bg/bg-window.webp") type("image/webp"),
+      url("assets/bg/bg-window.jpg")  type("image/jpeg")
+    );
 
   /* Fit the scene by WIDTH so the whole room stays in frame — the
      chair on the left, the bookshelf on the right. `cover` used to
@@ -74,9 +90,10 @@ body {
      On a tall window this leaves the room floating in --night above
      and below; the vignette in ::before softens those edges.
      Want it larger and tighter again? Change 100% to 115% or so. */
-  background-size: 100% auto;
-  background-position: center center;
-  background-repeat: no-repeat;
+  /* fade layer fills the viewport; photo fits by width */
+  background-size: 100% 100%, 100% auto;
+  background-position: center center, center center;
+  background-repeat: no-repeat, no-repeat;
 }
 
 /* Gradient light: a cold glow upper-centre, a warm candle
@@ -469,8 +486,8 @@ body {
   /* Portrait is far too narrow to fit the room by width — it would
      become a thin strip. Phones keep `cover`, framed on the window. */
   .atmosphere {
-    background-size: cover;
-    background-position: 52% 38%;
+    background-size: 100% 100%, cover;
+    background-position: center center, 52% 38%;
   }
 }
 
@@ -522,6 +539,26 @@ body {
 .panel .note + .note { margin-top: 0.9rem; }
 .panel .signature { color: var(--ember); margin: 1.5rem 0 0; }
 
+/* The lede and the first paragraph had nothing between them and ran
+   together as one block. */
+.panel .lede + .note,
+.panel .lede + .lede { margin-top: 1.25rem; }
+
+/* `roman` was used in index.html but never defined here, so those
+   paragraphs inherited the italic from .note. Upright, as intended —
+   italic is fine for a line, tiring for a paragraph. */
+.panel .note.roman {
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Centred text orphans badly — both edges move at once. Let the browser
+   even out the line lengths and avoid single-word last lines. */
+.panel .lede,
+.panel .note,
+.feature-syn,
+.panel .eyebrow { text-wrap: pretty; }
+
 
 /* ============================================================
    Roya Publication stamp + footer subscribe block
@@ -534,8 +571,14 @@ body {
   border-radius: 4px;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.62),
               0 0 26px rgba(216, 166, 95, 0.14);
-  opacity: 1;
+  /* Was fully saturated and out-shouted CHEW Z right beside it.
+     Eased back so it reads as provenance, not a badge. */
+  opacity: 0.88;
+  filter: saturate(0.82);
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
+
+.brand:hover .roya { opacity: 1; filter: none; }
 
 .subscribe-block {
   display: flex;
