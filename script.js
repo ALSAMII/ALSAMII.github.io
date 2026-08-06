@@ -1,19 +1,4 @@
 /* ============================================================
-   BACKDROP ROTATION
-   A scene is chosen at random every time the page loads, never
-   repeating the one shown immediately before it.
-   To add a scene: drop the image into assets/backdrops/ and
-   add its path to this list. To retire one, remove its line.
-   ============================================================ */
-
-var BACKDROPS = [
-  "assets/backdrops/01.jpg",
-  "assets/backdrops/02.jpg"
-];
-
-
-
-/* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
    add books in stories.js instead.
@@ -29,34 +14,13 @@ var BACKDROPS = [
    3. Hovering About or Author's Notes in the nav reveals those
       texts; moving away brings the theme text back.
    4. The speaker button plays assets/ambient.mp3, if present.
+
+   The backdrop is no longer set here — it's one fixed scene on
+   .atmosphere in style.css (assets/backdrop.webp / .jpg).
    ============================================================ */
 
 (function () {
   "use strict";
-
-  /* ---- Backdrop for this visit ----------------------------- */
-  if (BACKDROPS.length) {
-    var idx = Math.floor(Math.random() * BACKDROPS.length);
-
-    /* Avoid showing the same scene twice in a row on refresh. */
-    try {
-      var last = sessionStorage.getItem("lastBackdrop");
-      if (BACKDROPS.length > 1 && last !== null && Number(last) === idx) {
-        idx = (idx + 1 + Math.floor(Math.random() * (BACKDROPS.length - 1)))
-              % BACKDROPS.length;
-      }
-      sessionStorage.setItem("lastBackdrop", String(idx));
-    } catch (e) { /* private browsing — a plain random pick is fine */ }
-
-    var atmos = document.querySelector(".atmosphere");
-    if (atmos) {
-      /* Set immediately — no waiting, so nothing else can flash
-         first. The second layer is a fallback the browser paints
-         only if the chosen scene is missing. */
-      atmos.style.backgroundImage =
-        'url("' + BACKDROPS[idx] + '"), url("' + BACKDROPS[0] + '")';
-    }
-  }
 
   /* ---- 1. Build the list from stories.js ------------------- */
 
@@ -104,6 +68,8 @@ var BACKDROPS = [
     ftMeta.textContent = num + " \u00b7 " + s.title + (s.words ? " \u00b7 " + s.words : "");
     ftText.textContent = s.synopsis;
     ftLink.setAttribute("href", pdf);
+    ftLink.setAttribute("target", "_blank");
+    ftLink.setAttribute("rel", "noopener");
     easel.style.display = "";
     easel.alt = s.title + " — cover";
     if (easel.getAttribute("src") !== cover) easel.src = cover;
@@ -222,18 +188,28 @@ var BACKDROPS = [
     pdfBtn.className = "icon-btn";
     pdfBtn.href = pdf;
     pdfBtn.title = "Read the PDF";
-    pdfBtn.setAttribute("aria-label", s.title + " — PDF");
+    pdfBtn.setAttribute("aria-label", s.title + " — PDF (opens in a new tab)");
+    /* New tab: the reader keeps the room open behind the story. */
+    pdfBtn.target = "_blank";
+    pdfBtn.rel = "noopener";
     pdfBtn.innerHTML = PDF_ICON;
 
-    var eye = document.createElement("button");
-    eye.className = "icon-btn eye";
-    eye.type = "button";
-    eye.title = "Synopsis";
-    eye.setAttribute("aria-expanded", "false");
-    eye.setAttribute("aria-label", s.title + " — synopsis");
-    eye.innerHTML = EYE_ICON;
+    row.append(numEl, title, pdfBtn);
 
-    row.append(numEl, title, pdfBtn, eye);
+    /* The eye only earns its place on touch, where there's no hover
+       to reveal a synopsis. On a mouse or keyboard it would be a
+       control that does nothing, so it isn't rendered at all. */
+    var eye = null;
+    if (!canHover) {
+      eye = document.createElement("button");
+      eye.className = "icon-btn eye";
+      eye.type = "button";
+      eye.title = "Synopsis";
+      eye.setAttribute("aria-expanded", "false");
+      eye.setAttribute("aria-label", s.title + " — synopsis");
+      eye.innerHTML = EYE_ICON;
+      row.append(eye);
+    }
 
     var syn = document.createElement("div");
     syn.className = "synopsis";
