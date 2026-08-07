@@ -109,6 +109,40 @@
             The list below is built from that array at load.
          ──────────────────────────────────────────────────────── -->
     <aside class="shelf" id="stories" aria-label="Stories">
+
+      <!-- Filter bar. Both menus are built by script.js from the
+           category / subcategory fields in stories.js, so a new
+           book with a new category needs no edit here. -->
+      <div class="filters" id="filters">
+        <div class="filter-field">
+          <label class="caps" for="filterCat">Category</label>
+          <div class="select-wrap">
+            <select id="filterCat">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-field">
+          <label class="caps" for="filterSub">Subcategory</label>
+          <div class="select-wrap">
+            <select id="filterSub">
+              <option value="">All Subcategories</option>
+            </select>
+          </div>
+        </div>
+        <button class="filter-reset" id="filterReset" type="button"
+                title="Clear filters" aria-label="Clear filters" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M3 7h13M20 7h1M3 12h4M11 12h10M3 17h9M16 17h5"/>
+            <circle cx="18" cy="7" r="2"/><circle cx="9" cy="12" r="2"/>
+            <circle cx="14" cy="17" r="2"/>
+          </svg>
+        </button>
+      </div>
+
+      <p class="no-match" id="noMatch" hidden>Nothing under that pairing yet.</p>
+
       <ol></ol>
       <p class="more" id="shelfCount"></p>
     </aside>
@@ -125,6 +159,7 @@
         <div class="feature-text">
           <p class="caps feature-meta" id="ftMeta"></p>
           <p class="feature-syn" id="ftText"></p>
+          <p class="feature-substance" id="ftSubstance" hidden></p>
           <p><a class="cp-link caps" id="ftLink" href="#">Read the story &mdash; PDF</a></p>
         </div>
         <img class="easel" id="easelImg" alt="">

@@ -239,6 +239,123 @@ html[data-scene="1"] .atmosphere {
   min-height: 0; /* lets the list scroll instead of the page */
 }
 
+/* --- Filter bar ------------------------------------------- */
+
+.filters {
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: 0.75rem;
+  padding: 0 0.25rem 1rem;
+}
+
+.filter-field { min-width: 0; }
+
+.filter-field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.625rem;
+  color: var(--faded);
+}
+
+/* The chevron is drawn on the wrapper, so the <select> itself can
+   be stripped bare and still look native-free in every browser. */
+.select-wrap { position: relative; }
+
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: -0.3rem;
+  border-right: 1px solid var(--ember);
+  border-bottom: 1px solid var(--ember);
+  transform: rotate(45deg);
+  pointer-events: none;
+  transition: border-color 0.25s ease;
+}
+
+.filters select {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  padding: 0.7rem 2.2rem 0.7rem 0.9rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.9375rem;
+  color: var(--parchment);
+  background: rgba(11, 9, 7, 0.55);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.filters select:hover { border-color: var(--ember-soft); }
+.filters select:focus-visible {
+  outline: none;
+  border-color: var(--ember);
+  color: var(--ember);
+}
+
+/* A selection is live: the field lights up so it's obvious the
+   list below is showing part of the shelf, not all of it. */
+.filters select.is-set { color: var(--ember); border-color: var(--ember-soft); }
+
+/* Native menus paint themselves; force a dark one. */
+.filters select option { background: #14100c; color: var(--parchment); }
+
+.filter-reset {
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  color: var(--faded);
+  background: rgba(11, 9, 7, 0.55);
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease,
+              box-shadow 0.25s ease, opacity 0.25s ease;
+}
+.filter-reset svg { width: 1.15rem; height: 1.15rem; display: block; }
+.filter-reset:hover:not(:disabled) {
+  color: var(--ember);
+  border-color: var(--ember);
+  box-shadow: 0 0 22px rgba(216, 166, 95, 0.28);
+}
+.filter-reset:disabled { opacity: 0.35; cursor: default; }
+.filter-reset:not(:disabled) { color: var(--ember); border-color: var(--ember-soft); }
+
+.no-match {
+  flex: none;
+  margin: 0;
+  padding: 1.5rem 0.25rem;
+  color: var(--faded);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  border-top: 1px solid var(--hairline);
+}
+
+/* Rows the filter has ruled out */
+.story.filtered-out,
+.trilogy.filtered-out { display: none; }
+
+/* Whatever ends up at the top of a filtered list keeps the hairline
+   the original first row had. */
+.story.first-visible,
+.trilogy.first-visible { border-top: 1px solid var(--hairline); }
+
+/* Phones: the two menus stack rather than squeeze */
+@media (max-width: 30rem) {
+  .filters { grid-template-columns: 1fr auto; gap: 0.65rem 0.6rem; }
+  .filters .filter-field:first-child { grid-column: 1 / -1; }
+}
+
 /* --- Story list ------------------------------------------- */
 
 .shelf {
@@ -644,6 +761,26 @@ html[data-scene="1"] .atmosphere {
   gap: 1rem;
 }
 .feature.trio .feature-text { flex: 1 1 21rem; max-width: 29rem; }
+/* What the book runs on: its place in the two menus, then the
+   substance itself. Sits under the synopsis on the stage. */
+.feature-substance {
+  margin: 1.1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--faded);
+}
+.feature-substance .ft-tag {
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  color: var(--ember);
+  opacity: 0.85;
+}
+.feature-substance[hidden] { display: none; }
+
 .feature.trio .feature-syn {
   font-size: clamp(1.125rem, 1.5vw, 1.25rem);
   line-height: 1.7;

@@ -64,7 +64,7 @@ const items = [...STORIES]
       <link>${SITE}/#${slug(s)}</link>
       <guid isPermaLink="false">chewz-${n}</guid>
       <pubDate>${dateFor(s.num)}</pubDate>
-      ${s.tag ? `<category>${esc(s.tag)}</category>` : ""}
+      ${s.category ? `<category>${esc(s.category)}</category>` : ""}
       <description>${esc(s.synopsis)}</description>
     </item>`;
   })

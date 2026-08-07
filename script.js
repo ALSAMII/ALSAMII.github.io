@@ -105,6 +105,32 @@
     if (wasFeature) setTimeout(activate, 300); else activate();
   }
 
+  /* The line under a book's synopsis on the stage: what it runs on,
+     and where it sits in the two menus. Books without the fields
+     simply don't get the line. */
+  var ftSub = document.getElementById("ftSubstance");
+
+  function setSubstance(s) {
+    if (!ftSub) return;
+    var path = s && s.category
+      ? s.category + (s.subcategory ? " \u00b7 " + s.subcategory : "") : "";
+    if (!s || (!path && !s.substance)) { ftSub.hidden = true; ftSub.textContent = ""; return; }
+    ftSub.hidden = false;
+    ftSub.textContent = "";
+    if (path) {
+      var tag = document.createElement("span");
+      tag.className = "ft-tag caps";
+      tag.textContent = path;
+      ftSub.append(tag);
+    }
+    if (s.substance) {
+      var txt = document.createElement("span");
+      txt.className = "ft-substance";
+      txt.textContent = s.substance;
+      ftSub.append(txt);
+    }
+  }
+
   function showFeature(s, num, pdf, cover) {
     clearTimeout(hideTimer);
     feature.classList.remove("trio");
@@ -114,6 +140,7 @@
       (s.words ? " \u00b7 " + s.words : "") +
       (readingTime(s.words) ? " \u00b7 " + readingTime(s.words) : "");
     ftText.textContent = s.synopsis;
+    setSubstance(s);
     ftLink.setAttribute("href", pdf);
     ftLink.setAttribute("target", "_blank");
     ftLink.setAttribute("rel", "noopener");
@@ -135,6 +162,7 @@
     feature.classList.add("trio");
     ftMeta.textContent = groupLabel(t) + " \u00b7 " + t.title;
     ftText.textContent = t.synopsis;
+    setSubstance(null);
     ftLink.style.display = "none";
     /* Built fresh each time, so a group can hold any number of books. */
     easelSet.textContent = "";
@@ -180,6 +208,10 @@
     '-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
 
   var list = document.querySelector(".shelf ol");
+
+  /* Filled as the list is built; the filter works from these. */
+  var rows = [];        /* one entry per book row */
+  var groupRows = [];   /* one entry per series heading */
 
   /* ---- Pinning + the address bar --------------------------- */
 
@@ -271,6 +303,7 @@
     li.append(label, title, syn);
     li.dataset.slug = trioSlug(t);
     list.append(li);
+    groupRows.push({ group: t, el: li });
 
     li.addEventListener("click", function (e) {
       if (e.target.closest("a")) return;
@@ -361,6 +394,7 @@
     li.append(row, syn);
     li.dataset.slug = slugFor(s);
     list.append(li);
+    rows.push({ story: s, el: li });
 
     /* Clicking the title pins the book to the stage and puts its
        address in the bar, so the link can be copied and shared.
@@ -474,9 +508,106 @@
 
   buildGallery();
 
+  /* ---- 3b. Category / subcategory filter -------------------
+     Both menus are built from the fields in stories.js, so a new
+     book with a new category needs no edit here. The two menus
+     combine: picking a category narrows the subcategory list to
+     the ones that actually occur inside it. */
+
+  var selCat = document.getElementById("filterCat");
+  var selSub = document.getElementById("filterSub");
+  var resetBtn = document.getElementById("filterReset");
+  var noMatch = document.getElementById("noMatch");
   var countEl = document.getElementById("shelfCount");
-  if (countEl) {
-    countEl.textContent = STORIES.length + " stories \u00b7 more coming";
+  var COUNT_TEXT = STORIES.length + " stories \u00b7 more coming";
+
+  /* Order follows first appearance in the list rather than the
+     alphabet — the series' own order is the meaningful one. */
+  function uniqueBy(key, within) {
+    var seen = [];
+    STORIES.forEach(function (s) {
+      if (!s[key]) return;
+      if (within && s.category !== within) return;
+      if (seen.indexOf(s[key]) === -1) seen.push(s[key]);
+    });
+    return seen;
+  }
+
+  function fillMenu(sel, values, allLabel) {
+    var keep = sel.value;
+    sel.textContent = "";
+    var all = document.createElement("option");
+    all.value = "";
+    all.textContent = allLabel;
+    sel.append(all);
+    values.forEach(function (v) {
+      var o = document.createElement("option");
+      o.value = v;
+      o.textContent = v;
+      sel.append(o);
+    });
+    sel.value = values.indexOf(keep) === -1 ? "" : keep;
+  }
+
+  function applyFilter() {
+    var cat = selCat.value, sub = selSub.value;
+    var shown = 0;
+
+    rows.forEach(function (r) {
+      var ok = (!cat || r.story.category === cat) &&
+               (!sub || r.story.subcategory === sub);
+      r.el.classList.toggle("filtered-out", !ok);
+      if (ok) shown++;
+    });
+
+    /* A series heading stays only while at least one of its books does. */
+    groupRows.forEach(function (g) {
+      var any = g.group.books.some(function (n) {
+        var s = byNum[n];
+        return s && (!cat || s.category === cat) && (!sub || s.subcategory === sub);
+      });
+      g.el.classList.toggle("filtered-out", !any);
+    });
+
+    /* Give whatever is now on top the hairline the first row had. */
+    var first = true;
+    Array.prototype.forEach.call(list.children, function (el) {
+      var hidden = el.classList.contains("filtered-out");
+      el.classList.toggle("first-visible", !hidden && first);
+      if (!hidden) first = false;
+    });
+
+    var filtering = Boolean(cat || sub);
+    noMatch.hidden = shown !== 0;
+    selCat.classList.toggle("is-set", Boolean(cat));
+    selSub.classList.toggle("is-set", Boolean(sub));
+    resetBtn.disabled = !filtering;
+    if (countEl) {
+      countEl.textContent = filtering
+        ? shown + " of " + STORIES.length + (shown === 1 ? " story" : " stories")
+        : COUNT_TEXT;
+    }
+  }
+
+  if (selCat && selSub) {
+    fillMenu(selCat, uniqueBy("category"), "All Categories");
+    fillMenu(selSub, uniqueBy("subcategory"), "All Subcategories");
+
+    selCat.addEventListener("change", function () {
+      fillMenu(selSub, uniqueBy("subcategory", selCat.value || null),
+               "All Subcategories");
+      applyFilter();
+    });
+    selSub.addEventListener("change", applyFilter);
+    resetBtn.addEventListener("click", function () {
+      selCat.value = "";
+      fillMenu(selSub, uniqueBy("subcategory"), "All Subcategories");
+      selSub.value = "";
+      applyFilter();
+    });
+    applyFilter();
+  } else if (countEl) {
+    countEl.textContent = COUNT_TEXT;
   }
 
   /* Open straight onto a shared link, and follow the back button. */
