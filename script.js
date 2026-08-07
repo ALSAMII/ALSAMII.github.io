@@ -570,7 +570,16 @@
     return out;
   }
 
-  function fillMenu(sel, values, allLabel) {
+  /* The one-line meaning beside each Door and Key. Optional: a name
+     with no entry in GLOSSARY just shows on its own. */
+  var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
+
+  function labelFor(which, name) {
+    var book = GLOSS[which] || {};
+    return book[name] ? name + " \u2014 " + book[name] : name;
+  }
+
+  function fillMenu(sel, values, allLabel, which) {
     var keep = sel.value;
     sel.textContent = "";
     var all = document.createElement("option");
@@ -580,7 +589,7 @@
     values.forEach(function (v) {
       var o = document.createElement("option");
       o.value = v;
-      o.textContent = v;
+      o.textContent = which ? labelFor(which, v) : v;
       sel.append(o);
     });
     /* A selection that the narrowed menu no longer offers is dropped
@@ -740,7 +749,7 @@
   /* Rebuild the downstream menus, then filter. Called after any
      change, so the three can never disagree with each other. */
   function refresh() {
-    fillMenu(selKey, optionsFor("key", selDoor.value, ""), "All Keys");
+    fillMenu(selKey, optionsFor("key", selDoor.value, ""), "All Keys", "keys");
     var opts = turnsOptions(selDoor.value, selKey.value);
     var stillThere = opts.some(function (o) { return o.name === turns.value; });
     if (!stillThere) { turns.value = ""; turns.gloss = ""; }
@@ -789,7 +798,7 @@
   }
 
   if (selDoor && selKey && turnsBtn) {
-    fillMenu(selDoor, optionsFor("door", "", ""), "All Doors");
+    fillMenu(selDoor, optionsFor("door", "", ""), "All Doors", "doors");
     selDoor.addEventListener("change", refresh);
     selKey.addEventListener("change", refresh);
     resetBtn.addEventListener("click", function () {

@@ -241,19 +241,22 @@ html[data-scene="1"] .atmosphere {
 
 /* --- Filter bar ------------------------------------------- */
 
+/* One column of full-width fields with the clear button standing
+   beside all three. Side by side, the fields were too narrow to
+   show a name and its meaning on one line. */
 .filters {
   flex: none;
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr auto;
   align-items: end;
-  gap: 0.75rem;
+  gap: 0.7rem 0.75rem;
   padding: 0 0.25rem 1rem;
 }
 
-/* Door and Key share the first row; What turns it takes the second,
-   with the clear button standing beside both. */
-.filter-field--turns { grid-column: 1 / 3; }
-.filters .filter-reset { grid-row: 1 / 3; align-self: center; }
+/* Both ends pinned: an auto-placed row-spanning button lands in the
+   first column and shoves the fields sideways. */
+.filters .filter-field { grid-column: 1; }
+.filters .filter-reset { grid-column: 2; grid-row: 1 / 4; align-self: center; }
 
 .filter-field { min-width: 0; }
 
@@ -468,10 +471,7 @@ html[data-scene="1"] .atmosphere {
 
 /* Phones: the two menus stack rather than squeeze */
 @media (max-width: 30rem) {
-  .filters { grid-template-columns: 1fr auto; gap: 0.65rem 0.6rem; }
-  .filters .filter-field { grid-column: 1 / -1; }
-  .filters .filter-field--turns { grid-column: 1 / 2; }
-  .filters .filter-reset { grid-row: auto; align-self: end; }
+  .filters { gap: 0.6rem; }
 }
 
 /* --- Story list ------------------------------------------- */

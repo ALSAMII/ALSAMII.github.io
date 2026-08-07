@@ -345,6 +345,39 @@ const STORIES = [
    Leave it out and a group of three says "A Triptych".
    ============================================================ */
 
+/* ============================================================
+   GLOSSARY — the one-line meaning shown beside each Door and Key
+   in the dropdowns above the list. Edit the wording here; it
+   appears nowhere else. A door or key with no entry simply shows
+   its name on its own, so nothing breaks if one is missed.
+   ============================================================ */
+
+const GLOSSARY = {
+  doors: {
+    "Dose":        "taken into the body",
+    "Rite":        "practiced until it opens",
+    "Ordeal":      "endured past the limit",
+    "Withholding": "what you needed, absent"
+  },
+  keys: {
+    "Play It Back":       "the past, played again",
+    "Hearing Things":     "a sound that won't leave",
+    "Nothing Hurts Here": "pain switched off",
+    "Take It Together":   "nobody goes alone",
+    "Look Closer":        "learning to really look",
+    "Made to Believe":    "belief you didn't choose",
+    "Quiet the Basement": "the inner voice, silenced",
+    "Written in Skin":    "pain as proof you're alive",
+    "Past the Edge":      "further than the body can take",
+    "The Loop":           "one motion, over and over",
+    "Starve It Out":      "hunger, all the way",
+    "Four Minutes Each":  "never enough time",
+    "Nobody Called":      "the call nobody answers",
+    "Eleven Seconds":     "someone finally listens",
+    "Don't Move":         "stay still, stay alive"
+  }
+};
+
 const TRILOGIES = [
   {
     title: "Daughters of Anahita",

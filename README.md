@@ -54,7 +54,10 @@ Open `index.html` in a text editor and change:
    },
    ```
 
-   `door` and `key` feed the first two dropdowns above the list.
+   `door` and `key` feed the first two dropdowns above the list. The
+   one-line meaning shown beside each one lives in the `GLOSSARY`
+   block near the bottom of `stories.js` — add an entry there if you
+   introduce a new door or key.
    `substance` is the line shown under the synopsis on the stage,
    and its first part — everything before the em dash — becomes the
    entry in the third dropdown, "What turns it". Reuse an existing
