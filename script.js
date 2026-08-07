@@ -112,8 +112,8 @@
 
   function setSubstance(s) {
     if (!ftSub) return;
-    var path = s && s.category
-      ? s.category + (s.subcategory ? " \u00b7 " + s.subcategory : "") : "";
+    var path = s && s.door
+      ? s.door + (s.key ? " \u00b7 " + s.key : "") : "";
     if (!s || (!path && !s.substance)) { ftSub.hidden = true; ftSub.textContent = ""; return; }
     ftSub.hidden = false;
     ftSub.textContent = "";
@@ -508,27 +508,44 @@
 
   buildGallery();
 
-  /* ---- 3b. Category / subcategory filter -------------------
-     Both menus are built from the fields in stories.js, so a new
-     book with a new category needs no edit here. The two menus
-     combine: picking a category narrows the subcategory list to
-     the ones that actually occur inside it. */
+  /* ---- 3b. Door / Key / What-turns-it filter ---------------
+     All three menus are built from the fields in stories.js, so a
+     new book with a new door needs no edit here. They cascade:
+     choosing a Door narrows the Keys to the ones that occur behind
+     it, and both narrow what's left in the third menu. */
 
-  var selCat = document.getElementById("filterCat");
-  var selSub = document.getElementById("filterSub");
+  var selDoor = document.getElementById("filterDoor");
+  var selKey = document.getElementById("filterKey");
+  var selTurns = document.getElementById("filterTurns");
   var resetBtn = document.getElementById("filterReset");
   var noMatch = document.getElementById("noMatch");
   var countEl = document.getElementById("shelfCount");
   var COUNT_TEXT = STORIES.length + " stories \u00b7 more coming";
 
+  /* The third menu lists what a book runs on, which is the part of
+     "substance" before the em dash. Keeping it derived means there
+     is only ever one place to write it. */
+  function turnsOf(s) {
+    if (!s || !s.substance) return "";
+    return String(s.substance).split(" \u2014 ")[0].trim();
+  }
+
+  function matches(s, door, key, turns) {
+    return (!door || s.door === door) &&
+           (!key || s.key === key) &&
+           (!turns || turnsOf(s) === turns);
+  }
+
   /* Order follows first appearance in the list rather than the
      alphabet — the series' own order is the meaningful one. */
-  function uniqueBy(key, within) {
+  function optionsFor(field, door, key) {
     var seen = [];
     STORIES.forEach(function (s) {
-      if (!s[key]) return;
-      if (within && s.category !== within) return;
-      if (seen.indexOf(s[key]) === -1) seen.push(s[key]);
+      var v = field === "turns" ? turnsOf(s) : s[field];
+      if (!v) return;
+      if (door && s.door !== door) return;
+      if (key && s.key !== key) return;
+      if (seen.indexOf(v) === -1) seen.push(v);
     });
     return seen;
   }
@@ -546,16 +563,25 @@
       o.textContent = v;
       sel.append(o);
     });
+    /* A selection that the narrowed menu no longer offers is dropped
+       rather than left showing something the list isn't obeying. */
     sel.value = values.indexOf(keep) === -1 ? "" : keep;
   }
 
+  /* Rebuild the downstream menus, then filter. Called after any
+     change, so the three can never disagree with each other. */
+  function refresh() {
+    fillMenu(selKey, optionsFor("key", selDoor.value, ""), "All Keys");
+    fillMenu(selTurns, optionsFor("turns", selDoor.value, selKey.value), "Anything");
+    applyFilter();
+  }
+
   function applyFilter() {
-    var cat = selCat.value, sub = selSub.value;
+    var door = selDoor.value, key = selKey.value, turns = selTurns.value;
     var shown = 0;
 
     rows.forEach(function (r) {
-      var ok = (!cat || r.story.category === cat) &&
-               (!sub || r.story.subcategory === sub);
+      var ok = matches(r.story, door, key, turns);
       r.el.classList.toggle("filtered-out", !ok);
       if (ok) shown++;
     });
@@ -563,8 +589,7 @@
     /* A series heading stays only while at least one of its books does. */
     groupRows.forEach(function (g) {
       var any = g.group.books.some(function (n) {
-        var s = byNum[n];
-        return s && (!cat || s.category === cat) && (!sub || s.subcategory === sub);
+        return byNum[n] && matches(byNum[n], door, key, turns);
       });
       g.el.classList.toggle("filtered-out", !any);
     });
@@ -577,35 +602,34 @@
       if (!hidden) first = false;
     });
 
-    var filtering = Boolean(cat || sub);
+    var filtering = Boolean(door || key || turns);
     noMatch.hidden = shown !== 0;
-    selCat.classList.toggle("is-set", Boolean(cat));
-    selSub.classList.toggle("is-set", Boolean(sub));
+    selDoor.classList.toggle("is-set", Boolean(door));
+    selKey.classList.toggle("is-set", Boolean(key));
+    selTurns.classList.toggle("is-set", Boolean(turns));
     resetBtn.disabled = !filtering;
     if (countEl) {
       countEl.textContent = filtering
-        ? shown + " of " + STORIES.length + (shown === 1 ? " story" : " stories")
+        ? shown + " of " + STORIES.length + " stories"
         : COUNT_TEXT;
     }
   }
 
-  if (selCat && selSub) {
-    fillMenu(selCat, uniqueBy("category"), "All Categories");
-    fillMenu(selSub, uniqueBy("subcategory"), "All Subcategories");
-
-    selCat.addEventListener("change", function () {
-      fillMenu(selSub, uniqueBy("subcategory", selCat.value || null),
-               "All Subcategories");
+  if (selDoor && selKey && selTurns) {
+    fillMenu(selDoor, optionsFor("door", "", ""), "All Doors");
+    selDoor.addEventListener("change", refresh);
+    selKey.addEventListener("change", function () {
+      fillMenu(selTurns, optionsFor("turns", selDoor.value, selKey.value), "Anything");
       applyFilter();
     });
-    selSub.addEventListener("change", applyFilter);
+    selTurns.addEventListener("change", applyFilter);
     resetBtn.addEventListener("click", function () {
-      selCat.value = "";
-      fillMenu(selSub, uniqueBy("subcategory"), "All Subcategories");
-      selSub.value = "";
-      applyFilter();
+      selDoor.value = "";
+      selKey.value = "";
+      selTurns.value = "";
+      refresh();
     });
-    applyFilter();
+    refresh();
   } else if (countEl) {
     countEl.textContent = COUNT_TEXT;
   }

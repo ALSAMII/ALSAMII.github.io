@@ -250,6 +250,11 @@ html[data-scene="1"] .atmosphere {
   padding: 0 0.25rem 1rem;
 }
 
+/* Door and Key share the first row; What turns it takes the second,
+   with the clear button standing beside both. */
+.filter-field--turns { grid-column: 1 / 3; }
+.filters .filter-reset { grid-row: 1 / 3; align-self: center; }
+
 .filter-field { min-width: 0; }
 
 .filter-field label {
@@ -353,7 +358,9 @@ html[data-scene="1"] .atmosphere {
 /* Phones: the two menus stack rather than squeeze */
 @media (max-width: 30rem) {
   .filters { grid-template-columns: 1fr auto; gap: 0.65rem 0.6rem; }
-  .filters .filter-field:first-child { grid-column: 1 / -1; }
+  .filters .filter-field { grid-column: 1 / -1; }
+  .filters .filter-field--turns { grid-column: 1 / 2; }
+  .filters .filter-reset { grid-row: auto; align-self: end; }
 }
 
 /* --- Story list ------------------------------------------- */

@@ -110,23 +110,31 @@
          ──────────────────────────────────────────────────────── -->
     <aside class="shelf" id="stories" aria-label="Stories">
 
-      <!-- Filter bar. Both menus are built by script.js from the
-           category / subcategory fields in stories.js, so a new
-           book with a new category needs no edit here. -->
+      <!-- Filter bar. All three menus are built by script.js from
+           the door / key / substance fields in stories.js, so a new
+           book with a new door needs no edit here. -->
       <div class="filters" id="filters">
         <div class="filter-field">
-          <label class="caps" for="filterCat">Category</label>
+          <label class="caps" for="filterDoor">Door</label>
           <div class="select-wrap">
-            <select id="filterCat">
-              <option value="">All Categories</option>
+            <select id="filterDoor">
+              <option value="">All Doors</option>
             </select>
           </div>
         </div>
         <div class="filter-field">
-          <label class="caps" for="filterSub">Subcategory</label>
+          <label class="caps" for="filterKey">Key</label>
           <div class="select-wrap">
-            <select id="filterSub">
-              <option value="">All Subcategories</option>
+            <select id="filterKey">
+              <option value="">All Keys</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-field filter-field--turns">
+          <label class="caps" for="filterTurns">What turns it</label>
+          <div class="select-wrap">
+            <select id="filterTurns">
+              <option value="">Anything</option>
             </select>
           </div>
         </div>

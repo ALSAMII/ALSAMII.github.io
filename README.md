@@ -47,17 +47,19 @@ Open `index.html` in a text editor and change:
      num: 31,
      title: "The Long Way Round",
      words: "820 words",
-     category: "Rite",
-     subcategory: "The Loop",
-     substance: "Highway hypnosis \u2014 the 45-minute gap",
+     door: "Rite",
+     key: "The Loop",
+     substance: "Highway hypnosis \u2014 the 41-minute gap",
      synopsis: "One or two sentences shown when a reader hovers."
    },
    ```
 
-   `category` and `subcategory` feed the two dropdowns above the
-   list, and `substance` is the line shown under the synopsis on
-   the stage. Reuse an existing category and subcategory where one
-   fits — a new spelling creates a new menu entry.
+   `door` and `key` feed the first two dropdowns above the list.
+   `substance` is the line shown under the synopsis on the stage,
+   and its first part — everything before the em dash — becomes the
+   entry in the third dropdown, "What turns it". Reuse an existing
+   door and key where one fits; a new spelling creates a new menu
+   entry.
 
 3. Save, refresh. Numbering is automatic; the hover behaviour picks
    the story up on its own. Reordering stories = reordering blocks.
