@@ -59,7 +59,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=31">
+<link rel="stylesheet" href="style.css?v=32">
 </head>
 
 <body>
@@ -134,12 +134,18 @@
             </select>
           </div>
         </div>
+        <!-- Not a <select>: these entries carry a full sentence, and a
+             native option list can't wrap one. Built by script.js. -->
         <div class="filter-field filter-field--turns">
-          <label class="caps" for="filterTurns">What turns it</label>
-          <div class="select-wrap">
-            <select id="filterTurns">
-              <option value="">Anything</option>
-            </select>
+          <span class="caps combo-label" id="turnsLabel">What turns it</span>
+          <div class="combo" id="filterTurns">
+            <button type="button" class="combo-btn" id="turnsBtn"
+                    aria-haspopup="listbox" aria-expanded="false"
+                    aria-labelledby="turnsLabel turnsBtn">
+              <span class="combo-value" id="turnsValue">Anything</span>
+            </button>
+            <ul class="combo-list" id="turnsList" role="listbox"
+                aria-labelledby="turnsLabel" tabindex="-1" hidden></ul>
           </div>
         </div>
         <button class="filter-reset" id="filterReset" type="button"
@@ -245,7 +251,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=31"></script>
-<script src="script.js?v=31"></script>
+<script src="stories.js?v=32"></script>
+<script src="script.js?v=32"></script>
 </body>
 </html>

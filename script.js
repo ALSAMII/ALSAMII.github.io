@@ -516,18 +516,24 @@
 
   var selDoor = document.getElementById("filterDoor");
   var selKey = document.getElementById("filterKey");
-  var selTurns = document.getElementById("filterTurns");
   var resetBtn = document.getElementById("filterReset");
   var noMatch = document.getElementById("noMatch");
   var countEl = document.getElementById("shelfCount");
   var COUNT_TEXT = STORIES.length + " stories \u00b7 more coming";
 
-  /* The third menu lists what a book runs on, which is the part of
-     "substance" before the em dash. Keeping it derived means there
-     is only ever one place to write it. */
+  /* The third menu lists what a book runs on. That comes from the
+     "substance" field, split at the em dash: the name before it, the
+     description after. Keeping it derived means there is only ever
+     one place to write it. */
+  function splitSubstance(s) {
+    if (!s || !s.substance) return null;
+    var parts = String(s.substance).split(" \u2014 ");
+    return { name: parts[0].trim(), gloss: parts.slice(1).join(" \u2014 ").trim() };
+  }
+
   function turnsOf(s) {
-    if (!s || !s.substance) return "";
-    return String(s.substance).split(" \u2014 ")[0].trim();
+    var p = splitSubstance(s);
+    return p ? p.name : "";
   }
 
   function matches(s, door, key, turns) {
@@ -541,13 +547,27 @@
   function optionsFor(field, door, key) {
     var seen = [];
     STORIES.forEach(function (s) {
-      var v = field === "turns" ? turnsOf(s) : s[field];
+      var v = s[field];
       if (!v) return;
       if (door && s.door !== door) return;
       if (key && s.key !== key) return;
       if (seen.indexOf(v) === -1) seen.push(v);
     });
     return seen;
+  }
+
+  function turnsOptions(door, key) {
+    var out = [], seen = [];
+    STORIES.forEach(function (s) {
+      var p = splitSubstance(s);
+      if (!p || !p.name) return;
+      if (door && s.door !== door) return;
+      if (key && s.key !== key) return;
+      if (seen.indexOf(p.name) !== -1) return;
+      seen.push(p.name);
+      out.push(p);
+    });
+    return out;
   }
 
   function fillMenu(sel, values, allLabel) {
@@ -568,20 +588,174 @@
     sel.value = values.indexOf(keep) === -1 ? "" : keep;
   }
 
+  /* ---- The "What turns it" menu ----------------------------
+     A native <select> renders each option on one clipped line, and
+     these entries are whole sentences, so this one is built by hand:
+     a button and a listbox, each entry the name over its description.
+     Keyboard and screen-reader behaviour follows the listbox pattern. */
+
+  var turnsBtn = document.getElementById("turnsBtn");
+  var turnsList = document.getElementById("turnsList");
+  var turnsValueEl = document.getElementById("turnsValue");
+  var ALL_TURNS = "Anything";
+  var turns = { value: "", gloss: "" };
+  var turnsItems = [];
+  var activeIndex = -1;
+
+  function paintTurnsButton() {
+    turnsValueEl.textContent = "";
+    if (!turns.value) {
+      turnsValueEl.textContent = ALL_TURNS;
+      return;
+    }
+    var name = document.createElement("span");
+    name.className = "combo-name";
+    name.textContent = turns.value;
+    turnsValueEl.append(name);
+    if (turns.gloss) {
+      var gloss = document.createElement("span");
+      gloss.className = "combo-gloss";
+      gloss.textContent = turns.gloss;
+      turnsValueEl.append(gloss);
+    }
+  }
+
+  function buildTurnsList(options) {
+    turnsList.textContent = "";
+    turnsItems = [];
+
+    var entries = [{ name: "", gloss: "" }].concat(options);
+    entries.forEach(function (opt) {
+      var li = document.createElement("li");
+      li.className = "combo-opt";
+      li.setAttribute("role", "option");
+      li.dataset.value = opt.name;
+      li.setAttribute("aria-selected", opt.name === turns.value ? "true" : "false");
+      if (opt.name === turns.value) li.classList.add("is-chosen");
+
+      if (!opt.name) {
+        var any = document.createElement("span");
+        any.className = "combo-name";
+        any.textContent = ALL_TURNS;
+        li.append(any);
+      } else {
+        var n = document.createElement("span");
+        n.className = "combo-name";
+        n.textContent = opt.name;
+        li.append(n);
+        if (opt.gloss) {
+          var g = document.createElement("span");
+          g.className = "combo-gloss";
+          g.textContent = opt.gloss;
+          li.append(g);
+        }
+      }
+
+      li.addEventListener("click", function () {
+        chooseTurn(opt.name, opt.gloss);
+        closeTurns(true);
+      });
+      turnsList.append(li);
+      turnsItems.push(li);
+    });
+  }
+
+  function chooseTurn(name, gloss) {
+    turns.value = name || "";
+    turns.gloss = name ? (gloss || "") : "";
+    paintTurnsButton();
+    turnsBtn.classList.toggle("is-set", Boolean(turns.value));
+    applyFilter();
+  }
+
+  function markActive(i) {
+    turnsItems.forEach(function (el, n) {
+      el.classList.toggle("is-active", n === i);
+    });
+    activeIndex = i;
+    if (turnsItems[i] && turnsItems[i].scrollIntoView) {
+      turnsItems[i].scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  function openTurns() {
+    turnsList.hidden = false;
+    turnsBtn.setAttribute("aria-expanded", "true");
+    var chosen = turnsItems.findIndex(function (el) {
+      return el.dataset.value === turns.value;
+    });
+    markActive(chosen === -1 ? 0 : chosen);
+  }
+
+  function closeTurns(refocus) {
+    turnsList.hidden = true;
+    turnsBtn.setAttribute("aria-expanded", "false");
+    markActive(-1);
+    if (refocus) turnsBtn.focus();
+  }
+
+  function turnsIsOpen() { return !turnsList.hidden; }
+
+  if (turnsBtn) {
+    turnsBtn.addEventListener("click", function () {
+      if (turnsIsOpen()) closeTurns(false); else openTurns();
+    });
+
+    turnsBtn.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        if (!turnsIsOpen()) { openTurns(); return; }
+        if (e.key === "Enter" || e.key === " ") {
+          var el = turnsItems[activeIndex];
+          if (el) {
+            var opt = turnsOptionFor(el.dataset.value);
+            chooseTurn(el.dataset.value, opt ? opt.gloss : "");
+          }
+          closeTurns(true);
+          return;
+        }
+        markActive(Math.min(turnsItems.length - 1,
+          Math.max(0, activeIndex + (e.key === "ArrowDown" ? 1 : -1))));
+      } else if (e.key === "Escape" && turnsIsOpen()) {
+        closeTurns(true);
+      }
+    });
+
+    /* Clicking anywhere else puts the list away. */
+    document.addEventListener("click", function (e) {
+      if (!turnsIsOpen()) return;
+      var root = document.getElementById("filterTurns");
+      if (root && !root.contains(e.target)) closeTurns(false);
+    });
+  }
+
+  function turnsOptionFor(name) {
+    var all = turnsOptions(selDoor.value, selKey.value);
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].name === name) return all[i];
+    }
+    return null;
+  }
+
   /* Rebuild the downstream menus, then filter. Called after any
      change, so the three can never disagree with each other. */
   function refresh() {
     fillMenu(selKey, optionsFor("key", selDoor.value, ""), "All Keys");
-    fillMenu(selTurns, optionsFor("turns", selDoor.value, selKey.value), "Anything");
+    var opts = turnsOptions(selDoor.value, selKey.value);
+    var stillThere = opts.some(function (o) { return o.name === turns.value; });
+    if (!stillThere) { turns.value = ""; turns.gloss = ""; }
+    paintTurnsButton();
+    turnsBtn.classList.toggle("is-set", Boolean(turns.value));
+    buildTurnsList(opts);
     applyFilter();
   }
 
   function applyFilter() {
-    var door = selDoor.value, key = selKey.value, turns = selTurns.value;
+    var door = selDoor.value, key = selKey.value, turn = turns.value;
     var shown = 0;
 
     rows.forEach(function (r) {
-      var ok = matches(r.story, door, key, turns);
+      var ok = matches(r.story, door, key, turn);
       r.el.classList.toggle("filtered-out", !ok);
       if (ok) shown++;
     });
@@ -589,7 +763,7 @@
     /* A series heading stays only while at least one of its books does. */
     groupRows.forEach(function (g) {
       var any = g.group.books.some(function (n) {
-        return byNum[n] && matches(byNum[n], door, key, turns);
+        return byNum[n] && matches(byNum[n], door, key, turn);
       });
       g.el.classList.toggle("filtered-out", !any);
     });
@@ -602,11 +776,10 @@
       if (!hidden) first = false;
     });
 
-    var filtering = Boolean(door || key || turns);
+    var filtering = Boolean(door || key || turn);
     noMatch.hidden = shown !== 0;
     selDoor.classList.toggle("is-set", Boolean(door));
     selKey.classList.toggle("is-set", Boolean(key));
-    selTurns.classList.toggle("is-set", Boolean(turns));
     resetBtn.disabled = !filtering;
     if (countEl) {
       countEl.textContent = filtering
@@ -615,18 +788,15 @@
     }
   }
 
-  if (selDoor && selKey && selTurns) {
+  if (selDoor && selKey && turnsBtn) {
     fillMenu(selDoor, optionsFor("door", "", ""), "All Doors");
     selDoor.addEventListener("change", refresh);
-    selKey.addEventListener("change", function () {
-      fillMenu(selTurns, optionsFor("turns", selDoor.value, selKey.value), "Anything");
-      applyFilter();
-    });
-    selTurns.addEventListener("change", applyFilter);
+    selKey.addEventListener("change", refresh);
     resetBtn.addEventListener("click", function () {
       selDoor.value = "";
       selKey.value = "";
-      selTurns.value = "";
+      turns.value = "";
+      turns.gloss = "";
       refresh();
     });
     refresh();
