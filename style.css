@@ -722,6 +722,32 @@ html[data-scene="1"] .atmosphere {
   .feature.trio .easel-set img { width: clamp(4.25rem, 6.5vw, 6rem); }
 }
 
+/* Groups larger than three (the five-book cycle): the covers go
+   smaller and wrap, so five stand as three above two rather than
+   pushing the synopsis off the stage. Triptychs are untouched. */
+.easel-set[data-count="4"] img,
+.easel-set[data-count="5"] img { width: clamp(4.5rem, 5.5vw, 6.5rem); }
+
+.feature.trio .easel-set[data-count="4"],
+.feature.trio .easel-set[data-count="5"] {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 22rem;
+}
+
+@media (max-width: 82rem) {
+  .feature.trio .easel-set[data-count="4"],
+  .feature.trio .easel-set[data-count="5"] { max-width: 17rem; gap: 0.6rem; }
+  .feature.trio .easel-set[data-count="4"] img,
+  .feature.trio .easel-set[data-count="5"] img { width: clamp(3.75rem, 5vw, 5rem); }
+}
+
+/* Phones: the inline row of little covers wraps instead of
+   squeezing five onto one line. */
+.trilogy.open .synopsis .minis { flex-wrap: wrap; }
+.trilogy.open .synopsis .minis.many img { width: 4rem; }
+
 /* Space between stage paragraphs; type eases down on short windows */
 .panel .lede + .lede { margin-top: 1em; }
 @media (max-height: 51rem) {

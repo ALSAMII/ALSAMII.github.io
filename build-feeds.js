@@ -2,7 +2,7 @@
    REBUILDS feed.xml AND sitemap.xml FROM stories.js
 
    Search engines and feed readers can't run your JavaScript, so
-   they never see the 26 books — the page is one <div> to them.
+   they never see the books — the page is one <div> to them.
    These two static files tell them what's here.
 
    Run this whenever you add or change a book:
@@ -40,7 +40,8 @@ const slug = (s) =>
     .replace(/^-+|-+$/g, "");
 
 const trioSlug = (t) =>
-  "triptych-" + t.title.toLowerCase()
+  (t.books.length === 3 ? "triptych-" : "series-") +
+  t.title.toLowerCase()
     .replace(/['\u2019]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");

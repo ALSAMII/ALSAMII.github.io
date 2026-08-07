@@ -30,7 +30,6 @@
 
   var easel = document.getElementById("easelImg");
   var easelSet = document.getElementById("easelSet");
-  var setImgs = easelSet.querySelectorAll("img");
   var feature = document.getElementById("feature");
   var ftMeta = document.getElementById("ftMeta");
   var ftText = document.getElementById("ftText");
@@ -60,7 +59,8 @@
   }
 
   function trioSlug(t) {
-    return "triptych-" + t.title.toLowerCase()
+    return (t.books.length === 3 ? "triptych-" : "series-") +
+      t.title.toLowerCase()
       .replace(/['\u2019]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
@@ -123,18 +123,28 @@
     feature.classList.add("show");
   }
 
+  /* The small line above a group's title. stories.js can set its
+     own with a "label" field; a group of three keeps the old word. */
+  function groupLabel(t) {
+    return t.label || (t.books.length === 3 ? "A Triptych" : "A Series");
+  }
+
   function showTrilogy(t) {
     clearTimeout(hideTimer);
     panels.forEach(function (p) { p.classList.remove("is-active"); });
     feature.classList.add("trio");
-    ftMeta.textContent = "A Triptych \u00b7 " + t.title;
+    ftMeta.textContent = groupLabel(t) + " \u00b7 " + t.title;
     ftText.textContent = t.synopsis;
     ftLink.style.display = "none";
-    t.books.forEach(function (n, i) {
-      setImgs[i].style.display = "";
-      setImgs[i].alt = "";
-      setImgs[i].onerror = function () { setImgs[i].style.display = "none"; };
-      setImgs[i].src = coverFor(n);
+    /* Built fresh each time, so a group can hold any number of books. */
+    easelSet.textContent = "";
+    easelSet.setAttribute("data-count", t.books.length);
+    t.books.forEach(function (n) {
+      var im = document.createElement("img");
+      im.alt = "";
+      im.addEventListener("error", function () { im.remove(); });
+      im.src = coverFor(n);
+      easelSet.append(im);
     });
     feature.classList.add("show");
   }
@@ -237,7 +247,7 @@
 
     var label = document.createElement("p");
     label.className = "t-label caps";
-    label.textContent = "A Triptych";
+    label.textContent = groupLabel(t);
 
     var title = document.createElement("h2");
     title.className = "t-title";
@@ -246,7 +256,7 @@
     var syn = document.createElement("div");
     syn.className = "synopsis";
     var minis = document.createElement("div");
-    minis.className = "minis";
+    minis.className = "minis" + (t.books.length > 3 ? " many" : "");
     t.books.forEach(function (n) {
       var im = document.createElement("img");
       im.src = coverFor(n);

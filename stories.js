@@ -215,15 +215,26 @@ const STORIES = [
     title: "The Quiet Ones",
     words: "18,900 words",
     synopsis: "Romania, 1989. Decree 770 has forced a birth rate for a generation, and the surplus children are warehoused in institutions with a beautiful name \u2014 leag\u0103ne, cradles \u2014 at one caregiver to forty infants. Lidia is a decree child herself, aged out at eighteen and hired back as a night attendant: the machine staffing itself with its own product. Her unauthorised notebook records the two things the state's files cannot hold \u2014 the silence of wards where hundreds of infants have each concluded that crying reaches no one, and the rocking."
+  },
+
+  {
+    num: 30,
+    title: "Model and Meadow",
+    words: "21,000 words",
+    synopsis: "Terez\u00edn, 1942. The fortress ghetto is a town built to be looked at \u2014 sixty thousand people in a town of seven thousand beds, two truths running at all times. Eva, eleven, is sent to Room Twenty-Eight, where thirty girls run a civilization on a constitution of their own, and where on Thursdays, in a basement, a woman who packed fifty kilos of paper instead of clothes teaches them to breathe, to look, and to sign their names. She never corrects a drawing. She keeps every one. Then the world's certified eyes arrive, walk through a lie built of conscripted truth, and call it almost normal."
   }
 
 ];
 
 
 /* ============================================================
-   TRIPTYCHS — groups of books shown under one header in the
-   list. Hovering the header shows all three covers together
-   with the triptych synopsis. "books" are the series numbers.
+   SERIES — groups of books shown under one header in the list.
+   Hovering the header shows every cover in the group together
+   with the group's synopsis. "books" are the series numbers,
+   and a group can hold any number of them.
+
+   "label" is the small line above the title in the sidebar.
+   Leave it out and a group of three says "A Triptych".
    ============================================================ */
 
 const TRILOGIES = [
@@ -236,6 +247,12 @@ const TRILOGIES = [
     title: "Les Folies",
     books: [22, 23, 24],
     synopsis: "One city, three books, no villains. A clerk, then a crowd, then a congregation \u2014 each does everything correctly, and the result is wrong every time. Nobody breaks a law, nobody raises a voice, and by the final rule, you may already have agreed to it."
+  },
+  {
+    title: "The Unwitnessed Wars I\u2013V",
+    label: "A Cycle in Five Books",
+    books: [26, 27, 28, 29, 30],
+    synopsis: "Five atrocities the world declined to witness: poison gas drifting over the marshes of Iran and Iraq; a famine ordered by decree in Ukraine; a hundred machete days in Rwanda; wards of unheld children in Ceau\u0219escu's Romania; a show-ghetto dressed for the Red Cross and certified as almost normal. Five clerks counting what the ledgers were built to erase. Five doors the cornered body found \u2014 smoke, hunger, stillness, rocking, the drawn page \u2014 and one question, noir to the bone: shelter from the century, or the century, inside?"
   }
 ];
 
