@@ -616,9 +616,9 @@ html[data-scene="1"] .atmosphere {
 
 /* The three-part reader's guide in the About panel. Term above,
    meaning below, so it reads as a glossary rather than a paragraph. */
-.guide { margin: 0 0 1.75rem; }
+.guide { margin: 1.75rem 0; }
 
-.guide-row { margin: 0 0 1.35rem; }
+.guide-row { margin: 0 0 1.5rem; }
 .guide-row:last-child { margin-bottom: 0; }
 
 .guide-term {
@@ -692,8 +692,8 @@ html[data-scene="1"] .atmosphere {
   /* Stage first, list second — mirrors reading order on a phone.
      min-height, not height: the About panel is taller than a phone
      screen and needs to push the page down, not be cut off by it. */
-  .stage { order: -1; min-height: 60svh; overflow: visible; }
-  .panel { padding-block: 2rem; }
+  .stage { order: -1; min-height: 42svh; overflow: visible; }
+  .panel { padding-block: 1.25rem; }
 
   .floor { flex-wrap: wrap; justify-content: center; text-align: center; }
 
@@ -748,7 +748,7 @@ html[data-scene="1"] .atmosphere {
   .panel {
     align-self: center;
     align-self: safe center;
-    padding-block: 2.5rem;
+    padding-block: 1.5rem;
   }
 }
 
@@ -774,7 +774,6 @@ html[data-scene="1"] .atmosphere {
 /* Spacing for multi-paragraph notes and the signature line */
 .panel .note + .note { margin-top: 0.9rem; }
 .panel .guide + .note { margin-top: 0; }
-.panel .note + .guide { margin-top: 1.6rem; }
 .panel .signature { color: var(--ember); margin: 1.5rem 0 0; }
 
 /* The lede and the first paragraph had nothing between them and ran
