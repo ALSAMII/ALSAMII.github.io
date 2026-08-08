@@ -724,18 +724,33 @@ html[data-scene="1"] .atmosphere {
 
   .masthead { flex-wrap: wrap; }
 
-  /* Three nowrap links at 13px would crowd the speaker and the
-     volume slider on a narrow phone. */
+  /* The speaker and slider live inside the nav, so all five items
+     share one row. Since the links no longer wrap to two lines to
+     make space, the row has to earn its width back from the type:
+     smaller, tighter tracking, narrower gaps. */
+  .masthead nav { gap: 0.6rem; }
+
   .masthead nav a,
-  .masthead nav .linklike { font-size: 0.75rem; letter-spacing: 0.18em; }
+  .masthead nav .linklike { font-size: 0.6875rem; letter-spacing: 0.12em; }
 
   .hall { grid-template-columns: 1fr; gap: 0; }
 
-  /* Stage first, list second — mirrors reading order on a phone.
-     min-height, not height: About is taller than a phone screen and
-     needs to push the page down, not be cut off by it. */
-  .stage { order: -1; min-height: 42svh; overflow: visible; }
-  .panel { padding-block: 1.25rem; }
+  /* Stage first, list second — mirrors reading order on a phone. */
+  .stage { order: -1; min-height: auto; overflow: visible; }
+
+  /* On a wide screen every panel shares one grid cell, so the stage
+     keeps a steady height as you switch between them. On a phone that
+     means the tallest panel sets the height and the shorter ones float
+     in the middle of it. Here each panel gets its own row and the
+     inactive ones leave the flow entirely, so the active one starts
+     directly under the header. Trade-off: the cross-fade becomes an
+     instant swap on phones. */
+  .panel {
+    grid-area: auto;
+    align-self: start;
+    padding-block: 1.25rem;
+  }
+  .panel:not(.is-active) { display: none; }
 
   .floor { flex-wrap: wrap; justify-content: center; text-align: center; }
 
@@ -999,7 +1014,7 @@ html[data-scene="1"] .atmosphere {
   transition: opacity 0.25s ease;
 }
 .vol:hover, .vol:focus-visible { opacity: 1; }
-@media (max-width: 56rem) { .vol { width: 4.5rem; } }
+@media (max-width: 56rem) { .vol { width: 3.25rem; } }
 
 /* Mid-width windows (a 13" laptop lands here): the cover used to be
    hidden outright, which meant most laptop visitors never saw the
