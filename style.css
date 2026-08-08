@@ -577,6 +577,13 @@ html[data-scene="1"] .atmosphere {
   align-self: center;
   justify-self: center;
   max-width: 37rem;
+  /* About runs longer than the others; on a short window it scrolls
+     rather than spilling out of the stage. */
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
   padding: 1.25rem 1rem;
   text-align: center;
   opacity: 0;
@@ -613,6 +620,30 @@ html[data-scene="1"] .atmosphere {
 }
 
 .panel .eyebrow { color: var(--ember); margin: 0 0 1.25rem; }
+
+/* The three-part reader's guide in the About panel. Term above,
+   meaning below, so it reads as a glossary rather than a paragraph. */
+.guide { margin: 0 0 1.75rem; }
+
+.guide-row { margin: 0 0 1.35rem; }
+.guide-row:last-child { margin-bottom: 0; }
+
+.guide-term {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--ember);
+  font-size: 0.6875rem;
+}
+
+.guide-def {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  line-height: 1.65;
+  color: var(--parchment);
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
+  text-wrap: pretty;
+}
 
 .panel .note {
   font-family: var(--serif);
@@ -727,6 +758,8 @@ html[data-scene="1"] .atmosphere {
 
 /* Spacing for multi-paragraph notes and the signature line */
 .panel .note + .note { margin-top: 0.9rem; }
+.panel .guide + .note { margin-top: 0; }
+.panel .note + .guide { margin-top: 1.6rem; }
 .panel .signature { color: var(--ember); margin: 1.5rem 0 0; }
 
 /* The lede and the first paragraph had nothing between them and ran

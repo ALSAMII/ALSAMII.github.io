@@ -85,9 +85,10 @@
            (rounded === 1 ? " hour read" : " hours read");
   }
 
-  /* The stage rests on the Author's Notes. Hovering a book or the
-     About link swaps them out; letting go brings them back. */
-  var DEFAULT_PANEL = "panel-notes";
+  /* The stage rests on About: it's the reader's guide, so a first
+     visit lands on it and every hover returns to it. Hovering a book
+     or opening the Notes swaps it out; letting go brings it back. */
+  var DEFAULT_PANEL = "panel-about";
 
   var pinned = null;   /* the book or triptych currently held on the stage */
 
