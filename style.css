@@ -727,8 +727,14 @@ html[data-scene="1"] .atmosphere {
   /* The speaker and slider live inside the nav, so all five items
      share one row. Since the links no longer wrap to two lines to
      make space, the row has to earn its width back from the type:
-     smaller, tighter tracking, narrower gaps. */
-  .masthead nav { gap: 0.6rem; }
+     smaller, tighter tracking, narrower gaps.
+
+     nowrap is the guarantee. Fitting this by arithmetic alone is too
+     close a thing — a wider font fallback or larger system text and
+     the slider drops to its own line. Forbidden from wrapping, the
+     slider is the only item that can shrink (the links are nowrap
+     text and stop at min-content), so it absorbs any shortfall. */
+  .masthead nav { flex-wrap: nowrap; gap: 0.6rem; }
 
   .masthead nav a,
   .masthead nav .linklike { font-size: 0.6875rem; letter-spacing: 0.12em; }
@@ -1014,7 +1020,17 @@ html[data-scene="1"] .atmosphere {
   transition: opacity 0.25s ease;
 }
 .vol:hover, .vol:focus-visible { opacity: 1; }
-@media (max-width: 56rem) { .vol { width: 3.25rem; } }
+@media (max-width: 56rem) {
+  /* Shrinkable, with a floor — below this it stops being draggable. */
+  .vol { flex: 0 1 3.25rem; width: 3.25rem; min-width: 2.25rem; }
+}
+
+/* Very narrow phones (an SE, or a phone with large system text) can't
+   hold three links plus both sound controls. The slider goes and the
+   mute toggle stays, since muting is the one people actually want. */
+@media (max-width: 23rem) {
+  .vol { display: none; }
+}
 
 /* Mid-width windows (a 13" laptop lands here): the cover used to be
    hidden outright, which meant most laptop visitors never saw the
