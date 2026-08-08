@@ -12,6 +12,7 @@
   --faded:      #9c9280;                    /* secondary text */
   --ember:      #d8a65f;                    /* candlelight accent */
   --ember-soft: rgba(216, 166, 95, 0.55);
+  --ember-dim:  #b8964f;                    /* nav at rest — gold, held back */
   --hairline:   rgba(216, 208, 192, 0.13);  /* dividers */
 
   /* Type --------------------------------------------------- */
@@ -201,18 +202,46 @@ html[data-scene="1"] .atmosphere {
 .masthead nav {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: clamp(1rem, 3vw, 2.5rem);
 }
 
+/* The nav is the only thing up here you can click, so it reads as
+   gold rather than as secondary text. Tracking eases in as the size
+   goes up — .caps at 0.28em was wide enough to wrap two of three. */
+.masthead nav a,
+.masthead nav .linklike {
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+  color: var(--ember-dim);
+}
+
 .masthead nav a {
-  color: var(--faded);
+  display: inline-block;
   text-decoration: none;
   padding: 0.4rem 0.1rem;
   border-bottom: 1px solid transparent;
-  transition: color 0.25s ease, border-color 0.25s ease;
+  transition: color 0.25s ease, border-color 0.25s ease,
+              text-shadow 0.25s ease, transform 0.25s ease;
 }
 
-.masthead nav a:hover { color: var(--parchment); }
+.masthead nav .linklike {
+  display: inline-block;
+  transition: color 0.25s ease, border-color 0.25s ease,
+              text-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* Hover lifts past the wordmark's gold, catches candlelight, and
+   steps forward. Scale, not letter-spacing — a transform paints
+   without reflowing, so the neighbouring links stay put. */
+.masthead nav a:hover,
+.masthead nav .linklike:hover {
+  color: #f0c47e;
+  text-shadow: 0 0 26px rgba(216, 166, 95, 0.6);
+  transform: scale(1.09);
+}
 
 .masthead nav a[aria-current="true"] {
   color: var(--ember);
@@ -695,6 +724,11 @@ html[data-scene="1"] .atmosphere {
 
   .masthead { flex-wrap: wrap; }
 
+  /* Three nowrap links at 13px would crowd the speaker and the
+     volume slider on a narrow phone. */
+  .masthead nav a,
+  .masthead nav .linklike { font-size: 0.75rem; letter-spacing: 0.18em; }
+
   .hall { grid-template-columns: 1fr; gap: 0; }
 
   /* Stage first, list second — mirrors reading order on a phone.
@@ -720,6 +754,12 @@ html[data-scene="1"] .atmosphere {
   .atmosphere::before { animation: none; }
   .panel, .panel.is-active { transition: none; transform: none; }
   * { transition-duration: 0.01ms !important; }
+
+  /* The rule above kills the easing, not the transform itself —
+     without this the nav link would still jump in size. Colour and
+     glow still change, so nothing is lost. */
+  .masthead nav a:hover,
+  .masthead nav .linklike:hover { transform: none; }
 }
 
 /* ============================================================
