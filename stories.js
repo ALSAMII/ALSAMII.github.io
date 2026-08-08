@@ -330,6 +330,26 @@ const STORIES = [
     key: "The Loop",
     substance: "Highway hypnosis \u2014 the 41-minute gap",
     synopsis: "Cal Dorsey has driven eighty thousand pounds across the middle of America for twenty-six years, and in all that time he has lost forty-one minutes. He did not fall asleep. The truck stayed in its lane, and the fuel curve was the cleanest the company had ever recorded. When he came back to himself the sun was not up, the road ahead was empty, and something behind him was on fire. Out on the night frequencies a preacher nobody has ever met tells a scattered congregation that the driver who takes over when you go under is the better one \u2014 and in a glass building in Kansas City there is a research group that agrees, and has the numbers, and needs a great deal more of them."
+  },
+
+  {
+    num: 32,
+    title: "The Compassionate Fare",
+    words: "18,300 words",
+    door: "Withholding",
+    key: "The Forty Minutes",
+    substance: "The forty minutes \u2014 a stranger's hand at eight thousand feet, when nobody has touched you in days",
+    synopsis: "There is a cheaper ticket you can buy when somebody dies, and to qualify for it you have to prove the death at the desk, in a queue, in front of everyone. Ilse Novak has worked that queue for twelve years \u2014 senior cabin attendant on a small carrier that flies the bereaved in the cabin and their dead in the hold, on the same aircraft, on the same night. Somewhere in the seventh hour, with the lights down and the air thin and nobody aboard touched in days, she kneels in the aisle beside a chosen passenger and takes their hand and does not let go. Eleven hundred and forty signatures, kept in her own handwriting, because she is proud of it and because a record ought to be kept properly. She has never once asked what happens after the signature."
+  },
+
+  {
+    num: 33,
+    title: "The Isolated Hand",
+    words: "16,900 words",
+    door: "Dose",
+    key: "No Way to Say Stop",
+    substance: "Three drugs \u2014 one to stop you experiencing it, one to stop it hurting, one to stop you moving",
+    synopsis: "Sara Karim is halfway through a staged reconstruction: four operations, consented to twice, in writing, and she read the form both times. During the second one she was awake \u2014 able to hear the room, able to feel every part of what was done to her, in a body chemically separated from every channel it had ever used to say stop. She has told four people and been believed by none, and one of them was kind about it, which was worse. There is a published figure for how often this happens, and the figure is very small, and the figure is the reason nobody believes her. Then a consultant anaesthetist who has never lost a patient in twenty-two years pulls her chart apart, works out that her body was always going to do this, and offers her something nobody has offered her before, which is to be asked a question."
   }
 
 ];
@@ -374,7 +394,9 @@ const GLOSSARY = {
     "Four Minutes Each":  "never enough time",
     "Nobody Called":      "the call nobody answers",
     "Eleven Seconds":     "someone finally listens",
-    "Don't Move":         "stay still, stay alive"
+    "Don't Move":         "stay still, stay alive",
+    "The Forty Minutes":  "the hand nobody else offers",
+    "No Way to Say Stop": "awake, and unable to signal"
   }
 };
 
@@ -396,4 +418,3 @@ const TRILOGIES = [
     synopsis: "Five atrocities the world declined to witness: poison gas drifting over the marshes of Iran and Iraq; a famine ordered by decree in Ukraine; a hundred machete days in Rwanda; wards of unheld children in Ceau\u0219escu's Romania; a show-ghetto dressed for the Red Cross and certified as almost normal. Five clerks counting what the ledgers were built to erase. Five doors the cornered body found \u2014 smoke, hunger, stillness, rocking, the drawn page \u2014 and one question, noir to the bone: shelter from the century, or the century, inside?"
   }
 ];
-
