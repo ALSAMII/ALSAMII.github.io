@@ -189,6 +189,14 @@ html[data-scene="1"] .atmosphere {
   margin: 0.2rem 0 0;
   color: var(--faded);
 }
+/* The imprint line under the wordmark — quieter than the tagline,
+   since the Roya badge beside it already says the same thing. */
+.brand .imprint {
+  margin: 0.35rem 0 0;
+  font-size: 0.5625rem;
+  color: var(--faded);
+  opacity: 0.7;
+}
 
 .masthead nav {
   display: flex;
@@ -417,7 +425,7 @@ html[data-scene="1"] .atmosphere {
 .story.first-visible,
 .trilogy.first-visible { border-top: 1px solid var(--hairline); }
 
-/* Phones: the same single column, tighter */
+/* Phones: the two menus stack rather than squeeze */
 @media (max-width: 30rem) {
   .filters { gap: 0.6rem; }
 }
@@ -690,8 +698,8 @@ html[data-scene="1"] .atmosphere {
   .hall { grid-template-columns: 1fr; gap: 0; }
 
   /* Stage first, list second — mirrors reading order on a phone.
-     min-height, not height: the About panel is taller than a phone
-     screen and needs to push the page down, not be cut off by it. */
+     min-height, not height: About is taller than a phone screen and
+     needs to push the page down, not be cut off by it. */
   .stage { order: -1; min-height: 42svh; overflow: visible; }
   .panel { padding-block: 1.25rem; }
 
