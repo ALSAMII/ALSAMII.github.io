@@ -577,13 +577,6 @@ html[data-scene="1"] .atmosphere {
   align-self: center;
   justify-self: center;
   max-width: 37rem;
-  /* About runs longer than the others; on a short window it scrolls
-     rather than spilling out of the stage. */
-  max-height: 100%;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--hairline) transparent;
   padding: 1.25rem 1rem;
   text-align: center;
   opacity: 0;
@@ -696,8 +689,11 @@ html[data-scene="1"] .atmosphere {
 
   .hall { grid-template-columns: 1fr; gap: 0; }
 
-  /* Stage first, list second — mirrors reading order on a phone */
-  .stage { order: -1; min-height: 60svh; }
+  /* Stage first, list second — mirrors reading order on a phone.
+     min-height, not height: the About panel is taller than a phone
+     screen and needs to push the page down, not be cut off by it. */
+  .stage { order: -1; min-height: 60svh; overflow: visible; }
+  .panel { padding-block: 2rem; }
 
   .floor { flex-wrap: wrap; justify-content: center; text-align: center; }
 
@@ -735,6 +731,25 @@ html[data-scene="1"] .atmosphere {
    hover-driven stage feature. */
 @media (max-width: 56rem) {
   .feature { display: none; }
+}
+
+/* About runs longer than the other panels. On a desktop window the
+   frame is a fixed height, so the stage itself scrolls if the text
+   outgrows it; "safe center" keeps the top reachable when it does.
+   Phones are left alone — there the frame is auto-height and the
+   page scrolls, so a second scroll box inside it only traps text. */
+@media (min-width: 56.01rem) {
+  .stage {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+  .stage::-webkit-scrollbar { width: 0; height: 0; }
+  .panel {
+    align-self: center;
+    align-self: safe center;
+    padding-block: 2.5rem;
+  }
 }
 
 /* On phones the synopsis expands inline instead; give the
@@ -990,6 +1005,9 @@ html[data-scene="1"] .atmosphere {
   .panel .lede { font-size: clamp(1.125rem, 2.3vh, 1.4375rem); }
   .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
   .panel .rule { margin: 1.5rem auto; }
+  .guide-def { font-size: clamp(1rem, 2vh, 1.1875rem); }
+  .guide-row { margin-bottom: 1.1rem; }
+  .guide { margin-bottom: 1.35rem; }
 }
 
 /* ============================================================
