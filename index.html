@@ -59,7 +59,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=36">
+<link rel="stylesheet" href="style.css?v=37">
 </head>
 
 <body>
@@ -118,24 +118,33 @@
            the door / key / substance fields in stories.js, so a new
            book with a new door needs no edit here. -->
       <div class="filters" id="filters">
+        <!-- None of the three is a <select>: a native option list is
+             drawn by the operating system, so its font, colours and
+             highlight can't be styled. These are built by script.js. -->
         <div class="filter-field">
-          <label class="caps" for="filterDoor">Door</label>
-          <div class="select-wrap">
-            <select id="filterDoor">
-              <option value="">All Doors</option>
-            </select>
+          <span class="caps combo-label" id="doorLabel">Door</span>
+          <div class="combo combo--inline" id="filterDoor">
+            <button type="button" class="combo-btn" id="doorBtn"
+                    aria-haspopup="listbox" aria-expanded="false"
+                    aria-labelledby="doorLabel doorBtn">
+              <span class="combo-value" id="doorValue">All Doors</span>
+            </button>
+            <ul class="combo-list" id="doorList" role="listbox"
+                aria-labelledby="doorLabel" tabindex="-1" hidden></ul>
           </div>
         </div>
         <div class="filter-field">
-          <label class="caps" for="filterKey">Key</label>
-          <div class="select-wrap">
-            <select id="filterKey">
-              <option value="">All Keys</option>
-            </select>
+          <span class="caps combo-label" id="keyLabel">Key</span>
+          <div class="combo combo--inline" id="filterKey">
+            <button type="button" class="combo-btn" id="keyBtn"
+                    aria-haspopup="listbox" aria-expanded="false"
+                    aria-labelledby="keyLabel keyBtn">
+              <span class="combo-value" id="keyValue">All Keys</span>
+            </button>
+            <ul class="combo-list" id="keyList" role="listbox"
+                aria-labelledby="keyLabel" tabindex="-1" hidden></ul>
           </div>
         </div>
-        <!-- Not a <select>: these entries carry a full sentence, and a
-             native option list can't wrap one. Built by script.js. -->
         <div class="filter-field filter-field--turns">
           <span class="caps combo-label" id="turnsLabel">What turns it</span>
           <div class="combo" id="filterTurns">
@@ -251,7 +260,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=36"></script>
-<script src="script.js?v=36"></script>
+<script src="stories.js?v=37"></script>
+<script src="script.js?v=37"></script>
 </body>
 </html>

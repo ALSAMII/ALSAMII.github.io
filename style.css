@@ -255,94 +255,13 @@ html[data-scene="1"] .atmosphere {
 
 /* Both ends pinned: an auto-placed row-spanning button lands in the
    first column and shoves the fields sideways. */
-.filters .filter-field { grid-column: 1; }
+.filters .filter-field { grid-column: 1; min-width: 0; }
 .filters .filter-reset { grid-column: 2; grid-row: 1 / 4; align-self: center; }
 
-.filter-field { min-width: 0; }
-
-.filter-field label {
-  display: block;
-  margin-bottom: 0.4rem;
-  font-size: 0.625rem;
-  color: var(--faded);
-}
-
-/* The chevron is drawn on the wrapper, so the <select> itself can
-   be stripped bare and still look native-free in every browser. */
-.select-wrap { position: relative; }
-
-.select-wrap::after {
-  content: "";
-  position: absolute;
-  right: 0.85rem;
-  top: 50%;
-  width: 0.45rem;
-  height: 0.45rem;
-  margin-top: -0.3rem;
-  border-right: 1px solid var(--ember);
-  border-bottom: 1px solid var(--ember);
-  transform: rotate(45deg);
-  pointer-events: none;
-  transition: border-color 0.25s ease;
-}
-
-.filters select {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  padding: 0.7rem 2.2rem 0.7rem 0.9rem;
-  font-family: var(--sans);
-  font-weight: 300;
-  font-size: 0.9375rem;
-  color: var(--parchment);
-  background: rgba(11, 9, 7, 0.55);
-  border: 1px solid var(--hairline);
-  border-radius: 3px;
-  cursor: pointer;
-  transition: border-color 0.25s ease, color 0.25s ease;
-}
-
-.filters select:hover { border-color: var(--ember-soft); }
-.filters select:focus-visible {
-  outline: none;
-  border-color: var(--ember);
-  color: var(--ember);
-}
-
-/* A selection is live: the field lights up so it's obvious the
-   list below is showing part of the shelf, not all of it. */
-.filters select.is-set { color: var(--ember); border-color: var(--ember-soft); }
-
-/* Native menus paint themselves; force a dark one. */
-.filters select option { background: #14100c; color: var(--parchment); }
-
-.filter-reset {
-  display: grid;
-  place-items: center;
-  width: 2.9rem;
-  height: 2.9rem;
-  padding: 0;
-  color: var(--faded);
-  background: rgba(11, 9, 7, 0.55);
-  border: 1px solid var(--hairline);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: color 0.25s ease, border-color 0.25s ease,
-              box-shadow 0.25s ease, opacity 0.25s ease;
-}
-.filter-reset svg { width: 1.15rem; height: 1.15rem; display: block; }
-.filter-reset:hover:not(:disabled) {
-  color: var(--ember);
-  border-color: var(--ember);
-  box-shadow: 0 0 22px rgba(216, 166, 95, 0.28);
-}
-.filter-reset:disabled { opacity: 0.35; cursor: default; }
-.filter-reset:not(:disabled) { color: var(--ember); border-color: var(--ember-soft); }
-
-/* ---- "What turns it": a hand-built menu ------------------
-   The entries carry a whole sentence, which a native option list
-   would clip to one line, so this one is a button and a listbox
-   styled to sit beside the two real selects. */
+/* ---- The three menus -------------------------------------
+   Buttons and listboxes rather than <select>s: a native option
+   list is drawn by the operating system, so its font, colours and
+   highlight ignore this stylesheet completely. */
 
 .combo-label {
   display: block;
@@ -373,7 +292,6 @@ html[data-scene="1"] .atmosphere {
 .combo-btn:focus-visible { outline: none; border-color: var(--ember); }
 .combo-btn.is-set { border-color: var(--ember-soft); }
 
-/* Same chevron as the selects, rotating when the list is open. */
 .combo-btn::after {
   content: "";
   position: absolute;
@@ -391,13 +309,15 @@ html[data-scene="1"] .atmosphere {
   top: 1.45rem;
 }
 
-/* Closed state: the name, and under it as much of the description
-   as two lines will hold. */
 .combo-name {
   display: block;
   color: var(--ember);
   font-size: 0.9375rem;
 }
+
+/* "What turns it" carries whole sentences, so its meaning sits
+   under the name — clamped to two lines on the closed button, in
+   full once the list is open. */
 .combo-gloss {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -409,6 +329,11 @@ html[data-scene="1"] .atmosphere {
   line-height: 1.4;
   color: var(--faded);
 }
+
+/* Door and Key keep name and meaning together on one line. */
+.combo--inline .combo-name,
+.combo--inline .combo-gloss { display: inline; }
+.combo--inline .combo-gloss { margin: 0 0 0 0.35rem; }
 
 .combo-list {
   position: absolute;
@@ -436,19 +361,42 @@ html[data-scene="1"] .atmosphere {
   padding: 0.6rem 0.7rem;
   border-radius: 2px;
   cursor: pointer;
+  white-space: nowrap;
 }
 .combo-opt + .combo-opt { border-top: 1px solid var(--hairline); }
 .combo-opt:hover,
 .combo-opt.is-active { background: rgba(216, 166, 95, 0.09); }
-.combo-opt.is-chosen .combo-name { color: var(--ember); }
 
-/* In the open list the description runs in full — that's the
-   whole reason this menu isn't a <select>. */
-.combo-opt .combo-gloss {
+/* The third menu's entries wrap; the other two never should. */
+.combo:not(.combo--inline) .combo-opt { white-space: normal; }
+.combo:not(.combo--inline) .combo-opt .combo-gloss {
   display: block;
   -webkit-line-clamp: none;
   overflow: visible;
 }
+
+.filter-reset {
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  color: var(--faded);
+  background: rgba(11, 9, 7, 0.55);
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease,
+              box-shadow 0.25s ease, opacity 0.25s ease;
+}
+.filter-reset svg { width: 1.15rem; height: 1.15rem; display: block; }
+.filter-reset:hover:not(:disabled) {
+  color: var(--ember);
+  border-color: var(--ember);
+  box-shadow: 0 0 22px rgba(216, 166, 95, 0.28);
+}
+.filter-reset:disabled { opacity: 0.35; cursor: default; }
+.filter-reset:not(:disabled) { color: var(--ember); border-color: var(--ember-soft); }
 
 .no-match {
   flex: none;
@@ -469,7 +417,7 @@ html[data-scene="1"] .atmosphere {
 .story.first-visible,
 .trilogy.first-visible { border-top: 1px solid var(--hairline); }
 
-/* Phones: the two menus stack rather than squeeze */
+/* Phones: the same single column, tighter */
 @media (max-width: 30rem) {
   .filters { gap: 0.6rem; }
 }

@@ -512,19 +512,26 @@
      All three menus are built from the fields in stories.js, so a
      new book with a new door needs no edit here. They cascade:
      choosing a Door narrows the Keys to the ones that occur behind
-     it, and both narrow what's left in the third menu. */
+     it, and both narrow what's left in the third menu.
 
-  var selDoor = document.getElementById("filterDoor");
-  var selKey = document.getElementById("filterKey");
+     None of the three is a native <select>. An option list is drawn
+     by the operating system, which means its font, colours and
+     highlight ignore the stylesheet entirely — and the third menu's
+     entries are whole sentences a native list would clip. So they
+     are buttons and listboxes, built here. */
+
   var resetBtn = document.getElementById("filterReset");
   var noMatch = document.getElementById("noMatch");
   var countEl = document.getElementById("shelfCount");
   var COUNT_TEXT = STORIES.length + " stories \u00b7 more coming";
 
-  /* The third menu lists what a book runs on. That comes from the
-     "substance" field, split at the em dash: the name before it, the
-     description after. Keeping it derived means there is only ever
-     one place to write it. */
+  /* The one-line meaning beside each Door and Key. Optional: a name
+     with no entry in GLOSSARY just shows on its own. */
+  var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
+
+  /* What a book runs on comes from "substance", split at the em
+     dash: the name before it, the description after. Keeping it
+     derived means there is only ever one place to write it. */
   function splitSubstance(s) {
     if (!s || !s.substance) return null;
     var parts = String(s.substance).split(" \u2014 ");
@@ -544,223 +551,198 @@
 
   /* Order follows first appearance in the list rather than the
      alphabet — the series' own order is the meaningful one. */
-  function optionsFor(field, door, key) {
-    var seen = [];
+  function fieldOptions(field, book, door, key) {
+    var seen = [], out = [];
     STORIES.forEach(function (s) {
       var v = s[field];
-      if (!v) return;
+      if (!v || seen.indexOf(v) !== -1) return;
       if (door && s.door !== door) return;
       if (key && s.key !== key) return;
-      if (seen.indexOf(v) === -1) seen.push(v);
+      seen.push(v);
+      out.push({ name: v, gloss: (GLOSS[book] || {})[v] || "" });
     });
-    return seen;
+    return out;
   }
 
   function turnsOptions(door, key) {
-    var out = [], seen = [];
+    var seen = [], out = [];
     STORIES.forEach(function (s) {
       var p = splitSubstance(s);
-      if (!p || !p.name) return;
+      if (!p || !p.name || seen.indexOf(p.name) !== -1) return;
       if (door && s.door !== door) return;
       if (key && s.key !== key) return;
-      if (seen.indexOf(p.name) !== -1) return;
       seen.push(p.name);
       out.push(p);
     });
     return out;
   }
 
-  /* The one-line meaning beside each Door and Key. Optional: a name
-     with no entry in GLOSSARY just shows on its own. */
-  var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
-
-  function labelFor(which, name) {
-    var book = GLOSS[which] || {};
-    return book[name] ? name + " \u2014 " + book[name] : name;
-  }
-
-  function fillMenu(sel, values, allLabel, which) {
-    var keep = sel.value;
-    sel.textContent = "";
-    var all = document.createElement("option");
-    all.value = "";
-    all.textContent = allLabel;
-    sel.append(all);
-    values.forEach(function (v) {
-      var o = document.createElement("option");
-      o.value = v;
-      o.textContent = which ? labelFor(which, v) : v;
-      sel.append(o);
-    });
-    /* A selection that the narrowed menu no longer offers is dropped
-       rather than left showing something the list isn't obeying. */
-    sel.value = values.indexOf(keep) === -1 ? "" : keep;
-  }
-
-  /* ---- The "What turns it" menu ----------------------------
-     A native <select> renders each option on one clipped line, and
-     these entries are whole sentences, so this one is built by hand:
-     a button and a listbox, each entry the name over its description.
+  /* ---- The menu itself --------------------------------------
+     One component, three instances. "inline" runs the name and its
+     meaning together on a line, which suits the short glosses of
+     Door and Key; without it the meaning sits under the name on its
+     own lines, which is what the sentence-length third menu needs.
      Keyboard and screen-reader behaviour follows the listbox pattern. */
 
-  var turnsBtn = document.getElementById("turnsBtn");
-  var turnsList = document.getElementById("turnsList");
-  var turnsValueEl = document.getElementById("turnsValue");
-  var ALL_TURNS = "Anything";
-  var turns = { value: "", gloss: "" };
-  var turnsItems = [];
-  var activeIndex = -1;
+  var openMenu = null;
 
-  function paintTurnsButton() {
-    turnsValueEl.textContent = "";
-    if (!turns.value) {
-      turnsValueEl.textContent = ALL_TURNS;
-      return;
-    }
-    var name = document.createElement("span");
-    name.className = "combo-name";
-    name.textContent = turns.value;
-    turnsValueEl.append(name);
-    if (turns.gloss) {
-      var gloss = document.createElement("span");
-      gloss.className = "combo-gloss";
-      gloss.textContent = turns.gloss;
-      turnsValueEl.append(gloss);
-    }
-  }
+  function makeCombo(cfg) {
+    var root = document.getElementById(cfg.root);
+    var btn = document.getElementById(cfg.btn);
+    var listEl = document.getElementById(cfg.list);
+    var valueEl = document.getElementById(cfg.value);
+    if (!root || !btn || !listEl || !valueEl) return null;
 
-  function buildTurnsList(options) {
-    turnsList.textContent = "";
-    turnsItems = [];
+    var options = [], items = [], activeIndex = -1;
+    var api = { value: "", gloss: "" };
 
-    var entries = [{ name: "", gloss: "" }].concat(options);
-    entries.forEach(function (opt) {
-      var li = document.createElement("li");
-      li.className = "combo-opt";
-      li.setAttribute("role", "option");
-      li.dataset.value = opt.name;
-      li.setAttribute("aria-selected", opt.name === turns.value ? "true" : "false");
-      if (opt.name === turns.value) li.classList.add("is-chosen");
-
-      if (!opt.name) {
-        var any = document.createElement("span");
-        any.className = "combo-name";
-        any.textContent = ALL_TURNS;
-        li.append(any);
-      } else {
-        var n = document.createElement("span");
-        n.className = "combo-name";
-        n.textContent = opt.name;
-        li.append(n);
-        if (opt.gloss) {
-          var g = document.createElement("span");
-          g.className = "combo-gloss";
-          g.textContent = opt.gloss;
-          li.append(g);
-        }
+    function render(target, opt) {
+      target.textContent = "";
+      var name = document.createElement("span");
+      name.className = "combo-name";
+      name.textContent = opt.name || cfg.allLabel;
+      target.append(name);
+      if (opt.name && opt.gloss) {
+        var gloss = document.createElement("span");
+        gloss.className = "combo-gloss";
+        gloss.textContent = cfg.inline ? "\u2014 " + opt.gloss : opt.gloss;
+        target.append(gloss);
       }
+    }
 
-      li.addEventListener("click", function () {
-        chooseTurn(opt.name, opt.gloss);
-        closeTurns(true);
+    function paint() {
+      render(valueEl, { name: api.value, gloss: api.gloss });
+      btn.classList.toggle("is-set", Boolean(api.value));
+    }
+
+    function build() {
+      listEl.textContent = "";
+      items = [];
+      [{ name: "", gloss: "" }].concat(options).forEach(function (opt) {
+        var li = document.createElement("li");
+        li.className = "combo-opt";
+        li.setAttribute("role", "option");
+        li.dataset.value = opt.name;
+        var chosen = opt.name === api.value;
+        li.setAttribute("aria-selected", chosen ? "true" : "false");
+        if (chosen) li.classList.add("is-chosen");
+        render(li, opt);
+        li.addEventListener("click", function () {
+          choose(opt);
+          close(true);
+        });
+        listEl.append(li);
+        items.push(li);
       });
-      turnsList.append(li);
-      turnsItems.push(li);
-    });
-  }
-
-  function chooseTurn(name, gloss) {
-    turns.value = name || "";
-    turns.gloss = name ? (gloss || "") : "";
-    paintTurnsButton();
-    turnsBtn.classList.toggle("is-set", Boolean(turns.value));
-    applyFilter();
-  }
-
-  function markActive(i) {
-    turnsItems.forEach(function (el, n) {
-      el.classList.toggle("is-active", n === i);
-    });
-    activeIndex = i;
-    if (turnsItems[i] && turnsItems[i].scrollIntoView) {
-      turnsItems[i].scrollIntoView({ block: "nearest" });
     }
-  }
 
-  function openTurns() {
-    turnsList.hidden = false;
-    turnsBtn.setAttribute("aria-expanded", "true");
-    var chosen = turnsItems.findIndex(function (el) {
-      return el.dataset.value === turns.value;
-    });
-    markActive(chosen === -1 ? 0 : chosen);
-  }
+    function choose(opt) {
+      api.value = opt.name || "";
+      api.gloss = opt.name ? (opt.gloss || "") : "";
+      paint();
+      if (cfg.onChange) cfg.onChange();
+    }
 
-  function closeTurns(refocus) {
-    turnsList.hidden = true;
-    turnsBtn.setAttribute("aria-expanded", "false");
-    markActive(-1);
-    if (refocus) turnsBtn.focus();
-  }
-
-  function turnsIsOpen() { return !turnsList.hidden; }
-
-  if (turnsBtn) {
-    turnsBtn.addEventListener("click", function () {
-      if (turnsIsOpen()) closeTurns(false); else openTurns();
-    });
-
-    turnsBtn.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        if (!turnsIsOpen()) { openTurns(); return; }
-        if (e.key === "Enter" || e.key === " ") {
-          var el = turnsItems[activeIndex];
-          if (el) {
-            var opt = turnsOptionFor(el.dataset.value);
-            chooseTurn(el.dataset.value, opt ? opt.gloss : "");
-          }
-          closeTurns(true);
-          return;
-        }
-        markActive(Math.min(turnsItems.length - 1,
-          Math.max(0, activeIndex + (e.key === "ArrowDown" ? 1 : -1))));
-      } else if (e.key === "Escape" && turnsIsOpen()) {
-        closeTurns(true);
+    function markActive(i) {
+      items.forEach(function (el, n) { el.classList.toggle("is-active", n === i); });
+      activeIndex = i;
+      if (items[i] && items[i].scrollIntoView) {
+        items[i].scrollIntoView({ block: "nearest" });
       }
+    }
+
+    function isOpen() { return !listEl.hidden; }
+
+    function open() {
+      if (openMenu && openMenu !== api) openMenu.close(false);
+      listEl.hidden = false;
+      btn.setAttribute("aria-expanded", "true");
+      openMenu = api;
+      var at = -1;
+      items.forEach(function (el, n) { if (el.dataset.value === api.value) at = n; });
+      markActive(at === -1 ? 0 : at);
+    }
+
+    function close(refocus) {
+      listEl.hidden = true;
+      btn.setAttribute("aria-expanded", "false");
+      markActive(-1);
+      if (openMenu === api) openMenu = null;
+      if (refocus) btn.focus();
+    }
+
+    btn.addEventListener("click", function () {
+      if (isOpen()) close(false); else open();
+    });
+
+    btn.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { if (isOpen()) close(true); return; }
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp" &&
+          e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      if (!isOpen()) { open(); return; }
+      if (e.key === "Enter" || e.key === " ") {
+        var el = items[activeIndex];
+        if (el) {
+          var name = el.dataset.value;
+          var found = null;
+          options.forEach(function (o) { if (o.name === name) found = o; });
+          choose(found || { name: "", gloss: "" });
+        }
+        close(true);
+        return;
+      }
+      markActive(Math.min(items.length - 1,
+        Math.max(0, activeIndex + (e.key === "ArrowDown" ? 1 : -1))));
     });
 
     /* Clicking anywhere else puts the list away. */
     document.addEventListener("click", function (e) {
-      if (!turnsIsOpen()) return;
-      var root = document.getElementById("filterTurns");
-      if (root && !root.contains(e.target)) closeTurns(false);
+      if (isOpen() && !root.contains(e.target)) close(false);
     });
+
+    api.setOptions = function (list) {
+      options = list;
+      var still = false;
+      options.forEach(function (o) { if (o.name === api.value) { still = true; api.gloss = o.gloss; } });
+      if (!still) { api.value = ""; api.gloss = ""; }
+      paint();
+      build();
+    };
+    api.clear = function () { api.value = ""; api.gloss = ""; paint(); build(); };
+    api.close = close;
+
+    paint();
+    return api;
   }
 
-  function turnsOptionFor(name) {
-    var all = turnsOptions(selDoor.value, selKey.value);
-    for (var i = 0; i < all.length; i++) {
-      if (all[i].name === name) return all[i];
-    }
-    return null;
-  }
+  var doorMenu = makeCombo({
+    root: "filterDoor", btn: "doorBtn", list: "doorList", value: "doorValue",
+    allLabel: "All Doors", inline: true, onChange: function () { refresh(); }
+  });
+
+  var keyMenu = makeCombo({
+    root: "filterKey", btn: "keyBtn", list: "keyList", value: "keyValue",
+    allLabel: "All Keys", inline: true, onChange: function () { refresh(); }
+  });
+
+  var turnsMenu = makeCombo({
+    root: "filterTurns", btn: "turnsBtn", list: "turnsList", value: "turnsValue",
+    allLabel: "Anything", inline: false, onChange: function () { applyFilter(); }
+  });
 
   /* Rebuild the downstream menus, then filter. Called after any
-     change, so the three can never disagree with each other. */
+     change, so the three can never disagree with each other. A
+     selection the narrowed menu no longer offers is dropped rather
+     than left showing something the list isn't obeying. */
   function refresh() {
-    fillMenu(selKey, optionsFor("key", selDoor.value, ""), "All Keys", "keys");
-    var opts = turnsOptions(selDoor.value, selKey.value);
-    var stillThere = opts.some(function (o) { return o.name === turns.value; });
-    if (!stillThere) { turns.value = ""; turns.gloss = ""; }
-    paintTurnsButton();
-    turnsBtn.classList.toggle("is-set", Boolean(turns.value));
-    buildTurnsList(opts);
+    keyMenu.setOptions(fieldOptions("key", "keys", doorMenu.value, ""));
+    turnsMenu.setOptions(turnsOptions(doorMenu.value, keyMenu.value));
     applyFilter();
   }
 
   function applyFilter() {
-    var door = selDoor.value, key = selKey.value, turn = turns.value;
+    var door = doorMenu.value, key = keyMenu.value, turn = turnsMenu.value;
     var shown = 0;
 
     rows.forEach(function (r) {
@@ -787,8 +769,6 @@
 
     var filtering = Boolean(door || key || turn);
     noMatch.hidden = shown !== 0;
-    selDoor.classList.toggle("is-set", Boolean(door));
-    selKey.classList.toggle("is-set", Boolean(key));
     resetBtn.disabled = !filtering;
     if (countEl) {
       countEl.textContent = filtering
@@ -797,15 +777,12 @@
     }
   }
 
-  if (selDoor && selKey && turnsBtn) {
-    fillMenu(selDoor, optionsFor("door", "", ""), "All Doors", "doors");
-    selDoor.addEventListener("change", refresh);
-    selKey.addEventListener("change", refresh);
+  if (doorMenu && keyMenu && turnsMenu) {
+    doorMenu.setOptions(fieldOptions("door", "doors", "", ""));
     resetBtn.addEventListener("click", function () {
-      selDoor.value = "";
-      selKey.value = "";
-      turns.value = "";
-      turns.gloss = "";
+      doorMenu.clear();
+      keyMenu.clear();
+      turnsMenu.clear();
       refresh();
     });
     refresh();
