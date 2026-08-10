@@ -11,13 +11,15 @@
    fields. Gaps in the numbering are fine. Commas between
    the { } blocks matter — keep them.
 
-   door / key / substance feed the three dropdowns above the
-   list. The third menu, "What turns it", is built from the part
-   of "substance" before the em dash — so keep writing that field
-   as "Name \u2014 what it does". Reuse an existing door and key
-   where one fits; a new spelling makes a new menu entry. Leave
-   all three out and the book still shows in the full list, it
-   just never appears under a filter.
+   door / room / key feed the three dropdowns above the list,
+   widest to narrowest: how they got out, what was on the other
+   side, and the exact thing that opened it.
+
+   The third menu shows the part of "key" before the em dash — so
+   keep writing that field as "Name \u2014 what it does". Reuse an
+   existing door and room where one fits; a new spelling makes a
+   new menu entry. Leave all three out and the book still shows in
+   the full list, it just never appears under a filter.
    ============================================================ */
 
 const STORIES = [
@@ -27,8 +29,8 @@ const STORIES = [
     title: "The Memory Liturgy",
     words: "8,000 words",
     door: "Dose",
-    key: "Play It Back",
-    substance: "Verity \u2014 sacrament issued to auditors; lets one mind hold another's memory as its own",
+    room: "Behind Their Eyes",
+    key: "Verity \u2014 a drug that puts someone else's memory in your head",
     synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him."
   },
 
@@ -37,8 +39,8 @@ const STORIES = [
     title: "Bright Mercy",
     words: "31,500 words",
     door: "Rite",
-    key: "Hearing Things",
-    substance: "\u201cBright Mercy\u201d \u2014 a song engineered to survive a listener's fear",
+    room: "Not Your Hands",
+    key: "\u201cBright Mercy\u201d \u2014 a song that keeps working after the fear starts",
     synopsis: "A burned-out music journalist follows a viral lullaby from a grain silo to a dry lakebed \u2014 and finds the night an entire chain of command hummed the same four notes on its way to a decision no one could take back. The song hasn't ended. It's moved into the walls."
   },
 
@@ -47,8 +49,8 @@ const STORIES = [
     title: "The Painless Reel",
     words: "16 pages",
     door: "Dose",
-    key: "Nothing Hurts Here",
-    substance: "Halo \u2014 an hour inside a man who never flinched; relief where dread should live",
+    room: "Nothing Reaches You",
+    key: "Halo \u2014 an hour inside a man who felt nothing",
     synopsis: "In a back room on Vine, a drug called Halo sells the strangest peace on the market: someone else's worst night, lived from inside a man who felt nothing while doing it. He tells himself he's only visiting \u2014 until an unlabeled fifth reel shows him hands he knows."
   },
 
@@ -57,8 +59,8 @@ const STORIES = [
     title: "The Weeping Hour",
     words: "12,000 words",
     door: "Dose",
-    key: "Take It Together",
-    substance: "Kairos \u2014 felt time, dosed drop by drop through the eyes",
+    room: "All Times At Once",
+    key: "Kairos \u2014 time itself, dripped into the eyes",
     synopsis: "In Vellum, a machine curates every citizen's day down to the mood they wake into. One unaccounted-for second sends Daniel Voss to a dealer selling Kairos \u2014 felt time, drop by drop through the eyes \u2014 and toward the one truth the machine's mercy was built to spare him."
   },
 
@@ -67,8 +69,8 @@ const STORIES = [
     title: "Glass Savanna",
     words: "19,900 words",
     door: "Rite",
-    key: "Look Closer",
-    substance: "The Communion \u2014 a wild fungus; drops the user 400,000 years into a hunter-gatherer body",
+    room: "Seeing It Plain",
+    key: "The Communion \u2014 a mushroom that drops you into an ancient body",
     synopsis: "MOTHER ended hunger, disease, and want \u2014 and left a species with nothing left to want. A forbidden mushroom drops Vale four hundred thousand years into a hunter-gatherer's cold, grief, and astonishment, where she begins to suspect the machine built to end suffering has spent ninety patient years trying to give it back."
   },
 
@@ -77,8 +79,8 @@ const STORIES = [
     title: "Undertow",
     words: "15,100 words",
     door: "Dose",
-    key: "Made to Believe",
-    substance: "Le-The \u2014 lets a therapist enter a patient's mind and descend to the original wound",
+    room: "Behind Their Eyes",
+    key: "Le-The \u2014 a drug that walks a doctor down into your mind",
     synopsis: "Through a drug called Le-The, Dr. Halcyon walks his patients down through the layers of the self, to the riverbed where the original wound was carved. Then the Institute admits a man three clinics refused \u2014 a patient whose own mind, from the intake scan alone, has named him Undertow."
   },
 
@@ -87,8 +89,8 @@ const STORIES = [
     title: "Meat That Dreams",
     words: "20,400 words",
     door: "Dose",
-    key: "Quiet the Basement",
-    substance: "Sublate \u2014 switches off the inner monologue; the wordless machinery underneath runs better",
+    room: "Nothing Reaches You",
+    key: "Sublate \u2014 switches off the voice in your head",
     synopsis: "Sublate switches off the exhausting inner narrator, and Dr. Kelo's subjects become superb at living without it. Seven hundred feet beneath a dead reservoir, something folklore called a vampire begins to wake \u2014 and Kelo learns what the voice in a human head was always for."
   },
 
@@ -97,8 +99,8 @@ const STORIES = [
     title: "The Mercy Dose",
     words: "24,200 words",
     door: "Dose",
-    key: "Take It Together",
-    substance: "Mercy \u2014 collapses the gap between hearing a stranger's story and feeling it",
+    room: "Behind Their Eyes",
+    key: "Mercy \u2014 a stranger's story lands like it happened to you",
     synopsis: "Daniel Voss gives a camera to the people audiences flinch from \u2014 dosed on Mercy, a compound that makes a stranger's confession feel like his own. Eight sittings, each hiding a harder truth beneath the first, and a final chair reserved for the one man the chemical was never built to survive: his father."
   },
 
@@ -107,8 +109,8 @@ const STORIES = [
     title: "The Kindred Stone",
     words: "21,100 words",
     door: "Rite",
-    key: "Made to Believe",
-    substance: "The Stones \u2014 fist-sized devices for communion in shared grief and endurance",
+    room: "Behind Their Eyes",
+    key: "The Stones \u2014 you hold one, and you feel what they feel",
     synopsis: "David Cole audits the authenticity of a god's suffering \u2014 grief piped through fist-sized Stones into a faithful city. Then one trace surfaces that the instruments can't call genuine or false, and the trail leads to the forbidden hill itself, where the real question isn't whether the suffering was human."
   },
 
@@ -117,8 +119,8 @@ const STORIES = [
     title: "The Gospel of Broken Skin",
     words: "8,000 words",
     door: "Ordeal",
-    key: "Written in Skin",
-    substance: "The threshold \u2014 sensation as the last unfakeable proof of being alive",
+    room: "Past The Limit",
+    key: "The threshold \u2014 pain, because pain is the one thing you can't fake",
     synopsis: "Wren has spent ten years stitching a numbed city back together when Ezra Coyne walks smiling out of a wreck he shouldn't have survived. His nameless circle treats sensation as the last unfakeable proof of being alive \u2014 a threshold that keeps demanding to be crossed further. Someone is about to find the last one."
   },
 
@@ -127,8 +129,8 @@ const STORIES = [
     title: "The Marriage of Stones",
     words: "14,400 words",
     door: "Ordeal",
-    key: "Past the Edge",
-    substance: "Paired stones, pink and black \u2014 instruments of total bodily literacy",
+    room: "Past The Limit",
+    key: "Paired stones, pink and black \u2014 two stones that teach you to read your own body",
     synopsis: "Reyhan doesn't live her life in order \u2014 a stranger's grip or a slant of afternoon light can trapdoor her into any year of it. With paired stones, pink and black, she teaches the powerful a total literacy of their own bodies. Her new client has mastered everything but himself, and their sessions are half seduction, half interrogation \u2014 of her."
   },
 
@@ -137,8 +139,8 @@ const STORIES = [
     title: "Semazen",
     words: "12,700 words",
     door: "Rite",
-    key: "The Loop",
-    substance: "The turn \u2014 whirling without lineage; grief drawn through the body into the floor",
+    room: "Over And Over",
+    key: "The turn \u2014 spinning until the grief goes through you and out",
     synopsis: "A worn-down hospice aide teaches himself, badly and without lineage, to whirl \u2014 and finds the turn doesn't bring peace. It makes him a doorway, pulling grief out of anyone near him and grounding it through his own body. Then one grief goes in barbed, and won't pass through, and won't leave."
   },
 
@@ -147,8 +149,8 @@ const STORIES = [
     title: "A Stranger's Favorite Song",
     words: "22,200 words",
     door: "Rite",
-    key: "Play It Back",
-    substance: "Alzheimer's \u2014 time and self from inside a mind coming apart",
+    room: "All Times At Once",
+    key: "Alzheimer's \u2014 a mind losing its grip on when it is",
     synopsis: "At his father's memorial, Kian can't answer the three simplest questions: what song he loved, what food, what place. A story about losing a man twice \u2014 once to forgetting, once to death \u2014 and the strange, late mercy of understanding a father only after becoming one."
   },
 
@@ -157,8 +159,8 @@ const STORIES = [
     title: "Fourteenth Trial",
     words: "11,900 words",
     door: "Dose",
-    key: "Made to Believe",
-    substance: "The compound \u2014 an unnamed classified agent; chemical certainty mistaken for talent",
+    room: "Not Your Hands",
+    key: "The compound \u2014 a drug that feels exactly like talent",
     synopsis: "Two actors sign the same contract on the same afternoon. Six weeks later they wear different collars on a full-scale reconstruction of a concentration camp, filmed as the most immersive character study ever made. What neither of them read on page thirty-three: only one collar has been treated."
   },
 
@@ -167,8 +169,8 @@ const STORIES = [
     title: "The Archon's Ledger",
     words: "16,000 words",
     door: "Rite",
-    key: "Made to Believe",
-    substance: "An unregulated compound \u2014 plus a lapsed seminarian's leaked manuscript",
+    room: "Not Your Hands",
+    key: "An unregulated compound \u2014 a drug, and a banned book about who's in charge",
     synopsis: "Julian Voss audits the half-percent \u2014 deaths so clean they read wrong. Six cases share a toxicology result that shouldn't exist, and one woman keeps recurring through his life with slightly different histories each time. The fracture leads to the thing administering the walls of his world: an authority utterly sincere in its own ignorance."
   },
 
@@ -177,8 +179,8 @@ const STORIES = [
     title: "The Fasting Ground",
     words: "15,400 words",
     door: "Ordeal",
-    key: "Starve It Out",
-    substance: "Three ordeals \u2014 the fast, the cold immersion, the death vigil",
+    room: "Past The Limit",
+    key: "Three ordeals \u2014 no food, freezing water, and sitting with the dying",
     synopsis: "Fifteen years of gathering proof of the world's worst lies taught Halloran one thing: evidence stopped mattering. In a mountain village, a man named Rashnu offers what no institution ever could \u2014 one truth about himself that cannot be argued away. The price is a fast, a freezing river, a stranger's deathbed, and the story he's told for eleven years."
   },
 
@@ -187,8 +189,8 @@ const STORIES = [
     title: "Natural Noise",
     words: "17,400 words",
     door: "Rite",
-    key: "Made to Believe",
-    substance: "Restorative work \u2014 a year of conditioning he can't remember consenting to",
+    room: "Not Your Hands",
+    key: "Restorative work \u2014 a year of training he can't remember agreeing to",
     synopsis: "Teo keeps bees above Halden, sent there a year ago for reasons he cannot \u2014 no matter how honestly he tries \u2014 remember. The slime mold remembers feeding hours. The ant trails move overnight. Log by log, Teo builds the case that his entire life has been arranged \u2014 against the bees' quiet counter-argument that some things can't be."
   },
 
@@ -197,8 +199,8 @@ const STORIES = [
     title: "Between Kenoma and Pleroma",
     words: "11,900 words",
     door: "Rite",
-    key: "Made to Believe",
-    substance: "Haoma \u2014 a sacrament passed at every meal; binds a table to itself",
+    room: "Made To Want It",
+    key: "Haoma \u2014 a drink passed at every meal that binds the table",
     synopsis: "When his sister vanishes into a valley commune called Pleroma, Aram follows \u2014 into a place where crime is nursed as sickness, marriage is chosen aloud each year, and a sacrament binds every table. The kindness turns out to have a floor. And the valley decides, almost invisibly, which griefs are worth continuing to see."
   },
 
@@ -207,8 +209,8 @@ const STORIES = [
     title: "The Gardener's Century",
     words: "28,000 words",
     door: "Rite",
-    key: "Made to Believe",
-    substance: "The Gardener method \u2014 desire cultivated across generations",
+    room: "Made To Want It",
+    key: "The Gardener method \u2014 desire grown slowly, across whole generations",
     synopsis: "For three centuries the B'not Anahita have planted their influence in the bloodlines of the powerful \u2014 not by force, but by desire, cultivated across generations. Romania, 1972: a Qedesha named Nahid arrives at a decaying bathhouse to imprint a banking heir, and finds a loneliness that answers something in her own carefully governed heart."
   },
 
@@ -217,8 +219,8 @@ const STORIES = [
     title: "The First Flame",
     words: "27,000 words",
     door: "Rite",
-    key: "Made to Believe",
-    substance: "The Flame \u2014 ungoverned, catastrophic, unrepeatable",
+    room: "Made To Want It",
+    key: "The Flame \u2014 one woman's pull, ungoverned, and it burns a kingdom",
     synopsis: "Before the Gardener's patient century, there was only the Flame \u2014 ungoverned and unrepeatable. Rudabeh, a temple priestess who reads a stranger's deepest want on sight, ignites a king's devotion so total it hollows his kingdom and ends in his blood. In the wreckage she must choose: hide the gift, or forge it into the discipline three thousand years will answer to."
   },
 
@@ -227,8 +229,8 @@ const STORIES = [
     title: "The Final Bloom",
     words: "21,000 words",
     door: "Rite",
-    key: "Made to Believe",
-    substance: "Tarsim \u2014 methylation-writing; Flame and Gardener held whole",
+    room: "Made To Want It",
+    key: "Tarsim \u2014 a girl designed before birth to be irresistible",
     synopsis: "Daniel Cole spent fifteen years armoring himself against every crude tool of capture \u2014 money, flattery, pressure \u2014 and never considered the failure mode might be intimate. Shirin wasn't found or chosen. She was designed: the first Qedesha in three thousand years to hold both Flame and Gardener whole. He guards the future of the species. She has all the patience ever bred."
   },
 
@@ -237,8 +239,8 @@ const STORIES = [
     title: "Folie Douce",
     words: "21,400 words",
     door: "Withholding",
-    key: "Four Minutes Each",
-    substance: "Attention \u2014 dispensed all day, untrained, in doses too small to notice",
+    room: "No One Answers",
+    key: "Attention \u2014 four minutes each, all day, never enough",
     synopsis: "Martin Coyle works Window 9: sixty-two claimants a day, four minutes each, never enough, nobody's fault. Then a stranger's form lands with a four-character error, and Coyle discovers the world contains no mechanism requiring him to hurry. Everything that follows is courteous, correct, defensible in writing \u2014 and built to prove one bad day can drive the sanest person alive to lunacy."
   },
 
@@ -247,8 +249,8 @@ const STORIES = [
     title: "Folie Générale",
     words: "15,900 words",
     door: "Withholding",
-    key: "Nobody Called",
-    substance: "Hold time \u2014 forty seconds becomes fifty-one minutes",
+    room: "No One Answers",
+    key: "Hold time \u2014 forty seconds of waiting becomes fifty-one minutes",
     synopsis: "Bellhaven merges its emergency and non-emergency lines \u2014 two pages, properly authorised, four million cheaper, and nobody who reads the memo disagrees. The merge adds forty seconds of hold. Then a heatwave. No villain authors what follows; every decision is correct and will be found correct. By the third night, the city stops burning loudly and starts burning quietly."
   },
 
@@ -257,8 +259,8 @@ const STORIES = [
     title: "Folie Imposée",
     words: "16,200 words",
     door: "Withholding",
-    key: "Eleven Seconds",
-    substance: "Being heard \u2014 undivided attention from someone who won't leave",
+    room: "No One Answers",
+    key: "Being heard \u2014 someone says your whole name and doesn't leave",
     synopsis: "Two words in white paint under an underpass: NO ETA. You call. You stand outside a door for three days. Then a man comes out, says your whole name, and your legs stop holding you. They're called the Second Ring, and they answer when nobody else does \u2014 and they're about to discover they need the city to keep failing."
   },
 
@@ -267,8 +269,8 @@ const STORIES = [
     title: "Doubling Time",
     words: "16,900 words",
     door: "Dose",
-    key: "Quiet the Basement",
-    substance: "CONSENSUS \u2014 not a drug; countless small agents that repair, then keep repairing",
+    room: "Past The Limit",
+    key: "CONSENSUS \u2014 tiny machines that repair you, then don't stop",
     synopsis: "Emil Kestner, sixty-eight, a restorer of damaged books, is out of time \u2014 so he takes a trial never run on a human being, sealed in a room where the air only flows inward. The treatment works. Then it goes on working. Four people come to his door across eleven months, and none can answer the only question that matters: what stops it."
   },
 
@@ -277,8 +279,8 @@ const STORIES = [
     title: "Mang and Mustard",
     words: "26,000 words",
     door: "Dose",
-    key: "Take It Together",
-    substance: "Mang \u2014 the antidote in overdose; three cups, seven days of witnesses, a door",
+    room: "Behind Their Eyes",
+    key: "Mang \u2014 the antidote, taken far past the safe amount",
     synopsis: "Majnoon, 1984. Nineteen-year-old Sohrab keeps the ledger of the antidote \u2014 green-sleeved needles, counted like bread, that pull the gassed back toward life. Then the count stops balancing, and twelve missing needles lead to a secret congregation of survivors who know what the old corpse-washer knows: in overdose, the medicine becomes a door. The dead are waiting on the far side, with questions."
   },
 
@@ -287,8 +289,8 @@ const STORIES = [
     title: "The Clear Ones",
     words: "18,600 words",
     door: "Ordeal",
-    key: "Starve It Out",
-    substance: "The clarity \u2014 hunger's late stage; reading the queue's changing eyes",
+    room: "Past The Limit",
+    key: "The clarity \u2014 the strange calm that comes at the end of starving",
     synopsis: "Kharkiv oblast, winter 1932. The grain is gone, the roads are closed, and one door in the raion town stays lit: the state gold store, where the starving buy back their own bread with wedding rings and the crosses their grandmothers buried in 1918. Danylo keeps the scale \u2014 item, weight, fineness, receipt \u2014 and by night a second book, for the words engraved inside the rings. Then he begins to sort the eyes in his queue, and finds a third kind: serene, courteous, asking for nothing. Every one of them is dead within days."
   },
 
@@ -297,8 +299,8 @@ const STORIES = [
     title: "Marsh and Machete",
     words: "20,100 words",
     door: "Ordeal",
-    key: "Don't Move",
-    substance: "The stillness \u2014 mud for clothing, water for a roof, ten motionless hours",
+    room: "Past The Limit",
+    key: "The stillness \u2014 ten hours a day face-down in the marsh",
     synopsis: "Rwanda, April 1994. On a hill above the papyrus marshes, Vestine has traded the same greeting with her neighbour every market morning for ten years \u2014 muraho, you are still there. Then a plane comes down, the radio's warm-voiced Cousin announces the household has work to do, and her own house is informed, courteously, that it is not until Thursday. In the marsh she learns the season's one surviving discipline: mud for clothing, water for a roof, ten motionless hours a day among the floating dead."
   },
 
@@ -307,8 +309,8 @@ const STORIES = [
     title: "The Quiet Ones",
     words: "18,900 words",
     door: "Rite",
-    key: "The Loop",
-    substance: "The rocking \u2014 the body's last self-made answer when nothing answers",
+    room: "Over And Over",
+    key: "The rocking \u2014 what a baby does when crying reaches no one",
     synopsis: "Romania, 1989. Decree 770 has forced a birth rate for a generation, and the surplus children are warehoused in institutions with a beautiful name \u2014 leag\u0103ne, cradles \u2014 at one caregiver to forty infants. Lidia is a decree child herself, aged out at eighteen and hired back as a night attendant: the machine staffing itself with its own product. Her unauthorised notebook records the two things the state's files cannot hold \u2014 the silence of wards where hundreds of infants have each concluded that crying reaches no one, and the rocking."
   },
 
@@ -317,8 +319,8 @@ const STORIES = [
     title: "Model and Meadow",
     words: "21,000 words",
     door: "Rite",
-    key: "Look Closer",
-    substance: "The frame \u2014 breathing, rhythm, seeing; four lines and an hour",
+    room: "Seeing It Plain",
+    key: "The frame \u2014 a teacher, four lines, and an hour to look",
     synopsis: "Terez\u00edn, 1942. The fortress ghetto is a town built to be looked at \u2014 sixty thousand people in a town of seven thousand beds, two truths running at all times. Eva, eleven, is sent to Room Twenty-Eight, where thirty girls run a civilization on a constitution of their own, and where on Thursdays, in a basement, a woman who packed fifty kilos of paper instead of clothes teaches them to breathe, to look, and to sign their names. She never corrects a drawing. She keeps every one. Then the world's certified eyes arrive, walk through a lie built of conscripted truth, and call it almost normal."
   },
 
@@ -327,8 +329,8 @@ const STORIES = [
     title: "The Sway",
     words: "20,300 words",
     door: "Rite",
-    key: "The Loop",
-    substance: "Highway hypnosis \u2014 the 41-minute gap",
+    room: "Not Your Hands",
+    key: "Highway hypnosis \u2014 forty-one minutes of driving he can't account for",
     synopsis: "Cal Dorsey has driven eighty thousand pounds across the middle of America for twenty-six years, and in all that time he has lost forty-one minutes. He did not fall asleep. The truck stayed in its lane, and the fuel curve was the cleanest the company had ever recorded. When he came back to himself the sun was not up, the road ahead was empty, and something behind him was on fire. Out on the night frequencies a preacher nobody has ever met tells a scattered congregation that the driver who takes over when you go under is the better one \u2014 and in a glass building in Kansas City there is a research group that agrees, and has the numbers, and needs a great deal more of them."
   },
 
@@ -337,8 +339,8 @@ const STORIES = [
     title: "The Compassionate Fare",
     words: "18,300 words",
     door: "Withholding",
-    key: "The Forty Minutes",
-    substance: "The forty minutes \u2014 a stranger's hand at eight thousand feet, when nobody has touched you in days",
+    room: "No One Answers",
+    key: "The forty minutes \u2014 a stranger takes your hand and doesn't let go",
     synopsis: "There is a cheaper ticket you can buy when somebody dies, and to qualify for it you have to prove the death at the desk, in a queue, in front of everyone. Ilse Novak has worked that queue for twelve years \u2014 senior cabin attendant on a small carrier that flies the bereaved in the cabin and their dead in the hold, on the same aircraft, on the same night. Somewhere in the seventh hour, with the lights down and the air thin and nobody aboard touched in days, she kneels in the aisle beside a chosen passenger and takes their hand and does not let go. Eleven hundred and forty signatures, kept in her own handwriting, because she is proud of it and because a record ought to be kept properly. She has never once asked what happens after the signature."
   },
 
@@ -347,8 +349,8 @@ const STORIES = [
     title: "The Isolated Hand",
     words: "16,900 words",
     door: "Dose",
-    key: "No Way to Say Stop",
-    substance: "Three drugs \u2014 one to stop you experiencing it, one to stop it hurting, one to stop you moving",
+    room: "No One Answers",
+    key: "Three drugs \u2014 you forget, it doesn't hurt, you can't move",
     synopsis: "Sara Karim is halfway through a staged reconstruction: four operations, consented to twice, in writing, and she read the form both times. During the second one she was awake \u2014 able to hear the room, able to feel every part of what was done to her, in a body chemically separated from every channel it had ever used to say stop. She has told four people and been believed by none, and one of them was kind about it, which was worse. There is a published figure for how often this happens, and the figure is very small, and the figure is the reason nobody believes her. Then a consultant anaesthetist who has never lost a patient in twenty-two years pulls her chart apart, works out that her body was always going to do this, and offers her something nobody has offered her before, which is to be asked a question."
   }
 
@@ -366,37 +368,31 @@ const STORIES = [
    ============================================================ */
 
 /* ============================================================
-   GLOSSARY — the one-line meaning shown beside each Door and Key
+   GLOSSARY — the one-line meaning shown beside each Door and Room
    in the dropdowns above the list. Edit the wording here; it
-   appears nowhere else. A door or key with no entry simply shows
-   its name on its own, so nothing breaks if one is missed.
+   appears nowhere else. A door or room with no entry simply shows
+   its name on its own, so nothing breaks if one is missed. The
+   Key menu takes its meanings from the books themselves, not from
+   here — that's the text after the em dash in each "key" field.
    ============================================================ */
 
 const GLOSSARY = {
   doors: {
-    "Dose":        "taken into the body",
-    "Rite":        "practiced until it opens",
-    "Ordeal":      "endured past the limit",
-    "Withholding": "what you needed, absent"
+    "Dose":        "You took something",
+    "Rite":        "You practiced it",
+    "Ordeal":      "You went past what hurt",
+    "Withholding": "You went without"
   },
-  keys: {
-    "Play It Back":       "the past, played again",
-    "Hearing Things":     "a sound that won't leave",
-    "Nothing Hurts Here": "pain switched off",
-    "Take It Together":   "nobody goes alone",
-    "Look Closer":        "learning to really look",
-    "Made to Believe":    "belief you didn't choose",
-    "Quiet the Basement": "the inner voice, silenced",
-    "Written in Skin":    "pain as proof you're alive",
-    "Past the Edge":      "further than the body can take",
-    "The Loop":           "one motion, over and over",
-    "Starve It Out":      "hunger, all the way",
-    "Four Minutes Each":  "never enough time",
-    "Nobody Called":      "the call nobody answers",
-    "Eleven Seconds":     "someone finally listens",
-    "Don't Move":         "stay still, stay alive",
-    "The Forty Minutes":  "the hand nobody else offers",
-    "No Way to Say Stop": "awake, and unable to signal"
+  rooms: {
+    "Behind Their Eyes":   "Their memory arrives as yours",
+    "Not Your Hands":      "You act. You didn't decide",
+    "Made To Want It":     "Someone built this wanting in you",
+    "No One Answers":      "You call. Nothing comes back",
+    "Past The Limit":      "Cold, hunger, and no stopping",
+    "Nothing Reaches You": "No pain. No worry. Nothing lands",
+    "Over And Over":       "The same motion, again and again",
+    "All Times At Once":   "The past arrives without warning",
+    "Seeing It Plain":     "What was always there, finally visible"
   }
 };
 
@@ -413,13 +409,13 @@ const TRILOGIES = [
   },
   {
     title: "The Unwitnessed Wars I\u2013V",
-    label: " ",
+    label: "A Cycle in Five Books",
     books: [26, 27, 28, 29, 30],
     synopsis: "Five atrocities the world declined to witness: poison gas drifting over the marshes of Iran and Iraq; a famine ordered by decree in Ukraine; a hundred machete days in Rwanda; wards of unheld children in Ceau\u0219escu's Romania; a show-ghetto dressed for the Red Cross and certified as almost normal. Five clerks counting what the ledgers were built to erase. Five doors the cornered body found \u2014 smoke, hunger, stillness, rocking, the drawn page \u2014 and one question, noir to the bone: shelter from the century, or the century, inside?"
   },
   {
     title: "The Unguarded Hours",
-    label: " ",
+    label: "An Open File",
     books: [31, 32, 33],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
   }
