@@ -15,8 +15,16 @@
       texts; moving away brings the theme text back.
    4. The speaker button plays assets/ambient.mp3, if present.
 
-   The backdrop is no longer set here — it's one fixed scene on
-   .atmosphere in style.css (assets/backdrop.webp / .jpg).
+   The three filters read Door, Room, Key — widest to narrowest.
+   Door and Room come from fields of those names in stories.js and
+   take their one-line meanings from GLOSSARY. Key is derived from
+   the "key" field, split at the em dash: the name before it, the
+   description after.
+
+   Note: a few DOM ids and CSS classes still carry the older word
+   "substance" (#ftSubstance, .feature-substance). They are only
+   handles — renaming them would mean editing style.css for no
+   visible gain. The data they carry is the book's Key.
    ============================================================ */
 
 (function () {
@@ -24,16 +32,15 @@
 
   /* ---- 1. Build the list from stories.js ------------------- */
 
-  var panels = document.querySelectorAll(".panel");
-  var navLinks = document.querySelectorAll("[data-stage]");
-  var canHover = window.matchMedia("(hover: hover)").matches;
-
-  var easel = document.getElementById("easelImg");
-  var easelSet = document.getElementById("easelSet");
-  var feature = document.getElementById("feature");
-  var ftMeta = document.getElementById("ftMeta");
-  var ftText = document.getElementById("ftText");
-  var ftLink = document.getElementById("ftLink");
+  var panels    = document.querySelectorAll(".panel");
+  var navLinks  = document.querySelectorAll("[data-stage]");
+  var canHover  = window.matchMedia("(hover: hover)").matches;
+  var easel     = document.getElementById("easelImg");
+  var easelSet  = document.getElementById("easelSet");
+  var feature   = document.getElementById("feature");
+  var ftMeta    = document.getElementById("ftMeta");
+  var ftText    = document.getElementById("ftText");
+  var ftLink    = document.getElementById("ftLink");
   var hideTimer = null;
 
   var TRIOS = (typeof TRILOGIES !== "undefined") ? TRILOGIES : [];
@@ -61,9 +68,9 @@
   function trioSlug(t) {
     return (t.books.length === 3 ? "triptych-" : "series-") +
       t.title.toLowerCase()
-      .replace(/['\u2019]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+        .replace(/['\u2019]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
   }
 
   /* ---- Reading time ---------------------------------------
@@ -82,40 +89,41 @@
     /* Round to the nearest half hour — false precision helps nobody. */
     var rounded = Math.round(hrs * 2) / 2;
     return "about " + (rounded % 1 ? rounded.toFixed(1) : rounded) +
-           (rounded === 1 ? " hour read" : " hours read");
+      (rounded === 1 ? " hour read" : " hours read");
   }
 
   /* The stage rests on About: it's the reader's guide, so a first
      visit lands on it and every hover returns to it. Hovering a book
      or opening the Notes swaps it out; letting go brings it back. */
   var DEFAULT_PANEL = "panel-about";
-
-  var pinned = null;   /* the book or triptych currently held on the stage */
+  var pinned = null;   /* the book or group currently held on the stage */
 
   function showPanel(id) {
     var wasFeature = feature.classList.contains("show");
     feature.classList.remove("show");
+
     var activate = function () {
-      if (feature.classList.contains("show")) return; /* superseded */
+      if (feature.classList.contains("show")) return;  /* superseded */
       panels.forEach(function (p) {
         p.classList.toggle("is-active", p.id === id);
       });
     };
+
     /* If the cover was up, let it fade before the text arrives,
        so the two never sit on top of each other. */
     if (wasFeature) setTimeout(activate, 300); else activate();
   }
 
-  /* The line under a book's synopsis on the stage: what it runs on,
-     and where it sits in the two menus. Books without the fields
-     simply don't get the line. */
+  /* The line under a book's synopsis on the stage: where it sits in
+     the first two menus, then the Key itself. Books without the
+     fields simply don't get the line. */
   var ftSub = document.getElementById("ftSubstance");
 
-  function setSubstance(s) {
+  function setKeyLine(s) {
     if (!ftSub) return;
     var path = s && s.door
-      ? s.door + (s.key ? " \u00b7 " + s.key : "") : "";
-    if (!s || (!path && !s.substance)) { ftSub.hidden = true; ftSub.textContent = ""; return; }
+      ? s.door + (s.room ? " \u00b7 " + s.room : "") : "";
+    if (!s || (!path && !s.key)) { ftSub.hidden = true; ftSub.textContent = ""; return; }
     ftSub.hidden = false;
     ftSub.textContent = "";
     if (path) {
@@ -124,10 +132,10 @@
       tag.textContent = path;
       ftSub.append(tag);
     }
-    if (s.substance) {
+    if (s.key) {
       var txt = document.createElement("span");
       txt.className = "ft-substance";
-      txt.textContent = s.substance;
+      txt.textContent = s.key;
       ftSub.append(txt);
     }
   }
@@ -137,34 +145,43 @@
     feature.classList.remove("trio");
     ftLink.style.display = "";
     panels.forEach(function (p) { p.classList.remove("is-active"); });
+
     ftMeta.textContent = num + " \u00b7 " + s.title +
       (s.words ? " \u00b7 " + s.words : "") +
       (readingTime(s.words) ? " \u00b7 " + readingTime(s.words) : "");
     ftText.textContent = s.synopsis;
-    setSubstance(s);
+    setKeyLine(s);
     ftLink.setAttribute("href", pdf);
     ftLink.setAttribute("target", "_blank");
     ftLink.setAttribute("rel", "noopener");
+
     easel.style.display = "";
     easel.alt = s.title + " — cover";
     if (easel.getAttribute("src") !== cover) easel.src = cover;
+
     feature.classList.add("show");
   }
 
-  /* The small line above a group's title. stories.js can set its
-     own with a "label" field; a group of three keeps the old word. */
+  /* The small line above a group's title. stories.js can set its own
+     with a "label" field. Leave the field out and a group of three
+     says "A Triptych", anything else "A Series". Set it to an empty
+     string and no label is shown at all. */
   function groupLabel(t) {
-    return t.label || (t.books.length === 3 ? "A Triptych" : "A Series");
+    if (typeof t.label === "string") return t.label;
+    return t.books.length === 3 ? "A Triptych" : "A Series";
   }
 
   function showTrilogy(t) {
     clearTimeout(hideTimer);
     panels.forEach(function (p) { p.classList.remove("is-active"); });
     feature.classList.add("trio");
-    ftMeta.textContent = groupLabel(t) + " \u00b7 " + t.title;
+
+    var lab = groupLabel(t);
+    ftMeta.textContent = lab ? lab + " \u00b7 " + t.title : t.title;
     ftText.textContent = t.synopsis;
-    setSubstance(null);
+    setKeyLine(null);
     ftLink.style.display = "none";
+
     /* Built fresh each time, so a group can hold any number of books. */
     easelSet.textContent = "";
     easelSet.setAttribute("data-count", t.books.length);
@@ -175,6 +192,7 @@
       im.src = coverFor(n);
       easelSet.append(im);
     });
+
     feature.classList.add("show");
   }
 
@@ -211,7 +229,7 @@
   var list = document.querySelector(".shelf ol");
 
   /* Filled as the list is built; the filter works from these. */
-  var rows = [];        /* one entry per book row */
+  var rows      = [];   /* one entry per book row */
   var groupRows = [];   /* one entry per series heading */
 
   /* ---- Pinning + the address bar --------------------------- */
@@ -278,9 +296,13 @@
     li.className = "trilogy";
     li.tabIndex = 0;
 
-    var label = document.createElement("p");
-    label.className = "t-label caps";
-    label.textContent = groupLabel(t);
+    var lab = groupLabel(t);
+    var label = null;
+    if (lab) {
+      label = document.createElement("p");
+      label.className = "t-label caps";
+      label.textContent = lab;
+    }
 
     var title = document.createElement("h2");
     title.className = "t-title";
@@ -288,6 +310,7 @@
 
     var syn = document.createElement("div");
     syn.className = "synopsis";
+
     var minis = document.createElement("div");
     minis.className = "minis" + (t.books.length > 3 ? " many" : "");
     t.books.forEach(function (n) {
@@ -297,11 +320,13 @@
       im.addEventListener("error", function () { im.remove(); });
       minis.append(im);
     });
+
     var txt = document.createElement("span");
     txt.textContent = t.synopsis;
     syn.append(minis, txt);
 
-    li.append(label, title, syn);
+    if (label) li.append(label);
+    li.append(title, syn);
     li.dataset.slug = trioSlug(t);
     list.append(li);
     groupRows.push({ group: t, el: li });
@@ -332,8 +357,9 @@
 
   STORIES.forEach(function (s, i) {
     if (trioByFirst[s.num]) buildTrilogyHead(trioByFirst[s.num]);
-    var num = String(s.num || i + 1).padStart(2, "0");
-    var pdf = s.pdf || "pdfs/" + num + ".pdf";
+
+    var num   = String(s.num || i + 1).padStart(2, "0");
+    var pdf   = s.pdf   || "pdfs/" + num + ".pdf";
     var cover = s.cover || "covers/" + num + ".jpg";
 
     var li = document.createElement("li");
@@ -348,6 +374,7 @@
 
     var title = document.createElement("h2");
     title.className = "title";
+
     var titleBtn = document.createElement("button");
     titleBtn.type = "button";
     titleBtn.className = "title-btn";
@@ -384,10 +411,12 @@
 
     var syn = document.createElement("div");
     syn.className = "synopsis";
+
     var synImg = document.createElement("img");
     synImg.src = cover;
     synImg.alt = "";
     synImg.addEventListener("error", function () { synImg.remove(); });
+
     var synText = document.createElement("span");
     synText.textContent = s.synopsis;
     syn.append(synImg, synText);
@@ -417,7 +446,6 @@
     });
 
     /* ---- 2. Hover behaviour for this book ------------------ */
-
     if (canHover) {
       li.addEventListener("mouseenter", function () {
         showFeature(s, num, pdf, cover);
@@ -439,16 +467,17 @@
 
   /* ---- 3. All Covers --------------------------------------- */
 
-  var gallery = document.getElementById("gallery");
-  var galleryGrid = document.getElementById("galleryGrid");
-  var galleryOpen = document.getElementById("galleryOpen");
+  var gallery      = document.getElementById("gallery");
+  var galleryGrid  = document.getElementById("galleryGrid");
+  var galleryOpen  = document.getElementById("galleryOpen");
   var galleryClose = document.getElementById("galleryClose");
-  var lastFocus = null;
+  var lastFocus    = null;
 
   function buildGallery() {
     galleryGrid.textContent = "";
     STORIES.forEach(function (s) {
       var n = String(s.num).padStart(2, "0");
+
       var card = document.createElement("button");
       card.type = "button";
       card.className = "gcard";
@@ -500,7 +529,6 @@
   gallery.addEventListener("click", function (e) {
     if (e.target === gallery) closeGallery();
   });
-
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;
     if (!gallery.hidden) closeGallery();
@@ -509,69 +537,68 @@
 
   buildGallery();
 
-  /* ---- 3b. Door / Key / What-turns-it filter ---------------
+  /* ---- 3b. Door / Room / Key filter ------------------------
      All three menus are built from the fields in stories.js, so a
      new book with a new door needs no edit here. They cascade:
-     choosing a Door narrows the Keys to the ones that occur behind
-     it, and both narrow what's left in the third menu.
+     choosing a Door narrows the Rooms to the ones that lie behind
+     it, and both narrow what's left in the Key menu.
 
      None of the three is a native <select>. An option list is drawn
      by the operating system, which means its font, colours and
-     highlight ignore the stylesheet entirely — and the third menu's
+     highlight ignore the stylesheet entirely — and the Key menu's
      entries are whole sentences a native list would clip. So they
      are buttons and listboxes, built here. */
 
   var resetBtn = document.getElementById("filterReset");
-  var noMatch = document.getElementById("noMatch");
-  var countEl = document.getElementById("shelfCount");
+  var noMatch  = document.getElementById("noMatch");
+  var countEl  = document.getElementById("shelfCount");
   var COUNT_TEXT = STORIES.length + " stories \u00b7 more coming";
 
-  /* The one-line meaning beside each Door and Key. Optional: a name
+  /* The one-line meaning beside each Door and Room. Optional: a name
      with no entry in GLOSSARY just shows on its own. */
   var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
 
-  /* What a book runs on comes from "substance", split at the em
-     dash: the name before it, the description after. Keeping it
-     derived means there is only ever one place to write it. */
-  function splitSubstance(s) {
-    if (!s || !s.substance) return null;
-    var parts = String(s.substance).split(" \u2014 ");
+  /* A book's Key is written as "Name — what it does". Splitting it
+     here means there is only ever one place to write it. */
+  function splitKey(s) {
+    if (!s || !s.key) return null;
+    var parts = String(s.key).split(" \u2014 ");
     return { name: parts[0].trim(), gloss: parts.slice(1).join(" \u2014 ").trim() };
   }
 
-  function turnsOf(s) {
-    var p = splitSubstance(s);
+  function keyNameOf(s) {
+    var p = splitKey(s);
     return p ? p.name : "";
   }
 
-  function matches(s, door, key, turns) {
+  function matches(s, door, room, key) {
     return (!door || s.door === door) &&
-           (!key || s.key === key) &&
-           (!turns || turnsOf(s) === turns);
+           (!room || s.room === room) &&
+           (!key  || keyNameOf(s) === key);
   }
 
   /* Order follows first appearance in the list rather than the
      alphabet — the series' own order is the meaningful one. */
-  function fieldOptions(field, book, door, key) {
+  function fieldOptions(field, section, door, room) {
     var seen = [], out = [];
     STORIES.forEach(function (s) {
       var v = s[field];
       if (!v || seen.indexOf(v) !== -1) return;
       if (door && s.door !== door) return;
-      if (key && s.key !== key) return;
+      if (room && s.room !== room) return;
       seen.push(v);
-      out.push({ name: v, gloss: (GLOSS[book] || {})[v] || "" });
+      out.push({ name: v, gloss: (GLOSS[section] || {})[v] || "" });
     });
     return out;
   }
 
-  function turnsOptions(door, key) {
+  function keyOptions(door, room) {
     var seen = [], out = [];
     STORIES.forEach(function (s) {
-      var p = splitSubstance(s);
+      var p = splitKey(s);
       if (!p || !p.name || seen.indexOf(p.name) !== -1) return;
       if (door && s.door !== door) return;
-      if (key && s.key !== key) return;
+      if (room && s.room !== room) return;
       seen.push(p.name);
       out.push(p);
     });
@@ -581,16 +608,16 @@
   /* ---- The menu itself --------------------------------------
      One component, three instances. "inline" runs the name and its
      meaning together on a line, which suits the short glosses of
-     Door and Key; without it the meaning sits under the name on its
-     own lines, which is what the sentence-length third menu needs.
+     Door and Room; without it the meaning sits under the name on its
+     own lines, which is what the sentence-length Key menu needs.
      Keyboard and screen-reader behaviour follows the listbox pattern. */
 
   var openMenu = null;
 
   function makeCombo(cfg) {
-    var root = document.getElementById(cfg.root);
-    var btn = document.getElementById(cfg.btn);
-    var listEl = document.getElementById(cfg.list);
+    var root    = document.getElementById(cfg.root);
+    var btn     = document.getElementById(cfg.btn);
+    var listEl  = document.getElementById(cfg.list);
     var valueEl = document.getElementById(cfg.value);
     if (!root || !btn || !listEl || !valueEl) return null;
 
@@ -722,14 +749,14 @@
     allLabel: "All Doors", inline: true, onChange: function () { refresh(); }
   });
 
-  var keyMenu = makeCombo({
-    root: "filterKey", btn: "keyBtn", list: "keyList", value: "keyValue",
-    allLabel: "All Keys", inline: true, onChange: function () { refresh(); }
+  var roomMenu = makeCombo({
+    root: "filterRoom", btn: "roomBtn", list: "roomList", value: "roomValue",
+    allLabel: "All Rooms", inline: true, onChange: function () { refresh(); }
   });
 
-  var turnsMenu = makeCombo({
-    root: "filterTurns", btn: "turnsBtn", list: "turnsList", value: "turnsValue",
-    allLabel: "Anything", inline: false, onChange: function () { applyFilter(); }
+  var keyMenu = makeCombo({
+    root: "filterKey", btn: "keyBtn", list: "keyList", value: "keyValue",
+    allLabel: "Any Key", inline: false, onChange: function () { applyFilter(); }
   });
 
   /* Rebuild the downstream menus, then filter. Called after any
@@ -737,17 +764,17 @@
      selection the narrowed menu no longer offers is dropped rather
      than left showing something the list isn't obeying. */
   function refresh() {
-    keyMenu.setOptions(fieldOptions("key", "keys", doorMenu.value, ""));
-    turnsMenu.setOptions(turnsOptions(doorMenu.value, keyMenu.value));
+    roomMenu.setOptions(fieldOptions("room", "rooms", doorMenu.value, ""));
+    keyMenu.setOptions(keyOptions(doorMenu.value, roomMenu.value));
     applyFilter();
   }
 
   function applyFilter() {
-    var door = doorMenu.value, key = keyMenu.value, turn = turnsMenu.value;
+    var door = doorMenu.value, room = roomMenu.value, key = keyMenu.value;
     var shown = 0;
 
     rows.forEach(function (r) {
-      var ok = matches(r.story, door, key, turn);
+      var ok = matches(r.story, door, room, key);
       r.el.classList.toggle("filtered-out", !ok);
       if (ok) shown++;
     });
@@ -755,7 +782,7 @@
     /* A series heading stays only while at least one of its books does. */
     groupRows.forEach(function (g) {
       var any = g.group.books.some(function (n) {
-        return byNum[n] && matches(byNum[n], door, key, turn);
+        return byNum[n] && matches(byNum[n], door, room, key);
       });
       g.el.classList.toggle("filtered-out", !any);
     });
@@ -768,7 +795,7 @@
       if (!hidden) first = false;
     });
 
-    var filtering = Boolean(door || key || turn);
+    var filtering = Boolean(door || room || key);
     noMatch.hidden = shown !== 0;
     resetBtn.disabled = !filtering;
     if (countEl) {
@@ -778,12 +805,12 @@
     }
   }
 
-  if (doorMenu && keyMenu && turnsMenu) {
+  if (doorMenu && roomMenu && keyMenu) {
     doorMenu.setOptions(fieldOptions("door", "doors", "", ""));
     resetBtn.addEventListener("click", function () {
       doorMenu.clear();
+      roomMenu.clear();
       keyMenu.clear();
-      turnsMenu.clear();
       refresh();
     });
     refresh();
@@ -830,18 +857,18 @@
   });
 
   /* ---- 5. Ambient sound ------------------------------------ */
-
   /* Each scene has its own track, keyed by the data-scene the head
      script set. A scene with no entry here simply plays nothing.
      The <audio> tag carries loop, so a track repeats until muted. */
+
   var TRACK_FOR_SCENE = {
-    "0": "assets/ambient.mp3",           /* the window room */
-    "1": "assets/ambient-tearoom.mp3?v=3" /* the tea room in the rain */
+    "0": "assets/ambient.mp3",              /* the window room */
+    "1": "assets/ambient-tearoom.mp3?v=3"   /* the tea room in the rain */
   };
 
-  var audio = document.getElementById("ambient");
+  var audio  = document.getElementById("ambient");
   var toggle = document.getElementById("soundToggle");
-  var vol = document.getElementById("volSlider");
+  var vol    = document.getElementById("volSlider");
 
   var scene = document.documentElement.getAttribute("data-scene") || "0";
   var track = TRACK_FOR_SCENE[scene] || "";
@@ -856,8 +883,8 @@
     vol.hidden = true;
   }
 
-  var muted = true;                /* silence by default — the speaker
-                                      button is the invitation */
+  var muted = true;               /* silence by default — the speaker
+                                     button is the invitation */
 
   /* Ears hear loudness logarithmically, so a slider mapped straight
      to audio.volume feels dead across its top half. Squaring the
@@ -870,15 +897,14 @@
   function applyVolume() {
     audio.volume = levelFor(vol.value);
   }
-
   applyVolume();
 
-  var waveOn = document.getElementById("waveOn");
+  var waveOn  = document.getElementById("waveOn");
   var waveOff = document.getElementById("waveOff");
 
   function paint() {
     /* set inline so the swap works even if the stylesheet is stale */
-    waveOn.style.display = muted ? "none" : "";
+    waveOn.style.display  = muted ? "none" : "";
     waveOff.style.display = muted ? "" : "none";
     toggle.classList.toggle("muted", muted);
     toggle.setAttribute("aria-pressed", muted ? "false" : "true");
@@ -903,7 +929,6 @@
   vol.addEventListener("input", function () {
     applyVolume();
     var silent = Number(vol.value) === 0;
-
     /* Sliding to zero mutes (and shows the crossed speaker);
        sliding back up brings the music straight back. */
     if (silent !== muted) {
@@ -914,4 +939,5 @@
       play();
     }
   });
+
 })();
