@@ -352,6 +352,26 @@ const STORIES = [
     room: "No One Answers",
     key: "Three drugs \u2014 you forget, it doesn't hurt, you can't move",
     synopsis: "Sara Karim is halfway through a staged reconstruction: four operations, consented to twice, in writing, and she read the form both times. During the second one she was awake \u2014 able to hear the room, able to feel every part of what was done to her, in a body chemically separated from every channel it had ever used to say stop. She has told four people and been believed by none, and one of them was kind about it, which was worse. There is a published figure for how often this happens, and the figure is very small, and the figure is the reason nobody believes her. Then a consultant anaesthetist who has never lost a patient in twenty-two years pulls her chart apart, works out that her body was always going to do this, and offers her something nobody has offered her before, which is to be asked a question."
+  },
+
+  {
+    num: 34,
+    title: "Four Minutes Past Two",
+    words: "16,100 words",
+    door: "Withholding",
+    room: "Past The Limit",
+    key: "The nights \u2014 you stop being able to tell how bad you are",
+    synopsis: "Amal was born on the first of March and did not sleep, and neither did her mother. Everyone tells Leila Sadr the same three things: it passes, you'll forget it, you're doing brilliantly. By night ninety she is losing words. By night one hundred and forty she is losing hours. She has started writing things down, because there is a pattern in the nights and she cannot hold it in her head long enough to look at it. She is not imagining it, and she is not well, and both are true at the same time, and only one of them can be written on a form. Her husband is calm and kind and has not raised his voice once in ten months. Everybody says so. Her GP says so, her health visitor says so, and by the end so does she."
+  },
+
+  {
+    num: 35,
+    title: "The Weight of Her",
+    words: "18,100 words",
+    door: "Ordeal",
+    room: "No One Answers",
+    key: "The lifting \u2014 ten years of carrying a child who keeps growing",
+    synopsis: "Mia was born in October. By nine months they knew something, by fourteen months there was a word for it, and by three years a hoist in the ceiling and a house chosen entirely for its doorways. She never sat unaided. She never spoke. She never turned her head when her mother came into a room. She lived for ten years, and she got heavier every one of them. Her mother's account of those years: the therapy that saved her hips and hurt her every day, a sister who was four when it started and asked for nothing for fifteen years, and a phrase relatives use \u2014 silent angel \u2014 and what that phrase is actually for. The first year has visitors and casseroles. The sixth year has nothing at all, and the sixth year is worse."
   }
 
 ];
@@ -416,7 +436,7 @@ const TRILOGIES = [
   {
     title: "The Unguarded Hours",
     label: "An Open File",
-    books: [31, 32, 33],
+    books: [31, 32, 33, 34, 35],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
   }
 ];
