@@ -293,7 +293,7 @@ html[data-scene="1"] .atmosphere {
 /* Both ends pinned: an auto-placed row-spanning button lands in the
    first column and shoves the fields sideways. */
 .filters .filter-field { grid-column: 1; min-width: 0; }
-.filters .filter-reset { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+.filters .filter-reset { grid-column: 2; grid-row: 1; align-self: end; }
 
 /* ---- The three menus -------------------------------------
    Buttons and listboxes rather than <select>s: a native option
@@ -859,6 +859,28 @@ html[data-scene="1"] .atmosphere {
   }
 }
 
+/* On phones the cover and the Door / Room / Key block stand side by
+   side, with the synopsis underneath the pair. The space beside a
+   cover this size was otherwise empty. */
+.syn-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 0.25rem 0 1.25rem;
+}
+
+.syn-head img { margin: 0; flex: 0 0 7.5rem; width: 7.5rem; }
+
+.syn-head .tri { flex: 1 1 0; min-width: 0; gap: 0.5rem; }
+.syn-head .tri-def { font-size: 0.9375rem; line-height: 1.4; }
+
+/* Very narrow screens: stack rather than squeeze the block to a
+   column of two-word lines. */
+@media (max-width: 24rem) {
+  .syn-head { flex-direction: column; gap: 1rem; }
+  .syn-head img { flex: none; width: 9rem; }
+}
+
 /* On phones the synopsis expands inline instead; give the
    little cover in it the same treatment. */
 .story.open .synopsis img {
@@ -981,24 +1003,37 @@ html[data-scene="1"] .atmosphere {
   gap: 1rem;
 }
 .feature.trio .feature-text { flex: 1 1 21rem; max-width: 29rem; }
-/* What the book runs on: its place in the two menus, then the
-   substance itself. Sits under the synopsis on the stage. */
-.feature-substance {
-  margin: 1.1rem 0 0;
+/* ---- Door / Room / Key ------------------------------------
+   Room and Key are no longer menus, so this block is where a reader
+   meets them: three labelled lines for the book in front of them.
+   Used twice — under the synopsis on the stage, and beside the cover
+   in the phone's inline synopsis. */
+.tri {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  font-family: var(--serif);
-  font-size: 1.0625rem;
-  line-height: 1.5;
-  color: var(--faded);
+  gap: 0.65rem;
 }
-.feature-substance .ft-tag {
-  font-family: var(--sans);
-  font-size: 0.625rem;
+
+.tri-row { display: block; }
+
+.tri-term {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-size: 0.5625rem;
   color: var(--ember);
   opacity: 0.85;
 }
+
+.tri-def {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--faded);
+  text-wrap: pretty;
+}
+
+.feature-substance { margin: 1.35rem 0 0; }
 .feature-substance[hidden] { display: none; }
 
 .feature.trio .feature-syn {

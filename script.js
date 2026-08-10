@@ -15,16 +15,16 @@
       texts; moving away brings the theme text back.
    4. The speaker button plays assets/ambient.mp3, if present.
 
-   The three filters read Door, Room, Key — widest to narrowest.
-   Door and Room come from fields of those names in stories.js and
-   take their one-line meanings from GLOSSARY. Key is derived from
-   the "key" field, split at the em dash: the name before it, the
-   description after.
+   Door, Room and Key read widest to narrowest. Only Door is a menu:
+   at nine rooms and thirty-five keys the other two had stopped being
+   a choice and become a list, so they now appear beside each book
+   instead. Door and Room take their one-line meanings from GLOSSARY;
+   Key is derived from the "key" field, split at the em dash — the
+   name before it, the description after.
 
-   Note: a few DOM ids and CSS classes still carry the older word
+   Note: one DOM id and CSS class still carry the older word
    "substance" (#ftSubstance, .feature-substance). They are only
-   handles — renaming them would mean editing style.css for no
-   visible gain. The data they carry is the book's Key.
+   handles. What they hold is the Door / Room / Key block.
    ============================================================ */
 
 (function () {
@@ -51,6 +51,53 @@
   });
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
+
+  /* The one-line meaning beside each Door and Room. Optional: a name
+     with no entry in GLOSSARY just shows on its own. */
+  var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
+
+  /* A book's Key is written as "Name — what it does". Splitting it
+     here means there is only ever one place to write it. */
+  function splitKey(s) {
+    if (!s || !s.key) return null;
+    var parts = String(s.key).split(" \u2014 ");
+    return { name: parts[0].trim(), gloss: parts.slice(1).join(" \u2014 ").trim() };
+  }
+
+  function keyNameOf(s) {
+    var p = splitKey(s);
+    return p ? p.name : "";
+  }
+
+  /* Door, Room and Key as three labelled lines. Room and Key are no
+     longer menus — there are far too many of each to pick from — so
+     this is where a reader meets them: beside the cover, for the book
+     actually in front of them. Built once, used on the stage and in
+     the phone's inline synopsis both. */
+  function triadEl(s) {
+    var wrap = document.createElement("div");
+    wrap.className = "tri";
+    var kp = splitKey(s);
+    var rows = [
+      ["Door", s.door, (GLOSS.doors || {})[s.door]],
+      ["Room", s.room, (GLOSS.rooms || {})[s.room]],
+      ["Key",  kp ? kp.name : "", kp ? kp.gloss : ""]
+    ];
+    rows.forEach(function (r) {
+      if (!r[1]) return;
+      var row = document.createElement("span");
+      row.className = "tri-row";
+      var term = document.createElement("span");
+      term.className = "tri-term caps";
+      term.textContent = r[0];
+      var def = document.createElement("span");
+      def.className = "tri-def";
+      def.textContent = r[2] ? r[1] + " \u2014 " + r[2] : r[1];
+      row.append(term, def);
+      wrap.append(row);
+    });
+    return wrap;
+  }
 
   /* ---- Deep links -----------------------------------------
      Every book gets its own address: #04-the-weeping-hour.
@@ -114,30 +161,16 @@
     if (wasFeature) setTimeout(activate, 300); else activate();
   }
 
-  /* The line under a book's synopsis on the stage: where it sits in
-     the first two menus, then the Key itself. Books without the
-     fields simply don't get the line. */
+  /* The Door / Room / Key block under a book's synopsis on the stage.
+     A book missing all three simply doesn't get one. */
   var ftSub = document.getElementById("ftSubstance");
 
-  function setKeyLine(s) {
+  function setTriad(s) {
     if (!ftSub) return;
-    var path = s && s.door
-      ? s.door + (s.room ? " \u00b7 " + s.room : "") : "";
-    if (!s || (!path && !s.key)) { ftSub.hidden = true; ftSub.textContent = ""; return; }
-    ftSub.hidden = false;
     ftSub.textContent = "";
-    if (path) {
-      var tag = document.createElement("span");
-      tag.className = "ft-tag caps";
-      tag.textContent = path;
-      ftSub.append(tag);
-    }
-    if (s.key) {
-      var txt = document.createElement("span");
-      txt.className = "ft-substance";
-      txt.textContent = s.key;
-      ftSub.append(txt);
-    }
+    if (!s || (!s.door && !s.room && !s.key)) { ftSub.hidden = true; return; }
+    ftSub.hidden = false;
+    ftSub.append(triadEl(s));
   }
 
   function showFeature(s, num, pdf, cover) {
@@ -150,7 +183,7 @@
       (s.words ? " \u00b7 " + s.words : "") +
       (readingTime(s.words) ? " \u00b7 " + readingTime(s.words) : "");
     ftText.textContent = s.synopsis;
-    setKeyLine(s);
+    setTriad(s);
     ftLink.setAttribute("href", pdf);
     ftLink.setAttribute("target", "_blank");
     ftLink.setAttribute("rel", "noopener");
@@ -179,7 +212,7 @@
     var lab = groupLabel(t);
     ftMeta.textContent = lab ? lab + " \u00b7 " + t.title : t.title;
     ftText.textContent = t.synopsis;
-    setKeyLine(null);
+    setTriad(null);
     ftLink.style.display = "none";
 
     /* Built fresh each time, so a group can hold any number of books. */
@@ -412,14 +445,22 @@
     var syn = document.createElement("div");
     syn.className = "synopsis";
 
+    /* Cover on the left, Door / Room / Key on the right, synopsis
+       underneath the pair. The space beside a 9rem cover was empty
+       and this is exactly what belongs in it. */
+    var synHead = document.createElement("div");
+    synHead.className = "syn-head";
+
     var synImg = document.createElement("img");
     synImg.src = cover;
     synImg.alt = "";
     synImg.addEventListener("error", function () { synImg.remove(); });
 
+    synHead.append(synImg, triadEl(s));
+
     var synText = document.createElement("span");
     synText.textContent = s.synopsis;
-    syn.append(synImg, synText);
+    syn.append(synHead, synText);
 
     li.append(row, syn);
     li.dataset.slug = slugFor(s);
@@ -537,80 +578,44 @@
 
   buildGallery();
 
-  /* ---- 3b. Door / Room / Key filter ------------------------
-     All three menus are built from the fields in stories.js, so a
-     new book with a new door needs no edit here. They cascade:
-     choosing a Door narrows the Rooms to the ones that lie behind
-     it, and both narrow what's left in the Key menu.
+  /* ---- 3b. The Door filter ---------------------------------
+     Built from the door field in stories.js, so a new book with a
+     new door needs no edit here.
 
-     None of the three is a native <select>. An option list is drawn
-     by the operating system, which means its font, colours and
-     highlight ignore the stylesheet entirely — and the Key menu's
-     entries are whole sentences a native list would clip. So they
-     are buttons and listboxes, built here. */
+     Room and Key were menus once. At nine rooms and thirty-five keys
+     that stopped being a choice and became a list, so they moved to
+     where they do more good: beside the book itself. Door is broad
+     enough to stay a way in.
+
+     Not a native <select>. An option list is drawn by the operating
+     system, which means its font, colours and highlight ignore the
+     stylesheet entirely. So it is a button and a listbox, built here. */
 
   var resetBtn = document.getElementById("filterReset");
   var noMatch  = document.getElementById("noMatch");
   var countEl  = document.getElementById("shelfCount");
   var COUNT_TEXT = STORIES.length + " stories \u00b7 more coming";
 
-  /* The one-line meaning beside each Door and Room. Optional: a name
-     with no entry in GLOSSARY just shows on its own. */
-  var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
-
-  /* A book's Key is written as "Name — what it does". Splitting it
-     here means there is only ever one place to write it. */
-  function splitKey(s) {
-    if (!s || !s.key) return null;
-    var parts = String(s.key).split(" \u2014 ");
-    return { name: parts[0].trim(), gloss: parts.slice(1).join(" \u2014 ").trim() };
-  }
-
-  function keyNameOf(s) {
-    var p = splitKey(s);
-    return p ? p.name : "";
-  }
-
-  function matches(s, door, room, key) {
-    return (!door || s.door === door) &&
-           (!room || s.room === room) &&
-           (!key  || keyNameOf(s) === key);
+  function matches(s, door) {
+    return !door || s.door === door;
   }
 
   /* Order follows first appearance in the list rather than the
      alphabet — the series' own order is the meaningful one. */
-  function fieldOptions(field, section, door, room) {
+  function doorOptions() {
     var seen = [], out = [];
     STORIES.forEach(function (s) {
-      var v = s[field];
-      if (!v || seen.indexOf(v) !== -1) return;
-      if (door && s.door !== door) return;
-      if (room && s.room !== room) return;
-      seen.push(v);
-      out.push({ name: v, gloss: (GLOSS[section] || {})[v] || "" });
-    });
-    return out;
-  }
-
-  function keyOptions(door, room) {
-    var seen = [], out = [];
-    STORIES.forEach(function (s) {
-      var p = splitKey(s);
-      if (!p || !p.name || seen.indexOf(p.name) !== -1) return;
-      if (door && s.door !== door) return;
-      if (room && s.room !== room) return;
-      seen.push(p.name);
-      out.push(p);
+      if (!s.door || seen.indexOf(s.door) !== -1) return;
+      seen.push(s.door);
+      out.push({ name: s.door, gloss: (GLOSS.doors || {})[s.door] || "" });
     });
     return out;
   }
 
   /* ---- The menu itself --------------------------------------
-     One component, three instances. "inline" runs the name and its
-     meaning together on a line, which suits the short glosses of
-     Door and Room; without it the meaning sits under the name on its
-     own lines, which is what the sentence-length Key menu needs.
-     Keyboard and screen-reader behaviour follows the listbox pattern. */
+     "inline" runs the name and its meaning together on a line, which
+     suits the short door glosses. Keyboard and screen-reader
+     behaviour follows the listbox pattern. */
 
   var openMenu = null;
 
@@ -746,35 +751,15 @@
 
   var doorMenu = makeCombo({
     root: "filterDoor", btn: "doorBtn", list: "doorList", value: "doorValue",
-    allLabel: "All Doors", inline: true, onChange: function () { refresh(); }
+    allLabel: "All Doors", inline: true, onChange: function () { applyFilter(); }
   });
-
-  var roomMenu = makeCombo({
-    root: "filterRoom", btn: "roomBtn", list: "roomList", value: "roomValue",
-    allLabel: "All Rooms", inline: true, onChange: function () { refresh(); }
-  });
-
-  var keyMenu = makeCombo({
-    root: "filterKey", btn: "keyBtn", list: "keyList", value: "keyValue",
-    allLabel: "Any Key", inline: false, onChange: function () { applyFilter(); }
-  });
-
-  /* Rebuild the downstream menus, then filter. Called after any
-     change, so the three can never disagree with each other. A
-     selection the narrowed menu no longer offers is dropped rather
-     than left showing something the list isn't obeying. */
-  function refresh() {
-    roomMenu.setOptions(fieldOptions("room", "rooms", doorMenu.value, ""));
-    keyMenu.setOptions(keyOptions(doorMenu.value, roomMenu.value));
-    applyFilter();
-  }
 
   function applyFilter() {
-    var door = doorMenu.value, room = roomMenu.value, key = keyMenu.value;
+    var door = doorMenu ? doorMenu.value : "";
     var shown = 0;
 
     rows.forEach(function (r) {
-      var ok = matches(r.story, door, room, key);
+      var ok = matches(r.story, door);
       r.el.classList.toggle("filtered-out", !ok);
       if (ok) shown++;
     });
@@ -782,7 +767,7 @@
     /* A series heading stays only while at least one of its books does. */
     groupRows.forEach(function (g) {
       var any = g.group.books.some(function (n) {
-        return byNum[n] && matches(byNum[n], door, room, key);
+        return byNum[n] && matches(byNum[n], door);
       });
       g.el.classList.toggle("filtered-out", !any);
     });
@@ -795,7 +780,7 @@
       if (!hidden) first = false;
     });
 
-    var filtering = Boolean(door || room || key);
+    var filtering = Boolean(door);
     noMatch.hidden = shown !== 0;
     resetBtn.disabled = !filtering;
     if (countEl) {
@@ -805,15 +790,13 @@
     }
   }
 
-  if (doorMenu && roomMenu && keyMenu) {
-    doorMenu.setOptions(fieldOptions("door", "doors", "", ""));
+  if (doorMenu) {
+    doorMenu.setOptions(doorOptions());
     resetBtn.addEventListener("click", function () {
       doorMenu.clear();
-      roomMenu.clear();
-      keyMenu.clear();
-      refresh();
+      applyFilter();
     });
-    refresh();
+    applyFilter();
   } else if (countEl) {
     countEl.textContent = COUNT_TEXT;
   }

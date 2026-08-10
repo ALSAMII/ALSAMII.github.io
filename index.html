@@ -60,7 +60,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=45">
+<link rel="stylesheet" href="style.css?v=48">
 </head>
 
 <body>
@@ -118,18 +118,18 @@
          ──────────────────────────────────────────────────────── -->
     <aside class="shelf" id="stories" aria-label="Stories">
 
-      <!-- Filter bar. All three menus are built by script.js from
-           the door / room / key fields in stories.js, so a new book
-           with a new door needs no edit here.
+      <!-- Filter bar. The Door menu is built by script.js from the
+           door field in stories.js, so a new book with a new door
+           needs no edit here.
 
-           The three read widest to narrowest: how they got out,
-           what was on the other side, and the exact thing that
-           opened it. -->
+           Room and Key are no longer menus — there are too many of
+           each to choose from usefully. Every book carries all three,
+           shown beside its cover when you open it. -->
       <div class="filters" id="filters">
 
-        <!-- None of the three is a <select>: a native option list is
-             drawn by the operating system, so its font, colours and
-             highlight can't be styled. These are built by script.js. -->
+        <!-- Not a <select>: a native option list is drawn by the
+             operating system, so its font, colours and highlight
+             can't be styled. Built by script.js. -->
         <div class="filter-field">
           <span class="caps combo-label" id="doorLabel">Door</span>
           <div class="combo combo--inline" id="filterDoor">
@@ -140,34 +140,6 @@
             </button>
             <ul class="combo-list" id="doorList" role="listbox"
                 aria-labelledby="doorLabel" tabindex="-1" hidden></ul>
-          </div>
-        </div>
-
-        <div class="filter-field">
-          <span class="caps combo-label" id="roomLabel">Room</span>
-          <div class="combo combo--inline" id="filterRoom">
-            <button type="button" class="combo-btn" id="roomBtn"
-                    aria-haspopup="listbox" aria-expanded="false"
-                    aria-labelledby="roomLabel roomBtn">
-              <span class="combo-value" id="roomValue">All Rooms</span>
-            </button>
-            <ul class="combo-list" id="roomList" role="listbox"
-                aria-labelledby="roomLabel" tabindex="-1" hidden></ul>
-          </div>
-        </div>
-
-        <!-- The Key menu's entries are whole sentences, so it isn't
-             given combo--inline: the meaning sits under the name. -->
-        <div class="filter-field filter-field--key">
-          <span class="caps combo-label" id="keyLabel">Key</span>
-          <div class="combo" id="filterKey">
-            <button type="button" class="combo-btn" id="keyBtn"
-                    aria-haspopup="listbox" aria-expanded="false"
-                    aria-labelledby="keyLabel keyBtn">
-              <span class="combo-value" id="keyValue">Any Key</span>
-            </button>
-            <ul class="combo-list" id="keyList" role="listbox"
-                aria-labelledby="keyLabel" tabindex="-1" hidden></ul>
           </div>
         </div>
 
@@ -182,7 +154,7 @@
         </button>
       </div>
 
-      <p class="no-match" id="noMatch" hidden>Nothing under that pairing yet.</p>
+      <p class="no-match" id="noMatch" hidden>Nothing behind that door yet.</p>
 
       <ol></ol>
       <p class="more" id="shelfCount"></p>
@@ -200,7 +172,7 @@
         <div class="feature-text">
           <p class="caps feature-meta" id="ftMeta"></p>
           <p class="feature-syn" id="ftText"></p>
-          <p class="feature-substance" id="ftSubstance" hidden></p>
+          <div class="feature-substance" id="ftSubstance" hidden></div>
           <p><a class="cp-link caps" id="ftLink" href="#">Read the story &mdash; PDF</a></p>
         </div>
         <img class="easel" id="easelImg" alt="">
@@ -214,8 +186,9 @@
           do&mdash;and what it costs them.</p>
 
         <p class="note roman">Every book asks one question: how does a
-          person get out of their own head? The three menus are that
-          question, from the widest to the narrowest.</p>
+          person get out of their own head? Every book answers it three
+          times, from the widest to the narrowest. Open one and you
+          will see all three.</p>
 
         <div class="guide">
           <p class="guide-row">
@@ -295,7 +268,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=45"></script>
-<script src="script.js?v=45"></script>
+<script src="stories.js?v=48"></script>
+<script src="script.js?v=48"></script>
 </body>
 </html>
