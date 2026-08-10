@@ -367,11 +367,11 @@ const STORIES = [
   {
     num: 35,
     title: "The Weight of Her",
-    words: "18,100 words",
-    door: "Ordeal",
+    words: "26,500 words",
+    door: "Withholding",
     room: "No One Answers",
-    key: "The lifting \u2014 ten years of carrying a child who keeps growing",
-    synopsis: "Mia was born in October. By nine months they knew something, by fourteen months there was a word for it, and by three years a hoist in the ceiling and a house chosen entirely for its doorways. She never sat unaided. She never spoke. She never turned her head when her mother came into a room. She lived for ten years, and she got heavier every one of them. Her mother's account of those years: the therapy that saved her hips and hurt her every day, a sister who was four when it started and asked for nothing for fifteen years, and a phrase relatives use \u2014 silent angel \u2014 and what that phrase is actually for. The first year has visitors and casseroles. The sixth year has nothing at all, and the sixth year is worse."
+    key: "Let me know if you need anything \u2014 the offer that hands the asking back to you",
+    synopsis: "They were offered a test at sixteen weeks and did not have it. Roya was born in October. By nine months they knew something, by fourteen months there was a word for it, and by three years a hoist in the ceiling, a wet room, and a house chosen entirely for its doorways. She never sat unaided. She never spoke. She never turned her head when her mother came into a room. She lived ten years and eleven months, and she got heavier every one of them. Her mother's account of those years: the therapy that saved her hips and hurt her every day, a sister who was four when it started and asked for nothing for fifteen years, and a phrase relatives use \u2014 silent angel \u2014 and what that phrase is actually for. The first year has visitors and casseroles. The sixth year has nothing at all, and the sixth year is worse."
   }
 
 ];
@@ -435,8 +435,8 @@ const TRILOGIES = [
   },
   {
     title: "The Unguarded Hours",
-    label: " ",
-    books: [31, 32, 33, 34],
+    label: "An Open File",
+    books: [31, 32, 33, 34, 35],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
   }
 ];
