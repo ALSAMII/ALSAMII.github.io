@@ -435,8 +435,8 @@ const TRILOGIES = [
   },
   {
     title: "The Unguarded Hours",
-    label: "An Open File",
-    books: [31, 32, 33, 34, 35],
+    label: " ",
+    books: [31, 32, 33, 34],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
   }
 ];
