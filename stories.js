@@ -359,7 +359,7 @@ const STORIES = [
     title: "Four Minutes Past Two",
     words: "16,100 words",
     door: "Withholding",
-    room: "Past The Limit",
+    room: "Not Your Hands",
     key: "The nights \u2014 you stop being able to tell how bad you are",
     synopsis: "Amal was born on the first of March and did not sleep, and neither did her mother. Everyone tells Leila Sadr the same three things: it passes, you'll forget it, you're doing brilliantly. By night ninety she is losing words. By night one hundred and forty she is losing hours. She has started writing things down, because there is a pattern in the nights and she cannot hold it in her head long enough to look at it. She is not imagining it, and she is not well, and both are true at the same time, and only one of them can be written on a form. Her husband is calm and kind and has not raised his voice once in ten months. Everybody says so. Her GP says so, her health visitor says so, and by the end so does she."
   },
@@ -371,7 +371,7 @@ const STORIES = [
     door: "Withholding",
     room: "No One Answers",
     key: "Let me know if you need anything \u2014 the offer that hands the asking back to you",
-    synopsis: "They were offered a test at sixteen weeks and did not have it. Roya was born in October. By nine months they knew something, by fourteen months there was a word for it, and by three years a hoist in the ceiling, a wet room, and a house chosen entirely for its doorways. She never sat unaided. She never spoke. She never turned her head when her mother came into a room. She lived ten years and eleven months, and she got heavier every one of them. Her mother's account of those years: the therapy that saved her hips and hurt her every day, a sister who was four when it started and asked for nothing for fifteen years, and a phrase relatives use \u2014 silent angel \u2014 and what that phrase is actually for. The first year has visitors and casseroles. The sixth year has nothing at all, and the sixth year is worse."
+    synopsis: "Roya never spoke, never reached, never turned her head. She lived ten years and eleven months and got heavier every one of them.\n\nHer mother's account of the therapy that hurt her daily to save her, the sister who asked for nothing, and the phrase people used so they wouldn't have to visit.\n\nAnd of what came after \u2014 when life got easier, and the grief did not, and only one of those could ever be said out loud."
   }
 
 ];
@@ -435,7 +435,7 @@ const TRILOGIES = [
   },
   {
     title: "The Unguarded Hours",
-    label: " ",
+    label: "",
     books: [31, 32, 33, 34],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
   }
