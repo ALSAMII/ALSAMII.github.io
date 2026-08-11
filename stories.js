@@ -11,6 +11,10 @@
    fields. Gaps in the numbering are fine. Commas between
    the { } blocks matter — keep them.
 
+   synopsis is the paragraph on the stage. Keep it to about sixty
+   words — the early books sit at fifty-five, and anything much longer
+   reads as a wall rather than an invitation.
+
    hook is the one line shown under the title in the list — the thing
    that makes a stranger stop scrolling. Keep it short; it sits on one
    line beside the reading time.
@@ -354,7 +358,7 @@ const STORIES = [
     door: "Rite",
     room: "Two Truths At Once \u2014 a town dressed as a town, and certified",
     key: "The frame \u2014 breathing, rhythm, and one hour a week to really look",
-    synopsis: "Terez\u00edn, 1942. The fortress ghetto is a town built to be looked at \u2014 sixty thousand people in a town of seven thousand beds, two truths running at all times. Eva, eleven, is sent to Room Twenty-Eight, where thirty girls run a civilization on a constitution of their own, and where on Thursdays, in a basement, a woman who packed fifty kilos of paper instead of clothes teaches them to breathe, to look, and to sign their names. She never corrects a drawing. She keeps every one. Then the world's certified eyes arrive, walk through a lie built of conscripted truth, and call it almost normal."
+    synopsis: "Terez\u00edn, 1942: a town built to be looked at, sixty thousand people in seven thousand beds. Eva, eleven, is sent to Room Twenty-Eight, where thirty girls run a civilisation on a constitution of their own \u2014 and where on Thursdays a woman who packed fifty kilos of paper instead of clothes teaches them to breathe, to look, and to sign their names."
   },
 
   {
@@ -365,7 +369,7 @@ const STORIES = [
     door: "Rite",
     room: "Forty-One Minutes Gone \u2014 the truck held its lane; he wasn't there",
     key: "Highway hypnosis \u2014 the driver who takes over when you go under",
-    synopsis: "Cal Dorsey has driven eighty thousand pounds across the middle of America for twenty-six years, and in all that time he has lost forty-one minutes. He did not fall asleep. The truck stayed in its lane, and the fuel curve was the cleanest the company had ever recorded. When he came back to himself the sun was not up, the road ahead was empty, and something behind him was on fire. Out on the night frequencies a preacher nobody has ever met tells a scattered congregation that the driver who takes over when you go under is the better one \u2014 and in a glass building in Kansas City there is a research group that agrees, and has the numbers, and needs a great deal more of them."
+    synopsis: "Cal Dorsey has driven eighty thousand pounds across America for twenty-six years, and lost forty-one minutes of it. He did not fall asleep: the truck held its lane and the fuel curve was the cleanest the company had ever recorded. Out on the night frequencies a preacher tells a scattered congregation that the driver who takes over when you go under is the better one."
   },
 
   {
@@ -376,7 +380,7 @@ const STORIES = [
     door: "Withholding",
     room: "Touched At Last \u2014 nobody has laid a hand on you since the death",
     key: "The forty minutes \u2014 a stranger kneels in the aisle and holds on",
-    synopsis: "There is a cheaper ticket you can buy when somebody dies, and to qualify for it you have to prove the death at the desk, in a queue, in front of everyone. Ilse Novak has worked that queue for twelve years \u2014 senior cabin attendant on a small carrier that flies the bereaved in the cabin and their dead in the hold, on the same aircraft, on the same night. Somewhere in the seventh hour, with the lights down and the air thin and nobody aboard touched in days, she kneels in the aisle beside a chosen passenger and takes their hand and does not let go. Eleven hundred and forty signatures, kept in her own handwriting, because she is proud of it and because a record ought to be kept properly. She has never once asked what happens after the signature."
+    synopsis: "There is a cheaper ticket you can buy when somebody dies, and to get it you must prove the death at the desk, in a queue, in front of everyone. Ilse Novak has worked that queue for twelve years. Somewhere in the seventh hour she kneels in the aisle, takes a stranger's hand and does not let go. Eleven hundred and forty signatures, in her own handwriting."
   },
 
   {
@@ -387,7 +391,7 @@ const STORIES = [
     door: "Dose",
     room: "Awake, Unable To Say So \u2014 you feel all of it and cannot signal",
     key: "Three drugs \u2014 you forget, it doesn't hurt, you can't move",
-    synopsis: "Sara Karim is halfway through a staged reconstruction: four operations, consented to twice, in writing, and she read the form both times. During the second one she was awake \u2014 able to hear the room, able to feel every part of what was done to her, in a body chemically separated from every channel it had ever used to say stop. She has told four people and been believed by none, and one of them was kind about it, which was worse. There is a published figure for how often this happens, and the figure is very small, and the figure is the reason nobody believes her. Then a consultant anaesthetist who has never lost a patient in twenty-two years pulls her chart apart, works out that her body was always going to do this, and offers her something nobody has offered her before, which is to be asked a question."
+    synopsis: "Sara Karim consented twice, in writing, and read the form both times. During the second operation she was awake \u2014 able to hear the room, able to feel every part of it, in a body chemically cut off from every channel it had ever used to say stop. She has told four people and been believed by none. One of them was kind about it, which was worse."
   },
 
   {
@@ -398,7 +402,7 @@ const STORIES = [
     door: "Withholding",
     room: "Someone Else Writing You \u2014 her doctor agrees with him, and then so does she",
     key: "The nights \u2014 enough of them and you stop being able to judge",
-    synopsis: "Amal was born on the first of March and did not sleep, and neither did her mother. Everyone tells Leila Sadr the same three things: it passes, you'll forget it, you're doing brilliantly. By night ninety she is losing words. By night one hundred and forty she is losing hours. She has started writing things down, because there is a pattern in the nights and she cannot hold it in her head long enough to look at it. She is not imagining it, and she is not well, and both are true at the same time, and only one of them can be written on a form. Her husband is calm and kind and has not raised his voice once in ten months. Everybody says so. Her GP says so, her health visitor says so, and by the end so does she."
+    synopsis: "Amal was born on the first of March and did not sleep, and neither did her mother. By night ninety Leila Sadr is losing words; by night one hundred and forty she is losing hours. Her husband is calm and kind and has not raised his voice in ten months. Everybody says so. Her GP says so, her health visitor says so, and by the end so does she."
   },
 
   {
@@ -420,7 +424,7 @@ const STORIES = [
     door: "Rite",
     room: "The Second Page \u2014 the hand sets down what the dying avoided",
     key: "The left hand \u2014 after the stroke it writes without asking him",
-    synopsis: "For thirty years Martin Hale has been the hospice's letter-writer, the steady pair of hands called in when the dying want their last words in ink. He is famous on the ward for what he leaves out. The rough timber of a life comes to him warped and full of rot; the family receives furniture they can put their weight on. He calls it mercy, and he has had a long time to practise the word. Then a small, unlucky stroke severs the bridge between the two halves of his brain, and his left hand begins to write on its own \u2014 only after the dying have finished, only the thing they spent the whole testimony avoiding, and it is never wrong. Families read the pages and their lives come off at the roof. But the hand is not working through the ward's accounts. It is working towards one. Thirty years ago his own wife dictated her last words to him, and he did not write them down. The hand remembers. And when it sets down the confession addressed to its own keeper, he has to decide whether the page is her true verdict or the story his body built to explain the wound."
+    synopsis: "For thirty years Martin Hale has written the last words of the dying, and he is famous on the ward for what he leaves out. He calls it mercy. Then a small stroke severs the bridge between the halves of his brain, and his left hand begins to write on its own \u2014 only what the dying avoided, and never wrong. It is working towards one account in particular: his own."
   },
 
   {
@@ -431,7 +435,7 @@ const STORIES = [
     door: "Dose",
     room: "The Warm Room \u2014 six hours inside the weather everyone else lives in",
     key: "Six doses \u2014 a guard he has never lowered, lowered for him",
-    synopsis: "Hector Vane is fifty-one, employed, solvent, and has not been convicted of anything in twenty-eight years. He is also, by the instrument the courts rely on, over the diagnostic threshold \u2014 and a court order keeps him from the daughter who has not spoken to him in nine years, and from the grandson he has never met. So he volunteers for a private trial: six sessions of drug-assisted therapy for men like him, run by a clinician who believes the field gave up too early. If he can be certified treatable, the order can be revisited. He has read the research, including the parts she did not send him, including the programme that dosed men like him for fifteen years and produced people who reoffended at higher rates, because the therapy taught them the language of feeling and they took it out into the world and used it. He comes anyway. Under the compound the defences he has never had to lower simply are not there, and for six hours at a time he can feel the weather everyone else lives in. Then it wears off, and the feeling goes, and the map stays."
+    synopsis: "Hector Vane is fifty-one, employed, and over the diagnostic threshold \u2014 and a court order keeps him from the daughter who stopped speaking to him nine years ago. So he volunteers for six sessions of drug-assisted therapy. Under the compound the defences he has never had to lower are simply not there, and he can feel the weather everyone else lives in. Then it wears off."
   }
 
 ];
