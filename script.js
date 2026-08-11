@@ -316,16 +316,46 @@
     }
   }
 
+  /* Bringing a book to the reader.
+
+     On a mouse, pinning is right: the stage swaps to the book and the
+     panel behind it steps aside. On touch there is no stage feature —
+     .feature is display:none below 56rem — so pinning would empty the
+     stage and take the About panel with it, leaving nothing behind when
+     the reader scrolls back up. There, the row simply unfolds in place
+     and the panel is left alone. */
+  function revealBook(s, writeHash) {
+    var li = document.querySelector('[data-slug="' + slugFor(s) + '"]');
+
+    if (canHover) {
+      pin({ kind: "book", data: s }, li, writeHash);
+    } else {
+      if (li) {
+        li.classList.add("open");
+        var eye = li.querySelector(".eye");
+        if (eye) eye.setAttribute("aria-expanded", "true");
+      }
+      if (writeHash && history.replaceState) {
+        history.replaceState(null, "", "#" + slugFor(s));
+      }
+    }
+
+    if (li && li.scrollIntoView) li.scrollIntoView({ block: "center" });
+  }
+
   function openFromHash() {
     var slug = decodeURIComponent(String(location.hash).replace(/^#/, ""));
     if (!slug) return false;
     var entry = bySlug[slug];
     if (!entry) return false;
     var el = document.querySelector('[data-slug="' + slug + '"]');
-    pin(entry, el, false);
+    if (canHover) {
+      pin(entry, el, false);
+    } else if (el) {
+      /* Touch has no stage: unfold in place, panel untouched. */
+      el.classList.add("open");
+    }
     if (el && el.scrollIntoView) el.scrollIntoView({ block: "center" });
-    /* Touch has no stage, so unfold the synopsis inline instead. */
-    if (!canHover && el) el.classList.add("open");
     return true;
   }
 
@@ -371,13 +401,20 @@
 
     li.addEventListener("click", function (e) {
       if (e.target.closest("a")) return;
-      if (pinned && pinned.kind === "trio" && pinned.data === t) {
-        if (!canHover) li.classList.remove("open");
-        unpin();
-      } else {
-        pin({ kind: "trio", data: t }, li, true);
-        if (!canHover) li.classList.add("open");
+
+      if (!canHover) {
+        /* Touch: open and close in place. Pinning here would clear the
+           stage, and on a phone there is nothing to put in its place. */
+        var open = li.classList.toggle("open");
+        if (history.replaceState) {
+          history.replaceState(null, "",
+            open ? "#" + trioSlug(t) : location.pathname + location.search);
+        }
+        return;
       }
+
+      if (pinned && pinned.kind === "trio" && pinned.data === t) unpin();
+      else pin({ kind: "trio", data: t }, li, true);
     });
 
     if (canHover) {
@@ -503,19 +540,19 @@
        address in the bar, so the link can be copied and shared.
        Clicking it again lets go. */
     titleBtn.addEventListener("click", function () {
-      if (pinned && pinned.kind === "book" && pinned.data === s) {
-        if (!canHover) {
-          li.classList.remove("open");
-          if (eye) eye.setAttribute("aria-expanded", "false");
+      if (!canHover) {
+        /* Touch: a plain open/close toggle. Nothing is pinned, so the
+           panel on the stage stays where the reader left it. */
+        var open = li.classList.toggle("open");
+        if (eye) eye.setAttribute("aria-expanded", open ? "true" : "false");
+        if (history.replaceState) {
+          history.replaceState(null, "",
+            open ? "#" + slugFor(s) : location.pathname + location.search);
         }
-        unpin();
-      } else {
-        pin({ kind: "book", data: s }, li, true);
-        if (!canHover) {
-          li.classList.add("open");
-          if (eye) eye.setAttribute("aria-expanded", "true");
-        }
+        return;
       }
+      if (pinned && pinned.kind === "book" && pinned.data === s) unpin();
+      else pin({ kind: "book", data: s }, li, true);
     });
 
     /* ---- 2. Hover behaviour for this book ------------------ */
@@ -573,10 +610,7 @@
       card.append(img, cap, meta);
       card.addEventListener("click", function () {
         closeGallery();
-        var li = document.querySelector('[data-slug="' + slugFor(s) + '"]');
-        pin({ kind: "book", data: s }, li, true);
-        if (li && li.scrollIntoView) li.scrollIntoView({ block: "center" });
-        if (!canHover && li) li.classList.add("open");
+        revealBook(s, true);
       });
       galleryGrid.append(card);
     });
@@ -867,12 +901,7 @@
       img.src = "assets/start-" + n + ".jpg";
     }
 
-    btn.addEventListener("click", function () {
-      var li = document.querySelector('[data-slug="' + slugFor(s) + '"]');
-      pin({ kind: "book", data: s }, li, true);
-      if (li && li.scrollIntoView) li.scrollIntoView({ block: "center" });
-      if (!canHover && li) li.classList.add("open");
-    });
+    btn.addEventListener("click", function () { revealBook(s, true); });
   });
 
   /* Open straight onto a shared link, and follow the back button. */
