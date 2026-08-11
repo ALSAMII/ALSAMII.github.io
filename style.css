@@ -784,8 +784,8 @@ html[data-scene="1"] .atmosphere {
   object-fit: cover;
   pointer-events: none;
   border: 0;
-  opacity: 0.36;
-  filter: saturate(0.78) contrast(1.03);
+  opacity: 0.52;
+  filter: saturate(1) contrast(1.06) brightness(1.06);
   transition: opacity 0.4s ease, transform 5s ease;
 
   /* Two fades, intersected: one across, one down. The single radial
@@ -795,22 +795,22 @@ html[data-scene="1"] .atmosphere {
      sides well before the image's own edge. */
   -webkit-mask-image:
     linear-gradient(to right,
-      transparent 0%, rgba(0, 0, 0, 0.25) 30%, #000 62%,
-      rgba(0, 0, 0, 0.45) 88%, transparent 100%),
+      transparent 0%, rgba(0, 0, 0, 0.2) 26%, #000 58%,
+      rgba(0, 0, 0, 0.4) 88%, transparent 100%),
     linear-gradient(to bottom,
-      transparent 0%, #000 26%, #000 74%, transparent 100%);
+      transparent 0%, #000 24%, #000 76%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
     linear-gradient(to right,
-      transparent 0%, rgba(0, 0, 0, 0.25) 30%, #000 62%,
-      rgba(0, 0, 0, 0.45) 88%, transparent 100%),
+      transparent 0%, rgba(0, 0, 0, 0.2) 26%, #000 58%,
+      rgba(0, 0, 0, 0.4) 88%, transparent 100%),
     linear-gradient(to bottom,
-      transparent 0%, #000 26%, #000 74%, transparent 100%);
+      transparent 0%, #000 24%, #000 76%, transparent 100%);
   mask-composite: intersect;
 }
 .start-row:hover .start-scene,
 .start-row:focus-visible .start-scene {
-  opacity: 0.54;
+  opacity: 0.72;
   transform: scale(1.03);
 }
 
@@ -876,7 +876,7 @@ html[data-scene="1"] .atmosphere {
 
 @media (max-width: 34rem) {
   .start { gap: 1.6rem; }
-  .start-scene { max-width: 62%; opacity: 0.3; }
+  .start-scene { max-width: 66%; opacity: 0.46; }
   .start-note { font-size: 0.9375rem; }
 }
 
