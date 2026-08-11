@@ -255,6 +255,15 @@
     ' aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7' +
     '-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
 
+  /* The two icons are not self-explanatory — one opens the PDF, one
+     unfolds the synopsis — so each carries a word underneath. */
+  function iconLabel(text) {
+    var el = document.createElement("span");
+    el.className = "icon-label caps";
+    el.textContent = text;
+    return el;
+  }
+
   var list = document.querySelector(".shelf ol");
 
   /* Filled as the list is built; the filter works from these. */
@@ -420,6 +429,7 @@
     pdfBtn.target = "_blank";
     pdfBtn.rel = "noopener";
     pdfBtn.innerHTML = PDF_ICON;
+    pdfBtn.append(iconLabel("PDF"));
 
     /* Title, then the hook and the reading time under it. Thirty-five
        bare titles told a new visitor nothing; this is what they scroll
@@ -460,6 +470,7 @@
       eye.setAttribute("aria-expanded", "false");
       eye.setAttribute("aria-label", s.title + " — synopsis");
       eye.innerHTML = EYE_ICON;
+      eye.append(iconLabel("Synopsis"));
       row.append(eye);
     }
 

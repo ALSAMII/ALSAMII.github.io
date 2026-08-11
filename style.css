@@ -767,10 +767,10 @@ html[data-scene="1"] .atmosphere {
   z-index: 0;
   pointer-events: none;
   color: var(--ember);
-  opacity: 0.16;
+  opacity: 0.1;
   transition: opacity 0.4s ease;
 }
-.start-row:hover .start-art { opacity: 0.3; }
+.start-row:hover .start-art { opacity: 0.18; }
 
 .start-art svg { position: absolute; display: block; }
 
@@ -811,14 +811,15 @@ html[data-scene="1"] .atmosphere {
    sits on near-black while the picture is strongest on the right. */
 .start-cover {
   position: absolute;
-  inset: 0;
+  right: 0;
+  top: 0;
   z-index: 0;
-  width: 100%;
   height: 100%;
+  width: auto;
+  max-width: 62%;
   object-fit: cover;
-  object-position: 72% 50%;
   pointer-events: none;
-  opacity: 0.52;
+  opacity: 0.55;
   border: 0;
   transition: opacity 0.4s ease, transform 6s ease;
   -webkit-mask-image: linear-gradient(to left,
@@ -828,9 +829,15 @@ html[data-scene="1"] .atmosphere {
 }
 .start-row:hover .start-cover,
 .start-row:focus-visible .start-cover {
-  opacity: 0.68;
-  transform: scale(1.03);
+  opacity: 0.72;
+  transform: scale(1.04);
 }
+
+/* Where each scene is cropped, so nobody loses a head. The dervish and
+   the crowd are centred; the swimmer sits right of centre. */
+.start-row--whirl .start-cover { object-position: 50% 46%; }
+.start-row--water .start-cover { object-position: 62% 42%; }
+.start-row--song  .start-cover { object-position: 50% 54%; }
 
 /* The scrim. Sits above the picture and below the words, and is what
    lets the card carry a photograph without the blurb going grey. */
@@ -928,7 +935,7 @@ html[data-scene="1"] .atmosphere {
 /* Narrow phones: the cover moves above the text rather than
    squeezing the blurb into a ribbon. */
 @media (max-width: 26rem) {
-  .start-cover { opacity: 0.44; object-position: 78% 50%; }
+  .start-cover { max-width: 70%; opacity: 0.5; }
 
   /* Narrowest phones: the cover steps back further still so the
      three facts get a readable column. */
