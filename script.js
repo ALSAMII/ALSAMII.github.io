@@ -842,31 +842,31 @@
     var s = byNum[Number(btn.dataset.book)];
     if (!s) return;
 
-    /* Wrap what's already in the card so the cover can stand beside it. */
-    var body = document.createElement("div");
-    body.className = "start-body";
-    while (btn.firstChild) body.append(btn.firstChild);
+    /* index.html already carries the card's markup — the motif, the
+       image, the text. Nothing is built here; only the two things that
+       must never be typed by hand get filled in. */
+    var slot = btn.querySelector(".start-time");
+    if (slot) slot.textContent = readingTime(s.words);
 
-    var rt = readingTime(s.words);
-    var titleEl = body.querySelector(".start-title");
-    if (titleEl && rt) {
-      var time = document.createElement("span");
-      time.className = "start-time caps";
-      time.textContent = rt;
-      titleEl.after(time);
+    /* Scene artwork first: assets/start-NN.jpg, a wide image with no
+       text on it. Missing, it falls back to the book's cover; missing
+       that too, the drawn motif carries the card alone. */
+    var img = btn.querySelector(".start-cover");
+    if (img) {
+      var n = String(s.num).padStart(2, "0");
+      var fellBack = false;
+      img.loading = "lazy";
+      img.addEventListener("error", function () {
+        if (!fellBack) {
+          fellBack = true;
+          img.src = s.cover || coverFor(s.num);
+        } else {
+          img.remove();
+          btn.classList.add("no-art");
+        }
+      });
+      img.src = "assets/start-" + n + ".jpg";
     }
-
-    var img = document.createElement("img");
-    img.className = "start-cover";
-    img.alt = s.title + " — cover";
-    img.loading = "lazy";
-    img.addEventListener("error", function () {
-      img.remove();
-      btn.classList.add("no-art");
-    });
-    img.src = s.cover || coverFor(s.num);
-
-    btn.append(img, body);
 
     btn.addEventListener("click", function () {
       var li = document.querySelector('[data-slug="' + slugFor(s) + '"]');
