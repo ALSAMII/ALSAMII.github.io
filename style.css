@@ -24,18 +24,6 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
-/* The Start-here artwork is meant to hang past its card, and on a
-   narrow screen that overhang can run past the viewport. The document
-   then becomes wider than the window, Safari shrinks the page to fit,
-   and everything centred sits left of centre with a dead strip down
-   the right-hand side.
-
-   clip, not hidden: hidden would make these a scroll container and
-   break position: fixed for the backdrop and the Top button. clip just
-   cuts what leaves the box. */
-html,
-body { overflow-x: clip; }
-
 body {
   margin: 0;
   min-height: 100svh;
@@ -985,6 +973,15 @@ html[data-scene="1"] .atmosphere {
 
   /* Stage first, list second — mirrors reading order on a phone. */
   .stage { order: -1; min-height: auto; overflow: visible; }
+
+  /* The pool of shade behind the stage text is inset by -4.5rem at each
+     side. On a wide window that spills harmlessly into the margins; on
+     a portrait phone it makes the document about 50px wider than the
+     screen, Safari shrinks the whole page to fit, and every centred
+     thing lands left of centre with a dead strip down the right. Pulled
+     in to something the screen can hold. */
+  .panel::before,
+  .feature-text::before { inset: -2rem -0.5rem; }
 
   /* On a wide screen every panel shares one grid cell, so the stage
      keeps a steady height as you switch between them. On a phone that
