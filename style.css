@@ -876,7 +876,15 @@ html[data-scene="1"] .atmosphere {
 
 @media (max-width: 34rem) {
   .start { gap: 1.6rem; }
-  .start-scene { max-width: 66%; opacity: 0.46; }
+  /* Portrait: the scene stops overhanging so far above and below. At
+     128% it ran well into the gaps between cards; this keeps it close
+     to the height of the text it belongs to. */
+  .start-scene {
+    max-width: 66%;
+    opacity: 0.46;
+    top: -5%;
+    height: 110%;
+  }
   .start-note { font-size: 0.9375rem; }
 }
 
