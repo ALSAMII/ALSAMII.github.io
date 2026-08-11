@@ -455,7 +455,7 @@ const TRILOGIES = [
   },
   {
     title: "The Unwitnessed Wars I\u2013V",
-    label: "A Cycle in Five Books",
+    label: "",
     books: [26, 27, 28, 29, 30],
     synopsis: "Five atrocities the world declined to witness: poison gas drifting over the marshes of Iran and Iraq; a famine ordered by decree in Ukraine; a hundred machete days in Rwanda; wards of unheld children in Ceau\u0219escu's Romania; a show-ghetto dressed for the Red Cross and certified as almost normal. Five clerks counting what the ledgers were built to erase. Five doors the cornered body found \u2014 smoke, hunger, stillness, rocking, the drawn page \u2014 and one question, noir to the bone: shelter from the century, or the century, inside?"
   },
