@@ -37,83 +37,6 @@
   --sans:  "Jost", "Century Gothic", sans-serif;
 }
 
-/* ============================================================
-   LIGHT
-   Cool grey — plain, neutral, and meant for reading in daylight.
-   Same structure throughout: only the palette is restated, plus the
-   few places where a value that reads as "darker" has to become
-   "lighter". The gold stays, deepened to hold against white.
-   ============================================================ */
-
-html[data-theme="light"] {
-  --night:      #eceded;                    /* page base */
-  --parchment:  #1b1d1f;                    /* main text */
-  --faded:      #5c6165;                    /* secondary text */
-  --ember:      #8a6a24;                    /* the same candlelight, sunlit */
-  --ember-soft: rgba(138, 106, 36, 0.5);
-  --ember-dim:  #7a5d1f;
-  --ember-lit:  #5f4715;
-  --hairline:   rgba(27, 29, 31, 0.16);
-
-  --sunk:       #e2e4e5;
-  --raised:     #f6f7f7;
-  --field:      rgba(255, 255, 255, 0.72);
-  --veil:       rgba(236, 237, 237, 0.95);
-  --shade:      rgba(236, 237, 237, 0.74);
-  --shade-deep: rgba(236, 237, 237, 0.88);
-  --halo:       rgba(236, 237, 237, 0.9);
-  --cast:       rgba(31, 35, 38, 0.18);
-  --cast-deep:  rgba(31, 35, 38, 0.26);
-  --seam-mid:   rgba(236, 237, 237, 0.5);
-
-  /* The photograph is still there, washed out until it is texture
-     rather than a scene, and the grain eases off with it. */
-  --scene-fade: 0.22;
-  --grain:      0.025;
-}
-
-/* The backdrop's own layers were built to darken. Here they lighten. */
-html[data-theme="light"] .atmosphere {
-  --scrim: linear-gradient(rgba(236, 237, 237, 0.82), rgba(236, 237, 237, 0.82));
-  filter: saturate(0.5) brightness(1.35) contrast(0.82);
-}
-
-html[data-theme="light"] .atmosphere::before {
-  background:
-    radial-gradient(38rem 26rem at 62% 18%, rgba(255, 255, 255, 0.5), transparent 70%),
-    radial-gradient(26rem 20rem at 82% 72%, rgba(255, 250, 240, 0.45), transparent 70%),
-    radial-gradient(120% 90% at 50% 45%,
-      rgba(236, 237, 237, 0.35), rgba(236, 237, 237, 0.72) 82%);
-}
-
-/* Text sat on artwork needs a light halo, not a dark one. */
-html[data-theme="light"] .feature-syn,
-html[data-theme="light"] .guide-def,
-html[data-theme="light"] .panel .lede,
-html[data-theme="light"] .panel .note,
-html[data-theme="light"] .start-note,
-html[data-theme="light"] .start-title,
-html[data-theme="light"] .start-time,
-html[data-theme="light"] .start-heading {
-  text-shadow: 0 1px 16px var(--halo), 0 0 26px var(--halo);
-}
-
-/* A cover's edges were feathered into a dark room; here they need a
-   frame instead, or they dissolve into the page. */
-html[data-theme="light"] .easel,
-html[data-theme="light"] .easel-set img,
-html[data-theme="light"] .gcard img,
-html[data-theme="light"] .story.open .synopsis img {
-  -webkit-mask-image: none;
-  mask-image: none;
-  border: 1px solid var(--hairline);
-}
-
-html[data-theme="light"] .start-row:hover,
-html[data-theme="light"] .start-row:focus-visible { filter: brightness(0.97); }
-
-html[data-theme="light"] .roya { opacity: 1; filter: none; }
-
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
@@ -2050,3 +1973,150 @@ body.gallery-on { overflow: hidden; }
   .gcard img { transition: none; }
   .gcard:hover img { transform: none; }
 }
+
+
+/* ████████████████████████████████████████████████████████████
+   THE LIGHT THEME
+   ────────────────────────────────────────────────────────────
+   Everything for light mode lives here, at the foot of the file,
+   and every rule is behind html[data-theme="light"]. Nothing above
+   this line knows the theme exists, so the dark room cannot be
+   changed by anything written below — and this whole block can be
+   deleted in one cut without leaving a mark.
+
+   To adjust light mode, work here. To adjust dark mode, work above.
+   ████████████████████████████████████████████████████████████ */
+
+html[data-theme="light"] {
+  /* ---- Ink and paper ---- */
+  --night:      #eceded;                    /* page base */
+  --parchment:  #14171a;                    /* main text — near black */
+  --faded:      #4a5054;                    /* secondary text */
+
+  /* Gold, taken down until it holds its own against white. The dark
+     theme's #d8a65f is a candle flame; on paper it needs to be the
+     metal instead. */
+  --ember:      #7a5a17;
+  --ember-soft: rgba(122, 90, 23, 0.55);
+  --ember-dim:  #6b4f14;
+  --ember-lit:  #4f3a0c;
+  --hairline:   rgba(20, 23, 26, 0.18);
+
+  /* ---- Surfaces ---- */
+  --sunk:       #e2e4e5;
+  --raised:     #fbfbfb;
+  --field:      rgba(255, 255, 255, 0.78);
+  --veil:       rgba(236, 237, 237, 0.96);
+  --shade:      rgba(236, 237, 237, 0.78);
+  --shade-deep: rgba(236, 237, 237, 0.9);
+  --halo:       rgba(236, 237, 237, 0.92);
+  --cast:       rgba(24, 28, 32, 0.16);
+  --cast-deep:  rgba(24, 28, 32, 0.24);
+  --seam-mid:   rgba(236, 237, 237, 0.5);
+
+  --scene-fade: 0.2;
+  --grain:      0.02;
+}
+
+/* ---- The backdrop ------------------------------------------
+   Its layers were built to darken; here they lighten, and the
+   photograph is washed until it is texture rather than a scene. */
+
+html[data-theme="light"] .atmosphere {
+  --scrim: linear-gradient(rgba(236, 237, 237, 0.86), rgba(236, 237, 237, 0.86));
+  filter: saturate(0.42) brightness(1.4) contrast(0.8);
+}
+
+html[data-theme="light"] .atmosphere::before {
+  background:
+    radial-gradient(38rem 26rem at 62% 18%, rgba(255, 255, 255, 0.55), transparent 70%),
+    radial-gradient(26rem 20rem at 82% 72%, rgba(255, 252, 245, 0.5), transparent 70%),
+    radial-gradient(120% 90% at 50% 45%,
+      rgba(236, 237, 237, 0.3), rgba(236, 237, 237, 0.7) 82%);
+}
+
+/* ---- Text over artwork -------------------------------------
+   A dark halo behind dark text is a smudge. These get a light one. */
+
+html[data-theme="light"] .feature-syn,
+html[data-theme="light"] .guide-def,
+html[data-theme="light"] .panel .lede,
+html[data-theme="light"] .panel .note,
+html[data-theme="light"] .panel .signature,
+html[data-theme="light"] .start-note,
+html[data-theme="light"] .start-title,
+html[data-theme="light"] .start-num,
+html[data-theme="light"] .start-time,
+html[data-theme="light"] .start-heading,
+html[data-theme="light"] .story-hook {
+  text-shadow: 0 1px 14px var(--halo), 0 0 24px var(--halo);
+}
+
+/* ---- The covers --------------------------------------------
+   Every cover is a photograph of a book on a dark table. Feathered
+   into a dark room they float; feathered into a grey page they read
+   as dark rectangles dissolving at the edges, which is worse.
+
+   So on paper they stop being feathered and start being objects:
+   square, lightly outlined, and casting a real shadow. The white
+   inner ring is what separates the photograph's own darkness from
+   the page, so the eye reads "a photograph of a book" rather than
+   "a dark hole". */
+
+html[data-theme="light"] .easel,
+html[data-theme="light"] .easel-set img,
+html[data-theme="light"] .gcard img,
+html[data-theme="light"] .story.open .synopsis img,
+html[data-theme="light"] .syn-head img {
+  -webkit-mask-image: none;
+  mask-image: none;
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.9),
+    0 0 0 2px rgba(20, 23, 26, 0.14),
+    0 10px 26px rgba(24, 28, 32, 0.22),
+    0 2px 6px rgba(24, 28, 32, 0.14);
+}
+
+html[data-theme="light"] .gcard:hover img,
+html[data-theme="light"] .gcard:focus-visible img {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.95),
+    0 0 0 2px var(--ember-soft),
+    0 18px 38px rgba(24, 28, 32, 0.3);
+}
+
+/* ---- The Start-here scenes ---------------------------------
+   Same problem, no border to solve it with — these are meant to be
+   bleeding into the page. Washed out far enough to read as a stain
+   on paper rather than a window into somewhere else. */
+
+html[data-theme="light"] .start-scene {
+  filter: saturate(0.5) brightness(1.5) contrast(0.85);
+  mix-blend-mode: multiply;
+  opacity: 0.14;
+}
+
+html[data-theme="light"] .start-row:hover .start-scene,
+html[data-theme="light"] .start-row:focus-visible .start-scene { opacity: 0.2; }
+
+html[data-theme="light"] .start-row:hover,
+html[data-theme="light"] .start-row:focus-visible { filter: brightness(0.98); }
+
+/* ---- Odds and ends -----------------------------------------
+   The imprint stamp was held back so it would not out-shout the
+   wordmark in a dark room; on paper it needs its full strength.
+   The volume slider's track is drawn by the browser and needs a
+   colour it can actually show. */
+
+html[data-theme="light"] .roya { opacity: 1; filter: none; }
+html[data-theme="light"] .vol { accent-color: var(--ember); opacity: 0.75; }
+html[data-theme="light"] .icon-btn,
+html[data-theme="light"] .sound,
+html[data-theme="light"] .theme,
+html[data-theme="light"] .gallery-close { color: var(--faded); }
+html[data-theme="light"] .icon-btn:hover,
+html[data-theme="light"] .sound:hover,
+html[data-theme="light"] .theme:hover,
+html[data-theme="light"] .gallery-close:hover { color: var(--ember); }
+html[data-theme="light"] .icon-label { opacity: 0.75; }
