@@ -942,6 +942,51 @@
     }
   });
 
+  /* ---- Back to the top -------------------------------------
+     Only shown once the reader is a screen and a half down, and only
+     where the page scrolls at all — on a wide window the frame is a
+     fixed height and the list scrolls inside itself, so scrollY stays
+     at zero and the button never appears. */
+
+  var toTop = document.getElementById("toTop");
+
+  if (toTop) {
+    var TOP_AT = 700;          /* px scrolled before it earns its place */
+    var topTicking = false;
+
+    var syncTop = function () {
+      topTicking = false;
+      var far = window.scrollY > TOP_AT;
+      if (far === !toTop.hidden) return;   /* nothing to change */
+      if (far) {
+        toTop.hidden = false;
+        requestAnimationFrame(function () { toTop.classList.add("show"); });
+      } else {
+        toTop.classList.remove("show");
+        setTimeout(function () {
+          if (window.scrollY <= TOP_AT) toTop.hidden = true;
+        }, 300);
+      }
+    };
+
+    window.addEventListener("scroll", function () {
+      if (topTicking) return;
+      topTicking = true;
+      requestAnimationFrame(syncTop);
+    }, { passive: true });
+
+    toTop.addEventListener("click", function () {
+      var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
+      /* Send focus back to the top of the document, so a keyboard or
+         screen-reader user lands where the page now is. */
+      var brand = document.querySelector(".masthead nav a");
+      if (brand && brand.focus) brand.focus({ preventScroll: true });
+    });
+
+    syncTop();
+  }
+
   /* ---- 5. Ambient sound ------------------------------------ */
   /* Each scene has its own track, keyed by the data-scene the head
      script set. A scene with no entry here simply plays nothing.

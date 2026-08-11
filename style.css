@@ -1475,6 +1475,57 @@ html[data-scene="1"] .atmosphere {
 .linklike:hover { color: var(--parchment); }
 
 /* ============================================================
+   Back to the top
+   ============================================================ */
+
+/* Only the phone layout scrolls the page — on a wide screen the frame
+   is a fixed height and the list scrolls inside itself — so this sits
+   quiet until there is genuinely a long way back up. */
+.to-top {
+  position: fixed;
+  right: clamp(0.9rem, 3vw, 1.75rem);
+  bottom: calc(clamp(0.9rem, 3vw, 1.75rem) + env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0.7rem 0.5rem;
+
+  color: var(--ember);
+  background: rgba(11, 9, 7, 0.82);
+  border: 1px solid var(--ember-soft);
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+
+  opacity: 0;
+  transform: translateY(0.6rem);
+  transition: opacity 0.3s ease, transform 0.3s ease,
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.to-top[hidden] { display: none; }
+.to-top.show { opacity: 1; transform: none; }
+
+.to-top:hover,
+.to-top:focus-visible {
+  border-color: var(--ember);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6),
+              0 0 22px rgba(216, 166, 95, 0.28);
+}
+
+.to-top svg { display: block; width: 1.05rem; height: 1.05rem; }
+.to-top .caps { font-size: 0.5rem; letter-spacing: 0.14em; opacity: 0.85; }
+
+/* The gallery is its own scrolling layer and has a close button of
+   its own; two floating controls at once is one too many. */
+body.gallery-on .to-top { display: none; }
+
+/* ============================================================
    All Covers — the whole shelf at once
    ============================================================ */
 
