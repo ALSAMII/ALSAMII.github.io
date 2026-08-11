@@ -964,7 +964,7 @@
     if (sortMenu) {
       sortMenu.setOptions([
         { name: "Shortest first", gloss: "eighteen minutes up" },
-        { name: "Newest first",   gloss: "the latest book back to the first" }
+        { name: "Newest first",   gloss: STORIES.length + " down to 1" }
       ]);
     }
     resetBtn.addEventListener("click", function () {

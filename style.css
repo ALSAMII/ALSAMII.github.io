@@ -419,6 +419,13 @@ html[data-scene="1"] .atmosphere {
   color: var(--faded);
 }
 
+/* The closed button shows the choice alone. Half a row wide, there is
+   no space for a meaning beside it — "Newest first" nearly fills the
+   box on its own — and a button three lines tall next to a neighbour
+   one line tall is worse than a button that simply says what is set.
+   The meanings stay where they are needed: in the open list. */
+.combo-btn .combo-gloss { display: none; }
+
 /* Door and Key keep name and meaning together on one line. */
 .combo--inline .combo-name,
 .combo--inline .combo-gloss { display: inline; }
