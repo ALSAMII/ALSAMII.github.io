@@ -1066,10 +1066,17 @@ html[data-scene="1"] .atmosphere {
        visible page grows taller than that, and anything stopping at
        bottom: 0 leaves a strip of bare photograph beneath it. That
        strip was the line. */
-    bottom: -14vh;
-    height: 26vh;
+    bottom: -18lvh;
+    height: 32lvh;
     z-index: -1;
     pointer-events: none;
+    /* Promoted, like .atmosphere is. Both sit at z-index: -1, but the
+       backdrop carries a transform and is therefore composited; an
+       unpromoted layer at the same level can end up painted behind it,
+       which is why moving this fade twice changed nothing. With a
+       transform of its own the two are peers and document order
+       decides — and this comes after. */
+    transform: translateZ(0);
     /* Solid well before the halfway mark, so the whole overhang — and
        every toolbar state in between — is the flat page colour. */
     background: linear-gradient(to bottom,
