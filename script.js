@@ -56,17 +56,13 @@
      with no entry in GLOSSARY just shows on its own. */
   var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
 
-  /* A book's Key is written as "Name — what it does". Splitting it
-     here means there is only ever one place to write it. */
-  function splitKey(s) {
-    if (!s || !s.key) return null;
-    var parts = String(s.key).split(" \u2014 ");
+  /* Room and Key are both written as "Name — what it's like". They
+     belong to one book each, so there is no shared list behind them —
+     each field carries its own meaning, split here at the em dash. */
+  function splitPair(v) {
+    if (!v) return null;
+    var parts = String(v).split(" \u2014 ");
     return { name: parts[0].trim(), gloss: parts.slice(1).join(" \u2014 ").trim() };
-  }
-
-  function keyNameOf(s) {
-    var p = splitKey(s);
-    return p ? p.name : "";
   }
 
   /* Door, Room and Key as three labelled lines. Room and Key are no
@@ -77,11 +73,11 @@
   function triadEl(s) {
     var wrap = document.createElement("div");
     wrap.className = "tri";
-    var kp = splitKey(s);
+    var rp = splitPair(s.room), kp = splitPair(s.key);
     var rows = [
-      ["Door", s.door, (GLOSS.doors || {})[s.door]],
-      ["Room", s.room, (GLOSS.rooms || {})[s.room]],
-      ["Key",  kp ? kp.name : "", kp ? kp.gloss : ""]
+      ["Door", s.door,             (GLOSS.doors || {})[s.door]],
+      ["Room", rp ? rp.name : "",  rp ? rp.gloss : ""],
+      ["Key",  kp ? kp.name : "",  kp ? kp.gloss : ""]
     ];
     rows.forEach(function (r) {
       if (!r[1]) return;
@@ -425,7 +421,32 @@
     pdfBtn.rel = "noopener";
     pdfBtn.innerHTML = PDF_ICON;
 
-    row.append(numEl, title, pdfBtn);
+    /* Title, then the hook and the reading time under it. Thirty-five
+       bare titles told a new visitor nothing; this is what they scroll
+       past, so it is where the book has to make its case. */
+    var main = document.createElement("div");
+    main.className = "story-main";
+    main.append(title);
+
+    var sub = document.createElement("p");
+    sub.className = "story-sub";
+
+    if (s.hook) {
+      var hook = document.createElement("span");
+      hook.className = "story-hook";
+      hook.textContent = s.hook;
+      sub.append(hook);
+    }
+    var rt = readingTime(s.words);
+    if (rt) {
+      var time = document.createElement("span");
+      time.className = "story-time caps";
+      time.textContent = rt;
+      sub.append(time);
+    }
+    if (sub.childNodes.length) main.append(sub);
+
+    row.append(numEl, main, pdfBtn);
 
     /* The eye only earns its place on touch, where there's no hover
        to reveal a synopsis. On a mouse or keyboard it would be a
@@ -800,6 +821,20 @@
   } else if (countEl) {
     countEl.textContent = COUNT_TEXT;
   }
+
+  /* The three books recommended on the About panel. Clicking one pins
+     it to the stage and scrolls the list to it, so a first visit has
+     somewhere to land instead of thirty-five equal titles. */
+  document.querySelectorAll("[data-book]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var s = byNum[Number(btn.dataset.book)];
+      if (!s) return;
+      var li = document.querySelector('[data-slug="' + slugFor(s) + '"]');
+      pin({ kind: "book", data: s }, li, true);
+      if (li && li.scrollIntoView) li.scrollIntoView({ block: "center" });
+      if (!canHover && li) li.classList.add("open");
+    });
+  });
 
   /* Open straight onto a shared link, and follow the back button. */
   openFromHash();

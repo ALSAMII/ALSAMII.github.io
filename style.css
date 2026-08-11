@@ -509,6 +509,38 @@ html[data-scene="1"] .atmosphere {
 .story:hover .title,
 .story:focus-within .title { color: var(--ember); }
 
+/* ---- The hook line ----------------------------------------
+   Thirty-five titles alone gave a visitor nothing to choose
+   between. The hook is what they actually read while scrolling;
+   the reading time is what decides it. */
+.story-main { min-width: 0; }
+
+.story-sub {
+  margin: 0.3rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.6rem;
+}
+
+.story-hook {
+  font-family: var(--serif);
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  color: var(--faded);
+  text-wrap: pretty;
+}
+
+.story-time {
+  font-size: 0.5625rem;
+  color: var(--ember);
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.story:hover .story-hook,
+.story:focus-within .story-hook { color: var(--parchment); }
+
 /* The two icons: PDF link and synopsis eye */
 .icon-btn {
   display: grid;
@@ -659,6 +691,53 @@ html[data-scene="1"] .atmosphere {
 }
 
 .panel .eyebrow { color: var(--ember); margin: 0 0 1.25rem; }
+
+/* ---- Start here -------------------------------------------
+   Three ways in, on the panel a first visit lands on. Each is a
+   button: clicking pins that book and scrolls the list to it. */
+.start {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0 0 2rem;
+  text-align: left;
+}
+
+.start-row {
+  display: block;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font: inherit;
+  text-align: left;
+  background: rgba(11, 9, 7, 0.4);
+  border: 1px solid var(--hairline);
+  border-left: 2px solid var(--ember-soft);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.start-row:hover { border-color: var(--ember-soft); background: rgba(216, 166, 95, 0.06); }
+.start-row:hover { border-left-color: var(--ember); }
+
+.start-title {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  color: var(--ember);
+}
+
+.start-note {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--faded);
+  text-wrap: pretty;
+}
+.start-row:hover .start-note { color: var(--parchment); }
 
 /* The three-part reader's guide in the About panel. Term above,
    meaning below, so it reads as a glossary rather than a paragraph. */
