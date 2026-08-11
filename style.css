@@ -1061,14 +1061,22 @@ html[data-scene="1"] .atmosphere {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
-    height: 9vh;
+    /* Hung below the viewport, not sat on its floor. Fixed elements
+       anchor to the layout viewport; when Safari's toolbar retracts the
+       visible page grows taller than that, and anything stopping at
+       bottom: 0 leaves a strip of bare photograph beneath it. That
+       strip was the line. */
+    bottom: -14vh;
+    height: 26vh;
     z-index: -1;
     pointer-events: none;
+    /* Solid well before the halfway mark, so the whole overhang — and
+       every toolbar state in between — is the flat page colour. */
     background: linear-gradient(to bottom,
       rgba(11, 9, 7, 0) 0%,
-      rgba(11, 9, 7, 0.55) 55%,
-      #0b0907 94%);
+      rgba(11, 9, 7, 0.5) 18%,
+      #0b0907 32%,
+      #0b0907 100%);
   }
 
   .atmosphere::before { animation: none; }
