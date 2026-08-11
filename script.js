@@ -131,7 +131,7 @@
     var hrs = mins / 60;
     /* Round to the nearest half hour — false precision helps nobody. */
     var rounded = Math.round(hrs * 2) / 2;
-    return "about " + (rounded % 1 ? rounded.toFixed(1) : rounded) +
+    return (rounded % 1 ? rounded.toFixed(1) : rounded) +
       (rounded === 1 ? " hour read" : " hours read");
   }
 

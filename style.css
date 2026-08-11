@@ -523,11 +523,14 @@ html[data-scene="1"] .atmosphere {
 .story-main { min-width: 0; }
 
 .story-sub {
-  margin: 0.3rem 0 0;
+  margin: 0.35rem 0 0;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0 0.6rem;
+  /* A row gap as well as a column one: when the hook wraps, the
+     reading time drops to its own line and was sitting right on top
+     of it. */
+  gap: 0.45rem 0.6rem;
 }
 
 .story-hook {
