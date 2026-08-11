@@ -550,11 +550,13 @@ html[data-scene="1"] .atmosphere {
 
 /* The two icons: PDF link and synopsis eye */
 .icon-btn {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.3rem;
+  min-width: 2.75rem;
+  padding: 0.15rem 0;
   color: var(--faded);
   background: none;
   border: 0;
@@ -564,6 +566,17 @@ html[data-scene="1"] .atmosphere {
 }
 .icon-btn:hover { color: var(--ember); }
 .icon-btn svg { width: 1.05rem; height: 1.05rem; display: block; }
+
+/* Neither icon explains itself, so each says what it does. */
+.icon-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  opacity: 0.6;
+  white-space: nowrap;
+  transition: opacity 0.25s ease;
+}
+.icon-btn:hover .icon-label { opacity: 1; }
 
 /* Open rows: the hook has done its job. The synopsis is right there
    saying the same thing better, so showing both is repetition. */
@@ -792,31 +805,66 @@ html[data-scene="1"] .atmosphere {
   50%      { transform: scaleY(1);    opacity: 1; }
 }
 
-/* ---- The cover, as artwork ----
-   Large, dimmed, and set behind the words rather than beside them.
-   Sitting in the layout it made every card twice as tall and the
-   blurb a narrow ribbon; here it fills the card and the mask fades
-   it out to the left so the text never has to fight it. */
+/* ---- The scene ----
+   A wide, text-free image behind the words: assets/start/NN.jpg. It
+   fills the card and the mask thins it away to the left, so the blurb
+   sits on near-black while the picture is strongest on the right. */
 .start-cover {
   position: absolute;
+  inset: 0;
   z-index: 0;
-  right: -1.25rem;
-  top: 50%;
-  height: 132%;
-  width: auto;
-  max-width: 58%;
-  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 50%;
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.52;
   border: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.4s ease, transform 6s ease;
   -webkit-mask-image: linear-gradient(to left,
-    #000 0%, rgba(0, 0, 0, 0.5) 42%, transparent 88%);
+    #000 0%, rgba(0, 0, 0, 0.45) 52%, transparent 94%);
   mask-image: linear-gradient(to left,
-    #000 0%, rgba(0, 0, 0, 0.5) 42%, transparent 88%);
+    #000 0%, rgba(0, 0, 0, 0.45) 52%, transparent 94%);
 }
 .start-row:hover .start-cover,
-.start-row:focus-visible .start-cover { opacity: 0.45; }
+.start-row:focus-visible .start-cover {
+  opacity: 0.68;
+  transform: scale(1.03);
+}
+
+/* The scrim. Sits above the picture and below the words, and is what
+   lets the card carry a photograph without the blurb going grey. */
+.start-row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg,
+    rgba(11, 9, 7, 0.94) 0%,
+    rgba(11, 9, 7, 0.82) 38%,
+    rgba(11, 9, 7, 0.42) 72%,
+    rgba(11, 9, 7, 0.2) 100%);
+}
+
+/* A lit corner, as in the frame — the card catches the candle at its
+   top-left and falls away from there. */
+.start-row::before {
+  content: "";
+  position: absolute;
+  left: -1px; top: -1px;
+  width: 45%; height: 60%;
+  z-index: 2;
+  pointer-events: none;
+  border-top: 1px solid var(--ember);
+  border-left: 1px solid var(--ember);
+  border-top-left-radius: 4px;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(closest-side at 0 0, #000, transparent);
+  mask-image: radial-gradient(closest-side at 0 0, #000, transparent);
+  transition: opacity 0.35s ease;
+}
+.start-row:hover::before { opacity: 0.9; }
 
 .start-body { position: relative; z-index: 1; min-width: 0; }
 
@@ -880,7 +928,7 @@ html[data-scene="1"] .atmosphere {
 /* Narrow phones: the cover moves above the text rather than
    squeezing the blurb into a ribbon. */
 @media (max-width: 26rem) {
-  .start-cover { max-width: 66%; opacity: 0.24; }
+  .start-cover { opacity: 0.44; object-position: 78% 50%; }
 
   /* Narrowest phones: the cover steps back further still so the
      three facts get a readable column. */
