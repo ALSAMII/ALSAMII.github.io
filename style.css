@@ -1015,23 +1015,34 @@ html[data-scene="1"] .atmosphere {
    fixed layer is the last thing a phone scroll needs, and at this size
    it was barely perceptible. */
 @media (hover: none) {
-  .atmosphere,
-  .atmosphere::before,
-  .atmosphere::after {
+  .atmosphere {
     /* Overshot deliberately. Sized to exactly 100lvh the layer had a
        bottom edge, and whenever the visible area came out taller than
-       the browser reported, that edge showed up as a hard line across
-       the page with bare --night beneath it. Hanging it past both ends
-       means there is no edge to find, at any toolbar state. */
+       the browser reported, that edge showed as a hard line across the
+       page. Hanging it past both ends means there is no edge to find. */
     top: -7vh;
     height: 114lvh;
     bottom: auto;
-  }
 
-  .atmosphere {
+    /* The dissolve has to move with it. Its bottom band was written for
+       a viewport-sized layer at 87%; on a layer this tall that landed
+       about nine tenths of the way down the screen, and the fade
+       starting was itself the line. At 96% it falls below the fold
+       again, while the top dissolve stays where the header needs it. */
+    --edge-fade: linear-gradient(to bottom,
+      #0b0907 0%, rgba(11, 9, 7, 0) 12%,
+      rgba(11, 9, 7, 0) 96%, #0b0907 100%);
+
     transform: translateZ(0);
     backface-visibility: hidden;
   }
+
+  /* The transform above makes .atmosphere the containing block for its
+     own fixed-position pseudo-elements, so inset: 0 fills the oversized
+     parent exactly — the light and the grain stay registered with the
+     photograph instead of drifting against it. */
+  .atmosphere::before,
+  .atmosphere::after { inset: 0; }
 
   .atmosphere::before { animation: none; }
 }
