@@ -489,12 +489,19 @@ html[data-scene="1"] .atmosphere {
 .story-row {
   display: grid;
   grid-template-columns: 2.25rem 1fr auto auto;
-  align-items: center;
+  /* Top, not centre: once a row carries a hook and a reading time it
+     is tall enough that a centred number floats away from its own
+     title. */
+  align-items: start;
   gap: 0.875rem;
   padding: 1.05rem 0.25rem;
 }
 
-.story .num { color: var(--ember); letter-spacing: 0.2em; }
+.story .num {
+  color: var(--ember);
+  letter-spacing: 0.12em;   /* 0.2em read as two separate digits */
+  padding-top: 0.4rem;      /* sits on the title's baseline */
+}
 
 .story .title {
   margin: 0;
@@ -558,6 +565,10 @@ html[data-scene="1"] .atmosphere {
 .icon-btn:hover { color: var(--ember); }
 .icon-btn svg { width: 1.05rem; height: 1.05rem; display: block; }
 
+/* Open rows: the hook has done its job. The synopsis is right there
+   saying the same thing better, so showing both is repetition. */
+.story.open .story-hook { display: none; }
+
 /* Each story's synopsis lives hidden inside its row; the
    script shows it on the stage (desktop) or inline (touch). */
 .story .synopsis { display: none; }
@@ -566,10 +577,10 @@ html[data-scene="1"] .atmosphere {
   display: block;
   white-space: pre-line;   /* paragraph breaks, as on the stage */
   margin: 0 0.25rem;
-  padding: 0 0 1.25rem;
+  padding: 0 0 1.5rem;
   font-family: var(--serif);
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 1.0625rem;
+  line-height: 1.65;
   color: var(--faded);
   max-width: 34rem;
 }
@@ -870,6 +881,10 @@ html[data-scene="1"] .atmosphere {
    squeezing the blurb into a ribbon. */
 @media (max-width: 26rem) {
   .start-cover { max-width: 66%; opacity: 0.24; }
+
+  /* Narrowest phones: the cover steps back further still so the
+     three facts get a readable column. */
+  .syn-head img { flex-basis: 5.25rem; width: 5.25rem; }
   .start-num { font-size: 2.125rem; }
   .start-note { font-size: 0.9375rem; }
 }
@@ -1098,13 +1113,20 @@ html[data-scene="1"] .atmosphere {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  margin: 0.25rem 0 1.25rem;
+  margin: 0.25rem 0 1.15rem;
 }
 
-.syn-head img { margin: 0; flex: 0 0 7.5rem; width: 7.5rem; }
+.syn-head img { margin: 0; flex: 0 0 6rem; width: 6rem; }
 
-.syn-head .tri { flex: 1 1 0; min-width: 0; gap: 0.5rem; }
-.syn-head .tri-def { font-size: 0.9375rem; line-height: 1.4; }
+.syn-head .tri { flex: 1 1 0; min-width: 0; gap: 0.55rem; }
+.syn-head .tri-def { font-size: 0.875rem; line-height: 1.4; }
+
+/* A rule under the block separates the facts from the story, so the
+   two stop reading as one undifferentiated column of serif. */
+.syn-head {
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--hairline);
+}
 
 /* Very narrow screens: stack rather than squeeze the block to a
    column of two-word lines. */
