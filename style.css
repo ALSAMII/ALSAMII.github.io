@@ -720,107 +720,160 @@ html[data-scene="1"] .atmosphere {
 .panel .eyebrow { color: var(--ember); margin: 0 0 1.25rem; }
 
 /* ---- Start here -------------------------------------------
-   Three ways in, on the panel a first visit lands on. Each card is a
-   single artwork — frame, numeral and scene drawn as one — with the
-   title, reading time and blurb laid over it.
+   Three ways in, on the panel a first visit lands on.
 
-   The aspect ratio is locked to the artwork's own. That is what stops
-   the numeral and the gold frame distorting: the box can only be the
-   shape the picture is, so background-size: 100% 100% is exact rather
-   than a stretch. If a blurb ever outgrows the box the card gets
-   taller and the art gives a little with it. */
+   The card is only as tall as its own text — no locked aspect ratio,
+   which on a landscape screen made these enormous. The scene is an
+   image that deliberately breaks the frame: it hangs past the top,
+   right and bottom edges, faded well back and feathered away at every
+   side, so it reads as part of the room rather than as a picture in a
+   box. */
 .start {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin: 0 0 2.25rem;
+  gap: 2rem;
+  margin: 0 0 2.5rem;
   text-align: left;
 }
 
 .start-row {
   position: relative;
-  display: flex;
-  align-items: center;
+  display: block;
   width: 100%;
-  aspect-ratio: 1.467;
-  /* left padding clears the numeral; the rest is the frame's inset */
-  padding: 5% 5% 5% 21%;
+  padding: 1.3rem 1.4rem;
   font: inherit;
   text-align: left;
-  background-image: var(--card);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-color: var(--night);
-  border: 0;
-  border-radius: 0;
+  background: linear-gradient(135deg,
+    rgba(22, 17, 12, 0.5), rgba(11, 9, 7, 0.34));
+  border: 1px solid rgba(216, 166, 95, 0.26);
+  border-radius: 4px;
   cursor: pointer;
-  transition: filter 0.35s ease, transform 0.35s ease;
+  /* visible, so the scene can hang outside the frame */
+  overflow: visible;
+  isolation: isolate;
+  transition: border-color 0.35s ease, background 0.35s ease,
+              transform 0.35s ease;
 }
-
-.start-row--whirl { --card: url("assets/card-12.jpg"); }
-.start-row--water { --card: url("assets/card-06.jpg"); }
-.start-row--song  { --card: url("assets/card-02.jpg"); }
 
 .start-row:hover,
 .start-row:focus-visible {
-  filter: brightness(1.14);
+  border-color: rgba(216, 166, 95, 0.5);
+  background: linear-gradient(135deg,
+    rgba(30, 23, 16, 0.55), rgba(11, 9, 7, 0.38));
   transform: translateY(-2px);
 }
 
-.start-body { position: relative; z-index: 1; min-width: 0; }
-
-/* A feathered pool of shade under the words — the same device the
-   stage text uses, so the blurb never sits on a bright patch. */
-.start-body::before {
+/* The lit corner: the frame catches the candle at its top-left and
+   falls away from there. */
+.start-row::before {
   content: "";
   position: absolute;
-  inset: -1.2rem -1.6rem;
-  z-index: -1;
+  left: -1px; top: -1px;
+  width: 40%; height: 55%;
+  z-index: 2;
   pointer-events: none;
-  background: radial-gradient(closest-side,
-    rgba(7, 5, 4, 0.78) 42%, rgba(7, 5, 4, 0) 100%);
+  border-top: 1px solid var(--ember);
+  border-left: 1px solid var(--ember);
+  border-top-left-radius: 4px;
+  opacity: 0.45;
+  -webkit-mask-image: radial-gradient(closest-side at 0 0, #000, transparent);
+  mask-image: radial-gradient(closest-side at 0 0, #000, transparent);
+  transition: opacity 0.35s ease;
 }
+.start-row:hover::before { opacity: 0.85; }
+
+/* ---- The scene, breaking the frame ---- */
+.start-scene {
+  position: absolute;
+  z-index: 0;
+  right: -3.5%;
+  top: -10%;
+  height: 120%;
+  width: auto;
+  max-width: 56%;
+  object-fit: cover;
+  pointer-events: none;
+  border: 0;
+  opacity: 0.34;
+  filter: saturate(0.8) contrast(1.05);
+  transition: opacity 0.4s ease, transform 5s ease;
+  /* feathered on every side, strongest at its right, gone by the time
+     it reaches the words */
+  -webkit-mask-image: radial-gradient(115% 96% at 92% 50%,
+    #000 26%, rgba(0, 0, 0, 0.5) 58%, transparent 84%);
+  mask-image: radial-gradient(115% 96% at 92% 50%,
+    #000 26%, rgba(0, 0, 0, 0.5) 58%, transparent 84%);
+}
+.start-row:hover .start-scene,
+.start-row:focus-visible .start-scene {
+  opacity: 0.5;
+  transform: scale(1.03);
+}
+
+.start-row--whirl .start-scene { object-position: 50% 44%; }
+.start-row--water .start-scene { object-position: 62% 40%; }
+.start-row--song  .start-scene { object-position: 50% 54%; }
+
+/* ---- Text ---- */
+.start-body { position: relative; z-index: 1; min-width: 0; }
 
 .start-head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0 0.6rem;
-  margin-bottom: 0.55rem;
+  gap: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Same face and weight as the title — it is a label, not an ornament. */
+.start-num {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.1875rem;
+  color: var(--ember);
+  opacity: 0.8;
+  text-shadow: 0 1px 12px rgba(5, 4, 3, 0.9);
 }
 
 .start-title {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
+  font-size: 1.1875rem;
+  letter-spacing: 0.05em;
   color: var(--ember);
-  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.95);
+  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
+}
+.start-title::before {
+  content: "\00b7";
+  margin-right: 0.5rem;
+  opacity: 0.55;
 }
 
 .start-time {
   font-size: 0.5625rem;
   color: var(--ember);
-  opacity: 0.72;
+  opacity: 0.7;
   white-space: nowrap;
-  text-shadow: 0 1px 10px rgba(5, 4, 3, 0.95);
+  text-shadow: 0 1px 10px rgba(5, 4, 3, 0.9);
 }
 
 .start-note {
   display: block;
+  max-width: 32rem;
   font-family: var(--serif);
   font-size: 1rem;
-  line-height: 1.5;
-  color: var(--parchment);
+  line-height: 1.55;
+  color: var(--faded);
   text-wrap: pretty;
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.95),
-               0 0 26px rgba(5, 4, 3, 0.85);
+               0 0 24px rgba(5, 4, 3, 0.8);
 }
+.start-row:hover .start-note { color: var(--parchment); }
 
 @media (max-width: 34rem) {
-  .start-row { padding: 4.5% 4% 4.5% 20%; }
-  .start-title { font-size: 1.0625rem; }
-  .start-note { font-size: 0.8125rem; line-height: 1.45; }
+  .start { gap: 1.6rem; }
+  .start-scene { max-width: 62%; opacity: 0.3; }
+  .start-note { font-size: 0.9375rem; }
 }
 
 

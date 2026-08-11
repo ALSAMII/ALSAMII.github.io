@@ -848,10 +848,10 @@
     var slot = btn.querySelector(".start-time");
     if (slot) slot.textContent = readingTime(s.words);
 
-    /* Scene artwork first: assets/start-NN.jpg, a wide image with no
-       text on it. Missing, it falls back to the book's cover; missing
-       that too, the drawn motif carries the card alone. */
-    var img = btn.querySelector(".start-cover");
+    /* The scene: assets/start-NN.jpg, a wide image with no text on it.
+       Missing, it falls back to the book's cover; missing that too, the
+       card keeps its frame and simply carries no picture. */
+    var img = btn.querySelector(".start-scene");
     if (img) {
       var n = String(s.num).padStart(2, "0");
       var fellBack = false;
@@ -862,7 +862,6 @@
           img.src = s.cover || coverFor(s.num);
         } else {
           img.remove();
-          btn.classList.add("no-art");
         }
       });
       img.src = "assets/start-" + n + ".jpg";
