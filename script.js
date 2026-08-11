@@ -534,7 +534,23 @@
     li.append(row, syn);
     li.dataset.slug = slugFor(s);
     list.append(li);
-    rows.push({ story: s, el: li });
+
+    /* Everything a reader might half-remember about this book, in one
+       lowercase string: the title, the hook, the synopsis, the room and
+       key, its door, its number — and, if it belongs to one, the series
+       title, so "unwitnessed" finds all five.
+
+       The series synopsis is deliberately left out. It names Rwanda,
+       Ukraine and the rest, which would make a search for "rwanda"
+       return the whole cycle instead of the one book set there. */
+    var group = null;
+    TRIOS.forEach(function (t) { if (t.books.indexOf(s.num) !== -1) group = t; });
+    var hay = [s.title, s.hook, s.synopsis, s.room, s.key, s.door, s.words,
+               String(s.num), num,
+               group ? group.title : ""]
+      .join(" ").toLowerCase();
+
+    rows.push({ story: s, el: li, hay: hay });
 
     /* Clicking the title pins the book to the stage and puts its
        address in the bar, so the link can be copied and shared.
@@ -662,8 +678,14 @@
   var countEl  = document.getElementById("shelfCount");
   var COUNT_TEXT = STORIES.length + " stories \u00b7 more coming";
 
-  function matches(s, door) {
-    return !door || s.door === door;
+  var query = "";
+
+  function matches(r, door) {
+    if (door && r.story.door !== door) return false;
+    if (!query) return true;
+    /* Every word has to appear somewhere — so "rwanda marsh" narrows
+       rather than widening, which is what a reader expects. */
+    return query.split(/\s+/).every(function (w) { return r.hay.indexOf(w) !== -1; });
   }
 
   /* Order follows first appearance in the list rather than the
@@ -820,20 +842,72 @@
     allLabel: "All Doors", inline: true, onChange: function () { applyFilter(); }
   });
 
+  var sortMenu = makeCombo({
+    root: "filterSort", btn: "sortBtn", list: "sortList", value: "sortValue",
+    allLabel: "Series order", inline: true, onChange: function () { applySort(); }
+  });
+
+  /* ---- Order --------------------------------------------------
+     Three ways through the same shelf. Series order is the blank
+     option, so clearing the menu — or the reset button — always
+     returns the list to the order the books were written in.
+
+     Length is the biggest practical difference between these books:
+     eighteen minutes at one end, over two hours at the other. Newest
+     first answers the other common question, which a returning reader
+     currently has to scroll the whole shelf to answer. */
+
+  var shelfOrder = Array.prototype.slice.call(list.children);
+
+  function minutesOf(s) {
+    var n = parseInt(String(s.words).replace(/[^0-9]/g, ""), 10) || 0;
+    if (/page/i.test(s.words)) n = n * 275;
+    return Math.round(n / 250);
+  }
+
+  function applySort() {
+    var mode = sortMenu ? sortMenu.value : "";
+
+    if (!mode) {
+      /* Back to the order the shelf was built in, headings and all. */
+      shelfOrder.forEach(function (el) { list.append(el); });
+      groupRows.forEach(function (g) { g.el.classList.remove("sorted-away"); });
+      rows.forEach(function (r) { r.el.classList.remove("flat"); });
+    } else {
+      /* Any other order breaks the series apart, so the headings step
+         aside and the member books lose their indent — a group heading
+         above books that are no longer its own would be a lie. */
+      groupRows.forEach(function (g) { g.el.classList.add("sorted-away"); });
+
+      var ordered = rows.slice();
+      if (mode === "Shortest first") {
+        ordered.sort(function (a, b) { return minutesOf(a.story) - minutesOf(b.story); });
+      } else {
+        ordered.sort(function (a, b) { return b.story.num - a.story.num; });
+      }
+      ordered.forEach(function (r) {
+        r.el.classList.add("flat");
+        list.append(r.el);
+      });
+    }
+
+    applyFilter();   /* the top-of-list hairline has probably moved */
+  }
+
   function applyFilter() {
     var door = doorMenu ? doorMenu.value : "";
     var shown = 0;
 
     rows.forEach(function (r) {
-      var ok = matches(r.story, door);
+      var ok = matches(r, door);
       r.el.classList.toggle("filtered-out", !ok);
       if (ok) shown++;
     });
 
     /* A series heading stays only while at least one of its books does. */
     groupRows.forEach(function (g) {
-      var any = g.group.books.some(function (n) {
-        return byNum[n] && matches(byNum[n], door);
+      var any = rows.some(function (r) {
+        return g.group.books.indexOf(r.story.num) !== -1 && matches(r, door);
       });
       g.el.classList.toggle("filtered-out", !any);
     });
@@ -841,12 +915,14 @@
     /* Give whatever is now on top the hairline the first row had. */
     var first = true;
     Array.prototype.forEach.call(list.children, function (el) {
-      var hidden = el.classList.contains("filtered-out");
+      var hidden = el.classList.contains("filtered-out") ||
+                   el.classList.contains("sorted-away");
       el.classList.toggle("first-visible", !hidden && first);
       if (!hidden) first = false;
     });
 
-    var filtering = Boolean(door);
+    var filtering = Boolean(door) || Boolean(query) ||
+                    Boolean(sortMenu && sortMenu.value);
     noMatch.hidden = shown !== 0;
     resetBtn.disabled = !filtering;
     if (countEl) {
@@ -856,13 +932,52 @@
     }
   }
 
-  if (doorMenu) {
-    doorMenu.setOptions(doorOptions());
-    resetBtn.addEventListener("click", function () {
-      doorMenu.clear();
+  /* ---- Search -------------------------------------------------
+     One field over everything: title, hook, synopsis, room, key, door,
+     number and series. This is the control that keeps working as the
+     shelf grows — a door narrows thirty-seven books to eleven, but a
+     word narrows them to the one you were thinking of. */
+
+  var searchInput = document.getElementById("searchInput");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      query = searchInput.value.trim().toLowerCase();
+      searchInput.classList.toggle("is-set", Boolean(query));
       applyFilter();
     });
-    applyFilter();
+
+    /* Escape clears the field rather than unpinning a book — the reader
+       is plainly working in here, not on the stage. */
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !searchInput.value) return;
+      e.stopPropagation();
+      searchInput.value = "";
+      query = "";
+      searchInput.classList.remove("is-set");
+      applyFilter();
+    });
+  }
+
+  if (doorMenu) {
+    doorMenu.setOptions(doorOptions());
+    if (sortMenu) {
+      sortMenu.setOptions([
+        { name: "Shortest first", gloss: "eighteen minutes up" },
+        { name: "Newest first",   gloss: "the latest book back to the first" }
+      ]);
+    }
+    resetBtn.addEventListener("click", function () {
+      doorMenu.clear();
+      if (sortMenu) sortMenu.clear();
+      if (searchInput) {
+        searchInput.value = "";
+        searchInput.classList.remove("is-set");
+      }
+      query = "";
+      applySort();
+    });
+    applySort();
   } else if (countEl) {
     countEl.textContent = COUNT_TEXT;
   }

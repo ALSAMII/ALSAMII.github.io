@@ -59,7 +59,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=87">
+<link rel="stylesheet" href="style.css?v=89">
 </head>
 
 <body>
@@ -130,6 +130,27 @@
              operating system, so its font, colours and highlight
              can't be styled. Built by script.js. -->
         <div class="filter-field">
+          <span class="caps combo-label" id="searchLabel">Search</span>
+          <input class="combo-search" id="searchInput" type="search"
+                 autocomplete="off" spellcheck="false"
+                 placeholder="A word, a name, a line"
+                 aria-labelledby="searchLabel">
+        </div>
+
+        <div class="filter-field">
+          <span class="caps combo-label" id="sortLabel">Order</span>
+          <div class="combo combo--inline" id="filterSort">
+            <button type="button" class="combo-btn" id="sortBtn"
+                    aria-haspopup="listbox" aria-expanded="false"
+                    aria-labelledby="sortLabel sortBtn">
+              <span class="combo-value" id="sortValue">Series order</span>
+            </button>
+            <ul class="combo-list" id="sortList" role="listbox"
+                aria-labelledby="sortLabel" tabindex="-1" hidden></ul>
+          </div>
+        </div>
+
+        <div class="filter-field">
           <span class="caps combo-label" id="doorLabel">Door</span>
           <div class="combo combo--inline" id="filterDoor">
             <button type="button" class="combo-btn" id="doorBtn"
@@ -153,7 +174,7 @@
         </button>
       </div>
 
-      <p class="no-match" id="noMatch" hidden>Nothing behind that door yet.</p>
+      <p class="no-match" id="noMatch" hidden>Nothing matches that.</p>
 
       <ol></ol>
       <p class="more" id="shelfCount"></p>
@@ -320,7 +341,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=87"></script>
-<script src="script.js?v=87"></script>
+<script src="stories.js?v=89"></script>
+<script src="script.js?v=89"></script>
 </body>
 </html>

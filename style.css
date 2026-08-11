@@ -305,7 +305,7 @@ html[data-scene="1"] .atmosphere {
 /* Both ends pinned: an auto-placed row-spanning button lands in the
    first column and shoves the fields sideways. */
 .filters .filter-field { grid-column: 1; min-width: 0; }
-.filters .filter-reset { grid-column: 2; grid-row: 1; align-self: end; }
+.filters .filter-reset { grid-column: 2; grid-row: 1 / 5; align-self: center; }
 
 /* ---- The three menus -------------------------------------
    Buttons and listboxes rather than <select>s: a native option
@@ -318,6 +318,36 @@ html[data-scene="1"] .atmosphere {
   font-size: 0.625rem;
   color: var(--faded);
 }
+
+/* The search field. Dressed as the two menus beside it — same ground,
+   same hairline, same gold when it holds something — so the three read
+   as one set of controls rather than a box bolted above them. */
+.combo-search {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--parchment);
+  background: rgba(11, 9, 7, 0.55);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.25s ease;
+}
+
+.combo-search::placeholder { color: var(--faded); opacity: 0.75; }
+.combo-search:hover { border-color: var(--ember-soft); }
+.combo-search:focus { outline: none; border-color: var(--ember); }
+.combo-search.is-set { border-color: var(--ember-soft); color: var(--ember); }
+
+/* Safari's own clear button is a grey blob on a dark field; the reset
+   control beside these already does the job. */
+.combo-search::-webkit-search-cancel-button,
+.combo-search::-webkit-search-decoration { -webkit-appearance: none; }
 
 .combo { position: relative; }
 
@@ -464,6 +494,13 @@ html[data-scene="1"] .atmosphere {
 /* Rows the filter has ruled out */
 .story.filtered-out,
 .trilogy.filtered-out { display: none; }
+
+/* Series headings step aside under any order but the series' own — a
+   heading above books that are no longer its members would be a lie. */
+.trilogy.sorted-away { display: none; }
+
+/* ...and the books that sat under it give up their indent. */
+.story.flat .story-row { padding-left: 0.25rem; }
 
 /* Whatever ends up at the top of a filtered list keeps the hairline
    the original first row had. */
