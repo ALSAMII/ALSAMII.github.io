@@ -743,82 +743,74 @@ html[data-scene="1"] .atmosphere {
 .start {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.6rem;
   margin: 0 0 2.5rem;
   text-align: left;
 }
 
+/* No frame and no box. A border and a filled rectangle both announce
+   themselves against a photographic backdrop; what separates one card
+   from the next is the gap and the artwork itself. */
 .start-row {
   position: relative;
   display: block;
   width: 100%;
-  padding: 1.3rem 1.4rem;
+  padding: 1.2rem 1.35rem;
   font: inherit;
   text-align: left;
-  background: linear-gradient(135deg,
-    rgba(22, 17, 12, 0.5), rgba(11, 9, 7, 0.34));
-  border: 1px solid rgba(216, 166, 95, 0.26);
-  border-radius: 4px;
+  background: none;
+  border: 0;
   cursor: pointer;
-  /* visible, so the scene can hang outside the frame */
   overflow: visible;
   isolation: isolate;
-  transition: border-color 0.35s ease, background 0.35s ease,
-              transform 0.35s ease;
+  transition: transform 0.35s ease;
 }
 
 .start-row:hover,
-.start-row:focus-visible {
-  border-color: rgba(216, 166, 95, 0.5);
-  background: linear-gradient(135deg,
-    rgba(30, 23, 16, 0.55), rgba(11, 9, 7, 0.38));
-  transform: translateY(-2px);
-}
+.start-row:focus-visible { transform: translateY(-2px); }
 
-/* The lit corner: the frame catches the candle at its top-left and
-   falls away from there. */
-.start-row::before {
-  content: "";
-  position: absolute;
-  left: -1px; top: -1px;
-  width: 40%; height: 55%;
-  z-index: 2;
-  pointer-events: none;
-  border-top: 1px solid var(--ember);
-  border-left: 1px solid var(--ember);
-  border-top-left-radius: 4px;
-  opacity: 0.45;
-  -webkit-mask-image: radial-gradient(closest-side at 0 0, #000, transparent);
-  mask-image: radial-gradient(closest-side at 0 0, #000, transparent);
-  transition: opacity 0.35s ease;
-}
-.start-row:hover::before { opacity: 0.85; }
+/* Focus still needs to be visible without a border to light up. */
+.start-row:focus-visible { outline: 1px solid var(--ember-soft); outline-offset: 6px; }
 
 /* ---- The scene, breaking the frame ---- */
 .start-scene {
   position: absolute;
   z-index: 0;
-  right: -3.5%;
-  top: -10%;
-  height: 120%;
+  right: -7%;
+  top: -14%;
+  height: 128%;
   width: auto;
-  max-width: 56%;
+  max-width: 62%;
   object-fit: cover;
   pointer-events: none;
   border: 0;
-  opacity: 0.34;
-  filter: saturate(0.8) contrast(1.05);
+  opacity: 0.36;
+  filter: saturate(0.78) contrast(1.03);
   transition: opacity 0.4s ease, transform 5s ease;
-  /* feathered on every side, strongest at its right, gone by the time
-     it reaches the words */
-  -webkit-mask-image: radial-gradient(115% 96% at 92% 50%,
-    #000 26%, rgba(0, 0, 0, 0.5) 58%, transparent 84%);
-  mask-image: radial-gradient(115% 96% at 92% 50%,
-    #000 26%, rgba(0, 0, 0, 0.5) 58%, transparent 84%);
+
+  /* Two fades, intersected: one across, one down. The single radial
+     never reached transparent at the right or the top, so the picture
+     was being cut off square — that was the rectangle, and the column
+     running down between the cards. This one is gone on all four
+     sides well before the image's own edge. */
+  -webkit-mask-image:
+    linear-gradient(to right,
+      transparent 0%, rgba(0, 0, 0, 0.25) 30%, #000 62%,
+      rgba(0, 0, 0, 0.45) 88%, transparent 100%),
+    linear-gradient(to bottom,
+      transparent 0%, #000 26%, #000 74%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right,
+      transparent 0%, rgba(0, 0, 0, 0.25) 30%, #000 62%,
+      rgba(0, 0, 0, 0.45) 88%, transparent 100%),
+    linear-gradient(to bottom,
+      transparent 0%, #000 26%, #000 74%, transparent 100%);
+  mask-composite: intersect;
 }
 .start-row:hover .start-scene,
 .start-row:focus-visible .start-scene {
-  opacity: 0.5;
+  opacity: 0.54;
   transform: scale(1.03);
 }
 
