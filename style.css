@@ -2111,13 +2111,20 @@ html[data-theme="light"] .gcard:focus-visible img {
    on paper rather than a window into somewhere else. */
 
 html[data-theme="light"] .start-scene {
-  filter: saturate(0.5) brightness(1.5) contrast(0.85);
-  mix-blend-mode: multiply;
-  opacity: 0.14;
+  /* multiply keeps only what is darker than the page, and these scenes
+     are dark almost everywhere — so at 14% they all but disappeared.
+     Drawn normally instead, brightened and desaturated until the
+     picture reads as a wash on paper rather than a night sky, and set
+     high enough to actually be seen. */
+  filter: saturate(0.62) brightness(1.72) contrast(0.78);
+  opacity: 0.5;
 }
 
 html[data-theme="light"] .start-row:hover .start-scene,
-html[data-theme="light"] .start-row:focus-visible .start-scene { opacity: 0.2; }
+html[data-theme="light"] .start-row:focus-visible .start-scene {
+  filter: saturate(0.72) brightness(1.62) contrast(0.84);
+  opacity: 0.62;
+}
 
 html[data-theme="light"] .start-row:hover,
 html[data-theme="light"] .start-row:focus-visible { filter: brightness(0.98); }
