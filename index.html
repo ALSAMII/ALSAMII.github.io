@@ -60,7 +60,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=49">
+<link rel="stylesheet" href="style.css?v=50">
 </head>
 
 <body>
@@ -206,34 +206,88 @@
         <p class="eyebrow caps">Start here</p>
 
         <div class="start">
-          <button class="start-row" type="button" data-book="12">
-            <span class="start-title">12 &middot; Semazen</span>
-            <span class="start-note">A hospice aide teaches himself to
-              whirl &mdash; badly, and without lineage. The turn brings him
-              no peace. It makes him a doorway: grief comes out of whoever
-              is near him, passes through his body, and grounds into the
-              floor. Then one goes in barbed.</span>
+
+          <button class="start-row start-row--whirl" type="button" data-book="12">
+            <span class="start-art" aria-hidden="true">
+              <svg viewBox="0 0 200 200" fill="none" stroke="currentColor">
+                <g class="art-spin">
+                  <circle cx="100" cy="100" r="28" stroke-width="0.7"/>
+                  <circle cx="100" cy="100" r="50" stroke-width="0.6"/>
+                  <circle cx="100" cy="100" r="72" stroke-width="0.5"/>
+                  <circle cx="100" cy="100" r="94" stroke-width="0.4"/>
+                  <path d="M100 6 A94 94 0 0 1 194 100" stroke-width="1.4"/>
+                  <path d="M100 50 A50 50 0 0 0 50 100" stroke-width="1.1"/>
+                </g>
+              </svg>
+            </span>
+            <img class="start-cover" src="covers/12.jpg" alt="">
+            <span class="start-body">
+              <span class="start-head">
+                <span class="start-num">12</span>
+                <span class="start-title">Semazen</span>
+              </span>
+              <span class="start-note">A hospice aide teaches himself to
+                whirl &mdash; badly, and without lineage. The turn brings him
+                no peace. It makes him a doorway: grief comes out of whoever
+                is near him, passes through his body, and grounds into the
+                floor. Then one goes in barbed.</span>
+              <span class="start-time caps"></span>
+            </span>
           </button>
 
-          <button class="start-row" type="button" data-book="6">
-            <span class="start-title">06 &middot; Undertow</span>
-            <span class="start-note">A drug called Le-The lets a therapist
-              walk a patient down through themselves &mdash; past the
-              surface, past everything the world built on top, to the
-              riverbed where the first wound was cut. Nothing down there is
-              invented. Everything you meet is real. It was always
-              real.</span>
+          <button class="start-row start-row--water" type="button" data-book="6">
+            <span class="start-art" aria-hidden="true">
+              <svg viewBox="0 0 400 120" preserveAspectRatio="none"
+                   fill="none" stroke="currentColor">
+                <g class="art-drift">
+                  <path d="M0 40 Q 50 28 100 40 T 200 40 T 300 40 T 400 40"
+                        stroke-width="1.4"/>
+                  <path d="M0 52 Q 60 44 120 52 T 240 52 T 360 52 T 480 52"
+                        stroke-width="0.7" opacity="0.7"/>
+                  <path d="M0 68 Q 40 62 80 68 T 160 68 T 240 68 T 320 68"
+                        stroke-width="0.5" opacity="0.5"/>
+                </g>
+              </svg>
+            </span>
+            <img class="start-cover" src="covers/06.jpg" alt="">
+            <span class="start-body">
+              <span class="start-head">
+                <span class="start-num">06</span>
+                <span class="start-title">Undertow</span>
+              </span>
+              <span class="start-note">A drug called Le-The lets a therapist
+                walk a patient down through themselves &mdash; past the
+                surface, past everything the world built on top, to the
+                riverbed where the first wound was cut. Nothing down there is
+                invented. Everything you meet is real. It was always
+                real.</span>
+              <span class="start-time caps"></span>
+            </span>
           </button>
 
-          <button class="start-row" type="button" data-book="2">
-            <span class="start-title">02 &middot; Bright Mercy</span>
-            <span class="start-note">Rise now, rise now, let the chorus
-              swell. Four notes, and a lullaby built to keep working on a
-              frightened listener. By the time anyone convened a meeting it
-              was in eleven languages, and a whole chain of command was
-              humming it on the way to a decision no one could take
-              back.</span>
+          <button class="start-row start-row--song" type="button" data-book="2">
+            <span class="start-art" aria-hidden="true">
+              <svg viewBox="0 0 200 100" preserveAspectRatio="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <g class="art-pulse"><line x1="6" y1="44" x2="6" y2="56"/><line x1="14" y1="36" x2="14" y2="64"/><line x1="22" y1="41" x2="22" y2="59"/><line x1="30" y1="28" x2="30" y2="72"/><line x1="38" y1="39" x2="38" y2="61"/><line x1="46" y1="20" x2="46" y2="80"/><line x1="54" y1="34" x2="54" y2="66"/><line x1="62" y1="12" x2="62" y2="88"/><line x1="70" y1="30" x2="70" y2="70"/><line x1="78" y1="6" x2="78" y2="94"/><line x1="86" y1="24" x2="86" y2="76"/><line x1="94" y1="12" x2="94" y2="88"/><line x1="102" y1="32" x2="102" y2="68"/><line x1="110" y1="20" x2="110" y2="80"/><line x1="118" y1="38" x2="118" y2="62"/><line x1="126" y1="26" x2="126" y2="74"/><line x1="134" y1="42" x2="134" y2="58"/><line x1="142" y1="34" x2="142" y2="66"/><line x1="150" y1="44" x2="150" y2="56"/><line x1="158" y1="40" x2="158" y2="60"/><line x1="166" y1="43" x2="166" y2="57"/><line x1="174" y1="32" x2="174" y2="68"/><line x1="182" y1="38" x2="182" y2="62"/><line x1="190" y1="24" x2="190" y2="76"/><line x1="198" y1="41" x2="198" y2="59"/></g>
+              </svg>
+            </span>
+            <img class="start-cover" src="covers/02.jpg" alt="">
+            <span class="start-body">
+              <span class="start-head">
+                <span class="start-num">02</span>
+                <span class="start-title">Bright Mercy</span>
+              </span>
+              <span class="start-note">Rise now, rise now, let the chorus
+                swell. Four notes, and a lullaby built to keep working on a
+                frightened listener. By the time anyone convened a meeting it
+                was in eleven languages, and a whole chain of command was
+                humming it on the way to a decision no one could take
+                back.</span>
+              <span class="start-time caps"></span>
+            </span>
           </button>
+
         </div>
 
         <p class="note roman">No future. No rescue. Only what&rsquo;s
@@ -291,7 +345,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=49"></script>
-<script src="script.js?v=49"></script>
+<script src="stories.js?v=50"></script>
+<script src="script.js?v=50"></script>
 </body>
 </html>

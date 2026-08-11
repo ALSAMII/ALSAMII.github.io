@@ -822,13 +822,42 @@
     countEl.textContent = COUNT_TEXT;
   }
 
-  /* The three books recommended on the About panel. Clicking one pins
-     it to the stage and scrolls the list to it, so a first visit has
-     somewhere to land instead of thirty-five equal titles. */
+  /* The three books recommended on the About panel — the first thing a
+     new visitor meets, so each one gets its cover and its reading time.
+     Both are filled in here rather than written into index.html, so a
+     changed word count can never leave a stale figure on the page.
+     Clicking a card pins that book and scrolls the list to it. */
   document.querySelectorAll("[data-book]").forEach(function (btn) {
+    var s = byNum[Number(btn.dataset.book)];
+    if (!s) return;
+
+    /* Wrap what's already in the card so the cover can stand beside it. */
+    var body = document.createElement("div");
+    body.className = "start-body";
+    while (btn.firstChild) body.append(btn.firstChild);
+
+    var rt = readingTime(s.words);
+    var titleEl = body.querySelector(".start-title");
+    if (titleEl && rt) {
+      var time = document.createElement("span");
+      time.className = "start-time caps";
+      time.textContent = rt;
+      titleEl.after(time);
+    }
+
+    var img = document.createElement("img");
+    img.className = "start-cover";
+    img.alt = s.title + " — cover";
+    img.loading = "lazy";
+    img.addEventListener("error", function () {
+      img.remove();
+      btn.classList.add("no-art");
+    });
+    img.src = s.cover || coverFor(s.num);
+
+    btn.append(img, body);
+
     btn.addEventListener("click", function () {
-      var s = byNum[Number(btn.dataset.book)];
-      if (!s) return;
       var li = document.querySelector('[data-slug="' + slugFor(s) + '"]');
       pin({ kind: "book", data: s }, li, true);
       if (li && li.scrollIntoView) li.scrollIntoView({ block: "center" });

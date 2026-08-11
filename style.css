@@ -694,39 +694,147 @@ html[data-scene="1"] .atmosphere {
 
 /* ---- Start here -------------------------------------------
    Three ways in, on the panel a first visit lands on. Each is a
-   button: clicking pins that book and scrolls the list to it. */
+   button: clicking pins that book and scrolls the list to it.
+   Each carries its own drawn motif behind the text — the turn,
+   the waterline, the four notes — so the three read as objects
+   rather than as a list. */
 .start {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  margin: 0 0 2rem;
+  gap: 1.5rem;
+  margin: 0 0 2.25rem;
   text-align: left;
 }
 
 .start-row {
-  display: block;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+  align-items: start;
   width: 100%;
-  padding: 0.9rem 1rem;
+  padding: 1.1rem 1.15rem;
   font: inherit;
   text-align: left;
-  background: rgba(11, 9, 7, 0.4);
+  background: linear-gradient(135deg,
+    rgba(20, 16, 12, 0.72), rgba(11, 9, 7, 0.6));
   border: 1px solid var(--hairline);
   border-left: 2px solid var(--ember-soft);
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease,
+              transform 0.3s ease;
 }
-.start-row:hover { border-color: var(--ember-soft); background: rgba(216, 166, 95, 0.06); }
-.start-row:hover { border-left-color: var(--ember); }
+
+.start-row:hover,
+.start-row:focus-visible {
+  border-color: var(--ember-soft);
+  border-left-color: var(--ember);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5),
+              0 0 30px rgba(216, 166, 95, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ---- The motif ----
+   Drawn, not photographed: concentric turns for the whirl, a
+   waterline for the descent, the four notes as a waveform. Sits
+   behind everything at low opacity and lifts on hover. */
+.start-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  color: var(--ember);
+  opacity: 0.16;
+  transition: opacity 0.4s ease;
+}
+.start-row:hover .start-art { opacity: 0.3; }
+
+.start-art svg { position: absolute; display: block; }
+
+.start-row--whirl .start-art svg {
+  right: -3.5rem; top: 50%;
+  width: 15rem; height: 15rem;
+  transform: translateY(-50%);
+}
+.art-spin {
+  transform-origin: 100px 100px;
+  animation: turning 48s linear infinite;
+}
+@keyframes turning { to { transform: rotate(360deg); } }
+
+.start-row--water .start-art svg {
+  left: 0; right: 0; top: 38%;
+  width: 100%; height: 5.5rem;
+}
+.art-drift { animation: drifting 14s ease-in-out infinite; }
+@keyframes drifting {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(-22px); }
+}
+
+.start-row--song .start-art svg {
+  left: 0; bottom: 0;
+  width: 100%; height: 6.5rem;
+}
+.art-pulse { animation: swelling 9s ease-in-out infinite; }
+@keyframes swelling {
+  0%, 100% { transform: scaleY(0.72); opacity: 0.75; }
+  50%      { transform: scaleY(1);    opacity: 1; }
+}
+
+/* ---- Cover + text ---- */
+.start-cover {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 4.75rem;
+  height: auto;
+  border: 0;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.6);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+
+.start-body { position: relative; z-index: 1; min-width: 0; }
+
+.start-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin-bottom: 0.5rem;
+}
+
+/* The number is the ornament — large, serif, lit like the candle. */
+.start-num {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 2.5rem;
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+  color: var(--ember);
+  text-shadow: 0 0 26px rgba(216, 166, 95, 0.5),
+               0 2px 12px rgba(0, 0, 0, 0.7);
+}
 
 .start-title {
-  display: block;
-  margin-bottom: 0.4rem;
-  font-family: var(--sans);
-  font-weight: 400;
-  font-size: 0.9375rem;
-  letter-spacing: 0.04em;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.1875rem;
+  letter-spacing: 0.06em;
   color: var(--ember);
+}
+.start-title::before {
+  content: "\00b7";
+  margin-right: 0.5rem;
+  opacity: 0.6;
 }
 
 .start-note {
@@ -736,8 +844,42 @@ html[data-scene="1"] .atmosphere {
   line-height: 1.55;
   color: var(--faded);
   text-wrap: pretty;
+  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
 }
 .start-row:hover .start-note { color: var(--parchment); }
+
+.start-time {
+  display: block;
+  margin-top: 0.7rem;
+  font-size: 0.5625rem;
+  color: var(--ember);
+  opacity: 0.75;
+}
+
+/* Narrow phones: the cover moves above the text rather than
+   squeezing the blurb into a ribbon. */
+@media (max-width: 26rem) {
+  .start-row { grid-template-columns: 1fr; gap: 0.9rem; }
+  .start-cover { width: 5.5rem; }
+  .start-num { font-size: 2.125rem; }
+}
+
+/* No cover file: the text takes the full width rather than
+   leaving a gap where the artwork should be. */
+.start-row.no-art { gap: 0; }
+
+/* Narrow phones: a smaller cover keeps the blurb from becoming a
+   column two or three words wide. */
+@media (max-width: 26rem) {
+  .start-row { gap: 0.85rem; padding: 0.9rem; }
+  .start-cover { flex-basis: 4.25rem; width: 4.25rem; }
+  .start-note { font-size: 0.875rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start-row:hover, .start-row:focus-visible { transform: none; }
+  .start-row:hover .start-cover { transform: none; }
+}
 
 /* The three-part reader's guide in the About panel. Term above,
    meaning below, so it reads as a glossary rather than a paragraph. */
@@ -890,6 +1032,7 @@ html[data-scene="1"] .atmosphere {
 
 @media (prefers-reduced-motion: reduce) {
   .atmosphere::before { animation: none; }
+  .art-spin, .art-drift, .art-pulse { animation: none; }
   .panel, .panel.is-active { transition: none; transform: none; }
   * { transition-duration: 0.01ms !important; }
 
