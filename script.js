@@ -1102,6 +1102,41 @@
     syncTop();
   }
 
+  /* ---- Light and dark ---------------------------------------
+     The choice is remembered and applied in the head, before the first
+     paint, so a reader who chose light never sees the dark room flash
+     past first. All this does is flip the attribute and the icon.
+
+     theme-color moves with it: Safari fills its toolbar from that, and
+     a black bar under a grey page is the seam we spent so long on. */
+
+  var themeBtn  = document.getElementById("themeToggle");
+  var themeMoon = document.getElementById("themeMoon");
+  var themeSun  = document.getElementById("themeSun");
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  if (themeBtn) {
+    var paintTheme = function () {
+      var light = document.documentElement.getAttribute("data-theme") === "light";
+      if (themeMoon) themeMoon.style.display = light ? "none" : "";
+      if (themeSun)  themeSun.style.display  = light ? "" : "none";
+      themeBtn.setAttribute("aria-pressed", light ? "true" : "false");
+      themeBtn.title = light ? "Switch to the dark theme"
+                             : "Switch to the light theme";
+      if (themeMeta) themeMeta.setAttribute("content", light ? "#eceded" : "#0b0907");
+    };
+
+    themeBtn.addEventListener("click", function () {
+      var light = document.documentElement.getAttribute("data-theme") !== "light";
+      if (light) document.documentElement.setAttribute("data-theme", "light");
+      else document.documentElement.removeAttribute("data-theme");
+      try { localStorage.setItem("theme", light ? "light" : "dark"); } catch (e) {}
+      paintTheme();
+    });
+
+    paintTheme();
+  }
+
   /* ---- 5. Ambient sound ------------------------------------ */
   /* Each scene has its own track, keyed by the data-scene the head
      script set. A scene with no entry here simply plays nothing.

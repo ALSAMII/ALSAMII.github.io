@@ -36,6 +36,19 @@
      show one room and then swap to another. To add a scene: drop the
      files into assets/bg/, add a rule in style.css, and raise the
      count below. -->
+<!-- The reader's theme, applied before the first paint. Dark is the
+     default and stays the default: the device's own preference is not
+     consulted, only a choice made here. -->
+<script>
+(function () {
+  try {
+    if (localStorage.getItem("theme") === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  } catch (e) { /* private browsing — dark, as usual */ }
+})();
+</script>
+
 <script>
 (function () {
   var SCENES = 1;
@@ -59,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=94">
+<link rel="stylesheet" href="style.css?v=95">
 </head>
 
 <body>
@@ -103,6 +116,22 @@
 
       <input class="vol" id="volSlider" type="range" min="0" max="100"
              value="30" aria-label="Music volume">
+
+      <button class="theme" id="themeToggle" type="button"
+              aria-pressed="false" title="Switch to the light theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <g id="themeMoon">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+          </g>
+          <g id="themeSun" style="display:none">
+            <circle cx="12" cy="12" r="4.2"/>
+            <path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/>
+          </g>
+        </svg>
+        <span class="visually-hidden">Switch theme</span>
+      </button>
     </nav>
   </header>
 
@@ -336,7 +365,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=94"></script>
-<script src="script.js?v=94"></script>
+<script src="stories.js?v=95"></script>
+<script src="script.js?v=95"></script>
 </body>
 </html>
