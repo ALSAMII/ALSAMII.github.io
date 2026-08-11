@@ -295,27 +295,22 @@ html[data-scene="1"] .atmosphere {
    show a name and its meaning on one line. */
 .filters {
   flex: none;
-  display: grid;
-  /* Two menus abreast, the clear button beside them. Side by side they
-     read as one bar rather than a stack of boxes, and neither needs the
-     full width of the column to say "All Doors". */
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  /* Flex rather than a fixed set of columns: the fields share whatever
+     is left beside the clear button, so one menu fills the row and two
+     split it — and hiding or restoring the Door needs no change here. */
+  display: flex;
+  flex-wrap: wrap;
   align-items: end;
-  gap: 0.7rem 0.7rem;
+  gap: 0.7rem;
   padding: 0 0.25rem 0.9rem;
 }
 
 /* Both ends pinned: an auto-placed row-spanning button lands in the
    first column and shoves the fields sideways. */
-.filters .filter-field { min-width: 0; }
-.filters .filter-reset { grid-column: 3; grid-row: 1; align-self: end; }
-
-/* Below this the two menus have nothing left to give; they stack again
-   and the button stands beside the pair. */
-@media (max-width: 22rem) {
-  .filters { grid-template-columns: minmax(0, 1fr) auto; }
-  .filters .filter-reset { grid-column: 2; grid-row: 1 / 3; align-self: center; }
-}
+/* 8rem is the narrowest a menu stays readable; below that they wrap to
+   their own lines rather than squeezing. */
+.filters .filter-field { flex: 1 1 8rem; min-width: 0; }
+.filters .filter-reset { flex: none; align-self: end; }
 
 /* ---- The three menus -------------------------------------
    Buttons and listboxes rather than <select>s: a native option

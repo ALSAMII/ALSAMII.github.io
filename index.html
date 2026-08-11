@@ -59,7 +59,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=91">
+<link rel="stylesheet" href="style.css?v=92">
 </head>
 
 <body>
@@ -142,7 +142,10 @@
           </div>
         </div>
 
-        <div class="filter-field">
+        <!-- The Door menu, parked: remove the hidden attribute below to
+             bring it back. script.js still builds it either way, and an
+             unset menu filters nothing, so nothing else has to change. -->
+        <div class="filter-field" hidden>
           <span class="caps combo-label" id="doorLabel">Door</span>
           <div class="combo combo--inline" id="filterDoor">
             <button type="button" class="combo-btn" id="doorBtn"
@@ -333,7 +336,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=91"></script>
-<script src="script.js?v=91"></script>
+<script src="stories.js?v=92"></script>
+<script src="script.js?v=92"></script>
 </body>
 </html>
