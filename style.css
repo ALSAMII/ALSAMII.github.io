@@ -776,36 +776,49 @@ html[data-scene="1"] .atmosphere {
 .start-scene {
   position: absolute;
   z-index: 0;
-  right: -7%;
-  top: -14%;
-  height: 128%;
+  right: -9%;
+  top: -16%;
+  height: 132%;
   width: auto;
-  max-width: 62%;
+  max-width: 68%;
   object-fit: cover;
   pointer-events: none;
   border: 0;
-  opacity: 0.52;
+  opacity: 0.58;
   filter: saturate(1) contrast(1.06) brightness(1.06);
   transition: opacity 0.4s ease, transform 5s ease;
 
-  /* Two fades, intersected: one across, one down. The single radial
-     never reached transparent at the right or the top, so the picture
-     was being cut off square — that was the rectangle, and the column
-     running down between the cards. This one is gone on all four
-     sides well before the image's own edge. */
+  /* Three fades, intersected: one across, one down, and an ellipse over
+     the top of both.
+
+     The two straight fades alone leave a firm rectangular core with a
+     short ramp at each side — and the corners, where only one fade is
+     doing any work, stay strongest of all. The ellipse is what softens
+     those: it is smaller than the image on every axis, so it is already
+     transparent by the time it reaches any edge, and it takes the
+     corners down first because they are furthest from its centre.
+
+     The ramps are longer now as well. Nothing here reaches full
+     strength until well inside the picture. */
   -webkit-mask-image:
+    radial-gradient(ellipse 58% 56% at 56% 50%,
+      #000 26%, rgba(0, 0, 0, 0.55) 62%, transparent 100%),
     linear-gradient(to right,
-      transparent 0%, rgba(0, 0, 0, 0.2) 26%, #000 58%,
-      rgba(0, 0, 0, 0.4) 88%, transparent 100%),
+      transparent 0%, rgba(0, 0, 0, 0.12) 18%, #000 48%,
+      #000 64%, rgba(0, 0, 0, 0.3) 84%, transparent 98%),
     linear-gradient(to bottom,
-      transparent 0%, #000 24%, #000 76%, transparent 100%);
+      transparent 0%, rgba(0, 0, 0, 0.35) 14%, #000 34%,
+      #000 66%, rgba(0, 0, 0, 0.35) 86%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
+    radial-gradient(ellipse 58% 56% at 56% 50%,
+      #000 26%, rgba(0, 0, 0, 0.55) 62%, transparent 100%),
     linear-gradient(to right,
-      transparent 0%, rgba(0, 0, 0, 0.2) 26%, #000 58%,
-      rgba(0, 0, 0, 0.4) 88%, transparent 100%),
+      transparent 0%, rgba(0, 0, 0, 0.12) 18%, #000 48%,
+      #000 64%, rgba(0, 0, 0, 0.3) 84%, transparent 98%),
     linear-gradient(to bottom,
-      transparent 0%, #000 24%, #000 76%, transparent 100%);
+      transparent 0%, rgba(0, 0, 0, 0.35) 14%, #000 34%,
+      #000 66%, rgba(0, 0, 0, 0.35) 86%, transparent 100%);
   mask-composite: intersect;
 }
 .start-row:hover .start-scene,
@@ -880,10 +893,10 @@ html[data-scene="1"] .atmosphere {
      128% it ran well into the gaps between cards; this keeps it close
      to the height of the text it belongs to. */
   .start-scene {
-    max-width: 66%;
+    max-width: 72%;
     opacity: 0.46;
-    top: -5%;
-    height: 110%;
+    top: -7%;
+    height: 114%;
   }
   .start-note { font-size: 0.9375rem; }
 }
