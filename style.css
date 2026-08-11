@@ -24,6 +24,18 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/* The Start-here artwork is meant to hang past its card, and on a
+   narrow screen that overhang can run past the viewport. The document
+   then becomes wider than the window, Safari shrinks the page to fit,
+   and everything centred sits left of centre with a dead strip down
+   the right-hand side.
+
+   clip, not hidden: hidden would make these a scroll container and
+   break position: fixed for the backdrop and the Top button. clip just
+   cuts what leaves the box. */
+html,
+body { overflow-x: clip; }
+
 body {
   margin: 0;
   min-height: 100svh;
