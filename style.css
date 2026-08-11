@@ -688,6 +688,11 @@ html[data-scene="1"] .atmosphere {
   justify-content: center;
   align-items: center;
   gap: clamp(1.5rem, 3.5vw, 4.5rem);
+  /* The pair was centred as one unit, so a wide cover pushed the words
+     off to the left of the stage and they no longer sat under the panel
+     they replace. Held to the same measure the panels use, and the text
+     column given a width of its own, both stay put. */
+  width: min(100%, 46rem);
   max-width: 94%;
   opacity: 0;
   visibility: hidden;
@@ -706,7 +711,7 @@ html[data-scene="1"] .atmosphere {
   transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
 }
 
-.feature-text { flex: 1 1 19rem; max-width: 24rem; }
+.feature-text { flex: 1 1 20rem; max-width: 26rem; }
 
 .feature-meta { color: var(--ember); margin: 0 0 1.25rem; }
 
@@ -1448,6 +1453,19 @@ html[data-scene="1"] .atmosphere {
   gap: 0.65rem;
 }
 
+/* On the stage the three sit abreast: stacked full-width they were the
+   difference between a synopsis that fits a laptop window and one the
+   reader has to scroll for. */
+@media (min-width: 56.01rem) {
+  .feature-substance .tri {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+  .feature-substance .tri-def { font-size: 0.875rem; line-height: 1.35; }
+  .feature-substance .tri-term { font-size: 0.5rem; }
+}
+
 .tri-row { display: block; }
 
 .tri-term {
@@ -1587,6 +1605,13 @@ html[data-scene="1"] .atmosphere {
 /* Space between stage paragraphs; type eases down on short windows */
 .panel .lede + .lede { margin-top: 1em; }
 @media (max-height: 51rem) {
+  /* A 13-inch laptop lands here. Everything on the stage steps down a
+     little so a book's synopsis is read, not scrolled. */
+  .feature-syn { font-size: clamp(1.0625rem, 2.5vh, 1.3125rem); line-height: 1.6; }
+  .feature-meta { margin-bottom: 0.9rem; }
+  .feature-substance { margin-top: 1rem; }
+  .easel { max-height: 54vh; }
+
   .panel .lede { font-size: clamp(1.125rem, 2.3vh, 1.4375rem); }
   .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
   .panel .rule { margin: 1.5rem auto; }
