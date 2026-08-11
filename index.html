@@ -14,14 +14,14 @@
 <meta property="og:url" content="https://www.chewzfiction.com/">
 <meta property="og:title" content="Chew Z — Short Fiction">
 <meta property="og:description" content="Short noir novellas about people who find out something true about themselves and can't put it back.">
-<meta property="og:image" content="https://www.chewzfiction.com/assets/bg/bg-window.jpg">
-<meta property="og:image:width" content="2556">
-<meta property="og:image:height" content="1117">
-<meta property="og:image:alt" content="A dark reading room: a leather chair, a candle, and a window onto a misty forest where a stag stands.">
+<meta property="og:image" content="https://www.chewzfiction.com/assets/bg/bg-path.jpg">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="2103">
+<meta property="og:image:alt" content="A narrow path climbing into a dark pine forest, lit faintly from somewhere ahead.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Chew Z — Short Fiction">
 <meta name="twitter:description" content="Short noir novellas about people who find out something true about themselves and can't put it back.">
-<meta name="twitter:image" content="https://www.chewzfiction.com/assets/bg/bg-window.jpg">
+<meta name="twitter:image" content="https://www.chewzfiction.com/assets/bg/bg-path.jpg">
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="alternate" type="application/rss+xml" title="Chew Z — Short Fiction" href="feed.xml">
@@ -29,8 +29,7 @@
 <!-- The backdrop is a CSS background on a z-index:-1 layer, so the
      browser wouldn't find it until style.css is parsed. Preloading
      it here stops the flat-black flash on a cold load. -->
-<link rel="preload" as="image" href="assets/bg/bg-window.webp" type="image/webp" fetchpriority="high">
-<link rel="preload" as="image" href="assets/bg/bg-tearoom.webp" type="image/webp">
+<link rel="preload" as="image" href="assets/bg/bg-path.webp" type="image/webp" fetchpriority="high">
 
 <!-- Which scene this visit gets. Runs here, in the head, so the
      choice is made before anything paints — picking it later would
@@ -39,7 +38,7 @@
      count below. -->
 <script>
 (function () {
-  var SCENES = 2;
+  var SCENES = 1;
   var i = Math.floor(Math.random() * SCENES);
   try {
     var last = sessionStorage.getItem("lastScene");
@@ -60,7 +59,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=67">
+<link rel="stylesheet" href="style.css?v=68">
 </head>
 
 <body>
@@ -321,7 +320,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=67"></script>
-<script src="script.js?v=67"></script>
+<script src="stories.js?v=68"></script>
+<script src="script.js?v=68"></script>
 </body>
 </html>

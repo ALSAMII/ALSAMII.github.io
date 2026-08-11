@@ -39,7 +39,7 @@ body {
 
 /* ============================================================
    The atmosphere — three fixed layers behind everything:
-   1. the fixed backdrop scene (assets/bg/bg-window.webp, jpg fallback)
+   1. the fixed backdrop scene (assets/bg/bg-path.webp, jpg fallback)
    2. moonlight + candlelight gradients that darken it
    3. a faint film grain
    ============================================================ */
@@ -62,17 +62,25 @@ body {
     #0b0907 0%, rgba(11, 9, 7, 0) 13%,
     rgba(11, 9, 7, 0) 87%, #0b0907 100%);
 
+  /* A flat wash between the photo and the page. The forest path has a
+     bright centre and the stage text sits directly over it, so the
+     scene is knocked back here rather than left to the vignette
+     alone. Raise the alpha to fade the picture further. */
+  --scrim: linear-gradient(rgba(11, 9, 7, 0.46), rgba(11, 9, 7, 0.46));
+
   /* Default scene — also the floor if the head script never runs. */
-  background-image: var(--edge-fade), url("assets/bg/bg-window.jpg");
-  background-image: var(--edge-fade), image-set(
-    url("assets/bg/bg-window.webp") type("image/webp"),
-    url("assets/bg/bg-window.jpg")  type("image/jpeg")
+  background-image: var(--edge-fade), var(--scrim),
+    url("assets/bg/bg-path.jpg");
+  background-image: var(--edge-fade), var(--scrim), image-set(
+    url("assets/bg/bg-path.webp") type("image/webp"),
+    url("assets/bg/bg-path.jpg")  type("image/jpeg")
   );
 
-  /* fade layer fills the viewport; photo fits by width */
-  background-size: 100% 100%, 100% auto;
-  background-position: center center, center center;
-  background-repeat: no-repeat, no-repeat;
+  /* fade and scrim fill the viewport; the photo covers it. This one is
+     a portrait image, so it is cropped rather than fitted by width. */
+  background-size: 100% 100%, 100% 100%, cover;
+  background-position: center center, center center, center 42%;
+  background-repeat: no-repeat, no-repeat, no-repeat;
 }
 
 /* ---- The scenes -------------------------------------------------
@@ -82,22 +90,26 @@ body {
    and raise SCENES in index.html. */
 
 html[data-scene="0"] .atmosphere {
-  background-image: var(--edge-fade), url("assets/bg/bg-window.jpg");
-  background-image: var(--edge-fade), image-set(
-    url("assets/bg/bg-window.webp") type("image/webp"),
-    url("assets/bg/bg-window.jpg")  type("image/jpeg")
+  background-image: var(--edge-fade), var(--scrim),
+    url("assets/bg/bg-path.jpg");
+  background-image: var(--edge-fade), var(--scrim), image-set(
+    url("assets/bg/bg-path.webp") type("image/webp"),
+    url("assets/bg/bg-path.jpg")  type("image/jpeg")
   );
+  background-size: 100% 100%, 100% 100%, cover;
+  background-position: center center, center center, center 42%;
 }
 
 html[data-scene="1"] .atmosphere {
-  background-image: var(--edge-fade), url("assets/bg/bg-tearoom.jpg");
-  background-image: var(--edge-fade), image-set(
+  background-image: var(--edge-fade), var(--scrim),
+    url("assets/bg/bg-tearoom.jpg");
+  background-image: var(--edge-fade), var(--scrim), image-set(
     url("assets/bg/bg-tearoom.webp") type("image/webp"),
     url("assets/bg/bg-tearoom.jpg")  type("image/jpeg")
   );
   /* 1.75:1 — nearly the shape of a window, so it can fill the frame */
-  background-size: 100% 100%, cover;
-  background-position: center center, center 45%;
+  background-size: 100% 100%, 100% 100%, cover;
+  background-position: center center, center center, center 45%;
 }
 
 
@@ -992,8 +1004,8 @@ html[data-scene="1"] .atmosphere {
      the scene rules above so this still wins on a phone. */
   .atmosphere,
   html[data-scene] .atmosphere {
-    background-size: 100% 100%, cover;
-    background-position: center center, 52% 42%;
+    background-size: 100% 100%, 100% 100%, cover;
+    background-position: center center, center center, 52% 42%;
   }
 }
 
