@@ -410,6 +410,28 @@ const STORIES = [
     room: "The Sixth Year \u2014 the visitors stopped, and nobody noticed they had",
     key: "Let me know if you need anything \u2014 the offer that hands the asking back",
     synopsis: "Roya never spoke, never reached, never turned her head. She lived ten years and eleven months and got heavier every one of them.\n\nHer mother's account of the therapy that hurt her daily to save her, the sister who asked for nothing, and the phrase people used so they wouldn't have to visit.\n\nAnd of what came after \u2014 when life got easier, and the grief did not, and only one of those could ever be said out loud."
+  },
+
+  {
+    num: 36,
+    title: "What the Hand Kept",
+    words: "17,800 words",
+    hook: "His left hand writes what he left out",
+    door: "Rite",
+    room: "The Second Page \u2014 the hand sets down what the dying avoided",
+    key: "The left hand \u2014 after the stroke it writes without asking him",
+    synopsis: "For thirty years Martin Hale has been the hospice's letter-writer, the steady pair of hands called in when the dying want their last words in ink. He is famous on the ward for what he leaves out. The rough timber of a life comes to him warped and full of rot; the family receives furniture they can put their weight on. He calls it mercy, and he has had a long time to practise the word. Then a small, unlucky stroke severs the bridge between the two halves of his brain, and his left hand begins to write on its own \u2014 only after the dying have finished, only the thing they spent the whole testimony avoiding, and it is never wrong. Families read the pages and their lives come off at the roof. But the hand is not working through the ward's accounts. It is working towards one. Thirty years ago his own wife dictated her last words to him, and he did not write them down. The hand remembers. And when it sets down the confession addressed to its own keeper, he has to decide whether the page is her true verdict or the story his body built to explain the wound."
+  },
+
+  {
+    num: 37,
+    title: "Nothing to Push Against",
+    words: "21,100 words",
+    hook: "The feeling goes. The map stays",
+    door: "Dose",
+    room: "The Warm Room \u2014 six hours inside the weather everyone else lives in",
+    key: "Six doses \u2014 a guard he has never lowered, lowered for him",
+    synopsis: "Hector Vane is fifty-one, employed, solvent, and has not been convicted of anything in twenty-eight years. He is also, by the instrument the courts rely on, over the diagnostic threshold \u2014 and a court order keeps him from the daughter who has not spoken to him in nine years, and from the grandson he has never met. So he volunteers for a private trial: six sessions of drug-assisted therapy for men like him, run by a clinician who believes the field gave up too early. If he can be certified treatable, the order can be revisited. He has read the research, including the parts she did not send him, including the programme that dosed men like him for fifteen years and produced people who reoffended at higher rates, because the therapy taught them the language of feeling and they took it out into the world and used it. He comes anyway. Under the compound the defences he has never had to lower simply are not there, and for six hours at a time he can feel the weather everyone else lives in. Then it wears off, and the feeling goes, and the map stays."
   }
 
 ];
@@ -464,5 +486,11 @@ const TRILOGIES = [
     label: "",
     books: [31, 32, 33, 34],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
+  },
+  {
+    title: "The Sovereign Rooms",
+    label: "",
+    books: [36, 37],
+    synopsis: "Two accounts of a self that does not answer to its owner. A hospice scribe whose left hand, cut loose by a stroke, begins writing the things thirty years of mercy left out \u2014 and is never wrong about any of them. A man over the diagnostic threshold who takes six doses of a compound that lowers a guard he has never once had to lower, and comes back with a complete map of what other people feel and no way at all to be moved by it. One room writes without permission. The other can be entered at will and costs nothing to leave. Both are sovereign, and neither is governed."
   }
 ];
