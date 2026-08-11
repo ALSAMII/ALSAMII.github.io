@@ -1043,6 +1043,34 @@ html[data-scene="1"] .atmosphere {
   .atmosphere::before,
   .atmosphere::after { inset: 0; }
 
+  /* The seam at the very bottom of the screen.
+
+     Safari fills its toolbar with the page's theme-color, #0b0907. The
+     last row of page pixels above it is still showing a lit forest, so
+     two tones meet with nothing in between and the join reads as a
+     line. This dissolves the photograph into that same colour over the
+     final slice of the viewport, so the page and the toolbar become one
+     surface.
+
+     It is pinned to the viewport, not to the backdrop layer: body has
+     no transform, so fixed here means fixed to the screen — which is
+     what the old bottom fade could not do once the backdrop grew past
+     the screen's edges. */
+  body::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 9vh;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(to bottom,
+      rgba(11, 9, 7, 0) 0%,
+      rgba(11, 9, 7, 0.55) 55%,
+      #0b0907 94%);
+  }
+
   .atmosphere::before { animation: none; }
 }
 
