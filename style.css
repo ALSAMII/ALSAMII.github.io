@@ -833,7 +833,7 @@ html[data-scene="1"] .atmosphere {
 .start-num {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.1875rem;
+  font-size: 1.4375rem;
   color: var(--ember);
   opacity: 0.8;
   text-shadow: 0 1px 12px rgba(5, 4, 3, 0.9);
@@ -842,8 +842,8 @@ html[data-scene="1"] .atmosphere {
 .start-title {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.1875rem;
-  letter-spacing: 0.05em;
+  font-size: 1.4375rem;
+  letter-spacing: 0.045em;
   color: var(--ember);
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
 }
@@ -1018,7 +1018,13 @@ html[data-scene="1"] .atmosphere {
   .atmosphere,
   .atmosphere::before,
   .atmosphere::after {
-    height: 100lvh;
+    /* Overshot deliberately. Sized to exactly 100lvh the layer had a
+       bottom edge, and whenever the visible area came out taller than
+       the browser reported, that edge showed up as a hard line across
+       the page with bare --night beneath it. Hanging it past both ends
+       means there is no edge to find, at any toolbar state. */
+    top: -7vh;
+    height: 114lvh;
     bottom: auto;
   }
 
