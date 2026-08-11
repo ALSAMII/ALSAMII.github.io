@@ -748,20 +748,36 @@ html[data-scene="1"] .atmosphere {
 .start-heading {
   /* Sits close above the first card rather than floating between the
      guide and the group — it belongs to the three books beneath it. */
-  margin: 2.5rem 0 0.4rem 1.35rem;
-  max-width: 26rem;
+  margin: 2.5rem 0 0.9rem 1.35rem;
   text-align: left;
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 600;
-  font-size: 1.4375rem;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
+  /* The masthead's face — Jost, spaced caps — rather than the serif, so
+     it reads as a line of signage above the group instead of a fourth
+     title competing with the three below it. Sized to hold on one line
+     at any width the panel can be. */
+  font-family: var(--sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: clamp(0.625rem, 2.6vw, 0.75rem);
+  line-height: 1.5;
+  letter-spacing: 0.13em;
   /* Parchment, not ember. The gold is doing enough work already on the
      numbers, the titles and the reading times. */
   color: var(--parchment);
   text-wrap: pretty;
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
+}
+
+/* The narrowest phones: the indent stays, so the line still starts
+   where the numbers do, and the tracking gives up the few pixels
+   needed to keep it on one line. */
+@media (max-width: 23.5rem) {
+  .start-heading { font-size: 0.5625rem; letter-spacing: 0.08em; }
+
+  /* Small phones: a step down so the three definitions still align on
+     one line each. Below about 320px they wrap, and wrap together,
+     which reads fine. */
+  .guide-def { font-size: 0.875rem; }
+  .guide { gap: 1.2rem 0.4rem; }
 }
 
 .start {
@@ -936,8 +952,10 @@ html[data-scene="1"] .atmosphere {
    single words. */
 .guide {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
-  gap: 1.4rem clamp(0.6rem, 3vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+  /* Tight columns: every pixel taken out of the gap is a pixel the
+     definitions can use to stay on one line. */
+  gap: 1.4rem clamp(0.4rem, 1.4vw, 1.75rem);
   align-items: start;
   margin: 1.9rem 0;
 }
@@ -946,18 +964,20 @@ html[data-scene="1"] .atmosphere {
 
 .guide-term {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
   color: var(--ember);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
 }
 
 .guide-def {
   display: block;
   font-family: var(--serif);
-  /* Smaller than it was: a column is a third of the width a full line
-     had, and these are short phrases that should sit in two lines. */
-  font-size: clamp(0.875rem, 1.15vw, 1.0625rem);
-  line-height: 1.45;
+  /* Larger, and short enough to hold one line in a third of the panel.
+     The phrases were trimmed to suit: at this size a phone column holds
+     about sixteen characters, and "The one thing that did it." needs
+     twenty-six. */
+  font-size: clamp(0.9375rem, 1.4vw, 1.125rem);
+  line-height: 1.4;
   color: var(--parchment);
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
   text-wrap: pretty;
@@ -1052,6 +1072,10 @@ html[data-scene="1"] .atmosphere {
     grid-area: auto;
     align-self: start;
     padding-block: 1.25rem;
+    /* The frame already gives the page its side margins; a second inset
+       here only narrows the guide columns, and those need every pixel to
+       hold their definitions on one line. */
+    padding-inline: 0;
   }
   .panel:not(.is-active) { display: none; }
 
@@ -1510,7 +1534,7 @@ html[data-scene="1"] .atmosphere {
   .panel .lede { font-size: clamp(1.125rem, 2.3vh, 1.4375rem); }
   .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
   .panel .rule { margin: 1.5rem auto; }
-  .guide-def { font-size: clamp(0.8125rem, 1.6vh, 1rem); }
+  .guide-def { font-size: clamp(0.875rem, 1.7vh, 1.0625rem); }
   .guide { gap: 1rem clamp(0.6rem, 3vw, 2rem); margin-bottom: 1.35rem; }
 }
 
