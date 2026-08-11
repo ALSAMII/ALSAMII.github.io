@@ -748,8 +748,11 @@ html[data-scene="1"] .atmosphere {
 .start-heading {
   /* Sits close above the first card rather than floating between the
      guide and the group — it belongs to the three books beneath it. */
-  margin: 2.5rem 0 0.9rem 1.35rem;
-  text-align: left;
+  /* Plenty of air above, very little below: the gap is what tells a
+     reader this line has left the Door / Room / Key guide behind and
+     belongs to the three books directly under it. */
+  margin: 3.75rem 0 0.5rem;
+  text-align: center;
   /* The masthead's face — Jost, spaced caps — rather than the serif, so
      it reads as a line of signage above the group instead of a fourth
      title competing with the three below it. Sized to hold on one line
