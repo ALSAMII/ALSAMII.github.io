@@ -2063,6 +2063,12 @@ html[data-theme="light"] .story-hook {
    the page, so the eye reads "a photograph of a book" rather than
    "a dark hole". */
 
+/* Measured: every cover's four corners sit between luma 0 and 31 —
+   the dark table and shadow the artwork was photographed on. That is
+   inside the file, so no border removes it and no mask hides it. The
+   answer is to stop apologising for it: crop the darkest of the
+   surround away, then frame what is left as a deliberate plate. */
+
 html[data-theme="light"] .easel,
 html[data-theme="light"] .easel-set img,
 html[data-theme="light"] .gcard img,
@@ -2071,19 +2077,37 @@ html[data-theme="light"] .syn-head img {
   -webkit-mask-image: none;
   mask-image: none;
   border-radius: 2px;
+  /* A hairline, a white gap, then the shadow. The white ring is what
+     stops the artwork's own black bleeding into the page. */
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.9),
-    0 0 0 2px rgba(20, 23, 26, 0.14),
-    0 10px 26px rgba(24, 28, 32, 0.22),
-    0 2px 6px rgba(24, 28, 32, 0.14);
+    0 0 0 1px rgba(20, 23, 26, 0.35),
+    0 0 0 5px #ffffff,
+    0 0 0 6px rgba(20, 23, 26, 0.1),
+    0 8px 22px rgba(24, 28, 32, 0.2);
+}
+
+/* In the grid a cover gets a plate of its own: the frame is a box the
+   image sits inside, cropped so the darkest border of the photograph
+   falls outside it. */
+html[data-theme="light"] .gcard img {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 46%;
+  transform: scale(1.06);
+}
+
+html[data-theme="light"] .gcard {
+  overflow: visible;
 }
 
 html[data-theme="light"] .gcard:hover img,
 html[data-theme="light"] .gcard:focus-visible img {
+  transform: scale(1.06) translateY(-4px);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.95),
-    0 0 0 2px var(--ember-soft),
-    0 18px 38px rgba(24, 28, 32, 0.3);
+    0 0 0 1px var(--ember-soft),
+    0 0 0 5px #ffffff,
+    0 0 0 6px rgba(20, 23, 26, 0.12),
+    0 16px 34px rgba(24, 28, 32, 0.28);
 }
 
 /* ---- The Start-here scenes ---------------------------------
@@ -2108,6 +2132,25 @@ html[data-theme="light"] .start-row:focus-visible { filter: brightness(0.98); }
    wordmark in a dark room; on paper it needs its full strength.
    The volume slider's track is drawn by the browser and needs a
    colour it can actually show. */
+
+/* The gallery's blur smears the page beneath it into a grey haze —
+   fine over a black room, muddy over paper. On light it drops the
+   blur and simply covers the page. */
+html[data-theme="light"] .gallery {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--night);
+}
+
+html[data-theme="light"] .gallery-bar {
+  background: linear-gradient(to bottom,
+    var(--night) 0%, var(--night) 90%, transparent);
+}
+
+html[data-theme="light"] .gallery-bar::after {
+  background: linear-gradient(to bottom,
+    rgba(236, 237, 237, 0.92), transparent);
+}
 
 html[data-theme="light"] .roya { opacity: 1; filter: none; }
 html[data-theme="light"] .vol { accent-color: var(--ember); opacity: 0.75; }
