@@ -296,16 +296,26 @@ html[data-scene="1"] .atmosphere {
 .filters {
   flex: none;
   display: grid;
-  grid-template-columns: 1fr auto;
+  /* Two menus abreast, the clear button beside them. Side by side they
+     read as one bar rather than a stack of boxes, and neither needs the
+     full width of the column to say "All Doors". */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
   align-items: end;
-  gap: 0.7rem 0.75rem;
-  padding: 0 0.25rem 1rem;
+  gap: 0.7rem 0.7rem;
+  padding: 0 0.25rem 0.9rem;
 }
 
 /* Both ends pinned: an auto-placed row-spanning button lands in the
    first column and shoves the fields sideways. */
-.filters .filter-field { grid-column: 1; min-width: 0; }
-.filters .filter-reset { grid-column: 2; grid-row: 1 / 5; align-self: center; }
+.filters .filter-field { min-width: 0; }
+.filters .filter-reset { grid-column: 3; grid-row: 1; align-self: end; }
+
+/* Below this the two menus have nothing left to give; they stack again
+   and the button stands beside the pair. */
+@media (max-width: 22rem) {
+  .filters { grid-template-columns: minmax(0, 1fr) auto; }
+  .filters .filter-reset { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+}
 
 /* ---- The three menus -------------------------------------
    Buttons and listboxes rather than <select>s: a native option
@@ -520,6 +530,8 @@ html[data-scene="1"] .atmosphere {
   overflow: hidden;
   padding: 0.5rem 0 0.75rem;
 }
+
+@media (max-width: 56rem) { .shelf { padding-top: 0; } }
 
 .shelf ol {
   margin: 0;
@@ -824,7 +836,7 @@ html[data-scene="1"] .atmosphere {
   display: flex;
   flex-direction: column;
   gap: 2.6rem;
-  margin: 0 0 2.5rem;
+  margin: 0 0 1.5rem;
   text-align: left;
 }
 
@@ -1111,7 +1123,9 @@ html[data-scene="1"] .atmosphere {
   .panel {
     grid-area: auto;
     align-self: start;
-    padding-block: 1.25rem;
+    /* Little at the foot: the filter bar should sit just under the end
+       of the last card, not a screen below it. */
+    padding-block: 1.25rem 0.25rem;
     /* The frame already gives the page its side margins; a second inset
        here only narrows the guide columns, and those need every pixel to
        hold their definitions on one line. */
