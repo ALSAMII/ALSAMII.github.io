@@ -746,14 +746,21 @@ html[data-scene="1"] .atmosphere {
    to the card titles and indented to their left edge, so it reads as
    the first line of the group rather than as a floating centred label. */
 .start-heading {
-  margin: 0 0 1.15rem 1.35rem;
+  /* Sits close above the first card rather than floating between the
+     guide and the group — it belongs to the three books beneath it. */
+  margin: 2.5rem 0 0.4rem 1.35rem;
+  max-width: 26rem;
   text-align: left;
   font-family: var(--serif);
   font-style: italic;
   font-weight: 600;
   font-size: 1.4375rem;
-  letter-spacing: 0.03em;
-  color: var(--ember);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  /* Parchment, not ember. The gold is doing enough work already on the
+     numbers, the titles and the reading times. */
+  color: var(--parchment);
+  text-wrap: pretty;
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
 }
 
