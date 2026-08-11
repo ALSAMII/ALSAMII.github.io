@@ -1016,22 +1016,21 @@ html[data-scene="1"] .atmosphere {
    it was barely perceptible. */
 @media (hover: none) {
   .atmosphere {
-    /* Overshot deliberately. Sized to exactly 100lvh the layer had a
-       bottom edge, and whenever the visible area came out taller than
-       the browser reported, that edge showed as a hard line across the
-       page. Hanging it past both ends means there is no edge to find. */
-    top: -7vh;
-    height: 114lvh;
+    /* Overshot hard. Every edge this layer has must sit well outside
+       any viewport the browser can report, in any toolbar state — at
+       100lvh, and again at 114lvh, an edge kept finding its way back
+       onto the screen as a line. 20vh above and 25vh below leaves no
+       margin for the browser to be wrong by. */
+    top: -20vh;
+    height: 145lvh;
     bottom: auto;
 
-    /* The dissolve has to move with it. Its bottom band was written for
-       a viewport-sized layer at 87%; on a layer this tall that landed
-       about nine tenths of the way down the screen, and the fade
-       starting was itself the line. At 96% it falls below the fold
-       again, while the top dissolve stays where the header needs it. */
+    /* Top dissolve only. The bottom band was written for a
+       viewport-sized layer and kept landing back on screen as the
+       layer grew; there is nothing at the bottom for it to dissolve
+       into that the page colour does not already provide. */
     --edge-fade: linear-gradient(to bottom,
-      #0b0907 0%, rgba(11, 9, 7, 0) 12%,
-      rgba(11, 9, 7, 0) 96%, #0b0907 100%);
+      #0b0907 0%, rgba(11, 9, 7, 0) 20%);
 
     transform: translateZ(0);
     backface-visibility: hidden;
