@@ -414,8 +414,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    crescent sitting a touch high beside the speaker. */
 .brand-col .sound svg,
 .brand-col .theme svg {
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 1.6rem;
+  height: 1.6rem;
 }
 .brand-col .icon-label { font-size: 0.5625rem; letter-spacing: 0.14em; }
 .brand-col .sound,
@@ -1324,7 +1324,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .brand-col .sound,
   .brand-col .theme { padding: 0.2rem 0.15rem 0.1rem; }
   .brand-col .sound svg,
-  .brand-col .theme svg { width: 1.5rem; height: 1.5rem; }
+  .brand-col .theme svg { width: 1.3rem; height: 1.3rem; }
   .brand-col .icon-label { font-size: 0.5rem; letter-spacing: 0.1em; }
 
   .masthead nav a,
@@ -1530,7 +1530,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.1em; }
 
   .brand-col .sound svg,
-  .brand-col .theme svg { width: 1.4rem; height: 1.4rem; }
+  .brand-col .theme svg { width: 1.2rem; height: 1.2rem; }
   .brand-col .icon-label { font-size: 0.5rem; }
   .masthead .nav-controls { gap: 1.1rem; }
 
