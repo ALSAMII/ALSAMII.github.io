@@ -1101,7 +1101,10 @@ html[data-scene="1"] .atmosphere {
   /* No gap: the rules between the columns provide the separation, and
      the padding inside each cell keeps the text off them. */
   gap: 1.4rem 0;
-  align-items: start;
+  /* stretch, not start: the dividers are the columns' own left edges,
+     so a short column drew a short rule. Now every column is as tall
+     as the tallest and the three rules match. */
+  align-items: stretch;
   text-align: center;
   margin: 0 0 2rem;
 }
@@ -1204,8 +1207,6 @@ html[data-scene="1"] .atmosphere {
   .shelf { overflow: visible; display: block; }
   .shelf ol { overflow: visible; }
 
-  .masthead { flex-wrap: wrap; }
-
   /* The speaker and slider live inside the nav, so all five items
      share one row. Since the links no longer wrap to two lines to
      make space, the row has to earn its width back from the type:
@@ -1216,38 +1217,30 @@ html[data-scene="1"] .atmosphere {
      the slider drops to its own line. Forbidden from wrapping, the
      slider is the only item that can shrink (the links are nowrap
      text and stop at min-content), so it absorbs any shortfall. */
-  /* Tighter still on a phone; the nav wraps by itself if it has to. */
-  .masthead nav { gap: 0.5rem 0.6rem; }
-  .masthead .nav-links { flex-wrap: nowrap; gap: 0.6rem; }
-  .masthead .nav-controls { gap: 0.5rem; }
+  /* The masthead keeps its shape on a phone: brand to the left, the
+     two nav rows to the right, the pair centred on each other. Only
+     the sizes come down.
 
-  /* Portrait: the three links come up beside the wordmark, and only the
-     sound and theme controls drop beneath them. The brand gives up the
-     width for it — a smaller mark and tighter rules — because the links
-     are navigation and the controls are settings, and if one of the two
-     has to sit lower it should be the settings. */
+     These used to carry justify-content and align-content written for
+     a row-direction nav. The nav is a column now, where those mean
+     "bottom" and "centre the columns" — which is what pulled the nav
+     into the middle of a landscape screen. */
   .masthead { flex-wrap: nowrap; align-items: center; gap: 0.6rem; }
+
   .brand { flex: 0 0 auto; gap: 0.5rem; }
   .brand .roya { height: 2.75rem; padding: 0.1rem 0.5rem; }
   .brand .name { font-size: 0.9375rem; letter-spacing: 0.18em; }
   .brand .tag  { font-size: 0.4375rem; letter-spacing: 0.16em; }
 
   .masthead nav {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-content: center;
-    row-gap: 0.55rem;
+    margin-left: auto;      /* hold the nav at the right edge */
+    gap: 0.5rem;
   }
-  /* The links keep the top line to themselves; the controls take
-     whatever is left, which is the line below. */
-  .masthead .nav-links { flex: 0 0 auto; }
-  .masthead .nav-controls { flex: 0 0 auto; }
+  .masthead .nav-links { flex-wrap: nowrap; gap: 0.6rem; }
+  .masthead .nav-controls { gap: 0.5rem; }
 
-  /* Six items on one line now that the theme button is here. The
-     controls give up their padding first — the links are already as
-     tight as they read. */
   .masthead nav .sound,
   .masthead nav .theme { padding: 0.35rem 0.25rem; }
 
@@ -1945,10 +1938,12 @@ html[data-scene="1"] .atmosphere {
   padding: 0.6rem 0.7rem 0.5rem;
 
   color: var(--ember);
-  background: rgba(11, 9, 7, 0.82);
+  /* var, not a literal: this was a hardcoded near-black, so on paper it
+     stayed a dark blob. */
+  background: var(--field);
   border: 1px solid var(--ember-soft);
   border-radius: 999px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 12px 28px var(--cast);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   cursor: pointer;
@@ -1978,8 +1973,8 @@ html[data-scene="1"] .atmosphere {
 .to-top:hover,
 .to-top:focus-visible {
   border-color: var(--ember);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6),
-              0 0 22px rgba(216, 166, 95, 0.28);
+  box-shadow: 0 12px 28px var(--cast),
+              0 0 22px var(--ember-soft);
 }
 
 .to-top svg { display: block; width: 1.05rem; height: 1.05rem; }
@@ -2353,6 +2348,22 @@ html[data-theme="light"] .vol::-moz-range-thumb { background: #ffffff; }
 /* The ornaments sit at 0.7 opacity against a dark room; on paper the
    deeper gold is already quiet enough to be read at full strength. */
 html[data-theme="light"] .ornament { opacity: 0.85; }
+
+/* Back to the top. --field is a near-white wash on paper, which on its
+   own reads as a smudge over the page — so here it is solid, with a
+   real edge and a shadow that lifts it off the sheet. */
+html[data-theme="light"] .to-top {
+  background: #ffffff;
+  border-color: rgba(122, 90, 23, 0.45);
+  box-shadow: 0 6px 18px rgba(24, 28, 32, 0.18),
+              0 1px 3px rgba(24, 28, 32, 0.12);
+}
+html[data-theme="light"] .to-top:hover,
+html[data-theme="light"] .to-top:focus-visible {
+  border-color: var(--ember);
+  box-shadow: 0 10px 24px rgba(24, 28, 32, 0.24),
+              0 0 0 3px rgba(122, 90, 23, 0.12);
+}
 
 /* The marks have a set of their own for paper, drawn against white
    rather than filtered down from the dark set. */
