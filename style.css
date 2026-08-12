@@ -178,24 +178,6 @@ html[data-scene="1"] .atmosphere {
   white-space: nowrap;
 }
 
-/* Only a genuinely narrow screen splits the masthead. Above this the
-   brand, the mark and the whole nav share one line. */
-@media (max-width: 34rem) {
-  .masthead { flex-wrap: wrap; row-gap: 0.85rem; padding-bottom: 1rem; }
-  .brand { flex: 1 1 100%; }
-
-  .masthead nav {
-    flex: 1 1 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-  .masthead nav a,
-  .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.07em; }
-  .masthead .nav-links { gap: 0.5rem; }
-}
-
 /* Small spaced-caps labels used everywhere ----------------- */
 .caps {
   font-family: var(--sans);
@@ -211,7 +193,7 @@ html[data-scene="1"] .atmosphere {
 
 .masthead {
   display: flex;
-  align-items: center;
+  align-items: center;      /* the nav centres on the wordmark */
   justify-content: space-between;
   gap: clamp(0.75rem, 2vw, 2rem);
   padding: 1.5rem 0 1.35rem;
@@ -271,13 +253,16 @@ html[data-scene="1"] .atmosphere {
   opacity: 0.7;
 }
 
-/* Links on top, the controls beneath them — the settings step back
-   from the navigation instead of competing along one line. */
+/* One row, wrapping only when it must. Nothing switches direction at a
+   breakpoint: the links and the controls sit side by side while there
+   is room, and the controls drop beneath them when there is not. */
 .masthead nav {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.85rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem clamp(0.7rem, 2vw, 1.6rem);
 }
 
 .masthead .nav-links {
@@ -299,8 +284,8 @@ html[data-scene="1"] .atmosphere {
    goes up — .caps at 0.28em was wide enough to wrap two of three. */
 .masthead nav a,
 .masthead nav .linklike {
-  font-size: 0.8125rem;
-  letter-spacing: 0.22em;
+  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  letter-spacing: 0.14em;
   white-space: nowrap;
   color: var(--ember-dim);
 }
@@ -1234,12 +1219,22 @@ html[data-scene="1"] .atmosphere {
      the slider drops to its own line. Forbidden from wrapping, the
      slider is the only item that can shrink (the links are nowrap
      text and stop at min-content), so it absorbs any shortfall. */
-  /* The masthead keeps the one-row arrangement here — a phone held
-     sideways has more width than a small laptop, and stacking it was
-     wasting the top third of the screen. */
-  .masthead nav { gap: 0.55rem; }
-  .masthead .nav-links { flex-wrap: nowrap; gap: 0.7rem; }
-  .masthead .nav-controls { gap: 0.55rem; }
+  /* Tighter still on a phone; the nav wraps by itself if it has to. */
+  .masthead nav { gap: 0.5rem 0.6rem; }
+  .masthead .nav-links { flex-wrap: nowrap; gap: 0.6rem; }
+  .masthead .nav-controls { gap: 0.5rem; }
+
+  /* Portrait cannot hold the brand and the whole nav on one line — the
+     links alone would have to drop to about 7px. So the nav takes its
+     own line, and takes it as ONE line: links to the left, controls to
+     the right, still centred on each other rather than stacked. */
+  .masthead { flex-wrap: wrap; row-gap: 0.9rem; }
+  .brand { flex: 1 1 100%; }
+  .masthead nav {
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
 
   /* Six items on one line now that the theme button is here. The
      controls give up their padding first — the links are already as
@@ -1248,7 +1243,7 @@ html[data-scene="1"] .atmosphere {
   .masthead nav .theme { padding: 0.35rem 0.25rem; }
 
   .masthead nav a,
-  .masthead nav .linklike { font-size: 0.6875rem; letter-spacing: 0.1em; }
+  .masthead nav .linklike { font-size: 0.5625rem; letter-spacing: 0.07em; }
 
   .hall { grid-template-columns: 1fr; gap: 0; }
 
