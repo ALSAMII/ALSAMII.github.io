@@ -601,9 +601,15 @@ const GLOSSARY = {
      order here is the order of the numbers in every book's "notes"
      field, and the order they appear on the page. */
   notes: [
-    { name: "Noir",          levels: ["Warmth survives it", "Cold, but bearable", "No rescue at all"] },
-    { name: "Transgressive", levels: ["You'll be fine", "It will cost you", "Genuinely harrowing"] },
-    { name: "Speculative",   levels: ["The real world", "One invented thing", "An invented world"] }
+    { name: "Noir",
+      about: "How cold it gets, and whether anyone is rescued.",
+      levels: ["Warmth survives it", "Cold, but bearable", "No rescue at all"] },
+    { name: "Transgressive",
+      about: "How far past comfort it goes, and what it asks you to look at.",
+      levels: ["You'll be fine", "It will cost you", "Genuinely harrowing"] },
+    { name: "Speculative",
+      about: "How much of it is invented, and how much is simply the world.",
+      levels: ["The real world", "One invented thing", "An invented world"] }
   ]
 };
 

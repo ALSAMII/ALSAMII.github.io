@@ -89,9 +89,37 @@
       var row = document.createElement("div");
       row.className = "note-row";
 
-      var name = document.createElement("span");
-      name.className = "note-name caps";
-      name.textContent = scale.name;
+      /* A button, not a span: the label explains what the dial measures,
+         which a reader needs on a pointer and on a phone alike. Hover
+         opens it on a mouse; a tap opens it on touch. */
+      var name;
+      if (scale.about) {
+        name = document.createElement("button");
+        name.type = "button";
+        name.className = "note-name caps has-about";
+        name.setAttribute("aria-expanded", "false");
+
+        var about = document.createElement("span");
+        about.className = "note-about";
+        about.textContent = scale.about;
+
+        var label = document.createElement("span");
+        label.textContent = scale.name;
+
+        name.append(label, about);
+        name.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var open = name.getAttribute("aria-expanded") === "true";
+          /* One at a time — two open bubbles would overlap. */
+          wrap.querySelectorAll(".has-about[aria-expanded='true']")
+              .forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+          name.setAttribute("aria-expanded", open ? "false" : "true");
+        });
+      } else {
+        name = document.createElement("span");
+        name.className = "note-name caps";
+        name.textContent = scale.name;
+      }
 
       var meter = document.createElement("span");
       meter.className = "note-meter";
@@ -232,6 +260,7 @@
 
     easel.style.display = "";
     easel.alt = s.title + " — cover";
+    easelCaption = num + " \u00b7 " + s.title;
     if (easel.getAttribute("src") !== cover) easel.src = cover;
 
     feature.classList.add("show");
@@ -283,6 +312,12 @@
 
   feature.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
   feature.addEventListener("mouseleave", scheduleHide);
+
+  var easelCaption = "";
+  makeCoverOpen(easel, "");
+  easel.addEventListener("click", function () {
+    if (easelCaption && lightboxCap) lightboxCap.textContent = easelCaption;
+  });
 
   easel.addEventListener("error", function () {
     /* Missing cover: show the synopsis alone */
@@ -571,6 +606,7 @@
     synImg.alt = "";
     synImg.addEventListener("error", function () { synImg.remove(); });
 
+    makeCoverOpen(synImg, num + " \u00b7 " + s.title);
     synHead.append(synImg, triadEl(s));
 
     var synText = document.createElement("span");
@@ -644,6 +680,70 @@
     }
   });
 
+  /* An open dial description closes when the reader looks elsewhere. */
+  document.addEventListener("click", function (e) {
+    if (e.target.closest(".has-about")) return;
+    document.querySelectorAll(".has-about[aria-expanded='true']")
+            .forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+  });
+
+  /* ---- A cover, full size -----------------------------------
+     Click rather than hover: a hover-opened overlay flickers as the
+     pointer crosses it, and a click works the same on a phone. The
+     covers are 1000px wide, so this is the only place their detail is
+     actually visible. */
+
+  var lightbox      = document.getElementById("lightbox");
+  var lightboxImg   = document.getElementById("lightboxImg");
+  var lightboxCap   = document.getElementById("lightboxCap");
+  var lightboxClose = document.getElementById("lightboxClose");
+  var lightboxFrom  = null;
+
+  function openCover(src, caption, opener) {
+    if (!lightbox || !src) return;
+    lightboxFrom = opener || null;
+    lightboxImg.src = src;
+    lightboxImg.alt = caption || "";
+    if (lightboxCap) lightboxCap.textContent = caption || "";
+    lightbox.hidden = false;
+    document.body.classList.add("gallery-on");
+    requestAnimationFrame(function () { lightbox.classList.add("show"); });
+    if (lightboxClose) lightboxClose.focus();
+  }
+
+  function closeCover() {
+    if (!lightbox || lightbox.hidden) return;
+    lightbox.classList.remove("show");
+    document.body.classList.remove("gallery-on");
+    setTimeout(function () { lightbox.hidden = true; }, 260);
+    if (lightboxFrom && lightboxFrom.focus) lightboxFrom.focus();
+  }
+
+  if (lightbox) {
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox || e.target === lightboxImg) closeCover();
+    });
+    if (lightboxClose) lightboxClose.addEventListener("click", closeCover);
+  }
+
+  /* Every cover on the page opens it, wherever it happens to sit. */
+  function makeCoverOpen(img, caption) {
+    if (!img) return;
+    img.classList.add("cover-open");
+    img.setAttribute("role", "button");
+    img.setAttribute("tabindex", "0");
+    img.title = "See the cover full size";
+    var go = function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      openCover(img.getAttribute("src"), caption, img);
+    };
+    img.addEventListener("click", go);
+    img.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") go(e);
+    });
+  }
+
   /* ---- 3. All Covers --------------------------------------- */
 
   var gallery      = document.getElementById("gallery");
@@ -707,7 +807,8 @@
   });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;
-    if (!gallery.hidden) closeGallery();
+    if (lightbox && !lightbox.hidden) closeCover();
+    else if (!gallery.hidden) closeGallery();
     else if (pinned) unpin();
   });
 
