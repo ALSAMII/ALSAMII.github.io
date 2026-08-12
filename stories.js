@@ -558,6 +558,44 @@ const STORIES = [
     notes: [2, 2, 2],
     notes: [2, 2, 2],
     synopsis: "Corni Rowan was born unable to feel pain, and at twenty-three a clinic told him a parasite had taken what was left of his fear. Forty-one fights he could not be made to quit, eleven hundred jumps, and a drinks company whose entire product was the premise that fear is optional. Kids who could feel everything started imitating him, and started dying. Then, checking a fact for his daughter's science fair, he finds eleven years of blood panels \u2014 every one negative."
+  },
+
+  /* ---- The Borrowed Sun Cycle, Books I\u2013III ---- */
+
+  {
+    num: 41,
+    title: "The Gentled World",
+    words: "14,600 words",
+    hook: "Peace worked. Something moved into the empty rooms",
+    door: "Dose",
+    room: "Someone Else's Appetite \u2014 borrowed memories, and the wanting that arrives with them",
+    key: "The Clearing \u2014 ego dissolution, taken as a civic sacrament",
+    notes: [2, 3, 3],
+    synopsis: "Half a century after ego dissolution became a civic sacrament, the world is at peace \u2014 genuinely, verifiably, unbearably. Mara Voss is a Tender, licensed to sit with the dissolving, and a refractory: one of the rare few the Clearing will not take. Then her patients start coming up carrying memories that belong to no one \u2014 a louder world, a war in a desert, a song nobody wrote \u2014 and the gentled find these borrowed appetites intoxicating. A man dies of it, the first violent death in nineteen years, and she follows the leak down to the question no one gentled can bear to ask: is what's coming through a disease, a cure, or a collection notice?"
+  },
+
+  {
+    num: 42,
+    title: "The Carrier",
+    words: "14,400 words",
+    hook: "A world that never left, still broadcasting",
+    door: "Withholding",
+    room: "The Other Shore \u2014 a century of terror, playing back like a documentary of a nightmare",
+    key: "The Farside Deep Array \u2014 deep telemetry, checksummed one bit at a time",
+    notes: [2, 2, 3],
+    synopsis: "They never built the arsenals. The treaties held, the terror was cancelled, and a species spent its twentieth century aiming outward instead: atom-drive ships by 1975, Mars a working port, robot Pilgrims coasting past the edge of the sun's weather. Vera Nyquist is a Verifier, checksumming deep telemetry before it enters the human record. Then a Pilgrim relays home a signal that should not exist \u2014 decades of radio and television from a world that never left, wrong in the details the way copies are wrong. Buried in its broadcast schedule is a question, asked patiently for years, and somewhere in Vera's own station something has been answering."
+  },
+
+  {
+    num: 43,
+    title: "The Kept Flame",
+    words: "18,800 words",
+    hook: "Two thousand years of fire, and three nights missing",
+    door: "Rite",
+    room: "The Gap \u2014 three forged nights, centuries deep, and the door they open",
+    key: "The Lineage Ledger \u2014 the descent of a sacred fire, audited line by line",
+    notes: [2, 2, 3],
+    synopsis: "At Salamis the Persian fleet did not break. Greece entered the empire, Europe grew up inside it, and the faith of the fire became the governing belief of a commonwealth running from Lisbon to Lahore. At its heart burns the Accord Fire, unbroken for two thousand five hundred and six years, from which every treaty and coronation legally descends. Roshan Azad is a Reckoner, keeper of its lineage ledger \u2014 and a fire whose descent breaks is, in law, a new fire. Auditing all twenty-five centuries for the jubilee, she finds what every Reckoner is sworn to look for and none has ever found: a gap, forged over by a hand that loved the fire too much to be honest about it."
   }
 
 ];
@@ -641,5 +679,14 @@ const TRILOGIES = [
     label: "",
     books: [36, 37, 38, 39, 40],
     synopsis: "Two accounts of a self that does not answer to its owner. A hospice scribe whose left hand, cut loose by a stroke, begins writing the things thirty years of mercy left out \u2014 and is never wrong about any of them. A man over the diagnostic threshold who takes six doses of a compound that lowers a guard he has never once had to lower, and comes back with a complete map of what other people feel and no way at all to be moved by it. One room writes without permission. The other can be entered at will and costs nothing to leave. Both are sovereign, and neither is governed."
+  },
+  {
+    title: "The Borrowed Sun Cycle",
+    /* Blank, not absent: left out, a group of three would be labelled
+       "A Triptych", which this is not. An empty string shows nothing
+       above the title at all. */
+    label: "",
+    books: [41, 42, 43],
+    synopsis: "Seven worlds, one street corner, and a tall man walking through all of them with everything he owns in one bag. In each world, humanity made a different choice \u2014 cancelled its terror, kept its fire, sold its sleep \u2014 and in each one, something patient has begun leaving messages in the margins. A verse is being written across realities, one installment per world, and it reads like a bill coming due. There is no true world."
   }
 ];
