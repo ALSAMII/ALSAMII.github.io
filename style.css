@@ -1488,15 +1488,10 @@ html[data-scene="1"] .atmosphere {
 
 .note-row { display: contents; }
 
-/* Matched to .tri-term — the DOOR / ROOM / KEY labels directly above
-   these — so the two blocks read as one family. */
-.note-name {
-  font-size: 0.5625rem;
-  letter-spacing: 0.28em;
-  color: var(--ember);
-  opacity: 0.85;
-  white-space: nowrap;
-}
+/* Set with .tri-term rather than beside it: these labels sit directly
+   under DOOR / ROOM / KEY and any difference in size, tracking or
+   weight reads as a mistake. One rule, so they cannot drift apart. */
+.note-name { white-space: nowrap; }
 
 /* Three bars filling the width they are given, rather than three small
    squares with dead space beside them. */
@@ -1536,7 +1531,6 @@ html[data-scene="1"] .atmosphere {
 @media (max-width: 34rem) {
   .notes { grid-template-columns: minmax(4rem, 6rem) minmax(3rem, 1fr) auto;
            gap: 0.45rem 0.7rem; }
-  .note-name { font-size: 0.5rem; letter-spacing: 0.2em; }
   .note-meter { gap: 0.4rem; }
   .note-box { height: 0.35rem; }
   .note-word { font-size: 0.8125rem; padding-left: 0.7rem; }
@@ -1563,17 +1557,23 @@ html[data-scene="1"] .atmosphere {
     gap: 0.9rem;
   }
   .feature-substance .tri-def { font-size: 0.875rem; line-height: 1.35; }
-  .feature-substance .tri-term { font-size: 0.5rem; }
+  .feature-substance .tri-term,
+  .feature-substance .note-name { font-size: 0.5rem; }
 }
 
 .tri-row { display: block; }
 
+.tri-term,
+.note-name {
+  font-size: 0.5625rem;
+  letter-spacing: 0.28em;
+  color: var(--ember);
+  opacity: 0.85;
+}
+
 .tri-term {
   display: block;
   margin-bottom: 0.1rem;
-  font-size: 0.5625rem;
-  color: var(--ember);
-  opacity: 0.85;
 }
 
 .tri-def {
