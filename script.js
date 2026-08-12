@@ -588,8 +588,6 @@
     }
     if (sub.childNodes.length) main.append(sub);
 
-    row.append(numEl, main, pdfBtn);
-
     /* Share: hands over a link that opens straight onto this book.
        The address the site writes when a book is opened is the same
        one used here, so what a reader sends is what they were looking
@@ -648,6 +646,14 @@
       }
     });
 
+    /* The number and the share mark share the left margin: share is
+       the one control that doesn't open the book, so it sits away
+       from the two that do, and gives the title its full width back. */
+    var mark = document.createElement("div");
+    mark.className = "story-mark";
+    mark.append(numEl, shareBtn);
+
+    row.append(mark, main, pdfBtn);
 
     /* The eye only earns its place on touch, where there's no hover
        to reveal a synopsis. On a mouse or keyboard it would be a
@@ -664,10 +670,6 @@
       eye.append(iconLabel("Synopsis"));
       row.append(eye);
     }
-
-    /* Last in the row: PDF, then the synopsis where there is one,
-       then share. */
-    row.append(shareBtn);
 
     var syn = document.createElement("div");
     syn.className = "synopsis";
