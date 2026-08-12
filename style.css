@@ -195,7 +195,7 @@ html[data-scene="1"] .atmosphere {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: clamp(0.75rem, 2vw, 2rem);
   padding: 1.5rem 0 1.35rem;
   /* A gold hairline closes the header off from the room below it. */
   border-bottom: 1px solid var(--ember-soft);
@@ -204,8 +204,10 @@ html[data-scene="1"] .atmosphere {
 .brand {
   display: flex;
   align-items: center;
-  gap: clamp(0.9rem, 2.4vw, 1.75rem);
+  gap: clamp(0.7rem, 1.8vw, 1.4rem);
   line-height: 1.3;
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
 /* Rules either side of the stamp, so the imprint reads as a mark set
@@ -225,15 +227,22 @@ html[data-scene="1"] .atmosphere {
 .brand .name {
   font-family: var(--sans);
   font-weight: 300;
-  font-size: 1.625rem;
-  letter-spacing: 0.32em;
+  /* Eased from 1.625rem/0.32em. The wordmark and its tagline were the
+     widest thing in the masthead, and the nav needs that width to sit
+     on the same line as the brand rather than under it. */
+  font-size: clamp(1.125rem, 2.1vw, 1.4375rem);
+  letter-spacing: 0.26em;
   color: var(--ember);
   margin: 0;
+  white-space: nowrap;
 }
 
 .brand .tag {
   margin: 0.2rem 0 0;
+  font-size: 0.5625rem;
+  letter-spacing: 0.24em;
   color: var(--faded);
+  white-space: nowrap;
 }
 /* The imprint line under the wordmark — quieter than the tagline,
    since the Roya badge beside it already says the same thing. */
@@ -256,9 +265,9 @@ html[data-scene="1"] .atmosphere {
 .masthead .nav-links {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
-  gap: clamp(0.9rem, 2.4vw, 1.75rem);
+  gap: clamp(0.6rem, 1.6vw, 1.4rem);
 }
 
 .masthead .nav-controls {
@@ -1197,12 +1206,21 @@ html[data-scene="1"] .atmosphere {
      the slider drops to its own line. Forbidden from wrapping, the
      slider is the only item that can shrink (the links are nowrap
      text and stop at min-content), so it absorbs any shortfall. */
-  /* The controls have their own row now, so the links no longer have to
-     share a line with a slider and two icons — they get their size and
-     tracking back. */
-  .masthead nav { gap: 0.7rem; }
-  .masthead .nav-links { flex-wrap: nowrap; gap: 0.85rem; }
-  .masthead .nav-controls { gap: 0.7rem; }
+  /* Two rows on a phone: the brand and its mark, then the links and the
+     controls sharing one line beneath. Everything on a single row would
+     need the links at about 8.5px, which is too small to read. */
+  .masthead { flex-wrap: wrap; row-gap: 0.9rem; }
+  .brand { flex: 1 1 100%; }
+
+  .masthead nav {
+    flex: 1 1 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+  .masthead .nav-links { flex-wrap: nowrap; gap: 0.5rem; }
+  .masthead .nav-controls { gap: 0.5rem; }
 
   /* Six items on one line now that the theme button is here. The
      controls give up their padding first — the links are already as
@@ -1211,7 +1229,7 @@ html[data-scene="1"] .atmosphere {
   .masthead nav .theme { padding: 0.35rem 0.25rem; }
 
   .masthead nav a,
-  .masthead nav .linklike { font-size: 0.75rem; letter-spacing: 0.16em; }
+  .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.08em; }
 
   .hall { grid-template-columns: 1fr; gap: 0; }
 
