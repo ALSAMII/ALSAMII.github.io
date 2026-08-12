@@ -1173,7 +1173,32 @@
     btn.addEventListener("click", function () { revealBook(s, true); });
   });
 
-  /* Open straight onto a shared link, and follow the back button. */
+  /* Open straight onto a shared link, and follow the back button.
+
+     A reload is the exception. Opening a book writes its name into the
+     address so the page can be linked, and that name outlives the visit
+     — so refreshing used to reopen whatever was last read instead of
+     starting clean. The browser knows how the page was reached, so a
+     reload drops the name and begins at the door; a followed link, a
+     typed address, or a press of back still lands on the book. */
+  function arrivedByReload() {
+    try {
+      var nav = performance.getEntriesByType("navigation")[0];
+      if (nav && nav.type) return nav.type === "reload";
+      /* Older Safari: the deprecated reading, which still answers. */
+      if (performance.navigation) return performance.navigation.type === 1;
+    } catch (e) { /* fall through — treat it as a fresh arrival */ }
+    return false;
+  }
+
+  if (arrivedByReload() && location.hash) {
+    if (history.replaceState) {
+      history.replaceState(null, "", location.pathname + location.search);
+    } else {
+      location.hash = "";
+    }
+  }
+
   openFromHash();
   window.addEventListener("hashchange", function () {
     if (!openFromHash()) unpin();
