@@ -1516,7 +1516,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     gap: clamp(0.6rem, 2vw, 1.5rem);
   }
 
-  .masthead .roya { height: 3.4rem; padding: 0.1rem 0.7rem; }
+  /* Was 3.4rem, which left the emblem a stamp-sized thing beside a
+     column half again its height — it read as an afterthought. Sized
+     to the left column instead, so the three parts share a scale. */
+  .masthead .roya { height: 5.25rem; padding: 0.1rem 0.9rem; }
 
   .brand-col { gap: 0.4rem; }
   .brand-name .name { font-size: 1.25rem; letter-spacing: 0.16em; }
