@@ -178,6 +178,24 @@ html[data-scene="1"] .atmosphere {
   white-space: nowrap;
 }
 
+/* Only a genuinely narrow screen splits the masthead. Above this the
+   brand, the mark and the whole nav share one line. */
+@media (max-width: 34rem) {
+  .masthead { flex-wrap: wrap; row-gap: 0.85rem; padding-bottom: 1rem; }
+  .brand { flex: 1 1 100%; }
+
+  .masthead nav {
+    flex: 1 1 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .masthead nav a,
+  .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.07em; }
+  .masthead .nav-links { gap: 0.5rem; }
+}
+
 /* Small spaced-caps labels used everywhere ----------------- */
 .caps {
   font-family: var(--sans);
@@ -230,8 +248,8 @@ html[data-scene="1"] .atmosphere {
   /* Eased from 1.625rem/0.32em. The wordmark and its tagline were the
      widest thing in the masthead, and the nav needs that width to sit
      on the same line as the brand rather than under it. */
-  font-size: clamp(1.125rem, 2.1vw, 1.4375rem);
-  letter-spacing: 0.26em;
+  font-size: clamp(1rem, 1.7vw, 1.25rem);
+  letter-spacing: 0.22em;
   color: var(--ember);
   margin: 0;
   white-space: nowrap;
@@ -239,8 +257,8 @@ html[data-scene="1"] .atmosphere {
 
 .brand .tag {
   margin: 0.2rem 0 0;
-  font-size: 0.5625rem;
-  letter-spacing: 0.24em;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
   color: var(--faded);
   white-space: nowrap;
 }
@@ -1114,14 +1132,24 @@ html[data-scene="1"] .atmosphere {
 }
 .guide-row + .guide-row { border-left: 1px solid var(--hairline); }
 
+/* The marks are artwork, drawn as backgrounds rather than <img> so the
+   light theme can swap in its own set — a stylesheet cannot change an
+   image's src, and each theme has a version made for its ground.
+
+   Sized by height, so the door, the window and the key all stand the
+   same tall however wide each happens to be. */
 .guide-icon {
   display: block;
-  margin: 0 auto 0.7rem;
-  width: clamp(1.5rem, 4.2vw, 1.9rem);
-  color: var(--ember);
-  line-height: 0;
+  margin: 0 auto 0.75rem;
+  height: clamp(1.7rem, 4.6vw, 2.25rem);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: auto 100%;
 }
-.guide-icon svg { display: block; width: 100%; height: auto; }
+
+.guide-icon--door   { background-image: url("assets/icon-door.png"); }
+.guide-icon--window { background-image: url("assets/icon-window.png"); }
+.guide-icon--key    { background-image: url("assets/icon-key.png"); }
 .guide-row { margin: 0; }
 
 .guide-term {
@@ -1206,21 +1234,12 @@ html[data-scene="1"] .atmosphere {
      the slider drops to its own line. Forbidden from wrapping, the
      slider is the only item that can shrink (the links are nowrap
      text and stop at min-content), so it absorbs any shortfall. */
-  /* Two rows on a phone: the brand and its mark, then the links and the
-     controls sharing one line beneath. Everything on a single row would
-     need the links at about 8.5px, which is too small to read. */
-  .masthead { flex-wrap: wrap; row-gap: 0.9rem; }
-  .brand { flex: 1 1 100%; }
-
-  .masthead nav {
-    flex: 1 1 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.6rem;
-  }
-  .masthead .nav-links { flex-wrap: nowrap; gap: 0.5rem; }
-  .masthead .nav-controls { gap: 0.5rem; }
+  /* The masthead keeps the one-row arrangement here — a phone held
+     sideways has more width than a small laptop, and stacking it was
+     wasting the top third of the screen. */
+  .masthead nav { gap: 0.55rem; }
+  .masthead .nav-links { flex-wrap: nowrap; gap: 0.7rem; }
+  .masthead .nav-controls { gap: 0.55rem; }
 
   /* Six items on one line now that the theme button is here. The
      controls give up their padding first — the links are already as
@@ -1229,7 +1248,7 @@ html[data-scene="1"] .atmosphere {
   .masthead nav .theme { padding: 0.35rem 0.25rem; }
 
   .masthead nav a,
-  .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.08em; }
+  .masthead nav .linklike { font-size: 0.6875rem; letter-spacing: 0.1em; }
 
   .hall { grid-template-columns: 1fr; gap: 0; }
 
@@ -2305,6 +2324,12 @@ html[data-theme="light"] .vol::-moz-range-thumb { background: #ffffff; }
 /* The ornaments sit at 0.7 opacity against a dark room; on paper the
    deeper gold is already quiet enough to be read at full strength. */
 html[data-theme="light"] .ornament { opacity: 0.85; }
+
+/* The marks have a set of their own for paper, drawn against white
+   rather than filtered down from the dark set. */
+html[data-theme="light"] .guide-icon--door   { background-image: url("assets/icon-door-light.png"); }
+html[data-theme="light"] .guide-icon--window { background-image: url("assets/icon-window-light.png"); }
+html[data-theme="light"] .guide-icon--key    { background-image: url("assets/icon-key-light.png"); }
 
 /* The header's closing rule and the stamp's dividers were tuned to
    glow; here they only need to divide. */
