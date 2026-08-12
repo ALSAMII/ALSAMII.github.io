@@ -72,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=100">
+<link rel="stylesheet" href="style.css?v=102">
 </head>
 
 <body>
@@ -83,21 +83,23 @@
   <!-- ══════════════════════════ HEADER ══════════════════════ -->
   <header class="masthead">
     <div class="brand">
-      <div>
+      <div class="brand-name">
         <p class="name">CHEW&thinsp;Z</p>
         <p class="tag caps">Short Fiction</p>
-        <p class="imprint caps">From Roya Publication</p>
       </div>
       <img class="roya" src="assets/roya.jpg" alt="Roya Publication — Fiction">
     </div>
 
     <nav aria-label="Site" class="caps">
-      <a href="#" data-stage="notes">Author's Notes</a>
-      <a href="#" data-stage="about">About</a>
-      <button class="linklike" id="galleryOpen" type="button">All Covers</button>
+      <div class="nav-links">
+        <a href="#" data-stage="notes">Author's Notes</a>
+        <a href="#" data-stage="about">About</a>
+        <button class="linklike" id="galleryOpen" type="button">All Covers</button>
+      </div>
 
+      <div class="nav-controls">
       <button class="sound" id="soundToggle" aria-pressed="false"
-              title="Ambient sound (add assets/ambient.mp3 to enable)">
+              title="Ambient sound">
         <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
              aria-hidden="true">
@@ -132,6 +134,7 @@
         </svg>
         <span class="visually-hidden">Switch theme</span>
       </button>
+      </div>
     </nav>
   </header>
 
@@ -229,19 +232,38 @@
           out loud. These are short noir novellas about people who finally
           do&mdash;and what it costs them.</p>
 
+        <p class="ornament" aria-hidden="true">
+          <svg viewBox="0 0 160 12" fill="none" stroke="currentColor"
+               stroke-width="1" aria-hidden="true">
+            <path d="M4 6h62M94 6h62"/>
+            <path d="M80 1.5 84.5 6 80 10.5 75.5 6z" fill="currentColor" stroke="none"/>
+          </svg>
+        </p>
+
         <p class="note roman">Every book asks the same question: how
           does a person get out of their own head?</p>
 
+        <p class="ornament ornament--small" aria-hidden="true">
+          <svg viewBox="0 0 160 10" fill="none" stroke="currentColor"
+               stroke-width="0.9" aria-hidden="true">
+            <path d="M28 5h48M84 5h48"/>
+            <path d="M80 2.4 82.6 5 80 7.6 77.4 5z" fill="currentColor" stroke="none"/>
+          </svg>
+        </p>
+
         <div class="guide">
           <p class="guide-row">
+            <span class="guide-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h11v26H7z"/><path d="M18 6.5 25 4v24l-7-2.5"/><circle cx="20.4" cy="16" r="0.9" fill="currentColor" stroke="none"/></svg></span>
             <span class="guide-term caps">Door</span>
             <span class="guide-def">How they got out</span>
           </p>
           <p class="guide-row">
+            <span class="guide-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="20" height="22" rx="1"/><path d="M16 5v22M6 16h20"/></svg></span>
             <span class="guide-term caps">Room</span>
             <span class="guide-def">Where they ended</span>
           </p>
           <p class="guide-row">
+            <span class="guide-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="21" cy="10" r="5"/><path d="M17.6 13.6 6.5 24.7"/><path d="M10 21.2l2.6 2.6M13.2 18l2.6 2.6"/></svg></span>
             <span class="guide-term caps">Key</span>
             <span class="guide-def">What opened it</span>
           </p>
@@ -365,7 +387,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=100"></script>
-<script src="script.js?v=100"></script>
+<script src="stories.js?v=102"></script>
+<script src="script.js?v=102"></script>
 </body>
 </html>

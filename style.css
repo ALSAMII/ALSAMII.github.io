@@ -196,14 +196,25 @@ html[data-scene="1"] .atmosphere {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  padding: 1.75rem 0 1.5rem;
+  padding: 1.5rem 0 1.35rem;
+  /* A gold hairline closes the header off from the room below it. */
+  border-bottom: 1px solid var(--ember-soft);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: clamp(1.25rem, 3vw, 2.25rem);
+  gap: clamp(0.9rem, 2.4vw, 1.75rem);
   line-height: 1.3;
+}
+
+/* Rules either side of the stamp, so the imprint reads as a mark set
+   into the masthead rather than a logo parked beside the name. */
+.brand .roya {
+  padding: 0 clamp(0.9rem, 2.4vw, 1.75rem);
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  box-sizing: content-box;
 }
 
 .brand .name {
@@ -228,12 +239,27 @@ html[data-scene="1"] .atmosphere {
   opacity: 0.7;
 }
 
+/* Links on top, the controls beneath them — the settings step back
+   from the navigation instead of competing along one line. */
 .masthead nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.85rem;
+}
+
+.masthead .nav-links {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: clamp(1rem, 3vw, 2.5rem);
+  gap: clamp(0.9rem, 2.4vw, 1.75rem);
+}
+
+.masthead .nav-controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.4rem);
 }
 
 /* The nav is the only thing up here you can click, so it reads as
@@ -865,8 +891,9 @@ html[data-scene="1"] .atmosphere {
   /* Small phones: a step down so the three definitions still align on
      one line each. Below about 320px they wrap, and wrap together,
      which reads fine. */
-  .guide-def { font-size: 0.875rem; }
-  .guide { gap: 1.2rem 0.4rem; }
+  .guide-def { font-size: 0.8125rem; }
+  .guide { gap: 1.1rem 0; }
+  .guide-row { padding-inline: 0.2rem; }
 }
 
 .start {
@@ -1039,21 +1066,51 @@ html[data-scene="1"] .atmosphere {
    each column a readable measure it drops to two, and then to one,
    instead of squeezing "The one thing that did it" into a stack of
    single words. */
+/* A diamond on a rule, between the movements of the About panel. */
+.ornament {
+  display: block;
+  margin: 1.6rem auto;
+  width: min(100%, 15rem);
+  color: var(--ember);
+  opacity: 0.7;
+  line-height: 0;
+}
+.ornament svg { display: block; width: 100%; height: auto; }
+.ornament--small { width: min(100%, 11rem); margin: 1.4rem auto 1.5rem; }
+
 .guide {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
-  /* Tight columns: every pixel taken out of the gap is a pixel the
-     definitions can use to stay on one line. */
-  gap: 1.4rem clamp(0.4rem, 1.4vw, 1.75rem);
+  /* No gap: the rules between the columns provide the separation, and
+     the padding inside each cell keeps the text off them. */
+  gap: 1.4rem 0;
   align-items: start;
-  margin: 1.9rem 0;
+  text-align: center;
+  margin: 0 0 2rem;
 }
 
+/* A divider before the first column would be a fence at the edge of
+   the field, so only the second and third carry one. */
+.guide-row {
+  margin: 0;
+  padding-inline: clamp(0.3rem, 1.2vw, 0.9rem);
+}
+.guide-row + .guide-row { border-left: 1px solid var(--hairline); }
+
+.guide-icon {
+  display: block;
+  margin: 0 auto 0.7rem;
+  width: clamp(1.5rem, 4.2vw, 1.9rem);
+  color: var(--ember);
+  line-height: 0;
+}
+.guide-icon svg { display: block; width: 100%; height: auto; }
 .guide-row { margin: 0; }
 
 .guide-term {
   display: block;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.22em;
   color: var(--ember);
   font-size: 0.6875rem;
 }
@@ -1131,17 +1188,21 @@ html[data-scene="1"] .atmosphere {
      the slider drops to its own line. Forbidden from wrapping, the
      slider is the only item that can shrink (the links are nowrap
      text and stop at min-content), so it absorbs any shortfall. */
-  .masthead nav { flex-wrap: nowrap; gap: 0.45rem; }
+  /* The controls have their own row now, so the links no longer have to
+     share a line with a slider and two icons — they get their size and
+     tracking back. */
+  .masthead nav { gap: 0.7rem; }
+  .masthead .nav-links { flex-wrap: nowrap; gap: 0.85rem; }
+  .masthead .nav-controls { gap: 0.7rem; }
 
   /* Six items on one line now that the theme button is here. The
      controls give up their padding first — the links are already as
      tight as they read. */
   .masthead nav .sound,
-  .masthead nav .theme { padding: 0.4rem 0.15rem; }
-  .masthead nav .theme svg { width: 1.05rem; height: 1.05rem; }
+  .masthead nav .theme { padding: 0.35rem 0.25rem; }
 
   .masthead nav a,
-  .masthead nav .linklike { font-size: 0.6875rem; letter-spacing: 0.12em; }
+  .masthead nav .linklike { font-size: 0.75rem; letter-spacing: 0.16em; }
 
   .hall { grid-template-columns: 1fr; gap: 0; }
 
@@ -1574,17 +1635,58 @@ html[data-scene="1"] .atmosphere {
 }
 
 /* Music volume, beside the speaker */
+/* Drawn as a pill rather than a system slider: a track in gold with a
+   pale thumb riding it, which is what the header wants beside two line
+   icons. The native control underneath still does all the work. */
 .vol {
-  width: 5.5rem;
-  accent-color: var(--ember);
+  -webkit-appearance: none;
+  appearance: none;
+  width: 4rem;
+  height: 1.4rem;
+  background: none;
+  border: 0;
   cursor: pointer;
-  opacity: 0.55;
+  opacity: 0.85;
   transition: opacity 0.25s ease;
+}
+
+.vol::-webkit-slider-runnable-track {
+  height: 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(to right,
+    var(--ember-dim), var(--ember-soft));
+  border: 1px solid var(--ember-soft);
+}
+.vol::-moz-range-track {
+  height: 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(to right,
+    var(--ember-dim), var(--ember-soft));
+  border: 1px solid var(--ember-soft);
+}
+
+.vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.vol::-moz-range-thumb {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 0;
 }
 .vol:hover, .vol:focus-visible { opacity: 1; }
 @media (max-width: 56rem) {
   /* Shrinkable, with a floor — below this it stops being draggable. */
-  .vol { flex: 0 1 2.5rem; width: 2.5rem; min-width: 1.75rem; }
+  .vol { width: 3.25rem; }
 }
 
 /* Very narrow phones (an SE, or a phone with large system text) can't
@@ -2153,6 +2255,37 @@ html[data-theme="light"] .gallery-bar {
 html[data-theme="light"] .gallery-bar::after {
   background: linear-gradient(to bottom,
     rgba(236, 237, 237, 0.92), transparent);
+}
+
+/* ---- The new masthead and About furniture ------------------
+   The header rule, the dividers around the stamp, the ornaments and
+   the guide icons are all drawn in gold or hairline, so they follow
+   the palette — but three things need their own answer on paper. */
+
+/* The volume pill is a gold gradient on a dark bar; on paper the
+   track needs a light bed under it or the thumb vanishes into it. */
+html[data-theme="light"] .vol::-webkit-slider-runnable-track,
+html[data-theme="light"] .vol::-moz-range-track {
+  background: linear-gradient(to right,
+    var(--ember-dim), rgba(122, 90, 23, 0.28));
+  border-color: rgba(122, 90, 23, 0.4);
+}
+html[data-theme="light"] .vol::-webkit-slider-thumb {
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(24, 28, 32, 0.35);
+}
+html[data-theme="light"] .vol::-moz-range-thumb { background: #ffffff; }
+
+/* The ornaments sit at 0.7 opacity against a dark room; on paper the
+   deeper gold is already quiet enough to be read at full strength. */
+html[data-theme="light"] .ornament { opacity: 0.85; }
+
+/* The header's closing rule and the stamp's dividers were tuned to
+   glow; here they only need to divide. */
+html[data-theme="light"] .masthead { border-bottom-color: rgba(122, 90, 23, 0.35); }
+html[data-theme="light"] .brand .roya {
+  border-left-color: var(--hairline);
+  border-right-color: var(--hairline);
 }
 
 html[data-theme="light"] .roya { opacity: 1; filter: none; }
