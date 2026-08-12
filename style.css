@@ -1466,10 +1466,10 @@ html[data-scene="1"] .atmosphere {
 
 /* A rule under the block separates the facts from the story, so the
    two stop reading as one undifferentiated column of serif. */
-.syn-head {
-  padding-bottom: 1.1rem;
-  border-bottom: 1px solid var(--hairline);
-}
+.syn-head { padding-bottom: 0.4rem; }
+
+/* On a phone the band clears the cover and runs the full width. */
+.story.open .synopsis .notes { margin-top: 1rem; }
 
 /* Very narrow screens: stack rather than squeeze the block to a
    column of two-word lines. */
@@ -1599,6 +1599,67 @@ html[data-scene="1"] .atmosphere {
   gap: 1rem;
 }
 .feature.trio .feature-text { flex: 1 1 21rem; max-width: 29rem; }
+/* ---- The three readings ------------------------------------
+   A band of its own, ruled off above and below, running the full
+   measure under the cover. Name, then three squares, then the words
+   — the squares let two books be compared at a glance, the words say
+   what the comparison is about. */
+.notes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 1.35rem 0 0;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.note-row {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 8rem) auto 1fr;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.note-name {
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  color: var(--ember);
+}
+
+.note-meter { display: flex; gap: 0.3rem; }
+
+.note-box {
+  display: block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 1px solid var(--ember-soft);
+  border-radius: 1px;
+}
+.note-box.is-lit { background: var(--ember-dim); border-color: var(--ember-dim); }
+
+/* A rule between the meter and the words, as in the guide above. */
+.note-word {
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--hairline);
+  /* The sans, not the serif. These read as a reading on an instrument
+     rather than as prose, and the serif made them look like a fourth
+     line of the Door / Room / Key block above. */
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  color: var(--faded);
+  text-wrap: pretty;
+}
+
+@media (max-width: 34rem) {
+  .note-row { grid-template-columns: minmax(3.9rem, 6rem) auto 1fr; gap: 0.6rem; }
+  .note-name { font-size: 0.5rem; letter-spacing: 0.12em; }
+  .note-box { width: 0.7rem; height: 0.7rem; }
+  .note-word { font-size: 0.8125rem; padding-left: 0.6rem; }
+}
+
 /* ---- Door / Room / Key ------------------------------------
    Room and Key are no longer menus, so this block is where a reader
    meets them: three labelled lines for the book in front of them.
@@ -2351,6 +2412,20 @@ html[data-theme="light"] .vol::-moz-range-thumb { background: #ffffff; }
 /* The ornaments sit at 0.7 opacity against a dark room; on paper the
    deeper gold is already quiet enough to be read at full strength. */
 html[data-theme="light"] .ornament { opacity: 0.85; }
+
+/* The three readings. An unlit square outlined in --ember-soft nearly
+   vanishes on paper, so on light the empty ones carry a faint wash and
+   a firmer edge — otherwise a book at level 1 would read as having no
+   meter at all. */
+html[data-theme="light"] .note-box {
+  border-color: rgba(122, 90, 23, 0.45);
+  background: rgba(122, 90, 23, 0.07);
+}
+html[data-theme="light"] .note-box.is-lit {
+  background: var(--ember);
+  border-color: var(--ember);
+}
+html[data-theme="light"] .note-word { color: var(--parchment); }
 
 /* Back to the top. --field is a near-white wash on paper, which on its
    own reads as a smudge over the page — so here it is solid, with a
