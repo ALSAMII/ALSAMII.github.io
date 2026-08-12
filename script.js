@@ -52,6 +52,13 @@
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
 
+  /* The folder index.html is served from, with a trailing slash. At
+     the domain root this is just "/", but it keeps share links right
+     if the site is ever previewed from a subfolder. */
+  function basePath() {
+    return location.pathname.replace(/[^/]*$/, "");
+  }
+
   /* The one-line meaning beside each Door and Room. Optional: a name
      with no entry in GLOSSARY just shows on its own. */
   var GLOSS = (typeof GLOSSARY !== "undefined") ? GLOSSARY : {};
@@ -598,7 +605,14 @@
     shareBtn.append(shareLabel);
 
     shareBtn.addEventListener("click", function () {
-      var url = location.origin + location.pathname + "#" + slugFor(s);
+      /* Not the #slug address the site uses for itself. Everything
+         after a # stays in the browser and never reaches a server, so
+         a preview crawler asking about that link is only ever shown
+         the front page — which is why every book used to share the
+         same forest picture. /b/<slug>.html is a real page carrying
+         this book's cover, and it sends a reader straight on to the
+         book. Built by build-share-pages.js. */
+      var url = location.origin + basePath() + "b/" + slugFor(s) + ".html";
 
       /* A word in place of the label, then back — no alert to dismiss
          and nothing that moves the row. */
