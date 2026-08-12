@@ -256,13 +256,14 @@ html[data-scene="1"] .atmosphere {
 /* One row, wrapping only when it must. Nothing switches direction at a
    breakpoint: the links and the controls sit side by side while there
    is room, and the controls drop beneath them when there is not. */
+/* Two rows, right-aligned: navigation above, settings below. The
+   masthead centres its items, so the pair sits on the wordmark's
+   middle rather than its baseline. */
 .masthead nav {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.6rem clamp(0.7rem, 2vw, 1.6rem);
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(0.5rem, 1.4vw, 0.9rem);
 }
 
 .masthead .nav-links {
@@ -273,11 +274,7 @@ html[data-scene="1"] .atmosphere {
   gap: clamp(0.6rem, 1.6vw, 1.4rem);
 }
 
-.masthead .nav-controls {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.75rem, 2vw, 1.4rem);
-}
+
 
 /* The nav is the only thing up here you can click, so it reads as
    gold rather than as secondary text. Tracking eases in as the size
@@ -1702,111 +1699,68 @@ html[data-scene="1"] .atmosphere {
 
 /* Music volume, beside the speaker */
 /* ---- The controls ------------------------------------------
-   Two small stacks rather than a row of widgets: the volume wedge with
-   its speaker beneath, and the theme mark with its name beneath. The
-   wedge is vertical because a pill was the widest thing in the header
-   and the header had no width to spare. */
+   Links on the upper line, the three controls beneath them, the pair
+   right-aligned and centred as a block against the wordmark. */
 
 .masthead .nav-controls {
   display: flex;
-  align-items: flex-end;
-  gap: clamp(0.7rem, 1.8vw, 1.25rem);
-}
-
-/* The theme mark and the word under it. */
-.ctrl {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: clamp(0.7rem, 2vw, 1.35rem);
 }
 
-/* The wedge rides at the end of the links, so the row it belongs to is
-   the row a reader is already looking at. Centred on the caps rather
-   than sitting on their baseline, since it is taller than they are. */
-.masthead .nav-links .vol-wrap {
-  margin-left: clamp(0.15rem, 1vw, 0.6rem);
-  align-self: center;
-}
-
-/* A word under the theme mark, so the moon is not a guess. */
-.ctrl-label {
-  font-size: 0.5rem;
-  letter-spacing: 0.12em;
-  color: var(--faded);
-  line-height: 1;
-  transition: color 0.25s ease;
-}
-.ctrl:hover .ctrl-label { color: var(--ember); }
-
-/* ---- The volume wedge ----
-   Bars widening as they climb. Drawn twice: once dim for the whole
-   run, once lit and clipped to the level, so the control shows where
-   it is set without a thumb to find. --vol is written by script.js. */
-
-.vol-wrap {
-  --vol: 30%;
-  position: relative;
-  display: block;
-  width: 1.05rem;
-  height: 1.4rem;
-}
-
-.vol-wedge,
-.vol-wrap::after {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: var(--wedge);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
-
-.vol-wrap {
-  --wedge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 28' preserveAspectRatio='none'%3E%3Cg fill='%23d8a65f'%3E%3Crect x='9' y='25.4' width='2' height='1.4' rx='0.7'/%3E%3Crect x='8' y='22.4' width='4' height='1.4' rx='0.7'/%3E%3Crect x='7' y='19.4' width='6' height='1.4' rx='0.7'/%3E%3Crect x='6' y='16.4' width='8' height='1.4' rx='0.7'/%3E%3Crect x='5' y='13.4' width='10' height='1.4' rx='0.7'/%3E%3Crect x='4' y='10.4' width='12' height='1.4' rx='0.7'/%3E%3Crect x='3' y='7.4' width='14' height='1.4' rx='0.7'/%3E%3Crect x='2' y='4.4' width='16' height='1.4' rx='0.7'/%3E%3Crect x='1' y='1.4' width='18' height='1.4' rx='0.7'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-/* the whole run, held back */
-.vol-wedge { opacity: 0.28; }
-
-/* the same run, lit, clipped to the level from the bottom up */
-.vol-wrap::after {
-  content: "";
-  opacity: 1;
-  clip-path: inset(calc(100% - var(--vol)) 0 0 0);
-  transition: clip-path 0.12s linear;
-}
-
-/* The real control, laid over the drawing and invisible. Rotated
-   rather than writing-mode: rotation behaves the same everywhere,
-   and this has to work on an iPhone. */
+/* ---- The volume pill ----
+   Drawn rather than left to the system: a gold track with a pale thumb
+   riding it, which is what belongs beside two line icons. The native
+   control underneath still does all the work. */
 .vol {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 2.6rem;
-  height: 1.6rem;
-  margin: 0;
-  transform: translate(-50%, -50%) rotate(-90deg);
   -webkit-appearance: none;
   appearance: none;
+  width: clamp(2.75rem, 5vw, 3.75rem);
+  height: 1.3rem;
+  margin: 0;
   background: none;
   border: 0;
-  opacity: 0;
   cursor: pointer;
+  transition: opacity 0.25s ease;
 }
+
+.vol::-webkit-slider-runnable-track {
+  height: 1.3rem;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--ember-dim), var(--ember-soft));
+  border: 1px solid var(--ember-soft);
+}
+.vol::-moz-range-track {
+  height: 1.3rem;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--ember-dim), var(--ember-soft));
+  border: 1px solid var(--ember-soft);
+}
+
 .vol::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 1.1rem; height: 1.1rem; border-radius: 50%;
+  appearance: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.125rem;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
-.vol::-moz-range-thumb { width: 1.1rem; height: 1.1rem; border: 0; border-radius: 50%; }
+.vol::-moz-range-thumb {
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 0;
+}
 
-/* Focus has to land on something, since the input itself is invisible. */
-.vol:focus-visible ~ .vol-wedge,
-.vol-wrap:focus-within { outline: 1px solid var(--ember); outline-offset: 3px; }
+.vol:focus-visible { outline: 1px solid var(--ember); outline-offset: 3px; }
+
 @media (max-width: 56rem) {
-  /* Shrinkable, with a floor — below this it stops being draggable. */
-  .vol { width: 3.25rem; }
+  /* Narrower on a phone; the thumb still has room to be dragged. */
+  .vol { width: 2.75rem; }
 }
 
 /* Very narrow phones (an SE, or a phone with large system text) can't
@@ -2382,13 +2336,19 @@ html[data-theme="light"] .gallery-bar::after {
    the guide icons are all drawn in gold or hairline, so they follow
    the palette — but three things need their own answer on paper. */
 
-/* The wedge is drawn in the dark theme's gold. On paper it needs the
-   deeper gold and a touch more weight in the unlit bars, which read
-   fainter against white than they do against black. */
-html[data-theme="light"] .vol-wrap {
-  --wedge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 28' preserveAspectRatio='none'%3E%3Cg fill='%237a5a17'%3E%3Crect x='9' y='25.4' width='2' height='1.4' rx='0.7'/%3E%3Crect x='8' y='22.4' width='4' height='1.4' rx='0.7'/%3E%3Crect x='7' y='19.4' width='6' height='1.4' rx='0.7'/%3E%3Crect x='6' y='16.4' width='8' height='1.4' rx='0.7'/%3E%3Crect x='5' y='13.4' width='10' height='1.4' rx='0.7'/%3E%3Crect x='4' y='10.4' width='12' height='1.4' rx='0.7'/%3E%3Crect x='3' y='7.4' width='14' height='1.4' rx='0.7'/%3E%3Crect x='2' y='4.4' width='16' height='1.4' rx='0.7'/%3E%3Crect x='1' y='1.4' width='18' height='1.4' rx='0.7'/%3E%3C/g%3E%3C/svg%3E");
+/* The pill is a gold gradient on a dark bar; on paper the track needs
+   a lighter bed or the pale thumb vanishes into it. */
+html[data-theme="light"] .vol::-webkit-slider-runnable-track,
+html[data-theme="light"] .vol::-moz-range-track {
+  background: linear-gradient(to right,
+    var(--ember-dim), rgba(122, 90, 23, 0.28));
+  border-color: rgba(122, 90, 23, 0.4);
 }
-html[data-theme="light"] .vol-wedge { opacity: 0.34; }
+html[data-theme="light"] .vol::-webkit-slider-thumb {
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(24, 28, 32, 0.35);
+}
+html[data-theme="light"] .vol::-moz-range-thumb { background: #ffffff; }
 
 /* The ornaments sit at 0.7 opacity against a dark room; on paper the
    deeper gold is already quiet enough to be read at full strength. */
