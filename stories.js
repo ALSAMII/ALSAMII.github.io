@@ -571,7 +571,7 @@ const STORIES = [
     room: "Someone Else's Appetite \u2014 borrowed memories, and the wanting that arrives with them",
     key: "The Clearing \u2014 ego dissolution, taken as a civic sacrament",
     notes: [2, 3, 3],
-    synopsis: "Half a century after ego dissolution became a civic sacrament, the world is at peace \u2014 genuinely, verifiably, unbearably. Mara Voss is a Tender, licensed to sit with the dissolving, and a refractory: one of the rare few the Clearing will not take. Then her patients start coming up carrying memories that belong to no one \u2014 a louder world, a war in a desert, a song nobody wrote \u2014 and the gentled find these borrowed appetites intoxicating. A man dies of it, the first violent death in nineteen years, and she follows the leak down to the question no one gentled can bear to ask: is what's coming through a disease, a cure, or a collection notice?"
+    synopsis: "Half a century after ego dissolution became a civic sacrament, the world is at peace \u2014 genuinely, verifiably, unbearably. Then Mara Voss's patients start coming up from the Clearing carrying memories that belong to no one, a man dies of the trade in them, and she follows the leak down to the question no one gentled can bear to ask: is what's coming through a disease, a cure, or a collection notice?"
   },
 
   {
@@ -583,7 +583,7 @@ const STORIES = [
     room: "The Other Shore \u2014 a century of terror, playing back like a documentary of a nightmare",
     key: "The Farside Deep Array \u2014 deep telemetry, checksummed one bit at a time",
     notes: [2, 2, 3],
-    synopsis: "They never built the arsenals. The treaties held, the terror was cancelled, and a species spent its twentieth century aiming outward instead: atom-drive ships by 1975, Mars a working port, robot Pilgrims coasting past the edge of the sun's weather. Vera Nyquist is a Verifier, checksumming deep telemetry before it enters the human record. Then a Pilgrim relays home a signal that should not exist \u2014 decades of radio and television from a world that never left, wrong in the details the way copies are wrong. Buried in its broadcast schedule is a question, asked patiently for years, and somewhere in Vera's own station something has been answering."
+    synopsis: "They never built the arsenals: the terror was cancelled, and a species spent its twentieth century aiming outward instead \u2014 atom-drive ships by 1975, Mars a working port, robot Pilgrims past the edge of the sun's weather. Then a Pilgrim relays home decades of radio and television from a world that never left, wrong in the details the way copies are wrong, and somewhere in Vera Nyquist's own station something has been answering it."
   },
 
   {
@@ -595,7 +595,7 @@ const STORIES = [
     room: "The Gap \u2014 three forged nights, centuries deep, and the door they open",
     key: "The Lineage Ledger \u2014 the descent of a sacred fire, audited line by line",
     notes: [2, 2, 3],
-    synopsis: "At Salamis the Persian fleet did not break. Greece entered the empire, Europe grew up inside it, and the faith of the fire became the governing belief of a commonwealth running from Lisbon to Lahore. At its heart burns the Accord Fire, unbroken for two thousand five hundred and six years, from which every treaty and coronation legally descends. Roshan Azad is a Reckoner, keeper of its lineage ledger \u2014 and a fire whose descent breaks is, in law, a new fire. Auditing all twenty-five centuries for the jubilee, she finds what every Reckoner is sworn to look for and none has ever found: a gap, forged over by a hand that loved the fire too much to be honest about it."
+    synopsis: "At Salamis the Persian fleet did not break, and the faith of the fire became the governing belief of a commonwealth running from Lisbon to Lahore \u2014 with the Accord Fire at its heart, burning unbroken for two thousand five hundred and six years. Auditing its lineage ledger for the jubilee, Reckoner Roshan Azad finds what every Reckoner is sworn to look for and none has ever found: a gap, three nights deep, forged over by a hand that loved the fire too much to be honest about it."
   }
 
 ];
