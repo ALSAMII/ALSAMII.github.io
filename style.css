@@ -1462,19 +1462,19 @@ html[data-scene="1"] .atmosphere {
 .syn-head img { margin: 0; flex: 0 0 6rem; width: 6rem; }
 
 .syn-head .tri { flex: 1 1 0; min-width: 0; gap: 0.55rem; }
-.syn-head .tri-def { font-size: 0.875rem; line-height: 1.4; }
+.syn-head .tri-def { font-size: 0.8125rem; line-height: 1.35; }
 
 /* A rule under the block separates the facts from the story, so the
    two stop reading as one undifferentiated column of serif. */
 .syn-head { padding-bottom: 0; }
 
-/* On a phone the band clears the cover and runs the full measure — the
-   artwork and the Door / Room / Key sit in columns above it, this spans
-   both. The synopsis needs no margin of its own; the band's lower rule
-   is the separation. */
-.story.open .synopsis /* The band under the cover. One grid for the whole block rather than a
+/* The band under the cover. One grid for the whole block rather than a
    grid per row: the rows are display: contents, so all three share the
-   same three columns and the bars line up exactly down the page. */
+   same three columns and the bars line up exactly down the page. On a
+   phone it clears the cover and runs the full measure — the artwork and
+   the Door / Room / Key sit in columns above it, this spans both. The
+   synopsis needs no margin of its own; the band's lower rule is the
+   separation. */
 .notes {
   display: grid;
   grid-template-columns: minmax(4.5rem, 7rem) minmax(5rem, 1fr) auto;
@@ -1565,6 +1565,9 @@ html[data-scene="1"] .atmosphere {
 
 .tri-term,
 .note-name {
+  font-family: var(--sans);
+  font-weight: 400;
+  text-transform: uppercase;
   font-size: 0.5625rem;
   letter-spacing: 0.28em;
   color: var(--ember);
@@ -1579,8 +1582,8 @@ html[data-scene="1"] .atmosphere {
 .tri-def {
   display: block;
   font-family: var(--serif);
-  font-size: 1rem;
-  line-height: 1.45;
+  font-size: 0.875rem;
+  line-height: 1.4;
   color: var(--faded);
   text-wrap: pretty;
 }
@@ -1929,128 +1932,6 @@ html[data-scene="1"] .atmosphere {
 /* The gallery is its own scrolling layer and has a close button of
    its own; two floating controls at once is one too many. */
 body.gallery-on .to-top { display: none; }
-
-/* ---- What a dial measures ---------------------------------
-   The label opens a line explaining the scale. On a pointer that is
-   hover; on touch it is a tap, which script.js handles by flipping
-   aria-expanded. */
-.note-name.has-about {
-  position: relative;
-  font: inherit;
-  background: none;
-  border: 0;
-  padding: 0;
-  text-align: left;
-  cursor: help;
-  /* a dotted rule, the old sign that a word will explain itself */
-  border-bottom: 1px dotted var(--ember-soft);
-  transition: opacity 0.25s ease;
-}
-.note-name.has-about:hover { opacity: 1; }
-
-.note-about {
-  position: absolute;
-  left: 0;
-  bottom: calc(100% + 0.6rem);
-  z-index: 30;
-  width: max-content;
-  max-width: min(17rem, 70vw);
-  padding: 0.6rem 0.75rem;
-  font-family: var(--serif);
-  font-size: 0.875rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.4;
-  text-transform: none;
-  color: var(--parchment);
-  background: var(--raised);
-  border: 1px solid var(--ember-soft);
-  border-radius: 3px;
-  box-shadow: 0 16px 34px var(--cast-deep);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(0.3rem);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
-}
-
-.note-name.has-about:hover .note-about,
-.note-name.has-about:focus-visible .note-about,
-.note-name.has-about[aria-expanded="true"] .note-about {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
-}
-
-/* ---- A cover at full size ---------------------------------- */
-
-.cover-open { cursor: zoom-in; transition: transform 0.3s ease; }
-.cover-open:hover,
-.cover-open:focus-visible { transform: translateY(-3px) scale(1.02); }
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  height: 100lvh;
-  bottom: auto;
-  z-index: 60;
-  display: grid;
-  place-items: center;
-  gap: 1rem;
-  grid-template-rows: 1fr auto;
-  padding: clamp(1.5rem, 5vw, 3rem)
-           clamp(1.25rem, 4vw, 3rem)
-           calc(clamp(1.5rem, 5vw, 3rem) + env(safe-area-inset-bottom, 0px));
-  background: var(--veil);
-  cursor: zoom-out;
-  opacity: 0;
-  transition: opacity 0.26s ease;
-}
-.lightbox.show { opacity: 1; }
-.lightbox[hidden] { display: none; }
-
-.lightbox-img {
-  grid-row: 1;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border: 0;
-  border-radius: 2px;
-  box-shadow: 0 30px 70px var(--cast-deep);
-}
-
-.lightbox-cap {
-  grid-row: 2;
-  margin: 0;
-  color: var(--ember);
-  text-align: center;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: clamp(0.75rem, 3vw, 1.5rem);
-  right: clamp(0.75rem, 3vw, 1.5rem);
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  color: var(--faded);
-  background: var(--field);
-  border: 1px solid var(--hairline);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: color 0.25s ease, border-color 0.25s ease;
-}
-.lightbox-close:hover { color: var(--ember); border-color: var(--ember-soft); }
-.lightbox-close svg { display: block; width: 1.2rem; height: 1.2rem; }
-
-@media (prefers-reduced-motion: reduce) {
-  .cover-open:hover, .cover-open:focus-visible { transform: none; }
-}
 
 /* ============================================================
    All Covers — the whole shelf at once
@@ -2432,28 +2313,6 @@ html[data-theme="light"] .note-box.is-lit {
   border-color: rgba(122, 90, 23, 0.72);
 }
 html[data-theme="light"] .note-word { color: var(--parchment); }
-
-/* The bubble explaining a dial, and the full-size cover. Both are built
-   on --raised and --veil, which carry over — but on paper each needs a
-   real edge and a shadow rather than a glow, or it floats. */
-html[data-theme="light"] .note-about {
-  background: #ffffff;
-  border-color: rgba(122, 90, 23, 0.35);
-  box-shadow: 0 14px 30px rgba(24, 28, 32, 0.2),
-              0 2px 5px rgba(24, 28, 32, 0.1);
-}
-
-html[data-theme="light"] .lightbox { background: rgba(236, 237, 237, 0.97); }
-
-html[data-theme="light"] .lightbox-img {
-  box-shadow: 0 24px 56px rgba(24, 28, 32, 0.26),
-              0 0 0 1px rgba(20, 23, 26, 0.12);
-}
-
-html[data-theme="light"] .lightbox-close {
-  background: #ffffff;
-  border-color: rgba(122, 90, 23, 0.35);
-}
 
 /* Back to the top. --field is a near-white wash on paper, which on its
    own reads as a smudge over the page — so here it is solid, with a
