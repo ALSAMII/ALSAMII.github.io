@@ -436,6 +436,39 @@ const STORIES = [
     room: "The Warm Room \u2014 six hours inside the weather everyone else lives in",
     key: "Six doses \u2014 a guard he has never lowered, lowered for him",
     synopsis: "Hector Vane is fifty-one, employed, and over the diagnostic threshold \u2014 and a court order keeps him from the daughter who stopped speaking to him nine years ago. So he volunteers for six sessions of drug-assisted therapy. Under the compound the defences he has never had to lower are simply not there, and he can feel the weather everyone else lives in. Then it wears off."
+  },
+
+  {
+    num: 38,
+    title: "The Vertical Yes",
+    words: "18,200 words",
+    hook: "One blink for yes. Two for no",
+    door: "Withholding",
+    room: "Agreeing To Everything \u2014 the only answer left is the one they wanted",
+    key: "The alphabet board \u2014 twenty-two words an hour, and she is faster than that",
+    synopsis: "A clot takes out the bridge in Marek Sokol's brainstem and leaves everything above it working. He thinks, he hears, he feels every wrinkle in the sheet \u2014 and all he has left is one eye movement and an alphabet board. His wife starts to guess. Not from malice: from love, and exhaustion. Apologies he never made, then a confession to the hit-and-run that sent his brother to prison. She is right about everything except the fact."
+  },
+
+  {
+    num: 39,
+    title: "Blind Spot Blue",
+    words: "18,400 words",
+    hook: "She is right about everyone but him",
+    door: "Withholding",
+    room: "Nothing Flattering Left \u2014 the filter that softens people is switched off",
+    key: "Depressive realism \u2014 the illness that makes her read a room correctly",
+    synopsis: "Mira is nineteen and has been lying on a made bed in her coat since eleven this morning. Nothing is wrong with her life, which is the actual clinical picture and which nobody believes. She has one thing nobody else has: her readings of people are almost never wrong. Anton Reisz runs a consultancy that sells exactly that, and he warns her that getting better is a trade. She cannot read him. Her instrument was built to detect coldness."
+  },
+
+  {
+    num: 40,
+    title: "No Alarm",
+    words: "19,000 words",
+    hook: "Sold as fearless. Frightened the entire time",
+    door: "Withholding",
+    room: "No Word For It \u2014 afraid, with nothing to call it and a certificate saying otherwise",
+    key: "Two missing alarms \u2014 born without pain, and told a parasite took the rest",
+    synopsis: "Corni Rowan was born unable to feel pain, and at twenty-three a clinic told him a parasite had taken what was left of his fear. Forty-one fights he could not be made to quit, eleven hundred jumps, and a drinks company whose entire product was the premise that fear is optional. Kids who could feel everything started imitating him, and started dying. Then, checking a fact for his daughter's science fair, he finds eleven years of blood panels. Every one negative."
   }
 
 ];
@@ -494,7 +527,7 @@ const TRILOGIES = [
   {
     title: "The Sovereign Rooms",
     label: "",
-    books: [36, 37],
+    books: [36, 37, 38, 39, 40],
     synopsis: "Two accounts of a self that does not answer to its owner. A hospice scribe whose left hand, cut loose by a stroke, begins writing the things thirty years of mercy left out \u2014 and is never wrong about any of them. A man over the diagnostic threshold who takes six doses of a compound that lowers a guard he has never once had to lower, and comes back with a complete map of what other people feel and no way at all to be moved by it. One room writes without permission. The other can be entered at will and costs nothing to leave. Both are sovereign, and neither is governed."
   }
 ];

@@ -2078,6 +2078,7 @@ html[data-theme="light"] .easel,
 html[data-theme="light"] .easel-set img,
 html[data-theme="light"] .gcard img,
 html[data-theme="light"] .story.open .synopsis img,
+html[data-theme="light"] .story.open .synopsis .minis img,
 html[data-theme="light"] .syn-head img {
   /* The feathered mask is inherited from the dark theme and stays —
      it is the only thing that makes an edge disappear rather than
