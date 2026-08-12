@@ -1477,9 +1477,9 @@ html[data-scene="1"] .atmosphere {
    same three columns and the bars line up exactly down the page. */
 .notes {
   display: grid;
-  grid-template-columns: minmax(4.5rem, 7.5rem) minmax(4rem, 1fr) auto;
+  grid-template-columns: minmax(4.5rem, 7rem) minmax(5rem, 1fr) auto;
   align-items: center;
-  gap: 0.5rem 1rem;
+  gap: 0.75rem 1rem;
   margin: 0.35rem 0 1.1rem;
   padding: 0.85rem 0;
   border-top: 1px solid var(--hairline);
@@ -1488,10 +1488,13 @@ html[data-scene="1"] .atmosphere {
 
 .note-row { display: contents; }
 
+/* Matched to .tri-term — the DOOR / ROOM / KEY labels directly above
+   these — so the two blocks read as one family. */
 .note-name {
-  font-size: 0.625rem;
-  letter-spacing: 0.16em;
+  font-size: 0.5625rem;
+  letter-spacing: 0.28em;
   color: var(--ember);
+  opacity: 0.85;
   white-space: nowrap;
 }
 
@@ -1500,19 +1503,22 @@ html[data-scene="1"] .atmosphere {
 .note-meter {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
+/* Thin and long: a bar, not a box. Unlit is a hairline outline; lit is
+   a muted gold — quieter than --ember-dim, which read as a solid block
+   of paint at this width. */
 .note-box {
-  height: 0.7rem;
-  border: 1px solid var(--ember-soft);
-  border-radius: 1px;
+  height: 0.4rem;
+  border: 1px solid rgba(216, 166, 95, 0.3);
+  border-radius: 0;
   background: none;
 }
 
 .note-box.is-lit {
-  background: var(--ember-dim);
-  border-color: var(--ember-dim);
+  background: rgba(216, 166, 95, 0.62);
+  border-color: rgba(216, 166, 95, 0.62);
 }
 
 .note-word {
@@ -1530,9 +1536,9 @@ html[data-scene="1"] .atmosphere {
 @media (max-width: 34rem) {
   .notes { grid-template-columns: minmax(4rem, 6rem) minmax(3rem, 1fr) auto;
            gap: 0.45rem 0.7rem; }
-  .note-name { font-size: 0.5625rem; letter-spacing: 0.12em; }
-  .note-meter { gap: 0.35rem; }
-  .note-box { height: 0.65rem; }
+  .note-name { font-size: 0.5rem; letter-spacing: 0.2em; }
+  .note-meter { gap: 0.4rem; }
+  .note-box { height: 0.35rem; }
   .note-word { font-size: 0.8125rem; padding-left: 0.7rem; }
 }
 
@@ -2293,13 +2299,15 @@ html[data-theme="light"] .ornament { opacity: 0.85; }
    vanishes on paper, so on light the empty ones carry a faint wash and
    a firmer edge — otherwise a book at level 1 would read as having no
    meter at all. */
+/* The bars are drawn in the dark theme's candle gold. On paper they
+   need the deeper gold, and a slightly firmer unlit outline — a 30%
+   wash that reads on black disappears on white. */
 html[data-theme="light"] .note-box {
-  border-color: rgba(122, 90, 23, 0.45);
-  background: rgba(122, 90, 23, 0.07);
+  border-color: rgba(122, 90, 23, 0.38);
 }
 html[data-theme="light"] .note-box.is-lit {
-  background: var(--ember);
-  border-color: var(--ember);
+  background: rgba(122, 90, 23, 0.72);
+  border-color: rgba(122, 90, 23, 0.72);
 }
 html[data-theme="light"] .note-word { color: var(--parchment); }
 
