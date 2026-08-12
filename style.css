@@ -1468,8 +1468,11 @@ html[data-scene="1"] .atmosphere {
    two stop reading as one undifferentiated column of serif. */
 .syn-head { padding-bottom: 0.4rem; }
 
-/* On a phone the band clears the cover and runs the full width. */
-.story.open .synopsis .notes { margin-top: 1rem; }
+/* On a phone the band clears the cover and runs the full measure — the
+   artwork and the Door / Room / Key sit in columns above it, this spans
+   both. The synopsis needs no margin of its own; the band's lower rule
+   is the separation. */
+.story.open .synopsis .notes { margin: 0.35rem 0 1.15rem; }
 
 /* Very narrow screens: stack rather than squeeze the block to a
    column of two-word lines. */
@@ -1607,10 +1610,14 @@ html[data-scene="1"] .atmosphere {
 .notes {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  margin: 1.35rem 0 0;
-  padding: 1.1rem 0 0;
+  gap: 0.45rem;
+  margin: 1rem 0 1.15rem;
+  padding: 0.95rem 0;
+  /* A rule above and a rule below: the band is a different kind of
+     statement from the Door / Room / Key above it and the synopsis
+     below, and it should be plainly fenced off from both. */
   border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .note-row {
@@ -1654,7 +1661,7 @@ html[data-scene="1"] .atmosphere {
 }
 
 @media (max-width: 34rem) {
-  .note-row { grid-template-columns: minmax(3.9rem, 6rem) auto 1fr; gap: 0.6rem; }
+  .note-row { grid-template-columns: minmax(4.25rem, 6.5rem) auto 1fr; gap: 0.7rem; }
   .note-name { font-size: 0.5rem; letter-spacing: 0.12em; }
   .note-box { width: 0.7rem; height: 0.7rem; }
   .note-word { font-size: 0.8125rem; padding-left: 0.6rem; }
