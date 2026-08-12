@@ -1,0 +1,2301 @@
+/* ============================================================
+   CHEW Z — Short Fiction
+   One dark screen: story list on the left, a "stage" in the
+   middle that shows the theme text, the author's notes, or —
+   while you hover a story — that story's synopsis.
+   ============================================================ */
+
+:root {
+  /* Colours ------------------------------------------------ */
+  --night:      #0b0907;                    /* page base */
+  --parchment:  #e4dcc9;                    /* main text */
+  --faded:      #9c9280;                    /* secondary text */
+  --ember:      #d8a65f;                    /* candlelight accent */
+  --ember-soft: rgba(216, 166, 95, 0.55);
+  --ember-dim:  #b8964f;                    /* nav at rest — gold, held back */
+  --ember-lit:  #f0c47e;                    /* nav under the cursor */
+  --hairline:   rgba(216, 208, 192, 0.13);  /* dividers */
+
+  /* Surfaces and light. Everything that was a hard-coded near-black
+     lives here, so the light theme can restate it in one place rather
+     than being chased through the file. */
+  --sunk:       #070504;                    /* under the page — gallery, seams */
+  --raised:     #14100c;                    /* menus standing above it */
+  --field:      rgba(11, 9, 7, 0.55);       /* inputs and buttons */
+  --veil:       rgba(7, 5, 4, 0.93);        /* the gallery's own ground */
+  --shade:      rgba(7, 5, 4, 0.66);        /* pooled behind stage text */
+  --shade-deep: rgba(7, 5, 4, 0.82);        /* the same, on a phone */
+  --halo:       rgba(5, 4, 3, 0.85);        /* text shadow over artwork */
+  --cast:       rgba(0, 0, 0, 0.62);        /* what a cover drops */
+  --cast-deep:  rgba(0, 0, 0, 0.75);
+  --scene-fade: 0.58;                       /* start-card artwork */
+  --grain:      0.05;
+  --seam-mid:   rgba(11, 9, 7, 0.5);        /* page dissolving into the toolbar */
+
+  /* Type --------------------------------------------------- */
+  --serif: "Cormorant Garamond", "Times New Roman", serif;
+  --sans:  "Jost", "Century Gothic", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--night);
+  color: var(--parchment);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   The atmosphere — three fixed layers behind everything:
+   1. the fixed backdrop scene (assets/bg/bg-path.webp, jpg fallback)
+   2. moonlight + candlelight gradients that darken it
+   3. a faint film grain
+   ============================================================ */
+
+.atmosphere,
+.atmosphere::before,
+.atmosphere::after {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.atmosphere {
+  z-index: -1;
+  background-color: var(--night);
+
+  /* A soft fade that dissolves the top and bottom edges of the photo
+     into --night. Sits above the scene, so every scene gets it. */
+  --edge-fade: linear-gradient(to bottom,
+    var(--night) 0%, transparent 13%,
+    transparent 87%, var(--night) 100%);
+
+  /* A flat wash between the photo and the page. The forest path has a
+     bright centre and the stage text sits directly over it, so the
+     scene is knocked back here rather than left to the vignette
+     alone. Raise the alpha to fade the picture further. */
+  --scrim: linear-gradient(rgba(11, 9, 7, 0.46), rgba(11, 9, 7, 0.46));
+
+  /* Default scene — also the floor if the head script never runs. */
+  background-image: var(--edge-fade), var(--scrim),
+    url("assets/bg/bg-path.jpg");
+  background-image: var(--edge-fade), var(--scrim), image-set(
+    url("assets/bg/bg-path.webp") type("image/webp"),
+    url("assets/bg/bg-path.jpg")  type("image/jpeg")
+  );
+
+  /* fade and scrim fill the viewport; the photo covers it. This one is
+     a portrait image, so it is cropped rather than fitted by width. */
+  background-size: 100% 100%, 100% 100%, cover;
+  background-position: center center, center center, center 42%;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+}
+
+/* ---- The scenes -------------------------------------------------
+   One rule each. The head script sets data-scene at random on every
+   load, so the room changes with each refresh. To add a scene: put
+   the pair in assets/bg/, copy a block below with the next number,
+   and raise SCENES in index.html. */
+
+html[data-scene="0"] .atmosphere {
+  background-image: var(--edge-fade), var(--scrim),
+    url("assets/bg/bg-path.jpg");
+  background-image: var(--edge-fade), var(--scrim), image-set(
+    url("assets/bg/bg-path.webp") type("image/webp"),
+    url("assets/bg/bg-path.jpg")  type("image/jpeg")
+  );
+  background-size: 100% 100%, 100% 100%, cover;
+  background-position: center center, center center, center 42%;
+}
+
+html[data-scene="1"] .atmosphere {
+  background-image: var(--edge-fade), var(--scrim),
+    url("assets/bg/bg-tearoom.jpg");
+  background-image: var(--edge-fade), var(--scrim), image-set(
+    url("assets/bg/bg-tearoom.webp") type("image/webp"),
+    url("assets/bg/bg-tearoom.jpg")  type("image/jpeg")
+  );
+  /* 1.75:1 — nearly the shape of a window, so it can fill the frame */
+  background-size: 100% 100%, 100% 100%, cover;
+  background-position: center center, center center, center 45%;
+}
+
+
+/* Gradient light: a cold glow upper-centre, a warm candle
+   glow low-right, and a heavy vignette all round. */
+.atmosphere::before {
+  content: "";
+  background:
+    radial-gradient(38rem 26rem at 62% 18%,
+      rgba(140, 150, 140, 0.14), transparent 70%),
+    radial-gradient(26rem 20rem at 82% 72%,
+      rgba(212, 150, 70, 0.16), transparent 70%),
+    radial-gradient(120% 90% at 50% 45%,
+      rgba(11, 9, 7, 0.44), rgba(11, 9, 7, 0.85) 82%);
+}
+
+/* Film grain */
+.atmosphere::after {
+  content: "";
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* The slow breath of the candle */
+@keyframes candle {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.82; }
+}
+.atmosphere::before { animation: candle 7s ease-in-out infinite; }
+
+/* ============================================================
+   Page frame
+   ============================================================ */
+
+.frame {
+  height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+}
+
+/* Text for screen readers only ----------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Small spaced-caps labels used everywhere ----------------- */
+.caps {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0 1.35rem;
+  /* A gold hairline closes the header off from the room below it. */
+  border-bottom: 1px solid var(--ember-soft);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2.4vw, 1.75rem);
+  line-height: 1.3;
+}
+
+/* Rules either side of the stamp, so the imprint reads as a mark set
+   into the masthead rather than a logo parked beside the name. */
+.brand .roya {
+  padding: 0 clamp(0.9rem, 2.4vw, 1.75rem);
+  border-left: 1px solid var(--hairline);
+  border-right: 1px solid var(--hairline);
+  box-sizing: content-box;
+}
+
+.brand .name {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 1.625rem;
+  letter-spacing: 0.32em;
+  color: var(--ember);
+  margin: 0;
+}
+
+.brand .tag {
+  margin: 0.2rem 0 0;
+  color: var(--faded);
+}
+/* The imprint line under the wordmark — quieter than the tagline,
+   since the Roya badge beside it already says the same thing. */
+.brand .imprint {
+  margin: 0.35rem 0 0;
+  font-size: 0.5625rem;
+  color: var(--faded);
+  opacity: 0.7;
+}
+
+/* Links on top, the controls beneath them — the settings step back
+   from the navigation instead of competing along one line. */
+.masthead nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.85rem;
+}
+
+.masthead .nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: clamp(0.9rem, 2.4vw, 1.75rem);
+}
+
+.masthead .nav-controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.4rem);
+}
+
+/* The nav is the only thing up here you can click, so it reads as
+   gold rather than as secondary text. Tracking eases in as the size
+   goes up — .caps at 0.28em was wide enough to wrap two of three. */
+.masthead nav a,
+.masthead nav .linklike {
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+  color: var(--ember-dim);
+}
+
+.masthead nav a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.4rem 0.1rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease,
+              text-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.masthead nav .linklike {
+  display: inline-block;
+  transition: color 0.25s ease, border-color 0.25s ease,
+              text-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* Hover lifts past the wordmark's gold, catches candlelight, and
+   steps forward. Scale, not letter-spacing — a transform paints
+   without reflowing, so the neighbouring links stay put. */
+.masthead nav a:hover,
+.masthead nav .linklike:hover {
+  color: var(--ember-lit);
+  text-shadow: 0 0 26px rgba(216, 166, 95, 0.6);
+  transform: scale(1.09);
+}
+
+.masthead nav a[aria-current="true"] {
+  color: var(--ember);
+  border-bottom-color: var(--ember-soft);
+}
+
+/* Ambient-sound button */
+.sound {
+  background: none;
+  border: 0;
+  padding: 0.4rem;
+  color: var(--faded);
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+.sound:hover { color: var(--parchment); }
+.sound[aria-pressed="true"] { color: var(--ember); }
+.sound svg { display: block; width: 1.25rem; height: 1.25rem; }
+
+/* Speaker dims when muted (the cross itself is drawn by script) */
+.sound.muted { color: var(--faded); }
+
+/* Light and dark, beside the sound. Same weight as the speaker — it is
+   a setting, not a feature to be advertised. */
+.theme {
+  background: none;
+  border: 0;
+  padding: 0.4rem;
+  color: var(--faded);
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+.theme:hover { color: var(--ember); }
+.theme svg { display: block; width: 1.2rem; height: 1.2rem; }
+
+/* ============================================================
+   Main: sidebar + stage
+   ============================================================ */
+
+.hall {
+  display: grid;
+  grid-template-columns: minmax(19rem, 24rem) 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: stretch;
+  min-height: 0; /* lets the list scroll instead of the page */
+}
+
+/* --- Filter bar ------------------------------------------- */
+
+/* One column of full-width fields with the clear button standing
+   beside all three. Side by side, the fields were too narrow to
+   show a name and its meaning on one line. */
+.filters {
+  flex: none;
+  /* Flex rather than a fixed set of columns: the fields share whatever
+     is left beside the clear button, so one menu fills the row and two
+     split it — and hiding or restoring the Door needs no change here. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.7rem;
+  padding: 0 0.25rem 0.9rem;
+}
+
+/* Both ends pinned: an auto-placed row-spanning button lands in the
+   first column and shoves the fields sideways. */
+/* 8rem is the narrowest a menu stays readable; below that they wrap to
+   their own lines rather than squeezing. */
+.filters .filter-field { flex: 1 1 8rem; min-width: 0; }
+.filters .filter-reset { flex: none; align-self: end; }
+
+/* ---- The three menus -------------------------------------
+   Buttons and listboxes rather than <select>s: a native option
+   list is drawn by the operating system, so its font, colours and
+   highlight ignore this stylesheet completely. */
+
+.combo-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.625rem;
+  color: var(--faded);
+}
+
+/* The search field. Dressed as the two menus beside it — same ground,
+   same hairline, same gold when it holds something — so the three read
+   as one set of controls rather than a box bolted above them. */
+.combo-search {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--parchment);
+  background: var(--field);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.25s ease;
+}
+
+.combo-search::placeholder { color: var(--faded); opacity: 0.75; }
+.combo-search:hover { border-color: var(--ember-soft); }
+.combo-search:focus { outline: none; border-color: var(--ember); }
+.combo-search.is-set { border-color: var(--ember-soft); color: var(--ember); }
+
+/* Safari's own clear button is a grey blob on a dark field; the reset
+   control beside these already does the job. */
+.combo-search::-webkit-search-cancel-button,
+.combo-search::-webkit-search-decoration { -webkit-appearance: none; }
+
+.combo { position: relative; }
+
+.combo-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.7rem 2.2rem 0.7rem 0.9rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--parchment);
+  background: var(--field);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: border-color 0.25s ease;
+}
+.combo-btn:hover { border-color: var(--ember-soft); }
+.combo-btn:focus-visible { outline: none; border-color: var(--ember); }
+.combo-btn.is-set { border-color: var(--ember-soft); }
+
+.combo-btn::after {
+  content: "";
+  position: absolute;
+  right: 0.85rem;
+  top: 1.25rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1px solid var(--ember);
+  border-bottom: 1px solid var(--ember);
+  transform: rotate(45deg);
+  transition: transform 0.25s ease;
+}
+.combo-btn[aria-expanded="true"]::after {
+  transform: rotate(225deg);
+  top: 1.45rem;
+}
+
+.combo-name {
+  display: block;
+  color: var(--ember);
+  font-size: 0.9375rem;
+}
+
+/* "What turns it" carries whole sentences, so its meaning sits
+   under the name — clamped to two lines on the closed button, in
+   full once the list is open. */
+.combo-gloss {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 0.2rem;
+  font-family: var(--serif);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--faded);
+}
+
+/* The closed button shows the choice alone. Half a row wide, there is
+   no space for a meaning beside it — "Newest first" nearly fills the
+   box on its own — and a button three lines tall next to a neighbour
+   one line tall is worse than a button that simply says what is set.
+   The meanings stay where they are needed: in the open list. */
+.combo-btn .combo-gloss { display: none; }
+
+/* Door and Key keep name and meaning together on one line. */
+.combo--inline .combo-name,
+.combo--inline .combo-gloss { display: inline; }
+.combo--inline .combo-gloss { margin: 0 0 0 0.35rem; }
+
+.combo-list {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  min-width: 100%;
+  max-width: min(30rem, calc(100vw - 2.5rem));
+  max-height: 21rem;
+  margin: 0;
+  padding: 0.3rem;
+  list-style: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+  background: var(--raised);
+  border: 1px solid var(--ember-soft);
+  border-radius: 3px;
+  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.75);
+}
+.combo-list[hidden] { display: none; }
+
+.combo-opt {
+  padding: 0.6rem 0.7rem;
+  border-radius: 2px;
+  cursor: pointer;
+  /* Wraps rather than running off the side. The plainer Room glosses
+     are long enough that nowrap gave the list a sideways scrollbar
+     and clipped both ends of every line. */
+  white-space: normal;
+}
+.combo-opt + .combo-opt { border-top: 1px solid var(--hairline); }
+.combo-opt:hover,
+.combo-opt.is-active { background: rgba(216, 166, 95, 0.09); }
+
+/* Every menu's entries wrap. In the Key menu the meaning also gets its
+   own lines rather than being clamped to two. */
+.combo:not(.combo--inline) .combo-opt .combo-gloss {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+}
+
+.filter-reset {
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  color: var(--faded);
+  background: var(--field);
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease,
+              box-shadow 0.25s ease, opacity 0.25s ease;
+}
+.filter-reset svg { width: 1.15rem; height: 1.15rem; display: block; }
+.filter-reset:hover:not(:disabled) {
+  color: var(--ember);
+  border-color: var(--ember);
+  box-shadow: 0 0 22px rgba(216, 166, 95, 0.28);
+}
+.filter-reset:disabled { opacity: 0.35; cursor: default; }
+.filter-reset:not(:disabled) { color: var(--ember); border-color: var(--ember-soft); }
+
+.no-match {
+  flex: none;
+  margin: 0;
+  padding: 1.5rem 0.25rem;
+  color: var(--faded);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  border-top: 1px solid var(--hairline);
+}
+
+/* Rows the filter has ruled out */
+.story.filtered-out,
+.trilogy.filtered-out { display: none; }
+
+/* Series headings step aside under any order but the series' own — a
+   heading above books that are no longer its members would be a lie. */
+.trilogy.sorted-away { display: none; }
+
+/* ...and the books that sat under it give up their indent. */
+.story.flat .story-row { padding-left: 0.25rem; }
+
+/* Whatever ends up at the top of a filtered list keeps the hairline
+   the original first row had. */
+.story.first-visible,
+.trilogy.first-visible { border-top: 1px solid var(--hairline); }
+
+/* Phones: the two menus stack rather than squeeze */
+@media (max-width: 30rem) {
+  .filters { gap: 0.6rem; }
+}
+
+/* --- Story list ------------------------------------------- */
+
+.shelf {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0.5rem 0 0.75rem;
+}
+
+@media (max-width: 56rem) { .shelf { padding-top: 0; } }
+
+.shelf ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+  flex: 1 1 auto;
+  min-height: 9rem;
+}
+
+.story { border-bottom: 1px solid var(--hairline); }
+.story:first-child { border-top: 1px solid var(--hairline); }
+
+.story-row {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr auto auto;
+  /* Top, not centre: once a row carries a hook and a reading time it
+     is tall enough that a centred number floats away from its own
+     title. */
+  align-items: start;
+  gap: 0.875rem;
+  padding: 1.05rem 0.25rem;
+}
+
+.story .num {
+  color: var(--ember);
+  letter-spacing: 0.12em;   /* 0.2em read as two separate digits */
+  padding-top: 0.4rem;      /* sits on the title's baseline */
+}
+
+.story .title {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 1.0625rem;
+  letter-spacing: 0.02em;
+  color: var(--parchment);
+  transition: color 0.25s ease;
+}
+
+.story:hover .title,
+.story:focus-within .title { color: var(--ember); }
+
+/* ---- The hook line ----------------------------------------
+   Thirty-five titles alone gave a visitor nothing to choose
+   between. The hook is what they actually read while scrolling;
+   the reading time is what decides it. */
+.story-main { min-width: 0; }
+
+.story-sub {
+  margin: 0.35rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  /* A row gap as well as a column one: when the hook wraps, the
+     reading time drops to its own line and was sitting right on top
+     of it. */
+  gap: 0.45rem 0.6rem;
+}
+
+.story-hook {
+  font-family: var(--serif);
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  color: var(--faded);
+  text-wrap: pretty;
+}
+
+.story-time {
+  font-size: 0.5625rem;
+  color: var(--ember);
+  opacity: 0.7;
+  white-space: nowrap;
+}
+
+.story:hover .story-hook,
+.story:focus-within .story-hook { color: var(--parchment); }
+
+/* The two icons: PDF link and synopsis eye */
+.icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.3rem;
+  min-width: 2.75rem;
+  padding: 0.15rem 0;
+  color: var(--faded);
+  background: none;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+.icon-btn:hover { color: var(--ember); }
+.icon-btn svg { width: 1.05rem; height: 1.05rem; display: block; }
+
+/* Neither icon explains itself, so each says what it does. */
+.icon-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  opacity: 0.6;
+  white-space: nowrap;
+  transition: opacity 0.25s ease;
+}
+.icon-btn:hover .icon-label { opacity: 1; }
+
+/* Open rows: the hook has done its job. The synopsis is right there
+   saying the same thing better, so showing both is repetition. */
+.story.open .story-hook { display: none; }
+
+/* Each story's synopsis lives hidden inside its row; the
+   script shows it on the stage (desktop) or inline (touch). */
+.story .synopsis { display: none; }
+
+.story.open .synopsis {
+  display: block;
+  white-space: pre-line;   /* paragraph breaks, as on the stage */
+  margin: 0 0.25rem;
+  padding: 0 0 1.5rem;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--faded);
+  max-width: 34rem;
+}
+
+.more {
+  flex: none;
+  padding: 1rem 0.25rem;
+  color: var(--faded);
+  font-style: normal;
+}
+
+/* --- The stage -------------------------------------------- */
+
+.stage {
+  position: relative;
+  display: grid;
+  min-height: 0;
+}
+
+/* The hovered book: synopsis on the left, cover on the right */
+.feature {
+  grid-area: 1 / 1;
+  place-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1.5rem, 3.5vw, 4.5rem);
+  /* The pair was centred as one unit, so a wide cover pushed the words
+     off to the left of the stage and they no longer sat under the panel
+     they replace. Held to the same measure the panels use, and the text
+     column given a width of its own, both stay put. */
+  width: min(100%, 46rem);
+  max-width: 94%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(0.8rem);
+  transition: opacity 0.45s ease, transform 0.45s ease,
+              visibility 0s linear 0.45s;
+  z-index: 1;
+}
+
+.feature.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
+}
+
+.feature-text { flex: 1 1 20rem; max-width: 26rem; }
+
+.feature-meta { color: var(--ember); margin: 0 0 1.25rem; }
+
+.feature-syn {
+  font-family: var(--serif);
+  /* Synopses go in as plain text, so a blank line in stories.js would
+     otherwise collapse. pre-line keeps the paragraph breaks and still
+     wraps normally. Books written as one paragraph are unaffected. */
+  white-space: pre-line;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  line-height: 1.75;
+  color: var(--parchment);
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
+  margin: 0 0 1.75rem;
+}
+
+/* The cover: no frame — its edges feather away into the room */
+.easel {
+  max-height: 62vh;
+  max-width: min(24rem, 36vw);
+  width: auto;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}
+
+.panel {
+  position: relative;
+  grid-area: 1 / 1;           /* all panels stack in one cell */
+  align-self: center;
+  justify-self: center;
+  max-width: 37rem;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.5rem);
+  transition: opacity 0.2s ease, transform 0.2s ease,
+              visibility 0s linear 0.2s;
+}
+
+.panel.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s,
+              visibility 0s;
+}
+
+.panel .lede {
+  font-family: var(--serif);
+  font-weight: 600;
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
+  font-size: clamp(1.375rem, 2.3vw, 1.625rem);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.panel .rule {
+  width: 3.5rem;
+  height: 1px;
+  background: var(--ember-soft);
+  border: 0;
+  margin: 2.25rem auto;
+}
+
+.panel .eyebrow { color: var(--ember); margin: 0 0 1.25rem; }
+
+/* ---- Start here -------------------------------------------
+   Three ways in, on the panel a first visit lands on.
+
+   The card is only as tall as its own text — no locked aspect ratio,
+   which on a landscape screen made these enormous. The scene is an
+   image that deliberately breaks the frame: it hangs past the top,
+   right and bottom edges, faded well back and feathered away at every
+   side, so it reads as part of the room rather than as a picture in a
+   box. */
+/* The heading over the three cards. Set in the serif italic rather than
+   the spaced sans caps the other eyebrows use — it is announcing three
+   books, not labelling a panel, so it earns a voice of its own. Sized
+   to the card titles and indented to their left edge, so it reads as
+   the first line of the group rather than as a floating centred label. */
+.start-heading {
+  /* Sits close above the first card rather than floating between the
+     guide and the group — it belongs to the three books beneath it. */
+  /* Plenty of air above, very little below: the gap is what tells a
+     reader this line has left the Door / Room / Key guide behind and
+     belongs to the three books directly under it. */
+  margin: 3.75rem 0 0.5rem;
+  text-align: center;
+  /* The masthead's face — Jost, spaced caps — rather than the serif, so
+     it reads as a line of signage above the group instead of a fourth
+     title competing with the three below it. Sized to hold on one line
+     at any width the panel can be. */
+  font-family: var(--sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: clamp(0.625rem, 2.6vw, 0.75rem);
+  line-height: 1.5;
+  letter-spacing: 0.13em;
+  /* Parchment, not ember. The gold is doing enough work already on the
+     numbers, the titles and the reading times. */
+  color: var(--parchment);
+  text-wrap: pretty;
+  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
+}
+
+/* The narrowest phones: the indent stays, so the line still starts
+   where the numbers do, and the tracking gives up the few pixels
+   needed to keep it on one line. */
+@media (max-width: 23.5rem) {
+  .start-heading { font-size: 0.5625rem; letter-spacing: 0.08em; }
+
+  /* Small phones: a step down so the three definitions still align on
+     one line each. Below about 320px they wrap, and wrap together,
+     which reads fine. */
+  .guide-def { font-size: 0.8125rem; }
+  .guide { gap: 1.1rem 0; }
+  .guide-row { padding-inline: 0.2rem; }
+}
+
+.start {
+  display: flex;
+  flex-direction: column;
+  gap: 2.6rem;
+  margin: 0 0 1.5rem;
+  text-align: left;
+}
+
+/* No frame and no box. A border and a filled rectangle both announce
+   themselves against a photographic backdrop; what separates one card
+   from the next is the gap and the artwork itself. */
+.start-row {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 1.2rem 1.35rem;
+  font: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  overflow: visible;
+  isolation: isolate;
+  transition: transform 0.35s ease;
+}
+
+.start-row:hover,
+.start-row:focus-visible { transform: translateY(-2px); }
+
+/* Focus still needs to be visible without a border to light up. */
+.start-row:focus-visible { outline: 1px solid var(--ember-soft); outline-offset: 6px; }
+
+/* ---- The scene, breaking the frame ---- */
+.start-scene {
+  position: absolute;
+  z-index: 0;
+  right: -9%;
+  top: -16%;
+  height: 132%;
+  width: auto;
+  max-width: 68%;
+  object-fit: cover;
+  pointer-events: none;
+  border: 0;
+  opacity: var(--scene-fade);
+  filter: saturate(1) contrast(1.06) brightness(1.06);
+  transition: opacity 0.4s ease, transform 5s ease;
+
+  /* Three fades, intersected: one across, one down, and an ellipse over
+     the top of both.
+
+     The two straight fades alone leave a firm rectangular core with a
+     short ramp at each side — and the corners, where only one fade is
+     doing any work, stay strongest of all. The ellipse is what softens
+     those: it is smaller than the image on every axis, so it is already
+     transparent by the time it reaches any edge, and it takes the
+     corners down first because they are furthest from its centre.
+
+     The ramps are longer now as well. Nothing here reaches full
+     strength until well inside the picture. */
+  -webkit-mask-image:
+    radial-gradient(ellipse 58% 56% at 56% 50%,
+      #000 26%, rgba(0, 0, 0, 0.55) 62%, transparent 100%),
+    linear-gradient(to right,
+      transparent 0%, rgba(0, 0, 0, 0.12) 18%, #000 48%,
+      #000 64%, rgba(0, 0, 0, 0.3) 84%, transparent 98%),
+    linear-gradient(to bottom,
+      transparent 0%, rgba(0, 0, 0, 0.35) 14%, #000 34%,
+      #000 66%, rgba(0, 0, 0, 0.35) 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse 58% 56% at 56% 50%,
+      #000 26%, rgba(0, 0, 0, 0.55) 62%, transparent 100%),
+    linear-gradient(to right,
+      transparent 0%, rgba(0, 0, 0, 0.12) 18%, #000 48%,
+      #000 64%, rgba(0, 0, 0, 0.3) 84%, transparent 98%),
+    linear-gradient(to bottom,
+      transparent 0%, rgba(0, 0, 0, 0.35) 14%, #000 34%,
+      #000 66%, rgba(0, 0, 0, 0.35) 86%, transparent 100%);
+  mask-composite: intersect;
+}
+.start-row:hover .start-scene,
+.start-row:focus-visible .start-scene {
+  opacity: 0.72;
+  transform: scale(1.03);
+}
+
+.start-row--whirl .start-scene { object-position: 50% 44%; }
+.start-row--water .start-scene { object-position: 62% 40%; }
+.start-row--song  .start-scene { object-position: 50% 54%; }
+
+/* ---- Text ---- */
+.start-body { position: relative; z-index: 1; min-width: 0; }
+
+.start-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Same face and weight as the title — it is a label, not an ornament. */
+.start-num {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.4375rem;
+  color: var(--ember);
+  opacity: 0.8;
+  text-shadow: 0 1px 12px rgba(5, 4, 3, 0.9);
+}
+
+.start-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.4375rem;
+  letter-spacing: 0.045em;
+  color: var(--ember);
+  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
+}
+.start-title::before {
+  content: "\00b7";
+  margin-right: 0.5rem;
+  opacity: 0.55;
+}
+
+.start-time {
+  font-size: 0.5625rem;
+  color: var(--ember);
+  opacity: 0.7;
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(5, 4, 3, 0.9);
+}
+
+.start-note {
+  display: block;
+  max-width: 32rem;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--faded);
+  text-wrap: pretty;
+  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.95),
+               0 0 24px rgba(5, 4, 3, 0.8);
+}
+.start-row:hover .start-note { color: var(--parchment); }
+
+@media (max-width: 34rem) {
+  .start { gap: 1.6rem; }
+  /* Portrait: the scene stops overhanging so far above and below. At
+     128% it ran well into the gaps between cards; this keeps it close
+     to the height of the text it belongs to. */
+  .start-scene {
+    max-width: 72%;
+    opacity: 0.46;
+    top: -7%;
+    height: 114%;
+  }
+  .start-note { font-size: 0.9375rem; }
+}
+
+
+/* The three-part reader's guide in the About panel. Three columns
+   across, term above meaning, so Door, Room and Key are read as one
+   set rather than as a list of three separate things.
+
+   auto-fit rather than a fixed three: on anything too narrow to give
+   each column a readable measure it drops to two, and then to one,
+   instead of squeezing "The one thing that did it" into a stack of
+   single words. */
+/* A diamond on a rule, between the movements of the About panel. */
+.ornament {
+  display: block;
+  margin: 1.6rem auto;
+  width: min(100%, 15rem);
+  color: var(--ember);
+  opacity: 0.7;
+  line-height: 0;
+}
+.ornament svg { display: block; width: 100%; height: auto; }
+.ornament--small { width: min(100%, 11rem); margin: 1.4rem auto 1.5rem; }
+
+.guide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+  /* No gap: the rules between the columns provide the separation, and
+     the padding inside each cell keeps the text off them. */
+  gap: 1.4rem 0;
+  align-items: start;
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+/* A divider before the first column would be a fence at the edge of
+   the field, so only the second and third carry one. */
+.guide-row {
+  margin: 0;
+  padding-inline: clamp(0.3rem, 1.2vw, 0.9rem);
+}
+.guide-row + .guide-row { border-left: 1px solid var(--hairline); }
+
+.guide-icon {
+  display: block;
+  margin: 0 auto 0.7rem;
+  width: clamp(1.5rem, 4.2vw, 1.9rem);
+  color: var(--ember);
+  line-height: 0;
+}
+.guide-icon svg { display: block; width: 100%; height: auto; }
+.guide-row { margin: 0; }
+
+.guide-term {
+  display: block;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.22em;
+  color: var(--ember);
+  font-size: 0.6875rem;
+}
+
+.guide-def {
+  display: block;
+  font-family: var(--serif);
+  /* Larger, and short enough to hold one line in a third of the panel.
+     The phrases were trimmed to suit: at this size a phone column holds
+     about sixteen characters, and "The one thing that did it." needs
+     twenty-six. */
+  font-size: clamp(0.9375rem, 1.4vw, 1.125rem);
+  line-height: 1.4;
+  color: var(--parchment);
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
+  text-wrap: pretty;
+}
+
+.panel .note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
+  font-size: clamp(1.3125rem, 2.1vw, 1.5rem);
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.floor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0 1.75rem;
+  border-top: 1px solid var(--hairline);
+  color: var(--faded);
+}
+
+.floor nav { display: flex; gap: 2rem; }
+
+.floor a {
+  color: var(--faded);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.floor a:hover { color: var(--ember); }
+
+/* ============================================================
+   Accessibility + small screens
+   ============================================================ */
+
+:focus-visible {
+  outline: 1px solid var(--ember);
+  outline-offset: 4px;
+}
+
+@media (max-width: 56rem) {
+  .frame { height: auto; min-height: auto; }
+  .shelf { overflow: visible; display: block; }
+  .shelf ol { overflow: visible; }
+
+  .masthead { flex-wrap: wrap; }
+
+  /* The speaker and slider live inside the nav, so all five items
+     share one row. Since the links no longer wrap to two lines to
+     make space, the row has to earn its width back from the type:
+     smaller, tighter tracking, narrower gaps.
+
+     nowrap is the guarantee. Fitting this by arithmetic alone is too
+     close a thing — a wider font fallback or larger system text and
+     the slider drops to its own line. Forbidden from wrapping, the
+     slider is the only item that can shrink (the links are nowrap
+     text and stop at min-content), so it absorbs any shortfall. */
+  /* The controls have their own row now, so the links no longer have to
+     share a line with a slider and two icons — they get their size and
+     tracking back. */
+  .masthead nav { gap: 0.7rem; }
+  .masthead .nav-links { flex-wrap: nowrap; gap: 0.85rem; }
+  .masthead .nav-controls { gap: 0.7rem; }
+
+  /* Six items on one line now that the theme button is here. The
+     controls give up their padding first — the links are already as
+     tight as they read. */
+  .masthead nav .sound,
+  .masthead nav .theme { padding: 0.35rem 0.25rem; }
+
+  .masthead nav a,
+  .masthead nav .linklike { font-size: 0.75rem; letter-spacing: 0.16em; }
+
+  .hall { grid-template-columns: 1fr; gap: 0; }
+
+  /* Stage first, list second — mirrors reading order on a phone. */
+  .stage { order: -1; min-height: auto; overflow: visible; }
+
+  /* The pool of shade behind the stage text is inset by -4.5rem at each
+     side. On a wide window that spills harmlessly into the margins; on
+     a portrait phone it makes the document about 50px wider than the
+     screen, Safari shrinks the whole page to fit, and every centred
+     thing lands left of centre with a dead strip down the right. Pulled
+     in to something the screen can hold. */
+  .panel::before,
+  .feature-text::before { inset: -2rem -0.5rem; }
+
+  /* On a wide screen every panel shares one grid cell, so the stage
+     keeps a steady height as you switch between them. On a phone that
+     means the tallest panel sets the height and the shorter ones float
+     in the middle of it. Here each panel gets its own row and the
+     inactive ones leave the flow entirely, so the active one starts
+     directly under the header. Trade-off: the cross-fade becomes an
+     instant swap on phones. */
+  .panel {
+    grid-area: auto;
+    align-self: start;
+    /* Little at the foot: the filter bar should sit just under the end
+       of the last card, not a screen below it. */
+    padding-block: 1.25rem 0.25rem;
+    /* The frame already gives the page its side margins; a second inset
+       here only narrows the guide columns, and those need every pixel to
+       hold their definitions on one line. */
+    padding-inline: 0;
+  }
+  .panel:not(.is-active) { display: none; }
+
+  .floor { flex-wrap: wrap; justify-content: center; text-align: center; }
+
+  /* Portrait is far too narrow to fit a room by width — it would
+     become a thin strip. Phones fill the frame instead. The
+     [data-scene] here is deliberate: it matches the specificity of
+     the scene rules above so this still wins on a phone. */
+  .atmosphere,
+  html[data-scene] .atmosphere {
+    background-size: 100% 100%, 100% 100%, cover;
+    background-position: center center, center center, 52% 42%;
+  }
+}
+
+/* ---- Touch devices: keeping the scroll smooth -------------------
+   The three atmosphere layers are fixed and sized with inset: 0. On a
+   phone the address bar collapses as you scroll, the viewport height
+   changes, and all three layers resize — which means re-scaling a
+   full-screen photo, two gradients and a grain tile on every frame.
+   That is the stick-and-jump.
+
+   Two answers. Size them to the LARGEST viewport height so the
+   collapsing bar can't resize them; and promote the stack to its own
+   compositing layer so scrolling composites it instead of repainting
+   it. The candle breath goes too — a looping repaint of a full-screen
+   fixed layer is the last thing a phone scroll needs, and at this size
+   it was barely perceptible. */
+@media (hover: none) {
+  .atmosphere {
+    /* Overshot hard. Every edge this layer has must sit well outside
+       any viewport the browser can report, in any toolbar state — at
+       100lvh, and again at 114lvh, an edge kept finding its way back
+       onto the screen as a line. 20vh above and 25vh below leaves no
+       margin for the browser to be wrong by. */
+    top: -20vh;
+    height: 145lvh;
+    bottom: auto;
+
+    /* Top dissolve only. The bottom band was written for a
+       viewport-sized layer and kept landing back on screen as the
+       layer grew; there is nothing at the bottom for it to dissolve
+       into that the page colour does not already provide. */
+    --edge-fade: linear-gradient(to bottom,
+      var(--night) 0%, transparent 20%);
+
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* The transform above makes .atmosphere the containing block for its
+     own fixed-position pseudo-elements, so inset: 0 fills the oversized
+     parent exactly — the light and the grain stay registered with the
+     photograph instead of drifting against it. */
+  .atmosphere::before,
+  .atmosphere::after { inset: 0; }
+
+  /* The seam at the very bottom of the screen.
+
+     Safari fills its toolbar with the page's theme-color, #0b0907. The
+     last row of page pixels above it is still showing a lit forest, so
+     two tones meet with nothing in between and the join reads as a
+     line. This dissolves the photograph into that same colour over the
+     final slice of the viewport, so the page and the toolbar become one
+     surface.
+
+     It is pinned to the viewport, not to the backdrop layer: body has
+     no transform, so fixed here means fixed to the screen — which is
+     what the old bottom fade could not do once the backdrop grew past
+     the screen's edges. */
+  body::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    /* Hung below the viewport, not sat on its floor. Fixed elements
+       anchor to the layout viewport; when Safari's toolbar retracts the
+       visible page grows taller than that, and anything stopping at
+       bottom: 0 leaves a strip of bare photograph beneath it. That
+       strip was the line. */
+    bottom: -18lvh;
+    height: 32lvh;
+    z-index: -1;
+    pointer-events: none;
+    /* Promoted, like .atmosphere is. Both sit at z-index: -1, but the
+       backdrop carries a transform and is therefore composited; an
+       unpromoted layer at the same level can end up painted behind it,
+       which is why moving this fade twice changed nothing. With a
+       transform of its own the two are peers and document order
+       decides — and this comes after. */
+    transform: translateZ(0);
+    /* Solid well before the halfway mark, so the whole overhang — and
+       every toolbar state in between — is the flat page colour. */
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      var(--seam-mid) 18%,
+      var(--night) 32%,
+      var(--night) 100%);
+  }
+
+  .atmosphere::before { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere::before { animation: none; }
+  .panel, .panel.is-active { transition: none; transform: none; }
+  * { transition-duration: 0.01ms !important; }
+
+  /* The rule above kills the easing, not the transform itself —
+     without this the nav link would still jump in size. Colour and
+     glow still change, so nothing is lost. */
+  .masthead nav a:hover,
+  .masthead nav .linklike:hover { transform: none; }
+}
+
+/* ============================================================
+   The "read the PDF" link on the stage
+   ============================================================ */
+
+.cp-link {
+  color: var(--ember);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ember-soft);
+  padding-bottom: 0.2rem;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.cp-link:hover { color: var(--parchment); border-bottom-color: var(--parchment); }
+
+/* Phones keep the inline tap-to-expand synopsis instead of the
+   hover-driven stage feature. */
+@media (max-width: 56rem) {
+  .feature { display: none; }
+}
+
+/* About runs longer than the other panels. On a desktop window the
+   frame is a fixed height, so the stage itself scrolls if the text
+   outgrows it; "safe center" keeps the top reachable when it does.
+   Phones are left alone — there the frame is auto-height and the
+   page scrolls, so a second scroll box inside it only traps text. */
+@media (min-width: 56.01rem) {
+  .stage {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+  .stage::-webkit-scrollbar { width: 0; height: 0; }
+  .panel {
+    align-self: center;
+    align-self: safe center;
+    padding-block: 1.5rem;
+  }
+}
+
+/* On phones the cover and the Door / Room / Key block stand side by
+   side, with the synopsis underneath the pair. The space beside a
+   cover this size was otherwise empty. */
+.syn-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 0.25rem 0 1.15rem;
+}
+
+.syn-head img { margin: 0; flex: 0 0 6rem; width: 6rem; }
+
+.syn-head .tri { flex: 1 1 0; min-width: 0; gap: 0.55rem; }
+.syn-head .tri-def { font-size: 0.875rem; line-height: 1.4; }
+
+/* A rule under the block separates the facts from the story, so the
+   two stop reading as one undifferentiated column of serif. */
+.syn-head {
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Very narrow screens: stack rather than squeeze the block to a
+   column of two-word lines. */
+@media (max-width: 24rem) {
+  .syn-head { flex-direction: column; gap: 1rem; }
+  .syn-head img { flex: none; width: 9rem; }
+}
+
+/* On phones the synopsis expands inline instead; give the
+   little cover in it the same treatment. */
+.story.open .synopsis img {
+  display: block;
+  width: 9rem;
+  border: 0;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.62);
+  margin: 0.25rem 0 1.25rem;
+  /* feather the edges into the scene, as on desktop */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+
+/* Spacing for multi-paragraph notes and the signature line */
+.panel .note + .note { margin-top: 0.9rem; }
+.panel .guide + .note { margin-top: 0; }
+.panel .signature { color: var(--ember); margin: 1.5rem 0 0; }
+
+/* The lede and the first paragraph had nothing between them and ran
+   together as one block. */
+.panel .lede + .note,
+.panel .lede + .lede { margin-top: 1.25rem; }
+
+/* `roman` was used in index.html but never defined here, so those
+   paragraphs inherited the italic from .note. Upright, as intended —
+   italic is fine for a line, tiring for a paragraph. */
+.panel .note.roman {
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Centred text orphans badly — both edges move at once. Let the browser
+   even out the line lengths and avoid single-word last lines. */
+.panel .lede,
+.panel .note,
+.feature-syn,
+.panel .eyebrow { text-wrap: pretty; }
+
+
+/* ============================================================
+   Roya Publication stamp + footer subscribe block
+   ============================================================ */
+
+.roya {
+  display: block;
+  height: clamp(5.25rem, 9vh, 7rem);
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.62),
+              0 0 26px rgba(216, 166, 95, 0.14);
+  /* Was fully saturated and out-shouted CHEW Z right beside it.
+     Eased back so it reads as provenance, not a badge. */
+  opacity: 0.88;
+  filter: saturate(0.82);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.brand:hover .roya { opacity: 1; filter: none; }
+
+.subscribe-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+  color: var(--faded);
+}
+
+.subscribe-block .soon {
+  font-size: 0.6875rem;   /* was 9px — below a comfortable reading floor */
+  color: var(--ember);
+  opacity: 0.9;
+}
+
+/* ============================================================
+   Triptychs: sidebar headings and the three-cover feature
+   ============================================================ */
+
+.trilogy {
+  border-bottom: 1px solid var(--hairline);
+  padding: 1.4rem 0.25rem 1rem;
+  cursor: default;
+}
+
+.trilogy .t-label {
+  margin: 0 0 0.35rem;
+  color: var(--ember);
+  font-size: 0.6875rem;   /* was 9px */
+}
+
+.trilogy .t-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.3125rem;
+  letter-spacing: 0.02em;
+  color: var(--parchment);
+  transition: color 0.25s ease;
+}
+
+.trilogy:hover .t-title,
+.trilogy:focus-within .t-title { color: var(--ember); }
+
+/* member books sit indented beneath their heading */
+.story.in-trilogy .story-row { padding-left: 1.25rem; }
+
+/* the trilogy's three covers, standing together */
+.easel-set { display: none; }
+
+.feature.trio { flex-wrap: wrap; justify-content: center; }
+.feature.trio #easelImg { display: none; }
+.feature.trio .easel-set {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.feature.trio .feature-text { flex: 1 1 21rem; max-width: 29rem; }
+/* ---- Door / Room / Key ------------------------------------
+   Room and Key are no longer menus, so this block is where a reader
+   meets them: three labelled lines for the book in front of them.
+   Used twice — under the synopsis on the stage, and beside the cover
+   in the phone's inline synopsis. */
+.tri {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* On the stage the three sit abreast: stacked full-width they were the
+   difference between a synopsis that fits a laptop window and one the
+   reader has to scroll for. */
+@media (min-width: 56.01rem) {
+  .feature-substance .tri {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+  .feature-substance .tri-def { font-size: 0.875rem; line-height: 1.35; }
+  .feature-substance .tri-term { font-size: 0.5rem; }
+}
+
+.tri-row { display: block; }
+
+.tri-term {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-size: 0.5625rem;
+  color: var(--ember);
+  opacity: 0.85;
+}
+
+.tri-def {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--faded);
+  text-wrap: pretty;
+}
+
+.feature-substance { margin: 1.35rem 0 0; }
+.feature-substance[hidden] { display: none; }
+
+.feature.trio .feature-syn {
+  font-size: clamp(1.125rem, 1.5vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.easel-set img {
+  width: clamp(6.25rem, 8.25vw, 8.75rem);
+  border: 0;
+  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.7);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}
+
+/* phones: tapping the heading unfolds covers + synopsis inline */
+.trilogy .synopsis { display: none; }
+.trilogy.open .synopsis {
+  display: block;
+  padding: 1rem 0 0.5rem;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--faded);
+}
+.trilogy.open .synopsis .minis {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.trilogy.open .synopsis .minis img {
+  width: 5.5rem;
+  border: 0;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.6);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
+}
+
+/* Music volume, beside the speaker */
+/* Drawn as a pill rather than a system slider: a track in gold with a
+   pale thumb riding it, which is what the header wants beside two line
+   icons. The native control underneath still does all the work. */
+.vol {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 4rem;
+  height: 1.4rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+
+.vol::-webkit-slider-runnable-track {
+  height: 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(to right,
+    var(--ember-dim), var(--ember-soft));
+  border: 1px solid var(--ember-soft);
+}
+.vol::-moz-range-track {
+  height: 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(to right,
+    var(--ember-dim), var(--ember-soft));
+  border: 1px solid var(--ember-soft);
+}
+
+.vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.vol::-moz-range-thumb {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 0;
+}
+.vol:hover, .vol:focus-visible { opacity: 1; }
+@media (max-width: 56rem) {
+  /* Shrinkable, with a floor — below this it stops being draggable. */
+  .vol { width: 3.25rem; }
+}
+
+/* Very narrow phones (an SE, or a phone with large system text) can't
+   hold three links plus both sound controls. The slider goes and the
+   mute toggle stays, since muting is the one people actually want. */
+@media (max-width: 23rem) {
+  .vol { display: none; }
+}
+
+/* Mid-width windows (a 13" laptop lands here): the cover used to be
+   hidden outright, which meant most laptop visitors never saw the
+   artwork. It shrinks instead, and the text column narrows to match. */
+@media (max-width: 72rem) {
+  .feature { gap: clamp(1rem, 2.5vw, 2rem); }
+  .feature-text { flex: 1 1 15rem; max-width: 21rem; }
+  .easel {
+    max-width: min(11rem, 26vw);
+    max-height: 46vh;
+  }
+}
+
+/* Three covers plus a long triptych synopsis need real width, so the
+   set scales down rather than disappearing. */
+@media (max-width: 82rem) {
+  .feature.trio .easel-set { gap: 0.6rem; }
+  .feature.trio .easel-set img { width: clamp(4.25rem, 6.5vw, 6rem); }
+}
+
+/* Groups larger than three (the five-book cycle): the covers go
+   smaller and wrap, so five stand as three above two rather than
+   pushing the synopsis off the stage. Triptychs are untouched. */
+.easel-set[data-count="4"] img,
+.easel-set[data-count="5"] img { width: clamp(4.5rem, 5.5vw, 6.5rem); }
+
+.feature.trio .easel-set[data-count="4"],
+.feature.trio .easel-set[data-count="5"] {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 22rem;
+}
+
+@media (max-width: 82rem) {
+  .feature.trio .easel-set[data-count="4"],
+  .feature.trio .easel-set[data-count="5"] { max-width: 17rem; gap: 0.6rem; }
+  .feature.trio .easel-set[data-count="4"] img,
+  .feature.trio .easel-set[data-count="5"] img { width: clamp(3.75rem, 5vw, 5rem); }
+}
+
+/* Phones: the inline row of little covers wraps instead of
+   squeezing five onto one line. */
+.trilogy.open .synopsis .minis { flex-wrap: wrap; }
+.trilogy.open .synopsis .minis.many img { width: 4rem; }
+
+/* Space between stage paragraphs; type eases down on short windows */
+.panel .lede + .lede { margin-top: 1em; }
+@media (max-height: 51rem) {
+  /* A 13-inch laptop lands here. Everything on the stage steps down a
+     little so a book's synopsis is read, not scrolled. */
+  .feature-syn { font-size: clamp(1.0625rem, 2.5vh, 1.3125rem); line-height: 1.6; }
+  .feature-meta { margin-bottom: 0.9rem; }
+  .feature-substance { margin-top: 1rem; }
+  .easel { max-height: 54vh; }
+
+  .panel .lede { font-size: clamp(1.125rem, 2.3vh, 1.4375rem); }
+  .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
+  .panel .rule { margin: 1.5rem auto; }
+  .guide-def { font-size: clamp(0.875rem, 1.7vh, 1.0625rem); }
+  .guide { gap: 1rem clamp(0.6rem, 3vw, 2rem); margin-bottom: 1.35rem; }
+}
+
+/* ============================================================
+   A feathered pool of shade behind the stage text — dims and
+   softly blurs the artwork right where the words sit, and
+   fades to nothing at its edges.
+   ============================================================ */
+
+.panel::before,
+.feature-text::before {
+  content: "";
+  position: absolute;
+  inset: -3rem -4.5rem;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side,
+      var(--shade) 30%, rgba(7, 5, 4, 0) 100%);
+}
+
+.feature-text { position: relative; }
+
+/* Phone: the expanded synopsis sits over the artwork, so give it
+   the same feathered pool of shade the stage text gets. */
+@media (max-width: 56rem) {
+  .story.open,
+  .trilogy.open { position: relative; }
+
+  .story.open::before,
+  .trilogy.open::before {
+    content: "";
+    position: absolute;
+    inset: -1rem -2rem;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(closest-side,
+        var(--shade-deep) 42%, rgba(7, 5, 4, 0) 100%);
+  }
+
+  .story.open .synopsis,
+  .trilogy.open .synopsis { color: var(--parchment); }
+}
+
+/* ============================================================
+   Titles are buttons now, so a click can pin a book to the
+   stage and give it its own address.
+   ============================================================ */
+
+.title-btn {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.story.is-pinned .title,
+.trilogy.is-pinned .t-title { color: var(--ember); }
+
+/* A pinned book keeps a thin ember mark in the margin */
+.story.is-pinned,
+.trilogy.is-pinned { position: relative; }
+
+.story.is-pinned::after,
+.trilogy.is-pinned::after {
+  content: "";
+  position: absolute;
+  left: -0.6rem;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 1px;
+  background: var(--ember-soft);
+}
+
+/* A header button that reads as a nav link */
+.linklike {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--faded);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 0.4rem 0.1rem;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.linklike:hover { color: var(--parchment); }
+
+/* ============================================================
+   Back to the top
+   ============================================================ */
+
+/* Only the phone layout scrolls the page — on a wide screen the frame
+   is a fixed height and the list scrolls inside itself — so this sits
+   quiet until there is genuinely a long way back up. */
+/* Left, not right. Every row keeps its PDF and Synopsis buttons at the
+   right edge, so a floating control there sits on top of two live tap
+   targets. On the left there is only the number column and, when a row
+   is open, text — nothing that can be blocked. */
+.to-top {
+  position: fixed;
+  left: clamp(0.75rem, 3vw, 1.5rem);
+  bottom: calc(clamp(0.9rem, 3vw, 1.75rem) + env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.6rem 0.7rem 0.5rem;
+
+  color: var(--ember);
+  background: rgba(11, 9, 7, 0.82);
+  border: 1px solid var(--ember-soft);
+  border-radius: 999px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+
+  opacity: 0;
+  transform: translateY(0.6rem);
+  transition: opacity 0.3s ease, transform 0.3s ease,
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.to-top[hidden] { display: none; }
+.to-top.show { opacity: 1; transform: none; }
+
+/* Sideways, the corner is the tightest space on the screen: the pill
+   becomes the arrow alone. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .to-top {
+    left: 0.6rem;
+    bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
+    padding: 0.5rem;
+    gap: 0;
+  }
+  .to-top .caps { display: none; }
+  .to-top svg { width: 0.95rem; height: 0.95rem; }
+}
+
+.to-top:hover,
+.to-top:focus-visible {
+  border-color: var(--ember);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6),
+              0 0 22px rgba(216, 166, 95, 0.28);
+}
+
+.to-top svg { display: block; width: 1.05rem; height: 1.05rem; }
+.to-top .caps { font-size: 0.5rem; letter-spacing: 0.14em; opacity: 0.85; }
+
+/* The gallery is its own scrolling layer and has a close button of
+   its own; two floating controls at once is one too many. */
+body.gallery-on .to-top { display: none; }
+
+/* ============================================================
+   All Covers — the whole shelf at once
+   ============================================================ */
+
+.gallery {
+  position: fixed;
+  inset: 0;
+  /* Fixed anchors to the layout viewport; with Safari's toolbar
+     retracted the visible page is taller than that, and the last strip
+     of the shelf shows below the overlay. Sized to the largest viewport
+     instead, so it covers the page in every toolbar state. */
+  height: 100lvh;
+  bottom: auto;
+  z-index: 50;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--veil);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 0 clamp(1.25rem, 4vw, 3.5rem)
+             calc(5rem + env(safe-area-inset-bottom, 0px));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery.show { opacity: 1; }
+body.gallery-on { overflow: hidden; }
+
+.gallery-bar {
+  position: sticky;
+  top: 0;
+  /* Above the cards. At z-index 1 it lost to the covers' own stacking:
+     the fade below the bar painted behind them, so a strip of artwork
+     and a stranded hairline rode along under the heading. */
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.75rem 0 1.1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hairline);
+  /* Solid behind the words, dissolving only in the last tenth, so a
+     cover scrolling up meets the page colour rather than the heading. */
+  background: linear-gradient(to bottom,
+    var(--sunk) 0%, var(--sunk) 90%, transparent);
+  color: var(--ember);
+}
+
+/* A little more fall-off under the bar, painted over whatever is
+   passing beneath it. */
+.gallery-bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 1.5rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(7, 5, 4, 0.92), rgba(7, 5, 4, 0));
+}
+
+.gallery-close {
+  background: none;
+  border: 0;
+  padding: 0.4rem;
+  color: var(--faded);
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+.gallery-close:hover { color: var(--parchment); }
+.gallery-close svg { display: block; width: 1.4rem; height: 1.4rem; }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+.gcard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--faded);
+  cursor: pointer;
+}
+
+.gcard img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.66);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+  mask-composite: intersect;
+}
+
+.gcard:hover img,
+.gcard:focus-visible img {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.75);
+}
+
+.gcard.no-art img { display: none; }
+
+.gcard-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--parchment);
+  transition: color 0.25s ease;
+}
+.gcard:hover .gcard-title { color: var(--ember); }
+
+.gcard-meta { font-size: 0.6875rem; color: var(--faded); }
+
+@media (max-width: 56rem) {
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); }
+}
+
+/* A phone held sideways: plenty of width, almost no height. At the
+   portrait sizes a single row of covers filled the whole screen, so
+   here the columns get narrower, the gaps and the sticky bar tighten,
+   and the captions come down — enough to see two rows at once and
+   understand the shelf as a shelf. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .gallery { padding-bottom: 2.5rem; }
+
+  .gallery-bar {
+    padding: 0.85rem 0 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .gallery-close svg { width: 1.15rem; height: 1.15rem; }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+    gap: clamp(0.7rem, 1.4vw, 1.15rem);
+  }
+
+  .gcard { gap: 0.3rem; }
+  .gcard img { box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6); }
+  .gcard-title { font-size: 0.8125rem; line-height: 1.25; }
+  .gcard-meta { font-size: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gcard img { transition: none; }
+  .gcard:hover img { transform: none; }
+}
+
+
+/* ████████████████████████████████████████████████████████████
+   THE LIGHT THEME
+   ────────────────────────────────────────────────────────────
+   Everything for light mode lives here, at the foot of the file,
+   and every rule is behind html[data-theme="light"]. Nothing above
+   this line knows the theme exists, so the dark room cannot be
+   changed by anything written below — and this whole block can be
+   deleted in one cut without leaving a mark.
+
+   To adjust light mode, work here. To adjust dark mode, work above.
+   ████████████████████████████████████████████████████████████ */
+
+html[data-theme="light"] {
+  /* ---- Ink and paper ---- */
+  --night:      #eceded;                    /* page base */
+  --parchment:  #14171a;                    /* main text — near black */
+  --faded:      #4a5054;                    /* secondary text */
+
+  /* Gold, taken down until it holds its own against white. The dark
+     theme's #d8a65f is a candle flame; on paper it needs to be the
+     metal instead. */
+  --ember:      #7a5a17;
+  --ember-soft: rgba(122, 90, 23, 0.55);
+  --ember-dim:  #6b4f14;
+  --ember-lit:  #4f3a0c;
+  --hairline:   rgba(20, 23, 26, 0.18);
+
+  /* ---- Surfaces ---- */
+  --sunk:       #e2e4e5;
+  --raised:     #fbfbfb;
+  --field:      rgba(255, 255, 255, 0.78);
+  --veil:       rgba(236, 237, 237, 0.96);
+  --shade:      rgba(236, 237, 237, 0.78);
+  --shade-deep: rgba(236, 237, 237, 0.9);
+  --halo:       rgba(236, 237, 237, 0.92);
+  --cast:       rgba(24, 28, 32, 0.16);
+  --cast-deep:  rgba(24, 28, 32, 0.24);
+  --seam-mid:   rgba(236, 237, 237, 0.5);
+
+  --scene-fade: 0.2;
+  --grain:      0.02;
+}
+
+/* ---- The backdrop ------------------------------------------
+   Its layers were built to darken; here they lighten, and the
+   photograph is washed until it is texture rather than a scene. */
+
+html[data-theme="light"] .atmosphere {
+  --scrim: linear-gradient(rgba(236, 237, 237, 0.86), rgba(236, 237, 237, 0.86));
+  filter: saturate(0.42) brightness(1.4) contrast(0.8);
+}
+
+html[data-theme="light"] .atmosphere::before {
+  background:
+    radial-gradient(38rem 26rem at 62% 18%, rgba(255, 255, 255, 0.55), transparent 70%),
+    radial-gradient(26rem 20rem at 82% 72%, rgba(255, 252, 245, 0.5), transparent 70%),
+    radial-gradient(120% 90% at 50% 45%,
+      rgba(236, 237, 237, 0.3), rgba(236, 237, 237, 0.7) 82%);
+}
+
+/* ---- Text over artwork -------------------------------------
+   A dark halo behind dark text is a smudge. These get a light one. */
+
+html[data-theme="light"] .feature-syn,
+html[data-theme="light"] .guide-def,
+html[data-theme="light"] .panel .lede,
+html[data-theme="light"] .panel .note,
+html[data-theme="light"] .panel .signature,
+html[data-theme="light"] .start-note,
+html[data-theme="light"] .start-title,
+html[data-theme="light"] .start-num,
+html[data-theme="light"] .start-time,
+html[data-theme="light"] .start-heading,
+html[data-theme="light"] .story-hook {
+  text-shadow: 0 1px 14px var(--halo), 0 0 24px var(--halo);
+}
+
+/* ---- The covers --------------------------------------------
+   Every cover is a photograph of a book on a dark table. Feathered
+   into a dark room they float; feathered into a grey page they read
+   as dark rectangles dissolving at the edges, which is worse.
+
+   So on paper they stop being feathered and start being objects:
+   square, lightly outlined, and casting a real shadow. The white
+   inner ring is what separates the photograph's own darkness from
+   the page, so the eye reads "a photograph of a book" rather than
+   "a dark hole". */
+
+/* ---- The covers --------------------------------------------
+   Measured: every cover's four corners sit between luma 0 and 31 —
+   the dark table and shadow each book was photographed on. That is
+   inside the file, so no border can remove it.
+
+   A white ring only frames the darkness and, in the grid, crops into
+   the titles. What actually dissolves it is the same trick the dark
+   theme uses, inverted: keep the feathered mask so the edges go
+   transparent, and put the page colour behind them. The artwork's
+   black then fades into paper instead of stopping against it. */
+
+html[data-theme="light"] .easel,
+html[data-theme="light"] .easel-set img,
+html[data-theme="light"] .gcard img,
+html[data-theme="light"] .story.open .synopsis img,
+html[data-theme="light"] .story.open .synopsis .minis img,
+html[data-theme="light"] .syn-head img {
+  /* The feathered mask is inherited from the dark theme and stays —
+     it is the only thing that makes an edge disappear rather than
+     stop. These lift the artwork and take the weight out of the
+     mid-tones so it sits on paper. */
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  filter: brightness(1.07) contrast(0.93) saturate(0.9);
+}
+
+/* In the grid a soft shadow under the book is all that separates it
+   from the page; the feathered edges do everything else. drop-shadow
+   rather than box-shadow, because it follows the mask instead of
+   drawing a rectangle around it. */
+html[data-theme="light"] .gcard img {
+  filter: brightness(1.08) contrast(0.92) saturate(0.88)
+          drop-shadow(0 10px 16px rgba(24, 28, 32, 0.16));
+}
+
+html[data-theme="light"] .gcard:hover img,
+html[data-theme="light"] .gcard:focus-visible img {
+  filter: brightness(1.12) contrast(0.94) saturate(0.95)
+          drop-shadow(0 18px 28px rgba(24, 28, 32, 0.24));
+  box-shadow: none;
+}
+
+/* ---- The Start-here scenes ---------------------------------
+   Same problem, no border to solve it with — these are meant to be
+   bleeding into the page. Washed out far enough to read as a stain
+   on paper rather than a window into somewhere else. */
+
+html[data-theme="light"] .start-scene {
+  /* multiply keeps only what is darker than the page, and these scenes
+     are dark almost everywhere — so at 14% they all but disappeared.
+     Drawn normally instead, brightened and desaturated until the
+     picture reads as a wash on paper rather than a night sky, and set
+     high enough to actually be seen. */
+  filter: saturate(0.62) brightness(1.72) contrast(0.78);
+  opacity: 0.5;
+}
+
+html[data-theme="light"] .start-row:hover .start-scene,
+html[data-theme="light"] .start-row:focus-visible .start-scene {
+  filter: saturate(0.72) brightness(1.62) contrast(0.84);
+  opacity: 0.62;
+}
+
+html[data-theme="light"] .start-row:hover,
+html[data-theme="light"] .start-row:focus-visible { filter: brightness(0.98); }
+
+/* ---- Odds and ends -----------------------------------------
+   The imprint stamp was held back so it would not out-shout the
+   wordmark in a dark room; on paper it needs its full strength.
+   The volume slider's track is drawn by the browser and needs a
+   colour it can actually show. */
+
+/* The gallery's blur smears the page beneath it into a grey haze —
+   fine over a black room, muddy over paper. On light it drops the
+   blur and simply covers the page. */
+html[data-theme="light"] .gallery {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--night);
+}
+
+html[data-theme="light"] .gallery-bar {
+  background: linear-gradient(to bottom,
+    var(--night) 0%, var(--night) 90%, transparent);
+}
+
+html[data-theme="light"] .gallery-bar::after {
+  background: linear-gradient(to bottom,
+    rgba(236, 237, 237, 0.92), transparent);
+}
+
+/* ---- The new masthead and About furniture ------------------
+   The header rule, the dividers around the stamp, the ornaments and
+   the guide icons are all drawn in gold or hairline, so they follow
+   the palette — but three things need their own answer on paper. */
+
+/* The volume pill is a gold gradient on a dark bar; on paper the
+   track needs a light bed under it or the thumb vanishes into it. */
+html[data-theme="light"] .vol::-webkit-slider-runnable-track,
+html[data-theme="light"] .vol::-moz-range-track {
+  background: linear-gradient(to right,
+    var(--ember-dim), rgba(122, 90, 23, 0.28));
+  border-color: rgba(122, 90, 23, 0.4);
+}
+html[data-theme="light"] .vol::-webkit-slider-thumb {
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(24, 28, 32, 0.35);
+}
+html[data-theme="light"] .vol::-moz-range-thumb { background: #ffffff; }
+
+/* The ornaments sit at 0.7 opacity against a dark room; on paper the
+   deeper gold is already quiet enough to be read at full strength. */
+html[data-theme="light"] .ornament { opacity: 0.85; }
+
+/* The header's closing rule and the stamp's dividers were tuned to
+   glow; here they only need to divide. */
+html[data-theme="light"] .masthead { border-bottom-color: rgba(122, 90, 23, 0.35); }
+html[data-theme="light"] .brand .roya {
+  border-left-color: var(--hairline);
+  border-right-color: var(--hairline);
+}
+
+html[data-theme="light"] .roya { opacity: 1; filter: none; }
+html[data-theme="light"] .vol { accent-color: var(--ember); opacity: 0.75; }
+html[data-theme="light"] .icon-btn,
+html[data-theme="light"] .sound,
+html[data-theme="light"] .theme,
+html[data-theme="light"] .gallery-close { color: var(--faded); }
+html[data-theme="light"] .icon-btn:hover,
+html[data-theme="light"] .sound:hover,
+html[data-theme="light"] .theme:hover,
+html[data-theme="light"] .gallery-close:hover { color: var(--ember); }
+html[data-theme="light"] .icon-label { opacity: 0.75; }
