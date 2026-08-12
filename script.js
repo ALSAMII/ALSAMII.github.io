@@ -70,6 +70,50 @@
      this is where a reader meets them: beside the cover, for the book
      actually in front of them. Built once, used on the stage and in
      the phone's inline synopsis both. */
+  /* The three readings, as a band of their own: a name, three squares
+     with the level filled in, and the words for that level. Kept apart
+     from the Door / Room / Key block above it, because it answers a
+     different question — not what the book is, but what it will do to
+     you. A book with no notes simply gets no band. */
+  function notesEl(s) {
+    var scales = (GLOSS.notes || []);
+    if (!s || !Array.isArray(s.notes) || !scales.length) return null;
+
+    var wrap = document.createElement("div");
+    wrap.className = "notes";
+
+    scales.forEach(function (scale, i) {
+      var level = s.notes[i];
+      if (!level) return;
+
+      var row = document.createElement("div");
+      row.className = "note-row";
+
+      var name = document.createElement("span");
+      name.className = "note-name caps";
+      name.textContent = scale.name;
+
+      var meter = document.createElement("span");
+      meter.className = "note-meter";
+      meter.setAttribute("role", "img");
+      meter.setAttribute("aria-label", scale.name + ": " + level + " of 3");
+      for (var k = 1; k <= 3; k++) {
+        var box = document.createElement("span");
+        box.className = "note-box" + (k <= level ? " is-lit" : "");
+        meter.append(box);
+      }
+
+      var word = document.createElement("span");
+      word.className = "note-word";
+      word.textContent = scale.levels[level - 1] || "";
+
+      row.append(name, meter, word);
+      wrap.append(row);
+    });
+
+    return wrap.childNodes.length ? wrap : null;
+  }
+
   function triadEl(s) {
     var wrap = document.createElement("div");
     wrap.className = "tri";
@@ -167,6 +211,8 @@
     if (!s || (!s.door && !s.room && !s.key)) { ftSub.hidden = true; return; }
     ftSub.hidden = false;
     ftSub.append(triadEl(s));
+    var n = notesEl(s);
+    if (n) ftSub.append(n);
   }
 
   function showFeature(s, num, pdf, cover) {
@@ -529,7 +575,14 @@
 
     var synText = document.createElement("span");
     synText.textContent = s.synopsis;
-    syn.append(synHead, synText);
+    syn.append(synHead);
+
+    /* Full width, below the cover — the band runs the whole measure
+       rather than sharing the column with the artwork. */
+    var notes = notesEl(s);
+    if (notes) syn.append(notes);
+
+    syn.append(synText);
 
     li.append(row, syn);
     li.dataset.slug = slugFor(s);
