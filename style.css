@@ -211,10 +211,15 @@ html[data-scene="1"] .atmosphere {
 /* Rules either side of the stamp, so the imprint reads as a mark set
    into the masthead rather than a logo parked beside the name. */
 .brand .roya {
-  padding: 0 clamp(0.9rem, 2.4vw, 1.75rem);
-  border-left: 1px solid var(--hairline);
-  border-right: 1px solid var(--hairline);
+  padding: 0.15rem clamp(0.85rem, 2.2vw, 1.6rem);
+  /* Gold, not hairline: at 13% alpha these were invisible, and the
+     stamp's own glow was sitting over them. */
+  border-left: 1px solid var(--ember-soft);
+  border-right: 1px solid var(--ember-soft);
+  border-radius: 0;
   box-sizing: content-box;
+  /* The rounded card the stamp used to sit in fought the rules. */
+  box-shadow: none;
 }
 
 .brand .name {
@@ -891,7 +896,10 @@ html[data-scene="1"] .atmosphere {
   /* Small phones: a step down so the three definitions still align on
      one line each. Below about 320px they wrap, and wrap together,
      which reads fine. */
-  .guide-def { font-size: 0.8125rem; }
+  /* An SE cannot hold these on one line beside the dividers, and a
+     clipped word is worse than a wrapped one — so the smallest screens
+     get to wrap, together, and stay aligned with each other. */
+  .guide-def { font-size: 0.75rem; white-space: normal; }
   .guide { gap: 1.1rem 0; }
   .guide-row { padding-inline: 0.2rem; }
 }
@@ -1069,14 +1077,14 @@ html[data-scene="1"] .atmosphere {
 /* A diamond on a rule, between the movements of the About panel. */
 .ornament {
   display: block;
-  margin: 1.6rem auto;
-  width: min(100%, 15rem);
+  margin: 1.5rem auto;
+  width: min(70%, 11rem);
   color: var(--ember);
-  opacity: 0.7;
+  opacity: 0.55;
   line-height: 0;
 }
 .ornament svg { display: block; width: 100%; height: auto; }
-.ornament--small { width: min(100%, 11rem); margin: 1.4rem auto 1.5rem; }
+.ornament--small { width: min(46%, 7rem); margin: 1.3rem auto 1.4rem; opacity: 0.45; }
 
 .guide {
   display: grid;
@@ -1122,8 +1130,9 @@ html[data-scene="1"] .atmosphere {
      The phrases were trimmed to suit: at this size a phone column holds
      about sixteen characters, and "The one thing that did it." needs
      twenty-six. */
-  font-size: clamp(0.9375rem, 1.4vw, 1.125rem);
+  font-size: clamp(0.8125rem, 1.3vw, 1.0625rem);
   line-height: 1.4;
+  white-space: nowrap;
   color: var(--parchment);
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
   text-wrap: pretty;
@@ -1467,21 +1476,20 @@ html[data-scene="1"] .atmosphere {
    Roya Publication stamp + footer subscribe block
    ============================================================ */
 
+/* The mark itself, cut out — no card, no glow, no rectangle. It is
+   gold on transparency, so it sits on either theme unchanged and the
+   rules either side of it have nothing to fight. */
 .roya {
   display: block;
-  height: clamp(5.25rem, 9vh, 7rem);
+  height: clamp(3.5rem, 7.5vh, 5.25rem);
   width: auto;
-  border-radius: 4px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.62),
-              0 0 26px rgba(216, 166, 95, 0.14);
-  /* Was fully saturated and out-shouted CHEW Z right beside it.
-     Eased back so it reads as provenance, not a badge. */
-  opacity: 0.88;
-  filter: saturate(0.82);
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 0.92;
+  transition: opacity 0.3s ease;
 }
 
-.brand:hover .roya { opacity: 1; filter: none; }
+.brand:hover .roya { opacity: 1; }
 
 .subscribe-block {
   display: flex;
@@ -2288,7 +2296,10 @@ html[data-theme="light"] .brand .roya {
   border-right-color: var(--hairline);
 }
 
-html[data-theme="light"] .roya { opacity: 1; filter: none; }
+/* The mark is a transparent cut-out now, so it needs no rescuing on
+   paper — only a touch more presence, since gold on white reads
+   lighter than gold on black. */
+html[data-theme="light"] .roya { opacity: 1; }
 html[data-theme="light"] .vol { accent-color: var(--ember); opacity: 0.75; }
 html[data-theme="light"] .icon-btn,
 html[data-theme="light"] .sound,
