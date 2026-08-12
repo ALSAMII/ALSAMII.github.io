@@ -72,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=124">
+<link rel="stylesheet" href="style.css?v=125">
 </head>
 
 <body>
@@ -82,13 +82,14 @@
 
   <!-- ══════════════════════════ HEADER ══════════════════════ -->
   <header class="masthead">
-    <div class="brand">
-      <div class="brand-name">
-        <p class="name">CHEW&thinsp;Z</p>
-        <p class="tag caps">Short Fiction</p>
-      </div>
-      <img class="roya" src="assets/roya.png" alt="Roya Publication — Fiction">
+    <div class="brand-name">
+      <p class="name">CHEW&thinsp;Z</p>
+      <p class="tag caps">Short Fiction</p>
     </div>
+
+    <!-- The stamp stands in the middle of the header now, between its
+         two rules, with the wordmark and the nav balanced either side. -->
+    <img class="roya" src="assets/roya.png" alt="Roya Publication — Fiction">
 
     <nav aria-label="Site" class="caps">
       <div class="nav-links">
@@ -114,7 +115,7 @@
                 <path d="M21 9.5l-5 5"/>
               </g>
             </svg>
-            <span class="visually-hidden">Toggle ambient sound</span>
+            <span class="icon-label caps">Sound</span>
         </button>
 
         <input class="vol" id="volSlider" type="range" min="0" max="100"
@@ -133,7 +134,7 @@
               <path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/>
             </g>
           </svg>
-          <span class="visually-hidden">Switch theme</span>
+          <span class="icon-label caps">Theme</span>
         </button>
       </div>
     </nav>
@@ -402,7 +403,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=124"></script>
-<script src="script.js?v=124"></script>
+<script src="stories.js?v=125"></script>
+<script src="script.js?v=125"></script>
 </body>
 </html>

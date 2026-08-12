@@ -191,29 +191,33 @@ html[data-scene="1"] .atmosphere {
    Header
    ============================================================ */
 
+/* Three columns: the wordmark, the stamp, the nav. The outer two are
+   equal (1fr each), so the stamp sits on the true centre of the page
+   rather than wherever the other two happen to leave it. */
 .masthead {
-  display: flex;
-  align-items: center;      /* the nav centres on the wordmark */
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;      /* the stamp centres on the wordmark */
   gap: clamp(0.75rem, 2vw, 2rem);
   padding: 1.5rem 0 1.35rem;
   /* A gold hairline closes the header off from the room below it. */
   border-bottom: 1px solid var(--ember-soft);
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.7rem, 1.8vw, 1.4rem);
+.brand-name {
+  justify-self: start;
   line-height: 1.3;
-  flex: 0 0 auto;
   min-width: 0;
 }
 
 /* Rules either side of the stamp, so the imprint reads as a mark set
    into the masthead rather than a logo parked beside the name. */
-.brand .roya {
-  padding: 0.15rem clamp(0.85rem, 2.2vw, 1.6rem);
+.masthead .roya {
+  justify-self: center;
+  /* The stamp is the centrepiece now, so it gets real height. */
+  height: clamp(4rem, 7.5vw, 6.25rem);
+  width: auto;
+  padding: 0.15rem clamp(1rem, 2.6vw, 2rem);
   /* Gold, not hairline: at 13% alpha these were invisible, and the
      stamp's own glow was sitting over them. */
   border-left: 1px solid var(--ember-soft);
@@ -224,29 +228,28 @@ html[data-scene="1"] .atmosphere {
   box-shadow: none;
 }
 
-.brand .name {
+.brand-name .name {
   font-family: var(--sans);
   font-weight: 300;
-  /* Eased from 1.625rem/0.32em. The wordmark and its tagline were the
-     widest thing in the masthead, and the nav needs that width to sit
-     on the same line as the brand rather than under it. */
-  font-size: clamp(1rem, 1.7vw, 1.25rem);
-  letter-spacing: 0.22em;
+  /* The wordmark carries the left side of the header on its own now,
+     so it takes the size back that the old one-line layout gave up. */
+  font-size: clamp(1.375rem, 2.6vw, 2.125rem);
+  letter-spacing: 0.3em;
   color: var(--ember);
   margin: 0;
   white-space: nowrap;
 }
 
-.brand .tag {
-  margin: 0.2rem 0 0;
-  font-size: 0.5rem;
-  letter-spacing: 0.2em;
+.brand-name .tag {
+  margin: 0.3rem 0 0;
+  font-size: 0.5625rem;
+  letter-spacing: 0.24em;
   color: var(--faded);
   white-space: nowrap;
 }
 /* The imprint line under the wordmark — quieter than the tagline,
    since the Roya badge beside it already says the same thing. */
-.brand .imprint {
+.brand-name .imprint {
   margin: 0.35rem 0 0;
   font-size: 0.5625rem;
   color: var(--faded);
@@ -260,6 +263,7 @@ html[data-scene="1"] .atmosphere {
    masthead centres its items, so the pair sits on the wordmark's
    middle rather than its baseline. */
 .masthead nav {
+  justify-self: end;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -281,7 +285,9 @@ html[data-scene="1"] .atmosphere {
    goes up — .caps at 0.28em was wide enough to wrap two of three. */
 .masthead nav a,
 .masthead nav .linklike {
-  font-size: clamp(0.625rem, 0.85vw, 0.75rem);
+  /* Down a step from 0.625–0.75rem: the stamp and the wordmark carry
+     the header now, and the links only need to be found, not seen. */
+  font-size: clamp(0.5625rem, 0.72vw, 0.6875rem);
   letter-spacing: 0.14em;
   white-space: nowrap;
   color: var(--ember-dim);
@@ -317,11 +323,16 @@ html[data-scene="1"] .atmosphere {
   border-bottom-color: var(--ember-soft);
 }
 
-/* Ambient-sound button */
+/* Ambient-sound button. Icon above, a small word below — the two marks
+   up here explain nothing on their own, so each says what it is. */
 .sound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
   background: none;
   border: 0;
-  padding: 0.4rem;
+  padding: 0.4rem 0.25rem 0.15rem;
   color: var(--faded);
   cursor: pointer;
   transition: color 0.25s ease;
@@ -336,15 +347,24 @@ html[data-scene="1"] .atmosphere {
 /* Light and dark, beside the sound. Same weight as the speaker — it is
    a setting, not a feature to be advertised. */
 .theme {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
   background: none;
   border: 0;
-  padding: 0.4rem;
+  padding: 0.4rem 0.25rem 0.15rem;
   color: var(--faded);
   cursor: pointer;
   transition: color 0.25s ease;
 }
 .theme:hover { color: var(--ember); }
 .theme svg { display: block; width: 1.2rem; height: 1.2rem; }
+
+/* The captions borrow .icon-label from the guide buttons, which the
+   light theme already knows. They brighten with their own icon. */
+.sound:hover .icon-label,
+.theme:hover .icon-label { opacity: 1; }
 
 /* ============================================================
    Main: sidebar + stage
@@ -1220,32 +1240,27 @@ html[data-scene="1"] .atmosphere {
      the slider drops to its own line. Forbidden from wrapping, the
      slider is the only item that can shrink (the links are nowrap
      text and stop at min-content), so it absorbs any shortfall. */
-  /* The masthead keeps its shape on a phone: brand to the left, the
-     two nav rows to the right, the pair centred on each other. Only
-     the sizes come down.
+  /* The masthead keeps its shape on a phone: wordmark left, stamp in
+     the middle, the two nav rows to the right. The equal side columns
+     of the desktop grid are given up here — on a narrow screen the nav
+     is wider than its half and rides over the stamp, so the outer two
+     take their natural width and the stamp centres in what is left. */
+  .masthead { gap: 0.6rem; grid-template-columns: auto 1fr auto; }
 
-     These used to carry justify-content and align-content written for
-     a row-direction nav. The nav is a column now, where those mean
-     "bottom" and "centre the columns" — which is what pulled the nav
-     into the middle of a landscape screen. */
-  .masthead { flex-wrap: nowrap; align-items: center; gap: 0.6rem; }
-
-  .brand { flex: 0 0 auto; gap: 0.5rem; }
-  .brand .roya { height: 2.75rem; padding: 0.1rem 0.5rem; }
-  .brand .name { font-size: 0.9375rem; letter-spacing: 0.18em; }
-  .brand .tag  { font-size: 0.4375rem; letter-spacing: 0.16em; }
+  .masthead .roya { height: 3.25rem; padding: 0.1rem 0.6rem; }
+  .brand-name .name { font-size: 1.125rem; letter-spacing: 0.22em; }
+  .brand-name .tag  { font-size: 0.4375rem; letter-spacing: 0.16em; }
 
   .masthead nav {
-    flex: 0 1 auto;
     min-width: 0;
-    margin-left: auto;      /* hold the nav at the right edge */
     gap: 0.5rem;
   }
   .masthead .nav-links { flex-wrap: nowrap; gap: 0.6rem; }
   .masthead .nav-controls { gap: 0.5rem; }
 
   .masthead nav .sound,
-  .masthead nav .theme { padding: 0.35rem 0.25rem; }
+  .masthead nav .theme { padding: 0.3rem 0.15rem 0.1rem; }
+  .masthead .nav-controls .vol { margin-top: 0.3rem; }
 
   .masthead nav a,
   .masthead nav .linklike { font-size: 0.5625rem; letter-spacing: 0.05em; }
@@ -1385,18 +1400,36 @@ html[data-scene="1"] .atmosphere {
   .atmosphere::before { animation: none; }
 }
 
-/* Below this the links cannot share the wordmark's line without going
-   under 8px, so the nav takes a line of its own — links left, controls
-   right, on one row. Placed after the phone block above, because it has
-   to win against it rather than interrupt it. */
-@media (max-width: 23.5rem) {
-  .masthead { flex-wrap: wrap; row-gap: 0.8rem; }
-  .brand { flex: 1 1 100%; }
-  .masthead nav {
-    flex: 1 1 100%;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+/* Below this all three cannot share one row: the stamp grew and the
+   links cannot go under 9px, so together they overrun a phone. The
+   header takes two rows instead — wordmark left and the stamp on the
+   true centre above, the nav on a line of its own beneath, links left
+   and controls right. Placed after the phone block above, because it
+   has to win against it. */
+@media (max-width: 28rem) {
+  .masthead {
+    grid-template-columns: 1fr auto 1fr;
+    row-gap: 0.9rem;
   }
+  .brand-name { grid-column: 1; grid-row: 1; }
+  .masthead .roya { grid-column: 2; grid-row: 1; }
+  .masthead nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: stretch;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* The row's minimum width was a few px over a small phone, which
+       clipped the THEME caption at the edge — everything here gives
+       those pixels back. */
+    gap: 0.4rem;
+  }
+  .masthead .nav-links { gap: 0.5rem; }
+  .masthead .nav-controls { gap: 0.35rem; }
+  .masthead .nav-controls .vol { width: 2.4rem; }
+  .masthead nav a,
+  .masthead nav .linklike { letter-spacing: 0.03em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1492,6 +1525,75 @@ html[data-scene="1"] .atmosphere {
    under DOOR / ROOM / KEY and any difference in size, tracking or
    weight reads as a mistake. One rule, so they cannot drift apart. */
 .note-name { white-space: nowrap; }
+
+/* The name is a <button> when it carries an explanation, and a button
+   arrives wearing the system's grey pill. Stripped back to bare text
+   here, so it sits in its column exactly like the plain spans do —
+   without this the pill and its hidden description both paint inline
+   and the whole band collapses on itself. */
+.note-name.has-about {
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-block;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  /* Full strength here, 0.85 on the label span below — an opacity on
+     the button itself would wash the bubble it carries. */
+  opacity: 1;
+}
+
+/* A dotted rule under the word — the only hint that it opens. */
+.note-name.has-about > span:first-child {
+  display: inline-block;
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 0.1rem;
+  opacity: 0.85;
+}
+
+/* What the dial measures. Hidden until asked: hover opens it on a
+   mouse, a tap (aria-expanded, set by script.js) opens it on touch.
+   It floats above the label so it never pushes the band around. */
+.note-about {
+  position: absolute;
+  bottom: calc(100% + 0.55rem);
+  left: 0;
+  z-index: 5;
+  width: max-content;
+  max-width: min(17rem, 72vw);
+  padding: 0.55rem 0.75rem;
+  background: var(--raised);
+  border: 1px solid var(--hairline);
+  box-shadow: 0 14px 30px var(--cast);
+  font-family: var(--serif);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--faded);
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.note-name.has-about[aria-expanded="true"] .note-about {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (hover: hover) {
+  .note-name.has-about:hover .note-about {
+    opacity: 1;
+    visibility: visible;
+  }
+}
 
 /* Three bars filling the width they are given, rather than three small
    squares with dead space beside them. */
@@ -1646,9 +1748,15 @@ html[data-scene="1"] .atmosphere {
 
 .masthead .nav-controls {
   display: flex;
-  align-items: center;
+  /* Top-aligned, not centred: the buttons are icon-over-caption columns
+     now, and centring would drop the pill below the icon row. */
+  align-items: flex-start;
   gap: clamp(0.7rem, 2vw, 1.35rem);
 }
+
+/* Sits the pill's middle on the icons' middle: the icons' centre is
+   0.4rem padding + half of 1.25rem; the pill is 1.3rem tall. */
+.masthead .nav-controls .vol { margin-top: 0.375rem; }
 
 /* ---- The volume pill ----
    Drawn rather than left to the system: a gold track with a pale thumb
@@ -2339,7 +2447,7 @@ html[data-theme="light"] .guide-icon--key    { background-image: url("assets/ico
 /* The header's closing rule and the stamp's dividers were tuned to
    glow; here they only need to divide. */
 html[data-theme="light"] .masthead { border-bottom-color: rgba(122, 90, 23, 0.35); }
-html[data-theme="light"] .brand .roya {
+html[data-theme="light"] .masthead .roya {
   border-left-color: var(--hairline);
   border-right-color: var(--hairline);
 }
