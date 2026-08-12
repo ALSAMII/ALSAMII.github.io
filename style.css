@@ -346,6 +346,18 @@ html[data-scene="1"] .atmosphere {
   border-bottom-color: var(--ember-soft);
 }
 
+/* About is what the stage shows when nothing else has been asked for,
+   so its link carries the same underline a chosen link would — the
+   reader can see which of the three they are looking at. The rule
+   reads the stage itself rather than a class kept in step by hand:
+   the underline leaves the moment a book or the notes take the stage,
+   and comes back when they let go. */
+body:has(#panel-about.is-active):not(:has(#feature.show))
+  .masthead nav a[data-stage="about"] {
+  color: var(--ember);
+  border-bottom-color: var(--ember-soft);
+}
+
 /* Ambient-sound button. Icon above, a small word below — the two marks
    up here explain nothing on their own, so each says what it is. */
 .sound {
