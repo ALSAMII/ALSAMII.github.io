@@ -1224,11 +1224,36 @@ html[data-scene="1"] .atmosphere {
   .masthead .nav-links { flex-wrap: nowrap; gap: 0.6rem; }
   .masthead .nav-controls { gap: 0.5rem; }
 
-  /* Portrait cannot hold the brand and the whole nav on one line — the
-     links alone would have to drop to about 7px. So the nav takes its
-     own line, and takes it as ONE line: links to the left, controls to
-     the right, still centred on each other rather than stacked. */
-  .masthead { flex-wrap: wrap; row-gap: 0.9rem; }
+  /* Portrait: the three links come up beside the wordmark, and only the
+     sound and theme controls drop beneath them. The brand gives up the
+     width for it — a smaller mark and tighter rules — because the links
+     are navigation and the controls are settings, and if one of the two
+     has to sit lower it should be the settings. */
+  .masthead { flex-wrap: nowrap; align-items: center; gap: 0.6rem; }
+  .brand { flex: 0 0 auto; gap: 0.5rem; }
+  .brand .roya { height: 2.75rem; padding: 0.1rem 0.5rem; }
+  .brand .name { font-size: 0.9375rem; letter-spacing: 0.18em; }
+  .brand .tag  { font-size: 0.4375rem; letter-spacing: 0.16em; }
+
+  .masthead nav {
+    flex: 1 1 auto;
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: center;
+    row-gap: 0.55rem;
+  }
+  /* The links keep the top line to themselves; the controls take
+     whatever is left, which is the line below. */
+  .masthead .nav-links { flex: 0 0 auto; }
+  .masthead .nav-controls { flex: 0 0 auto; }
+}
+
+/* Below this the links cannot share the wordmark's line without going
+   under 8px, so the nav takes a line of its own again — links left,
+   controls right, on one row. */
+@media (max-width: 23.5rem) {
+  .masthead { flex-wrap: wrap; row-gap: 0.8rem; }
   .brand { flex: 1 1 100%; }
   .masthead nav {
     flex: 1 1 100%;
