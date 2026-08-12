@@ -41,6 +41,18 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/* Decorative pieces overhang their boxes on purpose — the start
+   panel's artwork, the stage's pool of shade. Off the right edge of a
+   phone those overhangs silently widen the layout viewport, and then
+   every fixed overlay and centred thing sits left of centre. Clipped
+   here once, at the root: nothing on the site scrolls sideways, so
+   only the invisible overhang is lost. (hidden first, for browsers
+   that don't know clip.) */
+html {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
 body {
   margin: 0;
   min-height: 100svh;
@@ -1439,6 +1451,9 @@ html[data-scene="1"] .atmosphere {
      glow still change, so nothing is lost. */
   .masthead nav a:hover,
   .masthead nav .linklike:hover { transform: none; }
+
+  /* Same reasoning for the covers that open the lightbox. */
+  .cover-open:hover { transform: none; }
 }
 
 /* ============================================================
@@ -1708,6 +1723,45 @@ html[data-scene="1"] .atmosphere {
     linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
   mask-composite: intersect;
 }
+
+/* ---- Series headings ---------------------------------------
+   "A Triptych" / "An Open File" and the series title beneath it.
+   These had no rules of their own and fell back to the browser's
+   h2 — heavy, oversized, off the shelf's rhythm. Both lines are set
+   in gold: the heading is the one thing on the shelf that is not a
+   book, and the colour is what says so. */
+.trilogy {
+  border-bottom: 1px solid var(--hairline);
+  padding: 1.05rem 0.25rem;
+  cursor: pointer;
+}
+
+.t-label {
+  margin: 0 0 0.4rem;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.5625rem;
+  letter-spacing: 0.3em;
+  color: var(--ember);
+  opacity: 0.85;
+}
+
+/* The serif, in italic — the shelf's book titles are upright sans, so
+   a series reads as a different kind of thing at a glance. */
+.t-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.375rem;
+  line-height: 1.25;
+  letter-spacing: 0.03em;
+  color: var(--ember);
+  transition: color 0.25s ease;
+}
+
+.trilogy:hover .t-title,
+.trilogy:focus-visible .t-title { color: var(--ember-lit); }
 
 /* phones: tapping the heading unfolds covers + synopsis inline */
 .trilogy .synopsis { display: none; }
@@ -2065,6 +2119,97 @@ body.gallery-on .to-top { display: none; }
 
 .gallery.show { opacity: 1; }
 body.gallery-on { overflow: hidden; }
+
+/* ============================================================
+   The cover at full size
+   A click on any cover — beside a synopsis, on the stage's easel —
+   opens it alone on a veil, the same ground the gallery stands on.
+   script.js fills the image and swaps the hidden attribute and the
+   .show class; everything visual lives here.
+   ============================================================ */
+
+/* The cue. A cover that opens says so under the cursor: it leans
+   forward a little on hover and the pointer becomes a magnifier. */
+.cover-open {
+  cursor: zoom-in;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Only a real mouse gets the lean: on a tablet a tap can leave
+   :hover stuck, and the cover would stay swollen after the full-size
+   view closed. */
+@media (hover: hover) and (pointer: fine) {
+  .cover-open:hover {
+    transform: scale(1.05);
+    box-shadow: 0 22px 48px var(--cast-deep);
+  }
+}
+
+.cover-open:focus-visible {
+  outline: 1px solid var(--ember);
+  outline-offset: 3px;
+}
+
+/* Above the gallery (z-index 50), since a cover can be opened from
+   inside it. Flex, not grid: the caption takes only the line it
+   needs and the image gets the rest. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  height: 100lvh;
+  bottom: auto;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  background: var(--veil);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox[hidden] { display: none; }
+.lightbox.show { opacity: 1; }
+
+/* The cover itself. Capped against both axes so a tall cover on a
+   short window and a wide window alike hold it whole; clicking it
+   closes, and the cursor says so. */
+.lightbox-img {
+  max-width: min(88vw, 32rem);
+  max-height: 76vh;
+  width: auto;
+  height: auto;
+  box-shadow: 0 34px 80px var(--cast-deep);
+  cursor: zoom-out;
+}
+
+.lightbox-cap {
+  margin: 0;
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  color: var(--faded);
+  text-align: center;
+}
+
+/* Same hand as the gallery's close, in the same corner. */
+.lightbox-close {
+  position: absolute;
+  top: calc(1rem + env(safe-area-inset-top, 0px));
+  right: calc(1rem + env(safe-area-inset-right, 0px));
+  background: none;
+  border: 0;
+  padding: 0.4rem;
+  color: var(--faded);
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+.lightbox-close:hover { color: var(--parchment); }
+.lightbox-close:focus-visible { outline: 1px solid var(--ember); outline-offset: 3px; }
+.lightbox-close svg { display: block; width: 1.4rem; height: 1.4rem; }
 
 .gallery-bar {
   position: sticky;
@@ -2457,9 +2602,11 @@ html[data-theme="light"] .roya { opacity: 1; }
 html[data-theme="light"] .icon-btn,
 html[data-theme="light"] .sound,
 html[data-theme="light"] .theme,
+html[data-theme="light"] .lightbox-close,
 html[data-theme="light"] .gallery-close { color: var(--faded); }
 html[data-theme="light"] .icon-btn:hover,
 html[data-theme="light"] .sound:hover,
 html[data-theme="light"] .theme:hover,
+html[data-theme="light"] .lightbox-close:hover,
 html[data-theme="light"] .gallery-close:hover { color: var(--ember); }
 html[data-theme="light"] .icon-label { opacity: 0.75; }
