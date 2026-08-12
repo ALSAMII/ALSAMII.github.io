@@ -238,7 +238,7 @@ html[data-scene="1"] .atmosphere {
 .masthead .roya {
   justify-self: center;
   /* The centrepiece: sized to stand as tall as the left column. */
-  height: clamp(5rem, 10vw, 8.5rem);
+  height: clamp(6rem, 12.5vw, 11rem);
   width: auto;
   padding: 0.15rem clamp(1.25rem, 3vw, 2.5rem);
   /* Gold, not hairline: at 13% alpha these were invisible, and the
@@ -254,9 +254,9 @@ html[data-scene="1"] .atmosphere {
 .brand-name .name {
   font-family: var(--sans);
   font-weight: 300;
-  /* The wordmark carries the left side of the header on its own now,
-     so it takes the size back that the old one-line layout gave up. */
-  font-size: clamp(1.375rem, 2.6vw, 2.125rem);
+  /* The settings beneath are small now, so the wordmark takes the room
+     they gave back — it carries the left column. */
+  font-size: clamp(1.625rem, 3.2vw, 2.75rem);
   letter-spacing: 0.3em;
   color: var(--ember);
   margin: 0;
@@ -264,8 +264,8 @@ html[data-scene="1"] .atmosphere {
 }
 
 .brand-name .tag {
-  margin: 0.3rem 0 0;
-  font-size: 0.5625rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.6875rem;
   letter-spacing: 0.24em;
   color: var(--faded);
   white-space: nowrap;
@@ -280,21 +280,24 @@ html[data-scene="1"] .atmosphere {
 }
 
 /* The three places to go, stacked and left-aligned beside the stamp,
-   centred against it as a block. */
+   centred against it as a block. Set in from the stamp's right-hand
+   rule: the column has room to spare, and the links crowded the line
+   when they began at its edge. */
 .masthead nav {
   justify-self: start;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-left: clamp(1.25rem, 3.5vw, 3.25rem);
 }
 
 .masthead .nav-links {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* Generous and even — the space between the three is what makes the
-     stack read as deliberate rather than as a list that ran out. */
-  gap: clamp(0.9rem, 1.9vw, 1.5rem);
+  /* Tighter than before: the three read as one block rather than as
+     three separate things sharing a column. */
+  gap: clamp(0.5rem, 1vw, 0.85rem);
 }
 
 
@@ -314,7 +317,9 @@ html[data-scene="1"] .atmosphere {
 .masthead nav a {
   display: inline-block;
   text-decoration: none;
-  padding: 0.4rem 0.1rem;
+  /* Was 0.4rem top and bottom, which added 13px of its own between
+     each pair — the stack's spacing is set by the gap alone now. */
+  padding: 0.15rem 0.1rem;
   border-bottom: 1px solid transparent;
   transition: color 0.25s ease, border-color 0.25s ease,
               text-shadow 0.25s ease, transform 0.25s ease;
@@ -383,6 +388,14 @@ html[data-scene="1"] .atmosphere {
    light theme already knows. They brighten with their own icon. */
 .sound:hover .icon-label,
 .theme:hover .icon-label { opacity: 1; }
+
+/* Smaller than the guide's icons: these two sit under the wordmark and
+   must not compete with it. */
+.brand-col .sound svg { width: 0.95rem; height: 0.95rem; }
+.brand-col .theme svg { width: 0.95rem; height: 0.95rem; }
+.brand-col .icon-label { font-size: 0.4375rem; letter-spacing: 0.12em; }
+.brand-col .sound,
+.brand-col .theme { gap: 0.25rem; padding: 0.3rem 0.15rem 0.1rem; }
 
 /* ============================================================
    Main: sidebar + stage
@@ -1265,22 +1278,27 @@ html[data-scene="1"] .atmosphere {
      take their natural width and the stamp centres in what is left. */
   .masthead { gap: 0.5rem; grid-template-columns: 1fr auto 1fr; padding: 1.1rem 0 1rem; }
 
-  .masthead .roya { height: 4.25rem; padding: 0.1rem 0.5rem; }
-  .brand-col { gap: 0.6rem; }
-  .brand-name .name { font-size: 0.9375rem; letter-spacing: 0.14em; }
-  .brand-name .tag  { font-size: 0.4rem; letter-spacing: 0.12em; }
+  .masthead .roya { height: 5rem; padding: 0.1rem 0.45rem; }
+  .brand-col { gap: 0.55rem; }
+  .brand-name .name { font-size: 1.0625rem; letter-spacing: 0.13em; }
+  .brand-name .tag  { font-size: 0.4375rem; letter-spacing: 0.12em; }
 
-  .masthead nav { min-width: 0; }
-  .masthead .nav-links { gap: 0.55rem; }
-  .masthead .nav-controls { gap: 0.5rem; }
+  .masthead nav { min-width: 0; padding-left: 0.7rem; }
+  .masthead .nav-links { gap: 0.45rem; }
+  .masthead .nav-controls { gap: 0.4rem; }
 
   .masthead nav .sound,
   .masthead nav .theme { padding: 0.25rem 0.1rem 0.1rem; }
   .brand-col .sound,
   .brand-col .theme { padding: 0.2rem 0.1rem 0.1rem; }
-  .masthead .nav-controls .vol { margin-top: 0.4rem; width: 1.6rem; height: 0.7rem; }
-  .masthead .nav-controls .vol::-webkit-slider-runnable-track { height: 0.7rem; }
-  .masthead .nav-controls .vol::-moz-range-track { height: 0.7rem; }
+  .brand-col .sound svg,
+  .brand-col .theme svg { width: 0.8rem; height: 0.8rem; }
+  .brand-col .icon-label { font-size: 0.375rem; letter-spacing: 0.1em; }
+  .masthead .nav-controls .vol { margin-top: 0.3rem; width: 1.4rem; height: 0.6rem; }
+  .masthead .nav-controls .vol::-webkit-slider-runnable-track { height: 0.6rem; }
+  .masthead .nav-controls .vol::-moz-range-track { height: 0.6rem; }
+  .masthead .nav-controls .vol::-webkit-slider-thumb { width: 0.5rem; height: 0.5rem; }
+  .masthead .nav-controls .vol::-moz-range-thumb { width: 0.5rem; height: 0.5rem; }
 
   .masthead nav a,
   .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.06em; }
