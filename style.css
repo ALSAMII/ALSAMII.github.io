@@ -1456,7 +1456,7 @@ html[data-scene="1"] .atmosphere {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  margin: 0.25rem 0 1.15rem;
+  margin: 0.25rem 0 0.55rem;
 }
 
 .syn-head img { margin: 0; flex: 0 0 6rem; width: 6rem; }
@@ -1466,205 +1466,74 @@ html[data-scene="1"] .atmosphere {
 
 /* A rule under the block separates the facts from the story, so the
    two stop reading as one undifferentiated column of serif. */
-.syn-head { padding-bottom: 0.4rem; }
+.syn-head { padding-bottom: 0; }
 
 /* On a phone the band clears the cover and runs the full measure — the
    artwork and the Door / Room / Key sit in columns above it, this spans
    both. The synopsis needs no margin of its own; the band's lower rule
    is the separation. */
-.story.open .synopsis .notes { margin: 0.35rem 0 1.15rem; }
-
-/* Very narrow screens: stack rather than squeeze the block to a
-   column of two-word lines. */
-@media (max-width: 24rem) {
-  .syn-head { flex-direction: column; gap: 1rem; }
-  .syn-head img { flex: none; width: 9rem; }
-}
-
-/* On phones the synopsis expands inline instead; give the
-   little cover in it the same treatment. */
-.story.open .synopsis img {
-  display: block;
-  width: 9rem;
-  border: 0;
-  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.62);
-  margin: 0.25rem 0 1.25rem;
-  /* feather the edges into the scene, as on desktop */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
-    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
-    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
-  mask-composite: intersect;
-}
-
-/* Spacing for multi-paragraph notes and the signature line */
-.panel .note + .note { margin-top: 0.9rem; }
-.panel .guide + .note { margin-top: 0; }
-.panel .signature { color: var(--ember); margin: 1.5rem 0 0; }
-
-/* The lede and the first paragraph had nothing between them and ran
-   together as one block. */
-.panel .lede + .note,
-.panel .lede + .lede { margin-top: 1.25rem; }
-
-/* `roman` was used in index.html but never defined here, so those
-   paragraphs inherited the italic from .note. Upright, as intended —
-   italic is fine for a line, tiring for a paragraph. */
-.panel .note.roman {
-  font-style: normal;
-  font-weight: 500;
-}
-
-/* Centred text orphans badly — both edges move at once. Let the browser
-   even out the line lengths and avoid single-word last lines. */
-.panel .lede,
-.panel .note,
-.feature-syn,
-.panel .eyebrow { text-wrap: pretty; }
-
-
-/* ============================================================
-   Roya Publication stamp + footer subscribe block
-   ============================================================ */
-
-/* The mark itself, cut out — no card, no glow, no rectangle. It is
-   gold on transparency, so it sits on either theme unchanged and the
-   rules either side of it have nothing to fight. */
-.roya {
-  display: block;
-  height: clamp(3.5rem, 7.5vh, 5.25rem);
-  width: auto;
-  border-radius: 0;
-  box-shadow: none;
-  opacity: 0.92;
-  transition: opacity 0.3s ease;
-}
-
-.brand:hover .roya { opacity: 1; }
-
-.subscribe-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.3rem;
-  color: var(--faded);
-}
-
-.subscribe-block .soon {
-  font-size: 0.6875rem;   /* was 9px — below a comfortable reading floor */
-  color: var(--ember);
-  opacity: 0.9;
-}
-
-/* ============================================================
-   Triptychs: sidebar headings and the three-cover feature
-   ============================================================ */
-
-.trilogy {
-  border-bottom: 1px solid var(--hairline);
-  padding: 1.4rem 0.25rem 1rem;
-  cursor: default;
-}
-
-.trilogy .t-label {
-  margin: 0 0 0.35rem;
-  color: var(--ember);
-  font-size: 0.6875rem;   /* was 9px */
-}
-
-.trilogy .t-title {
-  margin: 0;
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.3125rem;
-  letter-spacing: 0.02em;
-  color: var(--parchment);
-  transition: color 0.25s ease;
-}
-
-.trilogy:hover .t-title,
-.trilogy:focus-within .t-title { color: var(--ember); }
-
-/* member books sit indented beneath their heading */
-.story.in-trilogy .story-row { padding-left: 1.25rem; }
-
-/* the trilogy's three covers, standing together */
-.easel-set { display: none; }
-
-.feature.trio { flex-wrap: wrap; justify-content: center; }
-.feature.trio #easelImg { display: none; }
-.feature.trio .easel-set {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.feature.trio .feature-text { flex: 1 1 21rem; max-width: 29rem; }
-/* ---- The three readings ------------------------------------
-   A band of its own, ruled off above and below, running the full
-   measure under the cover. Name, then three squares, then the words
-   — the squares let two books be compared at a glance, the words say
-   what the comparison is about. */
+.story.open .synopsis /* The band under the cover. One grid for the whole block rather than a
+   grid per row: the rows are display: contents, so all three share the
+   same three columns and the bars line up exactly down the page. */
 .notes {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  margin: 1rem 0 1.15rem;
-  padding: 0.95rem 0;
-  /* A rule above and a rule below: the band is a different kind of
-     statement from the Door / Room / Key above it and the synopsis
-     below, and it should be plainly fenced off from both. */
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 7.5rem) minmax(4rem, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin: 0.35rem 0 1.1rem;
+  padding: 0.85rem 0;
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
 }
 
-.note-row {
-  display: grid;
-  grid-template-columns: minmax(4.5rem, 8rem) auto 1fr;
-  align-items: center;
-  gap: 0.85rem;
-}
+.note-row { display: contents; }
 
 .note-name {
-  font-size: 0.5625rem;
-  letter-spacing: 0.18em;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
   color: var(--ember);
+  white-space: nowrap;
 }
 
-.note-meter { display: flex; gap: 0.3rem; }
+/* Three bars filling the width they are given, rather than three small
+   squares with dead space beside them. */
+.note-meter {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+}
 
 .note-box {
-  display: block;
-  width: 0.85rem;
-  height: 0.85rem;
+  height: 0.7rem;
   border: 1px solid var(--ember-soft);
   border-radius: 1px;
+  background: none;
 }
-.note-box.is-lit { background: var(--ember-dim); border-color: var(--ember-dim); }
 
-/* A rule between the meter and the words, as in the guide above. */
+.note-box.is-lit {
+  background: var(--ember-dim);
+  border-color: var(--ember-dim);
+}
+
 .note-word {
-  padding-left: 0.85rem;
+  padding-left: 1rem;
   border-left: 1px solid var(--hairline);
-  /* The sans, not the serif. These read as a reading on an instrument
-     rather than as prose, and the serif made them look like a fourth
-     line of the Door / Room / Key block above. */
   font-family: var(--sans);
   font-weight: 300;
-  font-size: 0.8125rem;
-  letter-spacing: 0.04em;
-  line-height: 1.35;
+  font-size: 0.9375rem;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
   color: var(--faded);
-  text-wrap: pretty;
+  white-space: nowrap;
 }
 
 @media (max-width: 34rem) {
-  .note-row { grid-template-columns: minmax(4.25rem, 6.5rem) auto 1fr; gap: 0.7rem; }
-  .note-name { font-size: 0.5rem; letter-spacing: 0.12em; }
-  .note-box { width: 0.7rem; height: 0.7rem; }
-  .note-word { font-size: 0.8125rem; padding-left: 0.6rem; }
+  .notes { grid-template-columns: minmax(4rem, 6rem) minmax(3rem, 1fr) auto;
+           gap: 0.45rem 0.7rem; }
+  .note-name { font-size: 0.5625rem; letter-spacing: 0.12em; }
+  .note-meter { gap: 0.35rem; }
+  .note-box { height: 0.65rem; }
+  .note-word { font-size: 0.8125rem; padding-left: 0.7rem; }
 }
 
 /* ---- Door / Room / Key ------------------------------------
