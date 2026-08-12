@@ -336,6 +336,13 @@
     ' aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7' +
     '-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
 
+  var SHARE_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+    ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"' +
+    ' aria-hidden="true"><circle cx="18" cy="5" r="3"/>' +
+    '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>' +
+    '<path d="M8.6 10.5l6.8-4"/><path d="M8.6 13.5l6.8 4"/></svg>';
+
   /* The two icons are not self-explanatory — one opens the PDF, one
      unfolds the synopsis — so each carries a word underneath. */
   function iconLabel(text) {
@@ -576,6 +583,58 @@
 
     row.append(numEl, main, pdfBtn);
 
+    /* Share: hands over a link that opens straight onto this book.
+       The address the site writes when a book is opened is the same
+       one used here, so what a reader sends is what they were looking
+       at. Where the device has a share sheet it gets used; everywhere
+       else the link goes to the clipboard and the label says so. */
+    var shareBtn = document.createElement("button");
+    shareBtn.className = "icon-btn share";
+    shareBtn.type = "button";
+    shareBtn.title = "Share this book";
+    shareBtn.setAttribute("aria-label", s.title + " — copy a link to this book");
+    shareBtn.innerHTML = SHARE_ICON;
+    var shareLabel = iconLabel("Share");
+    shareBtn.append(shareLabel);
+
+    shareBtn.addEventListener("click", function () {
+      var url = location.origin + location.pathname + "#" + slugFor(s);
+
+      /* A word in place of the label, then back — no alert to dismiss
+         and nothing that moves the row. */
+      var say = function (word) {
+        shareLabel.textContent = word;
+        shareBtn.classList.add("shared");
+        clearTimeout(shareBtn._t);
+        shareBtn._t = setTimeout(function () {
+          shareLabel.textContent = "Share";
+          shareBtn.classList.remove("shared");
+        }, 1600);
+      };
+
+      if (navigator.share) {
+        navigator.share({ title: s.title + " — Chew Z", url: url })
+          .catch(function () { /* dismissed: nothing to report */ });
+        return;
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+          .then(function () { say("Copied"); })
+          .catch(function () { say("Copy failed"); });
+      } else {
+        /* Older Safari, and any page not served over https. */
+        var tmp = document.createElement("input");
+        tmp.value = url;
+        document.body.append(tmp);
+        tmp.select();
+        try { document.execCommand("copy"); say("Copied"); }
+        catch (e) { say("Copy failed"); }
+        tmp.remove();
+      }
+    });
+
+
     /* The eye only earns its place on touch, where there's no hover
        to reveal a synopsis. On a mouse or keyboard it would be a
        control that does nothing, so it isn't rendered at all. */
@@ -591,6 +650,10 @@
       eye.append(iconLabel("Synopsis"));
       row.append(eye);
     }
+
+    /* Last in the row: PDF, then the synopsis where there is one,
+       then share. */
+    row.append(shareBtn);
 
     var syn = document.createElement("div");
     syn.className = "synopsis";
