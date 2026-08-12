@@ -72,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=111">
+<link rel="stylesheet" href="style.css?v=112">
 </head>
 
 <body>
@@ -98,42 +98,51 @@
       </div>
 
       <div class="nav-controls">
-      <button class="sound" id="soundToggle" aria-pressed="false"
-              title="Ambient sound">
-        <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-             aria-hidden="true">
-          <path d="M11 5 6 9H2v6h4l5 4V5z"/>
-          <g id="waveOn">
-            <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
-            <path d="M18.5 5.5a9.4 9.4 0 0 1 0 13"/>
-          </g>
-          <g id="waveOff" style="display:none">
-            <path d="M16 9.5l5 5"/>
-            <path d="M21 9.5l-5 5"/>
-          </g>
-        </svg>
-        <span class="visually-hidden">Toggle ambient sound</span>
-      </button>
 
-      <input class="vol" id="volSlider" type="range" min="0" max="100"
-             value="30" aria-label="Music volume">
+        <div class="ctrl">
+          <span class="vol-wrap">
+            <span class="vol-wedge" aria-hidden="true"></span>
+            <input class="vol" id="volSlider" type="range" min="0" max="100"
+                   value="30" aria-label="Music volume">
+          </span>
+          <button class="sound" id="soundToggle" aria-pressed="false"
+                  title="Ambient sound">
+            <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M11 5 6 9H2v6h4l5 4V5z"/>
+              <g id="waveOn">
+                <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+                <path d="M18.5 5.5a9.4 9.4 0 0 1 0 13"/>
+              </g>
+              <g id="waveOff" style="display:none">
+                <path d="M16 9.5l5 5"/>
+                <path d="M21 9.5l-5 5"/>
+              </g>
+            </svg>
+            <span class="visually-hidden">Toggle ambient sound</span>
+          </button>
+        </div>
 
-      <button class="theme" id="themeToggle" type="button"
-              aria-pressed="false" title="Switch to the light theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-             aria-hidden="true">
-          <g id="themeMoon">
-            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
-          </g>
-          <g id="themeSun" style="display:none">
-            <circle cx="12" cy="12" r="4.2"/>
-            <path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/>
-          </g>
-        </svg>
-        <span class="visually-hidden">Switch theme</span>
-      </button>
+        <div class="ctrl">
+          <button class="theme" id="themeToggle" type="button"
+                  aria-pressed="false" title="Switch to the light theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <g id="themeMoon">
+                <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+              </g>
+              <g id="themeSun" style="display:none">
+                <circle cx="12" cy="12" r="4.2"/>
+                <path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/>
+              </g>
+            </svg>
+            <span class="visually-hidden">Switch theme</span>
+          </button>
+          <span class="ctrl-label caps" id="themeLabel">Dark</span>
+        </div>
+
       </div>
     </nav>
   </header>
@@ -387,7 +396,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=111"></script>
-<script src="script.js?v=111"></script>
+<script src="stories.js?v=112"></script>
+<script src="script.js?v=112"></script>
 </body>
 </html>

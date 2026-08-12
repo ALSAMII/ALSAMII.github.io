@@ -1113,7 +1113,8 @@
   var themeBtn  = document.getElementById("themeToggle");
   var themeMoon = document.getElementById("themeMoon");
   var themeSun  = document.getElementById("themeSun");
-  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var themeMeta  = document.querySelector('meta[name="theme-color"]');
+  var themeLabel = document.getElementById("themeLabel");
 
   if (themeBtn) {
     var paintTheme = function () {
@@ -1123,6 +1124,9 @@
       themeBtn.setAttribute("aria-pressed", light ? "true" : "false");
       themeBtn.title = light ? "Switch to the dark theme"
                              : "Switch to the light theme";
+      /* The word under the mark names the theme in use, so the moon is
+         not something the reader has to interpret. */
+      if (themeLabel) themeLabel.textContent = light ? "Light" : "Dark";
       if (themeMeta) themeMeta.setAttribute("content", light ? "#eceded" : "#0b0907");
     };
 
@@ -1179,8 +1183,13 @@
     return x * x;
   }
 
+  var volWrap = vol ? vol.closest(".vol-wrap") : null;
+
   function applyVolume() {
     audio.volume = levelFor(vol.value);
+    /* The wedge is drawn twice — dim underneath, lit on top — and this
+       is the line that clips the lit copy to the level. */
+    if (volWrap) volWrap.style.setProperty("--vol", vol.value + "%");
   }
   applyVolume();
 
