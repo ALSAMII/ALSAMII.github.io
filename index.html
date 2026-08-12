@@ -72,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=129">
+<link rel="stylesheet" href="style.css?v=130">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -134,21 +134,13 @@
 
   <!-- ══════════════════════════ HEADER ══════════════════════ -->
   <header class="masthead">
-    <div class="brand-name">
-      <p class="name">CHEW&thinsp;Z</p>
-      <p class="tag caps">Short Fiction</p>
-    </div>
-
-    <!-- The stamp stands in the middle of the header now, between its
-         two rules, with the wordmark and the nav balanced either side. -->
-    <img class="roya" src="assets/roya.png" alt="Roya Publication — Fiction">
-
-    <nav aria-label="Site" class="caps">
-      <div class="nav-links">
-        <a href="#" data-stage="notes">Author's Notes</a>
-        <a href="#" data-stage="about">About</a>
-        <button class="linklike" id="galleryOpen" type="button">All Covers</button>
-
+    <!-- The left column: the wordmark, and the two settings beneath it.
+         The controls sit here rather than in the nav because they are
+         not places to go — they are how the room is set. -->
+    <div class="brand-col">
+      <div class="brand-name">
+        <p class="name">CHEW&thinsp;Z</p>
+        <p class="tag caps">Short Fiction</p>
       </div>
 
       <div class="nav-controls">
@@ -188,6 +180,18 @@
           </svg>
           <span class="icon-label caps">Theme</span>
         </button>
+      </div>
+    </div>
+
+    <!-- The stamp stands in the middle of the header, between its
+         two rules, with the wordmark and the nav balanced either side. -->
+    <img class="roya" src="assets/roya.png" alt="Roya Publication — Fiction">
+
+    <nav aria-label="Site" class="caps">
+      <div class="nav-links">
+        <a href="#" data-stage="notes">Author's Notes</a>
+        <a href="#" data-stage="about">About</a>
+        <button class="linklike" id="galleryOpen" type="button">All Covers</button>
       </div>
     </nav>
   </header>
@@ -455,7 +459,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=129"></script>
-<script src="script.js?v=129"></script>
+<script src="stories.js?v=130"></script>
+<script src="script.js?v=130"></script>
 </body>
 </html>
