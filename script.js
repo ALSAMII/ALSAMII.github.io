@@ -13,7 +13,7 @@
       the synopsis inline instead.)
    3. Hovering About or Author's Notes in the nav reveals those
       texts; moving away brings the theme text back.
-   4. The speaker button plays assets/ambient.mp3, if present.
+   4. The speaker button plays assets/ambient-tearoom.mp3, if present.
 
    Door, Room and Key read widest to narrowest. Only Door is a menu:
    at nine rooms and thirty-five keys the other two had stopped being
@@ -1139,12 +1139,16 @@
 
   /* ---- 5. Ambient sound ------------------------------------ */
   /* Each scene has its own track, keyed by the data-scene the head
-     script set. A scene with no entry here simply plays nothing.
-     The <audio> tag carries loop, so a track repeats until muted. */
+     script set. A scene with no entry here simply plays nothing, and
+     the controls retire rather than sit there dead. The <audio> tag
+     carries loop, so a track repeats until muted.
+
+     ambient-tearoom is the only track now. The one that used to play
+     here came off YouTube and had no licence behind it, which is not
+     something to host on a public site. */
 
   var TRACK_FOR_SCENE = {
-    "0": "assets/ambient.mp3",              /* the forest path */
-    "1": "assets/ambient-tearoom.mp3?v=3"   /* the tea room in the rain */
+    "0": "assets/ambient-tearoom.mp3?v=4"
   };
 
   var audio  = document.getElementById("ambient");
