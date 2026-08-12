@@ -1247,19 +1247,6 @@ html[data-scene="1"] .atmosphere {
      whatever is left, which is the line below. */
   .masthead .nav-links { flex: 0 0 auto; }
   .masthead .nav-controls { flex: 0 0 auto; }
-}
-
-/* Below this the links cannot share the wordmark's line without going
-   under 8px, so the nav takes a line of its own again — links left,
-   controls right, on one row. */
-@media (max-width: 23.5rem) {
-  .masthead { flex-wrap: wrap; row-gap: 0.8rem; }
-  .brand { flex: 1 1 100%; }
-  .masthead nav {
-    flex: 1 1 100%;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
 
   /* Six items on one line now that the theme button is here. The
      controls give up their padding first — the links are already as
@@ -1403,6 +1390,20 @@ html[data-scene="1"] .atmosphere {
   }
 
   .atmosphere::before { animation: none; }
+}
+
+/* Below this the links cannot share the wordmark's line without going
+   under 8px, so the nav takes a line of its own — links left, controls
+   right, on one row. Placed after the phone block above, because it has
+   to win against it rather than interrupt it. */
+@media (max-width: 23.5rem) {
+  .masthead { flex-wrap: wrap; row-gap: 0.8rem; }
+  .brand { flex: 1 1 100%; }
+  .masthead nav {
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
