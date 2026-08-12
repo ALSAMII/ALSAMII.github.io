@@ -1000,9 +1000,12 @@ html[data-scene="1"] .atmosphere {
   transform: scale(1.03);
 }
 
-.start-row--whirl .start-scene { object-position: 50% 44%; }
-.start-row--water .start-scene { object-position: 62% 40%; }
-.start-row--song  .start-scene { object-position: 50% 54%; }
+/* Where each scene is cropped, so the subject survives at any card
+   height: the dervish centred, the can and its congregation held a
+   little low, the winged figure centred on her own light. */
+.start-row--whirl  .start-scene { object-position: 50% 44%; }
+.start-row--alarm  .start-scene { object-position: 50% 56%; }
+.start-row--weight .start-scene { object-position: 52% 46%; }
 
 /* ---- Text ---- */
 .start-body { position: relative; z-index: 1; min-width: 0; }
