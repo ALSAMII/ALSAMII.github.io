@@ -258,9 +258,9 @@ html[data-scene="1"] .atmosphere {
 .brand-name .name {
   font-family: var(--sans);
   font-weight: 300;
-  /* The settings beneath are small now, so the wordmark takes the room
-     they gave back — it carries the left column. */
-  font-size: clamp(1.625rem, 3.2vw, 2.75rem);
+  /* The volume bar set the left column's width; with it gone the
+     wordmark can have that room. */
+  font-size: clamp(1.875rem, 3.9vw, 3.375rem);
   letter-spacing: 0.3em;
   color: var(--ember);
   margin: 0;
@@ -268,9 +268,9 @@ html[data-scene="1"] .atmosphere {
 }
 
 .brand-name .tag {
-  margin: 0.35rem 0 0;
-  font-size: 0.6875rem;
-  letter-spacing: 0.24em;
+  margin: 0.4rem 0 0;
+  font-size: 0.8125rem;
+  letter-spacing: 0.26em;
   color: var(--faded);
   white-space: nowrap;
 }
@@ -405,13 +405,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .sound:hover .icon-label,
 .theme:hover .icon-label { opacity: 1; }
 
-/* Smaller than the guide's icons: these two sit under the wordmark and
-   must not compete with it. */
-.brand-col .sound svg { width: 0.95rem; height: 0.95rem; }
-.brand-col .theme svg { width: 0.95rem; height: 0.95rem; }
-.brand-col .icon-label { font-size: 0.4375rem; letter-spacing: 0.12em; }
+/* Larger than the guide's icons: with the volume bar gone these two
+   stand alone under the wordmark, side by side, and want the presence
+   the bar used to take up between them.
+
+   Both boxes are the same size to the pixel. They were 1.5 and 1.45rem
+   before, which set the two captions on different lines and left the
+   crescent sitting a touch high beside the speaker. */
+.brand-col .sound svg,
+.brand-col .theme svg {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+.brand-col .icon-label { font-size: 0.5625rem; letter-spacing: 0.14em; }
 .brand-col .sound,
-.brand-col .theme { gap: 0.25rem; padding: 0.3rem 0.15rem 0.1rem; }
+.brand-col .theme {
+  gap: 0.4rem;
+  padding: 0.3rem 0.2rem 0.1rem;
+  /* The two glyphs don't fill their 24-unit box the same way — the
+     speaker is wide and short, the crescent tall and narrow. Sizing
+     the boxes alike is what lines the captions up; centring inside
+     them is what lines the drawings up. */
+  justify-content: center;
+}
 
 /* ============================================================
    Main: sidebar + stage
@@ -1295,28 +1311,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .masthead { gap: 0.5rem; grid-template-columns: 1fr auto 1fr; padding: 1.1rem 0 1rem; }
 
   .masthead .roya { height: 5rem; padding: 0.1rem 0.45rem; }
-  .brand-col { gap: 0.55rem; }
-  .brand-name .name { font-size: 1.0625rem; letter-spacing: 0.13em; }
-  .brand-name .tag  { font-size: 0.4375rem; letter-spacing: 0.12em; }
+  .brand-col { gap: 0.5rem; }
+  .brand-name .name { font-size: 1.25rem; letter-spacing: 0.14em; }
+  .brand-name .tag  { font-size: 0.5rem; letter-spacing: 0.14em; }
 
   .masthead nav { min-width: 0; padding-left: 0.7rem; }
   .masthead .nav-links { gap: 0.45rem; }
-  .masthead .nav-controls { gap: 0.4rem; }
+  .masthead .nav-controls { gap: 1rem; }
 
   .masthead nav .sound,
   .masthead nav .theme { padding: 0.25rem 0.1rem 0.1rem; }
   .brand-col .sound,
-  .brand-col .theme { padding: 0.2rem 0.1rem 0.1rem; }
+  .brand-col .theme { padding: 0.2rem 0.15rem 0.1rem; }
   .brand-col .sound svg,
-  .brand-col .theme svg { width: 0.8rem; height: 0.8rem; }
-  .brand-col .icon-label { font-size: 0.375rem; letter-spacing: 0.1em; }
-  /* input.vol, not .vol: the masthead's own volume rules sit further
-     down the sheet, so at equal specificity they would win here. */
-  .masthead .nav-controls input.vol { margin-top: 0.1rem; width: 3.5rem; height: 1rem; }
-  .masthead .nav-controls input.vol::-webkit-slider-runnable-track { height: 1rem; }
-  .masthead .nav-controls input.vol::-moz-range-track { height: 1rem; }
-  .masthead .nav-controls input.vol::-webkit-slider-thumb { width: 0.75rem; height: 0.75rem; margin-top: 0.125rem; }
-  .masthead .nav-controls input.vol::-moz-range-thumb { width: 0.75rem; height: 0.75rem; }
+  .brand-col .theme svg { width: 1.5rem; height: 1.5rem; }
+  .brand-col .icon-label { font-size: 0.5rem; letter-spacing: 0.1em; }
 
   .masthead nav a,
   .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.06em; }
@@ -1510,8 +1519,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .masthead .roya { height: 3.4rem; padding: 0.1rem 0.7rem; }
 
   .brand-col { gap: 0.4rem; }
-  .brand-name .name { font-size: 1rem; letter-spacing: 0.16em; }
-  .brand-name .tag  { font-size: 0.4375rem; }
+  .brand-name .name { font-size: 1.25rem; letter-spacing: 0.16em; }
+  .brand-name .tag  { font-size: 0.5rem; }
 
   /* The three links go back on one line: stacked, they set the height
      of a header that has none to spare. */
@@ -1521,15 +1530,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.1em; }
 
   .brand-col .sound svg,
-  .brand-col .theme svg { width: 0.85rem; height: 0.85rem; }
-  .brand-col .icon-label { font-size: 0.375rem; }
-  .masthead .nav-controls input.vol { width: 3rem; height: 0.9rem; margin-top: 0.1rem; }
-  .masthead .nav-controls input.vol::-webkit-slider-runnable-track { height: 0.9rem; }
-  .masthead .nav-controls input.vol::-moz-range-track { height: 0.9rem; }
-  .masthead .nav-controls input.vol::-webkit-slider-thumb {
-    width: 0.7rem; height: 0.7rem; margin-top: 0.1rem;
-  }
-  .masthead .nav-controls input.vol::-moz-range-thumb { width: 0.7rem; height: 0.7rem; }
+  .brand-col .theme svg { width: 1.4rem; height: 1.4rem; }
+  .brand-col .icon-label { font-size: 0.5rem; }
+  .masthead .nav-controls { gap: 1.1rem; }
 
   /* The stage's opening text is set for a tall window; sideways it
      pushed the first story off the bottom entirely. */
@@ -1894,102 +1897,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .masthead .nav-controls {
   display: flex;
-  /* The pill has no caption, so centring it on the icons' captioned
-     height would sit it low. Aligned to the icon row instead, with
-     the offset below doing the fine work. */
+  /* The two captions are the same height, so the pair aligns cleanly
+     at the top; nothing sits between them to complicate it. */
   align-items: flex-start;
   justify-content: center;
-  gap: clamp(0.85rem, 2.2vw, 1.5rem);
-}
-
-/* Long enough to actually set a level rather than just nudge one, and
-   built so the thumb rides the centre of the track: the track carries
-   its border inside its own height (border-box), so the thumb's offset
-   is a clean half of the difference between the two. */
-.masthead .nav-controls .vol {
-  width: clamp(4.5rem, 8.5vw, 7rem);
-  height: 1.15rem;
-  /* Sits the pill's middle on the icons' middle: the icon button pads
-     0.3rem above a 0.95rem glyph, so its centre is 0.775rem down. */
-  margin-top: 0.2rem;
-  flex: 0 0 auto;
-}
-.masthead .nav-controls .vol::-webkit-slider-runnable-track {
-  height: 1.15rem;
-  box-sizing: border-box;
-}
-.masthead .nav-controls .vol::-moz-range-track {
-  height: 1.15rem;
-  box-sizing: border-box;
-}
-.masthead .nav-controls .vol::-webkit-slider-thumb {
-  width: 0.85rem;
-  height: 0.85rem;
-  /* (1.15 − 0.85) ÷ 2 — dead centre of the track. */
-  margin-top: 0.15rem;
-}
-.masthead .nav-controls .vol::-moz-range-thumb { width: 0.85rem; height: 0.85rem; }
-
-/* ---- The volume pill ----
-   Drawn rather than left to the system: a gold track with a pale thumb
-   riding it, which is what belongs beside two line icons. The native
-   control underneath still does all the work. */
-.vol {
-  -webkit-appearance: none;
-  appearance: none;
-  width: clamp(2.75rem, 5vw, 3.75rem);
-  height: 1.3rem;
-  margin: 0;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  transition: opacity 0.25s ease;
-}
-
-.vol::-webkit-slider-runnable-track {
-  height: 1.3rem;
-  border-radius: 999px;
-  background: linear-gradient(to right, var(--ember-dim), var(--ember-soft));
-  border: 1px solid var(--ember-soft);
-}
-.vol::-moz-range-track {
-  height: 1.3rem;
-  border-radius: 999px;
-  background: linear-gradient(to right, var(--ember-dim), var(--ember-soft));
-  border: 1px solid var(--ember-soft);
-}
-
-.vol::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 1.05rem;
-  height: 1.05rem;
-  margin-top: 0.125rem;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-}
-.vol::-moz-range-thumb {
-  width: 1.05rem;
-  height: 1.05rem;
-  border-radius: 50%;
-  background: var(--parchment);
-  border: 0;
-}
-
-.vol:focus-visible { outline: 1px solid var(--ember); outline-offset: 3px; }
-
-@media (max-width: 56rem) {
-  /* Narrower on a phone; the thumb still has room to be dragged. */
-  .vol { width: 2.75rem; }
-}
-
-/* Very narrow phones (an SE, or a phone with large system text) can't
-   hold three links plus both sound controls. The slider goes and the
-   mute toggle stays, since muting is the one people actually want. */
-@media (max-width: 23rem) {
-  .vol { display: none; }
+  gap: clamp(1.25rem, 3vw, 2.25rem);
 }
 
 /* Mid-width windows (a 13" laptop lands here): the cover used to be
@@ -2653,17 +2565,6 @@ html[data-theme="light"] .gallery-bar::after {
 
 /* The pill is a gold gradient on a dark bar; on paper the track needs
    a lighter bed or the pale thumb vanishes into it. */
-html[data-theme="light"] .vol::-webkit-slider-runnable-track,
-html[data-theme="light"] .vol::-moz-range-track {
-  background: linear-gradient(to right,
-    var(--ember-dim), rgba(122, 90, 23, 0.28));
-  border-color: rgba(122, 90, 23, 0.4);
-}
-html[data-theme="light"] .vol::-webkit-slider-thumb {
-  background: #ffffff;
-  box-shadow: 0 1px 4px rgba(24, 28, 32, 0.35);
-}
-html[data-theme="light"] .vol::-moz-range-thumb { background: #ffffff; }
 
 /* The ornaments sit at 0.7 opacity against a dark room; on paper the
    deeper gold is already quiet enough to be read at full strength. */

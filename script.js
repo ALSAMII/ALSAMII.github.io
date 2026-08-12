@@ -1307,7 +1307,6 @@
 
   var audio  = document.getElementById("ambient");
   var toggle = document.getElementById("soundToggle");
-  var vol    = document.getElementById("volSlider");
 
   var scene = document.documentElement.getAttribute("data-scene") || "0";
   var track = TRACK_FOR_SCENE[scene] || "";
@@ -1316,27 +1315,22 @@
     audio.src = track;
   } else {
     /* Nothing for this scene — stop the tag reaching for a file that
-       isn't there, and retire the controls rather than leave dead ones. */
+       isn't there, and retire the control rather than leave a dead one. */
     audio.removeAttribute("src");
     toggle.hidden = true;
-    vol.hidden = true;
   }
 
   var muted = true;               /* silence by default — the speaker
                                      button is the invitation */
 
-  /* Ears hear loudness logarithmically, so a slider mapped straight
-     to audio.volume feels dead across its top half. Squaring the
-     value spreads the audible change evenly along the bar. */
-  function levelFor(v) {
-    var x = Math.max(0, Math.min(100, v)) / 100;
-    return x * x;
-  }
+  /* One level, set here rather than left to the reader. The slider it
+     replaces sat at 30 of 100, which came out at 0.09 once squared for
+     the ear; this is that tenth quieter again. Ambience should sit
+     under the room, not in it — anyone who wants it louder has their
+     own volume keys. */
+  var LEVEL = 0.081;
 
-  function applyVolume() {
-    audio.volume = levelFor(vol.value);
-  }
-  applyVolume();
+  audio.volume = LEVEL;
 
   var waveOn  = document.getElementById("waveOn");
   var waveOff = document.getElementById("waveOff");
@@ -1363,20 +1357,6 @@
     muted = !muted;
     if (muted) audio.pause(); else play();
     paint();
-  });
-
-  vol.addEventListener("input", function () {
-    applyVolume();
-    var silent = Number(vol.value) === 0;
-    /* Sliding to zero mutes (and shows the crossed speaker);
-       sliding back up brings the music straight back. */
-    if (silent !== muted) {
-      muted = silent;
-      if (muted) audio.pause(); else play();
-      paint();
-    } else if (!muted && audio.paused) {
-      play();
-    }
   });
 
 })();
