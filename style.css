@@ -219,7 +219,11 @@ html[data-scene="1"] .atmosphere {
 /* The wordmark with the two settings beneath it. Centred as a block on
    the stamp's middle, so the left column reads as one piece. */
 .brand-col {
-  justify-self: start;
+  /* Centred in its own third rather than jammed against the left edge:
+     with the stamp on the page's centre and the nav beside it, a left-
+     hugging wordmark left a hole in the middle of the left half and the
+     header read as three things scattered rather than one composition. */
+  justify-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1306,11 +1310,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .brand-col .sound svg,
   .brand-col .theme svg { width: 0.8rem; height: 0.8rem; }
   .brand-col .icon-label { font-size: 0.375rem; letter-spacing: 0.1em; }
-  .masthead .nav-controls .vol { margin-top: 0.3rem; width: 1.4rem; height: 0.6rem; }
-  .masthead .nav-controls .vol::-webkit-slider-runnable-track { height: 0.6rem; }
-  .masthead .nav-controls .vol::-moz-range-track { height: 0.6rem; }
-  .masthead .nav-controls .vol::-webkit-slider-thumb { width: 0.5rem; height: 0.5rem; }
-  .masthead .nav-controls .vol::-moz-range-thumb { width: 0.5rem; height: 0.5rem; }
+  /* input.vol, not .vol: the masthead's own volume rules sit further
+     down the sheet, so at equal specificity they would win here. */
+  .masthead .nav-controls input.vol { margin-top: 0.1rem; width: 3.5rem; height: 1rem; }
+  .masthead .nav-controls input.vol::-webkit-slider-runnable-track { height: 1rem; }
+  .masthead .nav-controls input.vol::-moz-range-track { height: 1rem; }
+  .masthead .nav-controls input.vol::-webkit-slider-thumb { width: 0.75rem; height: 0.75rem; margin-top: 0.125rem; }
+  .masthead .nav-controls input.vol::-moz-range-thumb { width: 0.75rem; height: 0.75rem; }
 
   .masthead nav a,
   .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.06em; }
@@ -1488,6 +1494,46 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   }
   .masthead nav a,
   .masthead nav .linklike { font-size: 0.5625rem; letter-spacing: 0.02em; }
+}
+
+/* ---- A phone held sideways ---------------------------------
+   Wide but very short. The header is built for height it doesn't have
+   here — at full size it took a third of the screen, and what was left
+   showed so little of the room that the page read as scattered pieces.
+   Everything below trades the header's height back to the stories. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .masthead {
+    padding: 0.7rem 0 0.6rem;
+    gap: clamp(0.6rem, 2vw, 1.5rem);
+  }
+
+  .masthead .roya { height: 3.4rem; padding: 0.1rem 0.7rem; }
+
+  .brand-col { gap: 0.4rem; }
+  .brand-name .name { font-size: 1rem; letter-spacing: 0.16em; }
+  .brand-name .tag  { font-size: 0.4375rem; }
+
+  /* The three links go back on one line: stacked, they set the height
+     of a header that has none to spare. */
+  .masthead nav { padding-left: clamp(0.75rem, 2.5vw, 2rem); }
+  .masthead .nav-links { flex-direction: row; align-items: center; gap: 1rem; }
+  .masthead nav a,
+  .masthead nav .linklike { font-size: 0.625rem; letter-spacing: 0.1em; }
+
+  .brand-col .sound svg,
+  .brand-col .theme svg { width: 0.85rem; height: 0.85rem; }
+  .brand-col .icon-label { font-size: 0.375rem; }
+  .masthead .nav-controls input.vol { width: 3rem; height: 0.9rem; margin-top: 0.1rem; }
+  .masthead .nav-controls input.vol::-webkit-slider-runnable-track { height: 0.9rem; }
+  .masthead .nav-controls input.vol::-moz-range-track { height: 0.9rem; }
+  .masthead .nav-controls input.vol::-webkit-slider-thumb {
+    width: 0.7rem; height: 0.7rem; margin-top: 0.1rem;
+  }
+  .masthead .nav-controls input.vol::-moz-range-thumb { width: 0.7rem; height: 0.7rem; }
+
+  /* The stage's opening text is set for a tall window; sideways it
+     pushed the first story off the bottom entirely. */
+  .stage { min-height: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1856,23 +1902,33 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   gap: clamp(0.85rem, 2.2vw, 1.5rem);
 }
 
-/* Smaller and quieter than the icons it sits between — it is a fine
-   adjustment, not a third control. Nudged down onto the icons' middle:
-   their centre is 0.4rem of padding plus half of a 1.2rem glyph. */
+/* Long enough to actually set a level rather than just nudge one, and
+   built so the thumb rides the centre of the track: the track carries
+   its border inside its own height (border-box), so the thumb's offset
+   is a clean half of the difference between the two. */
 .masthead .nav-controls .vol {
-  width: clamp(1.9rem, 3vw, 2.5rem);
-  height: 0.85rem;
-  margin-top: 0.55rem;
+  width: clamp(4.5rem, 8.5vw, 7rem);
+  height: 1.15rem;
+  /* Sits the pill's middle on the icons' middle: the icon button pads
+     0.3rem above a 0.95rem glyph, so its centre is 0.775rem down. */
+  margin-top: 0.2rem;
   flex: 0 0 auto;
 }
-.masthead .nav-controls .vol::-webkit-slider-runnable-track { height: 0.85rem; }
-.masthead .nav-controls .vol::-moz-range-track { height: 0.85rem; }
-.masthead .nav-controls .vol::-webkit-slider-thumb {
-  width: 0.65rem;
-  height: 0.65rem;
-  margin-top: 0.1rem;
+.masthead .nav-controls .vol::-webkit-slider-runnable-track {
+  height: 1.15rem;
+  box-sizing: border-box;
 }
-.masthead .nav-controls .vol::-moz-range-thumb { width: 0.65rem; height: 0.65rem; }
+.masthead .nav-controls .vol::-moz-range-track {
+  height: 1.15rem;
+  box-sizing: border-box;
+}
+.masthead .nav-controls .vol::-webkit-slider-thumb {
+  width: 0.85rem;
+  height: 0.85rem;
+  /* (1.15 − 0.85) ÷ 2 — dead centre of the track. */
+  margin-top: 0.15rem;
+}
+.masthead .nav-controls .vol::-moz-range-thumb { width: 0.85rem; height: 0.85rem; }
 
 /* ---- The volume pill ----
    Drawn rather than left to the system: a gold track with a pale thumb
