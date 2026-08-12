@@ -72,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=112">
+<link rel="stylesheet" href="style.css?v=113">
 </head>
 
 <body>
@@ -95,17 +95,17 @@
         <a href="#" data-stage="notes">Author's Notes</a>
         <a href="#" data-stage="about">About</a>
         <button class="linklike" id="galleryOpen" type="button">All Covers</button>
+
+        <span class="vol-wrap">
+          <span class="vol-wedge" aria-hidden="true"></span>
+          <input class="vol" id="volSlider" type="range" min="0" max="100"
+                 value="30" aria-label="Music volume">
+        </span>
       </div>
 
       <div class="nav-controls">
 
-        <div class="ctrl">
-          <span class="vol-wrap">
-            <span class="vol-wedge" aria-hidden="true"></span>
-            <input class="vol" id="volSlider" type="range" min="0" max="100"
-                   value="30" aria-label="Music volume">
-          </span>
-          <button class="sound" id="soundToggle" aria-pressed="false"
+        <button class="sound" id="soundToggle" aria-pressed="false"
                   title="Ambient sound">
             <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -121,8 +121,7 @@
               </g>
             </svg>
             <span class="visually-hidden">Toggle ambient sound</span>
-          </button>
-        </div>
+        </button>
 
         <div class="ctrl">
           <button class="theme" id="themeToggle" type="button"
@@ -396,7 +395,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=112"></script>
-<script src="script.js?v=112"></script>
+<script src="stories.js?v=113"></script>
+<script src="script.js?v=113"></script>
 </body>
 </html>

@@ -1255,7 +1255,7 @@ html[data-scene="1"] .atmosphere {
   .masthead nav .theme { padding: 0.35rem 0.25rem; }
 
   .masthead nav a,
-  .masthead nav .linklike { font-size: 0.5625rem; letter-spacing: 0.07em; }
+  .masthead nav .linklike { font-size: 0.5625rem; letter-spacing: 0.05em; }
 
   .hall { grid-template-columns: 1fr; gap: 0; }
 
@@ -1710,14 +1710,23 @@ html[data-scene="1"] .atmosphere {
 .masthead .nav-controls {
   display: flex;
   align-items: flex-end;
-  gap: clamp(0.75rem, 2vw, 1.4rem);
+  gap: clamp(0.7rem, 1.8vw, 1.25rem);
 }
 
+/* The theme mark and the word under it. */
 .ctrl {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.25rem;
+}
+
+/* The wedge rides at the end of the links, so the row it belongs to is
+   the row a reader is already looking at. Centred on the caps rather
+   than sitting on their baseline, since it is taller than they are. */
+.masthead .nav-links .vol-wrap {
+  margin-left: clamp(0.15rem, 1vw, 0.6rem);
+  align-self: center;
 }
 
 /* A word under the theme mark, so the moon is not a guess. */
@@ -1739,8 +1748,8 @@ html[data-scene="1"] .atmosphere {
   --vol: 30%;
   position: relative;
   display: block;
-  width: 1.15rem;
-  height: 1.6rem;
+  width: 1.05rem;
+  height: 1.4rem;
 }
 
 .vol-wedge,
