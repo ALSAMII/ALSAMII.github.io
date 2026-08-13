@@ -714,7 +714,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* The margin (number over share), the book, then PDF and — on touch
      — the synopsis eye. Back to the original four: share moved out of
      the icon row, which had squeezed longer titles onto two lines. */
-  grid-template-columns: 2.75rem 1fr auto auto;
+  grid-template-columns: 2.75rem 1fr auto auto auto;
   /* Top, not centre: once a row carries a hook and a reading time it
      is tall enough that a centred number floats away from its own
      title. */
@@ -2197,6 +2197,148 @@ body.gallery-on .to-top { display: none; }
 }
 
 .gallery.show { opacity: 1; }
+/* ============================================================
+   THE READER
+   The novella in the room. A single column on the same dark ground
+   as the rest, with nothing in it but the words, a way out, and two
+   buttons for the size of the type.
+   ============================================================ */
+.reader {
+  position: fixed;
+  inset: 0;
+  height: 100lvh;
+  bottom: auto;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  /* --night is the page base and already flips with the theme, so the
+     reader is dark or paper without a second set of rules. */
+  background: var(--night);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.reader[hidden] { display: none; }
+.reader.show { opacity: 1; }
+
+/* The bar holds still while the book moves under it. */
+.reader-bar {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: calc(0.6rem + env(safe-area-inset-top, 0px))
+           clamp(0.9rem, 3vw, 1.75rem) 0.6rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.reader-title {
+  margin: 0;
+  min-width: 0;
+  text-align: center;
+  font-size: 0.5625rem;
+  letter-spacing: 0.22em;
+  color: var(--faded);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reader-tools { display: flex; gap: 0.35rem; }
+
+.reader-btn {
+  background: none;
+  border: 0;
+  padding: 0.45rem;
+  color: var(--faded);
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+.reader-btn:hover { color: var(--ember); }
+.reader-btn:focus-visible { outline: 1px solid var(--ember); outline-offset: 2px; }
+.reader-btn svg { display: block; width: 1.15rem; height: 1.15rem; }
+
+/* How far through, drawn as a gold thread under the bar. */
+.reader-progress { flex: 0 0 auto; height: 1px; background: var(--hairline); }
+.reader-progress i { display: block; height: 100%; width: 0; background: var(--ember); }
+
+.reader-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hairline) transparent;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 2rem)
+           calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+.reader-scroll:focus { outline: none; }
+
+/* A measure a person can actually read: about seventy characters,
+   whatever the screen. Everything else up here is margin. */
+.reader-page {
+  max-width: 34rem;
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-size: 1.05rem;          /* replaced by the reader's own choice */
+  line-height: 1.75;
+  color: var(--parchment);
+}
+
+.reader-page p {
+  margin: 0;
+  text-indent: 1.4em;
+  hyphens: auto;
+}
+/* The first paragraph after a heading opens flush, the way a printed
+   page does — the indent is only there to separate one from the next. */
+.reader-page h2 + p,
+.reader-page .r-v + p { text-indent: 0; }
+
+.reader-page .r-h {
+  margin: 2.75rem 0 1.25rem;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ember);
+  text-indent: 0;
+}
+.reader-page .r-h:first-child { margin-top: 0; }
+
+/* Verse: centred, its line breaks kept, since in verse the breaks
+   are the writing. */
+.reader-page .r-v {
+  margin: 0;
+  text-indent: 0;
+  text-align: center;
+  line-height: 1.9;
+  color: var(--faded);
+}
+
+.reader-page .r-wait {
+  text-indent: 0;
+  text-align: center;
+  color: var(--faded);
+}
+.reader-page .r-wait a { color: var(--ember); }
+
+.reader-end {
+  max-width: 34rem;
+  margin: 3.5rem auto 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+  font-size: 0.5rem;
+  letter-spacing: 0.24em;
+  color: var(--faded);
+}
+
+@media (max-width: 56rem) {
+  .reader-page { line-height: 1.7; }
+  .reader-scroll { padding-top: clamp(1.5rem, 5vw, 2.5rem); }
+}
+
 body.gallery-on { overflow: hidden; }
 
 /* ============================================================
@@ -2694,3 +2836,6 @@ html[data-theme="light"] .icon-btn.share { color: var(--verdigris-dim); }
 html[data-theme="light"] .icon-btn.share:hover,
 html[data-theme="light"] .icon-btn.share:focus-visible { color: var(--verdigris); }
 html[data-theme="light"] .icon-btn.share.shared { color: var(--verdigris-lit); }
+
+/* The reader needs no light-theme rules of its own: it is built from
+   --night, --parchment and --faded, all of which already flip. */

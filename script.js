@@ -343,6 +343,13 @@
     ' aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7' +
     '-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
 
+  var READ_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+    ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"' +
+    ' aria-hidden="true"><path d="M12 6.5v13"/>' +
+    '<path d="M12 6.5C10.5 5 8.5 4.5 6 4.5H3v13h3c2.5 0 4.5.5 6 2"/>' +
+    '<path d="M12 6.5C13.5 5 15.5 4.5 18 4.5h3v13h-3c-2.5 0-4.5.5-6 2"/></svg>';
+
   var SHARE_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
     ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"' +
@@ -653,7 +660,21 @@
     mark.className = "story-mark";
     mark.append(numEl, shareBtn);
 
-    row.append(mark, main, pdfBtn);
+    /* Read here, rather than downloading the object. First of the two,
+       because it is what most people want and the PDF is the keepsake. */
+    var readBtn = document.createElement("button");
+    readBtn.className = "icon-btn read";
+    readBtn.type = "button";
+    readBtn.title = "Read here";
+    readBtn.setAttribute("aria-label", s.title + " \u2014 read here");
+    readBtn.innerHTML = READ_ICON;
+    readBtn.append(iconLabel("Read"));
+    readBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      openReader(s);
+    });
+
+    row.append(mark, main, readBtn, pdfBtn);
 
     /* The eye only earns its place on touch, where there's no hover
        to reveal a synopsis. On a mouse or keyboard it would be a
@@ -1283,7 +1304,142 @@
     if (!openFromHash()) unpin();
   });
 
-  /* ---- 4. Nav: About / Author's Notes on hover -------------- */
+  /* ---- The reader ---------------------------------------------
+     The novella in the room, rather than in a downloaded file. Text
+     comes from read/NN.json — the PDFs pulled back into paragraphs by
+     build-reader.py — so it reflows to the screen it is on, sets its
+     own type size, and remembers where the reader stopped. The PDF
+     stays on offer for anyone who wants the typeset object. */
+  var reader       = document.getElementById("reader");
+  var readerPage   = document.getElementById("readerPage");
+  var readerScroll = document.getElementById("readerScroll");
+  var readerTitle  = document.getElementById("readerTitle");
+  var readerEnd    = document.getElementById("readerEnd");
+  var readerBar    = document.getElementById("readerBar");
+
+  var STEPS = [0.95, 1.05, 1.15, 1.3, 1.45];   /* type sizes on offer */
+  var readerBook = null;
+  var textCache  = {};
+
+  function readerPref(key, fallback) {
+    try {
+      var v = localStorage.getItem(key);
+      return v === null ? fallback : v;
+    } catch (e) { return fallback; }
+  }
+  function readerSave(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) { /* private mode */ }
+  }
+
+  function applyTypeSize() {
+    var i = Number(readerPref("readerSize", 1));
+    i = Math.max(0, Math.min(STEPS.length - 1, i));
+    readerPage.style.fontSize = STEPS[i] + "rem";
+  }
+
+  function nudgeTypeSize(by) {
+    var i = Math.max(0, Math.min(STEPS.length - 1,
+                                Number(readerPref("readerSize", 1)) + by));
+    readerSave("readerSize", i);
+    applyTypeSize();
+  }
+
+  /* Where they stopped, kept per book as a fraction of the whole. A
+     fraction rather than a pixel count, because the type size and the
+     width of the screen can both change between one sitting and the
+     next, and the place should survive both. */
+  function markPlace() {
+    if (!readerBook) return;
+    var max = readerScroll.scrollHeight - readerScroll.clientHeight;
+    var at  = max > 0 ? readerScroll.scrollTop / max : 0;
+    readerSave("place:" + readerBook, at.toFixed(4));
+    if (readerBar) readerBar.style.width = (at * 100).toFixed(1) + "%";
+  }
+
+  function renderBlocks(blocks) {
+    var html = "";
+    for (var i = 0; i < blocks.length; i++) {
+      var b = blocks[i];
+      if (b.t === "h") html += '<h2 class="r-h">' + b.h + "</h2>";
+      else if (b.t === "v") html += '<p class="r-v">' + b.h + "</p>";
+      else html += "<p>" + b.h + "</p>";
+    }
+    readerPage.innerHTML = html;
+  }
+
+  function openReader(s) {
+    var n = String(s.num).padStart(2, "0");
+    readerBook = n;
+    readerTitle.textContent = s.title;
+    readerEnd.textContent = "End \u00b7 " + s.title;
+    reader.hidden = false;
+    document.body.classList.add("gallery-on");
+    applyTypeSize();
+    requestAnimationFrame(function () { reader.classList.add("show"); });
+
+    var place = Number(readerPref("place:" + n, 0));
+    var settle = function () {
+      /* Two frames: one for the text to lay out, one for the browser
+         to know how tall it became. */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          var max = readerScroll.scrollHeight - readerScroll.clientHeight;
+          readerScroll.scrollTop = max * place;
+          markPlace();
+          readerScroll.focus({ preventScroll: true });
+        });
+      });
+    };
+
+    if (textCache[n]) { renderBlocks(textCache[n]); settle(); return; }
+
+    readerPage.innerHTML = '<p class="r-wait">Opening\u2026</p>';
+    fetch("read/" + n + ".json")
+      .then(function (r) {
+        if (!r.ok) throw new Error("no text");
+        return r.json();
+      })
+      .then(function (data) {
+        textCache[n] = data.blocks;
+        renderBlocks(data.blocks);
+        settle();
+      })
+      .catch(function () {
+        /* No reading text for this one yet — say so plainly, and
+           point at the file that certainly exists. */
+        readerPage.innerHTML =
+          '<p class="r-wait">This one isn\u2019t set for reading here yet. ' +
+          '<a href="' + (s.pdf || "pdfs/" + n + ".pdf") + '" target="_blank" rel="noopener">' +
+          "Open the PDF instead.</a></p>";
+      });
+  }
+
+  function closeReader() {
+    markPlace();
+    reader.classList.remove("show");
+    document.body.classList.remove("gallery-on");
+    setTimeout(function () { reader.hidden = true; }, 250);
+    readerBook = null;
+  }
+
+  if (reader) {
+    document.getElementById("readerClose").addEventListener("click", closeReader);
+    document.getElementById("readerSmaller").addEventListener("click", function () { nudgeTypeSize(-1); });
+    document.getElementById("readerBigger").addEventListener("click", function () { nudgeTypeSize(1); });
+
+    var placeTimer = null;
+    readerScroll.addEventListener("scroll", function () {
+      clearTimeout(placeTimer);
+      placeTimer = setTimeout(markPlace, 120);
+    }, { passive: true });
+
+    document.addEventListener("keydown", function (e) {
+      if (reader.hidden) return;
+      if (e.key === "Escape") closeReader();
+    });
+  }
+
+
 
   var stageFor = { about: "panel-about", notes: "panel-notes" };
 

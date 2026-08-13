@@ -72,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=143">
+<link rel="stylesheet" href="style.css?v=144">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -425,8 +425,7 @@
 
 <!-- A cover at full size. Opened by clicking any cover on the page;
      the image itself is set by script.js. -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"
-     aria-label="Cover" hidden>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"     aria-label="Cover" hidden>
   <button class="lightbox-close" id="lightboxClose" type="button"
           aria-label="Close">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -436,6 +435,48 @@
   </button>
   <img class="lightbox-img" id="lightboxImg" alt="">
   <p class="lightbox-cap caps" id="lightboxCap"></p>
+</div>
+
+<!-- ══════════════════ THE READER ══════════════════
+     The novella itself, in the room rather than in a downloaded file.
+     Text comes from read/NN.json, built out of the PDFs by
+     build-reader.py. Everything inside is filled by script.js. -->
+<div class="reader" id="reader" role="dialog" aria-modal="true"
+     aria-label="Reading" hidden>
+
+  <div class="reader-bar">
+    <button class="reader-btn" id="readerClose" type="button" aria-label="Close the book">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+
+    <p class="reader-title caps" id="readerTitle"></p>
+
+    <div class="reader-tools">
+      <button class="reader-btn" id="readerSmaller" type="button" aria-label="Smaller type">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M5 12h14"/>
+        </svg>
+      </button>
+      <button class="reader-btn" id="readerBigger" type="button" aria-label="Larger type">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M5 12h14M12 5v14"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- How far through, filled as the reader scrolls. -->
+  <div class="reader-progress" aria-hidden="true"><i id="readerBar"></i></div>
+
+  <div class="reader-scroll" id="readerScroll" tabindex="0">
+    <article class="reader-page" id="readerPage"></article>
+    <p class="reader-end caps" id="readerEnd"></p>
+  </div>
 </div>
 
 <!-- ══════════════════ ALL COVERS ══════════════════
@@ -456,7 +497,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=143"></script>
-<script src="script.js?v=143"></script>
+<script src="stories.js?v=144"></script>
+<script src="script.js?v=144"></script>
 </body>
 </html>
