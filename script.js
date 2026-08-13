@@ -1386,10 +1386,63 @@
     }
   }
 
+  /* The covers are photographs of a book standing up, which means the
+     top of the picture is not the top of the book — there is a band of
+     empty room above it, and the edge fade thins another sliver. So
+     the title is dropped to meet the printed edge rather than the edge
+     of the file, or it floats above the book it names.
+
+     A proportion of the cover's own height, so it holds at every
+     screen size. Raise COVER_HEADROOM if a future cover has more room
+     above the book than these do; lower it if it has less. */
+  var COVER_HEADROOM = 0.085;
+
+  function alignTitles() {
+    var rows = document.querySelectorAll(".story-row");
+    for (var i = 0; i < rows.length; i++) {
+      var cover = rows[i].querySelector(".row-cover");
+      var main  = rows[i].querySelector(".story-main");
+      var btn   = rows[i].querySelector(".title-btn");
+      if (!cover || !main || !btn) continue;
+
+      main.style.paddingTop = "0px";
+      var cs = window.getComputedStyle(btn);
+      var fs = parseFloat(cs.fontSize);
+      var lh = parseFloat(cs.lineHeight);
+
+      /* Where the ink of a capital starts inside its line box: half
+         the leading, then the gap the font leaves above its caps. */
+      var inkTop = (lh - fs) / 2 + fs * 0.14;
+      var want = cover.getBoundingClientRect().height * COVER_HEADROOM;
+      main.style.paddingTop = Math.max(0, want - inkTop).toFixed(1) + "px";
+    }
+  }
+
   fitTitles();
+  alignTitles();
+
+  /* The covers arrive after the list is built — they are lazy, and a
+     picture that has not loaded has no height to measure. So the
+     alignment is run again as each one lands, and once more when the
+     page is fully loaded, for anything served from cache. */
+  (function () {
+    var pending = null;
+    var again = function () {
+      clearTimeout(pending);
+      pending = setTimeout(alignTitles, 60);
+    };
+    document.querySelectorAll(".row-cover").forEach(function (img) {
+      if (img.complete && img.naturalHeight) return;
+      img.addEventListener("load", again, { once: true });
+    });
+    window.addEventListener("load", again);
+  })();
   window.addEventListener("resize", (function () {
     var t = null;
-    return function () { clearTimeout(t); t = setTimeout(fitTitles, 150); };
+    return function () {
+      clearTimeout(t);
+      t = setTimeout(function () { fitTitles(); alignTitles(); }, 150);
+    };
   })());
 
   /* ---- The reader ---------------------------------------------

@@ -903,12 +903,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin-top: 0.15rem;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 3.5rem;
+  /* The same figure as the three recommended books wear at the top of
+     the page: same serif, same weight, same size — one number for the
+     whole site rather than two. */
+  font-weight: 600;
+  font-size: 1.4375rem;
   letter-spacing: 0.06em;
   line-height: 1;
   text-transform: none;
   color: var(--ember);
-  opacity: 0.75;
+  opacity: 0.8;
+  text-shadow: 0 1px 12px rgba(5, 4, 3, 0.9);
   transition: opacity 0.25s ease, color 0.25s ease;
 }
 
@@ -934,7 +939,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-size: 1.125rem;
   line-height: 1.2;
   letter-spacing: 0.005em;
-  color: var(--ember);
+  /* Parchment, not gold. With the number, the rules, the reading time
+     and the ornaments all in ember, one more gold line made the row
+     read as decoration; the title is the thing being named, and it
+     stands out by being the one quiet, light thing in the row. */
+  color: var(--parchment);
   transition: color 0.25s ease;
 }
 
@@ -1567,7 +1576,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   }
 
   .story .title { font-size: 1.1875rem; }
-  .story .num { font-size: 3.25rem; }
+  .story .num { font-size: 1.4375rem; }
   .story-head { gap: 0.55rem; }
   .story-acts { padding-left: 0.7rem; gap: 0.55rem; }
   .story-acts .icon-btn { gap: 0.4rem; }
