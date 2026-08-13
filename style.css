@@ -792,6 +792,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   bottom: 0.15rem;
   width: 1px;
   background: var(--hairline);
+  /* Half strength: it only has to suggest a separation, and at full
+     weight it competed with the rules that divide one book from the
+     next. */
+  opacity: 0.5;
   -webkit-mask-image: linear-gradient(to bottom, #000 0 42%, transparent 42%, transparent 58%, #000 58% 100%);
   mask-image: linear-gradient(to bottom, #000 0 42%, transparent 42%, transparent 58%, #000 58% 100%);
 }
@@ -805,6 +809,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-size: 0.4rem;
   line-height: 1;
   color: var(--ember-soft);
+  opacity: 0.5;
 }
 
 /* Mark and word side by side rather than stacked: three pairs down a
@@ -926,11 +931,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .story .title {
   margin: 0;
   min-width: 0;
-  /* One line, always. A name broken across two lines stops looking
-     like one name — so the type is taken down a little on the few
-     titles too long for the measure (see fitTitles in script.js)
-     rather than the line being broken or the end cut off. */
-  white-space: nowrap;
+  /* Every title at the same size. A long one takes a second line
+     rather than being shrunk to fit — one title set smaller than its
+     neighbours drew more attention than the wrap ever did. */
+  white-space: normal;
   font-family: var(--serif);
   font-weight: 500;
   /* Modest by default: on a wide screen the shelf is a sidebar barely
@@ -961,6 +965,24 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      artwork beside it does not. */
   padding-top: 0;
   margin-top: -0.2rem;
+}
+
+/* A book inside a series carries a gold rule down its left edge —
+   one continuous bracket for the whole group, since the rows sit
+   flush against each other. */
+.story.in-series {
+  padding-left: 0.7rem;
+  box-shadow: inset 2px 0 0 -1px var(--ember-soft);
+}
+
+/* The series and the book's place in it, under the reading time. */
+.story-series {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--ember);
+  opacity: 0.72;
 }
 
 .story-sub {
@@ -1931,10 +1953,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   grid-template-columns: minmax(4.5rem, 7rem) minmax(5rem, 1fr) auto;
   align-items: center;
   gap: 0.75rem 1rem;
-  margin: 0.35rem 0 1.1rem;
-  padding: 0.85rem 0;
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
+  /* No rules top or bottom: the band is already set apart by the space
+     around it and by the shape of the dials themselves, and two more
+     hairlines in a block that already carries several made the whole
+     thing read as a form. */
+  margin: 0.9rem 0 1.2rem;
+  padding: 0;
 }
 
 .note-row { display: contents; }

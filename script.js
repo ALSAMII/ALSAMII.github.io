@@ -44,6 +44,23 @@
   var hideTimer = null;
 
   var TRIOS = (typeof TRILOGIES !== "undefined") ? TRILOGIES : [];
+
+  /* Which series a book belongs to, and where it stands in it. Built
+     once: a row needs to say "Les Folies, the second of three" without
+     the reader having to remember what heading they scrolled past. */
+  var SERIES_OF = {};
+
+  TRIOS.forEach(function (t) {
+    (t.books || []).forEach(function (n, i) {
+      SERIES_OF[n] = {
+        title: t.title,
+        place: String(i + 1),
+        of: t.books.length,
+        first: i === 0,
+        last: i === t.books.length - 1
+      };
+    });
+  });
   var trioByFirst = {}, inTrio = {};
   TRIOS.forEach(function (t) {
     trioByFirst[t.books[0]] = t;
@@ -623,6 +640,19 @@
       time.textContent = rt;
       sub.append(time);
     }
+    /* A book inside a series says so on its own row: the heading it
+       belongs to may be several screens back by the time it is read,
+       and "Doubling Time" sitting under Les Folies looked like a
+       fourth Folie. */
+    var series = SERIES_OF[s.num];
+    if (series) {
+      var mark2 = document.createElement("span");
+      mark2.className = "story-series caps";
+      mark2.textContent = series.title + " \u00b7 " + series.place +
+                          " of " + series.of;
+      sub.append(mark2);
+    }
+
     if (sub.childNodes.length) main.append(sub);
 
     /* Share: hands over a link that opens straight onto this book.
@@ -776,6 +806,12 @@
     row.append(syn);
 
     li.append(row);
+    if (series) {
+      li.classList.add("in-series");
+      if (series.first) li.classList.add("series-first");
+      if (series.last) li.classList.add("series-last");
+    }
+
     li.dataset.slug = slugFor(s);
     list.append(li);
 
@@ -1354,39 +1390,11 @@
     if (!openFromHash()) unpin();
   });
 
-  /* Titles hold one line. Most fit as set; the long ones are stepped
-     down until they do, never below three quarters of the size, which
-     is as small as a title can go and still match its neighbours. Run
-     after the list is built and again when the window changes, since
-     the measure moves with it. */
-  function fitTitles() {
-    var titles = document.querySelectorAll(".story .title-btn");
-    for (var i = 0; i < titles.length; i++) {
-      var el = titles[i];
-      var box = el.parentNode;                 /* the h2 sets the width */
-      el.style.fontSize = "";
-      var full = parseFloat(window.getComputedStyle(box).fontSize);
-      var size = full;
-      var floor = full * 0.66;
-      /* scrollWidth outruns clientWidth exactly while it overflows */
-      while (el.scrollWidth > box.clientWidth + 1 && size > floor) {
-        size -= 0.5;
-        el.style.fontSize = size + "px";
-      }
+  /* Every title is set at one size, and a long one wraps. Shrinking
+     the few that did not fit left book 18 visibly smaller than its
+     neighbours, which read as a fault rather than as a fit.
 
-      /* One or two of the longest names are still over at the floor.
-         Tracking closes the last few pixels: a title set a hair tight
-         reads as set, where one shrunk further reads as an error. */
-      el.style.letterSpacing = "";
-      var track = 0;
-      while (el.scrollWidth > box.clientWidth + 1 && track > -0.035) {
-        track -= 0.005;
-        el.style.letterSpacing = track + "em";
-      }
-    }
-  }
-
-  /* The covers are photographs of a book standing up, which means the
+     The covers are photographs of a book standing up, which means the
      top of the picture is not the top of the book — there is a band of
      empty room above it, and the edge fade thins another sliver. So
      the title is dropped to meet the printed edge rather than the edge
@@ -1418,7 +1426,6 @@
     }
   }
 
-  fitTitles();
   alignTitles();
 
   /* The covers arrive after the list is built — they are lazy, and a
@@ -1441,7 +1448,7 @@
     var t = null;
     return function () {
       clearTimeout(t);
-      t = setTimeout(function () { fitTitles(); alignTitles(); }, 150);
+      t = setTimeout(alignTitles, 150);
     };
   })());
 
