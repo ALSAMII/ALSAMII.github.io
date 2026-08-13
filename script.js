@@ -505,16 +505,29 @@
     if (label) words.append(label);
     words.append(title);
 
+    /* A series with a painted banner shows that instead of its spines:
+       seven covers in a row would be a row of stamps, where the
+       panorama is one picture of the world they share. */
     var set = document.createElement("div");
-    set.className = "t-covers" + (t.books.length > 3 ? " many" : "");
-    t.books.forEach(function (n) {
-      var im = document.createElement("img");
-      im.src = coverFor(n);
-      im.alt = "";
-      im.loading = "lazy";
-      im.addEventListener("error", function () { im.remove(); });
-      set.append(im);
-    });
+    if (t.banner) {
+      set.className = "t-banner";
+      var bn = document.createElement("img");
+      bn.src = t.banner;
+      bn.alt = t.title;
+      bn.loading = "lazy";
+      bn.addEventListener("error", function () { set.remove(); });
+      set.append(bn);
+    } else {
+      set.className = "t-covers" + (t.books.length > 3 ? " many" : "");
+      t.books.forEach(function (n) {
+        var im = document.createElement("img");
+        im.src = coverFor(n);
+        im.alt = "";
+        im.loading = "lazy";
+        im.addEventListener("error", function () { im.remove(); });
+        set.append(im);
+      });
+    }
 
     head.append(words, set);
 

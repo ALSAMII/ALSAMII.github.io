@@ -596,6 +596,66 @@ const STORIES = [
     key: "The Lineage Ledger \u2014 the descent of a sacred fire, audited line by line",
     notes: [2, 2, 3],
     synopsis: "At Salamis the Persian fleet did not break, and the faith of the fire became the governing belief of a commonwealth running from Lisbon to Lahore \u2014 with the Accord Fire at its heart, burning unbroken for two thousand five hundred and six years. Auditing its lineage ledger for the jubilee, Reckoner Roshan Azad finds what every Reckoner is sworn to look for and none has ever found: a gap, three nights deep, forged over by a hand that loved the fire too much to be honest about it."
+  },
+
+  {
+    num: 44,
+    title: "The Quiet Ride",
+    words: "15,100 words",
+    hook: "They didn\u2019t use dogs. They used medicine",
+    door: "Dose",
+    room: "The Calm \u2014 a country that cannot say what is being done to it",
+    key: "Agitation Psychosis \u2014 a diagnosis for saying true things out loud",
+    notes: [3, 3, 2],
+    synopsis: "In 1963 America met the movement with medicine rather than dogs and hoses: saying certain true things aloud became a diagnosis, and the cure was a pill, a certificate and \u2014 for those who kept talking \u2014 the quiet ride. Odessa Vane has spent thirty years transcribing the sanest sentences in America in rooms where saying them is the disease, and now patients in sealed wards hundreds of miles apart have begun dictating the same thing word for word: a street corner, an overpass, and four lines of a poem writing themselves onto a wall."
+  },
+
+  {
+    num: 45,
+    title: "The Dark Companion",
+    words: "13,700 words",
+    hook: "Nobody grieves alone. Something is collecting the difference",
+    door: "Withholding",
+    room: "The Branches \u2014 every loss undone somewhere, and no comfort in it",
+    key: "The Weight \u2014 a sky that has been getting heavier on a schedule",
+    notes: [2, 2, 3],
+    synopsis: "In this world Everett was believed, and a civilization learned to grieve gently: every loss has a counterpart who did not lose, on some other branch, and the branches are equal and can never touch. Petra Varga weighs the sky for a living, and it has been getting heavier by exact and dateable amounts for ninety years \u2014 more than any number of equal, silent branches could explain. Something out past the edge of the visible is not sharing the load. It is collecting it."
+  },
+
+  {
+    num: 46,
+    title: "The Unburned Library",
+    words: "13,600 words",
+    hook: "Nothing written was ever lost. Something was taken anyway",
+    door: "Withholding",
+    room: "The Compact \u2014 whoever may read, rules",
+    key: "The Tiles \u2014 two thousand years of knowledge fired into clay",
+    notes: [2, 2, 3],
+    synopsis: "In 391 a governor turned the mob back at the gate, and the House of Life did not fall \u2014 so nothing written has ever been lost, every text copied forward and fired into tile in an unbroken chain, and the world\u2019s peace rests on a colder arithmetic than treaties: whoever may read, rules. Isidora Iskandar verifies tile against tile for a living, and finds a gap in the oldest layer that no record explains \u2014 pieces of the world\u2019s most guarded truth, missing for centuries, taken by someone who left no name."
+  },
+
+  {
+    num: 47,
+    title: "The Fourth Dawn",
+    words: "17,200 words",
+    hook: "The same tall stranger, at ground zero, who did not run",
+    door: "Ordeal",
+    room: "The Registry \u2014 thirty years of counting what was done that morning",
+    key: "Trinity \u2014 a fireball hotter than the sun, and no warning given",
+    notes: [3, 3, 2],
+    synopsis: "Elena Baca has spent thirty years building the registry that finally made the government count what it did in the New Mexico desert on the morning of July 16, 1945 \u2014 and she has just won. Then she finds testimony in her own files belonging to no one: the same tall stranger with the same bag, described in identical words by families with no connection to each other, present at ground zero, who did not run. Getting to the bottom of it will cost her the clean story of her family and the clean story of her own thirty years of care."
+  },
+
+  {
+    num: 48,
+    title: "Service Life",
+    words: "28,600 words",
+    hook: "He certifies the day your things were always going to die",
+    door: "Rite",
+    room: "Lifecycle Confidence \u2014 a death date certified, signed and filed",
+    key: "The Chamber \u2014 things cooked until they fail, exactly on time",
+    notes: [2, 2, 2],
+    synopsis: "Cyrus Aban is a Longevity Advocate II in the Department of Lifecycle Confidence: he cooks consumer electronics in sealed chambers until they fail, works out precisely when they were always going to fail, and signs the certificate by hand while everyone else uses a stamp. Nineteen years of certifying death dates for objects, in a country that has made an institution of knowing exactly how long a thing is meant to last \u2014 and a growing suspicion about what else is being scheduled, and by whom."
   }
 
 ];
@@ -686,7 +746,11 @@ const TRILOGIES = [
        "A Triptych", which this is not. An empty string shows nothing
        above the title at all. */
     label: "",
-    books: [41, 42, 43],
+    books: [41, 42, 43, 44, 45, 46, 47],
+    /* A painted panorama of the whole cycle rather than a row of
+       covers — the seven belong to one street corner, and the picture
+       says so where seven separate spines would not. */
+    banner: "assets/borrowed-sun.jpg",
     synopsis: "Seven worlds, one street corner, and a tall man walking through all of them with everything he owns in one bag. In each world, humanity made a different choice \u2014 cancelled its terror, kept its fire, sold its sleep \u2014 and in each one, something patient has begun leaving messages in the margins. A verse is being written across realities, one installment per world, and it reads like a bill coming due. There is no true world."
   }
 ];
