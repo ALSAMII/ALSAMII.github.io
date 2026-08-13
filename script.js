@@ -667,8 +667,13 @@
       }
     });
 
-    /* The left margin of the row: the cover, with its number above and
-       the way to pass it on below. A shelf of books ought to look like
+    /* Share sits with the reading time rather than under the cover:
+       it belongs with the words about the book, and it keeps its place
+       when the row opens. Appended here, where the button exists —
+       above, var would have handed us an empty box. */
+    main.append(shareBtn);
+
+    /* The left margin of the row: the cover. A shelf of books ought to look like
        one — the covers are the reason anybody stops scrolling. */
     var mark = document.createElement("div");
     mark.className = "story-mark";
@@ -681,7 +686,7 @@
     rowImg.addEventListener("error", function () { rowImg.remove(); });
     makeCoverOpen(rowImg, num + " \u00b7 " + s.title);
 
-    mark.append(numEl, rowImg, shareBtn);
+    mark.append(rowImg);
 
     /* Read here, rather than downloading the object. First of the two,
        because it is what most people want and the PDF is the keepsake. */
@@ -718,6 +723,10 @@
        needed and pushed longer names onto a second line. */
     var acts = document.createElement("div");
     acts.className = "story-acts";
+    /* The number crowns the column: the top right was the one piece of
+       empty space in the row, and a numbered series should wear its
+       numbers where they can be seen. */
+    acts.append(numEl);
     if (eye) acts.append(eye);
     acts.append(pdfBtn, readBtn);
 
