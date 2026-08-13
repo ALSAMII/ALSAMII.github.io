@@ -723,8 +723,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   padding: 1.05rem 0.25rem;
 }
 
-/* The actions down the right of a row: look, download, read. */
+/* The actions down the right of a row: look, download, read. Held to
+   the top of its own column and spanning every row of the grid, so a
+   stack three deep never sets the height of the line beside it. */
 .story-acts {
+  grid-column: 3;
+  /* span 2, not 1 / -1: the second row is implicit (it exists only
+     when a row is open), and -1 resolves to the end of the explicit
+     grid, which would leave the stack setting the height of the
+     first line after all. */
+  grid-row: 1 / span 2;
+  align-self: start;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -857,6 +866,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .story .synopsis { display: none; }
 
 .story.open .synopsis {
+  /* The two left columns of the row, on the line below the title —
+     clear of the actions, which keep the column to their right. */
+  grid-column: 1 / 3;
+  grid-row: 2;
   display: block;
   white-space: pre-line;   /* paragraph breaks, as on the stage */
   margin: 0 0.25rem;
@@ -1795,8 +1808,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 @media (max-width: 34rem) {
-  .notes { grid-template-columns: minmax(4rem, 6rem) minmax(3rem, 1fr) auto;
-           gap: 0.45rem 0.7rem; }
+  /* auto, not a 6rem cap: the synopsis sits beside the action stack
+     now and has that much less width to give, and TRANSGRESSIVE is
+     wider than the cap — it was running over its own meter. */
+  .notes { grid-template-columns: auto minmax(2.5rem, 1fr) auto;
+           gap: 0.45rem 0.6rem; }
   .note-meter { gap: 0.4rem; }
   .note-box { height: 0.35rem; }
   .note-word { font-size: 0.8125rem; padding-left: 0.7rem; }

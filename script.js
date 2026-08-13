@@ -728,7 +728,14 @@
 
     syn.append(synText);
 
-    li.append(row, syn);
+    /* Inside the row, not after it. The row is a grid, and as a child
+       the synopsis can take the two left columns on a second line
+       while the actions keep the right-hand column beside it — which
+       is what closes the gap that opened under a short title when the
+       icons were stacked three deep. */
+    row.append(syn);
+
+    li.append(row);
     li.dataset.slug = slugFor(s);
     list.append(li);
 
