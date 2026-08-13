@@ -24,24 +24,46 @@ import pdfplumber
 PDF_DIR = "pdfs"
 OUT_DIR = "read"
 
-# The page furniture to drop: anything below this sits in the bottom
-# margin, which holds nothing but the page number.
-FOOTER_TOP = 590
+# Nothing below is a fixed measurement, because the books are not
+# typeset alike: the body is set at 9 in one and 10.6 in another, one
+# puts its page numbers at the foot and another runs a header along the
+# top. So each book is measured first, and these are the proportions
+# used to read that measurement.
 
-# A line starting this far right of the text block is an indented
-# first line — which is how this typesetting marks a new paragraph.
-BODY_LEFT = 60
-INDENT_MIN = 66
-
-# Set larger than the body: a chapter number, or a section heading.
-HEADING_SIZE = 12
-
-# Front matter runs until the first chapter. These headings mark the
-# parts of it worth keeping — the rest is copyright and contents.
-FRONT_KEEP = ("SYNOPSIS", "A NOTE FROM THE AUTHOR")
-SKIP_HEADS = ("CONTENTS",)
+HEAD_RATIO = 1.18    # larger than the body by this much: a heading
+FURNITURE  = 0.92    # smaller than the body by this much: page furniture
+INDENT_PT  = 4       # further right than the margin: a new paragraph
+MARGIN_PT  = 42      # this close to the top or foot: not the text
 
 
+def measure(pdf):
+    """Take the book's own measurements before reading it. The body is
+       whatever size most of the words are set in, and the left margin
+       is wherever most lines begin — everything else is judged against
+       those two."""
+    sizes, lefts, gaps = {}, {}, {}
+    for page in pdf.pages[:24]:
+        prev = None
+        for line in page.extract_text_lines():
+            if not line["text"].strip():
+                continue
+            size = round(max(c["size"] for c in line["chars"]), 1)
+            sizes[size] = sizes.get(size, 0) + len(line["text"])
+            x0 = round(line["x0"])
+            lefts[x0] = lefts.get(x0, 0) + 1
+            if prev is not None:
+                g = round(line["top"] - prev)
+                if 0 < g < 60:
+                    gaps[g] = gaps.get(g, 0) + 1
+            prev = line["top"]
+    if not sizes:
+        return 10.0, 60, 16
+    body = max(sizes, key=sizes.get)
+    left = max(lefts, key=lefts.get)
+    # The ordinary step from one line to the next. Anything taller is
+    # air the typesetter put there on purpose.
+    lead = max(gaps, key=gaps.get) if gaps else 16
+    return body, left, lead
 def line_html(line):
     """A line of text, with its italic runs marked.
 
@@ -74,10 +96,9 @@ def is_verse_head(text):
 
 def extract(path):
     """Walk the pages and turn lines into blocks. A block is a
-       paragraph, a heading, or a line of verse — the reader knows all
-       three. Sizes do the sorting: the body is set at 9, headings
-       above 10, and the closing verse at 10.5 under a heading of its
-       own, which is why the verse flag has to hold once it is set."""
+       paragraph, a heading, or a line of verse. What sorts them is the
+       book's own body size, measured first, so a novella set at 10.6
+       reads the same as one set at 9."""
     blocks = []
     in_verse = False
     para = []
@@ -88,29 +109,50 @@ def extract(path):
             para.clear()
 
     with pdfplumber.open(path) as pdf:
+        body, left, lead = measure(pdf)
+        head_at = body * HEAD_RATIO
+        small_at = body * FURNITURE
+
         for page in pdf.pages:
+            prev_top = None
+            top_edge = MARGIN_PT
+            foot_edge = page.height - MARGIN_PT
+
             for line in page.extract_text_lines():
                 text = line["text"].strip()
                 if not text:
                     continue
-                if line["top"] > FOOTER_TOP:
-                    continue
+
+                size = round(max(c["size"] for c in line["chars"]), 1)
+
+                # Page furniture: a folio, or a running head. Both sit
+                # in a margin, or are set smaller than the body, or are
+                # nothing but a number.
                 if re.fullmatch(r"[0-9ivxlcIVXLC]+", text):
                     continue
+                if size < small_at and (line["top"] < top_edge
+                                        or line["top"] > foot_edge):
+                    continue
+                if line["top"] > foot_edge and len(text) < 60:
+                    continue
 
-                size = max(round(c["size"], 1) for c in line["chars"])
                 html = line_html(line)
 
-                if size >= 12:
+                # Set larger than the body: a chapter, a part title.
+                if size >= head_at:
                     flush()
-                    in_verse = False
+                    in_verse = is_verse_head(text)
                     blocks.append({"t": "h", "h": html})
                     continue
 
-                if size >= 10 and not in_verse:
+                # Some of these books mark their sections in capitals
+                # at ordinary size instead — SESSION FOUR, REEL TWO.
+                # A short line shouting on its own is a heading too.
+                letters = re.sub(r"[^A-Za-z]", "", text)
+                if (letters and len(text) < 70 and text == text.upper()
+                        and len(letters) > 2):
                     flush()
-                    if is_verse_head(text):
-                        in_verse = True
+                    in_verse = is_verse_head(text)
                     blocks.append({"t": "h", "h": html})
                     continue
 
@@ -120,11 +162,88 @@ def extract(path):
                     blocks.append({"t": "v", "h": html})
                     continue
 
-                if line["x0"] >= INDENT_MIN and para:
+                if size < small_at:
+                    continue          # a caption or a stray running head
+
+                # Two ways a book opens a paragraph, and these ten
+                # use both: an indented first line, or a line of air
+                # above it. Either one is enough.
+                indented = line["x0"] >= left + INDENT_PT
+                spaced = prev_top is not None and (line["top"] - prev_top) > lead * 1.3
+                if (indented or spaced) and para:
                     flush()
                 para.append(html)
+                prev_top = line["top"]
             flush()
     return blocks
+
+
+# The copyright page, in the words it always uses. Some books set
+# these lines at body size, so no measurement will catch them.
+BOILERPLATE = re.compile(
+    r"^\s*(ISBN\b|Copyright\s*(\u00a9|\(c\))|All rights reserved"
+    r"|This is a work of fiction|Typeset in\b|Printed in\b"
+    r"|Roya Publication[s]?\s*(No\.|\u00b7)|A ROYA PUBLICATION\s*$)", re.I)
+
+# Where the reading starts, however the book announces it. Kept tight:
+# a looser pattern matched "Book I of the Borrowed Sun Cycle" on a
+# title page and opened the book on its own half-title.
+OPENER = re.compile(r"^\s*(A NOTE FROM THE AUTHOR|CHAPTER\b|PART\s+(ONE|I)\b)", re.I)
+
+# A line of a contents list: a short title with the page it is on.
+# Some books head the list with the word CONTENTS and some simply
+# start listing, so the shape has to be recognised on its own.
+CONTENTS_LINE = re.compile(r"^.{0,70}?\s\d{1,3}$")
+
+
+def drop_contents(blocks):
+    """Lose the contents list. Alone, a line like "Hearing One — the
+       Founding 14" is indistinguishable from a heading; three or more
+       in a row are unmistakably a list, so runs are what we look
+       for."""
+    plains = [re.sub("<[^>]+>", "", b["h"]).strip() for b in blocks]
+    drop = set()
+    run = []
+    for i, text in enumerate(plains):
+        if CONTENTS_LINE.match(text):
+            run.append(i)
+            continue
+        if len(run) >= 3:
+            drop.update(run)
+        run = []
+    if len(run) >= 3:
+        drop.update(run)
+    return [b for i, b in enumerate(blocks) if i not in drop]
+
+
+def drop_listed_headings(blocks):
+    """Lose a contents list that carries no page numbers.
+
+       Some books list their sections as a bare stack of titles, which
+       looks exactly like a stack of headings. What gives the list away
+       is that the book then goes on to use the same titles again, in
+       the same order, as the sections themselves. So inside a long run
+       of headings with no prose between them, any title that turns up
+       again later is the list's copy, not the section's."""
+    runs, run = [], []
+    for i, b in enumerate(blocks):
+        if b["t"] == "h":
+            run.append(i)
+        else:
+            if len(run) >= 4:
+                runs.append(run)
+            run = []
+    if len(run) >= 4:
+        runs.append(run)
+
+    plains = [re.sub("<[^>]+>", "", b["h"]).strip().upper() for b in blocks]
+    drop = set()
+    for run in runs:
+        for i in run:
+            later = plains[i + 1:]
+            if plains[i] and plains[i] in later:
+                drop.add(i)
+    return [b for i, b in enumerate(blocks) if i not in drop]
 
 
 def tidy(blocks):
@@ -132,30 +251,50 @@ def tidy(blocks):
        paragraphs that a page break cut in half. The title page,
        copyright and synopsis are the book\'s front matter — the site
        says all of that already."""
+    # Find the first thing that is the book rather than its front
+    # matter. Most announce it with a heading; some set the same words
+    # at body size, at the head of a paragraph, so both are checked.
     start = 0
     for i, b in enumerate(blocks):
-        if b["t"] == "h" and re.match(r"^\s*A NOTE FROM THE AUTHOR",
-                                      re.sub("<[^>]+>", "", b["h"]), re.I):
+        plain = re.sub("<[^>]+>", "", b["h"]).strip()
+        author_note = re.match(r"^\s*A Note from the Author\b", plain, re.I)
+        # A chapter opening counts only when it is set as a heading;
+        # as a paragraph it is far more likely to be a title page.
+        if (b["t"] == "h" and OPENER.match(plain)) or author_note:
             start = i
+            # Set inline: cut the announcement off the paragraph and
+            # give it back as the heading it was meant to be.
+            if b["t"] == "p":
+                m = re.match(r"^\s*(A Note from the Author)\s*(.*)$",
+                             plain, re.I | re.S)
+                if m:
+                    blocks[i] = {"t": "h", "h": m.group(1).upper()}
+                    blocks.insert(i + 1, {"t": "p", "h": m.group(2)})
             break
-    else:
-        for i, b in enumerate(blocks):
-            if b["t"] == "h" and re.match(r"^\s*CHAPTER\b",
-                                          re.sub("<[^>]+>", "", b["h"]), re.I):
-                start = i
-                break
+
+    blocks = drop_listed_headings(drop_contents(blocks[start:]))
+    start = 0
 
     out, skipping = [], False
-    for b in blocks[start:]:
+    for b in blocks:
         plain = re.sub("<[^>]+>", "", b["h"]).strip()
         if b["t"] == "h":
             skipping = bool(re.match(r"^\s*CONTENTS\b", plain, re.I))
             if skipping:
                 continue
         if skipping:
-            continue
+            # A contents list is a run of short lines. The moment a
+            # real paragraph turns up the list is over — some books
+            # have no heading after it to say so, and without this the
+            # rest of the novella went in the bin with the list.
+            if b["t"] == "p" and len(plain.split()) > 25:
+                skipping = False
+            else:
+                continue
         if not plain:
             continue
+        if BOILERPLATE.match(plain):
+            continue          # the copyright page, wherever it landed
         if (out and out[-1]["t"] == "p" and b["t"] == "p"
                 and not re.search(r'[.?!"\u201d\u2019]\s*$', out[-1]["h"])
                 and plain[:1].islower()):
