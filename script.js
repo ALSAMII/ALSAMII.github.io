@@ -245,9 +245,11 @@
     ftSub.textContent = "";
     if (!s || (!s.door && !s.room && !s.key)) { ftSub.hidden = true; return; }
     ftSub.hidden = false;
-    ftSub.append(triadEl(s));
+    /* Notes above the triad, as in the shelf below: whether a book is
+       for you, then where it sits in the Reach. */
     var n = notesEl(s);
     if (n) ftSub.append(n);
+    ftSub.append(triadEl(s));
   }
 
   function showFeature(s, num, pdf, cover) {
@@ -744,14 +746,17 @@
 
     var synText = document.createElement("span");
     synText.textContent = s.synopsis;
-    syn.append(synHead);
+    /* The order a stranger needs, not the order the catalogue was
+       built in: what the book is about, then whether it is for them,
+       then where it sits in the Reach. The synopsis first because the
+       three terms below it name things the reader has not met yet —
+       "Halo" means nothing until the story has introduced it. */
+    syn.append(synText);
 
-    /* Full width, below the cover — the band runs the whole measure
-       rather than sharing the column with the artwork. */
     var notes = notesEl(s);
     if (notes) syn.append(notes);
 
-    syn.append(synText);
+    syn.append(synHead);
 
     /* Inside the row, not after it. The row is a grid, and as a child
        the synopsis can take the two left columns on a second line

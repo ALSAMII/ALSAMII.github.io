@@ -1717,25 +1717,42 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin: 0.1rem 0 0.6rem;
 }
 
-/* Door, Room and Key across the measure rather than down it. Three
-   equal columns, so the three read as one set of facts about the book
-   instead of a list that happens to be three long. */
+/* Three rows, each with its term standing in a column of its own and
+   the description running alongside. Side by side in three columns the
+   descriptions broke into narrow ragged stacks; given the width of the
+   measure they read as sentences, which is what they are. */
 .syn-head .tri {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.3rem clamp(0.85rem, 3vw, 1.75rem);
-  align-items: start;
+  grid-template-columns: minmax(3.5rem, auto) 1fr;
+  gap: 0;
+  align-items: baseline;
 }
 
+/* display: contents — each row hands its two children straight to the
+   grid above, so every term lines up in one column however long the
+   description beside it runs. */
 .syn-head .tri-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  min-width: 0;
+  display: contents;
 }
 
-.syn-head .tri-term { font-size: 0.5rem; letter-spacing: 0.2em; }
-.syn-head .tri-def { font-size: 0.8125rem; line-height: 1.35; }
+.syn-head .tri-term {
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  color: var(--ember);
+  padding: 0.7rem 1rem 0.7rem 0;
+}
+
+.syn-head .tri-def {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  padding: 0.7rem 0;
+}
+
+/* A hairline between one and the next, drawn across both columns. */
+.syn-head .tri-row + .tri-row .tri-term,
+.syn-head .tri-row + .tri-row .tri-def {
+  border-top: 1px solid var(--hairline);
+}
 
 /* A rule under the block separates the facts from the story, so the
    two stop reading as one undifferentiated column of serif. */
