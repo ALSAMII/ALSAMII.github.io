@@ -13,12 +13,6 @@
   --ember:      #d8a65f;                    /* candlelight accent */
   --ember-soft: rgba(216, 166, 95, 0.55);
 
-  /* The bracket down the side of a series. Far quieter than the rules
-     it sits among: it runs the whole height of every book in a group,
-     so at the weight of a heading rule it was the brightest thing on
-     the shelf — a line whose only job is to say "these belong
-     together" should be noticed second, not first. */
-  --series-rule: rgba(216, 166, 95, 0.2);
   --ember-dim:  #b8964f;                    /* nav at rest — gold, held back */
   --ember-lit:  #f0c47e;                    /* nav under the cursor */
 
@@ -974,13 +968,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin-top: -0.2rem;
 }
 
-/* A book inside a series carries a gold rule down its left edge —
-   one continuous bracket for the whole group, since the rows sit
-   flush against each other. */
-.story.in-series {
-  padding-left: 0.7rem;
-  box-shadow: inset 1px 0 0 var(--series-rule);
-}
+/* A book inside a series keeps its indent, and nothing else. The rule
+   that used to run down the left edge joined the row's own top and
+   bottom borders at the corners, which made a box around the group —
+   and a box is a heavier thing than a set of books needs. The line
+   naming the series under each reading time does the same work
+   without drawing anything. */
+.story.in-series { padding-left: 0.7rem; }
 
 /* The series and the book's place in it, under the reading time. */
 .story-series {
@@ -3023,7 +3017,6 @@ html[data-theme="light"] {
      metal instead. */
   --ember:      #7a5a17;
   --ember-soft: rgba(122, 90, 23, 0.55);
-  --series-rule: rgba(122, 90, 23, 0.26);
   --ember-dim:  #6b4f14;
   --ember-lit:  #4f3a0c;
   --hairline:   rgba(20, 23, 26, 0.18);
