@@ -714,7 +714,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* Three columns only: the margin (number over share), the book,
      and one stack of actions down the right. Everything that used to
      sit side by side is stacked now, so the title keeps the width. */
-  grid-template-columns: 2.75rem 1fr auto;
+  /* Small by default: on a wide screen the shelf is a sidebar barely
+     twenty ems across, and a cover sized for a phone left room for
+     two books on the whole page. The phone block below enlarges it. */
+  grid-template-columns: 3.4rem 1fr auto;
   /* Top, not centre: once a row carries a hook and a reading time it
      is tall enough that a centred number floats away from its own
      title. */
@@ -728,11 +731,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    stack three deep never sets the height of the line beside it. */
 .story-acts {
   grid-column: 3;
-  /* span 2, not 1 / -1: the second row is implicit (it exists only
-     when a row is open), and -1 resolves to the end of the explicit
-     grid, which would leave the stack setting the height of the
-     first line after all. */
-  grid-row: 1 / span 2;
+  /* One row only. The cover made this line tall enough that the
+     stack no longer overhangs it, which frees the synopsis below to
+     take the whole measure instead of dodging the column. */
+  grid-row: 1;
   align-self: start;
   display: flex;
   flex-direction: column;
@@ -740,29 +742,64 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   gap: 0.7rem;
 }
 
-/* The left margin of a row: the number, and the share mark beneath it. */
+/* The left margin of a row: the number, the cover, and the word that
+   passes it on. */
 .story-mark {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0.55rem;
+  align-items: center;
+  gap: 0.4rem;
   min-width: 0;
 }
 
-/* Left-aligned with the number above it rather than centred in its own
-   box, which would set it adrift from the digits. */
+/* The cover on the shelf.
+
+   No border and no card: the artwork is printed to the edge, and a
+   frame around it would read as a sticker on the page. Instead the
+   edges are faded out with a mask, so the paper thins into whatever
+   is behind it — which means it sits as well on the light theme as on
+   the dark one without a second set of rules, since a mask hides
+   rather than paints. */
+.row-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .story:hover .row-cover { transform: translateY(-2px); }
+}
+
+/* Centred under the cover it belongs to, and set larger than the
+   other labels: with no mark above it, the word is the whole
+   control. */
 .story-mark .icon-btn.share {
   min-width: 0;
-  align-items: flex-start;
-  padding: 0;
-  gap: 0.25rem;
+  align-items: center;
+  padding: 0.1rem 0;
+  gap: 0;
 }
-.story-mark .icon-btn.share .icon-label { letter-spacing: 0.1em; }
+.story-mark .icon-btn.share .icon-label {
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  opacity: 1;
+}
 
 .story .num {
   color: var(--ember);
   letter-spacing: 0.12em;   /* 0.2em read as two separate digits */
-  padding-top: 0.4rem;      /* sits on the title's baseline */
+  font-size: 0.5625rem;
+  opacity: 0.85;
 }
 
 .story .title {
@@ -866,9 +903,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .story .synopsis { display: none; }
 
 .story.open .synopsis {
-  /* The two left columns of the row, on the line below the title —
-     clear of the actions, which keep the column to their right. */
-  grid-column: 1 / 3;
+  /* The full width of the row, on the line below. */
+  grid-column: 1 / -1;
   grid-row: 2;
   display: block;
   white-space: pre-line;   /* paragraph breaks, as on the stage */
@@ -1374,6 +1410,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      take their natural width and the stamp centres in what is left. */
   .masthead { gap: 0.5rem; grid-template-columns: 1fr auto 1fr; padding: 1.1rem 0 1rem; }
 
+  /* The shelf is the whole page on a phone, so the covers can be the
+     size they deserve. */
+  .story-row { grid-template-columns: clamp(4.25rem, 19vw, 6.5rem) 1fr auto; }
+  .story-mark .icon-btn.share .icon-label { font-size: 0.6875rem; }
+
   .masthead .roya { height: 5rem; padding: 0.1rem 0.45rem; }
   .brand-col { gap: 0.5rem; }
   .brand-name .name { font-size: 1.25rem; letter-spacing: 0.14em; }
@@ -1663,15 +1704,28 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    side, with the synopsis underneath the pair. The space beside a
    cover this size was otherwise empty. */
 .syn-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin: 0.25rem 0 0.55rem;
+  display: block;
+  margin: 0.1rem 0 0.6rem;
 }
 
-.syn-head img { margin: 0; flex: 0 0 6rem; width: 6rem; }
+/* Door, Room and Key across the measure rather than down it. Three
+   equal columns, so the three read as one set of facts about the book
+   instead of a list that happens to be three long. */
+.syn-head .tri {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem clamp(0.85rem, 3vw, 1.75rem);
+  align-items: start;
+}
 
-.syn-head .tri { flex: 1 1 0; min-width: 0; gap: 0.55rem; }
+.syn-head .tri-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.syn-head .tri-term { font-size: 0.5rem; letter-spacing: 0.2em; }
 .syn-head .tri-def { font-size: 0.8125rem; line-height: 1.35; }
 
 /* A rule under the block separates the facts from the story, so the
@@ -1903,6 +1957,45 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   padding: 1.05rem 0.25rem;
   cursor: pointer;
 }
+
+/* The series heading: its words on the left, the books it holds on the
+   right. The covers were only visible once the series was opened,
+   which is exactly the wrong way round — they are the invitation. */
+.t-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 3vw, 2rem);
+}
+
+.t-words { min-width: 0; }
+
+.t-covers {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+}
+
+/* Faded at the edges like the covers on the shelf, so a row of three
+   reads as books standing together rather than three pasted cards. */
+.t-covers img {
+  display: block;
+  width: clamp(2.5rem, 9vw, 3.5rem);
+  height: auto;
+  border-radius: 2px;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* A group of four or more would push the heading off its own line. */
+.t-covers.many img { width: clamp(1.9rem, 6.5vw, 2.6rem); }
 
 .t-label {
   margin: 0 0 0.4rem;

@@ -481,22 +481,35 @@
     var syn = document.createElement("div");
     syn.className = "synopsis";
 
-    var minis = document.createElement("div");
-    minis.className = "minis" + (t.books.length > 3 ? " many" : "");
+    /* The covers stand beside the heading, in the space that was
+       empty — a series should show what is in it before it is opened,
+       the same way the rows below show a book by its cover. */
+    var head = document.createElement("div");
+    head.className = "t-head";
+
+    var words = document.createElement("div");
+    words.className = "t-words";
+    if (label) words.append(label);
+    words.append(title);
+
+    var set = document.createElement("div");
+    set.className = "t-covers" + (t.books.length > 3 ? " many" : "");
     t.books.forEach(function (n) {
       var im = document.createElement("img");
       im.src = coverFor(n);
       im.alt = "";
+      im.loading = "lazy";
       im.addEventListener("error", function () { im.remove(); });
-      minis.append(im);
+      set.append(im);
     });
+
+    head.append(words, set);
 
     var txt = document.createElement("span");
     txt.textContent = t.synopsis;
-    syn.append(minis, txt);
+    syn.append(txt);
 
-    if (label) li.append(label);
-    li.append(title, syn);
+    li.append(head, syn);
     li.dataset.slug = trioSlug(t);
     list.append(li);
     groupRows.push({ group: t, el: li });
@@ -605,7 +618,8 @@
     shareBtn.type = "button";
     shareBtn.title = "Share this book";
     shareBtn.setAttribute("aria-label", s.title + " — copy a link to this book");
-    shareBtn.innerHTML = SHARE_ICON;
+    /* A word, not a mark: under a cover the icon read as clutter,
+       and "Share" says it plainly. */
     var shareLabel = iconLabel("Share");
     shareBtn.append(shareLabel);
 
@@ -653,12 +667,21 @@
       }
     });
 
-    /* The number and the share mark share the left margin: share is
-       the one control that doesn't open the book, so it sits away
-       from the two that do, and gives the title its full width back. */
+    /* The left margin of the row: the cover, with its number above and
+       the way to pass it on below. A shelf of books ought to look like
+       one — the covers are the reason anybody stops scrolling. */
     var mark = document.createElement("div");
     mark.className = "story-mark";
-    mark.append(numEl, shareBtn);
+
+    var rowImg = document.createElement("img");
+    rowImg.className = "row-cover";
+    rowImg.src = cover;
+    rowImg.alt = "";
+    rowImg.loading = "lazy";
+    rowImg.addEventListener("error", function () { rowImg.remove(); });
+    makeCoverOpen(rowImg, num + " \u00b7 " + s.title);
+
+    mark.append(numEl, rowImg, shareBtn);
 
     /* Read here, rather than downloading the object. First of the two,
        because it is what most people want and the PDF is the keepsake. */
@@ -703,19 +726,12 @@
     var syn = document.createElement("div");
     syn.className = "synopsis";
 
-    /* Cover on the left, Door / Room / Key on the right, synopsis
-       underneath the pair. The space beside a 9rem cover was empty
-       and this is exactly what belongs in it. */
+    /* No cover here any more — it stands in the row above, and
+       repeating it only pushed the reading matter down the screen.
+       Door, Room and Key take the full width instead, side by side. */
     var synHead = document.createElement("div");
     synHead.className = "syn-head";
-
-    var synImg = document.createElement("img");
-    synImg.src = cover;
-    synImg.alt = "";
-    synImg.addEventListener("error", function () { synImg.remove(); });
-
-    makeCoverOpen(synImg, num + " \u00b7 " + s.title);
-    synHead.append(synImg, triadEl(s));
+    synHead.append(triadEl(s));
 
     var synText = document.createElement("span");
     synText.textContent = s.synopsis;
