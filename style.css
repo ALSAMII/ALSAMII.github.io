@@ -753,7 +753,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   grid-template-columns: 4.5rem 1fr auto;
   /* Top, not centre: once a row carries a hook and a reading time it
      is tall enough that a centred number floats away from its own
-     title. */
+     title. The text column is nudged down a little below, so the
+     title's first line sits level with the top of the cover rather
+     than a few pixels above it — the serif carries space above its
+     capitals that the artwork does not. */
   align-items: start;
   gap: 0.875rem;
   padding: 1.05rem 0.25rem;
@@ -887,6 +890,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .story-head { min-width: 0; }
 
+
+
 /* The number, at the foot of the action column.
 
    No ring, no ticks, no rule: the medallion was a drawing around a
@@ -898,8 +903,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin-top: 0.15rem;
   font-family: var(--serif);
   font-weight: 400;
-  font-size: 1.75rem;
-  letter-spacing: 0.08em;
+  font-size: 3.5rem;
+  letter-spacing: 0.06em;
   line-height: 1;
   text-transform: none;
   color: var(--ember);
@@ -940,7 +945,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    Thirty-five titles alone gave a visitor nothing to choose
    between. The hook is what they actually read while scrolling;
    the reading time is what decides it. */
-.story-main { min-width: 0; }
+.story-main {
+  min-width: 0;
+  /* Nudged down so the title's capitals sit level with the top edge of
+     the cover: the serif carriesspace above its capitals that the
+     artwork beside it does not. */
+  padding-top: 0;
+  margin-top: -0.2rem;
+}
 
 .story-sub {
   margin: 0.35rem 0 0;
@@ -1555,7 +1567,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   }
 
   .story .title { font-size: 1.1875rem; }
-  .story .num { width: 2.3rem; height: 2.3rem; font-size: 0.9375rem; }
+  .story .num { font-size: 3.25rem; }
   .story-head { gap: 0.55rem; }
   .story-acts { padding-left: 0.7rem; gap: 0.55rem; }
   .story-acts .icon-btn { gap: 0.4rem; }
