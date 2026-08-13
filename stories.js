@@ -740,6 +740,7 @@ const TRILOGIES = [
   },
   {
     title: "The Sovereign Rooms",
+    banner: "assets/sovereign-rooms.jpg",
     label: "",
     books: [36, 37, 38, 39, 40],
     synopsis: "Two accounts of a self that does not answer to its owner. A hospice scribe whose left hand, cut loose by a stroke, begins writing the things thirty years of mercy left out \u2014 and is never wrong about any of them. A man over the diagnostic threshold who takes six doses of a compound that lowers a guard he has never once had to lower, and comes back with a complete map of what other people feel and no way at all to be moved by it. One room writes without permission. The other can be entered at will and costs nothing to leave. Both are sovereign, and neither is governed."
