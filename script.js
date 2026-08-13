@@ -585,6 +585,13 @@
 
     title.append(titleBtn);
 
+    /* The number rides beside the title in a struck medallion, the way
+       a plate number sits on an old frontispiece — the crosshair is
+       drawn in CSS, so it costs nothing and scales with the type. */
+    var head = document.createElement("div");
+    head.className = "story-head";
+    head.append(numEl, title);
+
     var pdfBtn = document.createElement("a");
     pdfBtn.className = "icon-btn";
     pdfBtn.href = pdf;
@@ -601,7 +608,7 @@
        past, so it is where the book has to make its case. */
     var main = document.createElement("div");
     main.className = "story-main";
-    main.append(title);
+    main.append(head);
 
     var sub = document.createElement("p");
     sub.className = "story-sub";
@@ -631,8 +638,10 @@
     shareBtn.type = "button";
     shareBtn.title = "Share this book";
     shareBtn.setAttribute("aria-label", s.title + " — copy a link to this book");
-    /* A word, not a mark: under a cover the icon read as clutter,
-       and "Share" says it plainly. */
+    /* The mark is back: share stands in a column with PDF and Read
+       now, and without one of its own its word would not line up with
+       theirs. */
+    shareBtn.innerHTML = SHARE_ICON;
     var shareLabel = iconLabel("Share");
     shareBtn.append(shareLabel);
 
@@ -684,8 +693,6 @@
        it belongs with the words about the book, and it keeps its place
        when the row opens. Appended here, where the button exists —
        above, var would have handed us an empty box. */
-    main.append(shareBtn);
-
     /* The left margin of the row: the cover. A shelf of books ought to look like
        one — the covers are the reason anybody stops scrolling. */
     var mark = document.createElement("div");
@@ -730,7 +737,10 @@
     /* The number crowns the column: the top right was the one piece of
        empty space in the row, and a numbered series should wear its
        numbers where they can be seen. */
-    acts.append(numEl, pdfBtn, readBtn);
+    /* PDF, then read, then share at the foot: two ways into the book
+       and then the way to hand it on. The number has left this column
+       for the title, so the three sit at the top of the row. */
+    acts.append(pdfBtn, readBtn, shareBtn);
 
     row.append(mark, main, acts);
 

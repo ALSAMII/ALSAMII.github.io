@@ -706,8 +706,41 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   min-height: 9rem;
 }
 
-.story { border-bottom: 1px solid var(--hairline); }
-.story:first-child { border-top: 1px solid var(--hairline); }
+/* The rule between one book and the next, with a diamond set into the
+   middle of it.
+
+   The line is drawn as a border-image rather than a plain border, so a
+   gap can be left at the centre for the mark to sit in. A background
+   swatch behind the diamond would have shown as a patch against the
+   backdrop photograph; a gap in the line shows nothing at all. */
+.story {
+  position: relative;
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(to right,
+      var(--hairline) 0 47%,
+      transparent 47% 53%,
+      var(--hairline) 53% 100%) 1;
+}
+
+.story::after {
+  content: "\25c8";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  font-size: 0.5rem;
+  line-height: 1;
+  color: var(--ember-soft);
+  pointer-events: none;
+}
+
+.story:first-child {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(to right,
+      var(--hairline) 0 47%,
+      transparent 47% 53%,
+      var(--hairline) 53% 100%) 1;
+}
 
 .story-row {
   display: grid;
@@ -738,9 +771,55 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   align-self: start;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
+  align-items: flex-start;
+  gap: clamp(0.65rem, 2.2vw, 1rem);
+
+  /* A rule down the left of the column, with a diamond set into it —
+     the same mark that divides one book from the next, turned on its
+     side. It separates the doing from the reading. */
+  position: relative;
+  padding-left: clamp(0.85rem, 3.5vw, 1.5rem);
 }
+
+.story-acts::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  bottom: 0.15rem;
+  width: 1px;
+  background: var(--hairline);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0 42%, transparent 42%, transparent 58%, #000 58% 100%);
+  mask-image: linear-gradient(to bottom, #000 0 42%, transparent 42%, transparent 58%, #000 58% 100%);
+}
+
+.story-acts::after {
+  content: "\25c8";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.4rem;
+  line-height: 1;
+  color: var(--ember-soft);
+}
+
+/* Mark and word side by side rather than stacked: three pairs down a
+   column read as a short menu, where three stacks read as a totem. */
+.story-acts .icon-btn {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.1rem 0;
+}
+.story-acts .icon-btn .icon-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  opacity: 0.8;
+}
+.story-acts .icon-btn:hover .icon-label { opacity: 1; }
+.story-acts .icon-btn.share .icon-label { opacity: 1; }
 
 /* The left margin of a row: the cover, and nothing else. */
 .story-mark {
@@ -760,15 +839,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 2px;
+  /* Rounded enough that no corner arrives as a point. The corners are
+     what gave the artwork away as a pasted rectangle. */
+  border-radius: 6px;
+
+  /* Three masks, taken together at their weakest (intersect): the two
+     linear ones thin the paper along each edge, and the oval takes the
+     corners down further still, since a corner is the one place two
+     edges arrive at once. The fades run twice as far as they did —
+     a short fade reads as a cut, a long one as paper thinning out. */
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%),
+    radial-gradient(115% 108% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 82%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%),
+    radial-gradient(115% 108% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 82%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
+
+  /* A few points short of solid, so the room shows faintly through the
+     artwork and the two stop being separate objects. */
+  opacity: 0.95;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
@@ -792,32 +885,80 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 1;
 }
 
-/* The number, at the head of the action column. A numbered series
-   ought to wear its numbers, so this one is set large in the serif
-   and given a gold hairline under it — the only figure on the shelf
-   that looks like a plate number rather than a label. */
+/* The title, with its number beside it. */
+.story-head {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.6rem, 2.5vw, 1.1rem);
+  min-width: 0;
+}
+
+/* The number, struck like a plate number on a frontispiece: set in the
+   serif inside a ring, with four ticks at the compass points. All of
+   it is drawn in CSS — a ring and two hairlines — so it scales with
+   the type and costs nothing to load. */
 .story .num {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
   font-family: var(--serif);
   font-weight: 500;
-  font-size: 1.5rem;
-  letter-spacing: 0.04em;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
   line-height: 1;
   text-transform: none;
   color: var(--ember);
-  padding-bottom: 0.3rem;
-  margin-bottom: 0.25rem;
-  border-bottom: 1px solid var(--ember-soft);
-  transition: color 0.25s ease;
+  border: 1px solid var(--ember-soft);
+  border-radius: 50%;
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
-.story:hover .num { color: var(--ember-lit); }
 
+/* The ticks: two hairlines crossing the ring, cut away behind the
+   figure so the number sits in a clearing rather than on top of a
+   drawing. */
+.story .num::before,
+.story .num::after {
+  content: "";
+  position: absolute;
+  background: var(--ember-soft);
+  opacity: 0.7;
+}
+.story .num::before {
+  left: -0.3rem;
+  right: -0.3rem;
+  height: 1px;
+  -webkit-mask-image: linear-gradient(to right, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
+  mask-image: linear-gradient(to right, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
+}
+.story .num::after {
+  top: -0.3rem;
+  bottom: -0.3rem;
+  width: 1px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
+  mask-image: linear-gradient(to bottom, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
+}
+
+.story:hover .num,
+.story.open .num { color: var(--ember-lit); border-color: var(--ember); }
+
+/* The serif, and given real size. The sans read as a list of files;
+   these are books, and the title is the one line on the shelf that
+   ought to look printed rather than filed. */
 .story .title {
   margin: 0;
-  font-family: var(--sans);
-  font-weight: 400;
-  font-size: 1.0625rem;
-  letter-spacing: 0.02em;
-  color: var(--parchment);
+  min-width: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  /* Modest by default: on a wide screen the shelf is a sidebar barely
+     three hundred pixels across, and a title sized for a phone broke
+     over three lines there. The phone block enlarges it. */
+  font-size: 1.125rem;
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  color: var(--ember);
   transition: color 0.25s ease;
 }
 
@@ -1424,7 +1565,31 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
   /* The shelf is the whole page on a phone, so the covers can be the
      size they deserve. */
-  .story-row { grid-template-columns: clamp(5.5rem, 25vw, 8.5rem) 1fr auto; }
+  /* The cover reaches for the rule on either side of it: on a phone
+     the shelf is the page, and the artwork is the reason anyone stops
+     scrolling. The row's own side padding is given back too, so the
+     cover starts where the dividing line does. */
+  .story-row {
+    /* 32vw took the width the titles needed and broke them over two
+       lines; this is as wide as the cover can go with the longest
+       title in the catalogue still standing on one. */
+    /* The cover gives a little back on a phone: the medallion and the
+       three named actions want width the old column left them. */
+    grid-template-columns: clamp(5rem, 22vw, 7.5rem) 1fr auto;
+    padding-left: 0;
+    /* Close to the rules above and below, not merely near them. */
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    column-gap: 0.7rem;
+  }
+
+  .story .title { font-size: 1.1875rem; }
+  .story .num { width: 2.3rem; height: 2.3rem; font-size: 0.9375rem; }
+  .story-head { gap: 0.55rem; }
+  .story-acts { padding-left: 0.7rem; gap: 0.55rem; }
+  .story-acts .icon-btn { gap: 0.4rem; }
+  .story-acts .icon-btn .icon-label { font-size: 0.5625rem; letter-spacing: 0.1em; }
+  .story-acts .icon-btn svg { width: 0.9rem; height: 0.9rem; }
   .story-mark .icon-btn.share .icon-label { font-size: 0.6875rem; }
 
   .masthead .roya { height: 5rem; padding: 0.1rem 0.45rem; }
@@ -2007,21 +2172,24 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   flex: 0 0 auto;
 }
 
-/* Faded at the edges like the covers on the shelf, so a row of three
-   reads as books standing together rather than three pasted cards. */
+/* Faded like the covers on the shelf, so a row of three reads as books
+   standing together rather than three pasted cards. */
 .t-covers img {
   display: block;
   width: clamp(2.5rem, 9vw, 3.5rem);
   height: auto;
-  border-radius: 2px;
+  border-radius: 5px;
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%),
+    radial-gradient(115% 108% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 82%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%),
+    radial-gradient(115% 108% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 82%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
+  opacity: 0.95;
 }
 
 /* A group of four or more would push the heading off its own line. */
@@ -2246,8 +2414,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .story.is-pinned,
 .trilogy.is-pinned { position: relative; }
 
-.story.is-pinned::after,
-.trilogy.is-pinned::after {
+/* ::before, not ::after: the divider's diamond took ::after, and the
+   two were overwriting each other — the pinned mark won and the
+   diamond vanished from whichever book was pinned. */
+.story.is-pinned::before,
+.trilogy.is-pinned::before {
   content: "";
   position: absolute;
   left: -0.6rem;
@@ -3007,6 +3178,28 @@ html[data-theme="light"] .icon-btn.share { color: var(--verdigris-dim); }
 html[data-theme="light"] .icon-btn.share:hover,
 html[data-theme="light"] .icon-btn.share:focus-visible { color: var(--verdigris); }
 html[data-theme="light"] .icon-btn.share.shared { color: var(--verdigris-lit); }
+
+/* The covers on paper.
+
+   A mask alone is not enough here. On the dark theme the artwork and
+   the room are both dark, so a thinning edge simply disappears into
+   it; on white, the same edge is the darkest thing on the page and
+   the fade only makes a soft-edged dark rectangle. So on paper the
+   covers are lifted and cooled a little — brought toward the page
+   rather than sat on top of it — and faded further at the edges. */
+html[data-theme="light"] .row-cover,
+html[data-theme="light"] .t-covers img {
+  opacity: 0.88;
+  filter: brightness(1.06) contrast(0.94);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
+    radial-gradient(112% 105% at 50% 50%, #000 46%, rgba(0,0,0,0.45) 78%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
+    radial-gradient(112% 105% at 50% 50%, #000 46%, rgba(0,0,0,0.45) 78%, transparent 100%);
+}
 
 /* The reader needs no light-theme rules of its own: it is built from
    --night, --parchment and --faded, all of which already flip. */
