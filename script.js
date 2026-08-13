@@ -510,6 +510,7 @@
        panorama is one picture of the world they share. */
     var set = document.createElement("div");
     if (t.banner) {
+      li.classList.add("has-banner");
       set.className = "t-banner";
       var bn = document.createElement("img");
       bn.src = t.banner;

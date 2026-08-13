@@ -714,22 +714,26 @@ const GLOSSARY = {
 const TRILOGIES = [
   {
     title: "Daughters of Anahita",
+    banner: "assets/daughters-of-anahita.jpg",
     books: [19, 20, 21],
     synopsis: "They don't buy men. They don't threaten them. They wait \u2014 and they have been waiting for three thousand years. The Gardener's Century: a dying bathhouse in communist Romania, an heir with nothing left but his name, and a woman planting something that won't bloom until everyone in the room is dead. The First Flame: the night it all began, when one ungoverned beauty burned a kingdom to ash \u2014 and patience was invented to make sure it never happened by accident again. The Final Bloom: a near future where gene-editing and ambient AI have made that patience absolute, and the order's most perfect instrument is aimed at the last incorruptible man on Earth. He will figure out exactly what is being done to him. It will not save him."
   },
   {
     title: "Les Folies",
+    banner: "assets/les-folies.jpg",
     books: [22, 23, 24],
     synopsis: "One city, three books, no villains. A clerk, then a crowd, then a congregation \u2014 each does everything correctly, and the result is wrong every time. Nobody breaks a law, nobody raises a voice, and by the final rule, you may already have agreed to it."
   },
   {
     title: "The Unwitnessed Wars I\u2013V",
+    banner: "assets/unwitnessed-wars.jpg",
     label: "",
     books: [26, 27, 28, 29, 30],
     synopsis: "Five atrocities the world declined to witness: poison gas drifting over the marshes of Iran and Iraq; a famine ordered by decree in Ukraine; a hundred machete days in Rwanda; wards of unheld children in Ceau\u0219escu's Romania; a show-ghetto dressed for the Red Cross and certified as almost normal. Five clerks counting what the ledgers were built to erase. Five doors the cornered body found \u2014 smoke, hunger, stillness, rocking, the drawn page \u2014 and one question, noir to the bone: shelter from the century, or the century, inside?"
   },
   {
     title: "The Unguarded Hours",
+    banner: "assets/unguarded-hours.jpg",
     label: "",
     books: [31, 32, 33, 34],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
