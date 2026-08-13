@@ -885,64 +885,30 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 1;
 }
 
-/* The title, with its number beside it. */
-.story-head {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.6rem, 2.5vw, 1.1rem);
-  min-width: 0;
-}
+.story-head { min-width: 0; }
 
-/* The number, struck like a plate number on a frontispiece: set in the
-   serif inside a ring, with four ticks at the compass points. All of
-   it is drawn in CSS — a ring and two hairlines — so it scales with
-   the type and costs nothing to load. */
+/* The number, at the foot of the action column.
+
+   No ring, no ticks, no rule: the medallion was a drawing around a
+   figure, and the figure is the interesting part. Set large in the
+   serif, spaced, and left to stand on its own — which reads the same
+   on paper as it does in the dark, since it is only type. */
 .story .num {
-  position: relative;
-  flex: 0 0 auto;
-  display: grid;
-  place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  align-self: flex-start;
+  margin-top: 0.15rem;
   font-family: var(--serif);
-  font-weight: 500;
-  font-size: 0.9375rem;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  font-size: 1.75rem;
+  letter-spacing: 0.08em;
   line-height: 1;
   text-transform: none;
   color: var(--ember);
-  border: 1px solid var(--ember-soft);
-  border-radius: 50%;
-  transition: color 0.25s ease, border-color 0.25s ease;
-}
-
-/* The ticks: two hairlines crossing the ring, cut away behind the
-   figure so the number sits in a clearing rather than on top of a
-   drawing. */
-.story .num::before,
-.story .num::after {
-  content: "";
-  position: absolute;
-  background: var(--ember-soft);
-  opacity: 0.7;
-}
-.story .num::before {
-  left: -0.3rem;
-  right: -0.3rem;
-  height: 1px;
-  -webkit-mask-image: linear-gradient(to right, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
-  mask-image: linear-gradient(to right, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
-}
-.story .num::after {
-  top: -0.3rem;
-  bottom: -0.3rem;
-  width: 1px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
-  mask-image: linear-gradient(to bottom, #000 0 22%, transparent 26%, transparent 74%, #000 78% 100%);
+  opacity: 0.75;
+  transition: opacity 0.25s ease, color 0.25s ease;
 }
 
 .story:hover .num,
-.story.open .num { color: var(--ember-lit); border-color: var(--ember); }
+.story.open .num { opacity: 1; color: var(--ember-lit); }
 
 /* The serif, and given real size. The sans read as a list of files;
    these are books, and the title is the one line on the shelf that
@@ -950,6 +916,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .story .title {
   margin: 0;
   min-width: 0;
+  /* One line, always. A name broken across two lines stops looking
+     like one name — so the type is taken down a little on the few
+     titles too long for the measure (see fitTitles in script.js)
+     rather than the line being broken or the end cut off. */
+  white-space: nowrap;
   font-family: var(--serif);
   font-weight: 500;
   /* Modest by default: on a wide screen the shelf is a sidebar barely

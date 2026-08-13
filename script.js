@@ -585,12 +585,9 @@
 
     title.append(titleBtn);
 
-    /* The number rides beside the title in a struck medallion, the way
-       a plate number sits on an old frontispiece — the crosshair is
-       drawn in CSS, so it costs nothing and scales with the type. */
     var head = document.createElement("div");
     head.className = "story-head";
-    head.append(numEl, title);
+    head.append(title);
 
     var pdfBtn = document.createElement("a");
     pdfBtn.className = "icon-btn";
@@ -740,7 +737,10 @@
     /* PDF, then read, then share at the foot: two ways into the book
        and then the way to hand it on. The number has left this column
        for the title, so the three sit at the top of the row. */
-    acts.append(pdfBtn, readBtn, shareBtn);
+    /* The number closes the column, below the three actions: set
+       plainly and large, it reads as the plate number of the volume
+       rather than as a fourth thing to press. */
+    acts.append(pdfBtn, readBtn, shareBtn, numEl);
 
     row.append(mark, main, acts);
 
@@ -1353,6 +1353,44 @@
   window.addEventListener("hashchange", function () {
     if (!openFromHash()) unpin();
   });
+
+  /* Titles hold one line. Most fit as set; the long ones are stepped
+     down until they do, never below three quarters of the size, which
+     is as small as a title can go and still match its neighbours. Run
+     after the list is built and again when the window changes, since
+     the measure moves with it. */
+  function fitTitles() {
+    var titles = document.querySelectorAll(".story .title-btn");
+    for (var i = 0; i < titles.length; i++) {
+      var el = titles[i];
+      var box = el.parentNode;                 /* the h2 sets the width */
+      el.style.fontSize = "";
+      var full = parseFloat(window.getComputedStyle(box).fontSize);
+      var size = full;
+      var floor = full * 0.66;
+      /* scrollWidth outruns clientWidth exactly while it overflows */
+      while (el.scrollWidth > box.clientWidth + 1 && size > floor) {
+        size -= 0.5;
+        el.style.fontSize = size + "px";
+      }
+
+      /* One or two of the longest names are still over at the floor.
+         Tracking closes the last few pixels: a title set a hair tight
+         reads as set, where one shrunk further reads as an error. */
+      el.style.letterSpacing = "";
+      var track = 0;
+      while (el.scrollWidth > box.clientWidth + 1 && track > -0.035) {
+        track -= 0.005;
+        el.style.letterSpacing = track + "em";
+      }
+    }
+  }
+
+  fitTitles();
+  window.addEventListener("resize", (function () {
+    var t = null;
+    return function () { clearTimeout(t); t = setTimeout(fitTitles, 150); };
+  })());
 
   /* ---- The reader ---------------------------------------------
      The novella in the room, rather than in a downloaded file. Text
