@@ -2183,6 +2183,30 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    stage and give it its own address.
    ============================================================ */
 
+/* The chevron that says a title opens. Set in the ember, a size below
+   the title and slightly transparent, so it reads as a hint rather
+   than a second thing to look at. It turns over when the row opens —
+   which is the part that teaches the gesture. */
+.title-caret {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.4rem;
+  vertical-align: baseline;
+  color: var(--ember);
+  opacity: 0.55;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.title-caret svg {
+  display: block;
+  width: 0.8em;
+  height: 0.8em;
+}
+
+.story.open .title-caret {
+  transform: rotate(180deg);
+  opacity: 0.9;
+}
+
 .title-btn {
   font: inherit;
   color: inherit;

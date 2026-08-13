@@ -9,7 +9,7 @@
       uses pdfs/27.pdf and covers/27.jpg (zero-padded under 10).
    2. Hovering a book shows its synopsis under the list and its
       cover LARGE in the middle of the page; moving away brings
-      the theme text back. (On phones, tapping the eye expands
+      the theme text back. (On phones, tapping the title expands
       the synopsis inline instead.)
    3. Hovering About or Author's Notes in the nav reveals those
       texts; moving away brings the theme text back.
@@ -337,12 +337,6 @@
     ' aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0' +
     ' 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>';
 
-  var EYE_ICON =
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
-    ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"' +
-    ' aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7' +
-    '-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
-
   var READ_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
     ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"' +
@@ -434,8 +428,8 @@
     } else {
       if (li) {
         li.classList.add("open");
-        var eye = li.querySelector(".eye");
-        if (eye) eye.setAttribute("aria-expanded", "true");
+        var tb = li.querySelector(".title-btn");
+        if (tb) tb.setAttribute("aria-expanded", "true");
       }
       if (writeHash && history.replaceState) {
         history.replaceState(null, "", "#" + slugFor(s));
@@ -569,7 +563,24 @@
     titleBtn.type = "button";
     titleBtn.className = "title-btn";
     titleBtn.textContent = s.title;
-    titleBtn.setAttribute("aria-label", s.title + " — show on the stage");
+    titleBtn.setAttribute("aria-label", s.title + " \u2014 show on the stage");
+
+    /* A chevron says the title opens. Only where tapping is the way
+       in: under a cursor the synopsis arrives on hover, and a mark
+       promising something the reader already has would only mislead.
+       Marked hidden from screen readers — aria-expanded on the button
+       already says the same thing, and says it better. */
+    if (!canHover) {
+      var caret = document.createElement("span");
+      caret.className = "title-caret";
+      caret.setAttribute("aria-hidden", "true");
+      caret.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+        ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M6 9l6 6 6-6"/></svg>';
+      titleBtn.append(caret);
+    }
+
     title.append(titleBtn);
 
     var pdfBtn = document.createElement("a");
@@ -702,33 +713,22 @@
       openReader(s);
     });
 
-    /* The eye only earns its place on touch, where there's no hover
-       to reveal a synopsis. On a mouse or keyboard it would be a
-       control that does nothing, so it isn't rendered at all. */
+    /* No synopsis button. The title opens the synopsis on touch and
+       shows it on the stage under a cursor, so an eye beside it was a
+       second way to do a thing already done — and a row has only so
+       much room before the controls stop being read at all. The title
+       carries the expanded state in its place. */
     var eye = null;
-    if (!canHover) {
-      eye = document.createElement("button");
-      eye.className = "icon-btn eye";
-      eye.type = "button";
-      eye.title = "Synopsis";
-      eye.setAttribute("aria-expanded", "false");
-      eye.setAttribute("aria-label", s.title + " — synopsis");
-      eye.innerHTML = EYE_ICON;
-      eye.append(iconLabel("Synopsis"));
-    }
+    titleBtn.setAttribute("aria-expanded", "false");
 
-    /* The three things you can do with a book, in one column down the
-       right: look, download, read. Stacked rather than spread across
-       the row, because side by side they took the width the title
-       needed and pushed longer names onto a second line. */
+    /* The two things you can do with a book, in one column down the
+       right, under its number: download it, or read it here. */
     var acts = document.createElement("div");
     acts.className = "story-acts";
     /* The number crowns the column: the top right was the one piece of
        empty space in the row, and a numbered series should wear its
        numbers where they can be seen. */
-    acts.append(numEl);
-    if (eye) acts.append(eye);
-    acts.append(pdfBtn, readBtn);
+    acts.append(numEl, pdfBtn, readBtn);
 
     row.append(mark, main, acts);
 
@@ -789,7 +789,7 @@
         /* Touch: a plain open/close toggle. Nothing is pinned, so the
            panel on the stage stays where the reader left it. */
         var open = li.classList.toggle("open");
-        if (eye) eye.setAttribute("aria-expanded", open ? "true" : "false");
+        titleBtn.setAttribute("aria-expanded", open ? "true" : "false");
         if (history.replaceState) {
           history.replaceState(null, "",
             open ? "#" + slugFor(s) : location.pathname + location.search);
@@ -811,11 +811,6 @@
       });
       li.addEventListener("focusout", function (e) {
         if (!li.contains(e.relatedTarget)) scheduleHide();
-      });
-    } else {
-      eye.addEventListener("click", function () {
-        var open = li.classList.toggle("open");
-        eye.setAttribute("aria-expanded", open ? "true" : "false");
       });
     }
   });
