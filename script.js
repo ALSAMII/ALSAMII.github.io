@@ -674,8 +674,6 @@
       openReader(s);
     });
 
-    row.append(mark, main, readBtn, pdfBtn);
-
     /* The eye only earns its place on touch, where there's no hover
        to reveal a synopsis. On a mouse or keyboard it would be a
        control that does nothing, so it isn't rendered at all. */
@@ -689,8 +687,18 @@
       eye.setAttribute("aria-label", s.title + " — synopsis");
       eye.innerHTML = EYE_ICON;
       eye.append(iconLabel("Synopsis"));
-      row.append(eye);
     }
+
+    /* The three things you can do with a book, in one column down the
+       right: look, download, read. Stacked rather than spread across
+       the row, because side by side they took the width the title
+       needed and pushed longer names onto a second line. */
+    var acts = document.createElement("div");
+    acts.className = "story-acts";
+    if (eye) acts.append(eye);
+    acts.append(pdfBtn, readBtn);
+
+    row.append(mark, main, acts);
 
     var syn = document.createElement("div");
     syn.className = "synopsis";
