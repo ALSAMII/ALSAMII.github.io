@@ -16,11 +16,12 @@ everything below, named and ready to upload.
 2. Add the book's block to `stories.js`
 3. Run `node build-feeds.js` → updates `feed.xml` + `sitemap.xml`
 4. Run `node build-share-pages.js` → updates the `b/` folder
-5. Raise the `?v=` number in `index.html`
-6. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
-   the `b/` folder, the new PDF, the new cover
+5. Run `python3 build-reader.py NN` → writes `read/NN.json`
+6. Raise the `?v=` number in `index.html`
+7. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
+   the `b/` folder, `read/NN.json`, the new PDF, the new cover
 
-Everything after this is the same six steps, explained.
+Everything after this is the same seven steps, explained.
 
 ---
 
@@ -156,7 +157,36 @@ doesn't exist.
 
 ---
 
-## 5. Raise the cache-buster
+## 5. Build the reading text
+
+```
+python3 build-reader.py 41       # one book
+python3 build-reader.py          # all of them
+```
+
+Writes `read/41.json` — the novella pulled out of the PDF as flowing
+text, which is what the **Read** button opens. Without it, Read tells
+the visitor the book isn't set for reading here yet and offers the PDF
+instead. Nothing breaks; the book simply can't be read on the site.
+
+Needs Python and one library: `pip install pdfplumber`.
+
+The script measures each PDF before reading it — the body is whatever
+size most of the words are set in — so it copes with the fact that
+these books are not all typeset alike. It keeps italics, chapter
+headings, and the line breaks in any verse, and drops the title page,
+copyright, and contents list.
+
+**Check the number it prints.** A book of 19,000 words should report
+somewhere near 18,000 — the difference is the front matter it skips. A
+figure far below that means the typesetting did something the script
+hasn't seen before. Send it to Claude rather than shipping it: every
+book in the catalogue was checked this way, and four of them needed the
+script taught something new.
+
+---
+
+## 6. Raise the cache-buster
 
 In `index.html`, near the top, three lines end in `?v=` and a number:
 
@@ -172,7 +202,7 @@ returning reader gets the new book instead of yesterday's list.
 
 ---
 
-## 6. Upload
+## 7. Upload
 
 To the repository root, replacing what's there:
 
@@ -182,6 +212,7 @@ index.html          the raised ?v= number
 feed.xml            rebuilt in step 3
 sitemap.xml         rebuilt in step 3
 b/                  the whole folder, rebuilt in step 4
+read/41.json        the reading text, built in step 5
 pdfs/41.pdf         the new file only
 covers/41.jpg       the new file only
 ```
@@ -206,6 +237,7 @@ Netlify picks up the commit and republishes within a minute or two.
 - Its cover shows when the row is opened — a blank frame means the
   cover is missing or is a `.png`
 - **PDF** opens the novella
+- **Read** opens the novella in the browser, and the type looks right
 - **Share** copies a link; pasting it into a message shows *that
   book's cover*
 - Opening the shared link lands on the book, already open
@@ -224,6 +256,10 @@ wrong. It must be `covers/NN.jpg`, two digits.
 
 **The old list keeps showing.** The `?v=` number didn't change, or
 only one of the three lines was changed. Check all three match.
+
+**Read says the book isn't set for reading here yet.** `read/NN.json`
+was never built, or never uploaded. Everything else about the book
+works; only the in-browser reading is missing.
 
 **Share shows the forest picture, not the cover.** The `b/` folder
 wasn't rebuilt or wasn't uploaded. Visit
