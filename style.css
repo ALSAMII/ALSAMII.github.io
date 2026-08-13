@@ -918,7 +918,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   white-space: pre-line;   /* paragraph breaks, as on the stage */
   margin: 0 0.25rem;
-  padding: 0 0 1.5rem;
+  /* 1.5rem of tail was written for a block that ended in prose. It
+     ends in the Door / Room / Key rows now, which carry padding of
+     their own, so this only added dead room above the next book. */
+  padding: 0 0 0.35rem;
   font-family: var(--serif);
   font-size: 1.0625rem;
   line-height: 1.65;
@@ -1714,7 +1717,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    cover this size was otherwise empty. */
 .syn-head {
   display: block;
-  margin: 0.1rem 0 0.6rem;
+  /* Last in the block now, so nothing follows it — the old bottom
+     margin was leaving a hand's width of dead room above the next
+     book. */
+  margin: 0.1rem 0 0;
 }
 
 /* Three rows, each with its term standing in a column of its own and
@@ -1739,20 +1745,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-size: 0.5625rem;
   letter-spacing: 0.2em;
   color: var(--ember);
-  padding: 0.7rem 1rem 0.7rem 0;
+  padding: 0.35rem 1rem 0.35rem 0;
 }
 
 .syn-head .tri-def {
   font-size: 0.9375rem;
   line-height: 1.45;
-  padding: 0.7rem 0;
+  padding: 0.3rem 0 0.4rem;
 }
 
-/* A hairline between one and the next, drawn across both columns. */
-.syn-head .tri-row + .tri-row .tri-term,
-.syn-head .tri-row + .tri-row .tri-def {
-  border-top: 1px solid var(--hairline);
-}
+/* No rules between the three: the labels down the left already
+   separate them, and three hairlines in a row made a table out of
+   what is only a short list. */
 
 /* A rule under the block separates the facts from the story, so the
    two stop reading as one undifferentiated column of serif. */
