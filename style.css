@@ -2238,20 +2238,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 0.95;
 }
 
-/* On paper the painting is the darkest thing on the page, so the same
-   treatment the covers get: lifted and cooled a little, and faded
-   further at the edges, so it settles into the sheet rather than
-   sitting on it as a dark rectangle. */
-html[data-theme="light"] .t-banner img {
-  opacity: 0.88;
-  filter: brightness(1.07) contrast(0.93);
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
-}
+
 
 /* A banner carries the series name in its own artwork, so the written
    heading beside it would say the same thing twice. The words stay in
@@ -3049,9 +3036,20 @@ html[data-theme="light"] {
    Its layers were built to darken; here they lighten, and the
    photograph is washed until it is texture rather than a scene. */
 
+/* Paper gets its own photograph rather than the night one bleached
+   out. The old rule washed the forest path with an 86% scrim and a
+   brightness filter to make it survive on white — which worked, but
+   what it produced was a grey ghost. This is a picture that was pale
+   to begin with, so it needs almost nothing done to it. */
 html[data-theme="light"] .atmosphere {
-  --scrim: linear-gradient(rgba(236, 237, 237, 0.86), rgba(236, 237, 237, 0.86));
-  filter: saturate(0.42) brightness(1.4) contrast(0.8);
+  --scrim: linear-gradient(rgba(236, 237, 237, 0.3), rgba(236, 237, 237, 0.3));
+  filter: none;
+  background-image: var(--edge-fade), var(--scrim),
+    url("assets/bg/bg-paper.jpg");
+  background-image: var(--edge-fade), var(--scrim), image-set(
+    url("assets/bg/bg-paper.webp") type("image/webp"),
+    url("assets/bg/bg-paper.jpg")  type("image/jpeg")
+  );
 }
 
 html[data-theme="light"] .atmosphere::before {
@@ -3265,26 +3263,24 @@ html[data-theme="light"] .icon-btn.share:hover,
 html[data-theme="light"] .icon-btn.share:focus-visible { color: var(--verdigris); }
 html[data-theme="light"] .icon-btn.share.shared { color: var(--verdigris-lit); }
 
-/* The covers on paper.
+/* Artwork on paper: printed, not dissolved.
 
-   A mask alone is not enough here. On the dark theme the artwork and
-   the room are both dark, so a thinning edge simply disappears into
-   it; on white, the same edge is the darkest thing on the page and
-   the fade only makes a soft-edged dark rectangle. So on paper the
-   covers are lifted and cooled a little — brought toward the page
-   rather than sat on top of it — and faded further at the edges. */
+   Fading an edge to transparent works in the dark, where the artwork
+   and the room are both dark and the edge simply disappears. On white
+   it does the opposite — a dark picture thinning into a pale page
+   leaves a grey halo around everything, which is what the banners were
+   showing. So on paper the masks come off entirely and the artwork
+   gets what a printed plate gets: a clean edge, a soft corner, and a
+   shadow to sit it on the sheet. */
 html[data-theme="light"] .row-cover,
-html[data-theme="light"] .t-covers img {
-  opacity: 0.88;
-  filter: brightness(1.06) contrast(0.94);
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
-    radial-gradient(112% 105% at 50% 50%, #000 46%, rgba(0,0,0,0.45) 78%, transparent 100%);
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
-    radial-gradient(112% 105% at 50% 50%, #000 46%, rgba(0,0,0,0.45) 78%, transparent 100%);
+html[data-theme="light"] .t-covers img,
+html[data-theme="light"] .t-banner img {
+  opacity: 1;
+  filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+  box-shadow: 0 2px 10px rgba(20, 23, 26, 0.16),
+              0 0 0 1px rgba(20, 23, 26, 0.07);
 }
 
 /* The reader needs no light-theme rules of its own: it is built from
