@@ -691,10 +691,10 @@
          after a # stays in the browser and never reaches a server, so
          a preview crawler asking about that link is only ever shown
          the front page — which is why every book used to share the
-         same forest picture. /b/<slug>.html is a real page carrying
+         same forest picture. /share/<slug>.html is a real page carrying
          this book's cover, and it sends a reader straight on to the
          book. Built by build-share-pages.js. */
-      var url = location.origin + basePath() + "b/" + slugFor(s) + ".html";
+      var url = location.origin + basePath() + "share/" + slugFor(s) + ".html";
 
       /* A word in place of the label, then back — no alert to dismiss
          and nothing that moves the row. */

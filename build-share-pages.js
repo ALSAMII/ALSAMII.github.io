@@ -1,5 +1,5 @@
 /* ============================================================
-   BUILDS ONE SHARE PAGE PER BOOK, INTO /b/
+   BUILDS ONE SHARE PAGE PER BOOK, INTO /share/
 
    Why this exists
    ---------------
@@ -9,7 +9,7 @@
    ever receive  chewzfiction.com  — so every book shared the site's
    own forest picture, whichever book it was.
 
-   The fix is a real page per book at  /b/<slug>.html , carrying that
+   The fix is a real page per book at  /share/<slug>.html , carrying that
    book's cover, title and hook in its meta tags. A crawler reads
    those and shows the cover. A person is sent on to the book itself
    before they can read a word of it.
@@ -18,7 +18,7 @@
 
        node build-share-pages.js
 
-   Then commit the /b folder. (build-feeds.js still handles feed.xml
+   Then commit the /share folder. (build-feeds.js still handles feed.xml
    and sitemap.xml — this is a separate step.)
    ============================================================ */
 
@@ -26,7 +26,7 @@ const fs = require("fs");
 const path = require("path");
 
 const SITE = "https://www.chewzfiction.com";
-const OUT = "b";
+const OUT = "share";
 
 /* stories.js declares plain consts, so evaluate it and take them out. */
 const src = fs.readFileSync("stories.js", "utf8");

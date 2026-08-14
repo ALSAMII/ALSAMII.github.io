@@ -32,9 +32,9 @@ index.html            the page itself: header, About, Author's Notes, footer
 style.css             all styling; the light theme is one block at the end
 script.js             behaviour — rarely needs touching
 build-feeds.js        rebuilds feed.xml + sitemap.xml from stories.js
-build-share-pages.js  rebuilds the b/ folder from stories.js
+build-share-pages.js  rebuilds the share/ folder from stories.js
 build-reader.py       pulls the reading text out of the PDFs
-b/                    one small page per book, so shared links show covers
+share/                one small page per book, so shared links show covers
 read/                 each novella as text, for reading on the site
 .nojekyll             tells GitHub Pages to serve the files as they are
 pdfs/                 the novellas, numbered: 01.pdf, 02.pdf ...
@@ -52,7 +52,7 @@ None is written by hand:
 
 ```
 node build-feeds.js         → feed.xml, sitemap.xml   (reads stories.js)
-node build-share-pages.js   → b/                      (reads stories.js)
+node build-share-pages.js   → share/                      (reads stories.js)
 python3 build-reader.py     → read/                   (reads pdfs/)
 ```
 
@@ -60,7 +60,7 @@ Run all three whenever a book is added or changed, and commit what they
 produce.
 
 `feed.xml` and `sitemap.xml` are how search engines and feed readers see
-a site whose list is built in JavaScript. The `b/` folder is how a shared
+a site whose list is built in JavaScript. The `share/` folder is how a shared
 link shows the right cover — see ADDING-A-BOOK.md for why that can't be
 done with a `#` address. The `read/` folder is the novellas themselves,
 lifted out of the PDFs so they can be read on the site.

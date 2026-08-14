@@ -18,11 +18,11 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
 1. Add `pdfs/NN.pdf` and `covers/NN.jpg`
 2. Add the book's block to `stories.js`
 3. Run `node build-feeds.js` → updates `feed.xml` + `sitemap.xml`
-4. Run `node build-share-pages.js` → updates the `b/` folder
+4. Run `node build-share-pages.js` → updates the `share/` folder
 5. Run `python3 build-reader.py NN` → writes `read/NN.json`
 6. Raise the `?v=` number in `index.html`
 7. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
-   the `b/` folder, `read/NN.json`, the new PDF, the new cover
+   the `share/` folder, `read/NN.json`, the new PDF, the new cover
 
 Everything after this is the same seven steps, explained.
 
@@ -163,13 +163,13 @@ invisible to them.
 node build-share-pages.js
 ```
 
-Rewrites the `b/` folder — one small page per book.
+Rewrites the `share/` folder — one small page per book.
 
 This is what makes a shared link show the *book's own cover* instead
 of the site's forest picture. The reason it's needed at all: everything
 after a `#` in a web address never reaches a server, so a link like
 `chewzfiction.com/#41-the-title` tells Facebook or iMessage nothing
-about which book it is. `b/41-the-title.html` is a real page carrying
+about which book it is. `share/41-the-title.html` is a real page carrying
 that book's cover in its meta tags, and it forwards a reader straight
 on to the book. The Share button on each row links here.
 
@@ -232,7 +232,7 @@ stories.js          the new book
 index.html          the raised ?v= number
 feed.xml            rebuilt in step 3
 sitemap.xml         rebuilt in step 3
-b/                  the whole folder, rebuilt in step 4
+share/              the whole folder, rebuilt in step 4
 read/41.json        the reading text, built in step 5
 pdfs/41.pdf         the new file only
 covers/41.jpg       the new file only
@@ -242,7 +242,7 @@ covers/41.jpg       the new file only
 custom domain. If it goes, the site silently reverts to
 `alsamii.github.io` and chewzfiction.com stops working.
 
-**Dragging a folder:** to upload `b/`, drag **the folder itself** into
+**Dragging a folder:** to upload `share/`, drag **the folder itself** into
 GitHub's upload area — not the files inside it. Dragging the contents
 scatters 40 loose pages across the repository root. If that happens,
 press `.` on the repository page to open the browser editor, delete
@@ -284,9 +284,9 @@ only one of the three lines was changed. Check all three match.
 was never built, or never uploaded. Everything else about the book
 works; only the in-browser reading is missing.
 
-**Share shows the forest picture, not the cover.** The `b/` folder
+**Share shows the forest picture, not the cover.** The `share/` folder
 wasn't rebuilt or wasn't uploaded. Visit
-`chewzfiction.com/b/41-the-title.html` — if it 404s, that's the cause.
+`chewzfiction.com/share/41-the-title.html` — if it 404s, that's the cause.
 Note that Facebook and LinkedIn cache previews for days; their
 respective debug tools will force a re-read.
 
