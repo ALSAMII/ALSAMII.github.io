@@ -1240,6 +1240,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-size: clamp(0.625rem, 2.6vw, 0.75rem);
   line-height: 1.5;
   letter-spacing: 0.13em;
+  display: block;
   /* Parchment, not ember. The gold is doing enough work already on the
      numbers, the titles and the reading times. */
   color: var(--parchment);
@@ -1252,6 +1253,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    needed to keep it on one line. */
 @media (max-width: 23.5rem) {
   .start-heading { font-size: 0.5625rem; letter-spacing: 0.08em; }
+
+  /* A phone has no room for an even split: the words take the larger
+     share, and the title comes down a step to sit in it. */
+  .start-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.6fr);
+    gap: 0.75rem;
+    padding: 0.7rem 1.1rem;
+  }
+  .start-title { font-size: 1.0625rem; letter-spacing: 0.02em; }
+  .start-num   { font-size: 1.0625rem; }
+  .start-note  { font-size: 0.875rem; line-height: 1.5; }
+  .start-cat   { font-size: 0.75rem; letter-spacing: 0.2em; padding: 0 1.1rem; }
 
   /* Small phones: a step down so the three definitions still align on
      one line each. Below about 320px they wrap, and wrap together,
@@ -1283,14 +1296,32 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  margin: 2.2rem 0 0.35rem;
+  /* Air above each category, very little below it: the gap is what
+     groups the pair under its own heading. */
+  margin: 2.4rem 0 0.2rem;
   padding: 0 1.35rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.3em;
+  font-size: 0.875rem;
+  letter-spacing: 0.26em;
   color: var(--ember);
 }
 
-.start-cat:first-child { margin-top: 0.6rem; }
+.start-cat:first-child { margin-top: 1rem; }
+
+/* The two lines of the heading: a quiet first line, then the
+   instruction set large in the serif — the one line on the panel that
+   tells a visitor what to do. */
+.start-heading-line { display: block; }
+
+.start-heading-lead {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 6vw, 2.125rem);
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+  color: var(--ember);
+}
 
 /* A rule running out from the word to the edge, so the name reads as a
    heading over the pair rather than a label on the first one. */
@@ -1344,9 +1375,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .start-row {
   position: relative;
-  display: block;
+  /* Two columns: the words on the left, the scene on the right. The
+     picture used to sit behind the prose, which meant it had to be
+     held back to a whisper to keep the text readable. Given a column
+     of its own it can be seen properly, and the type is on the page
+     rather than on the artwork. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+  align-items: center;
+  gap: clamp(0.9rem, 3vw, 1.75rem);
   width: 100%;
-  padding: 1.2rem 1.35rem;
+  padding: 0.85rem 1.35rem;
   font: inherit;
   text-align: left;
   background: none;
@@ -1363,58 +1402,41 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* Focus still needs to be visible without a border to light up. */
 .start-row:focus-visible { outline: 1px solid var(--ember-soft); outline-offset: 6px; }
 
-/* ---- The scene, breaking the frame ---- */
+/* ---- The scene ----
+   In its own column now, at full strength. The fade is what settles it
+   into the page: transparent at every edge, so it has no border to
+   give it away, and no colour is painted over it — which is why the
+   same treatment works on both themes. */
 .start-scene {
-  position: absolute;
+  position: relative;
   z-index: 0;
-  right: -9%;
-  top: -16%;
-  height: 132%;
-  width: auto;
-  max-width: 68%;
+  grid-column: 2;
+  grid-row: 1;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   pointer-events: none;
   border: 0;
-  opacity: var(--scene-fade);
-  filter: saturate(1) contrast(1.06) brightness(1.06);
+  border-radius: 3px;
+  opacity: 0.9;
   transition: opacity 0.4s ease, transform 5s ease;
 
-  /* Three fades, intersected: one across, one down, and an ellipse over
-     the top of both.
-
-     The two straight fades alone leave a firm rectangular core with a
-     short ramp at each side — and the corners, where only one fade is
-     doing any work, stay strongest of all. The ellipse is what softens
-     those: it is smaller than the image on every axis, so it is already
-     transparent by the time it reaches any edge, and it takes the
-     corners down first because they are furthest from its centre.
-
-     The ramps are longer now as well. Nothing here reaches full
-     strength until well inside the picture. */
   -webkit-mask-image:
-    radial-gradient(ellipse 58% 56% at 56% 50%,
-      #000 26%, rgba(0, 0, 0, 0.55) 62%, transparent 100%),
-    linear-gradient(to right,
-      transparent 0%, rgba(0, 0, 0, 0.12) 18%, #000 48%,
-      #000 64%, rgba(0, 0, 0, 0.3) 84%, transparent 98%),
-    linear-gradient(to bottom,
-      transparent 0%, rgba(0, 0, 0, 0.35) 14%, #000 34%,
-      #000 66%, rgba(0, 0, 0, 0.35) 86%, transparent 100%);
-  -webkit-mask-composite: source-in;
+    linear-gradient(to right, transparent 0, #000 16%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
+    radial-gradient(118% 112% at 50% 50%, #000 48%, rgba(0,0,0,0.5) 80%, transparent 100%);
   mask-image:
-    radial-gradient(ellipse 58% 56% at 56% 50%,
-      #000 26%, rgba(0, 0, 0, 0.55) 62%, transparent 100%),
-    linear-gradient(to right,
-      transparent 0%, rgba(0, 0, 0, 0.12) 18%, #000 48%,
-      #000 64%, rgba(0, 0, 0, 0.3) 84%, transparent 98%),
-    linear-gradient(to bottom,
-      transparent 0%, rgba(0, 0, 0, 0.35) 14%, #000 34%,
-      #000 66%, rgba(0, 0, 0, 0.35) 86%, transparent 100%);
+    linear-gradient(to right, transparent 0, #000 16%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
+    radial-gradient(118% 112% at 50% 50%, #000 48%, rgba(0,0,0,0.5) 80%, transparent 100%);
+  -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
+
 .start-row:hover .start-scene,
 .start-row:focus-visible .start-scene {
-  opacity: 0.72;
+  opacity: 1;
   transform: scale(1.03);
 }
 
@@ -1426,15 +1448,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
 /* ---- Text ---- */
-.start-body { position: relative; z-index: 1; min-width: 0; }
-
-.start-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 0.5rem;
-  margin-bottom: 0.5rem;
+.start-body {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  /* First column, though it comes second in the markup — the picture
+     is written first so a screen reader meets the words, not the
+     decoration. */
+  grid-column: 1;
+  grid-row: 1;
 }
+
+/* Block, not flex: as flex items the number and the title broke onto
+   separate lines the moment the column narrowed. As inline text they
+   wrap the way a line of type should — the number staying with the
+   first word of the name. */
+.start-head {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+.start-head > * { display: inline; }
 
 /* Same face and weight as the title — it is a label, not an ornament. */
 .start-num {
@@ -1483,16 +1516,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 @media (max-width: 34rem) {
   .start { gap: 1.6rem; }
-  /* Portrait: the scene stops overhanging so far above and below. At
-     128% it ran well into the gaps between cards; this keeps it close
-     to the height of the text it belongs to. */
-  .start-scene {
-    max-width: 72%;
-    opacity: 0.46;
-    top: -7%;
-    height: 114%;
-  }
-  .start-note { font-size: 0.9375rem; }
+  /* Nothing to override here any more: the scene has its own column
+     and takes its height from its own proportions. The rules that used
+     to overhang it above and below the card are gone with the overlay
+     they were written for. */
+  .start-note { font-size: 0.875rem; }
 }
 
 
@@ -3272,14 +3300,17 @@ html[data-theme="light"] .start-scene {
      Drawn normally instead, brightened and desaturated until the
      picture reads as a wash on paper rather than a night sky, and set
      high enough to actually be seen. */
-  filter: saturate(0.62) brightness(1.72) contrast(0.78);
-  opacity: 0.5;
+  /* The scene stands in its own column now rather than behind the
+     prose, so it no longer has to be bleached to keep text readable.
+     A light lift is all it takes to belong on paper. */
+  filter: saturate(0.88) brightness(1.1) contrast(0.94);
+  opacity: 0.94;
 }
 
 html[data-theme="light"] .start-row:hover .start-scene,
 html[data-theme="light"] .start-row:focus-visible .start-scene {
-  filter: saturate(0.72) brightness(1.62) contrast(0.84);
-  opacity: 0.62;
+  filter: saturate(0.95) brightness(1.06) contrast(0.97);
+  opacity: 1;
 }
 
 html[data-theme="light"] .start-row:hover,
