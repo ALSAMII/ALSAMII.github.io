@@ -1367,7 +1367,10 @@
           img.remove();
         }
       });
-      img.src = "assets/start-" + n + ".jpg";
+      /* The scene is normally named for the book it belongs to, but a
+         row may name its own file with data-scene — useful when a
+         picture outlives the book it was first made for. */
+      img.src = btn.dataset.scene || ("assets/start-" + n + ".jpg");
     }
 
     btn.addEventListener("click", function () { revealBook(s, true); });
