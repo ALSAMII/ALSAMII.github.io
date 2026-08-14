@@ -3042,22 +3042,55 @@ html[data-theme="light"] {
    what it produced was a grey ghost. This is a picture that was pale
    to begin with, so it needs almost nothing done to it. */
 html[data-theme="light"] .atmosphere {
-  --scrim: linear-gradient(rgba(236, 237, 237, 0.3), rgba(236, 237, 237, 0.3));
+  /* Light, because the photograph arrives pale and blurred already.
+     At the old weight the wood was washed away to nothing and the
+     deer with it. */
+  --scrim: linear-gradient(rgba(236, 237, 237, 0.16), rgba(236, 237, 237, 0.16));
   filter: none;
+
+  /* A shorter fade at the foot than the dark room uses. The deer
+     stands at the end of the path, low in the frame, and a fade
+     reaching 13% up the picture dissolved it before anyone saw it. */
+  --edge-fade: linear-gradient(to bottom,
+    var(--night) 0%, transparent 9%,
+    transparent 96%, var(--night) 100%);
+
+  /* Two photographs of the same wood, one shaped for each way a screen
+     can be held. A single picture cannot serve both: a landscape file
+     on a phone is blown up to twice its width and loses the sides,
+     which is where the trees are. The deer stands in the middle of
+     each, so it survives whatever cropping is left. */
   background-image: var(--edge-fade), var(--scrim),
-    url("assets/bg/bg-paper.jpg");
+    url("assets/bg/bg-paper-wide.jpg");
   background-image: var(--edge-fade), var(--scrim), image-set(
-    url("assets/bg/bg-paper.webp") type("image/webp"),
-    url("assets/bg/bg-paper.jpg")  type("image/jpeg")
+    url("assets/bg/bg-paper-wide.webp") type("image/webp"),
+    url("assets/bg/bg-paper-wide.jpg")  type("image/jpeg")
   );
+  background-position: center center, center center, center center;
 }
 
+@media (orientation: portrait) {
+  html[data-theme="light"] .atmosphere {
+    background-image: var(--edge-fade), var(--scrim),
+      url("assets/bg/bg-paper-tall.jpg");
+    background-image: var(--edge-fade), var(--scrim), image-set(
+      url("assets/bg/bg-paper-tall.webp") type("image/webp"),
+      url("assets/bg/bg-paper-tall.jpg")  type("image/jpeg")
+    );
+  }
+}
+
+/* The pools of light over the photograph. These were written for a
+   dark picture being bleached into service on a pale page, and at that
+   strength they buried the wood — and the deer standing in it. The
+   picture is pale to begin with now, so they only have to lift the
+   corners where text sits, not wash the whole frame. */
 html[data-theme="light"] .atmosphere::before {
   background:
-    radial-gradient(38rem 26rem at 62% 18%, rgba(255, 255, 255, 0.55), transparent 70%),
-    radial-gradient(26rem 20rem at 82% 72%, rgba(255, 252, 245, 0.5), transparent 70%),
+    radial-gradient(38rem 26rem at 62% 18%, rgba(255, 255, 255, 0.28), transparent 70%),
+    radial-gradient(26rem 20rem at 82% 72%, rgba(255, 252, 245, 0.24), transparent 70%),
     radial-gradient(120% 90% at 50% 45%,
-      rgba(236, 237, 237, 0.3), rgba(236, 237, 237, 0.7) 82%);
+      rgba(236, 237, 237, 0.06), rgba(236, 237, 237, 0.34) 88%);
 }
 
 /* ---- Text over artwork -------------------------------------
