@@ -247,10 +247,39 @@ html[data-scene="1"] .atmosphere {
 
 /* Rules either side of the stamp, so the imprint reads as a mark set
    into the masthead rather than a logo parked beside the name. */
-.masthead .roya {
+/* The stamp is a way home: clicking it returns to the front of the
+   site, which is where a reader expects a masthead to take them. */
+.roya-link {
   justify-self: center;
-  /* The centrepiece: sized to stand as tall as the left column. */
-  height: clamp(6rem, 12.5vw, 11rem);
+  display: block;
+  line-height: 0;
+  text-decoration: none;
+  position: relative;
+  transition: filter 0.3s ease;
+}
+
+/* A warm light behind the mark, as on the printed imprint. Drawn under
+   the artwork rather than on it, so the gold stays gold. */
+.roya-link::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  width: 130%;
+  height: 88%;
+  background: radial-gradient(closest-side,
+    rgba(232, 178, 74, 0.22), rgba(232, 178, 74, 0.08) 55%, transparent 100%);
+  pointer-events: none;
+}
+
+.roya-link:hover { filter: brightness(1.08); }
+.roya-link:focus-visible { outline: 1px solid var(--ember); outline-offset: 8px; }
+
+.masthead .roya {
+  /* The centrepiece, and the first thing a visitor should see. */
+  height: clamp(7.5rem, 15vw, 13.5rem);
   width: auto;
   padding: 0.15rem clamp(1.25rem, 3vw, 2.5rem);
   /* Gold, not hairline: at 13% alpha these were invisible, and the
@@ -1709,7 +1738,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .story-acts .icon-btn svg { width: 0.9rem; height: 0.9rem; }
   .story-mark .icon-btn.share .icon-label { font-size: 0.6875rem; }
 
-  .masthead .roya { height: 5rem; padding: 0.1rem 0.45rem; }
+  .masthead .roya { height: 6.25rem; padding: 0.1rem 0.5rem; }
   .brand-col { gap: 0.5rem; }
   .brand-name .name { font-size: 1.25rem; letter-spacing: 0.14em; }
   .brand-name .tag  { font-size: 0.5rem; letter-spacing: 0.14em; }
