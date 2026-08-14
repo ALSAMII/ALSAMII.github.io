@@ -1257,7 +1257,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* A phone has no room for an even split: the words take the larger
      share, and the title comes down a step to sit in it. */
   .start-row { padding: 0.75rem 1.1rem; }
-  .start-body { max-width: 66%; }
+  .start-body { max-width: 60%; }
+  .start-scene { width: 58%; }
   .start-title { font-size: 1.0625rem; letter-spacing: 0.02em; }
   .start-num   { font-size: 1.0625rem; }
   .start-note  { font-size: 0.875rem; line-height: 1.5; }
@@ -1402,10 +1403,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-scene {
   position: absolute;
   z-index: 0;
-  right: -6%;
-  top: -6%;
-  height: 112%;
-  width: 74%;
+  right: -5%;
+  top: -5%;
+  height: 110%;
+  width: 62%;
   object-fit: cover;
   pointer-events: none;
   border: 0;
@@ -1413,11 +1414,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: opacity 0.4s ease, transform 5s ease;
 
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.28) 26%, #000 64%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 18%, #000 52%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.28) 26%, #000 64%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 18%, #000 52%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
@@ -1436,12 +1437,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
 /* ---- Text ---- */
-/* The words, held to the side of the card the mask has cleared. */
+/* The words, held to the side of the card the mask has cleared. A
+   fixed measure rather than "most of the width": lines that run on
+   into the bright half of the picture are what made the two look
+   tangled instead of arranged. */
 .start-body {
   position: relative;
   z-index: 1;
   min-width: 0;
-  max-width: 62%;
+  max-width: 56%;
 }
 
 /* Block, not flex: as flex items the number and the title broke onto
@@ -1450,9 +1454,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    first word of the name. */
 .start-head {
   display: block;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
 }
 .start-head > * { display: inline; }
+
+/* On its own line beneath the name. Run in beside it, it pushed the
+   title's line out under the artwork on every card whose title was
+   more than two words. */
+.start-time {
+  display: block !important;
+  margin-top: 0.28rem;
+}
 
 /* Same face and weight as the title — it is a label, not an ornament. */
 .start-num {
