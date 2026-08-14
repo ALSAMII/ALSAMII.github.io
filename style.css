@@ -1683,6 +1683,20 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   pointer-events: none;
 }
 
+/* The book named as an example, so a reader can see the term standing
+   in a real story rather than in the abstract. */
+.guide-about em {
+  font-style: italic;
+  color: var(--parchment);
+}
+
+/* The four doors by name — the same words the filter above uses, so a
+   reader meets them here and recognises them there. */
+.guide-about b {
+  font-weight: 600;
+  color: var(--ember);
+}
+
 .guide-term[aria-expanded="true"] .guide-about {
   opacity: 1;
   visibility: visible;
