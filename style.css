@@ -1256,11 +1256,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
   /* A phone has no room for an even split: the words take the larger
      share, and the title comes down a step to sit in it. */
-  .start-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.6fr);
-    gap: 0.75rem;
-    padding: 0.7rem 1.1rem;
-  }
+  .start-row { padding: 0.75rem 1.1rem; }
+  .start-body { max-width: 66%; }
   .start-title { font-size: 1.0625rem; letter-spacing: 0.02em; }
   .start-num   { font-size: 1.0625rem; }
   .start-note  { font-size: 0.875rem; line-height: 1.5; }
@@ -1280,7 +1277,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start {
   display: flex;
   flex-direction: column;
-  gap: 2.6rem;
+  /* Close: the two books under a heading should read as a pair, and
+     the air above each category is what separates one pair from the
+     next. */
+  gap: 0.9rem;
   margin: 0 0 1.5rem;
   text-align: left;
 }
@@ -1298,7 +1298,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   gap: 0.9rem;
   /* Air above each category, very little below it: the gap is what
      groups the pair under its own heading. */
-  margin: 2.4rem 0 0.2rem;
+  margin: 1.9rem 0 0.1rem;
   padding: 0 1.35rem;
   font-size: 0.875rem;
   letter-spacing: 0.26em;
@@ -1323,15 +1323,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   color: var(--ember);
 }
 
-/* A rule running out from the word to the edge, so the name reads as a
-   heading over the pair rather than a label on the first one. */
-.start-cat::after {
-  content: "";
-  flex: 1 1 auto;
-  height: 1px;
-  background: var(--ember-soft);
-  opacity: 0.5;
-}
+/* No rule beside the name: with the scenes running to the edge of
+   every card, one more horizontal line was one too many. */
 
 /* The dotted underline says the word has something to tell you — the
    same hint the dials carry beneath a synopsis. */
@@ -1375,17 +1368,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .start-row {
   position: relative;
-  /* Two columns: the words on the left, the scene on the right. The
-     picture used to sit behind the prose, which meant it had to be
-     held back to a whisper to keep the text readable. Given a column
-     of its own it can be seen properly, and the type is on the page
-     rather than on the artwork. */
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
-  align-items: center;
-  gap: clamp(0.9rem, 3vw, 1.75rem);
+  /* One column, with the scene behind it. The picture fills the right
+     of the card and runs off the edge; the words sit on its dark side,
+     where the mask has thinned it to nothing. That is what lets the
+     artwork be large and bright and still leave the prose readable —
+     the two occupy the same space but never the same pixels. */
+  display: block;
   width: 100%;
-  padding: 0.85rem 1.35rem;
+  padding: 0.9rem 1.35rem;
+  overflow: hidden;
   font: inherit;
   text-align: left;
   background: none;
@@ -1403,33 +1394,30 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row:focus-visible { outline: 1px solid var(--ember-soft); outline-offset: 6px; }
 
 /* ---- The scene ----
-   In its own column now, at full strength. The fade is what settles it
-   into the page: transparent at every edge, so it has no border to
-   give it away, and no colour is painted over it — which is why the
-   same treatment works on both themes. */
+   Large enough to be looked at. It covers the right of the card and
+   runs past its edge, and the mask thins it to nothing on the left,
+   so the words lie on clear ground while the picture keeps its
+   colour. No wash is painted over it, which is why one treatment
+   serves both themes. */
 .start-scene {
-  position: relative;
+  position: absolute;
   z-index: 0;
-  grid-column: 2;
-  grid-row: 1;
-  display: block;
-  width: 100%;
-  aspect-ratio: 3 / 2;
+  right: -6%;
+  top: -6%;
+  height: 112%;
+  width: 74%;
   object-fit: cover;
   pointer-events: none;
   border: 0;
-  border-radius: 3px;
-  opacity: 0.9;
+  opacity: 0.95;
   transition: opacity 0.4s ease, transform 5s ease;
 
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 16%, #000 88%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
-    radial-gradient(118% 112% at 50% 50%, #000 48%, rgba(0,0,0,0.5) 80%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.28) 26%, #000 64%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, #000 16%, #000 88%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 13%, #000 87%, transparent 100%),
-    radial-gradient(118% 112% at 50% 50%, #000 48%, rgba(0,0,0,0.5) 80%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.28) 26%, #000 64%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
@@ -1437,7 +1425,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row:hover .start-scene,
 .start-row:focus-visible .start-scene {
   opacity: 1;
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 /* Where each scene is cropped, so the subject survives at any card
@@ -1448,15 +1436,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
 /* ---- Text ---- */
+/* The words, held to the side of the card the mask has cleared. */
 .start-body {
   position: relative;
   z-index: 1;
   min-width: 0;
-  /* First column, though it comes second in the markup — the picture
-     is written first so a screen reader meets the words, not the
-     decoration. */
-  grid-column: 1;
-  grid-row: 1;
+  max-width: 62%;
 }
 
 /* Block, not flex: as flex items the number and the title broke onto
@@ -1515,7 +1500,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row:hover .start-note { color: var(--parchment); }
 
 @media (max-width: 34rem) {
-  .start { gap: 1.6rem; }
+  .start { gap: 0.7rem; }
   /* Nothing to override here any more: the scene has its own column
      and takes its height from its own proportions. The rules that used
      to overhang it above and below the card are gone with the overlay
@@ -3191,6 +3176,8 @@ html[data-theme="light"] .atmosphere::before {
 /* ---- Text over artwork -------------------------------------
    A dark halo behind dark text is a smudge. These get a light one. */
 
+/* Text standing on artwork wants a light halo on paper, where the dark
+   one written for the candlelit room would only smudge it. */
 html[data-theme="light"] .feature-syn,
 html[data-theme="light"] .guide-def,
 html[data-theme="light"] .panel .lede,
@@ -3200,22 +3187,23 @@ html[data-theme="light"] .start-note,
 html[data-theme="light"] .start-title,
 html[data-theme="light"] .start-num,
 html[data-theme="light"] .start-time,
-html[data-theme="light"] .start-heading,
+html[data-theme="light"] .start-heading {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75),
+               0 0 8px rgba(255, 255, 255, 0.9);
+}
+
 /* Small gold type on paper.
 
    The palette gold was chosen to hold against a plain white page. It
    does — but the backdrop is a photograph of a wood, and small text at
    70–80% opacity over branches had nothing left to hold with. So on
    paper the small gold marks lose their transparency, take the darkest
-   gold in the set, and carry a faint white halo that lifts them off
-   whatever they happen to be standing on. */
+   gold in the set, and carry the same halo. */
 html[data-theme="light"] .story .num,
 html[data-theme="light"] .story-time,
 html[data-theme="light"] .story-series {
   color: #4a350a;
   opacity: 1;
-  /* The dark glow behind the number was written for a candlelit room;
-     on paper it only smudged the figure. */
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7),
                0 0 6px rgba(255, 255, 255, 0.85);
 }
@@ -3300,17 +3288,18 @@ html[data-theme="light"] .start-scene {
      Drawn normally instead, brightened and desaturated until the
      picture reads as a wash on paper rather than a night sky, and set
      high enough to actually be seen. */
-  /* The scene stands in its own column now rather than behind the
-     prose, so it no longer has to be bleached to keep text readable.
-     A light lift is all it takes to belong on paper. */
-  filter: saturate(0.88) brightness(1.1) contrast(0.94);
-  opacity: 0.94;
+  /* On paper the artwork is the darkest thing on the card and the
+     prose lies over its thinned edge, so it is lifted well clear of
+     the type. The right of the picture keeps its colour; only the
+     side the words sit on gives way. */
+  filter: saturate(0.92) brightness(1.32) contrast(0.86);
+  opacity: 0.8;
 }
 
 html[data-theme="light"] .start-row:hover .start-scene,
 html[data-theme="light"] .start-row:focus-visible .start-scene {
-  filter: saturate(0.95) brightness(1.06) contrast(0.97);
-  opacity: 1;
+  filter: saturate(1) brightness(1.24) contrast(0.9);
+  opacity: 0.9;
 }
 
 html[data-theme="light"] .start-row:hover,
