@@ -1275,6 +1275,73 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* No frame and no box. A border and a filled rectangle both announce
    themselves against a photographic backdrop; what separates one card
    from the next is the gap and the artwork itself. */
+/* ---- The category a pair of books stands under ----
+   Noir, Transgressive, Plausible: the same three dials the books
+   themselves carry, used here as three doors into the shelf. */
+.start-cat {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 2.2rem 0 0.35rem;
+  padding: 0 1.35rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  color: var(--ember);
+}
+
+.start-cat:first-child { margin-top: 0.6rem; }
+
+/* A rule running out from the word to the edge, so the name reads as a
+   heading over the pair rather than a label on the first one. */
+.start-cat::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--ember-soft);
+  opacity: 0.5;
+}
+
+/* The dotted underline says the word has something to tell you — the
+   same hint the dials carry beneath a synopsis. */
+.start-cat-name {
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 0.12rem;
+  cursor: help;
+}
+
+/* What the category measures. Held back until asked, and floated above
+   the heading so it never moves the books beneath it. */
+.start-cat-about {
+  position: absolute;
+  left: 1.35rem;
+  bottom: calc(100% + 0.45rem);
+  z-index: 6;
+  width: max-content;
+  max-width: min(20rem, 74vw);
+  padding: 0.55rem 0.75rem;
+  background: var(--raised);
+  border: 1px solid var(--hairline);
+  box-shadow: 0 14px 30px var(--cast);
+  font-family: var(--serif);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--faded);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.start-cat-name:focus .start-cat-about,
+.start-cat:hover .start-cat-about {
+  opacity: 1;
+  visibility: visible;
+}
+
 .start-row {
   position: relative;
   display: block;
