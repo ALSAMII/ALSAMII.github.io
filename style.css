@@ -694,7 +694,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   padding: 0.5rem 0 0.75rem;
 }
 
-@media (max-width: 56rem) { .shelf { padding-top: 0; } }
+/* On a phone the shelf follows the Start Here panel directly, so it
+   needs a clear break above it — otherwise the last recommendation and
+   the first of forty-eight books read as one list. */
+@media (max-width: 56rem) {
+  .shelf {
+    padding-top: 0;
+    margin-top: 2.75rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .shelf .filters { padding-top: 1.5rem; }
+}
 
 .shelf ol {
   margin: 0;
@@ -3161,14 +3171,27 @@ html[data-theme="light"] .feature-syn,
 html[data-theme="light"] .guide-def,
 html[data-theme="light"] .panel .lede,
 html[data-theme="light"] .panel .note,
-html[data-theme="light"] .panel .signature,
-html[data-theme="light"] .start-note,
+html[data-theme="light"] .panel .signature {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75),
+               0 0 8px rgba(255, 255, 255, 0.9);
+}
+
+/* The Start Here summaries on paper.
+
+   No halo and no glow: the artwork no longer runs beneath these lines,
+   so the shadows that were holding them off a picture were only
+   softening the letters. Plain ink on plain page, one step darker than
+   the secondary grey, is what actually reads. */
+html[data-theme="light"] .start-note {
+  color: #2c3136;
+  text-shadow: none;
+}
+
 html[data-theme="light"] .start-title,
 html[data-theme="light"] .start-num,
 html[data-theme="light"] .start-time,
 html[data-theme="light"] .start-heading {
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75),
-               0 0 8px rgba(255, 255, 255, 0.9);
+  text-shadow: none;
 }
 
 html[data-theme="light"] .story-hook {
@@ -3240,18 +3263,25 @@ html[data-theme="light"] .start-scene {
      Drawn normally instead, brightened and desaturated until the
      picture reads as a wash on paper rather than a night sky, and set
      high enough to actually be seen. */
-  /* On paper the artwork is the darkest thing on the card and the
-     prose lies over its thinned edge, so it is lifted well clear of
-     the type. The right of the picture keeps its colour; only the
-     side the words sit on gives way. */
-  filter: saturate(0.92) brightness(1.32) contrast(0.86);
-  opacity: 0.8;
+  /* On paper the artwork clears the words entirely rather than
+     thinning across them: a picture faded under dark type is what made
+     the summaries hard to read. The mask below cuts it off where the
+     text begins, so the right of the card keeps its full colour and
+     the left is plain page. */
+  filter: saturate(0.95) brightness(1.12) contrast(0.95);
+  opacity: 0.92;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, transparent 40%, #000 62%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, transparent 40%, #000 62%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 
 html[data-theme="light"] .start-row:hover .start-scene,
 html[data-theme="light"] .start-row:focus-visible .start-scene {
-  filter: saturate(1) brightness(1.24) contrast(0.9);
-  opacity: 0.9;
+  filter: saturate(1) brightness(1.08) contrast(0.98);
+  opacity: 1;
 }
 
 html[data-theme="light"] .start-row:hover,
