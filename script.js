@@ -880,11 +880,28 @@
     }
   });
 
-  /* An open dial description closes when the reader looks elsewhere. */
+  /* Door, Room and Key explain themselves on a tap, the way the dials
+     under a synopsis do. On a mouse the hover in the stylesheet has
+     already done it; this is for the screens that have no hover. */
+  document.querySelectorAll(".guide-term").forEach(function (term) {
+    term.addEventListener("click", function () {
+      var open = term.getAttribute("aria-expanded") === "true";
+      document.querySelectorAll(".guide-term[aria-expanded='true']")
+              .forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+      term.setAttribute("aria-expanded", open ? "false" : "true");
+    });
+  });
+
+  /* An open description closes when the reader looks elsewhere. */
   document.addEventListener("click", function (e) {
-    if (e.target.closest(".has-about")) return;
-    document.querySelectorAll(".has-about[aria-expanded='true']")
-            .forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+    if (!e.target.closest(".has-about")) {
+      document.querySelectorAll(".has-about[aria-expanded='true']")
+              .forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+    }
+    if (!e.target.closest(".guide-term")) {
+      document.querySelectorAll(".guide-term[aria-expanded='true']")
+              .forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+    }
   });
 
   /* ---- A cover, full size -----------------------------------

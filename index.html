@@ -72,7 +72,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=176">
+<link rel="stylesheet" href="style.css?v=177">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -311,17 +311,35 @@
         <div class="guide">
           <p class="guide-row">
             <span class="guide-icon guide-icon--door" aria-hidden="true"></span>
-            <span class="guide-term caps">Door</span>
+            <button class="guide-term caps" type="button" aria-expanded="false">
+              <span>Door</span>
+              <span class="guide-about">The way in. Every book turns on one
+                thing a person did to leave their own head &mdash; something
+                taken, something practised, something endured, something gone
+                without. Four doors, and the filter above sorts by them.</span>
+            </button>
             <span class="guide-def">How they got out</span>
           </p>
           <p class="guide-row">
             <span class="guide-icon guide-icon--window" aria-hidden="true"></span>
-            <span class="guide-term caps">Room</span>
+            <button class="guide-term caps" type="button" aria-expanded="false">
+              <span>Room</span>
+              <span class="guide-about">Where the door lets them out. The state
+                they end up in and have to live inside &mdash; an hour that
+                belongs to someone else, a city that stops answering, a house
+                with no one narrating. Named fresh for every book.</span>
+            </button>
             <span class="guide-def">Where they ended</span>
           </p>
           <p class="guide-row">
             <span class="guide-icon guide-icon--key" aria-hidden="true"></span>
-            <span class="guide-term caps">Key</span>
+            <button class="guide-term caps" type="button" aria-expanded="false">
+              <span>Key</span>
+              <span class="guide-about">The instrument itself. The drug, the
+                rite, the song, the ledger &mdash; the particular thing that
+                opens the door, and the one a reader tends to remember longest
+                after the story is over.</span>
+            </button>
             <span class="guide-def">What opened it</span>
           </p>
         </div>
@@ -544,7 +562,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=176"></script>
-<script src="script.js?v=176"></script>
+<script src="stories.js?v=177"></script>
+<script src="script.js?v=177"></script>
 </body>
 </html>

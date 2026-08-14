@@ -1581,6 +1581,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .ornament--small { width: min(46%, 7rem); margin: 1.3rem auto 1.4rem; opacity: 0.45; }
 
 .guide {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
   /* No gap: the rules between the columns provide the separation, and
@@ -1622,12 +1623,77 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .guide-icon--key    { background-image: url("assets/icon-key.png"); }
 .guide-row { margin: 0; }
 
+/* A button, not a span: the term carries an explanation now, and a
+   button is the one control a keyboard and a screen reader both
+   already understand. Stripped back to bare text so it sits exactly
+   where the label used to. */
 .guide-term {
   display: block;
+  width: 100%;
   margin-bottom: 0.5rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
   letter-spacing: 0.22em;
   color: var(--ember);
   font-size: 0.6875rem;
+  cursor: help;
+}
+
+/* The dotted rule under the word — the same hint the dials and the
+   Start Here categories use, so one gesture is learned once. */
+.guide-term > span:first-child {
+  display: inline-block;
+  border-bottom: 1px dotted currentColor;
+  padding-bottom: 0.14rem;
+}
+
+/* What the term means. Held back until asked, and floated above the
+   row so it never moves the three columns beneath it. */
+.guide-about {
+  position: absolute;
+  bottom: calc(100% + 0.7rem);
+  left: 0;
+  right: 0;
+  z-index: 6;
+  /* Measured against the whole guide rather than its own column: a
+     bubble centred on "Door" ran off the side of the screen, since
+     that column is a third of a phone wide. */
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 0.65rem 0.8rem;
+  background: var(--raised);
+  border: 1px solid var(--hairline);
+  box-shadow: 0 16px 34px var(--cast);
+  font-family: var(--serif);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  text-align: left;
+  color: var(--faded);
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+}
+
+.guide-term[aria-expanded="true"] .guide-about {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (hover: hover) {
+  .guide-term:hover .guide-about,
+  .guide-term:focus-visible .guide-about {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .guide-def {
