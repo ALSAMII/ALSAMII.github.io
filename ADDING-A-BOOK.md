@@ -8,6 +8,9 @@ If you'd rather not do it by hand: send Claude the book's details and
 the cover, and ask for the full set of files. Claude will hand back
 everything below, named and ready to upload.
 
+For anything that isn't a book — backdrops, series banners, the door
+filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
+
 ---
 
 ## The short version
@@ -110,17 +113,35 @@ synopsis.
 
 ### If the book joins a series
 
-Series groups live in the `TRILOGIES` block near the bottom of
-`stories.js`. Add the number to the right group's `books` list:
+Series live in the `TRILOGIES` block near the bottom of `stories.js`.
+Add the number to the right group's `books` list, in reading order:
 
 ```js
-{ title: "The Sovereign Rooms", label: "", books: [36, 37, 38, 39, 40, 41] },
+{
+  title: "The Borrowed Sun Cycle",
+  label: "",
+  books: [41, 42, 43, 44, 45, 46, 47],
+  banner: "assets/borrowed-sun.jpg",
+  synopsis: "Seven worlds, one street corner, ..."
+}
 ```
 
-Leave `label` empty for a plain series heading; a group of three uses
-`"A Triptych"`. A book that stands alone belongs in no group at all —
-**The Weight of Her** (35) is deliberately outside every group, and
-must stay that way.
+That is the only place a series is written down. The book will label
+itself on its own row — "THE BORROWED SUN CYCLE · 4 OF 7" — from its
+position in that list, and the count updates on its own as the series
+grows. Nothing goes in the book's own block.
+
+Leave `label` empty for a plain heading; a group of three uses
+`"A Triptych"`. Leave it out altogether and a group of three is
+labelled a triptych automatically, which is wrong for a longer cycle
+that only has three books so far.
+
+A book that stands alone belongs in no group — **The Weight of Her**
+(35) and **Service Life** (48) are deliberately outside every series,
+and must stay that way.
+
+For banners, and for starting a new series from scratch, see
+[CUSTOMISING.md](CUSTOMISING.md).
 
 ---
 
@@ -234,6 +255,8 @@ Netlify picks up the commit and republishes within a minute or two.
 ## Check it worked
 
 - The book appears at the bottom of the list, with its reading time
+- If it joined a series, its row names the series and its place in it,
+  and the count is right for every other book in that series too
 - Its cover shows when the row is opened — a blank frame means the
   cover is missing or is a `.png`
 - **PDF** opens the novella

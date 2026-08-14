@@ -13,11 +13,16 @@ or downloaded as the typeset PDF.
 
 Live at <https://www.chewzfiction.com>.
 
-## Adding a book
+## The two guides
 
-**See [ADDING-A-BOOK.md](ADDING-A-BOOK.md).** Seven steps, in order, with
+**[ADDING-A-BOOK.md](ADDING-A-BOOK.md)** — seven steps, in order, with
 the field-by-field format for `stories.js` and what to check afterwards.
-It's the one document to follow when the catalogue grows.
+Follow it whenever the catalogue grows.
+
+**[CUSTOMISING.md](CUSTOMISING.md)** — everything else: the backdrops
+and their sizes, series and their painted banners, the door filter and
+the three dials, the books featured on the About panel, wiring up a
+newsletter, the two themes, and how publishing works.
 
 ## What's in the folder
 
@@ -31,9 +36,10 @@ build-share-pages.js  rebuilds the b/ folder from stories.js
 build-reader.py       pulls the reading text out of the PDFs
 b/                    one small page per book, so shared links show covers
 read/                 each novella as text, for reading on the site
+.nojekyll             tells GitHub Pages to serve the files as they are
 pdfs/                 the novellas, numbered: 01.pdf, 02.pdf ...
 covers/               a cover per novella, numbered to match: 01.jpg ...
-assets/               backdrop artwork, the Roya mark, icons, ambient audio
+assets/               backdrops, series banners, the Roya mark, icons, audio
 feed.xml              generated — don't edit by hand
 sitemap.xml           generated — don't edit by hand
 CNAME                 the custom domain. NEVER DELETE THIS FILE
@@ -74,21 +80,27 @@ In `index.html`:
   attributes; each also wants an `assets/start-NN.jpg` scene image
 - the footer
 
+## Series
+
+Six of them, declared in the `TRILOGIES` block at the bottom of
+`stories.js`. Each names its books by number; every book in one then
+labels itself on its own row — "LES FOLIES · 2 OF 3" — with nothing
+written per book.
+
+Each series also carries a painted panorama, shown in place of a row of
+spines and in place of the written heading, since the artwork already
+carries the name. See CUSTOMISING.md for sizes.
+
 ## The backdrop and the ambient sound
 
-**Backdrop.** `assets/bg/bg-path.jpg` + `.webp`, darkened and vignetted
-in CSS so text stays readable. Both formats are needed: browsers take
-the webp and fall back to the jpg.
+Two photographs, one per theme: `assets/bg/bg-path` for the dark room
+and `assets/bg/bg-paper` for the light one, each as jpg and webp. A
+third scene, `bg-tearoom`, is built but switched off — `SCENES = 1` in
+the head of `index.html`; raise it to `2` to alternate.
 
-A second scene, `bg-tearoom`, is fully built but switched off — the head
-of `index.html` sets `SCENES = 1`, so only scene 0 is ever chosen.
-Raising it to `2` makes the backdrop alternate between the two, never
-the same one twice running.
-
-**Ambient sound.** `assets/ambient-tearoom.mp3`, off until the speaker
-in the header is pressed, then held at a low fixed level. Any audio
-hosted here needs a licence that permits it — a track lifted from
-YouTube does not.
+`assets/ambient-tearoom.mp3` is off until the speaker in the header is
+pressed, then held at a low fixed level. Any audio hosted here needs a
+licence that permits it — a track lifted from YouTube does not.
 
 ## The reader
 
@@ -115,11 +127,19 @@ or `stories.js`, or returning readers keep seeing the old version.
 
 ## Hosting
 
-GitHub repository `alsamii/alsamii.github.io` → Netlify, which
-republishes on every commit. The domain is managed at Porkbun:
-chewzfiction.com is canonical, chewzroya.com redirects to it. `CNAME`
-at the repository root is what holds the custom domain — deleting it
-silently reverts the site to `alsamii.github.io`.
+**GitHub Pages**, serving the `alsamii/alsamii.github.io` repository
+straight from `main`. There is no build step and nothing to pay for:
+committing publishes.
+
+The domain is managed at Porkbun — chewzfiction.com is canonical,
+chewzroya.com redirects to it. Two files at the repository root matter
+here and should never be deleted: **`CNAME`**, which holds the custom
+domain, and **`.nojekyll`**, which stops GitHub processing the files
+through Jekyll.
+
+(The site ran on Netlify for a while, deploying from the same
+repository. That was removed because every commit spent build credit
+on a site that needs no building.)
 
 ## If something breaks
 
