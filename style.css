@@ -3106,6 +3106,36 @@ html[data-theme="light"] .start-title,
 html[data-theme="light"] .start-num,
 html[data-theme="light"] .start-time,
 html[data-theme="light"] .start-heading,
+/* Small gold type on paper.
+
+   The palette gold was chosen to hold against a plain white page. It
+   does — but the backdrop is a photograph of a wood, and small text at
+   70–80% opacity over branches had nothing left to hold with. So on
+   paper the small gold marks lose their transparency, take the darkest
+   gold in the set, and carry a faint white halo that lifts them off
+   whatever they happen to be standing on. */
+html[data-theme="light"] .story .num,
+html[data-theme="light"] .story-time,
+html[data-theme="light"] .story-series {
+  color: #4a350a;
+  opacity: 1;
+  /* The dark glow behind the number was written for a candlelit room;
+     on paper it only smudged the figure. */
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7),
+               0 0 6px rgba(255, 255, 255, 0.85);
+}
+
+/* The reading time is the one line a reader scans for, so it earns a
+   little more weight than the rest of the small caps. */
+html[data-theme="light"] .story-time { font-weight: 500; }
+
+/* Titles and hooks sit over the same photograph and want the same
+   lift, without changing colour. */
+html[data-theme="light"] .story .title,
+html[data-theme="light"] .story-hook {
+  text-shadow: 0 0 7px rgba(255, 255, 255, 0.8);
+}
+
 html[data-theme="light"] .story-hook {
   text-shadow: 0 1px 14px var(--halo), 0 0 24px var(--halo);
 }
