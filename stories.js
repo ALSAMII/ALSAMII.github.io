@@ -626,7 +626,7 @@ const STORIES = [
     door: "Rite",
     room: "A Kind Town \u2014 pleasant, forgiving, and no longer able to recognise what is done to it",
     key: "The Taking \u2014 grievances dictated across a desk and carried out in a body",
-    notes: [3, 3, 2],
+    notes: [3, 3, 1],
     synopsis: "Once a season every resident of Halloran sits across a plain desk and dictates their grievances to the Taker, who writes them down in longhand and carries them out of the building in her body. Ninety years of this, and the town is kind in a way visitors notice and cannot place. What Ruth Amsel learns, always a little too late to act on, is that the grievances are not dissipated but stored \u2014 and that when a Taker reaches capacity, Halloran has a procedure for emptying her."
   },
 
@@ -638,7 +638,7 @@ const STORIES = [
     door: "Dose",
     room: "The Loop \u2014 continuous ecstasy, and no one on the other side of it",
     key: "The Glow \u2014 a self-replicating implant grown from thirty generations of prayer",
-    notes: [3, 3, 2],
+    notes: [3, 3, 1],
     synopsis: "They found it in the bodies of women who had spent their lives in practice: small pearlescent stones the flesh had grown to house its rarest visitor. Cloned, subsidised, then administered in sleep, the Glow gives a woman continuous ecstasy and asks nothing back \u2014 no partner, no wanting, no other person at all. Men are not persecuted; they are simply no longer recognised. This is the gentlest extinction ever recorded, and every step of it was consented to, filed, and delivered as customer service."
   }
 
