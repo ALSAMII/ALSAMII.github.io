@@ -1453,9 +1453,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      to reach the screen. The page clips the surplus, and nothing
      scrolls sideways because the root is set to clip. */
   right: -5rem;
-  top: -6%;
-  height: 112%;
-  width: 92%;
+  top: -14%;
+  height: 128%;
+  /* Wider, so the picture reaches further left and more of it is
+     actually seen. The words now lie over its dim side rather than
+     stopping short of it — which is the trade that buys the extra
+     artwork. */
+  width: 124%;
   object-fit: cover;
   pointer-events: none;
   border: 0;
@@ -1463,11 +1467,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: opacity 0.4s ease, transform 5s ease;
 
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, transparent 28%, rgba(0,0,0,0.4) 44%, #000 68%, #000 94%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, transparent 28%, rgba(0,0,0,0.4) 44%, #000 68%, #000 94%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
