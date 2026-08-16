@@ -1416,7 +1416,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   width: 100%;
   padding: 0.9rem 1.35rem;
-  overflow: hidden;
+  /* Not clipped. The scene is meant to run off the side of the card
+     and out of the panel; hiding the overflow cut it off square at the
+     card's own edge, which is the vertical seam that kept appearing
+     partway across the screen. The page itself clips the far side. */
   font: inherit;
   text-align: left;
   background: none;
@@ -1445,10 +1448,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* Big, and running off the edge of the card. Narrowing this was the
      wrong way to stop the words crossing it — it took most of the
      picture with it. The mask below does that job instead. */
-  right: -6%;
+  /* Far enough right to clear the card, the panel and the frame — each
+     adds its own margin, so a percentage of the card was never going
+     to reach the screen. The page clips the surplus, and nothing
+     scrolls sideways because the root is set to clip. */
+  right: -5rem;
   top: -6%;
   height: 112%;
-  width: 76%;
+  width: 92%;
   object-fit: cover;
   pointer-events: none;
   border: 0;
