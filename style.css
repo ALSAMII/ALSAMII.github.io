@@ -1744,13 +1744,23 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   text-wrap: pretty;
 }
 
+/* The italic aside, in the About panel and the author's note.
+
+   At 600 the serif's italic goes heavy and starts to shout, which is
+   the opposite of what an aside should do. Set at 400 it reads as an
+   aside — quieter than the statement above it, and the italic alone
+   does the work of setting it apart. A little extra tracking, because
+   light italics set tight are harder to read than upright text. */
 .panel .note {
   font-family: var(--serif);
   font-style: italic;
-  font-weight: 600;
-  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
+  font-weight: 400;
+  text-shadow: 0 1px 22px rgba(5, 4, 3, 0.7);
   font-size: clamp(1.3125rem, 2.1vw, 1.5rem);
-  line-height: 1.75;
+  line-height: 1.8;
+  letter-spacing: 0.012em;
+  color: var(--parchment);
+  opacity: 0.9;
   margin: 0;
 }
 
