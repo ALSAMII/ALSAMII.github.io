@@ -1232,7 +1232,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-weight: 600;
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
   font-size: clamp(1.375rem, 2.3vw, 1.625rem);
-  line-height: 1.7;
+  line-height: 1.55;
   letter-spacing: 0.02em;
   margin: 0;
 }
@@ -1262,12 +1262,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    to the card titles and indented to their left edge, so it reads as
    the first line of the group rather than as a floating centred label. */
 .start-heading {
-  /* Sits close above the first card rather than floating between the
-     guide and the group — it belongs to the three books beneath it. */
-  /* Plenty of air above, very little below: the gap is what tells a
-     reader this line has left the Door / Room / Key guide behind and
-     belongs to the three books directly under it. */
-  margin: 3.75rem 0 0.5rem;
+  /* Air above, very little below: the gap is what tells a reader this
+     line has left the Door / Room / Key guide behind and belongs to
+     the books directly under it. Enough to separate, not so much that
+     the panel needs a scroll to get past it. */
+  margin: 2.1rem 0 0.4rem;
   text-align: center;
   /* The masthead's face — Jost, spaced caps — rather than the serif, so
      it reads as a line of signage above the group instead of a fourth
@@ -1310,7 +1309,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      clipped word is worse than a wrapped one — so the smallest screens
      get to wrap, together, and stay aligned with each other. */
   .guide-def { font-size: 0.75rem; white-space: normal; }
-  .guide { gap: 1.1rem 0; }
+  .guide { gap: 0.75rem 0; }
   .guide-row { padding-inline: 0.2rem; }
 }
 
@@ -1595,16 +1594,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    instead of squeezing "The one thing that did it" into a stack of
    single words. */
 /* A diamond on a rule, between the movements of the About panel. */
+/* The ornaments between the panel's three parts. Trimmed: they are
+   punctuation, and punctuation does not need a paragraph of air on
+   each side of it. */
 .ornament {
   display: block;
-  margin: 1.5rem auto;
+  margin: 0.95rem auto;
   width: min(70%, 11rem);
   color: var(--ember);
   opacity: 0.55;
   line-height: 0;
 }
 .ornament svg { display: block; width: 100%; height: auto; }
-.ornament--small { width: min(46%, 7rem); margin: 1.3rem auto 1.4rem; opacity: 0.45; }
+.ornament--small { width: min(46%, 7rem); margin: 0.8rem auto 0.9rem; opacity: 0.45; }
 
 .guide {
   position: relative;
@@ -1612,7 +1614,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
   /* No gap: the rules between the columns provide the separation, and
      the padding inside each cell keeps the text off them. */
-  gap: 1.4rem 0;
+  gap: 0.9rem 0;
   /* stretch, not start: the dividers are the columns' own left edges,
      so a short column drew a short rule. Now every column is as tall
      as the tallest and the three rules match. */
@@ -1637,8 +1639,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    same tall however wide each happens to be. */
 .guide-icon {
   display: block;
-  margin: 0 auto 0.75rem;
-  height: clamp(1.7rem, 4.6vw, 2.25rem);
+  margin: 0 auto 0.5rem;
+  height: clamp(1.55rem, 4.2vw, 2.1rem);
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: auto 100%;
@@ -1656,7 +1658,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .guide-term {
   display: block;
   width: 100%;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   padding: 0;
   background: none;
   border: 0;
@@ -1764,7 +1766,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-weight: 400;
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.7);
   font-size: clamp(1.3125rem, 2.1vw, 1.5rem);
-  line-height: 1.8;
+  line-height: 1.65;
   letter-spacing: 0.012em;
   color: var(--parchment);
   opacity: 0.9;
@@ -2631,7 +2633,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .trilogy.open .synopsis .minis.many img { width: 4rem; }
 
 /* Space between stage paragraphs; type eases down on short windows */
-.panel .lede + .lede { margin-top: 1em; }
+.panel .lede + .lede { margin-top: 0.7em; }
 @media (max-height: 51rem) {
   /* A 13-inch laptop lands here. Everything on the stage steps down a
      little so a book's synopsis is read, not scrolled. */
@@ -2644,7 +2646,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
   .panel .rule { margin: 1.5rem auto; }
   .guide-def { font-size: clamp(0.875rem, 1.7vh, 1.0625rem); }
-  .guide { gap: 1rem clamp(0.6rem, 3vw, 2rem); margin-bottom: 1.35rem; }
+  .guide { gap: 0.7rem clamp(0.6rem, 3vw, 2rem); margin-bottom: 0.9rem; }
 }
 
 /* ============================================================
