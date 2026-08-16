@@ -1296,8 +1296,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* A phone has no room for an even split: the words take the larger
      share, and the title comes down a step to sit in it. */
   .start-row { padding: 0.75rem 1.1rem; }
-  .start-body { max-width: 60%; }
-  .start-scene { width: 58%; }
+  .start-body { max-width: 54%; }
+  .start-scene { width: 56%; }
   .start-title { font-size: 1.0625rem; letter-spacing: 0.02em; }
   .start-num   { font-size: 1.0625rem; }
   .start-note  { font-size: 0.875rem; line-height: 1.5; }
@@ -1453,10 +1453,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: opacity 0.4s ease, transform 5s ease;
 
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 18%, #000 52%, #000 92%, transparent 100%),
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.3) 22%, #000 60%, #000 92%, transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 18%, #000 52%, #000 92%, transparent 100%),
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.3) 22%, #000 60%, #000 92%, transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -1483,7 +1483,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-body {
   position: relative;
   z-index: 1;
+  /* block, because this is a <span>: as an inline box it ignored
+     max-width entirely, which is why the summaries were running the
+     full width of the card and finishing over the artwork. */
+  display: block;
   min-width: 0;
+  /* Short of the artwork, not up against it: the last line of a
+     summary is the one most likely to run long. Wide enough to keep
+     the lines readable, and still finishing well before the picture
+     turns solid. */
   max-width: 56%;
 }
 
@@ -1557,6 +1565,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      to overhang it above and below the card are gone with the overlay
      they were written for. */
   .start-note { font-size: 0.875rem; }
+  .start-body { max-width: 60%; }
+  .start-scene { width: 56%; }
 }
 
 
@@ -3367,29 +3377,38 @@ html[data-theme="light"] .gcard:focus-visible img {
    on paper rather than a window into somewhere else. */
 
 html[data-theme="light"] .start-scene {
-  /* multiply keeps only what is darker than the page, and these scenes
-     are dark almost everywhere — so at 14% they all but disappeared.
-     Drawn normally instead, brightened and desaturated until the
-     picture reads as a wash on paper rather than a night sky, and set
-     high enough to actually be seen. */
-  /* On paper the artwork clears the words entirely rather than
-     thinning across them: a picture faded under dark type is what made
-     the summaries hard to read. The mask below cuts it off where the
-     text begins, so the right of the card keeps its full colour and
-     the left is plain page. */
-  filter: saturate(0.95) brightness(1.12) contrast(0.95);
-  opacity: 0.92;
+  /* On paper the artwork is a picture on a page, not a bleed off the
+     edge of one.
+
+     Bleeding it past the card gave it a hard vertical cut where the
+     card clips — invisible on a dark ground, obvious on white. So on
+     paper it sits inside the card and fades on every side: an oval
+     mask softens the top, right and bottom, and a linear one clears
+     the left where the words are. Nothing is painted over it, so more
+     of the picture shows, not less. */
+  /* Wholly inside the card, so the fade finishes before the card's own
+     edge does — anything overhanging is clipped square, and a square
+     cut is exactly what shows on white. */
+  right: 1.5%;
+  top: 5%;
+  height: 90%;
+  width: 72%;
+  opacity: 0.95;
+  filter: saturate(0.98) brightness(1.06) contrast(0.97);
+
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, transparent 40%, #000 62%, #000 92%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.2) 24%, #000 54%, #000 100%),
+    radial-gradient(80% 88% at 58% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, transparent 40%, #000 62%, #000 92%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.2) 24%, #000 54%, #000 92%, transparent 100%),
+    radial-gradient(80% 88% at 58% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
 html[data-theme="light"] .start-row:hover .start-scene,
 html[data-theme="light"] .start-row:focus-visible .start-scene {
-  filter: saturate(1) brightness(1.08) contrast(0.98);
+  filter: saturate(1.02) brightness(1.03) contrast(0.99);
   opacity: 1;
 }
 
