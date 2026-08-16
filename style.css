@@ -1295,8 +1295,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
   /* A phone has no room for an even split: the words take the larger
      share, and the title comes down a step to sit in it. */
-  .start-row { padding: 0.75rem 1.1rem; }
-  .start-body { max-width: 54%; }
+  .start-row { padding: 0.5rem 1.1rem; }
+  .start-body { max-width: 68%; }
   .start-scene { width: 56%; }
   .start-title { font-size: 1.0625rem; letter-spacing: 0.02em; }
   .start-num   { font-size: 1.0625rem; }
@@ -1320,7 +1320,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* Close: the two books under a heading should read as a pair, and
      the air above each category is what separates one pair from the
      next. */
-  gap: 0.9rem;
+  gap: 0.35rem;
   margin: 0 0 1.5rem;
   text-align: left;
 }
@@ -1415,7 +1415,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      the two occupy the same space but never the same pixels. */
   display: block;
   width: 100%;
-  padding: 0.9rem 1.35rem;
+  padding: 0.55rem 1.35rem;
   /* Not clipped. The scene is meant to run off the side of the card
      and out of the panel; hiding the overflow cut it off square at the
      card's own edge, which is the vertical seam that kept appearing
@@ -1504,11 +1504,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      full width of the card and finishing over the artwork. */
   display: block;
   min-width: 0;
-  /* Short of the artwork, not up against it: the last line of a
-     summary is the one most likely to run long. Wide enough to keep
-     the lines readable, and still finishing well before the picture
-     turns solid. */
-  max-width: 56%;
+  /* Across the card and over the picture. The artwork is dim on this
+     side, and a wider measure means fewer, longer lines — which is
+     what brings the two books in a category close enough to read as a
+     pair. */
+  max-width: 64%;
 }
 
 /* Block, not flex: as flex items the number and the title broke onto
@@ -1517,7 +1517,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    first word of the name. */
 .start-head {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 .start-head > * { display: inline; }
 
@@ -1526,7 +1526,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    more than two words. */
 .start-time {
   display: block !important;
-  margin-top: 0.28rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.35rem;
 }
 
 /* Same face and weight as the title — it is a label, not an ornament. */
@@ -1566,7 +1567,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   max-width: 32rem;
   font-family: var(--serif);
   font-size: 1rem;
-  line-height: 1.55;
+  line-height: 1.48;
   color: var(--faded);
   text-wrap: pretty;
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.95),
@@ -1575,13 +1576,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row:hover .start-note { color: var(--parchment); }
 
 @media (max-width: 34rem) {
-  .start { gap: 0.7rem; }
+  .start { gap: 0.3rem; }
   /* Nothing to override here any more: the scene has its own column
      and takes its height from its own proportions. The rules that used
      to overhang it above and below the card are gone with the overlay
      they were written for. */
   .start-note { font-size: 0.875rem; }
-  .start-body { max-width: 54%; }
+  .start-body { max-width: 68%; }
 }
 
 
@@ -3328,7 +3329,11 @@ html[data-theme="light"] .panel .signature {
    the secondary grey, is what actually reads. */
 html[data-theme="light"] .start-note {
   color: #2c3136;
-  text-shadow: none;
+  /* A faint page-coloured halo, only where a line runs onto the
+     picture — enough to keep the letters whole without the glow that
+     was softening them before. */
+  text-shadow: 0 0 6px rgba(240, 241, 241, 0.95),
+               0 0 2px rgba(240, 241, 241, 0.9);
 }
 
 html[data-theme="light"] .start-title,
@@ -3421,12 +3426,15 @@ html[data-theme="light"] .start-scene {
   opacity: 0.95;
   filter: saturate(0.98) brightness(1.06) contrast(0.97);
 
+  /* The clear side runs further on paper than it does in the dark: the
+     words are set wide now, and dark text over a picture on a pale
+     page loses far more than light text over one in the dark. */
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.2) 24%, #000 54%, #000 100%),
-    radial-gradient(80% 88% at 58% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
+    linear-gradient(to right, transparent 0, transparent 34%, rgba(0,0,0,0.28) 56%, #000 78%, #000 100%),
+    radial-gradient(80% 88% at 62% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.2) 24%, #000 54%, #000 92%, transparent 100%),
-    radial-gradient(80% 88% at 58% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
+    linear-gradient(to right, transparent 0, transparent 34%, rgba(0,0,0,0.28) 56%, #000 78%, #000 92%, transparent 100%),
+    radial-gradient(80% 88% at 62% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
