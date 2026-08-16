@@ -3408,43 +3408,36 @@ html[data-theme="light"] .gcard:focus-visible img {
    bleeding into the page. Washed out far enough to read as a stain
    on paper rather than a window into somewhere else. */
 
+/* The scene on paper.
+
+   Same picture, same place, same size as in the dark — only the
+   handling differs. Two rounds of local fixes had quietly given the
+   light theme a layout of its own: inset in the card, smaller, with a
+   vignette the dark one never had. Each change made sense on its own
+   and the result was two designs.
+
+   What paper genuinely needs is not a different shape but a lighter
+   touch: the artwork lifted so dark type can sit on it, and held
+   further back on the left, since dark text loses far more over a
+   picture than light text does. */
 html[data-theme="light"] .start-scene {
-  /* On paper the artwork is a picture on a page, not a bleed off the
-     edge of one.
+  filter: saturate(0.96) brightness(1.16) contrast(0.92);
+  opacity: 0.85;
 
-     Bleeding it past the card gave it a hard vertical cut where the
-     card clips — invisible on a dark ground, obvious on white. So on
-     paper it sits inside the card and fades on every side: an oval
-     mask softens the top, right and bottom, and a linear one clears
-     the left where the words are. Nothing is painted over it, so more
-     of the picture shows, not less. */
-  /* Wholly inside the card, so the fade finishes before the card's own
-     edge does — anything overhanging is clipped square, and a square
-     cut is exactly what shows on white. */
-  right: 1.5%;
-  top: 5%;
-  height: 90%;
-  width: 72%;
-  opacity: 0.95;
-  filter: saturate(0.98) brightness(1.06) contrast(0.97);
-
-  /* The clear side runs further on paper than it does in the dark: the
-     words are set wide now, and dark text over a picture on a pale
-     page loses far more than light text over one in the dark. */
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, transparent 34%, rgba(0,0,0,0.28) 56%, #000 78%, #000 100%),
-    radial-gradient(80% 88% at 62% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 38%, #000 62%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, transparent 34%, rgba(0,0,0,0.28) 56%, #000 78%, #000 92%, transparent 100%),
-    radial-gradient(80% 88% at 62% 50%, #000 22%, rgba(0,0,0,0.5) 58%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 38%, #000 62%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 22%, #000 78%, transparent 100%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
 }
 
 html[data-theme="light"] .start-row:hover .start-scene,
 html[data-theme="light"] .start-row:focus-visible .start-scene {
-  filter: saturate(1.02) brightness(1.03) contrast(0.99);
-  opacity: 1;
+  filter: saturate(1) brightness(1.12) contrast(0.94);
+  opacity: 0.94;
 }
 
 html[data-theme="light"] .start-row:hover,
