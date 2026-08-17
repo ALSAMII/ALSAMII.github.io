@@ -1319,7 +1319,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* Close: the two books under a heading should read as a pair, and
      the air above each category is what separates one pair from the
      next. */
-  gap: 0.35rem;
+  gap: 1.5rem;
   margin: 0 0 1.5rem;
   text-align: left;
 }
@@ -1452,12 +1452,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      to reach the screen. The page clips the surplus, and nothing
      scrolls sideways because the root is set to clip. */
   right: -5rem;
-  /* Overhanging a little top and bottom, so one card's picture is
-     still fading out where the next one begins to fade in. Butted
-     exactly edge to edge they met as a seam; overlapped, the two
-     dissolve through each other. */
-  top: -9%;
-  height: 118%;
+  /* Kept inside its own card now, so the gap between two of them is
+     clear ground rather than one picture running into the next. The
+     long fades top and bottom still stop either edge reading as a
+     cut. */
+  top: -2%;
+  height: 104%;
   /* Wider, so the picture reaches further left and more of it is
      actually seen. The words now lie over its dim side rather than
      stopping short of it — which is the trade that buys the extra
@@ -1498,10 +1498,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    tall box by scaling the picture up and cropping its sides — which is
    what was magnifying the figure. A shorter box, closer to the
    picture's own three-by-two, shows more of her at less magnification. */
+/* "cover" always crops one axis to fill its box, which is why her feet
+   kept going. "contain" fits the whole picture inside instead, and
+   anchoring it right keeps it running off the edge of the card the way
+   the others do. */
 .start-row--glow .start-scene {
-  top: 8%;
-  height: 84%;
-  object-position: 50% 24%;
+  object-fit: contain;
+  object-position: 100% 50%;
 }
 
 /* ---- Text ---- */
@@ -1589,7 +1592,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row:hover .start-note { color: var(--parchment); }
 
 @media (max-width: 34rem) {
-  .start { gap: 0.3rem; }
+  .start { gap: 1.2rem; }
   /* Nothing to override here any more: the scene has its own column
      and takes its height from its own proportions. The rules that used
      to overhang it above and below the card are gone with the overlay
