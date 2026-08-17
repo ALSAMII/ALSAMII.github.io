@@ -1494,6 +1494,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--alarm  .start-scene { object-position: 50% 56%; }
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
+/* The figure stands nearly the full height of her frame, so a centred
+   crop takes her head off. Anchored near the top instead. */
+.start-row--glow   .start-scene { object-position: 50% 12%; }
+
 /* ---- Text ---- */
 /* The words, held to the side of the card the mask has cleared. A
    fixed measure rather than "most of the width": lines that run on
