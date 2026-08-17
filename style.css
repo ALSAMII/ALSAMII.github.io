@@ -1494,9 +1494,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--alarm  .start-scene { object-position: 50% 56%; }
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
-/* The figure stands nearly the full height of her frame, so a centred
-   crop takes her head off. Anchored near the top instead. */
-.start-row--glow   .start-scene { object-position: 50% 12%; }
+/* The Glow's card is the tallest on the panel, and "cover" fills a
+   tall box by scaling the picture up and cropping its sides — which is
+   what was magnifying the figure. A shorter box, closer to the
+   picture's own three-by-two, shows more of her at less magnification. */
+.start-row--glow .start-scene {
+  top: 8%;
+  height: 84%;
+  object-position: 50% 24%;
+}
 
 /* ---- Text ---- */
 /* The words, held to the side of the card the mask has cleared. A
