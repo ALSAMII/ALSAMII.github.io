@@ -1514,21 +1514,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    the middle of the text. The artwork was finishing above the last
    three lines with bare card underneath it.
 
-   Same mask, held to the floor: the left and top fades are unchanged,
-   the bottom one is gone, and the vignette is widened and lifted so it
-   is still falling away at the corners rather than cutting the picture
-   short. Both pictures are near-black along their lower edge, so
-   running them to the bottom reads as depth, not as a crop. */
+   Holding it to the floor instead was the wrong correction: with the
+   bottom fade gone and the vignette pushed out past the card, every
+   edge landed inside solid mask and the picture read as a pasted
+   rectangle — which is the one thing the other rows never do.
+
+   So the fade is back, only later. Solid down to seven-eighths, then
+   away over the last stretch: long enough to have no edge, short
+   enough that it is falling through the final lines rather than
+   starting above them. The vignette is only a little wider than the
+   shared one, so the corners still go before the middle does. */
 .start-row--cut  .start-scene,
 .start-row--samba .start-scene {
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 12%, #000 34%, #000 100%),
-    radial-gradient(128% 132% at 62% 42%, #000 44%, rgba(0,0,0,0.72) 80%, transparent 100%);
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
+    radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
   mask-image:
     linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 12%, #000 34%, #000 100%),
-    radial-gradient(128% 132% at 62% 42%, #000 44%, rgba(0,0,0,0.72) 80%, transparent 100%);
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
+    radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
 }
 
 /* Anchored to the top of the frame rather than centred: on a tall card
