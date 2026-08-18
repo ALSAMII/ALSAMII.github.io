@@ -1514,52 +1514,39 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    the middle of the text. The artwork was finishing above the last
    three lines with bare card underneath it.
 
-   Holding it to the floor instead was the wrong correction: with the
-   bottom fade gone and the vignette pushed out past the card, every
-   edge landed inside solid mask and the picture read as a pasted
-   rectangle — which is the one thing the other rows never do.
+   The fix is the same mask with its bottom fade moved down: solid to
+   seven-eighths, gone by the floor. Two wrong turns on the way there,
+   both worth recording. Removing the bottom fade outright squared the
+   picture off into a pasted rectangle. Fitting it with "contain" on
+   wide screens was worse: the mask is drawn on the element, not on the
+   picture, so a fitted picture ends partway across ground the mask is
+   still holding solid, and its own straight edge shows.
 
-   So the fade is back, only later. Solid down to seven-eighths, then
-   away over the last stretch: long enough to have no edge, short
-   enough that it is falling through the final lines rather than
-   starting above them. The vignette is only a little wider than the
-   shared one, so the corners still go before the middle does. */
-.start-row--cut  .start-scene,
-.start-row--samba .start-scene {
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
-    radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
-  mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
-    radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
-}
-
-/* Anchored to the top of the frame rather than centred: on a tall card
-   "cover" scales the picture up and takes the crop off both ends, and
-   what these two lose that way is the surface light — the thing that
-   tells you which way is up. */
-.start-row--cut   .start-scene { object-position: 50% 22%; }
-.start-row--samba .start-scene { object-position: 54% 30%; }
-
-/* Wide screens turn these cards on their side: the same summary that
-   stacked into ten narrow lines now runs in three, so the card is
-   short and very wide — much wider than the picture's three-by-two.
-   "cover" fills that by scaling to the width and throwing away better
-   than half the height, which is why the diver was reduced to a light
-   with no divers under it and the surfer to an enlargement.
-
-   So on wide cards the picture is fitted rather than filled, the way
-   The Glow's is: whole, held to the right, running toward the edge but
-   not off it. The crop anchors above are portrait tuning and are
-   released here — with nothing cropped there is no band to choose. */
-@media (min-width: 56.01rem), (orientation: landscape) and (max-height: 30rem) {
+   Wide and landscape cards never had the problem — they are short, so
+   the shared fade lands on the card edge where it was meant to. So
+   none of this applies to them. */
+/* The tall-card tuning below is deliberately fenced to narrow, upright
+   screens, which is the only shape that has the problem. Everywhere
+   else these two rows are left entirely alone, so they fill and fade
+   exactly as The Mercy Dose and Mang and Mustard do. */
+@media (max-width: 56rem) and (min-height: 30.01rem) {
   .start-row--cut  .start-scene,
   .start-row--samba .start-scene {
-    object-fit: contain;
-    object-position: 92% 50%;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
+      radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
+      radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
   }
+
+  /* Anchored high rather than centred: on a tall card "cover" takes its
+     crop off both ends, and what these two lose that way is the surface
+     light — the thing that tells you which way is up. */
+  .start-row--cut   .start-scene { object-position: 50% 22%; }
+  .start-row--samba .start-scene { object-position: 54% 30%; }
 }
 
 /* ---- Text ---- */
