@@ -1543,6 +1543,25 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--cut   .start-scene { object-position: 50% 22%; }
 .start-row--samba .start-scene { object-position: 54% 30%; }
 
+/* Wide screens turn these cards on their side: the same summary that
+   stacked into ten narrow lines now runs in three, so the card is
+   short and very wide — much wider than the picture's three-by-two.
+   "cover" fills that by scaling to the width and throwing away better
+   than half the height, which is why the diver was reduced to a light
+   with no divers under it and the surfer to an enlargement.
+
+   So on wide cards the picture is fitted rather than filled, the way
+   The Glow's is: whole, held to the right, running toward the edge but
+   not off it. The crop anchors above are portrait tuning and are
+   released here — with nothing cropped there is no band to choose. */
+@media (min-width: 56.01rem), (orientation: landscape) and (max-height: 30rem) {
+  .start-row--cut  .start-scene,
+  .start-row--samba .start-scene {
+    object-fit: contain;
+    object-position: 92% 50%;
+  }
+}
+
 /* ---- Text ---- */
 /* The words, held to the side of the card the mask has cleared. A
    fixed measure rather than "most of the width": lines that run on
