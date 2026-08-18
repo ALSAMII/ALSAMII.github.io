@@ -640,7 +640,32 @@ const STORIES = [
     key: "The Glow \u2014 a self-replicating implant grown from thirty generations of prayer",
     notes: [3, 3, 1],
     synopsis: "They found it in the bodies of women who had spent their lives in practice: small pearlescent stones the flesh had grown to house its rarest visitor. Cloned, subsidised, then administered in sleep, the Glow gives a woman continuous ecstasy and asks nothing back \u2014 no partner, no wanting, no other person at all. Men are not persecuted; they are simply no longer recognised. This is the gentlest extinction ever recorded, and every step of it was consented to, filed, and delivered as customer service."
+  },
+
+  {
+    num: 51,
+    title: "One Came Up",
+    words: "40,100 words",
+    hook: "Ninety-four metres of still water, and one hand in it",
+    door: "Ordeal",
+    room: "The Cut \u2014 a flooded quarry where a man stops arguing with himself",
+    key: "The Hold \u2014 the urge to breathe, trained until it stops arriving on time",
+    notes: [3, 3, 3],
+    synopsis: "The Cut is a flooded slate quarry outside Ossay, ninety-four metres to the floor, and Sabine Vasseur has not put her face in that water in nine years. She coaches beginners on the shallow shelf and walks down at the end of each day to put one hand in and take it out again. Then she finds Aurel Nizan diving alone \u2014 self-taught to a depth that should not be possible, keeping a longhand log, not reckless but unwilling to stop. Everything she teaches him is correct. She simply does not tell him what is waiting at the bottom, because she needs to know what he will say to it."
+  },
+
+  {
+    num: 52,
+    title: "Samba",
+    words: "29,000 words",
+    hook: "Four hundred and eleven recoveries, and none of them the point",
+    door: "Ordeal",
+    room: "Past the Alarm \u2014 the quiet on the far side of panic, and what is standing in it",
+    key: "The Ladder \u2014 breath-hold conditioning with rungs that continue past blackout",
+    notes: [3, 3, 2],
+    synopsis: "Cass Moura drives a rescue ski at the largest wave in Europe: four hundred and eleven recoveries, sixty-two seconds from impact to hand-on-body, a life built on the belief that his speed is the only decent thing about him. He is wrong about what the speed is for. The tow crews have been training under a retired navy diving medic, and their breath-hold work is a ladder whose rungs go past blackout \u2014 because forty-one subjects have described the same structure, in the same words, in the same absence of fear. Then a swell arrives with no precedent in the recorded history of the beach."
   }
+
 
 ];
 
