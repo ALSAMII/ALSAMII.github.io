@@ -1549,6 +1549,16 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--samba .start-scene { object-position: 54% 30%; }
 }
 
+/* On a wide card "cover" shows a horizontal band of the picture and
+   drops the rest, and the middle band of this one is mostly open water:
+   the divers sit below centre, so a centred crop cuts them at the fins.
+   Taking the band down to three-fifths brings both of them in whole and
+   still keeps the surface light along the top edge. Only this row needs
+   it — the surfer is closer to the middle of his own frame. */
+@media (min-width: 56.01rem), (orientation: landscape) and (max-height: 30rem) {
+  .start-row--cut .start-scene { object-position: 50% 60%; }
+}
+
 /* ---- Text ---- */
 /* The words, held to the side of the card the mask has cleared. A
    fixed measure rather than "most of the width": lines that run on
