@@ -639,7 +639,7 @@ const STORIES = [
     room: "The Loop \u2014 continuous ecstasy, and no one on the other side of it",
     key: "The Glow \u2014 a self-replicating implant grown from thirty generations of prayer",
     notes: [3, 3, 1],
-    synopsis: "They found it in the bodies of women who had spent their lives in practice: small pearlescent stones the flesh had grown to house its rarest visitor. Cloned, subsidised, then administered in sleep, the Glow gives a woman continuous ecstasy and asks nothing back \u2014 no partner, no wanting, no other person at all. Men are not persecuted; they are simply no longer recognised. This is the gentlest extinction ever recorded, and every step of it was consented to, filed, and delivered as customer service."
+    synopsis: "For centuries practitioners sealed the body with mudras \u2014 tongue, hands, gaze \u2014 and learned to hold sensation rather than spend it. Then a laboratory cloned it and sold it on prescription. Under the Glow, arousal is not an event but a residence: a warmth that never clears, softening thought until the body becomes an instrument that plays itself."
   },
 
   {
@@ -651,7 +651,7 @@ const STORIES = [
     room: "The Cut \u2014 a flooded quarry where a man stops arguing with himself",
     key: "The Hold \u2014 the urge to breathe, trained until it stops arriving on time",
     notes: [3, 3, 3],
-    synopsis: "The Cut is a flooded slate quarry outside Ossay, ninety-four metres to the floor, and Sabine Vasseur has not put her face in that water in nine years. She coaches beginners on the shallow shelf and walks down at the end of each day to put one hand in and take it out again. Then she finds Aurel Nizan diving alone \u2014 self-taught to a depth that should not be possible, keeping a longhand log, not reckless but unwilling to stop. Everything she teaches him is correct. She simply does not tell him what is waiting at the bottom, because she needs to know what he will say to it."
+    synopsis: "A cold black lake, ninety-four metres to the bottom. They call it the Cut, and Sabine Vasseur has not swum in it for nine years. Then a young man starts diving it alone. She teaches him everything \u2014 except the old story about what waits below, patient, and fond of company."
   },
 
   {
@@ -664,6 +664,42 @@ const STORIES = [
     key: "The Ladder \u2014 breath-hold conditioning with rungs that continue past blackout",
     notes: [3, 3, 2],
     synopsis: "Cass Moura drives a rescue ski at the largest wave in Europe: four hundred and eleven recoveries, sixty-two seconds from impact to hand-on-body, a life built on the belief that his speed is the only decent thing about him. He is wrong about what the speed is for. The tow crews have been training under a retired navy diving medic, and their breath-hold work is a ladder whose rungs go past blackout \u2014 because forty-one subjects have described the same structure, in the same words, in the same absence of fear. Then a swell arrives with no precedent in the recorded history of the beach."
+  },
+
+  {
+    num: 53,
+    title: "The Vagabond Watch",
+    words: "17,200 words",
+    hook: "A second hand has started writing in his logbook",
+    door: "Withholding",
+    room: "The Margins \u2014 a companion that is neither comfort nor intruder, and is never wrong",
+    key: "The Watch \u2014 six hundred days of twenty-minute sleep, and no witness to any of it",
+    notes: [3, 2, 3],
+    synopsis: "Nuno Sequeira has been at sea alone for six hundred days. No race, no sponsor, no tracker, no witness. Then a second hand begins writing in his logbook \u2014 correcting his positions, noting bodily changes he has not felt, annotating his estranged daughter more accurately than he can. He starts consulting the margins in order to remember her."
+  },
+
+  {
+    num: 54,
+    title: "The Donor",
+    words: "20,900 words",
+    hook: "He came up alone, and his statement has stood for ten years",
+    door: "Ordeal",
+    room: "Two Hundred and Forty Metres \u2014 absolute dark under a ceiling of limestone, and no way out but the way in",
+    key: "The Thirds \u2014 the arithmetic of coming back, and one patient rule about sharing air",
+    notes: [3, 3, 3],
+    synopsis: "A body has lain at two hundred and forty metres for ten years. The dead man\u2019s sister hires the only diver rated to reach him \u2014 she says she wants a burial, but what she wants is the equipment, because which mouthpiece is in whose mouth is a record of a man\u2019s last four minutes. Bijan Rahsepar was on the original dive. He came up alone."
+  },
+
+  {
+    num: 55,
+    title: "The Second Swimmer",
+    words: "42,600 words",
+    hook: "Something is swimming on the side away from the boat",
+    door: "Ordeal",
+    room: "The Rules \u2014 no contact, no assistance, and four people forbidden to reach out",
+    key: "Twelve Degrees \u2014 thirty-four kilometres of cold, and thirty-one hours to cross it",
+    notes: [3, 3, 3],
+    synopsis: "Thirty-four kilometres of twelve-degree water between Ireland and Scotland, and Farangis Roshanfar needs it to finish the seven. Ten years ago her son swam beside her as pace swimmer and drowned in the dark; under the rules of the sport, nobody was permitted to touch him. Past the twentieth hour, in the jellyfish field, something begins swimming on the side away from the boat \u2014 and begins, gently, to correct her."
   }
 
 
@@ -766,5 +802,15 @@ const TRILOGIES = [
        says so where seven separate spines would not. */
     banner: "assets/borrowed-sun.jpg",
     synopsis: "Seven worlds, one street corner, and a tall man walking through all of them with everything he owns in one bag. In each world, humanity made a different choice \u2014 cancelled its terror, kept its fire, sold its sleep \u2014 and in each one, something patient has begun leaving messages in the margins. A verse is being written across realities, one installment per world, and it reads like a bill coming due. There is no true world."
+  },
+  {
+    title: "The Water Ordeals",
+    label: "",
+    books: [51, 52, 53, 54, 55],
+    /* A single painted panorama rather than a row of covers \u2014 quarry
+       wall, open sea, the wave and the weed all belong to one body of
+       water, and the picture says so where five spines would not. */
+    banner: "assets/water-ordeals.jpg",
+    synopsis: "Five novellas about people who go into water that will not permit assistance \u2014 a flooded quarry, a cave under limestone, the largest wave in Europe, six hundred days alone at sea, a channel in twelve degrees. Each leaves a record, and each record is accurate, complete, and wrong about the only thing that matters. Somebody came up. Somebody did not. The survivor is the sole witness, and memory is not a document but a reconstruction, rebuilt every time it is opened."
   }
 ];
