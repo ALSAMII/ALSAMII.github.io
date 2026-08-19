@@ -141,7 +141,18 @@ A book that stands alone belongs in no group — **The Weight of Her**
 and must stay that way.
 
 For banners, and for starting a new series from scratch, see
-[CUSTOMISING.md](CUSTOMISING.md).
+[CUSTOMISING.md](CUSTOMISING.md). One thing to know before you paint
+one: a banner replaces the written series heading, on the assumption
+its artwork carries the name. A panorama with no lettering in it needs
+the heading put back by hand — CUSTOMISING has the rule.
+
+### If the book is to be recommended on the About panel
+
+That's a separate edit and not part of adding a book — the panel holds
+a fixed number of cards, so featuring a new one means dropping another.
+It needs a wide scene image at `assets/start-NN.jpg`, which is not the
+cover but a repainting of it: 3:2, subject in the right third, left
+half dark and empty for the words, no type anywhere. See CUSTOMISING.
 
 ---
 
@@ -244,11 +255,11 @@ custom domain. If it goes, the site silently reverts to
 
 **Dragging a folder:** to upload `share/`, drag **the folder itself** into
 GitHub's upload area — not the files inside it. Dragging the contents
-scatters 40 loose pages across the repository root. If that happens,
+scatters 55 loose pages across the repository root. If that happens,
 press `.` on the repository page to open the browser editor, delete
 the strays, and drag the folder in there instead.
 
-Netlify picks up the commit and republishes within a minute or two.
+GitHub Pages republishes within a minute or two of the commit landing.
 
 ---
 

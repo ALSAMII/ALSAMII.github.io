@@ -78,13 +78,56 @@ and a group of three is labelled a triptych by default, which is wrong
 for a cycle that is only three books in so far.
 
 **`banner`** — a painted panorama shown instead of a row of covers. It
-replaces the written heading too, since the artwork carries the series
-name; the words stay in the page for search and screen readers.
+replaces the written heading too, on the assumption that the artwork
+carries the series name in its own lettering; the words stay in the
+page for search and screen readers.
 
 Banner images want to be **wide** — between 2:1 and 3:1 — around
-1900–2200px across, saved as jpg at quality 88, 300–600 KB. Put them in
+1900–2200px across, saved as jpg at quality 88, 180–600 KB. Put them in
 `assets/` named for the series. Leave `banner` out and the series shows
 its books' spines instead, which suits a small group.
+
+### A banner with no lettering in it
+
+If the painting has no words in it, that default leaves the series
+sitting on the page unnamed — a picture and a synopsis with nothing
+saying what it is. **The Water Ordeals** is the one such series: five
+bodies of water and no type anywhere.
+
+The fix is a targeted override in `style.css`, just after the
+`.trilogy.has-banner` rules, which puts the heading back and stacks it
+above the picture:
+
+```css
+.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-head {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-words {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+}
+```
+
+The slug is built from the title: `series-` plus the title lowercased
+with everything but letters and numbers turned into hyphens — a group
+of exactly three gets `triptych-` instead. A new untitled banner needs
+the same pair of rules under its own slug. Nothing has to change in the
+light theme; the heading uses the same variables as every other, and
+they already flip.
+
+**Renaming a series breaks this**, because the slug changes and the
+override stops matching. If a series with an untitled banner is
+renamed, update the slug in both selectors.
 
 ---
 
@@ -128,17 +171,87 @@ written per book as `Name — description`, split at an em dash.
 
 ---
 
-## The three books on the About panel
+## The recommended books on the About panel
 
-In `index.html`, search for `data-book`:
+Each recommendation is one card: a book number, a short note, and a
+picture behind the words. In `index.html`, search for `data-book`:
 
 ```html
-<button class="start-row start-row--whirl" type="button" data-book="12">
+<button class="start-row start-row--samba" type="button" data-book="52">
 ```
 
-Change the number to feature a different book. Each one also wants a
-scene image at `assets/start-NN.jpg` matching its number — without it
-the panel still works, but that card loses its picture.
+Two things are named there. **`data-book`** is which novella the card
+opens — change the number to feature a different one. **`start-row--x`**
+is that card's own hook for CSS, used only to tune how its picture is
+cropped; pick a short word from the title.
+
+### The picture
+
+The card looks for `assets/start-NN.jpg`, numbered to match the book.
+Without it the card still works and still opens the book — it just
+loses its background.
+
+These are **not the cover**. A cover is upright and full of type; this
+slot is wide, and the words of the card lie across it. What works is
+the cover's scene, repainted:
+
+| | |
+|---|---|
+| Shape | 3:2 landscape, 1536 × 1024 is ideal |
+| Subject | pushed into the **right third** |
+| Left half | dark and empty — this is where the words go |
+| Type | none at all, anywhere in the image |
+| Exposure | darker than looks right on its own |
+
+That last one matters. The card lays a mask over the picture that
+fades it out to the left and softens all four edges, so anything
+mid-toned turns to mud once it is in place. A picture that looks too
+dark by itself is usually correct on the card.
+
+If you're generating one, describing the empty left half explicitly —
+"the entire left half of the frame is deep shadow, no subject, no
+detail" — does more work than any other line in the prompt.
+
+### Where the picture sits in its card
+
+`object-fit: cover` fills the card by scaling the picture up and
+cropping whatever doesn't fit, so a wide picture in a tall card loses
+its sides and a tall subject in a wide card loses its head. Each card
+therefore gets an `object-position` in `style.css`:
+
+```css
+.start-row--whirl  .start-scene { object-position: 50% 44%; }
+.start-row--alarm  .start-scene { object-position: 50% 56%; }
+```
+
+The first number is horizontal, the second vertical; both are which
+part of the *picture* to keep, not where to move it. Raise the second
+number to hold on to something near the bottom of the frame, lower it
+for something near the top.
+
+Add one only when the default centre crop cuts the subject. Check the
+card at a phone width and at a laptop width before deciding — the card
+is a different shape at each, and a value that saves the subject on one
+can lose it on the other. Where the two disagree, give the card a value
+inside each of the two media queries that already exist for exactly
+this, rather than compromising on one number:
+
+```css
+@media (max-width: 56rem) and (min-height: 30.01rem) { ... }   /* tall card  */
+@media (min-width: 56.01rem), (orientation: landscape) and (max-height: 30rem) { ... }   /* wide card */
+```
+
+**One known trap.** On a narrow upright screen the cards grow tall, and
+the shared bottom fade — measured for a short card — lands part-way up
+the picture instead of on its edge, cutting the subject off in mid-air.
+`--cut` and `--samba` both hit this and both carry a replacement mask
+inside the tall-card query. If a new scene looks like it has been
+sliced across the bottom on a phone but is fine on a laptop, that is
+what has happened; copy their block.
+
+Nothing here needs a light-theme counterpart — the scene already has
+its own rules in the light block at the end of `style.css`, and they
+apply to every card.
 
 ---
 

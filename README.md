@@ -82,14 +82,17 @@ In `index.html`:
 
 ## Series
 
-Six of them, declared in the `TRILOGIES` block at the bottom of
+Seven of them, declared in the `TRILOGIES` block at the bottom of
 `stories.js`. Each names its books by number; every book in one then
 labels itself on its own row — "LES FOLIES · 2 OF 3" — with nothing
 written per book.
 
 Each series also carries a painted panorama, shown in place of a row of
-spines and in place of the written heading, since the artwork already
-carries the name. See CUSTOMISING.md for sizes.
+spines and — where the artwork carries the series name in its own
+lettering — in place of the written heading too. **The Water Ordeals**
+is the exception: its panorama has no words in it, so the heading is
+put back by hand in `style.css`. Any future banner without lettering
+needs the same. See CUSTOMISING.md for sizes and for that rule.
 
 ## The backdrop and the ambient sound
 

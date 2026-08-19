@@ -2581,6 +2581,28 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .trilogy.has-banner .t-banner { max-width: 100%; }
 
+/* ...unless the painting has no lettering in it. The Water Ordeals is
+   a panorama of five bodies of water and nothing else, so hiding the
+   words would leave the series standing on the page unnamed. Here the
+   heading comes back and sits above the picture, full width. */
+.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-head {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-words {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+}
+
 /* On a phone a heading and a wide picture cannot share a line, so a
    series that has both stacks them. */
 @media (max-width: 40rem) {
