@@ -1494,6 +1494,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--alarm  .start-scene { object-position: 50% 56%; }
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
+/* The Second Swimmer holds two subjects at opposite corners of its
+   picture — the boat high on the right, the swimmer low and left of
+   it — so no single crop keeps both at every card shape. The value
+   here is the compromise for the shapes that fall through both queries
+   below; each of those then takes the side it can afford to favour. */
+.start-row--swimmer .start-scene { object-position: 58% 56%; }
+
 /* The Glow's card is the tallest on the panel, and "cover" fills a
    tall box by scaling the picture up and cropping its sides — which is
    what was magnifying the figure. A shorter box, closer to the
@@ -1530,7 +1537,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    else these two rows are left entirely alone, so they fill and fade
    exactly as The Mercy Dose and Mang and Mustard do. */
 @media (max-width: 56rem) and (min-height: 30.01rem) {
-  .start-row--cut  .start-scene,
   .start-row--samba .start-scene {
     -webkit-mask-image:
       linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
@@ -1543,22 +1549,27 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   }
 
   /* Anchored high rather than centred: on a tall card "cover" takes its
-     crop off both ends, and what these two lose that way is the surface
+     crop off both ends, and what Samba loses that way is the surface
      light — the thing that tells you which way is up. */
-  .start-row--cut   .start-scene { object-position: 50% 22%; }
   .start-row--samba .start-scene { object-position: 54% 30%; }
+
+  /* A tall card crops the sides off a wide picture, and a centred crop
+     takes the boat's bow with them. Held right instead: the whole boat
+     survives, both its lamps with it, and the swimmer stays where the
+     mask is still solid. Nothing is lost on the left but empty water,
+     which is the half the words want anyway. */
+  .start-row--swimmer .start-scene { object-position: 70% 50%; }
 }
 
 /* On a wide card "cover" shows a horizontal band of the picture and
-   drops the rest. Measured off the artwork, the pair runs from just
-   under half way down to a little past four-fifths — their midpoint is
-   at two thirds, not at the centre, which is why a centred band and
-   then a slightly lowered one both took the fins off. Three quarters
-   puts the band's middle on theirs, which is the most of them any crop
-   of this shape can hold. Only this row needs it — the surfer sits
-   closer to the middle of his own frame. */
+   drops the rest. The Second Swimmer's band is measured off her: a
+   centred one cuts her at the bottom edge, where the mask is already
+   thinning, and she is the subject the card is about. Lowered to 62%
+   she sits at roughly two-thirds down the card — clear of the fade,
+   with the boat's hull and its column of light still in frame above
+   her, even though the crew go. */
 @media (min-width: 56.01rem), (orientation: landscape) and (max-height: 30rem) {
-  .start-row--cut .start-scene { object-position: 50% 76%; }
+  .start-row--swimmer .start-scene { object-position: 50% 62%; }
 }
 
 /* ---- Text ---- */
