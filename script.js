@@ -1218,6 +1218,17 @@
     allLabel: "Series order", inline: true, onChange: function () { applySort(); }
   });
 
+  /* The label above the order menu counts the shelf. It used to be
+     typed into index.html, which meant it quietly went stale every
+     time a book was added — it read 52 while the catalogue held 55.
+     Written from STORIES instead, it can't drift again. */
+  (function countShelf() {
+    var el = document.getElementById("sortLabel");
+    if (el && typeof STORIES !== "undefined" && STORIES.length) {
+      el.textContent = "All " + STORIES.length + " stories \u00b7 order";
+    }
+  })();
+
   /* ---- Order --------------------------------------------------
      Three ways through the same shelf. Series order is the blank
      option, so clearing the menu — or the reset button — always
