@@ -1501,6 +1501,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    below; each of those then takes the side it can afford to favour. */
 .start-row--swimmer .start-scene { object-position: 58% 56%; }
 
+/* Meat That Dreams is a single deep corridor with the figure standing
+   in it, so almost everything that matters sits in one narrow vertical
+   strip — and the strip runs nearly the full height of the picture.
+   A centred crop keeps his suit and loses his head, which is the one
+   part that tells you something is wrong with him. The values below
+   are measured off that. */
+.start-row--dreams .start-scene { object-position: 62% 30%; }
+
 /* The Glow's card is the tallest on the panel, and "cover" fills a
    tall box by scaling the picture up and cropping its sides — which is
    what was magnifying the figure. A shorter box, closer to the
@@ -1559,6 +1567,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      mask is still solid. Nothing is lost on the left but empty water,
      which is the half the words want anyway. */
   .start-row--swimmer .start-scene { object-position: 70% 50%; }
+
+  /* A tall card crops the sides away, and centring loses the figure to
+     the right edge. Held well right, the whole of him stands in frame
+     head to shoe with the corridor and its far window beside him, and
+     what goes is only the empty wall on the left — which is the half
+     the words are sitting on. */
+  .start-row--dreams .start-scene { object-position: 78% 50%; }
 }
 
 /* On a wide card "cover" shows a horizontal band of the picture and
@@ -1570,6 +1585,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    her, even though the crew go. */
 @media (min-width: 56.01rem), (orientation: landscape) and (max-height: 30rem) {
   .start-row--swimmer .start-scene { object-position: 50% 62%; }
+
+  /* A wide card shows a shallow horizontal band. Centred, that band
+     lands on his jacket and cuts the head clean off, which turns the
+     one uncanny thing in the picture into an anonymous suit. Raised to
+     22% the band holds his head and shoulders, the receding doorframes
+     and the lit window at the end of the corridor — everything the
+     scene is actually for. */
+  .start-row--dreams .start-scene { object-position: 50% 22%; }
 }
 
 /* ---- Text ---- */
@@ -2587,13 +2610,30 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 
 
-/* A banner carries the series name in its own artwork, so the written
-   heading beside it would say the same thing twice. The words stay in
-   the page for search and for a screen reader, but the picture does
-   the announcing — and takes the whole width to do it. */
-.trilogy.has-banner .t-head { display: block; }
+/* A banner is shown instead of a row of spines, and the written heading
+   sits above it, full width.
 
-.trilogy.has-banner .t-words {
+   Three of the paintings carry the series name in their own lettering —
+   The Unwitnessed Wars, The Unguarded Hours, The Sovereign Rooms — and
+   for those the heading beside them would say the same thing twice, so
+   it is taken out of sight and left in the page for search and for a
+   screen reader. Everything else keeps its heading.
+
+   This used to be the other way round: hidden for every banner, with
+   exceptions added back one slug at a time. Once the untitled paintings
+   outnumbered the lettered ones, that meant a new banner arrived on the
+   page unnamed unless somebody remembered to come here — a silent
+   failure, and the wrong way for a default to fall. */
+.trilogy.has-banner .t-head {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.trilogy.has-banner[data-slug="series-the-unwitnessed-wars-i-v"] .t-words,
+.trilogy.has-banner[data-slug="series-the-unguarded-hours"] .t-words,
+.trilogy.has-banner[data-slug="series-the-sovereign-rooms"] .t-words {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -2607,28 +2647,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 .trilogy.has-banner .t-banner { max-width: 100%; }
-
-/* ...unless the painting has no lettering in it. The Water Ordeals is
-   a panorama of five bodies of water and nothing else, so hiding the
-   words would leave the series standing on the page unnamed. Here the
-   heading comes back and sits above the picture, full width. */
-.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-head {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.85rem;
-}
-
-.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-words {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
-  clip-path: none;
-  white-space: normal;
-}
 
 /* On a phone a heading and a wide picture cannot share a line, so a
    series that has both stacks them. */
