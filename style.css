@@ -1297,8 +1297,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row { padding: 0.5rem 1.1rem; }
   .start-body { max-width: 68%; }
   .start-scene { width: 56%; }
-  .start-title { font-size: 0.9rem; letter-spacing: 0.02em; }
-  .start-num   { font-size: 0.9rem; }
+  .start-title { font-size: 1rem; letter-spacing: 0.015em; }
+  .start-num   { font-size: 1rem; }
   .start-note  { font-size: 0.875rem; line-height: 1.5; }
   .start-cat   { font-size: 0.75rem; letter-spacing: 0.2em; padding: 0 1.1rem; }
 
@@ -1638,7 +1638,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-num {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.4375rem;
+  /* The same scale as the title, deliberately. Fixed at 1.4375rem it
+     stayed full size while the title scaled down beside it, so on any
+     phone wider than 376px the two sat on one line at two different
+     sizes with two different baselines — a lone "7" beside a shrunken
+     name made it obvious, where a two-digit number hid it. Whatever
+     the title does, the number does. */
+  font-size: clamp(1rem, 4.6vw, 1.625rem);
   color: var(--ember);
   opacity: 0.8;
   text-shadow: 0 1px 12px rgba(5, 4, 3, 0.9);
@@ -1647,16 +1653,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-title {
   font-family: var(--serif);
   font-weight: 600;
-  /* Scaled rather than fixed, and measured against the longest names on
-     the panel — Mang and Mustard, The Second Swimmer. At 4.4vw and
-     0.045em of tracking, "55 · The Second Swimmer" wanted 223px on a
-     390px phone and had 222px to put it in: one pixel over, and a title
-     that broke in two where every other card read as one line. Stepped
-     down to 4.1vw with tighter tracking, the longest name now fits with
-     room to spare from 320px up, and nothing changes on a laptop, where
-     the clamp still tops out at the same 1.4375rem it always did. */
-  font-size: clamp(0.9rem, 4.1vw, 1.4375rem);
-  letter-spacing: 0.025em;
+  /* Scaled rather than fixed, and sized against the longest names on
+     the panel — Mang and Mustard, Meat That Dreams, The Second Swimmer.
+     Measured off the rendered page rather than guessed: at 4.1vw the
+     longest of them used about six-sevenths of its column on a 393px
+     phone, so there was room to grow and the titles were reading small.
+     4.6vw takes roughly nine-tenths, which is as much as can be taken
+     while every title still holds one line down to 320px. Tracking
+     comes in a little to help pay for it. Raise this further and the
+     names start breaking in two again, which is what the whole scaling
+     is here to prevent. */
+  font-size: clamp(1rem, 4.6vw, 1.625rem);
+  letter-spacing: 0.02em;
   color: var(--ember);
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
 }

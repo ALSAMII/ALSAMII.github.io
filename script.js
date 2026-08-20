@@ -67,6 +67,29 @@
     t.books.forEach(function (n) { inTrio[n] = true; });
   });
 
+  /* Pictures are requested by plain filename, so replacing one — a new
+     series banner, a new scene — leaves every returning reader looking
+     at the copy their browser already holds. The three ?v= links in
+     index.html never covered this, because they only tag the stylesheet
+     and the two scripts.
+
+     The number is read off this script's own src rather than typed
+     again here, so raising the cache-buster in index.html, which is
+     already the habit after any change, now refreshes the artwork too
+     and there is no second number to remember. */
+  var ASSET_V = (function () {
+    var el = document.currentScript ||
+             document.querySelector('script[src*="script.js"]');
+    var m = el && el.getAttribute("src") &&
+            el.getAttribute("src").match(/[?&]v=([^&]+)/);
+    return m ? m[1] : "";
+  })();
+
+  function stamped(url) {
+    if (!ASSET_V || !url || /^(data:|https?:)/.test(url)) return url;
+    return url + (url.indexOf("?") === -1 ? "?v=" : "&v=") + ASSET_V;
+  }
+
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
 
   /* The folder index.html is served from, with a trailing slash. At
@@ -319,7 +342,7 @@
       var im = document.createElement("img");
       im.alt = "";
       im.addEventListener("error", function () { im.remove(); });
-      im.src = coverFor(n);
+      im.src = stamped(coverFor(n));
       easelSet.append(im);
     });
 
@@ -513,7 +536,7 @@
       li.classList.add("has-banner");
       set.className = "t-banner";
       var bn = document.createElement("img");
-      bn.src = t.banner;
+      bn.src = stamped(t.banner);
       bn.alt = t.title;
       bn.loading = "lazy";
       bn.addEventListener("error", function () { set.remove(); });
@@ -522,7 +545,7 @@
       set.className = "t-covers" + (t.books.length > 3 ? " many" : "");
       t.books.forEach(function (n) {
         var im = document.createElement("img");
-        im.src = coverFor(n);
+        im.src = stamped(coverFor(n));
         im.alt = "";
         im.loading = "lazy";
         im.addEventListener("error", function () { im.remove(); });
@@ -980,7 +1003,7 @@
       card.setAttribute("aria-label", s.title + " — show on the stage");
 
       var img = document.createElement("img");
-      img.src = s.cover || coverFor(s.num);
+      img.src = stamped(s.cover || coverFor(s.num));
       img.alt = s.title + " — cover";
       img.loading = "lazy";
       img.addEventListener("error", function () { card.classList.add("no-art"); });
@@ -1390,7 +1413,7 @@
       img.addEventListener("error", function () {
         if (!fellBack) {
           fellBack = true;
-          img.src = s.cover || coverFor(s.num);
+          img.src = stamped(s.cover || coverFor(s.num));
         } else {
           img.remove();
         }
@@ -1398,7 +1421,7 @@
       /* The scene is normally named for the book it belongs to, but a
          row may name its own file with data-scene — useful when a
          picture outlives the book it was first made for. */
-      img.src = btn.dataset.scene || ("assets/start-" + n + ".jpg");
+      img.src = stamped(btn.dataset.scene || ("assets/start-" + n + ".jpg"));
     }
 
     btn.addEventListener("click", function () { revealBook(s, true); });
