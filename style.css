@@ -1645,6 +1645,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      name made it obvious, where a two-digit number hid it. Whatever
      the title does, the number does. */
   font-size: clamp(1rem, 4.6vw, 1.625rem);
+  /* Cormorant sets old-style figures by default, where 3, 4, 5, 7 and 9
+     hang below the baseline the way a lowercase g does. Beside a title
+     in caps-and-lowercase that reads as a number sitting too low — 7
+     obviously, 26 not at all, which is why it looked like a fault in
+     one card and not the others. Lining figures stand on the baseline
+     at cap height, which is what a number used as a label wants. */
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
   color: var(--ember);
   opacity: 0.8;
   text-shadow: 0 1px 12px rgba(5, 4, 3, 0.9);
