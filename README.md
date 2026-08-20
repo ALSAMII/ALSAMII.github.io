@@ -88,11 +88,10 @@ labels itself on its own row — "LES FOLIES · 2 OF 3" — with nothing
 written per book.
 
 Each series also carries a painted panorama, shown in place of a row of
-spines and — where the artwork carries the series name in its own
-lettering — in place of the written heading too. **The Water Ordeals**
-is the exception: its panorama has no words in it, so the heading is
-put back by hand in `style.css`. Any future banner without lettering
-needs the same. See CUSTOMISING.md for sizes and for that rule.
+spines, with the written heading above it. Three of the paintings have
+the series name lettered into the artwork itself; those three are named
+in `style.css` and take the written heading out of sight so it isn't
+said twice. See CUSTOMISING.md for sizes and for that rule.
 
 ## The backdrop and the ambient sound
 
@@ -121,6 +120,14 @@ it reports.
 
 A book with no `read/NN.json` is not broken: Read tells the visitor it
 isn't set for reading here yet and points at the PDF.
+
+## The shelf count
+
+The label above the order menu — "All 55 stories · order" — is written
+by `script.js` from the length of `STORIES`, so it counts itself and
+never needs editing. The number typed into `index.html` is only what
+shows for the half-second before the script runs; it is worth keeping
+roughly right, but nothing depends on it.
 
 ## Cache-busting
 

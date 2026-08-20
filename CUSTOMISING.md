@@ -77,57 +77,43 @@ group of three; an empty string shows nothing. Leave it out entirely
 and a group of three is labelled a triptych by default, which is wrong
 for a cycle that is only three books in so far.
 
-**`banner`** — a painted panorama shown instead of a row of covers. It
-replaces the written heading too, on the assumption that the artwork
-carries the series name in its own lettering; the words stay in the
-page for search and screen readers.
+**`banner`** — a painted panorama shown instead of a row of covers. The
+written heading sits above it.
 
 Banner images want to be **wide** — between 2:1 and 3:1 — around
 1900–2200px across, saved as jpg at quality 88, 180–600 KB. Put them in
 `assets/` named for the series. Leave `banner` out and the series shows
 its books' spines instead, which suits a small group.
 
-### A banner with no lettering in it
+### A banner that already has the name painted on it
 
-If the painting has no words in it, that default leaves the series
-sitting on the page unnamed — a picture and a synopsis with nothing
-saying what it is. **The Water Ordeals** is the one such series: five
-bodies of water and no type anywhere.
-
-The fix is a targeted override in `style.css`, just after the
-`.trilogy.has-banner` rules, which puts the heading back and stacks it
-above the picture:
+Three of the paintings carry the series name in their own lettering —
+The Unwitnessed Wars, The Unguarded Hours, The Sovereign Rooms — and
+for those the heading beside them would say the same thing twice. They
+are named in one rule in `style.css` which takes the words out of sight
+while leaving them in the page for search and for a screen reader:
 
 ```css
-.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-head {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.85rem;
-}
-
-.trilogy.has-banner[data-slug="series-the-water-ordeals"] .t-words {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
-  clip-path: none;
-  white-space: normal;
+.trilogy.has-banner[data-slug="series-the-unwitnessed-wars-i-v"] .t-words,
+.trilogy.has-banner[data-slug="series-the-unguarded-hours"] .t-words,
+.trilogy.has-banner[data-slug="series-the-sovereign-rooms"] .t-words {
+  position: absolute;
+  width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+  white-space: nowrap; border: 0;
 }
 ```
 
+A new banner with the name painted into it needs its slug added to that
+list. A new banner **without** lettering needs nothing — the heading is
+the default, and showing a name twice is a visible mistake you will
+catch, where showing it not at all is a quiet one you might not.
+
 The slug is built from the title: `series-` plus the title lowercased
 with everything but letters and numbers turned into hyphens — a group
-of exactly three gets `triptych-` instead. A new untitled banner needs
-the same pair of rules under its own slug. Nothing has to change in the
-light theme; the heading uses the same variables as every other, and
-they already flip.
-
-**Renaming a series breaks this**, because the slug changes and the
-override stops matching. If a series with an untitled banner is
-renamed, update the slug in both selectors.
+of exactly three gets `triptych-` instead. **Renaming a series breaks
+the match**, so if a series in that list is renamed, update its slug
+there too, or its name will start appearing twice.
 
 ---
 

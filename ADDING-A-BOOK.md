@@ -142,9 +142,9 @@ and must stay that way.
 
 For banners, and for starting a new series from scratch, see
 [CUSTOMISING.md](CUSTOMISING.md). One thing to know before you paint
-one: a banner replaces the written series heading, on the assumption
-its artwork carries the name. A panorama with no lettering in it needs
-the heading put back by hand — CUSTOMISING has the rule.
+one: the written heading shows above the banner by default. Only a
+painting with the series name lettered into it needs the heading
+suppressed, and that is one line in `style.css` — CUSTOMISING has it.
 
 ### If the book is to be recommended on the About panel
 
