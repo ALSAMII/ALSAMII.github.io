@@ -700,6 +700,66 @@ const STORIES = [
     key: "Twelve Degrees \u2014 thirty-four kilometres of cold, and thirty-one hours to cross it",
     notes: [3, 3, 3],
     synopsis: "Thirty-four kilometres of twelve-degree water between Ireland and Scotland, and Farangis Roshanfar needs it to finish the seven. Ten years ago her son swam beside her as pace swimmer and drowned in the dark; under the rules of the sport, nobody was permitted to touch him. Past the twentieth hour, in the jellyfish field, something begins swimming on the side away from the boat \u2014 and begins, gently, to correct her."
+  },
+
+  {
+    num: 56,
+    title: "The Long Part",
+    words: "10,300 words",
+    hook: "Three days awake and moving, and she comes back further away each time",
+    door: "Withholding",
+    room: "The Long Part \u2014 the hours after the second night, where the trail stops being a trail",
+    key: "The Chair and the Thermos \u2014 a daughter at every finish, counting",
+    notes: [3, 2, 3],
+    synopsis: "Rudabeh Sarrafi crossed a border on foot at thirteen and let a new country call her Ruby. At forty-one she started running. By forty-nine she was one of the few people alive who could stay awake and moving for three days \u2014 and her daughter waited at every finish with a folding chair, watching her come back a little further away each time."
+  },
+
+  {
+    num: 57,
+    title: "Hold Me Up Till The Horn",
+    words: "37,500 words",
+    hook: "Eleven hundred hours on the floor, and one rule: keep moving",
+    door: "Ordeal",
+    room: "The Floor \u2014 forty-five minutes dancing, fifteen on a cot, around the clock, for as long as a body will hold",
+    key: "The Story \u2014 a thousand years old, taught as steps, to keep her upright",
+    notes: [3, 3, 3],
+    synopsis: "Outside Detroit, September 1932. Ninety-one couples take the floor for a contest with one rule: keep moving. Alma Sutter buried a daughter six weeks ago and is paired with a stranger the announcer cannot be bothered to name correctly. To keep her awake he starts telling her a story a thousand years old \u2014 and because he cannot stop moving to tell it, he teaches it to her as steps."
+  },
+
+  {
+    num: 58,
+    title: "The Standing Man",
+    words: "21,300 words",
+    hook: "Her son is still up there, upright, and the route uses him as a waypoint",
+    door: "Ordeal",
+    room: "Eight Thousand Six Hundred Metres \u2014 where the dead are left where they stop and the living steer by them",
+    key: "The Stairwell \u2014 four years of training for an arithmetic she has already done",
+    notes: [3, 3, 3],
+    synopsis: "Above eight thousand metres the dead are not brought down. Four years ago Ruth Aldiss\u2019s son sat down on a shelf of rock and did not get up; he is still there, upright, facing downhill, and every climber on the route navigates by him. She is fifty-eight, twenty-nine years in payroll, and she has trained in a stairwell. She is not going up there to bring him home."
+  },
+
+  {
+    num: 59,
+    title: "The Bell",
+    words: "50,100 words",
+    hook: "Four minutes after the knockdown, his dead wife is in the room",
+    door: "Ordeal",
+    room: "The Room Under Chicago \u2014 no rounds, no referee, one bell to start and one when a man does not get up",
+    key: "The Visit \u2014 four minutes the medical literature has a flat clinical name for",
+    notes: [3, 3, 3],
+    synopsis: "After a knockdown in a VFW hall, Sean Vardy has four minutes the medical literature has a flat clinical name for and he calls, privately, a visit. His wife, four years dead, is in the room \u2014 not remembered but present, breathing, saying his name. He starts taking fights to get it back, and the threshold rises the way it always rises."
+  },
+
+  {
+    num: 60,
+    title: "Fifty Metres a Second",
+    words: "28,800 words",
+    hook: "Nineteen memorial films, and every one of them ends in mid-air",
+    door: "Rite",
+    room: "The Edit \u2014 the last minute of a person\u2019s life, watched as many times as it takes",
+    key: "The Card \u2014 a brown envelope, handed over by a man who will not look at her",
+    notes: [3, 2, 3],
+    synopsis: "Every flyer in the valley wears a camera. When one of them dies the memory card comes off the body, and for fifteen years Solveig Aandahl has been the one who cuts it into four minutes a family can sit through in a church. She has made nineteen. Every one of them ends in mid-air. Her brother\u2019s card is in a kitchen drawer, and she has never put it in a reader."
   }
 
 
