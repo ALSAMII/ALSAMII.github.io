@@ -760,6 +760,30 @@ const STORIES = [
     key: "The Card \u2014 a brown envelope, handed over by a man who will not look at her",
     notes: [3, 2, 3],
     synopsis: "Every flyer in the valley wears a camera. When one of them dies the memory card comes off the body, and for fifteen years Solveig Aandahl has been the one who cuts it into four minutes a family can sit through in a church. She has made nineteen. Every one of them ends in mid-air. Her brother\u2019s card is in a kitchen drawer, and she has never put it in a reader."
+  },
+
+  {
+    num: 61,
+    title: "The Road to Shaam",
+    words: "48,400 words",
+    hook: "On the seventh night he leaves his body and sees an alley three streets from his uncle\u2019s door",
+    door: "Rite",
+    room: "The Yard \u2014 a walled space behind a butcher\u2019s shop in south Tehran, every Muharram since he was nine",
+    key: "The Chain \u2014 and the beat it keeps, set for him at a speed chosen by people who loved him",
+    notes: [3, 3, 3],
+    synopsis: "Ali Shabani is fifteen, the second son of a comfortable family in north Tehran, and every year he takes a bus forty minutes south to beat himself with a chain until he bleeds through his shirt. Nobody makes him go; that is the part he cannot explain. This year he is given the best part there is, and on the seventh night he floats out of his body and sees an alley, a man on the ground, and men from his own neighbourhood standing over him doing nothing. The old men tell him he has been shown Karbala. The alley is three streets from his uncle\u2019s door."
+  },
+
+  {
+    num: 62,
+    title: "The Evening of Strangers",
+    words: "28,400 words",
+    hook: "Nine mourning halls in Los Angeles, and he has never once decided not to go",
+    door: "Withholding",
+    room: "Eleven Years \u2014 a life built alone, entirely, and the strength that took",
+    key: "The Small Things \u2014 a wedding left early, a light fixture replaced, a playlist he calls taste",
+    notes: [3, 2, 3],
+    synopsis: "Ali arrives in Los Angeles with one suitcase, nine hundred dollars and two hands that do not fully close. Nobody meets him at the airport. Over eleven years he builds everything himself, and finds \u2014 genuinely, unmistakably \u2014 that he is happy. The strength that took is the most attractive thing about him. It is also the lock. There are nine mourning halls in the city, he knows where all of them are, and he has never once been in one, and never once decided not to go."
   }
 
 
@@ -872,5 +896,11 @@ const TRILOGIES = [
        water, and the picture says so where five spines would not. */
     banner: "assets/water-ordeals.jpg",
     synopsis: "Five novellas about people who go into water that will not permit assistance \u2014 a flooded quarry, a cave under limestone, the largest wave in Europe, six hundred days alone at sea, a channel in twelve degrees. Each leaves a record, and each record is accurate, complete, and wrong about the only thing that matters. Somebody came up. Somebody did not. The survivor is the sole witness, and memory is not a document but a reconstruction, rebuilt every time it is opened."
+  },
+  {
+    title: "The Ghariban",
+    label: "",
+    books: [61, 62],
+    synopsis: "Two novellas about one boy and the ritual he was raised inside. In Tehran he beats himself with a chain every Muharram, and in the state that follows he sees something happening three streets from his uncle\u2019s door. Eleven years later in Los Angeles he has built an entire life alone, and cannot say why he knows where all nine mourning halls are and has never once been in one. Ghariban: the stranger, the one far from home, the one nobody came for."
   }
 ];
