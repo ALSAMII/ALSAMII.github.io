@@ -1504,27 +1504,20 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    are measured off that. */
 .start-row--dreams .start-scene { object-position: 62% 30%; }
 
-/* The Glow is the one scene painted on something pale, and the one
-   whose card is tall enough that "cover" magnifies the figure to a
-   torso — on a landscape phone the card is short and wide, and cover
-   has to fill it, so almost the whole plate is thrown away.
-   "contain" fits the whole picture in instead, which is the look this
-   row wants. The reason it was abandoned is that contain leaves the
-   picture's own left edge sitting in the middle of the element as a
-   hard vertical line, and the mask cannot soften it: the mask is laid
-   across the element, not across the picture, so wherever the picture
-   stops, the edge stops with it.
-   The fix is to give the picture no edge to show. start-50.webp is the
-   same painting with an alpha channel that falls to nothing on all four
-   sides, so contain has something that ends by fading. Every tone is
-   as painted; what changes is how much of it is there. Any other pale
-   or full-plate scene should be prepared the same way rather than
-   darkened — darkening puts a black rectangle over a page that is warm
-   dark grey, which is the same hard edge inverted. */
-.start-row--glow .start-scene {
-  object-fit: contain;
-  object-position: 100% 50%;
-}
+/* The Glow's picture is a standing figure that fills the height of its
+   own frame, which "cover" cannot survive on a short landscape card —
+   it scales to fill the width and leaves a waistband. Rather than give
+   this row its own object-fit, the picture itself was widened to 3:1,
+   extended leftward with its own dark and cross-faded so the join is
+   not visible. Cover then scales it by width and takes almost nothing
+   off the top and bottom, so she stays whole at every card shape and
+   the row behaves exactly like the other five.
+   Worth knowing if another full-height subject turns up: widen the
+   picture, do not change the fit. "contain" leaves the picture's own
+   edge sitting mid-card as a hard line the mask cannot reach, and
+   darkening the picture to hide it puts a black rectangle over a page
+   that is warm dark grey. */
+.start-row--glow .start-scene { object-position: 86% 50%; }
 
 /* ---- The two deep-water cards ----
    Both of these rows carry long summaries, so their cards are tall —
