@@ -2808,6 +2808,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 /* Space between stage paragraphs; type eases down on short windows */
 .panel .lede + .lede { margin-top: 0.7em; }
+
+/* The note is set italic because it is usually an aside. Where the
+   markup asks for "roman" it wants the upright face instead — the word
+   was in the HTML from the start but nothing here answered it, so the
+   italic above won by default and a paragraph meant to read as plain
+   text came out slanted. */
+.panel .note.roman { font-style: normal; }
+
+/* With the ornament between them gone, the two paragraphs need the air
+   the ornament used to provide, or they read as one block. */
+.panel .lede + .note { margin-top: 1.35em; }
 @media (max-height: 51rem) {
   /* A 13-inch laptop lands here. Everything on the stage steps down a
      little so a book's synopsis is read, not scrolled. */
