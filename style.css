@@ -1935,10 +1935,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    ============================================================ */
 
 /* The three category pairs above recommend single books. This does the
-   same for a group: one card per series, the first cover beside what
-   the whole thing is about. Two across where there is room, stacked on
-   a phone — a series card carries a cover rather than a wide scene, so
-   it cannot use the .start-row treatment. */
+   same for a group: one card per series, its first cover with what the
+   whole run is about, and the span and reading time along the foot.
+
+   The two cards sit side by side at every width, phone included. That
+   is what forces the arrangement inside them: at 390px each card is
+   only about 165px across, and a cover beside a paragraph in 165px is
+   neither. So the card stacks internally on a phone — cover above,
+   words below — and only puts them side by side once there is room. */
 
 .series-heading {
   margin: 2.6rem 0 0.2rem;
@@ -1951,22 +1955,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .series-rec {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  padding: 0.9rem 1.35rem 0;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  padding: 0.9rem 1.1rem 0;
+  align-items: stretch;
 }
 
 @media (min-width: 46rem) {
-  .series-rec { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .series-rec { gap: 1.25rem; padding: 0.9rem 1.35rem 0; }
 }
 
 .series-card {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
-  gap: 1.1rem;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 1rem;
+  padding: 0.8rem;
   text-align: left;
   background: rgba(255, 246, 232, 0.022);
   border: 1px solid rgba(214, 178, 118, 0.14);
@@ -1977,18 +1980,38 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: border-color 0.25s ease, background 0.25s ease;
 }
 
+@media (min-width: 46rem) {
+  .series-card { padding: 1.1rem; }
+}
+
 .series-card:hover,
 .series-card:focus-visible {
   background: rgba(255, 246, 232, 0.045);
   border-color: rgba(214, 178, 118, 0.3);
 }
 
+/* Cover and words. Stacked on a phone, side by side from 46rem. */
+.series-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  flex: 1 1 auto;
+}
+
+@media (min-width: 46rem) {
+  .series-main {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+}
+
 .series-cover {
   display: block;
-  border-radius: 0.4rem;
+  border-radius: 0.35rem;
   overflow: hidden;
-  /* The covers are 2:3. Fixing the ratio here keeps the two cards level
-     with each other even before the images have loaded. */
+  /* Fixed at the covers' own 2:3, so the two cards stay level with each
+     other before the pictures have loaded. */
   aspect-ratio: 2 / 3;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
 }
@@ -2006,22 +2029,22 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1.25rem, 3.4vw, 1.5rem);
-  line-height: 1.15;
+  font-size: clamp(1.0625rem, 3.6vw, 1.4375rem);
+  line-height: 1.12;
   letter-spacing: 0.01em;
   color: var(--ember);
 }
 
-/* The same diamond-and-rules used between the panel's parts, drawn in
-   CSS at card scale rather than carried as another inline SVG. */
+/* The panel's diamond-and-rules at card scale, drawn here rather than
+   carried in as another inline SVG. */
 .series-orn {
   display: block;
   position: relative;
   height: 1px;
-  margin: 0.75rem 0;
+  margin: 0.6rem 0;
   background: linear-gradient(to right,
-    transparent, rgba(214, 178, 118, 0.32) 18%,
-    rgba(214, 178, 118, 0.32) 82%, transparent);
+    transparent, rgba(214, 178, 118, 0.3) 14%,
+    rgba(214, 178, 118, 0.3) 86%, transparent);
 }
 
 .series-orn::after {
@@ -2036,45 +2059,74 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 0.55;
 }
 
+/* Small enough to hold "DIPTYCH · BOOKS 1–2" on one line in a card this
+   narrow — broken over two it stops reading as a label. */
 .series-span {
   display: block;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
   color: var(--ember);
   opacity: 0.85;
+  white-space: nowrap;
 }
 
-.series-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 1rem;
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
-  color: var(--ember);
-  opacity: 0.8;
+@media (min-width: 46rem) {
+  .series-span { font-size: 0.6875rem; letter-spacing: 0.18em; }
 }
-
-/* Empty until script.js fills it, so it must not leave a gap when it
-   has nothing to say. */
-.series-time:empty { display: none; }
 
 .series-note {
   display: block;
-  margin-top: 0.7rem;
+  margin-top: 0.55rem;
   font-family: var(--serif);
-  font-size: clamp(0.95rem, 2.4vw, 1.0625rem);
-  line-height: 1.6;
+  font-size: 0.875rem;
+  line-height: 1.45;
   color: var(--parchment);
   opacity: 0.88;
 }
 
-/* On a narrow phone the two columns get too tight for the note to
-   read, so the cover steps back and the words take the width. */
-@media (max-width: 26rem) {
-  .series-card { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: 0.85rem; }
-  .series-note { font-size: 0.95rem; line-height: 1.5; }
+@media (min-width: 46rem) {
+  .series-note { margin-top: 0.7rem; font-size: 1rem; line-height: 1.6; }
 }
+
+/* The foot. Pushed to the bottom of the card so the two line up with
+   each other however unevenly the notes above them run. */
+.series-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: auto;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(214, 178, 118, 0.13);
+}
+
+.series-fact {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  color: var(--ember);
+  opacity: 0.82;
+  white-space: nowrap;
+}
+
+@media (min-width: 46rem) {
+  .series-foot { gap: 0.4rem; padding-top: 0.9rem; }
+  .series-fact { font-size: 0.6875rem; letter-spacing: 0.18em; }
+}
+
+.series-ico {
+  flex: none;
+  width: 0.85rem;
+  height: 0.85rem;
+  opacity: 0.9;
+}
+
+/* Both are written by script.js, so neither should hold a line open
+   before it has anything to say. */
+.series-fact:has(.series-time:empty),
+.series-fact:has(.series-books:empty) { display: none; }
 
 /* ============================================================
    Footer
