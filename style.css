@@ -1494,6 +1494,31 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--alarm  .start-scene { object-position: 50% 56%; }
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
+/* The Glow is the one scene painted on something pale. Every other
+   picture on the panel is a dark room or dark water, so the shared
+   mask can hold them at part opacity over on the left and they still
+   read as shadow. Parchment at half opacity is still parchment, and
+   what appeared under the words was a lit panel with two visible
+   sides.
+   Darkening the picture itself was the wrong answer and made it worse:
+   the shared mask is fully opaque from 58% across, so painting that
+   region black produced a black rectangle over a page that is warm
+   dark grey rather than black — the same hard edge, inverted. Opacity
+   is the only thing that actually removes a picture, so this row gets
+   its own horizontal fade that stays near nothing until well past the
+   text and only reaches full strength under the figure. The picture is
+   left exactly as painted. */
+.start-row--glow .start-scene {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.04) 22%, rgba(0,0,0,0.16) 42%, rgba(0,0,0,0.48) 60%, rgba(0,0,0,0.86) 74%, #000 84%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.18) 14%, #000 36%, #000 82%, rgba(0,0,0,0.2) 93%, transparent 100%),
+    radial-gradient(96% 96% at 74% 50%, #000 28%, rgba(0,0,0,0.55) 64%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.04) 22%, rgba(0,0,0,0.16) 42%, rgba(0,0,0,0.48) 60%, rgba(0,0,0,0.86) 74%, #000 84%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.18) 14%, #000 36%, #000 82%, rgba(0,0,0,0.2) 93%, transparent 100%),
+    radial-gradient(96% 96% at 74% 50%, #000 28%, rgba(0,0,0,0.55) 64%, transparent 100%);
+}
+
 /* The Second Swimmer holds two subjects at opposite corners of its
    picture — the boat high on the right, the swimmer low and left of
    it — so no single crop keeps both at every card shape. The value
@@ -1509,17 +1534,22 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    are measured off that. */
 .start-row--dreams .start-scene { object-position: 62% 30%; }
 
-/* The Glow's card is the tallest on the panel, and "cover" fills a
-   tall box by scaling the picture up and cropping its sides — which is
-   what was magnifying the figure. A shorter box, closer to the
-   picture's own three-by-two, shows more of her at less magnification. */
-/* "cover" always crops one axis to fill its box, which is why her feet
-   kept going. "contain" fits the whole picture inside instead, and
-   anchoring it right keeps it running off the edge of the card the way
-   the others do. */
+/* The Glow's card is the tallest on the panel, and an earlier attempt
+   to stop the figure being magnified switched this row to "contain".
+   That is what produced the visible box. "contain" fits the whole
+   picture inside the element instead of filling it, so the picture's
+   own left edge lands somewhere in the middle of the card as a hard
+   vertical line — and the mask above cannot soften it, because the
+   mask is laid across the element, not across the picture. Wherever
+   the picture stops, the edge stops with it.
+   Back to "cover", which is what every other row uses and why no other
+   row has this problem: the picture fills the element, so the fades
+   have continuous artwork to work on all the way out. She is cropped
+   for it, as everyone else on the panel is, and the crop is set below
+   to keep her head and the two upper medallions. */
 .start-row--glow .start-scene {
-  object-fit: contain;
-  object-position: 100% 50%;
+  object-fit: cover;
+  object-position: 68% 42%;
 }
 
 /* ---- The two deep-water cards ----
