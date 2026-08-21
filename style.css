@@ -1967,8 +1967,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      leaving that padding in place was costing the covers a fifth of the
      screen. The negative margin cancels it and the small padding here
      puts a little back, so the cards reach almost to the edges. */
-  margin: 0 calc(-1rem - clamp(1.25rem, 4vw, 3.5rem));
-  padding: 0.9rem 0.4rem 0;
+  margin: 0 -1rem;
+  padding: 0.9rem 0 0;
   align-items: stretch;
 }
 
