@@ -1491,6 +1491,16 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    height: the dervish centred, the can and its congregation held a
    little low, the winged figure centred on her own light. */
 .start-row--whirl  .start-scene { object-position: 50% 44%; }
+
+/* Mang and Mustard keeps its subject in the middle band of its own
+   frame rather than running the full height, so unlike the other
+   two it needed no widening — a plain crop holds the masked figure,
+   the burning horizon behind him and the base of the gas cloud at
+   every card shape. Held right and a little high: right because a
+   portrait card crops hard from the sides and he sits far over,
+   high because what is below him is open water and what is above is
+   the cloud, which is the thing worth keeping. */
+.start-row--mustard .start-scene { object-position: 80% 46%; }
 /* The can, its flame and the burning figure above it stack into one
    tall column, so a short landscape card cropped it to a waistband
    of the can and lost both ends. The picture was widened to 3:1
