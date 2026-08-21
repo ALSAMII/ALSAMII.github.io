@@ -14,14 +14,14 @@
 <meta property="og:url" content="https://www.chewzfiction.com/">
 <meta property="og:title" content="Chew Z — Short Fiction">
 <meta property="og:description" content="Short noir novellas about people who find out something true about themselves and can't put it back.">
-<meta property="og:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=238">
+<meta property="og:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=239">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="The Roya Publication imprint mark — a gold card reading ROYA PUBLICATION FICTION, with two dark hare’s ears rising from the lower half.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Chew Z — Short Fiction">
 <meta name="twitter:description" content="Short noir novellas about people who find out something true about themselves and can't put it back.">
-<meta name="twitter:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=238">
+<meta name="twitter:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=239">
 <meta name="twitter:image:alt" content="The Roya Publication imprint mark — a gold card reading ROYA PUBLICATION FICTION, with two dark hare’s ears rising from the lower half.">
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -73,7 +73,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=238">
+<link rel="stylesheet" href="style.css?v=239">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -447,6 +447,60 @@
 
         </div>
 
+        <!-- Recommended series. Same idea as the three category pairs
+             above, but for a group rather than a single book: one card
+             per series, its first cover alongside what the whole thing
+             is about. Two cards sit side by side where there is room and
+             stack on a phone.
+
+             To change what is featured, edit the two cards below. Each
+             one needs: data-book (the first book of the series, which is
+             what the card opens), the cover path, the series name, the
+             shape and span, and the note. The reading time is written by
+             script.js from the books in the series, so it is left
+             empty. -->
+        <p class="series-heading caps">Recommended Series</p>
+
+        <div class="series-rec">
+
+          <button class="series-card" type="button" data-book="1" data-books="1,2">
+            <span class="series-cover">
+              <img src="covers/01.jpg" alt="" aria-hidden="true">
+            </span>
+            <span class="series-body">
+              <span class="series-title">The Memory Liturgy</span>
+              <span class="series-orn" aria-hidden="true"></span>
+              <span class="series-span caps">Diptych &middot; Books 1&ndash;2</span>
+              <span class="series-meta caps">
+                <span class="series-time"></span>
+                <span class="series-books">Books 1&ndash;2</span>
+              </span>
+              <span class="series-note">In a flooded city of the dead, a
+                keeper of forgotten rites hunts for the truth behind a
+                liturgy that remembers too much.</span>
+            </span>
+          </button>
+
+          <button class="series-card" type="button" data-book="2" data-books="1,2">
+            <span class="series-cover">
+              <img src="covers/02.jpg" alt="" aria-hidden="true">
+            </span>
+            <span class="series-body">
+              <span class="series-title">Bright Mercy</span>
+              <span class="series-orn" aria-hidden="true"></span>
+              <span class="series-span caps">Diptych &middot; Books 1&ndash;2</span>
+              <span class="series-meta caps">
+                <span class="series-time"></span>
+                <span class="series-books">Books 1&ndash;2</span>
+              </span>
+              <span class="series-note">On an island where the storms never
+                stop, a lighthouse keeper tends the living and the lost
+                &mdash; and learns that mercy has a price.</span>
+            </span>
+          </button>
+
+        </div>
+
       </div>
 
       <div class="panel" id="panel-notes">
@@ -565,7 +619,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=238"></script>
-<script src="script.js?v=238"></script>
+<script src="stories.js?v=239"></script>
+<script src="script.js?v=239"></script>
 </body>
 </html>

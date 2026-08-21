@@ -1931,6 +1931,152 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 /* ============================================================
+   Recommended series
+   ============================================================ */
+
+/* The three category pairs above recommend single books. This does the
+   same for a group: one card per series, the first cover beside what
+   the whole thing is about. Two across where there is room, stacked on
+   a phone — a series card carries a cover rather than a wide scene, so
+   it cannot use the .start-row treatment. */
+
+.series-heading {
+  margin: 2.6rem 0 0.2rem;
+  padding: 0 1.35rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.26em;
+  color: var(--ember);
+  text-align: center;
+}
+
+.series-rec {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 0.9rem 1.35rem 0;
+}
+
+@media (min-width: 46rem) {
+  .series-rec { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+}
+
+.series-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+  gap: 1.1rem;
+  align-items: start;
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  background: rgba(255, 246, 232, 0.022);
+  border: 1px solid rgba(214, 178, 118, 0.14);
+  border-radius: 0.7rem;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.series-card:hover,
+.series-card:focus-visible {
+  background: rgba(255, 246, 232, 0.045);
+  border-color: rgba(214, 178, 118, 0.3);
+}
+
+.series-cover {
+  display: block;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  /* The covers are 2:3. Fixing the ratio here keeps the two cards level
+     with each other even before the images have loaded. */
+  aspect-ratio: 2 / 3;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+.series-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.series-body { display: block; min-width: 0; }
+
+.series-title {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3.4vw, 1.5rem);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--ember);
+}
+
+/* The same diamond-and-rules used between the panel's parts, drawn in
+   CSS at card scale rather than carried as another inline SVG. */
+.series-orn {
+  display: block;
+  position: relative;
+  height: 1px;
+  margin: 0.75rem 0;
+  background: linear-gradient(to right,
+    transparent, rgba(214, 178, 118, 0.32) 18%,
+    rgba(214, 178, 118, 0.32) 82%, transparent);
+}
+
+.series-orn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--ember);
+  opacity: 0.55;
+}
+
+.series-span {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--ember);
+  opacity: 0.85;
+}
+
+.series-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: var(--ember);
+  opacity: 0.8;
+}
+
+/* Empty until script.js fills it, so it must not leave a gap when it
+   has nothing to say. */
+.series-time:empty { display: none; }
+
+.series-note {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: var(--serif);
+  font-size: clamp(0.95rem, 2.4vw, 1.0625rem);
+  line-height: 1.6;
+  color: var(--parchment);
+  opacity: 0.88;
+}
+
+/* On a narrow phone the two columns get too tight for the note to
+   read, so the cover steps back and the words take the width. */
+@media (max-width: 26rem) {
+  .series-card { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: 0.85rem; }
+  .series-note { font-size: 0.95rem; line-height: 1.5; }
+}
+
+/* ============================================================
    Footer
    ============================================================ */
 
@@ -3528,6 +3674,32 @@ html[data-theme="light"] .start-num,
 html[data-theme="light"] .start-time,
 html[data-theme="light"] .start-heading {
   text-shadow: none;
+}
+
+/* The series cards are the one place on the panel where a card has its
+   own border and fill rather than a picture behind it, so in light mode
+   they need the ink and the edges restated — the dark theme's near-white
+   parchment and low-contrast border would both disappear on paper. */
+html[data-theme="light"] .series-card {
+  background: rgba(20, 24, 28, 0.028);
+  border-color: rgba(60, 66, 72, 0.2);
+}
+
+html[data-theme="light"] .series-card:hover,
+html[data-theme="light"] .series-card:focus-visible {
+  background: rgba(20, 24, 28, 0.05);
+  border-color: rgba(60, 66, 72, 0.36);
+}
+
+html[data-theme="light"] .series-note { color: #2c3136; }
+
+html[data-theme="light"] .series-title,
+html[data-theme="light"] .series-span,
+html[data-theme="light"] .series-meta,
+html[data-theme="light"] .series-heading { text-shadow: none; }
+
+html[data-theme="light"] .series-cover {
+  box-shadow: 0 8px 22px rgba(20, 24, 28, 0.28);
 }
 
 html[data-theme="light"] .story-hook {

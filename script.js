@@ -1427,6 +1427,37 @@
     btn.addEventListener("click", function () { revealBook(s, true); });
   });
 
+  /* The recommended series cards. A series card reads data-books — the
+     numbers it spans — and shows the time for all of them together,
+     because what is being recommended is the whole run and not the book
+     whose cover happens to be on the card. Everything else about the
+     card, including the click, is already handled above: it carries
+     data-book too, so it opens the first of its books. */
+  document.querySelectorAll(".series-card[data-books]").forEach(function (card) {
+    var slot = card.querySelector(".series-time");
+    if (!slot) return;
+
+    var nums = card.dataset.books.split(",")
+      .map(function (n) { return Number(n.trim()); })
+      .filter(function (n) { return n; });
+
+    var total = nums.reduce(function (sum, n) {
+      var b = byNum[n];
+      return sum + (b ? (parseInt(String(b.words).replace(/[^0-9]/g, ""), 10) || 0) : 0);
+    }, 0);
+
+    if (total) slot.textContent = readingTime(total.toLocaleString() + " words");
+
+    /* The span reads "Books 1–2" from the same numbers, so the two can
+       never drift apart the way two hand-typed figures would. */
+    var span = card.querySelector(".series-books");
+    if (span && nums.length) {
+      span.textContent = nums.length === 1
+        ? "Book " + nums[0]
+        : "Books " + nums[0] + "\u2013" + nums[nums.length - 1];
+    }
+  });
+
   /* Open straight onto a shared link, and follow the back button.
 
      A reload is the exception. Opening a book writes its name into the
