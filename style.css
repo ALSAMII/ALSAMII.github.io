@@ -1967,8 +1967,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      leaving that padding in place was costing the covers a fifth of the
      screen. The negative margin cancels it and the small padding here
      puts a little back, so the cards reach almost to the edges. */
-  margin: 0 -1rem;
-  padding: 0.9rem 0.45rem 0;
+  margin: 0 calc(-1rem - clamp(1.25rem, 4vw, 3.5rem));
+  padding: 0.9rem 0.4rem 0;
   align-items: stretch;
 }
 
@@ -2009,7 +2009,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  flex: 1 1 auto;
+  /* Not 1 1 auto. The two cards are stretched to a common height by the
+     grid, and when this section was allowed to grow into that height
+     its rows grew with it — so the card with the shorter note gave its
+     spare height to the cover, which pushed that title down and left
+     the two out of line. Fixed at its natural height, both covers are
+     the same and both titles start level. The footer's margin-top:auto
+     still takes up the slack at the bottom. */
+  flex: 0 0 auto;
+  align-content: start;
 }
 
 .series-main .series-body { margin-top: -0.85rem; }
