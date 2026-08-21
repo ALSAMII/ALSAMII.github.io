@@ -1452,12 +1452,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      to reach the screen. The page clips the surplus, and nothing
      scrolls sideways because the root is set to clip. */
   right: -5rem;
-  /* Kept inside its own card now, so the gap between two of them is
-     clear ground rather than one picture running into the next. The
-     long fades top and bottom still stop either edge reading as a
-     cut. */
-  top: -2%;
-  height: 104%;
+  /* Taller than the card, deliberately. At 104% the long fades top and
+     bottom landed inside the card, so the picture thinned away level
+     with the first and last lines of the paragraph and left the block
+     of text sitting against bare page above and below. Overhanging by
+     roughly a tenth at each end puts those fades outside the card,
+     where they still stop either edge reading as a cut but no longer
+     eat into the height the words occupy. It also gives the element a
+     less extreme aspect, so "cover" crops less off the picture and
+     more of the artwork survives. */
+  top: -9%;
+  height: 118%;
   /* Wider, so the picture reaches further left and more of it is
      actually seen. The words now lie over its dim side rather than
      stopping short of it — which is the trade that buys the extra
@@ -1471,11 +1476,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 16%, #000 40%, #000 80%, rgba(0,0,0,0.22) 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 22%, #000 88%, rgba(0,0,0,0.3) 96%, transparent 100%),
     radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
   mask-image:
     linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 16%, #000 40%, #000 80%, rgba(0,0,0,0.22) 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 22%, #000 88%, rgba(0,0,0,0.3) 96%, transparent 100%),
     radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -1563,11 +1568,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--samba .start-scene {
     -webkit-mask-image:
       linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 24%, #000 90%, rgba(0,0,0,0.3) 97%, transparent 100%),
       radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
     mask-image:
       linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
-      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.22) 14%, #000 36%, #000 86%, rgba(0,0,0,0.34) 95%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 24%, #000 90%, rgba(0,0,0,0.3) 97%, transparent 100%),
       radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
   }
 
@@ -3598,9 +3603,14 @@ html[data-theme="light"] .start-row::before {
   /* Wider than the card and softened top and bottom, so the veil has
      no edge of its own: a flat rectangle of page colour laid over a
      textured backdrop shows as a panel, which is exactly what it must
-     not look like. */
-  top: -6%;
-  bottom: -6%;
+     not look like.
+     The overhang tracks the scene's. When the picture was made taller
+     than its card, a veil still stopping at 6% would have left the
+     newly exposed top and bottom of the artwork sitting untreated in
+     light mode — dark picture against a pale page, with a visible
+     horizontal edge at each end. It reaches as far as the scene does. */
+  top: -11%;
+  bottom: -11%;
   left: -3rem;
   right: 0;
   z-index: 1;
@@ -3616,8 +3626,8 @@ html[data-theme="light"] .start-row::before {
     rgba(236, 237, 237, 0.45) 72%,
     rgba(236, 237, 237, 0.15) 80%,
     transparent 88%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
 }
 
 /* Above the veil. */
