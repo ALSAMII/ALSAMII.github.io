@@ -1491,7 +1491,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    height: the dervish centred, the can and its congregation held a
    little low, the winged figure centred on her own light. */
 .start-row--whirl  .start-scene { object-position: 50% 44%; }
-.start-row--alarm  .start-scene { object-position: 50% 56%; }
+/* The can, its flame and the burning figure above it stack into one
+   tall column, so a short landscape card cropped it to a waistband
+   of the can and lost both ends. The picture was widened to 3:1
+   instead — extended leftward with its own dark and cross-faded so
+   the join is invisible — which lets cover scale by width and take
+   almost nothing off the top and bottom. Anchored far right so the
+   heavy horizontal crop on a portrait card keeps the whole column
+   rather than slicing the figure off its right edge. */
+.start-row--alarm  .start-scene { object-position: 92% 50%; }
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
 .start-row--swimmer .start-scene { object-position: 58% 56%; }
