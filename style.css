@@ -1990,13 +1990,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border-color: rgba(214, 178, 118, 0.3);
 }
 
-/* Cover and words. Stacked on a phone, side by side from 46rem. */
+/* Cover and words. Stacked on a phone, side by side from 46rem.
+   No gap in the stacked case: the cover's own fade is the join, and a
+   gap on top of it would open a band of bare card between the two and
+   undo the blend. */
 .series-main {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: 0;
   flex: 1 1 auto;
 }
+
+.series-main .series-body { margin-top: -0.85rem; }
 
 @media (min-width: 46rem) {
   .series-main {
@@ -2004,16 +2009,30 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     gap: 1rem;
     align-items: start;
   }
+  .series-main .series-body { margin-top: 0; }
 }
 
 .series-cover {
   display: block;
-  border-radius: 0.35rem;
   overflow: hidden;
   /* Fixed at the covers' own 2:3, so the two cards stay level with each
      other before the pictures have loaded. */
   aspect-ratio: 2 / 3;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  /* Dissolved rather than framed, the way the scenes behind the book
+     rows are. A hard-edged panel with a drop shadow reads as a separate
+     object sitting on the card; fading it out at the foot lets it
+     become the ground the title stands on. The sides come in a little
+     too, so the picture has no straight edge anywhere to give itself
+     away. No border radius and no shadow: both would draw the outline
+     the fade exists to remove. */
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 0, #000 52%, rgba(0,0,0,0.72) 74%, rgba(0,0,0,0.22) 91%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, #000 0, #000 52%, rgba(0,0,0,0.72) 74%, rgba(0,0,0,0.22) 91%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-composite: intersect;
 }
 
 .series-cover img {
@@ -2125,8 +2144,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 /* Both are written by script.js, so neither should hold a line open
    before it has anything to say. */
-.series-fact:has(.series-time:empty),
-.series-fact:has(.series-books:empty) { display: none; }
+/* Written by script.js, so it must not hold a line open before it has
+   anything to say. */
+.series-fact:has(.series-time:empty) { display: none; }
 
 /* ============================================================
    Footer
@@ -3750,9 +3770,9 @@ html[data-theme="light"] .series-span,
 html[data-theme="light"] .series-meta,
 html[data-theme="light"] .series-heading { text-shadow: none; }
 
-html[data-theme="light"] .series-cover {
-  box-shadow: 0 8px 22px rgba(20, 24, 28, 0.28);
-}
+/* No shadow on the cover in either theme. It is masked to a soft edge,
+   and a shadow renders outside the mask — it would draw the rectangle
+   the fade is there to dissolve. */
 
 html[data-theme="light"] .story-hook {
   text-shadow: 0 1px 14px var(--halo), 0 0 24px var(--halo);
