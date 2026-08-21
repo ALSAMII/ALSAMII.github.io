@@ -1956,20 +1956,25 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-rec {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.7rem;
-  padding: 0.9rem 1.1rem 0;
+  /* Tight on purpose. Everything given back here goes to the covers,
+     which are the point of the section — at 1.1rem of side padding and
+     0.7rem between, a phone was spending a quarter of its width on
+     air. The cards still read as separate objects at this spacing
+     because each has its own border. */
+  gap: 0.45rem;
+  padding: 0.9rem 0.6rem 0;
   align-items: stretch;
 }
 
 @media (min-width: 46rem) {
-  .series-rec { gap: 1.25rem; padding: 0.9rem 1.35rem 0; }
+  .series-rec { gap: 1.1rem; padding: 0.9rem 1.35rem 0; }
 }
 
 .series-card {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0.8rem;
+  padding: 0.5rem 0.5rem 0.6rem;
   text-align: left;
   background: rgba(255, 246, 232, 0.022);
   border: 1px solid rgba(214, 178, 118, 0.14);
