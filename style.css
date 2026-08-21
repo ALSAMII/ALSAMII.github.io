@@ -2022,14 +2022,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .series-main .series-body { margin-top: -0.85rem; }
 
-@media (min-width: 46rem) {
-  .series-main {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-    gap: 1rem;
-    align-items: start;
-  }
-  .series-main .series-body { margin-top: 0; }
-}
+/* No side-by-side arrangement at any width. The panel is capped at
+   37rem, so two cards are about 287px each however large the screen —
+   and split into a cover and a text column that leaves 136px for a
+   title that needs 257. On a laptop it was pushing the name straight
+   out of the card. Cover above, words below, everywhere. */
 
 .series-cover {
   display: block;
@@ -2071,7 +2068,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      card this narrow that is what sets the size — measured against the
      column rather than chosen, and it fits with a little to spare.
      Tracking comes out entirely to buy the last of the room. */
-  font-size: clamp(0.85rem, 3.55vw, 1.4375rem);
+  /* The ceiling is set by the card, not by taste: two cards in a 37rem
+     panel leave 252px inside the padding, and "The Evening of
+     Strangers" at 1.4375rem wants 257. 1.3125rem fits with room. */
+  font-size: clamp(0.85rem, 3.55vw, 1.3125rem);
   line-height: 1.15;
   letter-spacing: 0;
   color: var(--ember);
