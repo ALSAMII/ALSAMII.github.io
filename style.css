@@ -1961,20 +1961,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      0.7rem between, a phone was spending a quarter of its width on
      air. The cards still read as separate objects at this spacing
      because each has its own border. */
-  gap: 0.45rem;
-  padding: 0.9rem 0.6rem 0;
+  gap: 0.4rem;
+  /* Full width of the panel, not of the panel's text column. The panel
+     carries 1rem of side padding for prose; these are pictures, and
+     leaving that padding in place was costing the covers a fifth of the
+     screen. The negative margin cancels it and the small padding here
+     puts a little back, so the cards reach almost to the edges. */
+  margin: 0 -1rem;
+  padding: 0.9rem 0.45rem 0;
   align-items: stretch;
 }
 
 @media (min-width: 46rem) {
-  .series-rec { gap: 1.1rem; padding: 0.9rem 1.35rem 0; }
+  .series-rec { gap: 1.1rem; margin: 0; padding: 0.9rem 1.35rem 0; }
 }
 
 .series-card {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0.5rem 0.5rem 0.6rem;
+  padding: 0.45rem 0.45rem 0.55rem;
   text-align: left;
   background: rgba(255, 246, 232, 0.022);
   border: 1px solid rgba(214, 178, 118, 0.14);
@@ -2022,7 +2028,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   overflow: hidden;
   /* Fixed at the covers' own 2:3, so the two cards stay level with each
      other before the pictures have loaded. */
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 3 / 5;
   /* Dissolved rather than framed, the way the scenes behind the book
      rows are. A hard-edged panel with a drop shadow reads as a separate
      object sitting on the card; fading it out at the foot lets it
@@ -2031,12 +2037,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      away. No border radius and no shadow: both would draw the outline
      the fade exists to remove. */
   -webkit-mask-image:
-    linear-gradient(to bottom, #000 0, #000 52%, rgba(0,0,0,0.72) 74%, rgba(0,0,0,0.22) 91%, transparent 100%),
-    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+    linear-gradient(to bottom, #000 0, #000 46%, rgba(0,0,0,0.62) 70%, rgba(0,0,0,0.16) 89%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to bottom, #000 0, #000 52%, rgba(0,0,0,0.72) 74%, rgba(0,0,0,0.22) 91%, transparent 100%),
-    linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+    linear-gradient(to bottom, #000 0, #000 46%, rgba(0,0,0,0.62) 70%, rgba(0,0,0,0.16) 89%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
   mask-composite: intersect;
 }
 
@@ -2053,10 +2059,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1.0625rem, 3.6vw, 1.4375rem);
-  line-height: 1.12;
-  letter-spacing: 0.01em;
+  /* One line. "The Evening of Strangers" is 24 characters, and in a
+     card this narrow that is what sets the size — measured against the
+     column rather than chosen, and it fits with a little to spare.
+     Tracking comes out entirely to buy the last of the room. */
+  font-size: clamp(0.85rem, 3.55vw, 1.4375rem);
+  line-height: 1.15;
+  letter-spacing: 0;
   color: var(--ember);
+  white-space: nowrap;
+}
+
+@media (min-width: 46rem) {
+  .series-title { letter-spacing: 0.01em; }
 }
 
 /* The panel's diamond-and-rules at card scale, drawn here rather than
