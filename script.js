@@ -1443,6 +1443,13 @@
     var slot = btn.querySelector(".start-time");
     if (slot) slot.textContent = readingTime(s.words);
 
+    /* The book's number at the head of a series card's title line, the
+       same way the Start Here rows carry theirs. Written here rather
+       than typed into index.html so it can never disagree with the
+       data-book it sits on. */
+    var num = btn.querySelector(".series-num");
+    if (num) num.textContent = String(s.num);
+
     /* The scene: assets/start-NN.jpg, a wide image with no text on it.
        Missing, it falls back to the book's cover; missing that too, the
        card keeps its frame and simply carries no picture. */

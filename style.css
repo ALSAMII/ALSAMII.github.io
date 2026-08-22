@@ -2237,35 +2237,102 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      words already sit on the picture's dissolve because the picture
      reaches left under them; they do not need to be pushed to meet
      it. */
-  max-width: 64%;
+  /* Wider than the 64% the paragraph is set to. The title line now
+     carries three things — the number, the name and Book One — where
+     it used to carry only the name, and at 64% the label was pushed
+     onto a line of its own on every phone. The paragraph and the rule
+     under the title are capped below so they keep the measure they
+     had; only this one line is allowed the extra room.
+
+     If Book One still drops to a second line on a narrow phone, raise
+     this figure. If it starts sitting on the bright part of the
+     painting, lower it — and lower .series-title's 4.2vw with it. */
+  max-width: 70%;
   margin: 0;
   padding: 0;
 }
 
-@media (max-width: 23.5rem) { .series-body { max-width: 68%; } }
+@media (max-width: 23.5rem) { .series-body { max-width: 74%; } }
 
-.series-title {
+/* The number, the name and Book One on one line. Block with inline
+   children, not flex — as flex items they broke apart the moment the
+   column narrowed. As inline text they wrap the way a line of type
+   should, and if the label will not fit it falls below on its own
+   rather than pulling the name apart. Exactly what .start-head does
+   for the Start Here cards. */
+.series-head {
   display: block;
+  margin-bottom: 0.15rem;
+}
+.series-head > * { display: inline; }
+
+/* Same face and weight as the title, and the same scale, so the two
+   share a baseline however the title shrinks. Lining figures because
+   Cormorant's default old-style ones hang below the baseline, which
+   beside a name in caps-and-lowercase reads as a number sitting low. */
+.series-num {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1.0625rem, 4.4vw, 1.5rem);
+  font-size: clamp(1rem, 4.2vw, 1.375rem);
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
+  color: var(--ember);
+  opacity: 0.8;
+  white-space: nowrap;
+  text-shadow: 0 1px 12px rgba(5, 4, 3, 0.9);
+}
+
+/* The separator belongs to the title, not the number, so an empty
+   number — which is what it is until script.js fills it — leaves no
+   stray dot at the head of the line. */
+.series-num:not(:empty) + .series-title::before {
+  content: "\00b7";
+  margin-right: 0.5rem;
+  opacity: 0.55;
+}
+
+.series-title {
+  /* No display of its own. It is now one word in a line of three
+     things, and `display: block` here — sitting further down the file
+     than `.series-head > *` and at the same specificity — was quietly
+     winning and putting the name back on a line by itself. */
+  font-family: var(--serif);
+  font-weight: 600;
+  /* A step down from 4.4vw. The line has a number in front of it and a
+     label after it now, and the longest of the two names — The Evening
+     of Strangers — needs the difference to hold them all together on a
+     phone. */
+  font-size: clamp(1rem, 4.2vw, 1.375rem);
   line-height: 1.15;
   letter-spacing: 0.01em;
   color: var(--ember);
+  /* The number and the name are one unit: a break is allowed before
+     Book One, never inside the title itself. */
+  white-space: nowrap;
 }
 
+/* Beside the title rather than beneath it. Held to one piece, so if
+   the line runs out it moves down whole instead of splitting into
+   "BOOK" and "ONE". */
 .series-span {
-  display: block;
-  margin-top: 0.25rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.16em;
+  display: inline;
+  margin-left: 0.6rem;
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
   color: var(--ember);
   opacity: 0.85;
 }
 
 @media (min-width: 46rem) {
-  .series-span { font-size: 0.6875rem; letter-spacing: 0.18em; }
+  .series-span { font-size: 0.625rem; letter-spacing: 0.16em; }
 }
+
+/* 91% of a body that is now 70% of the card — which is the 64% these
+   two were set to before the title line needed more room. Written as a
+   proportion so they follow the body if that figure is ever changed. */
+.series-orn,
+.series-note { max-width: 91%; }
 
 .series-orn {
   display: block;
@@ -4027,6 +4094,7 @@ html[data-theme="light"] .series-note,
 html[data-theme="light"] .series-blurb { color: #2c3136; }
 
 html[data-theme="light"] .series-title,
+html[data-theme="light"] .series-num,
 html[data-theme="light"] .series-span,
 html[data-theme="light"] .series-fact,
 html[data-theme="light"] .series-name,
