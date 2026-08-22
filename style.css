@@ -2059,23 +2059,39 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   object-position: 100% 50%;
 }
 
-/* Lifted a little on hover, as the shelf scenes are. */
-.series-cover { opacity: 0.92; transition: opacity 0.3s ease; }
+/* Brighter than it came. Both pictures were painted dark for a slot
+   that fades them further, and behind a mask on a black page they were
+   losing the mountain and the streetlamp entirely — the parts worth
+   seeing. Lifted here rather than in the files, so the originals stay
+   as painted and the light theme, which needs none of this, can opt
+   out below. */
+.series-cover {
+  opacity: 1;
+  filter: brightness(1.32) saturate(1.06);
+  transition: filter 0.3s ease;
+}
+
 .series-card:hover .series-cover,
-.series-card:focus-visible .series-cover { opacity: 1; }
+.series-card:focus-visible .series-cover {
+  filter: brightness(1.5) saturate(1.1);
+}
 
 .series-body {
   position: relative;
   z-index: 1;
   display: block;
   min-width: 0;
-  /* Over the picture's dim side, the way the shelf rows sit. */
+  /* Set in from the left so the block sits inside the picture's faded
+     edge rather than beside it — the fade runs from the picture's left
+     to about a third across, and this puts the words on that dissolve,
+     which is where the shelf rows put theirs. */
   max-width: 64%;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 1.5rem;
 }
 
-@media (max-width: 23.5rem) { .series-body { max-width: 68%; } }
+@media (min-width: 46rem) { .series-body { padding-left: 2.25rem; } }
+@media (max-width: 23.5rem) { .series-body { max-width: 68%; padding-left: 1rem; } }
 
 .series-title {
   display: block;
@@ -2162,35 +2178,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   width: 0.85rem;
   height: 0.85rem;
   opacity: 0.9;
-}
-
-/* The chevron. Not a second button — the whole card is the control —
-   just the sign that it opens something. */
-.series-go {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  border: 1px solid rgba(214, 178, 118, 0.28);
-  border-radius: 999px;
-  color: var(--ember);
-  opacity: 0.75;
-  transition: border-color 0.25s ease, opacity 0.25s ease;
-}
-
-.series-go svg { width: 0.85rem; height: 0.85rem; }
-
-.series-card:hover .series-go,
-.series-card:focus-visible .series-go {
-  border-color: var(--ember);
-  opacity: 1;
-}
-
-@media (min-width: 46rem) {
-  .series-go { width: 2.25rem; height: 2.25rem; }
-  .series-go svg { width: 1rem; height: 1rem; }
 }
 
 /* Written by script.js, so it must not hold a line open before it has
@@ -3834,7 +3821,12 @@ html[data-theme="light"] .series-card::before {
   pointer-events: none;
 }
 
-html[data-theme="light"] .series-cover { opacity: 0.95; }
+/* On paper the picture is already light enough; the dark theme's lift
+   would wash it out. */
+html[data-theme="light"] .series-cover {
+  filter: saturate(0.98) brightness(1.04) contrast(0.96);
+  opacity: 0.95;
+}
 
 html[data-theme="light"] .series-note,
 html[data-theme="light"] .series-blurb { color: #2c3136; }
@@ -3847,17 +3839,6 @@ html[data-theme="light"] .series-heading { text-shadow: none; }
 
 /* The chevron's ring is drawn in the dark theme's low-contrast gold,
    which vanishes on paper. */
-html[data-theme="light"] .series-go {
-  border-color: rgba(122, 90, 23, 0.4);
-  opacity: 0.85;
-}
-
-html[data-theme="light"] .series-card:hover .series-go,
-html[data-theme="light"] .series-card:focus-visible .series-go {
-  border-color: var(--ember);
-  opacity: 1;
-}
-
 /* No shadow on the cover in either theme. It is masked to a soft edge,
    and a shadow renders outside the mask — it would draw the rectangle
    the fade is there to dissolve. */
