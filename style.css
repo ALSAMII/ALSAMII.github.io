@@ -2671,6 +2671,22 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
        here only narrows the guide columns, and those need every pixel to
        hold their definitions on one line. */
     padding-inline: 0;
+
+    /* Out to the hairline, the same reach the header has.
+
+       The masthead's box was pulled through the frame's right gutter so
+       its rule could run to the edge of the screen. The panel underneath
+       was not, so it stopped a gutter short — and because everything on
+       it is centred, that showed twice over: the lines were shorter than
+       they needed to be, and the whole column of type was centred about
+       9px left of the line it sits under.
+
+       Both are the same measurement, so one margin fixes both. The
+       stretch is needed with it: the panel is a centred grid item, and a
+       centred item shrinks to its content rather than taking the room a
+       negative margin opens up. */
+    justify-self: stretch;
+    margin-right: calc(-1 * var(--frame-pad));
   }
   .panel:not(.is-active) { display: none; }
 
