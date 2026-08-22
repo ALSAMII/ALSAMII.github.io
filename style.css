@@ -2001,14 +2001,27 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.8rem;
-  /* Full width of the panel rather than of its text column: the panel
-     keeps 1rem either side for prose, and these are pictures. */
-  margin: 0 -1rem;
-  padding: 1rem 0 0;
+  /* Full bleed. Cancelling each ancestor's padding in turn was guesswork
+     — the panel keeps 1rem for prose and the frame another 1.25rem, and
+     subtracting both by hand kept landing short or over. Measured from
+     the viewport instead, which cannot drift: the row is the width of
+     the screen and sits centred on it, with a little padding so the
+     cards do not touch the edges. Safe because the root clips
+     horizontal overflow, so this cannot make the page scroll sideways.
+     Above 46rem the panel is narrower than the screen and centred, so
+     the row goes back to following it. */
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding: 1rem 0.55rem 0;
 }
 
 @media (min-width: 46rem) {
-  .series-rec { gap: 1rem; margin: 0; padding: 1.1rem 0 0; }
+  .series-rec {
+    gap: 1rem;
+    width: auto;
+    margin-inline: -1rem;
+    padding: 1.1rem 0 0;
+  }
 }
 
 .series-card {
