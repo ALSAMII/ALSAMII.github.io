@@ -1240,6 +1240,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   line-height: 1.55;
   letter-spacing: 0.02em;
   margin: 0;
+  /* The same 1.35rem the shelf rows, the series cards and the series
+     paragraph all use. Without it these two sat 21.6px further left
+     than everything below them — invisible on a centred line until a
+     long one reaches the edge, and then the whole panel looks as if it
+     has two different margins. */
+  padding: 0 1.35rem;
 }
 
 .panel .rule {
@@ -1933,6 +1939,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   color: var(--parchment);
   opacity: 0.9;
   margin: 0;
+  padding: 0 1.35rem;
 }
 
 /* ============================================================
@@ -1959,7 +1966,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   justify-content: center;
   gap: clamp(0.7rem, 3vw, 1.6rem);
   margin: 2.6rem 0 0.2rem;
-  padding: 0 1.1rem;
+  /* Out to the same edge the series cards reach, so the rule reads as
+     the section's own line rather than a short flourish floating in the
+     middle of it. */
+  padding: 0 0.55rem;
   color: var(--ember);
   text-align: center;
 }
@@ -2008,10 +2018,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 /* The rules either side, each ending in a dot. They take whatever width
    is left, so the device fits any screen without being measured. */
+/* No width cap. It was held to 9rem, which on any wide screen left the
+   device stranded in the middle with bare page either side. It takes
+   whatever is left over instead. */
 .sh-rule {
   position: relative;
   flex: 1 1 auto;
-  max-width: clamp(2.5rem, 18vw, 9rem);
+  min-width: 1.5rem;
   height: 1px;
   background: linear-gradient(to right,
     transparent, rgba(216, 166, 95, 0.45) 22%, rgba(216, 166, 95, 0.45));
@@ -2042,7 +2055,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 @media (orientation: landscape) and (max-height: 30rem) {
   .series-heading { margin-top: 1.6rem; }
   .sh-fan { width: clamp(3.5rem, 12vw, 5.5rem); opacity: 0.7; }
-  .sh-rule { max-width: clamp(3rem, 22vw, 11rem); }
+  .sh-rule { min-width: 2rem; }
 }
 
 /* The series named once, above its books, with a rule running out to
@@ -2055,7 +2068,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   justify-content: center;
   gap: 0.9rem;
   margin: 1.1rem 0 0.75rem;
-  padding: 0 1rem;
+  /* Matched to the heading above it, so the two rules stack squarely. */
+  padding: 0 0.55rem;
   font-size: clamp(1rem, 3.6vw, 1.375rem);
   letter-spacing: 0.2em;
   color: var(--ember);
@@ -2065,7 +2079,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-name::after {
   content: "";
   flex: 1 1 auto;
-  max-width: 5.5rem;
+  max-width: 9rem;
   height: 1px;
   background: linear-gradient(to right,
     transparent, rgba(214, 178, 118, 0.42));
