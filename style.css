@@ -2000,83 +2000,52 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-rec {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.8rem;
-  /* Full bleed. Cancelling each ancestor's padding in turn was guesswork
-     — the panel keeps 1rem for prose and the frame another 1.25rem, and
-     subtracting both by hand kept landing short or over. Measured from
-     the viewport instead, which cannot drift: the row is the width of
-     the screen and sits centred on it, with a little padding so the
-     cards do not touch the edges. Safe because the root clips
-     horizontal overflow, so this cannot make the page scroll sideways.
-     Above 46rem the panel is narrower than the screen and centred, so
-     the row goes back to following it. */
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
-  padding: 1rem 0.55rem 0;
+  /* Air between the two, since neither has a border to separate them
+     any more. */
+  gap: 1.6rem;
+  margin: 0;
+  padding: 0.75rem 0 0;
 }
 
 @media (min-width: 46rem) {
-  .series-rec {
-    gap: 1rem;
-    width: auto;
-    margin-inline: -1rem;
-    padding: 1.1rem 0 0;
-  }
+  .series-rec { gap: 1.8rem; padding: 1rem 0 0; }
 }
 
 .series-card {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
-  gap: 0;
-  align-items: stretch;
+  position: relative;
+  display: block;
   width: 100%;
-  padding: 0;
-  overflow: hidden;
+  padding: 0.55rem 1.35rem;
   text-align: left;
-  background: rgba(255, 246, 232, 0.022);
-  border: 1px solid rgba(214, 178, 118, 0.14);
-  border-radius: 0.7rem;
+  background: none;
+  border: 0;
+  border-radius: 0;
   color: inherit;
   font: inherit;
   cursor: pointer;
-  transition: border-color 0.25s ease, background 0.25s ease;
-}
-
-@media (min-width: 46rem) {
-  .series-card { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); }
-}
-
-.series-card:hover,
-.series-card:focus-visible {
-  background: rgba(255, 246, 232, 0.045);
-  border-color: rgba(214, 178, 118, 0.3);
+  /* Not clipped: the picture is meant to run out of the card and off
+     the page, and the root clips the surplus. */
+  overflow: visible;
 }
 
 .series-cover {
-  display: block;
-  /* Wider than tall now that it sits beside the words rather than above
-     them. The art is a tall 2:3, so this crops it — which is fine: both
-     pictures put their figure and their light in the middle band and
-     have dark to spare at top and bottom. */
-  /* No aspect-ratio here. With min-height:100% as well, the browser
-     resolved the width from the card's height instead of from the grid
-     column — 640px of card became 800px of cover, which overran the
-     second column and ran underneath the title and the note. The grid
-     column sets the width and the row sets the height; the picture
-     fills whatever that gives it. */
-  align-self: stretch;
-  height: 100%;
-  /* Faded on its right edge into the text rather than at the foot, and
-     softened along the other three so the picture has no straight edge
-     to give itself away. No radius, no shadow: both would draw the
-     outline the fade exists to remove. */
+  position: absolute;
+  z-index: 0;
+  /* Far enough right to clear the card, the panel and the frame, the
+     same reach the shelf scenes use. */
+  right: -5rem;
+  top: -6%;
+  height: 112%;
+  width: 76%;
+  /* Faded on its left edge into the words, and softened top and bottom
+     so neither reads as a cut. */
   -webkit-mask-image:
-    linear-gradient(to right, #000 0, #000 38%, rgba(0,0,0,0.68) 62%, rgba(0,0,0,0.22) 84%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.68) 34%, #000 56%, #000 94%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 22%, #000 88%, rgba(0,0,0,0.3) 96%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to right, #000 0, #000 38%, rgba(0,0,0,0.68) 62%, rgba(0,0,0,0.22) 84%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.2) 12%, rgba(0,0,0,0.68) 34%, #000 56%, #000 94%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 22%, #000 88%, rgba(0,0,0,0.3) 96%, transparent 100%);
   mask-composite: intersect;
 }
 
@@ -2085,27 +2054,28 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Anchored left. The art is 5:4 and so is the cover's ratio, but the
-     card's height is set by the words beside it, so the box ends up
-     taller than 5:4 and cover has to crop the sides. Centred, that
-     takes from both and can clip the figure — which sits in the left
-     third of both pictures. Held left, everything lost comes off the
-     right, which is the empty half these were painted with. */
-  object-position: 0% 50%;
+  /* Held right: the crop takes from the left, which on both of these
+     is empty night, and keeps the figure and the light. */
+  object-position: 100% 50%;
 }
+
+/* Lifted a little on hover, as the shelf scenes are. */
+.series-cover { opacity: 0.92; transition: opacity 0.3s ease; }
+.series-card:hover .series-cover,
+.series-card:focus-visible .series-cover { opacity: 1; }
 
 .series-body {
+  position: relative;
+  z-index: 1;
   display: block;
   min-width: 0;
-  /* Pulled left under the cover's fade, so the words begin inside the
-     picture's dissolve instead of after it. */
-  margin-left: 0;
-  padding: 0.85rem 0.9rem 0.75rem 0.35rem;
+  /* Over the picture's dim side, the way the shelf rows sit. */
+  max-width: 64%;
+  margin: 0;
+  padding: 0;
 }
 
-@media (min-width: 46rem) {
-  .series-body { margin-left: 0; padding: 1.15rem 1.35rem 1rem 0.5rem; }
-}
+@media (max-width: 23.5rem) { .series-body { max-width: 68%; } }
 
 .series-title {
   display: block;
@@ -3850,16 +3820,21 @@ html[data-theme="light"] .start-heading {
    own border and fill rather than a picture behind it, so in light mode
    they need the ink and the edges restated — the dark theme's near-white
    parchment and low-contrast border would both disappear on paper. */
-html[data-theme="light"] .series-card {
-  background: rgba(20, 24, 28, 0.028);
-  border-color: rgba(60, 66, 72, 0.2);
+/* The card has no fill or border any more, so there is nothing to
+   restate here — but its picture now sits behind the words, which on
+   paper means the same veil the shelf rows use. */
+html[data-theme="light"] .series-card::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -8% -5rem -8% -1rem;
+  background: linear-gradient(to right,
+    var(--page) 0, var(--page) 46%, rgba(240, 241, 241, 0.72) 68%,
+    rgba(240, 241, 241, 0.2) 88%, transparent 100%);
+  pointer-events: none;
 }
 
-html[data-theme="light"] .series-card:hover,
-html[data-theme="light"] .series-card:focus-visible {
-  background: rgba(20, 24, 28, 0.05);
-  border-color: rgba(60, 66, 72, 0.36);
-}
+html[data-theme="light"] .series-cover { opacity: 0.95; }
 
 html[data-theme="light"] .series-note,
 html[data-theme="light"] .series-blurb { color: #2c3136; }
