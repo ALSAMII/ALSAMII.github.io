@@ -2054,9 +2054,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Held right: the crop takes from the left, which on both of these
-     is empty night, and keeps the figure and the light. */
-  object-position: 100% 50%;
+  /* Centred. These are painted 5:4 to fit the slot, so the crop is
+     shallow either way, and both put their subject in the middle
+     band. */
+  object-position: 50% 50%;
 }
 
 /* Brighter than it came. Both pictures were painted dark for a slot
@@ -2067,13 +2068,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    out below. */
 .series-cover {
   opacity: 1;
-  filter: brightness(1.32) saturate(1.06);
+  filter: brightness(1.12) saturate(1.03);
   transition: filter 0.3s ease;
 }
 
 .series-card:hover .series-cover,
 .series-card:focus-visible .series-cover {
-  filter: brightness(1.5) saturate(1.1);
+  filter: brightness(1.28) saturate(1.06);
 }
 
 .series-body {
@@ -2081,17 +2082,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   z-index: 1;
   display: block;
   min-width: 0;
-  /* Set in from the left so the block sits inside the picture's faded
-     edge rather than beside it — the fade runs from the picture's left
-     to about a third across, and this puts the words on that dissolve,
-     which is where the shelf rows put theirs. */
+  /* No indent. Every block on this panel — the series paragraph above,
+     the shelf rows below — begins at the card's own padding, and an
+     extra set-in here put these two out of line with all of it. The
+     words already sit on the picture's dissolve because the picture
+     reaches left under them; they do not need to be pushed to meet
+     it. */
   max-width: 64%;
   margin: 0;
-  padding: 0 0 0 1.5rem;
+  padding: 0;
 }
 
-@media (min-width: 46rem) { .series-body { padding-left: 2.25rem; } }
-@media (max-width: 23.5rem) { .series-body { max-width: 68%; padding-left: 1rem; } }
+@media (max-width: 23.5rem) { .series-body { max-width: 68%; } }
 
 .series-title {
   display: block;
