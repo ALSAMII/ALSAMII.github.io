@@ -2045,7 +2045,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 42%;
+  /* Anchored left. The art is 5:4 and so is the cover's ratio, but the
+     card's height is set by the words beside it, so the box ends up
+     taller than 5:4 and cover has to crop the sides. Centred, that
+     takes from both and can clip the figure — which sits in the left
+     third of both pictures. Held left, everything lost comes off the
+     right, which is the empty half these were painted with. */
+  object-position: 0% 50%;
 }
 
 .series-body {
