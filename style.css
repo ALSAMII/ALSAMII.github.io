@@ -1880,6 +1880,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* The ornaments between the panel's three parts. Trimmed: they are
    punctuation, and punctuation does not need a paragraph of air on
    each side of it. */
+/* UNUSED at present. The small rule-and-diamond that sat between the
+   lede and the Door / Room / Key guide has been taken out of
+   index.html. These rules — and .ornament svg, .ornament--small, and
+   the light-theme opacity further down — are left standing so that
+   putting the device back anywhere is a span of markup and nothing
+   else. */
 .ornament {
   display: block;
   margin: 0.95rem auto;
@@ -1895,12 +1901,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
-  /* No gap: the rules between the columns provide the separation, and
-     the padding inside each cell keeps the text off them. */
+  /* The columns used to be separated by a rule down the left edge of
+     each one; the padding inside every cell was there to keep the words
+     off those rules. With the rules gone that padding is now doing the
+     separating by itself, which is why there is still no column gap. */
   gap: 0.9rem 0;
-  /* stretch, not start: the dividers are the columns' own left edges,
-     so a short column drew a short rule. Now every column is as tall
-     as the tallest and the three rules match. */
+  /* stretch is left in place. It was here so a short column would not
+     draw a short divider — no longer a concern, but it also keeps the
+     three cells the same height, which the icons sit better in. */
   align-items: stretch;
   text-align: center;
   margin: 0 0 2rem;
@@ -1912,7 +1920,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin: 0;
   padding-inline: clamp(0.3rem, 1.2vw, 0.9rem);
 }
-.guide-row + .guide-row { border-left: 1px solid var(--hairline); }
+/* No rules between the columns any more. The three cells are held apart
+   by their own padding and by the space the icons sit in — which is what
+   .guide's comment above already assumed, and is enough on its own now
+   that the ornament above them has gone too and there is nothing for a
+   vertical to answer. */
 
 /* The marks are artwork, drawn as backgrounds rather than <img> so the
    light theme can swap in its own set — a stylesheet cannot change an
@@ -2200,20 +2212,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   color: var(--ember);
 }
 
-.series-name::before,
-.series-name::after {
-  content: "";
-  flex: 1 1 auto;
-  max-width: 9rem;
-  height: 1px;
-  background: linear-gradient(to right,
-    transparent, rgba(214, 178, 118, 0.42));
-}
+/* Nothing either side of the series name now. It sits directly beneath
+   the Recommended Series device, which already carries a rule out to
+   each side and a fan above and below — two sets of flanking rules,
+   one under the other, were reading as an echo rather than as a pair.
+   The name stands on its own.
 
-.series-name::after {
-  background: linear-gradient(to left,
-    transparent, rgba(214, 178, 118, 0.42));
-}
+   .series-name keeps its flex and its centring: with no pseudo-elements
+   to push apart, justify-content simply centres the one child. */
 
 .series-name > span { flex: 0 0 auto; }
 
