@@ -509,9 +509,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .combo-label {
   display: block;
-  margin-bottom: 0.4rem;
-  font-size: 0.625rem;
-  color: var(--faded);
+  margin-bottom: 0.45rem;
+  /* Was 0.625rem. At that size, in caps with the tracking .caps adds
+     and in the secondary grey, the shelf count was the hardest thing on
+     the page to read — and it is the line that tells a visitor how much
+     is here. Two points larger and a shade brighter, still quieter than
+     the menu beneath it. */
+  font-size: 0.75rem;
+  color: #b3a993;
 }
 
 /* The search field. Dressed as the two menus beside it — same ground,
