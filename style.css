@@ -329,11 +329,16 @@ html[data-scene="1"] .atmosphere {
   /* The centrepiece, and the first thing a visitor should see. */
   height: clamp(7.5rem, 15vw, 13.5rem);
   width: auto;
+  /* The padding stays. It was holding the stamp off the two vertical
+     rules that used to flank it; with those gone it is what keeps the
+     wordmark and the nav from crowding in on the artwork. */
   padding: 0.15rem clamp(1.25rem, 3vw, 2.5rem);
-  /* Gold, not hairline: at 13% alpha these were invisible, and the
-     stamp's own glow was sitting over them. */
-  border-left: 1px solid var(--ember-soft);
-  border-right: 1px solid var(--ember-soft);
+  /* No rules either side. They were drawn to frame the stamp as a
+     device between the two outer columns — but with the wordmark now
+     ranged left and the nav ranged right, the header's own ends do
+     that framing, and a second pair of verticals in the middle only
+     boxed in the one thing that should have been floating. */
+  border: 0;
   border-radius: 0;
   box-sizing: content-box;
   /* The rounded card the stamp used to sit in fought the rules. */
@@ -2893,7 +2898,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     grid-column: 2;
     grid-row: 1;
     justify-self: end;
-    border-left: 0;      /* one rule, not two, at the row's end */
+    /* There used to be a border-left: 0 here — one rule rather than two
+       at the end of the row. Both are gone now, so there is nothing
+       left for this to switch off. */
   }
   /* Three stacked links would run the header down the screen here, so
      on the narrowest phones only they go back to a single line. */
@@ -4687,11 +4694,6 @@ html[data-theme="light"] .guide-icon--key    { background-image: url("assets/ico
 /* The header's closing rule and the stamp's dividers were tuned to
    glow; here they only need to divide. */
 html[data-theme="light"] .masthead { border-bottom-color: rgba(122, 90, 23, 0.35); }
-html[data-theme="light"] .masthead .roya {
-  border-left-color: var(--hairline);
-  border-right-color: var(--hairline);
-}
-
 /* The mark is a transparent cut-out now, so it needs no rescuing on
    paper — only a touch more presence, since gold on white reads
    lighter than gold on black. */
