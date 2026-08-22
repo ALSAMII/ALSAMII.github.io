@@ -42,6 +42,16 @@
 
   /* Type --------------------------------------------------- */
   --serif: "Cormorant Garamond", "Times New Roman", serif;
+
+  /* The About panel only. Spectral was drawn for screens: lower stroke
+     contrast, a taller lowercase, and a sturdier italic than Cormorant,
+     which is why it can be set several points smaller and still read
+     more easily on a phone. Kept off every other surface on purpose —
+     Cormorant is the voice of the covers and the shelf, and a second
+     serif spreading past this panel would start to read as a second
+     publisher. If it ever does spread, that is a decision, not a
+     default: change it here and nowhere else. */
+  --display: "Spectral", "Cormorant Garamond", Georgia, serif;
   --sans:  "Jost", "Century Gothic", sans-serif;
 }
 
@@ -1258,12 +1268,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 .panel .lede {
-  font-family: var(--serif);
-  font-weight: 600;
+  font-family: var(--display);
+  /* Light. Spectral's 300 holds a stem where Cormorant's would thin out,
+     and at this size the panel wants air rather than weight. If it reads
+     washy over the artwork on your screen, 400 is already loaded. */
+  font-weight: 300;
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.85);
-  font-size: clamp(1.375rem, 2.3vw, 1.625rem);
-  line-height: 1.55;
-  letter-spacing: 0.02em;
+  /* Smaller than the 1.375rem this was, and deliberately: Spectral's
+     lowercase stands taller in the same point size, so the letters
+     measure larger on the page while the number goes down. The extra
+     leading is what the wider face wants. */
+  font-size: clamp(1.125rem, 1.9vw, 1.3125rem);
+  line-height: 1.7;
+  /* Cormorant needed 0.02em opened up. Spectral is drawn with its
+     spacing already in it and tightens up badly if you add more. */
+  letter-spacing: 0;
   margin: 0;
   /* The same 1.35rem the shelf rows, the series cards and the series
      paragraph all use. Without it these two sat 21.6px further left
@@ -1959,15 +1978,22 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    does the work of setting it apart. A little extra tracking, because
    light italics set tight are harder to read than upright text. */
 .panel .note {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 300;
   text-shadow: 0 1px 22px rgba(5, 4, 3, 0.7);
-  font-size: clamp(1.3125rem, 2.1vw, 1.5rem);
-  line-height: 1.65;
-  letter-spacing: 0.012em;
-  color: var(--parchment);
-  opacity: 0.9;
+  font-size: clamp(1rem, 1.7vw, 1.125rem);
+  line-height: 1.8;
+  letter-spacing: 0;
+  /* The change that does the most work here. These two paragraphs used
+     to be the same face, the same alignment, 22px against 21px and both
+     parchment — one slab with no edge in it. The second one now steps
+     back into the secondary ink, so the confession reads first and the
+     description reads second, which is the order they were written in.
+     A real colour rather than an opacity, so light mode can set its own
+     value instead of inheriting a washed-out near-black. */
+  color: var(--faded);
+  opacity: 1;
   margin: 0;
   padding: 0 var(--text-edge);
 }
@@ -4003,8 +4029,8 @@ body.gallery-on { overflow: hidden; }
   .frame { --read-up: 1.18; }
 
   /* ---- The About panel ---- */
-  .panel .lede { font-size: calc(clamp(1.375rem, 2.3vw, 1.625rem) * var(--read-up)); }
-  .panel .note { font-size: calc(clamp(1.3125rem, 2.1vw, 1.5rem) * var(--read-up)); }
+  .panel .lede { font-size: calc(clamp(1.125rem, 1.9vw, 1.3125rem) * var(--read-up)); }
+  .panel .note { font-size: calc(clamp(1rem, 1.7vw, 1.125rem) * var(--read-up)); }
   .guide-term  { font-size: calc(0.6875rem * var(--read-up)); }
   .guide-def   { font-size: calc(clamp(0.8125rem, 1.3vw, 1.0625rem) * var(--read-up)); }
 
