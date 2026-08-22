@@ -1911,7 +1911,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      three cells the same height, which the icons sit better in. */
   align-items: stretch;
   text-align: center;
-  margin: 0 0 2rem;
+  /* The top margin used to be 0, because the rule-and-diamond above the
+     guide was holding the gap open — 0.8rem of margin, a 7px drawing and
+     0.9rem more, about 2.1rem of vertical space in all. Taking that
+     device out took the whole gap with it and the icons ran straight
+     into the end of the paragraph.
+
+     2.4rem, slightly more than the ornament occupied: without a mark in
+     the middle of it, empty space has to be a little wider before it
+     reads as deliberate rather than as a paragraph that failed to
+     break. */
+  margin: 2.4rem 0 2rem;
 }
 
 /* A divider before the first column would be a fence at the edge of
@@ -3557,6 +3567,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .panel .note { font-size: clamp(1.0625rem, 2.15vh, 1.3125rem); }
   .panel .rule { margin: 1.5rem auto; }
   .guide-def { font-size: clamp(0.875rem, 1.7vh, 1.0625rem); }
+  /* margin-bottom only. The 2.4rem above the guide is wanted here too —
+     this is the shortest screen, where the paragraph and the icons are
+     closest to each other. */
   .guide { gap: 0.7rem clamp(0.6rem, 3vw, 2rem); margin-bottom: 0.9rem; }
 }
 
