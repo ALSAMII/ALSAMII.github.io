@@ -38,8 +38,14 @@ TARGETS = [
     # folder      filename starts with   max width   quality
     ("assets",    "start-",              1440,       78),
     ("assets",    "series-",             1440,       78),
-    ("assets",    "banner-",             1600,       78),
     ("covers",    "",                    1000,       80),
+    # The series banners are named for the series, not with a prefix —
+    # les-folies.jpg, water-ordeals.jpg, ghariban.jpg. An earlier version
+    # of this list looked for "banner-" and so quietly skipped every one
+    # of them, which are the largest pictures on the site. An empty
+    # prefix sweeps the whole folder; anything already converted is
+    # skipped, so the narrower rules above still set their own widths.
+    ("assets",    "",                    1600,       78),
 ]
 
 SOURCE_EXT = (".jpg", ".jpeg", ".png")

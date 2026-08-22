@@ -123,8 +123,13 @@
     img.decoding = "async";
     img.addEventListener("error", function () {
       at += 1;
-      if (at < chain.length) img.src = stamped(chain[at]);
-      else img.remove();
+      if (at < chain.length) { img.src = stamped(chain[at]); return; }
+      /* Out of fallbacks. Flagged rather than removed here, so a caller
+         that wants to take away more than the picture — a banner row
+         dropping its whole frame — can act on the last failure instead
+         of on the first. */
+      img.dataset.artDone = "1";
+      img.remove();
     });
     img.src = stamped(chain[0]);
   }
@@ -573,10 +578,19 @@
       li.classList.add("has-banner");
       set.className = "t-banner";
       var bn = document.createElement("img");
-      bn.src = stamped(t.banner);
       bn.alt = t.title;
       bn.loading = "lazy";
-      bn.addEventListener("error", function () { set.remove(); });
+      bn.setAttribute("fetchpriority", "low");
+      /* Through loadArt, so a banner asks for its .webp first like the
+         scenes and the series covers already do. A panorama is the
+         largest single picture on the shelf — this one is 235 KB as a
+         JPEG and 161 KB as WebP — and it was the last thing still
+         fetching the heavy file. If neither exists the row drops the
+         picture and keeps its spines, which is what it did before. */
+      loadArt(bn, t.banner);
+      bn.addEventListener("error", function () {
+        if (bn.dataset.artDone === "1") set.remove();
+      });
       set.append(bn);
     } else {
       set.className = "t-covers" + (t.books.length > 3 ? " many" : "");
