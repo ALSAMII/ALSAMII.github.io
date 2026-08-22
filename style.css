@@ -1342,14 +1342,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    books, not labelling a panel, so it earns a voice of its own. Sized
    to the card titles and indented to their left edge, so it reads as
    the first line of the group rather than as a floating centred label. */
+/* UNUSED at present. The line this styled has been removed from
+   index.html; the rules are left standing — here, in the phone reading
+   dial, and in the light theme — so that putting a short line back above
+   the heading is one span of markup and nothing else. */
 .start-heading {
   /* Air above, very little below: the gap is what tells a reader this
      line has left the Door / Room / Key guide behind and belongs to
      the books directly under it. Enough to separate, not so much that
      the panel needs a scroll to get past it. */
-  /* Nothing at the foot any more. The space between this line and
-     "Start here." is set on .sh--lead below, so there is one number to
-     change rather than two that add together. */
+  /* Nothing at the foot. If a line is ever put back here, the heading
+     beneath it brings its own 2.6rem, so this only has to clear the
+     guide above. */
   margin: 2.1rem 0 0;
   text-align: center;
   /* The masthead's face — Jost, spaced caps — rather than the serif, so
@@ -1446,22 +1450,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    tells a visitor what to do. */
 .start-heading-line { display: block; }
 
-/* ---- Start here ----------------------------------------------------
-   The line sits inside the same flex device the Recommended Series
-   heading uses, and now wears the same face and the same size as well:
-   .sh-text and .caps, exactly as its twin does, with no modifier of its
-   own. Everything — the rules, the dots, the fans, the type — is
-   inherited rather than restated, so recolour or resize .sh-text once
-   and both headings follow, in either theme.
+/* ---- Where to begin -------------------------------------------------
+   Nothing here any more, and that is the point. The heading above the
+   Start Here cards is a plain .series-heading now — same device, same
+   face, same size, same margins as the one above the recommended
+   series. It carried a modifier for its top margin only because a
+   second line sat between it and the Door / Room / Key guide; with that
+   line gone, .series-heading's own 2.6rem clears the guide's 2rem foot
+   properly on its own.
 
-   The only thing of its own is the space above it. */
-.series-heading.sh--lead {
-  /* The air you asked for. "One of these will bother you" used to sit
-     0.3rem above this — close enough that the two read as one stacked
-     block rather than as a whisper and then the thing it is pointing
-     at. The rules either side need room to be seen as well. */
-  margin: 1.5rem 0 0.35rem;
-}
+   Change .sh-text or .sh-rule and both headings move together. There is
+   no longer anything about either one to remember. */
 
 /* The old rule, kept because the class may still be sitting in a
    cached copy of index.html on someone's phone. It costs nothing and
