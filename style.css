@@ -185,7 +185,25 @@ html[data-scene="1"] .atmosphere {
   height: 100svh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  /* The page's outer gutter. The masthead's gold hairline runs the full
+     width inside this, so this is the line every left edge on the page
+     is measured against. */
   padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+
+  /* --------------------------------------------------------------
+     THE SINGLE LEFT EDGE  (--text-edge)
+     Every block inside a panel — the lede, the note, the category
+     headings, the Start Here cards, the series rules and the series
+     cards — sets its side padding from this one value and nothing
+     else. Before this there were four different insets in play
+     (0.25rem, 0.55rem, 1.1rem, 1.35rem) and the section rules sat
+     12.8px left of the words they belonged to.
+
+     Change this number and the whole panel moves together. On a phone
+     it is overridden to 0 further down, so the words sit exactly on
+     the frame's gutter, level with the masthead hairline.
+     -------------------------------------------------------------- */
+  --text-edge: 1.35rem;
 }
 
 /* Text for screen readers only ----------------------------- */
@@ -492,7 +510,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   flex-wrap: wrap;
   align-items: end;
   gap: 0.7rem;
-  padding: 0 0.25rem 0.9rem;
+  padding: 0 0 0.9rem;
 }
 
 /* Both ends pinned: an auto-placed row-spanning button lands in the
@@ -804,7 +822,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      capitals that the artwork does not. */
   align-items: start;
   gap: 0.875rem;
-  padding: 1.05rem 0.25rem;
+  /* No side inset. The shelf is already inside the frame's gutter, and
+     a further 4px here put every row out of line with the masthead
+     hairline directly above it. */
+  padding: 1.05rem 0;
 }
 
 /* The actions down the right of a row: look, download, read. Held to
@@ -1245,7 +1266,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      than everything below them — invisible on a centred line until a
      long one reaches the edge, and then the whole panel looks as if it
      has two different margins. */
-  padding: 0 1.35rem;
+  padding: 0 var(--text-edge);
 }
 
 .panel .rule {
@@ -1305,13 +1326,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
   /* A phone has no room for an even split: the words take the larger
      share, and the title comes down a step to sit in it. */
-  .start-row { padding: 0.5rem 1.1rem; }
+  .start-row { padding: 0.5rem var(--text-edge); }
   .start-body { max-width: 68%; }
   .start-scene { width: 56%; }
   .start-title { font-size: 1rem; letter-spacing: 0.015em; }
   .start-num   { font-size: 1rem; }
   .start-note  { font-size: 0.875rem; line-height: 1.5; }
-  .start-cat   { font-size: 0.75rem; letter-spacing: 0.2em; padding: 0 1.1rem; }
+  .start-cat   { font-size: 0.75rem; letter-spacing: 0.2em; padding: 0 var(--text-edge); }
 
   /* Small phones: a step down so the three definitions still align on
      one line each. Below about 320px they wrap, and wrap together,
@@ -1349,7 +1370,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* Air above each category, very little below it: the gap is what
      groups the pair under its own heading. */
   margin: 1.9rem 0 0.1rem;
-  padding: 0 1.35rem;
+  padding: 0 var(--text-edge);
   font-size: 0.875rem;
   letter-spacing: 0.26em;
   color: var(--ember);
@@ -1388,7 +1409,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    the heading so it never moves the books beneath it. */
 .start-cat-about {
   position: absolute;
-  left: 1.35rem;
+  left: var(--text-edge);
   bottom: calc(100% + 0.45rem);
   z-index: 6;
   width: max-content;
@@ -1425,7 +1446,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      the two occupy the same space but never the same pixels. */
   display: block;
   width: 100%;
-  padding: 0.55rem 1.35rem;
+  padding: 0.55rem var(--text-edge);
   /* Not clipped. The scene is meant to run off the side of the card
      and out of the panel; hiding the overflow cut it off square at the
      card's own edge, which is the vertical seam that kept appearing
@@ -1939,7 +1960,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   color: var(--parchment);
   opacity: 0.9;
   margin: 0;
-  padding: 0 1.35rem;
+  padding: 0 var(--text-edge);
 }
 
 /* ============================================================
@@ -1968,8 +1989,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin: 2.6rem 0 0.2rem;
   /* Out to the same edge the series cards reach, so the rule reads as
      the section's own line rather than a short flourish floating in the
-     middle of it. */
-  padding: 0 0.55rem;
+     middle of it. This said 0.55rem and the cards said 1.35rem, so the
+     rule started 12.8px left of every word beneath it — visible as two
+     different margins the moment the eye ran down the page. */
+  padding: 0 var(--text-edge);
   color: var(--ember);
   text-align: center;
 }
@@ -2068,8 +2091,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   justify-content: center;
   gap: 0.9rem;
   margin: 1.1rem 0 0.75rem;
-  /* Matched to the heading above it, so the two rules stack squarely. */
-  padding: 0 0.55rem;
+  /* Matched to the heading above it, so the two rules stack squarely —
+     and now to the cards below it as well. */
+  padding: 0 var(--text-edge);
   font-size: clamp(1rem, 3.6vw, 1.375rem);
   letter-spacing: 0.2em;
   color: var(--ember);
@@ -2095,7 +2119,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-blurb {
   max-width: 34rem;
   margin: 0 auto;
-  padding: 0 1.35rem;
+  padding: 0 var(--text-edge);
   font-family: var(--serif);
   font-size: clamp(0.9375rem, 2.6vw, 1.0625rem);
   line-height: 1.6;
@@ -2122,7 +2146,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   position: relative;
   display: block;
   width: 100%;
-  padding: 0.55rem 1.35rem;
+  padding: 0.55rem var(--text-edge);
   text-align: left;
   background: none;
   border: 0;
@@ -2335,6 +2359,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 @media (max-width: 56rem) {
+  /* On a phone the panel runs the full width of the frame, so its own
+     side padding is switched off below and the words would otherwise
+     still sit 21.6px inside the masthead hairline above them. Zeroed
+     here, so the hairline, the lede, the category headings, the cards,
+     the series rules and the shelf beneath all start on exactly the
+     same vertical line — the frame's gutter. */
+  .frame { --text-edge: 0rem; }
+
   .frame { height: auto; min-height: auto; }
   .shelf { overflow: visible; display: block; }
   .shelf ol { overflow: visible; }
@@ -2944,7 +2976,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    book, and the colour is what says so. */
 .trilogy {
   border-bottom: 1px solid var(--hairline);
-  padding: 1.05rem 0.25rem;
+  /* Level with .story-row, which is level with the frame. */
+  padding: 1.05rem 0;
   cursor: pointer;
 }
 
