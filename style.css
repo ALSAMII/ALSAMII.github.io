@@ -4143,6 +4143,61 @@ body.gallery-on { overflow: hidden; }
 
 
 /* ████████████████████████████████████████████████████████████
+   A PHONE HELD SIDEWAYS
+   ────────────────────────────────────────────────────────────
+   Two things were leaving the right-hand side of a landscape
+   screen empty, and they compounded.
+
+   .panel carries max-width: 37rem, which portrait never reaches —
+   there the panel is narrower than the cap, so it filled. Turned
+   sideways the frame is far wider than 37rem, the cap binds, and
+   the panel stops well short of it. Then `justify-self: stretch`,
+   which was added so the panel could take the room a negative
+   margin opens up, puts a capped item at the START of its cell
+   rather than the middle — so all of the leftover width collected
+   on the right instead of splitting either side.
+
+   Lifting the cap fixes both at once. But a 37rem cap is not
+   arbitrary: it is roughly where a line of prose stops being
+   comfortable to read. Filling a landscape frame at portrait's
+   type size would set the lede at something like ninety characters
+   a line, which is well past that. So the type goes up with the
+   width — the measure in ems stays close to what it is in
+   portrait, and the panel fills.
+
+   This block sits after the reading dial and matches on
+   orientation alone, so it holds whether a sideways phone is
+   reading the narrow rules or the wide ones.
+   ████████████████████████████████████████████████████████████ */
+
+@media (orientation: landscape) and (max-height: 30rem) {
+  /* Insurance. The hairline's reach is set in the max-width: 56rem
+     block, which a sideways phone normally matches — but a wide one
+     might not, and then the panel below would have reached past a line
+     that hadn't moved. Setting the same margin here means the two can
+     never disagree; where both rules apply they ask for the identical
+     value, so it costs nothing. */
+  .masthead { margin-right: calc(-1 * var(--frame-pad)); }
+
+  .panel {
+    /* No cap. The frame is the measure now, and the type below is
+       sized for it. */
+    max-width: none;
+    justify-self: stretch;
+    /* Out to the hairline, exactly as in portrait. */
+    margin-right: calc(-1 * var(--frame-pad));
+  }
+
+  /* Up a step, so the longer line still reads as a line rather than
+     as a run of words. The vw term does the work here: a sideways
+     phone is between 40 and 60rem wide, where portrait's 1.9vw was
+     always losing to its own minimum. */
+  .panel .lede { font-size: calc(clamp(1.25rem, 2.6vw, 1.75rem) * var(--read-up)); }
+  .panel .note { font-size: calc(clamp(1.125rem, 2.3vw, 1.5rem) * var(--read-up)); }
+}
+
+
+/* ████████████████████████████████████████████████████████████
    THE LIGHT THEME
    ────────────────────────────────────────────────────────────
    Everything for light mode lives here, at the foot of the file,
