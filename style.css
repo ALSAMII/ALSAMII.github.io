@@ -3951,6 +3951,81 @@ body.gallery-on { overflow: hidden; }
 
 
 /* ████████████████████████████████████████████████████████████
+   READING SIZE ON A PHONE
+   ────────────────────────────────────────────────────────────
+   The page opens at 0.85 zoom, which buys a wider measure — more
+   words to a line, less wrapping, less scrolling — but shrinks
+   every letter by the same 15%. Body copy set at 1rem was landing
+   at about 13.5 physical pixels, and the small gold labels at
+   under 8, which is why the page had to be pinched to be read.
+
+   This block hands the type back its size without giving the width
+   away. One dial, applied to the prose and the labels only:
+   --read-up. At 1.18 the letters measure what they were drawn to
+   measure, and the wider layout is kept. Raise it past 1.18 for
+   type larger than the design's own; lower it towards 1 to go back
+   to the small setting.
+
+   What is deliberately NOT here: every title and every number.
+   .start-title, .series-title, .story .title and their numbers are
+   all sized to hold on one line at a given width, and scaling them
+   is what breaks a name in two. They already read at 19–23px.
+   .series-span is left alone for the same reason — it has just
+   been fitted onto the title line beside Book One.
+
+   This sits at the foot of the file, below every rule it revises,
+   because most of them are single-class selectors that would
+   otherwise win on source order alone.
+   ████████████████████████████████████████████████████████████ */
+
+@media (max-width: 56rem) {
+  .frame { --read-up: 1.18; }
+
+  /* ---- The About panel ---- */
+  .panel .lede { font-size: calc(clamp(1.375rem, 2.3vw, 1.625rem) * var(--read-up)); }
+  .panel .note { font-size: calc(clamp(1.3125rem, 2.1vw, 1.5rem) * var(--read-up)); }
+  .guide-term  { font-size: calc(0.6875rem * var(--read-up)); }
+  .guide-def   { font-size: calc(clamp(0.8125rem, 1.3vw, 1.0625rem) * var(--read-up)); }
+
+  /* ---- Start Here ---- */
+  .start-heading { font-size: calc(clamp(0.625rem, 2.6vw, 0.75rem) * var(--read-up)); }
+  .start-cat     { font-size: calc(0.875rem * var(--read-up)); }
+  .start-note    { font-size: calc(1rem * var(--read-up)); }
+  .start-time    { font-size: calc(0.5625rem * var(--read-up)); }
+
+  /* ---- Recommended series ---- */
+  .sh-text      { font-size: calc(clamp(0.75rem, 2.9vw, 0.9375rem) * var(--read-up)); }
+  .series-blurb { font-size: calc(clamp(0.9375rem, 2.6vw, 1.0625rem) * var(--read-up)); }
+  .series-note  { font-size: calc(0.8125rem * var(--read-up)); }
+  .series-fact  { font-size: calc(0.625rem * var(--read-up)); }
+
+  /* ---- The shelf ---- */
+  .story-hook            { font-size: calc(0.9375rem * var(--read-up)); }
+  .story-time            { font-size: calc(0.5625rem * var(--read-up)); }
+  .story-series          { font-size: calc(0.5rem * var(--read-up)); }
+  .story.open .synopsis  { font-size: calc(1.0625rem * var(--read-up)); }
+  .t-label               { font-size: calc(0.5625rem * var(--read-up)); }
+  .story-acts .icon-btn .icon-label { font-size: calc(0.5625rem * var(--read-up)); }
+  .story-mark .icon-btn.share .icon-label { font-size: calc(0.6875rem * var(--read-up)); }
+
+  /* ---- All covers ---- */
+  .gcard-title { font-size: calc(1rem * var(--read-up)); }
+  .gcard-meta  { font-size: calc(0.6875rem * var(--read-up)); }
+
+  /* The narrowest phones have their own smaller settings further up
+     the file. They are stepped down for a reason — the columns there
+     have no slack — so the dial is applied to those figures rather
+     than to the full-size ones, and they stay a step behind. */
+  @media (max-width: 28rem) {
+    .start-heading { font-size: calc(0.5625rem * var(--read-up)); }
+    .start-cat     { font-size: calc(0.75rem * var(--read-up)); }
+    .start-note    { font-size: calc(0.875rem * var(--read-up)); }
+    .guide-def     { font-size: calc(0.75rem * var(--read-up)); }
+  }
+}
+
+
+/* ████████████████████████████████████████████████████████████
    THE LIGHT THEME
    ────────────────────────────────────────────────────────────
    Everything for light mode lives here, at the foot of the file,
