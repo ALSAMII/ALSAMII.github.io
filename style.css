@@ -271,7 +271,14 @@ html[data-scene="1"] .atmosphere {
   /* Centred in its own third rather than jammed against the left edge:
      with the stamp on the page's centre and the nav beside it, a left-
      hugging wordmark left a hole in the middle of the left half and the
-     header read as three things scattered rather than one composition. */
+     header read as three things scattered rather than one composition.
+
+     That holds on a wide screen, where the frame's gutter is generous
+     and the three columns sit close. On a phone and on a phone held
+     sideways the header's box runs the full width of the rule beneath
+     it, the thirds get much wider, and centring leaves the hole it was
+     meant to avoid — so both of those range this to the left instead.
+     See the max-width: 56rem and landscape blocks. */
   justify-self: center;
   display: flex;
   flex-direction: column;
@@ -2630,6 +2637,22 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     margin-right: calc(-1 * var(--frame-pad));
   }
 
+  /* Ranged left, against the start of the hairline, so the wordmark
+     answers the nav on the other side. It was centred in its own third
+     — which read as one composition when the header's box stopped at
+     the frame's gutter, but the box now runs the full width of the
+     rule, and a centred wordmark in a third that wide just leaves a
+     hole between it and the stamp.
+
+     align-items ranges the wordmark, "Short Fiction" and the two
+     controls against each other; text-align: left stops "Short Fiction"
+     centring itself under a wordmark it is now flush with. */
+  .brand-col {
+    justify-self: start;
+    align-items: flex-start;
+  }
+  .brand-name { text-align: left; }
+
   /* Ranged right, against the end of the hairline, now that the column
      reaches it. Set on both the column and the stack inside it: the
      first puts the block at the right of the grid cell, the second
@@ -4254,6 +4277,16 @@ body.gallery-on { overflow: hidden; }
      reach is set in the phone block too, and the panel below must never
      reach past a line that hasn't moved. */
   .masthead { margin-right: calc(-1 * var(--frame-pad)); }
+
+  /* And the header's two outer columns ranged to the ends of that rule,
+     as they are in portrait — the wordmark to where it starts, the nav
+     to where it finishes. Restated for the same reason as everything
+     above: a sideways phone stopped matching the phone block when the
+     viewport tag was corrected. */
+  .brand-col { justify-self: start; align-items: flex-start; }
+  .brand-name { text-align: left; }
+  .masthead nav { justify-self: end; align-items: flex-end; padding-left: 0; }
+  .masthead .nav-links { align-items: flex-end; }
 
   /* And the shelf with it, so the list's rules end where the header's
      does. Same value as the portrait rule; where both apply they ask
