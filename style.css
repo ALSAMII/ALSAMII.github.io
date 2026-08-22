@@ -218,6 +218,15 @@ html[data-scene="1"] .atmosphere {
      the frame's gutter, level with the masthead hairline.
      -------------------------------------------------------------- */
   --text-edge: 1.35rem;
+
+  /* The reading dial, at rest. Its real value is set for phones at the
+     foot of the file; declared here so it always resolves. Every type
+     size that uses it is written as calc(<size> * var(--read-up)), and
+     a calc() holding an undefined custom property is invalid — the
+     whole declaration is thrown away and the element silently falls
+     back to something else. One line here means that cannot happen at
+     any width, in any orientation. */
+  --read-up: 1;
 }
 
 /* Text for screen readers only ----------------------------- */
@@ -4198,12 +4207,30 @@ body.gallery-on { overflow: hidden; }
    ████████████████████████████████████████████████████████████ */
 
 @media (orientation: landscape) and (max-height: 30rem) {
-  /* Insurance. The hairline's reach is set in the max-width: 56rem
-     block, which a sideways phone normally matches — but a wide one
-     might not, and then the panel below would have reached past a line
-     that hadn't moved. Setting the same margin here means the two can
-     never disagree; where both rules apply they ask for the identical
-     value, so it costs nothing. */
+  /* ---- Standing on its own two feet --------------------------------
+     A sideways phone used to report about 53rem of layout and so picked
+     up the max-width: 56rem block along with everything else. With the
+     viewport tag corrected it reports about 63rem instead, and that
+     block no longer matches — so everything a sideways phone was
+     quietly borrowing from it is restated here.
+
+     Without this the reading dial would resolve to nothing and take the
+     type rules with it, the hall would split into two columns with the
+     shelf beside the stage, and the panel would find its side padding
+     again. None of which is what a phone held sideways wants.
+
+     These are the same values the phone block sets, deliberately: the
+     two are meant to agree, and where both apply they ask for the same
+     thing. */
+  .frame { --text-edge: 0rem; --read-up: 1.18; height: auto; min-height: auto; }
+  .hall  { grid-template-columns: 1fr; gap: 0; }
+  .stage { order: -1; overflow: visible; }
+  .panel { padding-inline: 0; }
+  .shelf { overflow: visible; display: block; }
+
+  /* Insurance, from before, and still worth keeping: the hairline's
+     reach is set in the phone block too, and the panel below must never
+     reach past a line that hasn't moved. */
   .masthead { margin-right: calc(-1 * var(--frame-pad)); }
 
   /* And the shelf with it, so the list's rules end where the header's
