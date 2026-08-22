@@ -188,7 +188,11 @@ html[data-scene="1"] .atmosphere {
   /* The page's outer gutter. The masthead's gold hairline runs the full
      width inside this, so this is the line every left edge on the page
      is measured against. */
-  padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+  /* Named, because two rules below need to reach back out through it
+     by exactly this much. Written once here so they can never drift
+     apart from it at any width. */
+  --frame-pad: clamp(1.25rem, 4vw, 3.5rem);
+  padding: 0 var(--frame-pad);
 
   /* --------------------------------------------------------------
      THE SINGLE LEFT EDGE  (--text-edge)
@@ -2364,6 +2368,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 @media (max-width: 56rem) {
+  /* The right-hand rule of the Recommended Series device, out to the
+     same edge as the header hairline and the paintings. Only the right
+     one: the left keeps its dot on the gutter, where every line of type
+     on the panel begins. */
+  .sh-rule:last-child { margin-right: calc(-1 * var(--frame-pad)); }
+
+  /* The dot rides on the end of the rule, so it went off the edge with
+     it. Held a few pixels back inside the screen so it stays a whole
+     dot rather than a half one. */
+  .sh-rule:last-child::after { transform: translate(-3px, -50%); }
+
   /* On a phone the panel runs the full width of the frame, so its own
      side padding is switched off below and the words would otherwise
      still sit 21.6px inside the masthead hairline above them. Zeroed
@@ -2391,7 +2406,23 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      of the desktop grid are given up here — on a narrow screen the nav
      is wider than its half and rides over the stamp, so the outer two
      take their natural width and the stamp centres in what is left. */
-  .masthead { gap: 0.5rem; grid-template-columns: 1fr auto 1fr; padding: 1.1rem 0 1rem; }
+  /* The gold hairline under the header now runs out to the right edge
+     of the screen, level with where the paintings on the cards below
+     it are cut off. The paintings overhang their cards by design and
+     the root clips them at the page's edge; the rule stopping short of
+     that made the header look inset from a page that isn't.
+
+     The margin pulls the header's box out through the frame's gutter —
+     which is what carries the border — and the matching padding puts
+     the wordmark, the stamp and the nav back exactly where they were,
+     so only the line moves. The left end stays on the gutter, level
+     with the words beneath it. */
+  .masthead {
+    gap: 0.5rem;
+    grid-template-columns: 1fr auto 1fr;
+    padding: 1.1rem var(--frame-pad) 1rem 0;
+    margin-right: calc(-1 * var(--frame-pad));
+  }
 
   /* The shelf is the whole page on a phone, so the covers can be the
      size they deserve. */
