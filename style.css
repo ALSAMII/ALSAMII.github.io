@@ -1934,15 +1934,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    Recommended series
    ============================================================ */
 
-/* The three category pairs above recommend single books. This does the
-   same for a group: one card per series, its first cover with what the
-   whole run is about, and the span and reading time along the foot.
+/* One card per row, full width: cover on the left, the series and its
+   note on the right, a reading time and a chevron along the foot.
 
-   The two cards sit side by side at every width, phone included. That
-   is what forces the arrangement inside them: at 390px each card is
-   only about 165px across, and a cover beside a paragraph in 165px is
-   neither. So the card stacks internally on a phone — cover above,
-   words below — and only puts them side by side once there is room. */
+   Two cards abreast was tried first and does not work here. The panel
+   is capped at 37rem, so side by side each card is about 287px however
+   large the screen — enough for a stamp-sized cover and a column too
+   narrow to hold a title. Stacked, each card gets the full width and
+   the cover can be a picture rather than a thumbnail. */
 
 .series-heading {
   margin: 2.6rem 0 0.2rem;
@@ -1953,34 +1952,51 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   text-align: center;
 }
 
+/* The rule under the heading, drawn rather than carried as an SVG. */
+.series-heading-orn {
+  position: relative;
+  height: 1px;
+  width: min(22rem, 70%);
+  margin: 0.85rem auto 0;
+  background: linear-gradient(to right,
+    transparent, rgba(214, 178, 118, 0.3) 12%,
+    rgba(214, 178, 118, 0.3) 88%, transparent);
+}
+
+.series-heading-orn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--ember);
+  opacity: 0.6;
+}
+
 .series-rec {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* Tight on purpose. Everything given back here goes to the covers,
-     which are the point of the section — at 1.1rem of side padding and
-     0.7rem between, a phone was spending a quarter of its width on
-     air. The cards still read as separate objects at this spacing
-     because each has its own border. */
-  gap: 0.4rem;
-  /* Full width of the panel, not of the panel's text column. The panel
-     carries 1rem of side padding for prose; these are pictures, and
-     leaving that padding in place was costing the covers a fifth of the
-     screen. The negative margin cancels it and the small padding here
-     puts a little back, so the cards reach almost to the edges. */
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  /* Full width of the panel rather than of its text column: the panel
+     keeps 1rem either side for prose, and these are pictures. */
   margin: 0 -1rem;
-  padding: 0.9rem 0 0;
-  align-items: stretch;
+  padding: 1rem 0 0;
 }
 
 @media (min-width: 46rem) {
-  .series-rec { gap: 1.1rem; margin: 0; padding: 0.9rem 1.35rem 0; }
+  .series-rec { gap: 1rem; margin: 0; padding: 1.1rem 0 0; }
 }
 
 .series-card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 0.46fr) minmax(0, 1fr);
+  gap: 0;
+  align-items: stretch;
   width: 100%;
-  padding: 0.45rem 0.45rem 0.55rem;
+  padding: 0;
+  overflow: hidden;
   text-align: left;
   background: rgba(255, 246, 232, 0.022);
   border: 1px solid rgba(214, 178, 118, 0.14);
@@ -1992,7 +2008,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 @media (min-width: 46rem) {
-  .series-card { padding: 1.1rem; }
+  .series-card { grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr); }
 }
 
 .series-card:hover,
@@ -2001,53 +2017,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border-color: rgba(214, 178, 118, 0.3);
 }
 
-/* Cover and words. Stacked on a phone, side by side from 46rem.
-   No gap in the stacked case: the cover's own fade is the join, and a
-   gap on top of it would open a band of bare card between the two and
-   undo the blend. */
-.series-main {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  /* Not 1 1 auto. The two cards are stretched to a common height by the
-     grid, and when this section was allowed to grow into that height
-     its rows grew with it — so the card with the shorter note gave its
-     spare height to the cover, which pushed that title down and left
-     the two out of line. Fixed at its natural height, both covers are
-     the same and both titles start level. The footer's margin-top:auto
-     still takes up the slack at the bottom. */
-  flex: 0 0 auto;
-  align-content: start;
-}
-
-.series-main .series-body { margin-top: -0.85rem; }
-
-/* No side-by-side arrangement at any width. The panel is capped at
-   37rem, so two cards are about 287px each however large the screen —
-   and split into a cover and a text column that leaves 136px for a
-   title that needs 257. On a laptop it was pushing the name straight
-   out of the card. Cover above, words below, everywhere. */
-
 .series-cover {
   display: block;
-  overflow: hidden;
-  /* Fixed at the covers' own 2:3, so the two cards stay level with each
-     other before the pictures have loaded. */
-  aspect-ratio: 3 / 5;
-  /* Dissolved rather than framed, the way the scenes behind the book
-     rows are. A hard-edged panel with a drop shadow reads as a separate
-     object sitting on the card; fading it out at the foot lets it
-     become the ground the title stands on. The sides come in a little
-     too, so the picture has no straight edge anywhere to give itself
-     away. No border radius and no shadow: both would draw the outline
-     the fade exists to remove. */
+  /* Wider than tall now that it sits beside the words rather than above
+     them. The art is a tall 2:3, so this crops it — which is fine: both
+     pictures put their figure and their light in the middle band and
+     have dark to spare at top and bottom. */
+  aspect-ratio: 5 / 4;
+  align-self: stretch;
+  min-height: 100%;
+  /* Faded on its right edge into the text rather than at the foot, and
+     softened along the other three so the picture has no straight edge
+     to give itself away. No radius, no shadow: both would draw the
+     outline the fade exists to remove. */
   -webkit-mask-image:
-    linear-gradient(to bottom, #000 0, #000 46%, rgba(0,0,0,0.62) 70%, rgba(0,0,0,0.16) 89%, transparent 100%),
-    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    linear-gradient(to right, #000 0, #000 58%, rgba(0,0,0,0.6) 80%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to bottom, #000 0, #000 46%, rgba(0,0,0,0.62) 70%, rgba(0,0,0,0.16) 89%, transparent 100%),
-    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    linear-gradient(to right, #000 0, #000 58%, rgba(0,0,0,0.6) 80%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
   mask-composite: intersect;
 }
 
@@ -2056,102 +2045,92 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 42%;
 }
 
-.series-body { display: block; min-width: 0; }
+.series-body {
+  display: block;
+  min-width: 0;
+  /* Pulled left under the cover's fade, so the words begin inside the
+     picture's dissolve instead of after it. */
+  margin-left: -1.6rem;
+  padding: 0.85rem 0.9rem 0.75rem 0;
+}
+
+@media (min-width: 46rem) {
+  .series-body { margin-left: -2.2rem; padding: 1.1rem 1.25rem 0.9rem 0; }
+}
 
 .series-title {
   display: block;
   font-family: var(--serif);
   font-weight: 600;
-  /* One line. "The Evening of Strangers" is 24 characters, and in a
-     card this narrow that is what sets the size — measured against the
-     column rather than chosen, and it fits with a little to spare.
-     Tracking comes out entirely to buy the last of the room. */
-  /* The ceiling is set by the card, not by taste: two cards in a 37rem
-     panel leave 252px inside the padding, and "The Evening of
-     Strangers" at 1.4375rem wants 257. 1.3125rem fits with room. */
-  font-size: clamp(0.85rem, 3.55vw, 1.3125rem);
+  font-size: clamp(1.0625rem, 4.4vw, 1.5rem);
   line-height: 1.15;
-  letter-spacing: 0;
+  letter-spacing: 0.01em;
   color: var(--ember);
-  white-space: nowrap;
 }
 
-@media (min-width: 46rem) {
-  .series-title { letter-spacing: 0.01em; }
-}
-
-/* The panel's diamond-and-rules at card scale, drawn here rather than
-   carried in as another inline SVG. */
-.series-orn {
-  display: block;
-  position: relative;
-  height: 1px;
-  margin: 0.6rem 0;
-  background: linear-gradient(to right,
-    transparent, rgba(214, 178, 118, 0.3) 14%,
-    rgba(214, 178, 118, 0.3) 86%, transparent);
-}
-
-.series-orn::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 5px;
-  height: 5px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: var(--ember);
-  opacity: 0.55;
-}
-
-/* Small enough to hold "DIPTYCH · BOOKS 1–2" on one line in a card this
-   narrow — broken over two it stops reading as a label. */
 .series-span {
   display: block;
-  font-size: 0.5625rem;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
+  margin-top: 0.25rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
   color: var(--ember);
   opacity: 0.85;
-  white-space: nowrap;
 }
 
 @media (min-width: 46rem) {
   .series-span { font-size: 0.6875rem; letter-spacing: 0.18em; }
 }
 
+.series-orn {
+  display: block;
+  position: relative;
+  height: 1px;
+  margin: 0.55rem 0 0.6rem;
+  background: linear-gradient(to right,
+    rgba(214, 178, 118, 0.26), rgba(214, 178, 118, 0.26) 70%, transparent);
+}
+
+.series-orn::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--ember);
+  opacity: 0.5;
+}
+
 .series-note {
   display: block;
-  margin-top: 0.55rem;
   font-family: var(--serif);
-  font-size: 0.875rem;
-  line-height: 1.45;
+  font-size: 0.8125rem;
+  line-height: 1.5;
   color: var(--parchment);
   opacity: 0.88;
 }
 
 @media (min-width: 46rem) {
-  .series-note { margin-top: 0.7rem; font-size: 1rem; line-height: 1.6; }
+  .series-note { font-size: 1rem; line-height: 1.6; }
 }
 
-/* The foot. Pushed to the bottom of the card so the two line up with
-   each other however unevenly the notes above them run. */
 .series-foot {
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-top: auto;
-  padding-top: 0.7rem;
-  border-top: 1px solid rgba(214, 178, 118, 0.13);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.7rem;
 }
 
 .series-fact {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 0.5625rem;
+  gap: 0.4rem;
+  font-size: 0.625rem;
   letter-spacing: 0.14em;
   color: var(--ember);
   opacity: 0.82;
@@ -2159,7 +2138,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 @media (min-width: 46rem) {
-  .series-foot { gap: 0.4rem; padding-top: 0.9rem; }
   .series-fact { font-size: 0.6875rem; letter-spacing: 0.18em; }
 }
 
@@ -2170,11 +2148,38 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 0.9;
 }
 
-/* Both are written by script.js, so neither should hold a line open
-   before it has anything to say. */
+/* The chevron. Not a second button — the whole card is the control —
+   just the sign that it opens something. */
+.series-go {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid rgba(214, 178, 118, 0.28);
+  border-radius: 999px;
+  color: var(--ember);
+  opacity: 0.75;
+  transition: border-color 0.25s ease, opacity 0.25s ease;
+}
+
+.series-go svg { width: 0.85rem; height: 0.85rem; }
+
+.series-card:hover .series-go,
+.series-card:focus-visible .series-go {
+  border-color: var(--ember);
+  opacity: 1;
+}
+
+@media (min-width: 46rem) {
+  .series-go { width: 2.25rem; height: 2.25rem; }
+  .series-go svg { width: 1rem; height: 1rem; }
+}
+
 /* Written by script.js, so it must not hold a line open before it has
    anything to say. */
-.series-fact:has(.series-time:empty) { display: none; }
+.series-fact:has(.series-time:empty) { visibility: hidden; }
 
 /* ============================================================
    Footer
@@ -3814,8 +3819,21 @@ html[data-theme="light"] .series-note { color: #2c3136; }
 
 html[data-theme="light"] .series-title,
 html[data-theme="light"] .series-span,
-html[data-theme="light"] .series-meta,
+html[data-theme="light"] .series-fact,
 html[data-theme="light"] .series-heading { text-shadow: none; }
+
+/* The chevron's ring is drawn in the dark theme's low-contrast gold,
+   which vanishes on paper. */
+html[data-theme="light"] .series-go {
+  border-color: rgba(122, 90, 23, 0.4);
+  opacity: 0.85;
+}
+
+html[data-theme="light"] .series-card:hover .series-go,
+html[data-theme="light"] .series-card:focus-visible .series-go {
+  border-color: var(--ember);
+  opacity: 1;
+}
 
 /* No shadow on the cover in either theme. It is masked to a soft edge,
    and a shadow renders outside the mask — it would draw the rectangle
