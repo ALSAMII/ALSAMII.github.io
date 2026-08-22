@@ -2555,9 +2555,39 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .masthead {
     gap: 0.5rem;
     grid-template-columns: 1fr auto 1fr;
-    padding: 1.1rem var(--frame-pad) 1rem 0;
+    /* No padding on the right any more, only the margin.
+
+       When the hairline was sent out to the screen edge, the margin
+       pulled the header's box out through the frame's gutter and this
+       padding pushed the three columns back off it — so the line grew
+       and the grid did not. The stamp went on being centred in the
+       grid, which was no longer centred under the line: it sat half a
+       gutter, about 9px, to the left of it, and the nav stopped a
+       gutter short of where the line ended.
+
+       Dropping the padding lets the columns fill the same width the
+       line spans. The stamp's centre is the line's centre, and the
+       third column now ends exactly where the line does. */
+    padding: 1.1rem 0 1rem;
     margin-right: calc(-1 * var(--frame-pad));
   }
+
+  /* Ranged right, against the end of the hairline, now that the column
+     reaches it. Set on both the column and the stack inside it: the
+     first puts the block at the right of the grid cell, the second
+     ranges the three labels against each other, so their right edges
+     line up rather than their left.
+
+     No text-align here on purpose. Each link shrinks to its own words,
+     so aligning the boxes aligns the words — and a stray text-align
+     would follow the nav into the narrowest-phone layout below, where
+     the three go back onto one row. */
+  .masthead nav {
+    justify-self: end;
+    align-items: flex-end;
+    padding-left: 0;
+  }
+  .masthead .nav-links { align-items: flex-end; }
 
   /* The shelf is the whole page on a phone, so the covers can be the
      size they deserve. */
@@ -2593,7 +2623,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .brand-name .name { font-size: 1.25rem; letter-spacing: 0.14em; }
   .brand-name .tag  { font-size: 0.5rem; letter-spacing: 0.14em; }
 
-  .masthead nav { min-width: 0; padding-left: 0.7rem; }
+  /* padding-left is zeroed further down, where the nav is ranged right
+     against the hairline. Kept here only for min-width. */
+  .masthead nav { min-width: 0; }
   .masthead .nav-links { gap: 0.45rem; }
   .masthead .nav-controls { gap: 1rem; }
 
