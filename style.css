@@ -854,7 +854,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   align-self: start;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  /* Stretch, not flex-start. The column is sized to its widest item —
+     SHARE — and with flex-start the three shorter ones stopped wherever
+     their own words ran out: PDF some 36px inside the row's edge, the
+     number 85px inside it. Stretched, every item is the column's full
+     width, which lets each one place its own contents against the right
+     edge below. */
+  align-items: stretch;
   gap: clamp(0.65rem, 2.2vw, 1rem);
 
   /* A rule down the left of the column, with a diamond set into it —
@@ -897,6 +903,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .story-acts .icon-btn {
   flex-direction: row;
   align-items: center;
+  /* The icons keep their straight line down the left of the column and
+     the words are pushed out to the right of it, so both edges of the
+     block are flush. The gap becomes a minimum rather than the whole
+     distance. Ranging the buttons right instead would have aligned the
+     words but left the three icons stepping in and out by the length of
+     each label. */
+  justify-content: space-between;
   gap: 0.5rem;
   min-width: 0;
   padding: 0.1rem 0;
@@ -984,7 +997,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    serif, spaced, and left to stand on its own — which reads the same
    on paper as it does in the dark, since it is only type. */
 .story .num {
-  align-self: flex-start;
+  /* Was flex-start, which left it sitting under the icons rather than
+     under the words. It closes the column, so it ends where the column
+     ends. */
+  align-self: stretch;
+  text-align: right;
   margin-top: 0.15rem;
   font-family: var(--serif);
   font-weight: 400;
@@ -2523,7 +2540,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .frame { --text-edge: 0rem; }
 
   .frame { height: auto; min-height: auto; }
-  .shelf { overflow: visible; display: block; }
+  /* Out to the hairline, the same reach the header and the panel above
+     it were given. Without this the shelf's rules and the row of actions
+     stopped a gutter short of the line under the masthead, so the page
+     had two right edges — one for the reading matter and one for the
+     list. The actions ranged right above now land on the same line
+     everything else does. */
+  .shelf {
+    overflow: visible;
+    display: block;
+    margin-right: calc(-1 * var(--frame-pad));
+  }
   .shelf ol { overflow: visible; }
 
   /* The speaker and slider live inside the nav, so all five items
@@ -4178,6 +4205,11 @@ body.gallery-on { overflow: hidden; }
      never disagree; where both rules apply they ask for the identical
      value, so it costs nothing. */
   .masthead { margin-right: calc(-1 * var(--frame-pad)); }
+
+  /* And the shelf with it, so the list's rules end where the header's
+     does. Same value as the portrait rule; where both apply they ask
+     for the same thing. */
+  .shelf { margin-right: calc(-1 * var(--frame-pad)); }
 
   .panel {
     /* No cap. The frame is the measure now, and the type below is
