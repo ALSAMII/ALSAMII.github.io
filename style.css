@@ -1952,27 +1952,49 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   text-align: center;
 }
 
-/* The rule under the heading, drawn rather than carried as an SVG. */
-.series-heading-orn {
-  position: relative;
-  height: 1px;
-  width: min(22rem, 70%);
-  margin: 0.85rem auto 0;
-  background: linear-gradient(to right,
-    transparent, rgba(214, 178, 118, 0.3) 12%,
-    rgba(214, 178, 118, 0.3) 88%, transparent);
+/* The series named once, above its books, with a rule running out to
+   either side and a diamond where it meets the words. The rules are
+   drawn on the pseudo-elements so they always meet the name however
+   long it is, rather than being fixed at a width that suits one. */
+.series-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 1.1rem 0 0.75rem;
+  padding: 0 1rem;
+  font-size: clamp(1rem, 3.6vw, 1.375rem);
+  letter-spacing: 0.2em;
+  color: var(--ember);
 }
 
-.series-heading-orn::after {
+.series-name::before,
+.series-name::after {
   content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: var(--ember);
-  opacity: 0.6;
+  flex: 1 1 auto;
+  max-width: 5.5rem;
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent, rgba(214, 178, 118, 0.42));
+}
+
+.series-name::after {
+  background: linear-gradient(to left,
+    transparent, rgba(214, 178, 118, 0.42));
+}
+
+.series-name > span { flex: 0 0 auto; }
+
+.series-blurb {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0 1.35rem;
+  font-family: var(--serif);
+  font-size: clamp(0.9375rem, 2.6vw, 1.0625rem);
+  line-height: 1.6;
+  text-align: center;
+  color: var(--parchment);
+  opacity: 0.86;
 }
 
 .series-rec {
@@ -2023,9 +2045,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      them. The art is a tall 2:3, so this crops it — which is fine: both
      pictures put their figure and their light in the middle band and
      have dark to spare at top and bottom. */
-  aspect-ratio: 5 / 4;
+  /* No aspect-ratio here. With min-height:100% as well, the browser
+     resolved the width from the card's height instead of from the grid
+     column — 640px of card became 800px of cover, which overran the
+     second column and ran underneath the title and the note. The grid
+     column sets the width and the row sets the height; the picture
+     fills whatever that gives it. */
   align-self: stretch;
-  min-height: 100%;
+  height: 100%;
   /* Faded on its right edge into the text rather than at the foot, and
      softened along the other three so the picture has no straight edge
      to give itself away. No radius, no shadow: both would draw the
@@ -2059,7 +2086,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   min-width: 0;
   /* Pulled left under the cover's fade, so the words begin inside the
      picture's dissolve instead of after it. */
-  margin-left: -1.6rem;
+  margin-left: -1.1rem;
   padding: 0.85rem 0.9rem 0.75rem 0;
 }
 
@@ -3821,11 +3848,13 @@ html[data-theme="light"] .series-card:focus-visible {
   border-color: rgba(60, 66, 72, 0.36);
 }
 
-html[data-theme="light"] .series-note { color: #2c3136; }
+html[data-theme="light"] .series-note,
+html[data-theme="light"] .series-blurb { color: #2c3136; }
 
 html[data-theme="light"] .series-title,
 html[data-theme="light"] .series-span,
 html[data-theme="light"] .series-fact,
+html[data-theme="light"] .series-name,
 html[data-theme="light"] .series-heading { text-shadow: none; }
 
 /* The chevron's ring is drawn in the dark theme's low-contrast gold,
