@@ -2590,6 +2590,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      dot rather than a half one. */
   .sh-rule:last-child::after { transform: translate(-3px, -50%); }
 
+  /* The Door / Room / Key row, out through the same gutter.
+
+     The rule above makes the heading device one gutter wider than every
+     other block on the panel. Everything else is centred on the panel,
+     the device is centred on the panel plus a gutter — so its middle
+     sits half a gutter, about 10px, to the right of theirs. Nothing
+     showed it until Door / Room / Key ended up directly above PICK A
+     DOOR, where Room should have been dead centre over it and was not.
+
+     Matching the margin puts the guide in the same box as the device:
+     Room lands on the centre of the heading beneath it, and the outer
+     two columns reach the same width the rules do. Written here, beside
+     the rule that causes it, so the two move together. */
+  .guide { margin-right: calc(-1 * var(--frame-pad)); }
+
   /* On a phone the panel runs the full width of the frame, so its own
      side padding is switched off below and the words would otherwise
      still sit 21.6px inside the masthead hairline above them. Zeroed
