@@ -855,21 +855,29 @@ const TRILOGIES = [
   },
   {
     title: "The Unwitnessed Wars I\u2013V",
-    banner: "assets/unwitnessed-wars.jpg",
+    /* Its five covers, standing together, rather than the painted
+       panorama. To put the banner back, uncomment the line below —
+       nothing else needs changing, and the written heading will hide
+       itself again because the artwork carries the title.
+       banner: "assets/unwitnessed-wars.jpg", */
     label: "",
     books: [26, 27, 28, 29, 30],
     synopsis: "Five atrocities the world declined to witness: poison gas drifting over the marshes of Iran and Iraq; a famine ordered by decree in Ukraine; a hundred machete days in Rwanda; wards of unheld children in Ceau\u0219escu's Romania; a show-ghetto dressed for the Red Cross and certified as almost normal. Five clerks counting what the ledgers were built to erase. Five doors the cornered body found \u2014 smoke, hunger, stillness, rocking, the drawn page \u2014 and one question, noir to the bone: shelter from the century, or the century, inside?"
   },
   {
     title: "The Unguarded Hours",
-    banner: "assets/unguarded-hours.jpg",
+    /* Its four covers, standing together. See the note on The
+       Unwitnessed Wars above.
+       banner: "assets/unguarded-hours.jpg", */
     label: "",
     books: [31, 32, 33, 34],
     synopsis: "There are hours no one chooses and no one can defend \u2014 when exhaustion takes the wheel, when grief wears through the last wall, when the body is awake and cannot say so. They happen at scale and almost nobody reports them, because whatever opens the door also erases the record. Someone has noticed. Someone has worked out what it's worth."
   },
   {
     title: "The Sovereign Rooms",
-    banner: "assets/sovereign-rooms.jpg",
+    /* Its five covers, standing together. See the note on The
+       Unwitnessed Wars above.
+       banner: "assets/sovereign-rooms.jpg", */
     label: "",
     books: [36, 37, 38, 39, 40],
     synopsis: "Two accounts of a self that does not answer to its owner. A hospice scribe whose left hand, cut loose by a stroke, begins writing the things thirty years of mercy left out \u2014 and is never wrong about any of them. A man over the diagnostic threshold who takes six doses of a compound that lowers a guard he has never once had to lower, and comes back with a complete map of what other people feel and no way at all to be moved by it. One room writes without permission. The other can be entered at will and costs nothing to leave. Both are sovereign, and neither is governed."

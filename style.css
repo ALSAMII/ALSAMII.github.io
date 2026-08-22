@@ -1321,7 +1321,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* The narrowest phones: the indent stays, so the line still starts
    where the numbers do, and the tracking gives up the few pixels
    needed to keep it on one line. */
-@media (max-width: 23.5rem) {
+/* 28rem, not 23.5rem. The page now loads at 0.85 zoom, which widens the
+   layout viewport by the same proportion — a 375px phone reports 441px
+   of layout. Left at 23.5rem this query stopped firing on the small
+   phones it was written for. 28rem (448px) catches them again and still
+   clears a 393px phone, which lands at 462px. */
+@media (max-width: 28rem) {
   .start-heading { font-size: 0.5625rem; letter-spacing: 0.08em; }
 
   /* A phone has no room for an even split: the words take the larger
@@ -3072,9 +3077,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   gap: 0.85rem;
 }
 
-.trilogy.has-banner[data-slug="series-the-unwitnessed-wars-i-v"] .t-words,
-.trilogy.has-banner[data-slug="series-the-unguarded-hours"] .t-words,
-.trilogy.has-banner[data-slug="series-the-sovereign-rooms"] .t-words {
+/* The list is empty at the moment. The three series that used to be
+   here — The Unwitnessed Wars, The Unguarded Hours, The Sovereign
+   Rooms — now show their covers rather than a painted banner, so there
+   is no artwork carrying the title and the written heading has to do
+   the naming again. Nothing was needed to bring it back: without a
+   banner the row never gets .has-banner, so these selectors simply
+   stopped matching.
+
+   If a new banner arrives with the title lettered into the painting,
+   add its slug here and the written heading steps aside for it. */
+.trilogy.has-banner[data-slug="series-none-at-present"] .t-words {
   position: absolute;
   width: 1px;
   height: 1px;
