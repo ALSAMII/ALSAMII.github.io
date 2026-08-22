@@ -1360,6 +1360,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-title { font-size: 1rem; letter-spacing: 0.015em; }
   .start-num   { font-size: 1rem; }
   .start-note  { font-size: 0.875rem; line-height: 1.5; }
+
+  /* The series cards step down with them, or the parity just made
+     between the two kinds of card would break on the small phones. */
+  .series-title { font-size: 1rem; letter-spacing: 0.015em; }
+  .series-num   { font-size: 1rem; }
+  .series-note  { font-size: 0.875rem; line-height: 1.5; }
   .start-cat   { font-size: 0.75rem; letter-spacing: 0.2em; padding: 0 var(--text-edge); }
 
   /* Small phones: a step down so the three definitions still align on
@@ -2310,7 +2316,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    Raise this if a longer series title ever wraps again; lower it if the
    label starts sitting on the bright part of the picture. */
 @media (max-width: 56rem) {
-  .series-head { width: 112%; }
+  /* 118%, not 112%. The title has just gone up from 4.0vw to 4.6vw to
+     match the Start Here cards, which costs The Evening of Strangers
+     about 32px. At 112% that left 12px in hand — close enough that a
+     different phone would have wrapped it. This restores the margin. */
+  .series-head { width: 118%; }
 }
 
 /* Same face and weight as the title, and the same scale, so the two
@@ -2320,7 +2330,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-num {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1rem, 4.0vw, 1.3125rem);
+  /* The same figure .start-num wears. A series card and a Start Here
+     card are the same object to a reader — a book, its number, what it
+     is about — so they are set alike. */
+  font-size: clamp(1rem, 4.6vw, 1.625rem);
   font-variant-numeric: lining-nums;
   font-feature-settings: "lnum" 1;
   color: var(--ember);
@@ -2349,7 +2362,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      label after it now, and the longest of the two names — The Evening
      of Strangers — needs the difference to hold them all together on a
      phone. */
-  font-size: clamp(1rem, 4.0vw, 1.3125rem);
+  /* Matched to .start-title, and to .series-num beside it. */
+  font-size: clamp(1rem, 4.6vw, 1.625rem);
   line-height: 1.15;
   letter-spacing: 0.01em;
   color: var(--ember);
@@ -2405,14 +2419,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-note {
   display: block;
   font-family: var(--serif);
-  font-size: 0.8125rem;
-  line-height: 1.5;
+  /* .start-note's figures exactly: 1rem at 1.48. The series synopses
+     were set three steps smaller than the Start Here ones for no reason
+     the reader can see, and on the same screen the two sat side by side
+     looking like different kinds of book. */
+  font-size: 1rem;
+  line-height: 1.48;
   color: var(--parchment);
   opacity: 0.88;
 }
 
+/* On a wide screen the base size is already 1rem — this now only opens
+   the leading a little, which a longer line wants. Kept as its own rule
+   so it is obvious that the size is no longer being changed here. */
 @media (min-width: 46rem) {
-  .series-note { font-size: 1rem; line-height: 1.6; }
+  .series-note { line-height: 1.6; }
 }
 
 .series-foot {
@@ -4043,7 +4064,7 @@ body.gallery-on { overflow: hidden; }
   /* ---- Recommended series ---- */
   .sh-text      { font-size: calc(clamp(0.75rem, 2.9vw, 0.9375rem) * var(--read-up)); }
   .series-blurb { font-size: calc(clamp(0.9375rem, 2.6vw, 1.0625rem) * var(--read-up)); }
-  .series-note  { font-size: calc(0.8125rem * var(--read-up)); }
+  .series-note  { font-size: calc(1rem * var(--read-up)); }
   .series-fact  { font-size: calc(0.625rem * var(--read-up)); }
 
   /* ---- The shelf ---- */
@@ -4067,6 +4088,7 @@ body.gallery-on { overflow: hidden; }
     .start-heading { font-size: calc(0.5625rem * var(--read-up)); }
     .start-cat     { font-size: calc(0.75rem * var(--read-up)); }
     .start-note    { font-size: calc(0.875rem * var(--read-up)); }
+    .series-note   { font-size: calc(0.875rem * var(--read-up)); }
     .guide-def     { font-size: calc(0.75rem * var(--read-up)); }
   }
 }
