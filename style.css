@@ -1347,7 +1347,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      line has left the Door / Room / Key guide behind and belongs to
      the books directly under it. Enough to separate, not so much that
      the panel needs a scroll to get past it. */
-  margin: 2.1rem 0 0.4rem;
+  /* Nothing at the foot any more. The space between this line and
+     "Start here." is set on .sh--lead below, so there is one number to
+     change rather than two that add together. */
+  margin: 2.1rem 0 0;
   text-align: center;
   /* The masthead's face — Jost, spaced caps — rather than the serif, so
      it reads as a line of signage above the group instead of a fourth
@@ -1443,6 +1446,39 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    tells a visitor what to do. */
 .start-heading-line { display: block; }
 
+/* ---- Start here ----------------------------------------------------
+   The line now sits inside the same flex device the Recommended Series
+   heading uses, so everything about the rules, the dots and the fans is
+   inherited rather than restated — recolour .sh-rule once and both
+   headings follow, in either theme.
+
+   Only two things are its own: the gap above it, and the fact that it
+   keeps the serif. .sh-text is spaced caps in the sans, which is right
+   for a label naming a section but wrong for the line that is the whole
+   invitation. */
+.series-heading.sh--lead {
+  /* The air you asked for. "One of these will bother you" used to sit
+     0.3rem above this — close enough that the two read as one stacked
+     block rather than as a whisper and then the thing it is pointing
+     at. The rules either side need room to be seen as well. */
+  margin: 1.5rem 0 0.35rem;
+}
+
+.sh-text.sh-text--lead {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 6vw, 2.125rem);
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+  /* The p it used to live in carried this for both its lines; on its
+     own now, it carries its own. */
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+/* The old rule, kept because the class may still be sitting in a
+   cached copy of index.html on someone's phone. It costs nothing and
+   means a stale page does not render the line at body size. */
 .start-heading-lead {
   display: block;
   margin-top: 0.3rem;
@@ -4140,7 +4176,8 @@ body.gallery-on { overflow: hidden; }
   .guide-def   { font-size: calc(clamp(0.8125rem, 1.3vw, 1.0625rem) * var(--read-up)); }
 
   /* ---- Start Here ---- */
-  .start-heading { font-size: calc(clamp(0.625rem, 2.6vw, 0.75rem) * var(--read-up)); }
+  .start-heading  { font-size: calc(clamp(0.625rem, 2.6vw, 0.75rem) * var(--read-up)); }
+  .sh-text.sh-text--lead { font-size: calc(clamp(1.5rem, 6vw, 2.125rem) * var(--read-up)); }
   .start-cat     { font-size: calc(0.875rem * var(--read-up)); }
   .start-note    { font-size: calc(1rem * var(--read-up)); }
   .start-time    { font-size: calc(0.5625rem * var(--read-up)); }
@@ -4405,6 +4442,7 @@ html[data-theme="light"] .series-span,
 html[data-theme="light"] .series-fact,
 html[data-theme="light"] .series-name,
 html[data-theme="light"] .sh-text,
+html[data-theme="light"] .sh-text--lead,
 html[data-theme="light"] .series-heading { text-shadow: none; }
 
 /* The device is drawn in the dark theme's gold at low opacity, which on
