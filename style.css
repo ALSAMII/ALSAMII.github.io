@@ -1948,13 +1948,101 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    narrow to hold a title. Stacked, each card gets the full width and
    the cover can be a picture rather than a thumbnail. */
 
+/* The heading is a small deco device: a fan of rays above and below the
+   words, with a rule running out to either side and a dot at each end.
+   The rays are SVG because they are rays — a set of lines at true angles
+   from a point, which gradients cannot do — and the rules are drawn in
+   CSS so they can take whatever width is left over. */
 .series-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.7rem, 3vw, 1.6rem);
   margin: 2.6rem 0 0.2rem;
-  padding: 0 1.35rem;
-  font-size: 0.875rem;
-  letter-spacing: 0.26em;
+  padding: 0 1.1rem;
   color: var(--ember);
   text-align: center;
+}
+
+.sh-core {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.sh-text {
+  display: block;
+  font-size: clamp(0.75rem, 2.9vw, 0.9375rem);
+  letter-spacing: clamp(0.16em, 0.8vw, 0.28em);
+  white-space: nowrap;
+}
+
+.sh-fan {
+  display: block;
+  width: clamp(4.5rem, 22vw, 7.5rem);
+  height: auto;
+  /* The rays reach full strength at the chevron and fade as they go
+     out, so the device dissolves into the page instead of ending. */
+  opacity: 0.85;
+}
+
+.sh-fan--flip { transform: scaleY(-1); }
+
+.sh-rays {
+  stroke: var(--ember);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  opacity: 0.5;
+}
+
+.sh-chev {
+  stroke: var(--ember);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sh-chev--in { stroke-width: 1.1; opacity: 0.6; }
+
+/* The rules either side, each ending in a dot. They take whatever width
+   is left, so the device fits any screen without being measured. */
+.sh-rule {
+  position: relative;
+  flex: 1 1 auto;
+  max-width: clamp(2.5rem, 18vw, 9rem);
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent, rgba(216, 166, 95, 0.45) 22%, rgba(216, 166, 95, 0.45));
+}
+
+.sh-rule:last-child {
+  background: linear-gradient(to left,
+    transparent, rgba(216, 166, 95, 0.45) 22%, rgba(216, 166, 95, 0.45));
+}
+
+.sh-rule::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  transform: translate(-1px, -50%);
+  border-radius: 999px;
+  background: var(--ember);
+  opacity: 0.75;
+}
+
+.sh-rule:last-child::after { left: auto; right: 0; transform: translate(1px, -50%); }
+
+/* Sideways the screen is short, and a tall device above the section
+   costs more than it gives: the fans halve and the rays step back. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .series-heading { margin-top: 1.6rem; }
+  .sh-fan { width: clamp(3.5rem, 12vw, 5.5rem); opacity: 0.7; }
+  .sh-rule { max-width: clamp(3rem, 22vw, 11rem); }
 }
 
 /* The series named once, above its books, with a rule running out to
@@ -3851,7 +3939,26 @@ html[data-theme="light"] .series-title,
 html[data-theme="light"] .series-span,
 html[data-theme="light"] .series-fact,
 html[data-theme="light"] .series-name,
+html[data-theme="light"] .sh-text,
 html[data-theme="light"] .series-heading { text-shadow: none; }
+
+/* The device is drawn in the dark theme's gold at low opacity, which on
+   paper is barely there. Deepened and made a little more solid. */
+html[data-theme="light"] .sh-rays { stroke: #7a5a17; opacity: 0.42; }
+html[data-theme="light"] .sh-chev { stroke: #7a5a17; }
+html[data-theme="light"] .sh-chev--in { opacity: 0.5; }
+
+html[data-theme="light"] .sh-rule {
+  background: linear-gradient(to right,
+    transparent, rgba(122, 90, 23, 0.4) 22%, rgba(122, 90, 23, 0.4));
+}
+
+html[data-theme="light"] .sh-rule:last-child {
+  background: linear-gradient(to left,
+    transparent, rgba(122, 90, 23, 0.4) 22%, rgba(122, 90, 23, 0.4));
+}
+
+html[data-theme="light"] .sh-rule::after { background: #7a5a17; }
 
 /* The chevron's ring is drawn in the dark theme's low-contrast gold,
    which vanishes on paper. */
