@@ -32,6 +32,15 @@
      it here stops the flat-black flash on a cold load. -->
 <link rel="preload" as="image" href="assets/bg/bg-path.webp" type="image/webp" fetchpriority="high">
 
+<!-- The first Start Here painting. Its address is built by script.js,
+     which the browser cannot see until stories.js and script.js have
+     both been fetched and run — so the picture at the very top of a
+     phone screen was the last thing asked for. Naming it here lets the
+     preload scanner start it while the HTML is still arriving.
+     If the .webp is not there this 404s harmlessly and the script
+     falls back to the .jpg, as it does for every other picture. -->
+<link rel="preload" as="image" href="assets/start-07.webp?v=270" type="image/webp" fetchpriority="high">
+
 <!-- Which scene this visit gets. Runs here, in the head, so the
      choice is made before anything paints — picking it later would
      show one room and then swap to another. To add a scene: drop the
@@ -490,7 +499,7 @@
 
           <button class="series-card" type="button" data-book="61" data-books="61,62">
             <span class="series-cover">
-              <img src="assets/series-61.png" alt="" aria-hidden="true">
+              <img data-art="assets/series-61.png" alt="" aria-hidden="true">
             </span>
             <span class="series-body">
               <span class="series-title">The Road to Shaam</span>
@@ -511,7 +520,7 @@
 
           <button class="series-card" type="button" data-book="62" data-books="61,62">
             <span class="series-cover">
-              <img src="assets/series-62.png" alt="" aria-hidden="true">
+              <img data-art="assets/series-62.png" alt="" aria-hidden="true">
             </span>
             <span class="series-body">
               <span class="series-title">The Evening of Strangers</span>

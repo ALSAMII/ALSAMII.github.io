@@ -92,6 +92,43 @@
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
 
+  /* ---- Artwork: WebP first, the original as a safety net --------------
+     Every painting on the site is a photograph-like image, and WebP
+     carries those at roughly half the bytes of a JPEG and a twentieth
+     of a PNG with no visible difference. Rather than rename anything
+     in the markup, each picture asks for the .webp beside it and drops
+     back to the file actually named if that is not there yet.
+
+     This means the site behaves identically before and after the
+     conversion script has been run — the only cost while the .webp
+     files are missing is one failed request per picture, which the
+     browser then remembers for the rest of the visit.
+
+     order:  <name>.webp  ->  <name>.jpg|.png  ->  the book's cover
+                                                ->  nothing at all */
+  function webpTwin(url) {
+    return url ? url.replace(/\.(jpe?g|png)$/i, ".webp") : url;
+  }
+
+  function loadArt(img, original, lastResort) {
+    if (!img || !original) return;
+
+    var chain = [];
+    var webp = webpTwin(original);
+    if (webp !== original) chain.push(webp);
+    chain.push(original);
+    if (lastResort && lastResort !== original) chain.push(lastResort);
+
+    var at = 0;
+    img.decoding = "async";
+    img.addEventListener("error", function () {
+      at += 1;
+      if (at < chain.length) img.src = stamped(chain[at]);
+      else img.remove();
+    });
+    img.src = stamped(chain[0]);
+  }
+
   /* The folder index.html is served from, with a trailing slash. At
      the domain root this is just "/", but it keeps share links right
      if the site is ever previewed from a subfolder. */
@@ -1392,6 +1429,10 @@
      Both are filled in here rather than written into index.html, so a
      changed word count can never leave a stale figure on the page.
      Clicking a card pins that book and scrolls the list to it. */
+  /* Read once, outside the loop: the topmost picture on the panel, the
+     only one that should not be lazy. */
+  var firstScene = document.querySelector(".start-row .start-scene");
+
   document.querySelectorAll("[data-book]").forEach(function (btn) {
     var s = byNum[Number(btn.dataset.book)];
     if (!s) return;
@@ -1408,23 +1449,42 @@
     var img = btn.querySelector(".start-scene");
     if (img) {
       var n = String(s.num).padStart(2, "0");
-      var fellBack = false;
-      img.loading = "lazy";
-      img.addEventListener("error", function () {
-        if (!fellBack) {
-          fellBack = true;
-          img.src = stamped(s.cover || coverFor(s.num));
-        } else {
-          img.remove();
-        }
-      });
+
+      /* The first card is the top of the page on a phone — it is what a
+         new reader is looking at while the rest is still arriving. It
+         was being lazy-loaded along with the five below it, which told
+         the browser to wait for something already on screen. It is now
+         asked for first and hard; everything under it still waits until
+         it is nearly in view. */
+      if (img === firstScene) {
+        img.loading = "eager";
+        img.setAttribute("fetchpriority", "high");
+      } else {
+        img.loading = "lazy";
+        img.setAttribute("fetchpriority", "low");
+      }
+
       /* The scene is normally named for the book it belongs to, but a
          row may name its own file with data-scene — useful when a
          picture outlives the book it was first made for. */
-      img.src = stamped(btn.dataset.scene || ("assets/start-" + n + ".jpg"));
+      loadArt(img,
+              btn.dataset.scene || ("assets/start-" + n + ".jpg"),
+              s.cover || coverFor(s.num));
     }
 
     btn.addEventListener("click", function () { revealBook(s, true); });
+  });
+
+  /* The two series paintings. Their filenames stay in index.html, on a
+     data-art attribute rather than src, so the picture is requested
+     once — through loadArt, which gets the WebP if it exists — instead
+     of the browser starting the PNG and the script then replacing it.
+     They sit well below the fold, so nothing is lost by letting the
+     script name them. */
+  document.querySelectorAll(".series-cover img[data-art]").forEach(function (im) {
+    im.loading = "lazy";
+    im.setAttribute("fetchpriority", "low");
+    loadArt(im, im.dataset.art);
   });
 
   /* The recommended series cards. A series card reads data-books — the
