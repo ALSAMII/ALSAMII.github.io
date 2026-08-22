@@ -2244,9 +2244,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      under the title are capped below so they keep the measure they
      had; only this one line is allowed the extra room.
 
-     If Book One still drops to a second line on a narrow phone, raise
-     this figure. If it starts sitting on the bright part of the
-     painting, lower it — and lower .series-title's 4.2vw with it. */
+     The title line itself is allowed to reach past this — see
+     .series-head below, which is what actually holds Book One and
+     Book Two up beside their titles. Change that figure first; this
+     one governs the paragraph. */
   max-width: 70%;
   margin: 0;
   padding: 0;
@@ -2266,6 +2267,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 .series-head > * { display: inline; }
 
+/* Wider than the block it sits in. .series-body is held to 70% so the
+   paragraph stays off the lit half of the painting, and on that measure
+   The Road to Shaam had 53px to spare while The Evening of Strangers —
+   seven letters longer — was 4px short, so Book One sat on the title
+   line and Book Two dropped below it. One card doing one thing and its
+   twin doing another is worse than either.
+
+   Only this one line reaches further; the paragraph and the little rule
+   below it keep the measure they had. A percentage over 100 is what
+   lets a child outgrow its parent's max-width.
+
+   Phones only. On a wide screen the panel is a centred 37rem column and
+   both lines already fit inside it with room over.
+
+   Raise this if a longer series title ever wraps again; lower it if the
+   label starts sitting on the bright part of the picture. */
+@media (max-width: 56rem) {
+  .series-head { width: 112%; }
+}
+
 /* Same face and weight as the title, and the same scale, so the two
    share a baseline however the title shrinks. Lining figures because
    Cormorant's default old-style ones hang below the baseline, which
@@ -2273,7 +2294,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-num {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(1rem, 4.2vw, 1.375rem);
+  font-size: clamp(1rem, 4.0vw, 1.3125rem);
   font-variant-numeric: lining-nums;
   font-feature-settings: "lnum" 1;
   color: var(--ember);
@@ -2302,7 +2323,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      label after it now, and the longest of the two names — The Evening
      of Strangers — needs the difference to hold them all together on a
      phone. */
-  font-size: clamp(1rem, 4.2vw, 1.375rem);
+  font-size: clamp(1rem, 4.0vw, 1.3125rem);
   line-height: 1.15;
   letter-spacing: 0.01em;
   color: var(--ember);
@@ -2316,7 +2337,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    "BOOK" and "ONE". */
 .series-span {
   display: inline;
-  margin-left: 0.6rem;
+  margin-left: 0.45rem;
   font-size: 0.5625rem;
   letter-spacing: 0.14em;
   white-space: nowrap;
