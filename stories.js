@@ -784,6 +784,18 @@ const STORIES = [
     key: "The Small Things \u2014 a wedding left early, a light fixture replaced, a playlist he calls taste",
     notes: [3, 2, 3],
     synopsis: "Ali arrives in Los Angeles with one suitcase, nine hundred dollars and two hands that do not fully close. Nobody meets him at the airport. Over eleven years he builds everything himself, and finds \u2014 genuinely, unmistakably \u2014 that he is happy. The strength that took is the most attractive thing about him. It is also the lock. There are nine mourning halls in the city, he knows where all of them are, and he has never once been in one, and never once decided not to go."
+  },
+
+  {
+    num: 63,
+    title: "The House Is Patient",
+    words: "31,300 words",
+    hook: "A patch of skin the size of a playing card has stopped reporting to him",
+    door: "Withholding",
+    room: "The Cold Room \u2014 fifteen degrees, one frame at a time, eight hours at a stretch",
+    key: "Eleven Cans \u2014 film shot in a walled colony in 1962, delivered by two lawyers when he was nineteen",
+    notes: [3, 3, 3],
+    synopsis: "Rotterdam, 1996. Dariush restores film for a living \u2014 sitting still, looking at one frame for a long time. In March he burns his forearm on a lamp housing and does not notice for four hours. He does not go to a doctor. He goes upstairs to eleven cans of film that came to him through two lawyers when he was nineteen, and runs them frame by frame: a clinic cabinet that was never empty, four minutes along the back row of a classroom, and eleven minutes of a woman speaking into the lens in a dialect nobody in the room could follow, subtitled in nine languages as a prayer. They did not send him out to be saved. They sent him out to be found, and they were prepared to wait thirty-four years for it."
   }
 
 
