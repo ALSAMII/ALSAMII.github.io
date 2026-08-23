@@ -115,7 +115,77 @@ ${urls}
 `
 );
 
+/* ------------------------------------------------------------
+   THE COUNT IN index.html's METADATA
+
+   The title and the three descriptions open with the number of
+   books, spelled out. That number is the sort of thing that goes
+   stale silently: nobody re-reads their own <title>, and the one
+   place it is wrong is the first thing a stranger sees.
+
+   So it is written from STORIES.length here instead, on the same
+   run that rebuilds the feed. Only the number word is touched —
+   the sentences around it stay exactly as they are in the file,
+   so you can reword them freely.
+   ------------------------------------------------------------ */
+
+const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven",
+              "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+              "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+              "nineteen"];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty",
+              "seventy", "eighty", "ninety"];
+
+function spell(n) {
+  if (n < 20) return ONES[n];
+  if (n < 100) {
+    const t = TENS[Math.floor(n / 10)];
+    return n % 10 ? `${t}-${ONES[n % 10]}` : t;
+  }
+  const h = `${ONES[Math.floor(n / 100)]} hundred`;
+  return n % 100 ? `${h} and ${spell(n % 100)}` : h;
+}
+
+const cap = (w) => w.charAt(0).toUpperCase() + w.slice(1);
+
+/* Whatever sits between the fixed text on each side of the number —
+   matched lazily, so it takes the number and stops at the phrase.
+
+   It has to allow spaces, not just hyphens: past ninety-nine the words
+   run to "One hundred and twenty-one". An earlier version here matched
+   a single hyphenated word, which was fine up to 99 and then silently
+   stopped finding its own output the moment the catalogue passed 100 —
+   the count would have frozen at "One hundred" and never moved again.
+
+   Matching on the surrounding phrase rather than on the previous number
+   also means this keeps working no matter what the count was last run,
+   including when it goes down. */
+const PATTERNS = [
+  [/(Chew Z — ).+?( Short Noir Novellas)/g,
+   () => cap(spell(STORIES.length))],
+  [/(content=").+?( short noir novellas)/g,
+   () => cap(spell(STORIES.length))],
+];
+
+let html = fs.readFileSync("index.html", "utf8");
+let hits = 0;
+for (const [re, word] of PATTERNS) {
+  html = html.replace(re, (m, before, after) => { hits++; return before + word() + after; });
+}
+
+if (hits === 0) {
+  console.warn(
+    "index.html: no count found to update. If you reworded the title or the\n" +
+    "            descriptions, the phrases this looks for are\n" +
+    '            "Chew Z — <number> Short Noir Novellas" and\n' +
+    '            "<number> short noir novellas". Adjust PATTERNS above.'
+  );
+} else {
+  fs.writeFileSync("index.html", html);
+}
+
 console.log(
   `feed.xml: ${STORIES.length} items\n` +
-  `sitemap.xml: ${STORIES.length * 2 + TRILOGIES.length + 1} urls`
+  `sitemap.xml: ${STORIES.length * 2 + TRILOGIES.length + 1} urls\n` +
+  `index.html: count set to "${cap(spell(STORIES.length))}" in ${hits} place${hits === 1 ? "" : "s"}`
 );
