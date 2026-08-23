@@ -2468,9 +2468,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* 91% of a body that is now 70% of the card — which is the 64% these
    two were set to before the title line needed more room. Written as a
    proportion so they follow the body if that figure is ever changed. */
-.series-orn,
 .series-note { max-width: 91%; }
 
+/* UNUSED at present. The hairline-and-diamond that sat between a series
+   card's title line and its synopsis has been taken out of index.html.
+   These rules and .series-orn::after are left standing so that putting
+   it back is a span of markup and nothing else.
+
+   Note that .series-note now carries the gap the divider used to hold
+   open — if this comes back, take that margin off again. */
 .series-orn {
   display: block;
   position: relative;
@@ -2494,6 +2500,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .series-note {
   display: block;
+  /* The divider above used to hold 0.6rem below itself, and the title
+     line 0.15rem above that. Taking it out closed the synopsis right up
+     under the title, so the gap moves here — a little less than the
+     divider occupied in total, because a plain space between two blocks
+     needs less than a space with a mark sitting in the middle of it. */
+  margin-top: 0.5rem;
   font-family: var(--serif);
   /* .start-note's figures exactly: 1rem at 1.48. The series synopses
      were set three steps smaller than the Start Here ones for no reason
