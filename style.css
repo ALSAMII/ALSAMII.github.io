@@ -1972,7 +1972,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   text-transform: inherit;
   letter-spacing: 0.22em;
   color: var(--ember);
-  font-size: 0.6875rem;
+  /* Matched to .panel .note, the paragraph directly above the guide.
+     These three words are the panel's own vocabulary — the terms every
+     book is described with — and at 0.6875rem they were set smaller
+     than the definitions underneath them, which read as a caption
+     labelling a caption. At the paragraph's size they lead their
+     columns instead. */
+  font-size: clamp(1rem, 1.7vw, 1.125rem);
   cursor: help;
 }
 
@@ -4234,7 +4240,7 @@ body.gallery-on { overflow: hidden; }
   /* ---- The About panel ---- */
   .panel .lede { font-size: calc(clamp(1.125rem, 1.9vw, 1.3125rem) * var(--read-up)); }
   .panel .note { font-size: calc(clamp(1rem, 1.7vw, 1.125rem) * var(--read-up)); }
-  .guide-term  { font-size: calc(0.6875rem * var(--read-up)); }
+  .guide-term  { font-size: calc(clamp(1rem, 1.7vw, 1.125rem) * var(--read-up)); }
   .guide-def   { font-size: calc(clamp(0.8125rem, 1.3vw, 1.0625rem) * var(--read-up)); }
 
   /* ---- Start Here ---- */
