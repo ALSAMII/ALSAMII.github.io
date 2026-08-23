@@ -1303,6 +1303,24 @@
     }
   })();
 
+  /* ---- The count under the wordmark ---------------------------
+     The tagline said "Short Fiction", two inches from a stamp that
+     reads PUBLICATION / FICTION and above a page titled Short
+     Fiction — the same word three times on one screen, and the one
+     slot on the page that a stranger reads before anything else.
+     It carries the size of the catalogue instead.
+
+     A numeral here, not the spelled-out form the title and the
+     descriptions use: this is a label, like the shelf line above,
+     and a label takes a figure. From STORIES.length, so it cannot
+     go stale — the whole reason the shelf line was rewritten. */
+  (function countBrand() {
+    var el = document.getElementById("brandCount");
+    if (el && typeof STORIES !== "undefined" && STORIES.length) {
+      el.textContent = STORIES.length + " Short Novellas";
+    }
+  })();
+
   /* ---- Order --------------------------------------------------
      Three ways through the same shelf. Series order is the blank
      option, so clearing the menu — or the reset button — always
