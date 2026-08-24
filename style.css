@@ -4370,6 +4370,202 @@ body.gallery-on { overflow: hidden; }
 }
 
 
+/* ============================================================
+   DESKTOP — THE LEFT RAIL
+   ────────────────────────────────────────────────────────────
+   Wide windows only (64rem / 1024px and up). Everything the
+   masthead used to lay across the top of the page stands up into
+   a narrow column down the left instead: the stamp, then the
+   wordmark and its two settings, then the three places to go.
+
+   Nothing here exists below 64rem, so the phone, the tablet and
+   the sideways phone keep the horizontal header exactly as it
+   was — this block can be cut out whole and the site returns to
+   the old layout with no other edit.
+
+   The header's gold hairline stands up with it: it was the rule
+   under the masthead, and it is now the rule down the rail's
+   right-hand side, running the full height of the page.
+   ============================================================ */
+
+/* The three glyphs beside the nav links are off by default and
+   only ever come on inside the rail. */
+.nav-ico { display: none; }
+
+@media (min-width: 64rem) {
+
+  /* --- The page splits into rail + room ------------------- */
+  .frame {
+    /* One place to set the rail. 11vw lands on ~130px at 1180px
+       wide, which is what the layout was drawn to. */
+    --rail-w:   clamp(8rem, 11vw, 11rem);
+    --rail-gap: clamp(1.75rem, 3.2vw, 3rem);
+
+    grid-template-columns: var(--rail-w) 1fr;
+    /* Was three rows (header, room, floor). The header is a column
+       now, so the room and the floor are all that stack. */
+    grid-template-rows: 1fr auto;
+    column-gap: var(--rail-gap);
+  }
+
+  .masthead { grid-column: 1; grid-row: 1 / -1; }
+  .hall     { grid-column: 2; grid-row: 1; }
+  .floor    { grid-column: 2; grid-row: 2; }
+
+  /* --- The rail itself ------------------------------------ */
+  .masthead {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(1rem, 1.9vh, 1.9rem);
+    padding: clamp(2.25rem, 4vh, 3rem) 0 1.5rem;
+    /* The rule turns ninety degrees. No padding or margin on the
+       right: the border sits on the rail column's own edge, and the
+       grid's column-gap is what holds the room off it — otherwise
+       the line drifts across the gap and lands hard against the
+       first cover. */
+    border-bottom: 0;
+    border-right: 1px solid var(--ember-soft);
+  }
+
+  /* DOM order is wordmark, stamp, nav — the order the horizontal
+     header wanted. The rail wants the stamp at the top, so the
+     three are re-ordered here rather than moved in the HTML,
+     which would have changed every other width too. */
+  .masthead .roya-link { order: 1; }
+  .masthead .brand-col { order: 2; }
+  .masthead nav        { order: 3; }
+
+  /* --- The stamp ------------------------------------------ */
+  .masthead .roya-link { justify-self: stretch; text-align: center; }
+
+  .masthead .roya {
+    /* Sized by width, not height: the rail is the narrow dimension,
+       and a height clamp would have let the mark run out past the
+       rule at some window sizes. */
+    height: auto;
+    width: min(100%, 7.5rem);
+    max-width: 100%;
+    padding: 0.15rem 0;
+    margin: 0 auto;
+  }
+
+  /* --- The two hairline dividers --------------------------
+     A rule with a small gold point at its centre, matching the
+     ornaments used on the stage. One under the stamp, one above
+     the nav, so the rail reads as three stacked pieces rather
+     than one long list. */
+  .masthead .brand-col::before,
+  .masthead nav::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background:
+      radial-gradient(circle at 50% 50%,
+        var(--ember-dim) 0 1.6px, transparent 1.7px) center / 100% 100% no-repeat,
+      linear-gradient(90deg, transparent,
+        var(--ember-soft) 16%, var(--ember-soft) 84%, transparent)
+        center / 100% 1px no-repeat;
+  }
+
+  /* --- Wordmark and settings ------------------------------ */
+  .masthead .brand-col {
+    justify-self: stretch;
+    align-items: stretch;
+    gap: clamp(0.9rem, 1.7vh, 1.5rem);
+  }
+
+  .masthead .brand-name { text-align: center; }
+
+  /* Down from the 54px it carried across the top of the page:
+     in a 130px column the wordmark is a label, not a banner. */
+  .masthead .brand-name .name {
+    font-size: clamp(0.9rem, 1.15vw, 1.15rem);
+    letter-spacing: 0.24em;
+  }
+
+  .masthead .brand-name .tag {
+    margin-top: 0.5rem;
+    font-size: clamp(0.46rem, 0.62vw, 0.58rem);
+    letter-spacing: 0.13em;
+  }
+
+  .masthead .nav-controls { gap: clamp(1rem, 2vw, 1.6rem); }
+
+  .masthead .brand-col .sound svg,
+  .masthead .brand-col .theme svg { width: 1.15rem; height: 1.15rem; }
+
+  .masthead .brand-col .icon-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.11em;
+  }
+
+  /* --- The three places to go ----------------------------- */
+  .masthead nav {
+    justify-self: stretch;
+    align-items: stretch;
+    /* It was set in from the stamp's edge across the top. In the
+       rail the links start on the rail's own left edge, level with
+       everything above them. */
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.9rem, 1.7vh, 1.4rem);
+  }
+
+  .masthead .nav-links {
+    align-items: stretch;
+    gap: clamp(0.8rem, 1.5vh, 1.25rem);
+  }
+
+  .masthead nav a,
+  .masthead nav .linklike {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0;
+    font-size: clamp(0.5rem, 0.68vw, 0.625rem);
+    letter-spacing: 0.11em;
+    /* The lift on hover pushed a left-ranged link sideways off its
+       own column. It grows from the left edge instead. */
+    transform-origin: left center;
+  }
+
+  .masthead nav .nav-ico {
+    display: block;
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.85;
+  }
+
+  /* The underline belongs to the word, not to the word plus its
+     glyph — a rule running under the icon as well reads as a box
+     rather than as a chosen link. */
+  .masthead nav a { border-bottom: 0; }
+  .masthead nav a .nav-txt { border-bottom: 1px solid transparent; }
+
+  .masthead nav a[aria-current="true"] { border-bottom-color: transparent; }
+  .masthead nav a[aria-current="true"] .nav-txt {
+    border-bottom-color: var(--ember-soft);
+  }
+
+  body:has(#panel-about.is-active):not(:has(#feature.show))
+    .masthead nav a[data-stage="about"] { border-bottom-color: transparent; }
+  body:has(#panel-about.is-active):not(:has(#feature.show))
+    .masthead nav a[data-stage="about"] .nav-txt {
+    border-bottom-color: var(--ember-soft);
+  }
+
+  /* --- The room --------------------------------------------
+     The header used to hold the top of the page open; with it
+     gone the shelf and the stage would start hard against the
+     window's edge. */
+  .hall { padding-top: clamp(2.25rem, 4vh, 3rem); }
+}
+
 /* ████████████████████████████████████████████████████████████
    THE LIGHT THEME
    ────────────────────────────────────────────────────────────
@@ -4793,3 +4989,40 @@ html[data-theme="light"] .t-banner img {
 
 /* The reader needs no light-theme rules of its own: it is built from
    --night, --parchment and --faded, all of which already flip. */
+
+
+/* The rail on paper ------------------------------------------
+   The vertical rule that divides the rail from the room is the
+   masthead's old hairline stood up, and it takes the same
+   treatment the horizontal one does here: the dark theme's soft
+   gold is a candle edge, and on a pale sheet it needs to be the
+   drawn line instead, or the two halves of the page float apart
+   with nothing between them.
+
+   The stamp keeps its full strength — the warm glow behind it is
+   drawn under the artwork, so on paper it reads as the printed
+   plate rather than as a light source. */
+@media (min-width: 64rem) {
+  html[data-theme="light"] .masthead {
+    border-right-color: rgba(122, 90, 23, 0.35);
+  }
+
+  /* The dividers are drawn from --ember-dim and --ember-soft, both
+     of which already flip with the theme; they are restated here
+     only to take the point down a shade, because a hard dot that
+     read as an ornament on black reads as a full stop on white. */
+  html[data-theme="light"] .masthead .brand-col::before,
+  html[data-theme="light"] .masthead nav::before {
+    background:
+      radial-gradient(circle at 50% 50%,
+        rgba(107, 79, 20, 0.75) 0 1.6px, transparent 1.7px) center / 100% 100% no-repeat,
+      linear-gradient(90deg, transparent,
+        rgba(122, 90, 23, 0.32) 16%, rgba(122, 90, 23, 0.32) 84%, transparent)
+        center / 100% 1px no-repeat;
+  }
+
+  /* At 16px the glyphs are small enough that the dark theme's 0.85
+     leaves them thin on a pale ground. They go to full strength and
+     let the gold do the work of holding them back. */
+  html[data-theme="light"] .masthead nav .nav-ico { opacity: 1; }
+}
