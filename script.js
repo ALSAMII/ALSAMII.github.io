@@ -523,6 +523,52 @@
     if (li && li.scrollIntoView) li.scrollIntoView({ block: "center" });
   }
 
+  /* Scrolling to the book once is not enough on a first visit.
+
+     The covers are lazy, and a picture that has not loaded has no
+     height. alignTitles() then re-runs as each one lands and writes
+     fresh padding onto every row. So the whole list grows underneath
+     the reader after the scroll has already happened, and the book
+     slides away from the middle of the screen. The further down the
+     list a book sits the more rows there are above it to grow, which
+     is why the newest book drifts furthest — and why a second visit,
+     with the covers already in cache, lands perfectly and hides the
+     fault.
+
+     So the book is held in the middle until the layout stops moving:
+     re-centred whenever it has drifted, for a few seconds, and let go
+     the instant the reader scrolls, taps or types. Never fights a
+     deliberate scroll, and does nothing at all when nothing shifts. */
+  function keepCentred(el) {
+    if (!el || !el.scrollIntoView) return;
+    var stop = false;
+    var until = Date.now() + 4000;
+    var last = null;
+    function release() { stop = true; }
+    ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (t) {
+      window.addEventListener(t, release, { once: true, passive: true });
+    });
+    (function tick() {
+      if (stop || Date.now() > until) return;
+      var top = el.getBoundingClientRect().top;
+      /* Whether it drifted, not whether it is exactly centred. The
+         newest book is the last row on the page, so the document often
+         cannot scroll far enough to centre it at all — measuring
+         against the middle would then correct it every tenth of a
+         second, forever, and never once succeed.
+
+         behavior:"auto" on purpose: if the stylesheet ever turns on
+         smooth scrolling, a correction mid-glide would read as a page
+         that cannot sit still. */
+      if (last !== null && Math.abs(top - last) > 2) {
+        el.scrollIntoView({ block: "center", behavior: "auto" });
+        top = el.getBoundingClientRect().top;
+      }
+      last = top;
+      setTimeout(tick, 100);
+    })();
+  }
+
   function openFromHash() {
     var slug = decodeURIComponent(String(location.hash).replace(/^#/, ""));
     if (!slug) return false;
@@ -535,7 +581,10 @@
       /* Touch has no stage: unfold in place, panel untouched. */
       el.classList.add("open");
     }
-    if (el && el.scrollIntoView) el.scrollIntoView({ block: "center" });
+    if (el && el.scrollIntoView) {
+      el.scrollIntoView({ block: "center" });
+      keepCentred(el);
+    }
     return true;
   }
 
