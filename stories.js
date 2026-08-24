@@ -614,7 +614,7 @@ const STORIES = [
     door: "Rite",
     room: "Lifecycle Confidence \u2014 a death date certified, signed and filed",
     key: "The Chamber \u2014 things cooked until they fail, exactly on time",
-    notes: [2, 3, 1],
+    notes: [3, 2, 1],
     synopsis: "Cyrus Aban is a Longevity Advocate II in the Department of Lifecycle Confidence: he cooks consumer electronics in sealed chambers until they fail, works out precisely when they were always going to fail, and signs the certificate by hand while everyone else uses a stamp. Nineteen years of certifying death dates for objects, in a country that has made an institution of knowing exactly how long a thing is meant to last \u2014 and a growing suspicion about what else is being scheduled, and by whom."
   },
 
@@ -626,7 +626,7 @@ const STORIES = [
     door: "Rite",
     room: "A Kind Town \u2014 pleasant, forgiving, and no longer able to recognise what is done to it",
     key: "The Taking \u2014 grievances dictated across a desk and carried out in a body",
-    notes: [3, 3, 1],
+    notes: [3, 2, 1],
     synopsis: "Once a season every resident of Halloran sits across a plain desk and dictates their grievances to the Taker, who writes them down in longhand and carries them out of the building in her body. Ninety years of this, and the town is kind in a way visitors notice and cannot place. What Ruth Amsel learns, always a little too late to act on, is that the grievances are not dissipated but stored \u2014 and that when a Taker reaches capacity, Halloran has a procedure for emptying her."
   },
 
@@ -638,7 +638,7 @@ const STORIES = [
     door: "Dose",
     room: "The Loop \u2014 continuous ecstasy, and no one on the other side of it",
     key: "The Glow \u2014 a self-replicating implant grown from thirty generations of prayer",
-    notes: [3, 3, 1],
+    notes: [3, 2, 1],
     synopsis: "For centuries practitioners sealed the body with mudras \u2014 tongue, hands, gaze \u2014 and learned to hold sensation rather than spend it. Then a laboratory cloned it and sold it on prescription. Under the Glow, arousal is not an event but a residence: a warmth that never clears, softening thought until the body becomes an instrument that plays itself."
   },
 
@@ -650,7 +650,7 @@ const STORIES = [
     door: "Ordeal",
     room: "The Cut \u2014 a flooded quarry where a man stops arguing with himself",
     key: "The Hold \u2014 the urge to breathe, trained until it stops arriving on time",
-    notes: [3, 3, 3],
+    notes: [2, 1, 3],
     synopsis: "A cold black lake, ninety-four metres to the bottom. They call it the Cut, and Sabine Vasseur has not swum in it for nine years. Then a young man starts diving it alone. She teaches him everything \u2014 except the old story about what waits below, patient, and fond of company."
   },
 
@@ -662,7 +662,7 @@ const STORIES = [
     door: "Ordeal",
     room: "Past the Alarm \u2014 the quiet on the far side of panic, and what is standing in it",
     key: "The Ladder \u2014 breath-hold conditioning with rungs that continue past blackout",
-    notes: [3, 3, 2],
+    notes: [2, 1, 2],
     synopsis: "Cass Moura drives a rescue ski at the largest wave in Europe: four hundred and eleven recoveries, sixty-two seconds from impact to hand-on-body, a life built on the belief that his speed is the only decent thing about him. He is wrong about what the speed is for. The tow crews have been training under a retired navy diving medic, and their breath-hold work is a ladder whose rungs go past blackout \u2014 because forty-one subjects have described the same structure, in the same words, in the same absence of fear. Then a swell arrives with no precedent in the recorded history of the beach."
   },
 
@@ -674,7 +674,7 @@ const STORIES = [
     door: "Withholding",
     room: "The Margins \u2014 a companion that is neither comfort nor intruder, and is never wrong",
     key: "The Watch \u2014 six hundred days of twenty-minute sleep, and no witness to any of it",
-    notes: [3, 2, 3],
+    notes: [3, 1, 3],
     synopsis: "Nuno Sequeira has been at sea alone for six hundred days. No race, no sponsor, no tracker, no witness. Then a second hand begins writing in his logbook \u2014 correcting his positions, noting bodily changes he has not felt, annotating his estranged daughter more accurately than he can. He starts consulting the margins in order to remember her."
   },
 
@@ -686,7 +686,7 @@ const STORIES = [
     door: "Ordeal",
     room: "Two Hundred and Forty Metres \u2014 absolute dark under a ceiling of limestone, and no way out but the way in",
     key: "The Thirds \u2014 the arithmetic of coming back, and one patient rule about sharing air",
-    notes: [3, 3, 3],
+    notes: [2, 1, 3],
     synopsis: "A body has lain at two hundred and forty metres for ten years. The dead man\u2019s sister hires the only diver rated to reach him \u2014 she says she wants a burial, but what she wants is the equipment, because which mouthpiece is in whose mouth is a record of a man\u2019s last four minutes. Bijan Rahsepar was on the original dive. He came up alone."
   },
 
@@ -698,7 +698,7 @@ const STORIES = [
     door: "Ordeal",
     room: "The Rules \u2014 no contact, no assistance, and four people forbidden to reach out",
     key: "Twelve Degrees \u2014 thirty-four kilometres of cold, and thirty-one hours to cross it",
-    notes: [3, 3, 3],
+    notes: [2, 1, 3],
     synopsis: "Thirty-four kilometres of twelve-degree water between Ireland and Scotland, and Farangis Roshanfar needs it to finish the seven. Ten years ago her son swam beside her as pace swimmer and drowned in the dark; under the rules of the sport, nobody was permitted to touch him. Past the twentieth hour, in the jellyfish field, something begins swimming on the side away from the boat \u2014 and begins, gently, to correct her."
   },
 
@@ -710,7 +710,7 @@ const STORIES = [
     door: "Withholding",
     room: "The Long Part \u2014 the hours after the second night, where the trail stops being a trail",
     key: "The Chair and the Thermos \u2014 a daughter at every finish, counting",
-    notes: [3, 2, 3],
+    notes: [2, 1, 2],
     synopsis: "Rudabeh Sarrafi crossed a border on foot at thirteen and let a new country call her Ruby. At forty-one she started running. By forty-nine she was one of the few people alive who could stay awake and moving for three days \u2014 and her daughter waited at every finish with a folding chair, watching her come back a little further away each time."
   },
 
@@ -734,7 +734,7 @@ const STORIES = [
     door: "Ordeal",
     room: "Eight Thousand Six Hundred Metres \u2014 where the dead are left where they stop and the living steer by them",
     key: "The Stairwell \u2014 four years of training for an arithmetic she has already done",
-    notes: [3, 3, 3],
+    notes: [2, 1, 2],
     synopsis: "Above eight thousand metres the dead are not brought down. Four years ago Ruth Aldiss\u2019s son sat down on a shelf of rock and did not get up; he is still there, upright, facing downhill, and every climber on the route navigates by him. She is fifty-eight, twenty-nine years in payroll, and she has trained in a stairwell. She is not going up there to bring him home."
   },
 
@@ -746,7 +746,7 @@ const STORIES = [
     door: "Ordeal",
     room: "The Room Under Chicago \u2014 no rounds, no referee, one bell to start and one when a man does not get up",
     key: "The Visit \u2014 four minutes the medical literature has a flat clinical name for",
-    notes: [3, 3, 3],
+    notes: [2, 3, 2],
     synopsis: "After a knockdown in a VFW hall, Sean Vardy has four minutes the medical literature has a flat clinical name for and he calls, privately, a visit. His wife, four years dead, is in the room \u2014 not remembered but present, breathing, saying his name. He starts taking fights to get it back, and the threshold rises the way it always rises."
   },
 
@@ -758,7 +758,7 @@ const STORIES = [
     door: "Rite",
     room: "The Edit \u2014 the last minute of a person\u2019s life, watched as many times as it takes",
     key: "The Card \u2014 a brown envelope, handed over by a man who will not look at her",
-    notes: [3, 2, 3],
+    notes: [2, 1, 2],
     synopsis: "Every flyer in the valley wears a camera. When one of them dies the memory card comes off the body, and for fifteen years Solveig Aandahl has been the one who cuts it into four minutes a family can sit through in a church. She has made nineteen. Every one of them ends in mid-air. Her brother\u2019s card is in a kitchen drawer, and she has never put it in a reader."
   },
 
@@ -770,7 +770,7 @@ const STORIES = [
     door: "Rite",
     room: "The Yard \u2014 a walled space behind a butcher\u2019s shop in south Tehran, every Muharram since he was nine",
     key: "The Chain \u2014 and the beat it keeps, set for him at a speed chosen by people who loved him",
-    notes: [3, 3, 3],
+    notes: [2, 1, 3],
     synopsis: "Ali Shabani is fifteen, the second son of a comfortable family in north Tehran, and every year he takes a bus forty minutes south to beat himself with a chain until he bleeds through his shirt. Nobody makes him go; that is the part he cannot explain. This year he is given the best part there is, and on the seventh night he floats out of his body and sees an alley, a man on the ground, and men from his own neighbourhood standing over him doing nothing. The old men tell him he has been shown Karbala. The alley is three streets from his uncle\u2019s door."
   },
 
@@ -782,7 +782,7 @@ const STORIES = [
     door: "Withholding",
     room: "Eleven Years \u2014 a life built alone, entirely, and the strength that took",
     key: "The Small Things \u2014 a wedding left early, a light fixture replaced, a playlist he calls taste",
-    notes: [3, 2, 3],
+    notes: [2, 1, 3],
     synopsis: "Ali arrives in Los Angeles with one suitcase, nine hundred dollars and two hands that do not fully close. Nobody meets him at the airport. Over eleven years he builds everything himself, and finds \u2014 genuinely, unmistakably \u2014 that he is happy. The strength that took is the most attractive thing about him. It is also the lock. There are nine mourning halls in the city, he knows where all of them are, and he has never once been in one, and never once decided not to go."
   },
 
@@ -794,7 +794,7 @@ const STORIES = [
     door: "Withholding",
     room: "The Cold Room \u2014 fifteen degrees, one frame at a time, eight hours at a stretch",
     key: "Eleven Cans \u2014 film shot in a walled colony in 1962, delivered by two lawyers when he was nineteen",
-    notes: [3, 3, 3],
+    notes: [1, 3, 2],
     synopsis: "Outside Tabriz there is a walled village that appears on no map, built for people whose nerves have stopped reporting and who can no longer be trusted to feel what is happening to them. In 1962 a camera was allowed inside for eleven days. Thirty-four years later a man runs those eleven cans frame by frame and finds what nobody in the room was meant to keep: a clinic cabinet that was never empty, four minutes along the back row of a classroom, and eleven minutes of a woman speaking into the lens in a dialect none of the crew could follow, subtitled in nine languages as a prayer. She is not praying. He is the only person left alive who can hear what she actually said, because she was his mother and she was speaking to him."
   }
 
