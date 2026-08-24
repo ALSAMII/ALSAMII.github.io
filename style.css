@@ -4371,6 +4371,101 @@ body.gallery-on { overflow: hidden; }
 
 
 /* ============================================================
+   DESKTOP — THE STAGE: WHAT SITS WHERE, AND HOW WIDE
+   ────────────────────────────────────────────────────────────
+   THE BUG THIS FIXES
+
+   Every panel and the hover feature share one grid cell in the
+   stage — .panel and .feature are all grid-area 1 / 1. A grid row
+   is as tall as its tallest occupant, and About is very tall: it
+   carries the lede, the guide and the whole Pick a Door section,
+   around 3300px of it, which the stage scrolls.
+
+   So the row was ~3300px tall, and everything else in that cell
+   was centre-aligned inside it. The Notes panel is about 350px
+   tall: centred in a 3300px row it was drawn 1470px below the top
+   of the stage — far past the bottom of the window. The hover
+   feature landed in the same place. Nothing was broken or hidden;
+   it was all being painted a screenful and a half down.
+
+   That is all three symptoms at once:
+     · Author's Notes shows nothing — it is down there.
+     · Hovering a book blanks the stage — the cover is down there.
+     · Scrolling up brings the text back — scrolling the stage is
+       what reaches it.
+
+   The fix is to stop centring in a row whose height belongs to a
+   different panel. Everything in the cell ranges to the top, so a
+   short panel starts where the reader is already looking. About is
+   taller than the stage and starts at the top either way, so it
+   does not move.
+
+   script.js does the other half: it returns the stage to the top
+   whenever the panel changes, so switching out of a scrolled About
+   does not leave a short panel stranded above the viewport.
+   ============================================================ */
+
+@media (min-width: 56.01rem) {
+  .stage > .panel,
+  .stage > .feature {
+    align-self: start;
+  }
+
+  /* Ranged to the top, the first line sat hard against the top of
+     the stage. This is the air the centring used to provide. */
+  .stage > .panel { padding-top: clamp(0.75rem, 2.5vh, 2.25rem); }
+  .stage > .feature { margin-top: clamp(0.75rem, 4vh, 3.5rem); }
+}
+
+
+/* ============================================================
+   DESKTOP — THE STAGE TAKES THE WIDTH IT IS GIVEN
+   ────────────────────────────────────────────────────────────
+   On a wide window the stage column was much wider than anything
+   in it: the panels were held to a 37rem measure and centred, so
+   a 1600px window left ~100px of dead ground down each side of
+   the recommendations — the gap between the shelf and the first
+   line of a Pick a Door card.
+
+   The panel now takes the full column and the recommendations
+   grow into it. The prose does not: a lede set to 54rem is a
+   worse read than one set to 37rem, so the two paragraphs and
+   the guide keep the measure they had and stay centred inside
+   the wider block. Only the cards, which are pictures with text
+   beside them, actually want the room.
+
+   The column gap comes in as well — 5vw was 80px of nothing at
+   1600px, and it is the space marked as wasted.
+   ============================================================ */
+
+@media (min-width: 64rem) {
+  .hall {
+    gap: clamp(1.75rem, 3.2vw, 3.5rem);
+    /* The shelf was a fixed 24rem the moment there was room for it,
+       which at 1024px left the stage narrower than a Pick a Door
+       card can be drawn — the panel could not shrink to fit and
+       spilled past its own column. The shelf gives way instead: it
+       still reaches 24rem on a wide window, and comes in to 17rem
+       at the narrow end where the stage needs the room more.
+
+       minmax(0, 1fr) rather than 1fr on the stage, so its own
+       min-content can never push the column wider than the track. */
+    grid-template-columns: clamp(17rem, 26vw, 24rem) minmax(0, 1fr);
+  }
+
+  .stage > .panel { max-width: min(100%, 54rem); }
+  .stage > .feature { width: min(100%, 54rem); }
+
+  /* The measure, kept. These are the only things in the panel set
+     as running text. */
+  .stage > .panel > .lede,
+  .stage > .panel > .note {
+    max-width: 37rem;
+    margin-inline: auto;
+  }
+}
+
+/* ============================================================
    DESKTOP — THE LEFT RAIL
    ────────────────────────────────────────────────────────────
    Wide windows only (64rem / 1024px and up). Everything the
@@ -4524,13 +4619,13 @@ body.gallery-on { overflow: hidden; }
   /* Down from the 54px it carried across the top of the page:
      in a 130px column the wordmark is a label, not a banner. */
   .masthead .brand-name .name {
-    font-size: clamp(0.9rem, 1.15vw, 1.15rem);
+    font-size: clamp(1.05rem, 1.45vw, 1.5rem);
     letter-spacing: 0.24em;
   }
 
   .masthead .brand-name .tag {
-    margin-top: 0.5rem;
-    font-size: clamp(0.46rem, 0.62vw, 0.58rem);
+    margin-top: 0.55rem;
+    font-size: clamp(0.56rem, 0.76vw, 0.72rem);
     letter-spacing: 0.13em;
   }
 
@@ -4574,7 +4669,10 @@ body.gallery-on { overflow: hidden; }
      reads as centred. */
   .masthead .nav-links {
     align-items: flex-start;
-    gap: clamp(0.8rem, 1.5vh, 1.25rem);
+    /* Opened right up. The rail has more vertical room than it has
+       anything to put in it, and three links breathing is the one
+       place that space buys something. */
+    gap: clamp(1.15rem, 2.6vh, 2.1rem);
   }
 
   .masthead nav a,
@@ -4594,7 +4692,7 @@ body.gallery-on { overflow: hidden; }
        Tracking comes in from 0.11em to pay for it: "Author's Notes"
        is the longest line in the column and it has to clear the
        rule at 1024px, the narrowest window this layout runs at. */
-    font-size: clamp(0.625rem, 0.82vw, 0.8125rem);
+    font-size: clamp(0.72rem, 0.95vw, 0.9375rem);
     letter-spacing: 0.085em;
     /* The lift on hover pushed a left-ranged link sideways off its
        own column. It grows from the left edge instead. */
@@ -4604,8 +4702,8 @@ body.gallery-on { overflow: hidden; }
   .masthead nav .nav-ico {
     display: block;
     flex: none;
-    width: 0.9rem;
-    height: 0.9rem;
+    width: 1.05rem;
+    height: 1.05rem;
     opacity: 0.85;
   }
 

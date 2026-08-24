@@ -299,8 +299,30 @@
   /* The stage rests on About: it's the reader's guide, so a first
      visit lands on it and every hover returns to it. Hovering a book
      or opening the Notes swaps it out; letting go brings it back. */
+  var stage = document.querySelector(".stage");
   var DEFAULT_PANEL = "panel-about";
   var pinned = null;   /* the book or group currently held on the stage */
+
+  /* The stage scrolls, and About is long enough to scroll a long
+     way. A reader who has gone down the Pick a Door list and then
+     opens the Notes was being shown the middle of nothing: the new
+     panel is short, it starts at the top of the stage, and the
+     stage was still parked a thousand pixels below it.
+
+     So the stage returns to the top whenever what stands on it
+     changes. "auto" rather than "smooth": this is a cut between two
+     things, not a journey, and a half-second glide down the length
+     of the About panel is a worse answer than simply being there.
+
+     Guarded, because on a phone the stage does not scroll — it is
+     overflow: visible and the page scrolls instead, and resetting
+     that would throw the reader back to the masthead. */
+  function stageToTop() {
+    if (!stage) return;
+    if (stage.scrollHeight > stage.clientHeight + 1) {
+      stage.scrollTop = 0;
+    }
+  }
 
   function showPanel(id) {
     var wasFeature = feature.classList.contains("show");
@@ -311,6 +333,7 @@
       panels.forEach(function (p) {
         p.classList.toggle("is-active", p.id === id);
       });
+      stageToTop();
     };
 
     /* If the cover was up, let it fade before the text arrives,
@@ -355,6 +378,7 @@
     if (easel.getAttribute("src") !== cover) easel.src = cover;
 
     feature.classList.add("show");
+    stageToTop();
   }
 
   /* The small line above a group's title. stories.js can set its own
