@@ -4418,23 +4418,65 @@ body.gallery-on { overflow: hidden; }
     flex-direction: column;
     align-items: stretch;
     gap: clamp(1rem, 1.9vh, 1.9rem);
-    padding: clamp(2.25rem, 4vh, 3rem) 0 1.5rem;
-    /* The rule turns ninety degrees. No padding or margin on the
-       right: the border sits on the rail column's own edge, and the
-       grid's column-gap is what holds the room off it — otherwise
-       the line drifts across the gap and lands hard against the
-       first cover. */
+    padding: clamp(2.25rem, 4vh, 3rem) 0 clamp(1.75rem, 3.5vh, 2.75rem);
+    position: relative;
     border-bottom: 0;
-    border-right: 1px solid var(--ember-soft);
+
+    /* ---- Centring, and what "the area" actually is --------------
+       The rail reads as the whole strip from the window's edge to
+       the rule, but the frame's gutter was holding its contents off
+       the left by --frame-pad with nothing balancing it on the
+       right. Everything centred sat that far right of the strip's
+       true middle.
+
+       So the rail reaches back out through the gutter to the
+       window's edge and centres across the whole strip. The nav is
+       the one thing ranged left rather than centred, so it takes
+       the gutter back as padding and keeps the left edge it had. */
+    margin-left: calc(var(--frame-pad) * -1);
+  }
+
+  /* The rule down the rail's right-hand side. A border drew it at
+     full strength from the very top of the page to the very bottom,
+     which made it the loudest thing in a quiet layout. Drawn as a
+     gradient instead: faded gold, and dying out at both ends so it
+     reads as a division rather than as a drawn edge. */
+  .masthead::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom,
+      transparent 0,
+      rgba(216, 166, 95, 0.17) 10%,
+      rgba(216, 166, 95, 0.17) 90%,
+      transparent 100%);
+    pointer-events: none;
   }
 
   /* DOM order is wordmark, stamp, nav — the order the horizontal
-     header wanted. The rail wants the stamp at the top, so the
-     three are re-ordered here rather than moved in the HTML,
-     which would have changed every other width too. */
-  .masthead .roya-link { order: 1; }
-  .masthead .brand-col { order: 2; }
-  .masthead nav        { order: 3; }
+     header wanted. The rail wants the stamp at the top and the two
+     settings at the very foot, so the pieces are re-ordered here
+     rather than moved in the HTML, which would have changed every
+     other width too.
+
+     display:contents dissolves the wrapper the wordmark and the
+     settings share, so the two become items of the rail in their
+     own right and can be ordered apart. Moving the settings out of
+     that wrapper in the HTML would have broken the phone header,
+     where the pair belongs under the wordmark. */
+  .masthead .brand-col   { display: contents; }
+  .masthead .roya-link   { order: 1; }
+  .masthead .brand-name  { order: 2; }
+  .masthead nav          { order: 3; }
+  .masthead .nav-controls { order: 4; }
+
+  /* Sound and Theme sit on the floor of the rail: they are how the
+     room is set, not places to go, and the auto margin above them
+     takes up whatever height the column has left. */
+  .masthead .nav-controls { margin-top: auto; }
 
   /* --- The stamp ------------------------------------------ */
   .masthead .roya-link { justify-self: stretch; text-align: center; }
@@ -4450,17 +4492,24 @@ body.gallery-on { overflow: hidden; }
     margin: 0 auto;
   }
 
-  /* --- The two hairline dividers --------------------------
+  /* --- The one hairline divider ---------------------------
      A rule with a small gold point at its centre, matching the
-     ornaments used on the stage. One under the stamp, one above
-     the nav, so the rail reads as three stacked pieces rather
-     than one long list. */
-  .masthead .brand-col::before,
-  .masthead nav::before {
+     ornaments used on the stage. It sits under the stamp only.
+
+     There was a second above the nav; with the settings gone to the
+     foot of the column, the three links follow the wordmark
+     directly and a rule between them cut one piece into two for no
+     reason. The gap alone separates them now.
+
+     It hangs off .brand-name rather than off the wrapper, because
+     the wrapper is display:contents up above and a dissolved box
+     is no place to pin an ornament. */
+  .masthead .brand-name::before {
     content: "";
     display: block;
     width: 100%;
     height: 3px;
+    margin-bottom: clamp(1rem, 1.9vh, 1.9rem);
     background:
       radial-gradient(circle at 50% 50%,
         var(--ember-dim) 0 1.6px, transparent 1.7px) center / 100% 100% no-repeat,
@@ -4470,12 +4519,6 @@ body.gallery-on { overflow: hidden; }
   }
 
   /* --- Wordmark and settings ------------------------------ */
-  .masthead .brand-col {
-    justify-self: stretch;
-    align-items: stretch;
-    gap: clamp(0.9rem, 1.7vh, 1.5rem);
-  }
-
   .masthead .brand-name { text-align: center; }
 
   /* Down from the 54px it carried across the top of the page:
@@ -4504,18 +4547,33 @@ body.gallery-on { overflow: hidden; }
   /* --- The three places to go ----------------------------- */
   .masthead nav {
     justify-self: stretch;
-    align-items: stretch;
-    /* It was set in from the stamp's edge across the top. In the
-       rail the links start on the rail's own left edge, level with
-       everything above them. */
+    /* Centred on the strip like everything else in the rail. It was
+       ranged left, taking the frame's gutter back as padding to
+       hold the page's left edge — that padding goes, or the block
+       would centre on a column that starts 50px in. */
+    align-items: center;
     padding-left: 0;
     display: flex;
     flex-direction: column;
     gap: clamp(0.9rem, 1.7vh, 1.4rem);
+
+    /* How far down the column the three links sit. This is the one
+       number to change if they want to go lower still — everything
+       below them is pinned to the floor by its own auto margin, so
+       nothing else has to move to let this grow. */
+    margin-top: clamp(2.25rem, 6vh, 5rem);
   }
 
+  /* Centred as a block, not line by line.
+     Three links of three different lengths, each centred on its own,
+     put the three glyphs at three different distances from the edge
+     — a ragged left margin down the one part of the rail that is a
+     list. So the group shrinks to its widest line ("Author's
+     Notes"), that block centres on the strip, and the links range
+     left inside it: the icons hold a common edge and the set still
+     reads as centred. */
   .masthead .nav-links {
-    align-items: stretch;
+    align-items: flex-start;
     gap: clamp(0.8rem, 1.5vh, 1.25rem);
   }
 
@@ -4523,11 +4581,21 @@ body.gallery-on { overflow: hidden; }
   .masthead nav .linklike {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    width: 100%;
+    /* Down from 0.6rem. Every point the gap gives up is a point the
+       words can take, and the column is not allowed to widen. */
+    gap: 0.45rem;
+    /* Was 100%, to stretch across the rail. The set is a centred
+       block now, so each link is only as wide as it reads. */
+    width: auto;
     padding: 0;
-    font-size: clamp(0.5rem, 0.68vw, 0.625rem);
-    letter-spacing: 0.11em;
+    /* Up by about a third. The three links are the only things in
+       the rail a reader can act on, and at 8px they read as a
+       caption on the settings above them rather than as a menu.
+       Tracking comes in from 0.11em to pay for it: "Author's Notes"
+       is the longest line in the column and it has to clear the
+       rule at 1024px, the narrowest window this layout runs at. */
+    font-size: clamp(0.625rem, 0.82vw, 0.8125rem);
+    letter-spacing: 0.085em;
     /* The lift on hover pushed a left-ranged link sideways off its
        own column. It grows from the left edge instead. */
     transform-origin: left center;
@@ -4536,8 +4604,8 @@ body.gallery-on { overflow: hidden; }
   .masthead nav .nav-ico {
     display: block;
     flex: none;
-    width: 1rem;
-    height: 1rem;
+    width: 0.9rem;
+    height: 0.9rem;
     opacity: 0.85;
   }
 
@@ -5003,16 +5071,25 @@ html[data-theme="light"] .t-banner img {
    drawn under the artwork, so on paper it reads as the printed
    plate rather than as a light source. */
 @media (min-width: 64rem) {
-  html[data-theme="light"] .masthead {
-    border-right-color: rgba(122, 90, 23, 0.35);
+  /* The rule is a faded gradient rather than a border now. On paper
+     the dark theme's warm gold has nothing to glow against and the
+     rail simply loses its edge, so it goes to the ink value and
+     carries a little more weight — 0.17 of a candle flame and 0.2
+     of a drawn line are not the same amount of visible. It keeps
+     the fade at both ends. */
+  html[data-theme="light"] .masthead::after {
+    background: linear-gradient(to bottom,
+      transparent 0,
+      rgba(122, 90, 23, 0.26) 10%,
+      rgba(122, 90, 23, 0.26) 90%,
+      transparent 100%);
   }
 
-  /* The dividers are drawn from --ember-dim and --ember-soft, both
-     of which already flip with the theme; they are restated here
-     only to take the point down a shade, because a hard dot that
-     read as an ornament on black reads as a full stop on white. */
-  html[data-theme="light"] .masthead .brand-col::before,
-  html[data-theme="light"] .masthead nav::before {
+  /* The divider is drawn from --ember-dim and --ember-soft, both of
+     which already flip with the theme; it is restated here only to
+     take the point down a shade, because a hard dot that read as an
+     ornament on black reads as a full stop on white. */
+  html[data-theme="light"] .masthead .brand-name::before {
     background:
       radial-gradient(circle at 50% 50%,
         rgba(107, 79, 20, 0.75) 0 1.6px, transparent 1.7px) center / 100% 100% no-repeat,
