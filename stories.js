@@ -795,7 +795,7 @@ const STORIES = [
     room: "The Cold Room \u2014 fifteen degrees, one frame at a time, eight hours at a stretch",
     key: "Eleven Cans \u2014 film shot in a walled colony in 1962, delivered by two lawyers when he was nineteen",
     notes: [3, 3, 3],
-    synopsis: "Rotterdam, 1996. Dariush restores film for a living \u2014 sitting still, looking at one frame for a long time. In March he burns his forearm on a lamp housing and does not notice for four hours. He does not go to a doctor. He goes upstairs to eleven cans of film that came to him through two lawyers when he was nineteen, and runs them frame by frame: a clinic cabinet that was never empty, four minutes along the back row of a classroom, and eleven minutes of a woman speaking into the lens in a dialect nobody in the room could follow, subtitled in nine languages as a prayer. They did not send him out to be saved. They sent him out to be found, and they were prepared to wait thirty-four years for it."
+    synopsis: "Outside Tabriz there is a walled village that appears on no map, built for people whose nerves have stopped reporting and who can no longer be trusted to feel what is happening to them. In 1962 a camera was allowed inside for eleven days. Thirty-four years later a man runs those eleven cans frame by frame and finds what nobody in the room was meant to keep: a clinic cabinet that was never empty, four minutes along the back row of a classroom, and eleven minutes of a woman speaking into the lens in a dialect none of the crew could follow, subtitled in nine languages as a prayer. She is not praying. He is the only person left alive who can hear what she actually said, because she was his mother and she was speaking to him."
   }
 
 
