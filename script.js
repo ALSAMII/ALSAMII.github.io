@@ -1575,7 +1575,26 @@
     return false;
   }
 
-  if (arrivedByReload() && location.hash) {
+  /* A share page hands the reader on with location.replace() and a
+     meta refresh behind it. Several browsers — WebKit most reliably —
+     file that arrival as a reload rather than as a followed link, so
+     the guard below threw away the very name the share page existed to
+     deliver, and every shared link opened the front door instead of
+     the book it named.
+
+     A redirect leaves a trace a reload does not: the page that sent
+     the reader is still in document.referrer, and it is one of ours.
+     So an arrival from a share page is a followed link whatever the
+     browser wants to call it. */
+  function arrivedFromShare() {
+    try {
+      var r = String(document.referrer || "");
+      if (r.indexOf(location.origin) !== 0) return false;
+      return /\/(share|b)\/[^\/]+\.html$/.test(r);
+    } catch (e) { return false; }
+  }
+
+  if (arrivedByReload() && location.hash && !arrivedFromShare()) {
     if (history.replaceState) {
       history.replaceState(null, "", location.pathname + location.search);
     } else {
