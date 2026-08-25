@@ -4439,6 +4439,24 @@ body.gallery-on { overflow: hidden; }
    ============================================================ */
 
 @media (min-width: 64rem) {
+  /* Ranged left, not centred.
+     ────────────────────────────────────────────────────────────
+     The panel is capped at a measure it should not exceed, and it
+     was centred in whatever the stage column happened to be. On a
+     1440px window the two are the same size and nothing shows. On
+     a full-screen 2560 the stage is 1784px and the panel is 864,
+     so the slack — 920px of it — was being split evenly and half
+     of it parked between the shelf and the first word. That is the
+     gap: not a margin anyone set, just centring doing its job in a
+     column far wider than its contents.
+
+     So the panel starts where its column starts. The shelf and the
+     stage are then held apart by the hall's own gap and nothing
+     else, at every width. What slack remains goes to the outer
+     right edge, where the backdrop is already the only thing. */
+  .stage > .panel,
+  .stage > .feature { justify-self: start; }
+
   .hall {
     gap: clamp(1.75rem, 3.2vw, 3.5rem);
     /* The shelf was a fixed 24rem the moment there was room for it,
@@ -4453,8 +4471,12 @@ body.gallery-on { overflow: hidden; }
     grid-template-columns: clamp(17rem, 26vw, 24rem) minmax(0, 1fr);
   }
 
-  .stage > .panel { max-width: min(100%, 54rem); }
-  .stage > .feature { width: min(100%, 54rem); }
+  /* 54rem was set to fill a 1440px window. With the block ranged
+     left there is real room past that on a large screen, and the
+     Pick a Door cards are the part that wants it — so the cap comes
+     up and they grow into it rather than leaving the width unused. */
+  .stage > .panel { max-width: min(100%, 62rem); }
+  .stage > .feature { width: min(100%, 62rem); }
 
   /* The measure, kept. These are the only things in the panel set
      as running text. */
