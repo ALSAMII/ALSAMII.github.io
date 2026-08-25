@@ -808,8 +808,19 @@ const STORIES = [
     key: "Kh\u0101m\u016bsh\u012b \u2014 the stillness of the flat hour, which for four years was only people resting",
     notes: [2, 2, 2],
     synopsis: "Outside Tabriz, 1938. Homa is twenty-six, a teacher who believed a country could be cured by decree, sent eleven kilometres past the end of the road. She is the only person there who will never fall ill, the only one whose body still reports to her, and she stays twenty-four years. In the worst week of her life she sits down against the wall in the afternoon and does not come back for most of a day. By spring a hundred people are standing in a garden she cannot explain."
-  }
+  },
 
+  {
+    num: 65,
+    title: "The Room Is Quiet",
+    words: "31,500 words",
+    hook: "Every evening at seven she sits down in a chair by the window and goes somewhere",
+    door: "Rite",
+    room: "The Walled Enclosure \u2014 dry, water down the middle, something living at the far end that cannot be reached, and something behind you that you do not turn round on",
+    key: "Three Sentences \u2014 what her father taught her on the end of her bed when she was six, and was proud of the phrasing",
+    notes: [2, 3, 2],
+    synopsis: "Rotterdam. Bahar Kamrani is forty, restores film for a living, and every evening at seven she sits down by the window and goes somewhere. A company that has tested four hundred thousand people finds the forty-one who sit off the end of the instrument, and every one of them traces back to a village outside Tabriz that is a weighbridge now. They want to know how it is done. She spends two years telling them honestly why it must not be, and nobody there can attend long enough to hear it."
+  }
 
 ];
 
@@ -942,12 +953,15 @@ const TRILOGIES = [
   },
   {
     title: "The Unheard House",
-    /* Two books, so no label \u2014 left empty it takes a plain heading.
-       Without a "banner" the row shows the two spines side by side,
+    /* Three books now, and the label field is gone rather than emptied:
+       left out entirely, a group of three is called "A Triptych" by
+       script.js, which is what Daughters of Anahita and Les Folies
+       already do. An empty string would suppress the line instead.
+
+       Without a "banner" the row shows the three spines side by side,
        which is right until there is a painting of the place itself.
        When one exists, add banner: "assets/unheard-house.jpg" here. */
-    label: "",
-    books: [63, 64],
-    synopsis: "Two novellas about a walled village outside Tabriz that appears on no map, and about the twenty-two minutes of film that are the only record anyone outside ever saw. One book watches from the cutting room, thirty-four years late, frame by frame. The other is written from inside the wall by the one person there who was never ill, who stayed twenty-four years and paid nothing, and who is the reason a hundred people ended up standing in a garden none of them could describe."
+    books: [63, 64, 65],
+    synopsis: "Three novellas about a walled village outside Tabriz that appears on no map, and about what the people inside it were protecting. One watches from a cutting room thirty-four years late, frame by frame. One is written from inside the wall, by the only person there who was never ill. The third is set in Rotterdam now, where a company works out that the thing two hundred people gave their hands and their eyes for can be reached by anybody, in ninety minutes, for four hundred euro."
   }
 ];
