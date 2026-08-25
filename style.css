@@ -4534,24 +4534,59 @@ body.gallery-on { overflow: hidden; }
     --rail-gap: clamp(1.75rem, 3.2vw, 3rem);
 
     grid-template-columns: var(--rail-w) 1fr;
-    /* Was three rows (header, room, floor). The header is a column
-       now, so the room and the floor are all that stack. */
-    grid-template-rows: 1fr auto;
+    /* Three rows again, but not the old three. The rail owns column
+       one for the whole height; column two carries the menu bar, then
+       the room, then the floor. */
+    --topnav-h: clamp(4rem, 8vh, 5.5rem);
+    grid-template-rows: var(--topnav-h) 1fr auto;
     column-gap: var(--rail-gap);
+    /* The menu bar and the rail's rule are both positioned against
+       this box. */
+    position: relative;
   }
 
   .masthead { grid-column: 1; grid-row: 1 / -1; }
-  .hall     { grid-column: 2; grid-row: 1; }
-  .floor    { grid-column: 2; grid-row: 2; }
+  .hall     { grid-column: 2; grid-row: 2; }
+  .floor    { grid-column: 2; grid-row: 3; }
+
+  /* The rail's rule moves here from .masthead::after.
+     It has to: the menu bar is positioned against .frame, and it can
+     only be if nothing between it and .frame is positioned — which
+     .masthead was, solely to carry this line. Drawn from the frame
+     instead, it lands in the same place and still runs the full
+     height of the page. */
+  .frame::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--frame-pad) + var(--rail-w));
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom,
+      transparent 0,
+      rgba(216, 166, 95, 0.17) 10%,
+      rgba(216, 166, 95, 0.17) 90%,
+      transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
 
   /* --- The rail itself ------------------------------------ */
   .masthead {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: clamp(1rem, 1.9vh, 1.9rem);
+    /* One step, used by everything in the column — the gap between
+       pieces, the air under the divider, the space inside the menu
+       and the space above it. Set once here so the rhythm cannot
+       drift: four different numbers were doing this job, and the
+       menu ended up reading as a separate thing that had floated
+       down the middle of the rail. */
+    --rail-step: clamp(1.05rem, 2.05vh, 1.85rem);
+    gap: var(--rail-step);
     padding: clamp(2.25rem, 4vh, 3rem) 0 clamp(1.75rem, 3.5vh, 2.75rem);
-    position: relative;
+    /* Static on purpose — see .frame::before above. */
+    position: static;
     border-bottom: 0;
 
     /* ---- Centring, and what "the area" actually is --------------
@@ -4573,20 +4608,9 @@ body.gallery-on { overflow: hidden; }
      which made it the loudest thing in a quiet layout. Drawn as a
      gradient instead: faded gold, and dying out at both ends so it
      reads as a division rather than as a drawn edge. */
-  .masthead::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom,
-      transparent 0,
-      rgba(216, 166, 95, 0.17) 10%,
-      rgba(216, 166, 95, 0.17) 90%,
-      transparent 100%);
-    pointer-events: none;
-  }
+  /* Retired. The line is drawn by .frame::before now. */
+  .masthead::after { content: none; }
+
 
   /* DOM order is wordmark, stamp, nav — the order the horizontal
      header wanted. The rail wants the stamp at the top and the two
@@ -4641,7 +4665,7 @@ body.gallery-on { overflow: hidden; }
     display: block;
     width: 100%;
     height: 3px;
-    margin-bottom: clamp(1rem, 1.9vh, 1.9rem);
+    margin-bottom: var(--rail-step);
     background:
       radial-gradient(circle at 50% 50%,
         var(--ember-dim) 0 1.6px, transparent 1.7px) center / 100% 100% no-repeat,
@@ -4677,24 +4701,60 @@ body.gallery-on { overflow: hidden; }
   }
 
   /* --- The three places to go ----------------------------- */
-  .masthead nav {
-    justify-self: stretch;
-    /* Centred on the strip like everything else in the rail. It was
-       ranged left, taking the frame's gutter back as padding to
-       hold the page's left edge — that padding goes, or the block
-       would centre on a column that starts 50px in. */
-    align-items: center;
-    padding-left: 0;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.9rem, 1.7vh, 1.4rem);
+  /* ── THE MENU BAR ──────────────────────────────────────────
+     Lifted out of the rail and laid across the head of the room:
+     it starts where the rail's rule is and runs to the far edge,
+     level with the top of the page.
 
-    /* How far down the column the three links sit. This is the one
-       number to change if they want to go lower still — everything
-       below them is pinned to the floor by its own auto margin, so
-       nothing else has to move to let this grow. */
-    margin-top: clamp(2.25rem, 6vh, 5rem);
+     Taken out of the rail's flow with position:absolute rather than
+     moved in the HTML. That matters — below 64rem the nav is still
+     the third column of the horizontal header, and every rule that
+     places it there reaches it through .masthead. Moving the tag
+     would have broken the phone to fix the desktop. Here the markup
+     is untouched at every width and only this block, which no
+     narrow screen ever reads, puts it somewhere else.
+
+     The row it occupies is real: .frame reserves --topnav-h at the
+     top of column two, so the shelf and the stage begin below it
+     rather than underneath it. */
+  .masthead nav {
+    position: absolute;
+    top: 0;
+    left: calc(var(--frame-pad) + var(--rail-w) + var(--rail-gap));
+    right: var(--frame-pad);
+    height: var(--topnav-h);
+    /* Air above the words, so the bar sits on the page rather than
+       against the top of the window. The rail's own top padding is
+       set to the same, so the first link and the imprint mark start
+       level with each other. */
+    padding-top: clamp(1.25rem, 2.6vh, 2rem);
+    z-index: 2;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-self: auto;
+    padding-left: 0;
+    margin-top: 0;
   }
+
+  /* A hairline under the bar, the same faded gold as the rail's, so
+     the menu reads as the head of the page rather than as three
+     words floating above the list. */
+  .masthead nav::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(to right,
+      rgba(216, 166, 95, 0.17) 0,
+      rgba(216, 166, 95, 0.17) 88%,
+      transparent 100%);
+    pointer-events: none;
+  }
+
 
   /* Centred as a block, not line by line.
      Three links of three different lengths, each centred on its own,
@@ -4704,33 +4764,35 @@ body.gallery-on { overflow: hidden; }
      Notes"), that block centres on the strip, and the links range
      left inside it: the icons hold a common edge and the set still
      reads as centred. */
+  /* Spread the full width of the bar: first flush left under the
+     rule, last flush right on the frame's edge, the third exactly
+     between them. Even spacing without a number to keep in step —
+     the three stay evenly placed at every window size. */
   .masthead .nav-links {
-    align-items: flex-start;
-    /* Opened right up. The rail has more vertical room than it has
-       anything to put in it, and three links breathing is the one
-       place that space buys something. */
-    gap: clamp(1.15rem, 2.6vh, 2.1rem);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
   }
+
 
   .masthead nav a,
   .masthead nav .linklike {
     display: flex;
     align-items: center;
-    /* Down from 0.6rem. Every point the gap gives up is a point the
-       words can take, and the column is not allowed to widen. */
-    gap: 0.45rem;
-    /* Was 100%, to stretch across the rail. The set is a centred
-       block now, so each link is only as wide as it reads. */
+    /* The glyph and its word, held together. */
+    gap: 0.5rem;
+    /* Each link is only as wide as it reads, or space-between has
+       nothing to space. */
     width: auto;
+    flex: none;
     padding: 0;
-    /* Up by about a third. The three links are the only things in
-       the rail a reader can act on, and at 8px they read as a
-       caption on the settings above them rather than as a menu.
-       Tracking comes in from 0.11em to pay for it: "Author's Notes"
-       is the longest line in the column and it has to clear the
-       rule at 1024px, the narrowest window this layout runs at. */
-    font-size: clamp(0.72rem, 0.95vw, 0.9375rem);
-    letter-spacing: 0.085em;
+    /* The rail was 130px wide and the type had to fit it. The bar is
+       the width of the room, so the links take the size and the
+       tracking the rest of the page's small caps use. */
+    font-size: clamp(0.6875rem, 0.72vw, 0.8125rem);
+    letter-spacing: 0.14em;
     /* The lift on hover pushed a left-ranged link sideways off its
        own column. It grows from the left edge instead. */
     transform-origin: left center;
@@ -4785,7 +4847,9 @@ body.gallery-on { overflow: hidden; }
      The header used to hold the top of the page open; with it
      gone the shelf and the stage would start hard against the
      window's edge. */
-  .hall { padding-top: clamp(2.25rem, 4vh, 3rem); }
+  /* The bar holds the top of the page open now; this is only the
+     air between its rule and the first line under it. */
+  .hall { padding-top: clamp(1.1rem, 2.2vh, 1.75rem); }
 }
 
 /* ████████████████████████████████████████████████████████████
@@ -5231,7 +5295,7 @@ html[data-theme="light"] .t-banner img {
      carries a little more weight — 0.17 of a candle flame and 0.2
      of a drawn line are not the same amount of visible. It keeps
      the fade at both ends. */
-  html[data-theme="light"] .masthead::after {
+  html[data-theme="light"] .frame::before {
     background: linear-gradient(to bottom,
       transparent 0,
       rgba(122, 90, 23, 0.26) 10%,
@@ -5252,6 +5316,16 @@ html[data-theme="light"] .t-banner img {
         center / 100% 1px no-repeat;
   }
 
+  /* The menu bar's own hairline takes the same ink value the
+     vertical rule does — a candle-edge gold has nothing to glow
+     against on paper and the bar simply loses its bottom. */
+  html[data-theme="light"] .masthead nav::after {
+    background: linear-gradient(to right,
+      rgba(122, 90, 23, 0.26) 0,
+      rgba(122, 90, 23, 0.26) 88%,
+      transparent 100%);
+  }
+
   /* At 16px the glyphs are small enough that the dark theme's 0.85
      leaves them thin on a pale ground. They go to full strength and
      let the gold do the work of holding them back. */
@@ -5266,142 +5340,3 @@ html[data-theme="light"] .t-banner img {
     color: var(--ember-lit);
   }
 }
-
-/* ============================================================
-   Series cards — giving each recommendation its own ground
-   ------------------------------------------------------------
-   .series-cover hangs outside its card on purpose (top: -9%,
-   height: 118%) so the vertical fades fall beyond the box and
-   never read as a cut. On one card that is right. On two, each
-   picture reaches 9% of the card's height into the gap, and at
-   .series-rec's 1.35rem the two overhangs meet in the middle —
-   which is why 61 and 62 run together with no seam between them.
-
-   Three changes, all at 46rem and above, which is the same
-   breakpoint .series-rec already uses for its own spacing:
-   more room between the cards, a shallower hang, and a vertical
-   mask that closes sooner at both ends. The base rules are left
-   exactly as they are, so a phone in portrait — where the cards
-   are shorter and stack with more air — is untouched.
-   ============================================================ */
-@media (min-width: 46rem) {
-
-  /* Room for both overhangs and clean page between them. */
-  .series-rec { gap: 3.5rem; }
-
-  .series-cover {
-    /* Still outside the card, by 4% rather than 9%. */
-    top: -4%;
-    height: 108%;
-
-    /* And the picture finishes before the gap does: the bottom
-       fade begins at 82% and is gone by 93%, rather than running
-       to the very edge of a box that overhangs anyway. */
-    -webkit-mask-image:
-      linear-gradient(to right, transparent 0, rgba(0,0,0,0.14) 18%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0.88) 56%, #000 68%, #000 95%, transparent 100%),
-      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.28) 10%, #000 26%, #000 82%, rgba(0,0,0,0.28) 93%, transparent 100%);
-    mask-image:
-      linear-gradient(to right, transparent 0, rgba(0,0,0,0.14) 18%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0.88) 56%, #000 68%, #000 95%, transparent 100%),
-      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.28) 10%, #000 26%, #000 82%, rgba(0,0,0,0.28) 93%, transparent 100%);
-  }
-
-  /* The boundary said out loud, in the mark the shelf rows already
-     use between one book and the next. On ::after, not ::before —
-     the light theme owns .series-card::before for its paper veil. */
-  .series-card + .series-card::after {
-    content: "\25c8";
-    position: absolute;
-    left: 50%;
-    top: -1.75rem;
-    transform: translateX(-50%);
-    font-size: 0.5rem;
-    line-height: 1;
-    color: var(--ember-soft);
-    opacity: 0.55;
-    pointer-events: none;
-    z-index: 2;
-  }
-}
-
-/* ============================================================
-   The rail's three links — held off the divider
-   ------------------------------------------------------------
-   At 64rem and up the nav becomes a vertical rail in the left
-   column, each link an icon and a word. The base size, written
-   for a stack that had a column to itself, tops out at 1.0625rem
-   with 0.14em of tracking — which on the widest screens carries
-   ALL COVERS and AUTHOR'S NOTES right up to the vertical rule
-   that closes the sidebar.
-
-   Two points smaller and a touch tighter. Same breakpoint the
-   rail itself uses, so nothing below 64rem — every phone, in
-   either orientation, and the tablet layouts — is affected.
-   ============================================================ */
-@media (min-width: 64rem) {
-
-  .masthead nav a,
-  .masthead nav .linklike {
-    font-size: clamp(0.75rem, 0.92vw, 0.875rem);
-    letter-spacing: 0.11em;
-  }
-
-  /* The glyph comes down with the words, or it starts to read as
-     the larger of the two things on the line. */
-  .masthead nav .nav-ico {
-    width: 0.95rem;
-    height: 0.95rem;
-  }
-
-  /* A little more air between the rail and the rule beside it.
-     The links begin where they always did; it is the right-hand
-     end that is pulled back. */
-  .masthead nav { padding-right: clamp(0.75rem, 1.6vw, 1.5rem); }
-}
-
-/* ============================================================
-   Author's Notes — the reading size, and the hand at the foot
-   ------------------------------------------------------------
-   Two things on this panel.
-
-   The note itself tops out at 1.125rem. On a wide screen that is
-   a short measure of italic set very small in a column with room
-   to spare — the panel reads as a caption rather than as the one
-   place on the site where the author speaks in his own voice.
-   Raised at 64rem and above only, so every phone and tablet size
-   keeps the reading scale already tuned for it.
-
-   And the signature. It was carrying .caps — sans, 11px, 0.28em
-   of tracking, uppercase, and the panel's near-white ink — which
-   is the dress of a label, not of a name at the end of a piece of
-   writing. It is set in the covers' serif now, italic, in gold,
-   at a size that closes the passage.
-   ============================================================ */
-@media (min-width: 64rem) {
-  .panel .note {
-    font-size: calc(clamp(1.0625rem, 1.35vw, 1.3125rem) * var(--read-up));
-    line-height: 1.75;
-  }
-}
-
-/* The name at the foot. Unscoped: it was wrong at every width, and
-   a signature that changes character between a phone and a desk is
-   two signatures. Specificity stays under the light theme's own
-   rule above, which restates the halo and nothing else. */
-.panel .signature {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.375rem, 1.8vw, 1.75rem);
-  /* .caps set both of these and neither belongs on a name. */
-  letter-spacing: 0.015em;
-  text-transform: none;
-  color: var(--ember);
-  /* Air above it, so it sits apart from the last line rather than
-     reading as one more line of the note. */
-  margin-top: 1.9rem;
-  opacity: 0.92;
-}
-
-/* The em dash is a lead-in, not part of the name — held back a
-   little so the eye lands on CHEW Z. */
-.panel .signature { text-shadow: 0 1px 20px rgba(5, 4, 3, 0.65); }
