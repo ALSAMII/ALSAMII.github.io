@@ -4785,6 +4785,11 @@ body.gallery-on { overflow: hidden; }
     display: flex;
     flex-direction: row;
     align-items: center;
+    /* Centred on the bar. The set used to start on the shelf's left
+       edge and run out halfway, leaving the whole right half of the
+       bar empty; centred, it sits over the middle of the page and
+       the space falls evenly either side of it. */
+    justify-content: center;
     justify-self: auto;
     padding-left: 0;
     margin-top: 0;
@@ -5032,6 +5037,52 @@ body.gallery-on { overflow: hidden; }
     letter-spacing: 0.2em;
     line-height: 1.4;
   }
+}
+
+/* ============================================================
+   THE AUTHOR'S NOTES — THE VOICE, AND THE NAME UNDER IT
+   ────────────────────────────────────────────────────────────
+   The four paragraphs were set in the secondary ink at 16–18px.
+   That colour is right in the About panel, where .note sits behind
+   the lede and has to step back from it — but the Notes panel has
+   no lede. It is four paragraphs and a name, and the thing meant to
+   read first was the only thing on the page, greyed out against a
+   photograph. It takes the main ink now and a couple of points more.
+
+   THE SIGNATURE. It was .caps and nothing else: Jost, 11px,
+   uppercase, hard-tracked — the same treatment as ALL 64 STORIES
+   and the reading times, which is to say a label. A name at the
+   foot of a statement is not a label.
+
+   It goes to Cormorant italic, which is the voice of the covers and
+   the spines and appears nowhere else in this panel, so it reads as
+   a hand rather than as more interface. Uppercase comes off: a
+   signature is written, not set. And it is now about half again the
+   size of the prose above it, so the eye ends where the writing does.
+
+   Both faces are already loaded — Cormorant's italic 500 is in the
+   font request at the top of index.html. No new download.
+   ============================================================ */
+
+#panel-notes .note {
+  /* Up from --faded. */
+  color: var(--parchment);
+  font-size: clamp(1.15rem, 2vw, 1.375rem);
+  line-height: 1.75;
+}
+
+#panel-notes .signature {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  font-size: clamp(1.75rem, 3.1vw, 2.375rem);
+  /* .caps tracks at 0.28em, which is spacing for small uppercase and
+     pulls a signature apart. Almost none here. */
+  letter-spacing: 0.015em;
+  line-height: 1.2;
+  color: var(--ember);
+  margin-top: clamp(1.25rem, 2.6vh, 2rem);
 }
 
 /* ████████████████████████████████████████████████████████████
