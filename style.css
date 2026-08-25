@@ -4863,6 +4863,110 @@ body.gallery-on { overflow: hidden; }
   .hall { padding-top: clamp(1.1rem, 2.2vh, 1.75rem); }
 }
 
+/* ============================================================
+   THE PHONE HEADER — TYPE, AND ONE BUTTON THAT SAT HIGH
+   ────────────────────────────────────────────────────────────
+   Everything here is below the desktop rail's 64rem, so the rail
+   never sees any of it.
+
+   THE MISALIGNMENT. Held sideways, the three links sit in a row
+   bottom-aligned. About and Author's Notes are <a>; All Covers is a
+   <button>, and the button was carrying 0.4rem of vertical padding
+   against the anchors' 0.15rem. Bottom-aligning boxes of different
+   heights lines up the boxes, not the words — so the button's label
+   was drawn 4px above its neighbours. The padding is matched here
+   and the three sit on one line.
+
+   That was showing upright too, where it read as uneven spacing
+   between the links rather than as a misalignment.
+   ============================================================ */
+
+@media (max-width: 63.99rem) {
+  .masthead nav .linklike {
+    /* The same box as the anchors beside it. */
+    padding: 0.15rem 0.1rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  /* Bottoms are equal now, but baselines are what the eye reads, so
+     ask for those directly and the row cannot drift again. */
+  .masthead .nav-links { align-items: baseline; }
+}
+
+/* Upright, and the narrow end of sideways ------------------- */
+@media (max-width: 56rem) {
+  /* Up from 8px. It is the line that says what the whole site is
+     and it was set smaller than anything else on the page. */
+  .brand-name .tag {
+    font-size: clamp(0.5625rem, 2.4vw, 0.6875rem);
+    letter-spacing: 0.1em;
+  }
+
+  /* Up from 10px, about a fifth.
+     The nav sits in a fixed grid track — 137.7px of it on a 393px
+     screen — and was only using 100. The logo beside it is placed by
+     the track, not by this text, so it does not move when the type
+     grows; there is room to take and nothing pays for it.
+
+     Held on a clamp rather than a fixed size because "Author's Notes"
+     never wraps: on a 320px screen the track comes down to about 90px
+     and a fixed 12px would push the longest of the three straight
+     through it. The clamp gives the small screens back their 10px. */
+  .masthead nav a,
+  .masthead nav .linklike {
+    font-size: clamp(0.625rem, 2.9vw, 0.78rem);
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ============================================================
+   THE FOOTER — GIVING THE PAGE ITS HEIGHT BACK
+   ────────────────────────────────────────────────────────────
+   The bar was 93px on every desktop screen: 13% of a 700px laptop,
+   spent on two lines that are never read twice.
+
+   22px of that was nothing at all. The copyright line is a <p>, and
+   a <p> carries a browser-default margin of one em top and bottom —
+   here that is 11px each side of an 11px line, doing no work and
+   visible to nobody. Zeroing it is worth as much as every other
+   change in this block put together, so it is done at every width.
+
+   The rest — the padding and the size of the type — is desktop only.
+   A phone's footer wraps to two centred lines and needs the room it
+   has; laptops are the screens that were paying for this.
+   ============================================================ */
+
+.floor p { margin: 0; }
+
+@media (min-width: 56.01rem) {
+  .floor {
+    /* Down from 1.5rem / 1.75rem. */
+    padding: 0.7rem 0 0.8rem;
+  }
+
+  /* Down from 11px. These two lines are a legal notice and a promise,
+     not part of the reading — they only have to be legible, and the
+     tracking comes in a little because .caps at 0.28em was spaced for
+     type two sizes larger than this. */
+  .floor .caps {
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
+    line-height: 1.4;
+  }
+}
+
+/* A phone held sideways is the screen with the least height of any,
+   and it was keeping the full-size bar because it is narrower than
+   56rem. It gets the same treatment on the same grounds. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .floor { padding: 0.6rem 0 0.7rem; }
+  .floor .caps {
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
+    line-height: 1.4;
+  }
+}
+
 /* ████████████████████████████████████████████████████████████
    THE LIGHT THEME
    ────────────────────────────────────────────────────────────
