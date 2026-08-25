@@ -820,6 +820,30 @@ const STORIES = [
     key: "Three Sentences \u2014 what her father taught her on the end of her bed when she was six, and was proud of the phrasing",
     notes: [2, 3, 2],
     synopsis: "Rotterdam. Bahar Kamrani is forty, restores film for a living, and every evening at seven she sits down by the window and goes somewhere. A company that has tested four hundred thousand people finds the forty-one who sit off the end of the instrument, and every one of them traces back to a village outside Tabriz that is a weighbridge now. They want to know how it is done. She spends two years telling them honestly why it must not be, and nobody there can attend long enough to hear it."
+  },
+
+  {
+    num: 66,
+    title: "The Illuminated Face",
+    words: "27,500 words",
+    hook: "His wife's face is failing, and the new lines say something better than the old ones ever did",
+    door: "Rite",
+    room: "The Front Room \u2014 his wife in her own chair, ratified, visited, photographed and transcribed by strangers who have come to read her",
+    key: "The Reading Angle \u2014 a lamp set on the floor, low and oblique, because light from above fills the ground and light from below throws the lines",
+    notes: [3, 3, 1],
+    synopsis: "A provincial Iranian city, and three families keeping a doctrine the world burned six hundred years ago: that the human face is not like scripture but is scripture, fourteen lines of divine writing laid out in hair and bone. Mansur Sarmadi is their reader \u2014 when one of them dies he reads the face aloud, and the reading is the funeral. Then his wife's face begins to fail. He starts reading her in secret while she sleeps, and finds that what the ruin is writing is better than anything the old text ever said."
+  },
+
+  {
+    num: 67,
+    title: "Sayyid of Nowhere",
+    words: "32,500 words",
+    hook: "He took the clothes because they were on a chair and nobody was watching the chair",
+    door: "Dose",
+    room: "The Inner Chamber \u2014 four paces by five, one door, no window, and a vent bricked up in 1961",
+    key: "Esfand \u2014 wild rue, burned in every doorway in Iran against the evil eye, and nobody there has ever called it a drug",
+    notes: [1, 2, 1],
+    synopsis: "A career burglar walks out of a hospital in Mashhad in a dead cleric's clothes, taken because they were on a chair and nobody was watching the chair. He does not check the colour of the turban. It is black, which means sayyid \u2014 descent from the Prophet. He has not faked a job, he has faked a bloodline. He gets off a bus in a salt town meaning to stay twelve days, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. He stays fourteen months."
   }
 
 ];
