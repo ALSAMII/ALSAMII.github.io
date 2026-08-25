@@ -1365,6 +1365,21 @@
       build();
     };
     api.clear = function () { api.value = ""; api.gloss = ""; paint(); build(); };
+
+    /* Choose an option by name, as a click would. Used to open the
+       shelf on an order other than the blank one. Silently does
+       nothing if the name is not among the options, so a renamed
+       option can never leave the menu in a state it cannot show. */
+    api.select = function (name) {
+      var found = null;
+      options.forEach(function (o) { if (o.name === name) found = o; });
+      if (!found) return false;
+      api.value = found.name;
+      api.gloss = found.gloss || "";
+      paint(); build();
+      if (cfg.onChange) cfg.onChange();
+      return true;
+    };
     api.close = close;
 
     paint();
@@ -1420,6 +1435,12 @@
      first answers the other common question, which a returning reader
      currently has to scroll the whole shelf to answer. */
 
+  /* The order the shelf opens in. Named once, because three separate
+     places have to agree on it: the menu that selects it at startup,
+     the reset button that returns to it, and the count line that must
+     not mistake it for a filter. */
+  var DEFAULT_ORDER = "Newest first";
+
   var shelfOrder = Array.prototype.slice.call(list.children);
 
   function minutesOf(s) {
@@ -1436,21 +1457,55 @@
       shelfOrder.forEach(function (el) { list.append(el); });
       groupRows.forEach(function (g) { g.el.classList.remove("sorted-away"); });
       rows.forEach(function (r) { r.el.classList.remove("flat"); });
-    } else {
-      /* Any other order breaks the series apart, so the headings step
-         aside and the member books lose their indent — a group heading
-         above books that are no longer its own would be a lie. */
+    } else if (mode === "Shortest first") {
+      /* Length breaks a series apart and there is no honest way round
+         it: a group is not a length, so it has no place on a shelf
+         ordered by one. The headings step aside and the member books
+         lose their indent — a group heading above books that are no
+         longer its own would be a lie. */
       groupRows.forEach(function (g) { g.el.classList.add("sorted-away"); });
 
-      var ordered = rows.slice();
-      if (mode === "Shortest first") {
-        ordered.sort(function (a, b) { return minutesOf(a.story) - minutesOf(b.story); });
-      } else {
-        ordered.sort(function (a, b) { return b.story.num - a.story.num; });
-      }
-      ordered.forEach(function (r) {
-        r.el.classList.add("flat");
-        list.append(r.el);
+      rows.slice()
+        .sort(function (a, b) { return minutesOf(a.story) - minutesOf(b.story); })
+        .forEach(function (r) {
+          r.el.classList.add("flat");
+          list.append(r.el);
+        });
+
+    } else {
+      /* Newest first, where a series does have an honest position:
+         the book it most recently gained. The group used to be hidden
+         here along with the rest, which meant the one order a
+         returning reader is most likely to open was also the only one
+         that never showed the artwork.
+
+         So the books are laid out newest to oldest, and then each
+         series is lifted back in directly above its own newest member
+         — the covers first, then that book, then the shelf carries on
+         down. A group whose newest book is No. 65 sits at 65, which is
+         where a reader looking for what is new would look for it. */
+      rows.slice()
+        .sort(function (a, b) { return b.story.num - a.story.num; })
+        .forEach(function (r) {
+          r.el.classList.add("flat");
+          list.append(r.el);
+        });
+
+      groupRows.forEach(function (g) {
+        var newest = -1;
+        g.group.books.forEach(function (n) { if (n > newest) newest = n; });
+
+        var anchor = null;
+        rows.forEach(function (r) { if (r.story.num === newest) anchor = r; });
+
+        if (anchor) {
+          g.el.classList.remove("sorted-away");
+          list.insertBefore(g.el, anchor.el);
+        } else {
+          /* Its newest book is not on the shelf — nothing to stand
+             above, so it stays out rather than floating. */
+          g.el.classList.add("sorted-away");
+        }
       });
     }
 
@@ -1484,12 +1539,26 @@
       if (!hidden) first = false;
     });
 
-    var filtering = Boolean(door) || Boolean(query) ||
-                    Boolean(sortMenu && sortMenu.value);
+    /* Two different questions, and they used to share one answer.
+
+       The count line reports what is being *hidden*, so only the door
+       and the search belong in it. Order does not remove a book. With
+       Newest first now the order the shelf opens in, the old test
+       counted the default as filtering and the line read "65 of 65
+       stories" to every arriving reader — a true sentence that says
+       nothing, in place of the one that says the shelf is still
+       growing.
+
+       The reset button asks the other question: has anything moved
+       since arrival? That one does include the order. */
+    var hiding  = Boolean(door) || Boolean(query);
+    var changed = hiding ||
+                  Boolean(sortMenu && sortMenu.value !== DEFAULT_ORDER);
+
     noMatch.hidden = shown !== 0;
-    resetBtn.disabled = !filtering;
+    resetBtn.disabled = !changed;
     if (countEl) {
-      countEl.textContent = filtering
+      countEl.textContent = hiding
         ? shown + " of " + STORIES.length + " stories"
         : COUNT_TEXT;
     }
@@ -1529,10 +1598,17 @@
         { name: "Shortest first", gloss: "eighteen minutes up" },
         { name: "Newest first",   gloss: STORIES.length + " down to 1" }
       ]);
+      /* The shelf opens on the newest book rather than on No. 1.
+         Series order is still the blank option in the menu, so it is
+         one click away and still what the list is built in. */
+      sortMenu.select(DEFAULT_ORDER);
     }
     resetBtn.addEventListener("click", function () {
       doorMenu.clear();
-      if (sortMenu) sortMenu.clear();
+      /* Reset returns the shelf to how it looked on arrival, which is
+         now Newest first — clearing to the blank option would have
+         reset it to something the reader had never seen. */
+      if (sortMenu && !sortMenu.select(DEFAULT_ORDER)) sortMenu.clear();
       if (searchInput) {
         searchInput.value = "";
         searchInput.classList.remove("is-set");
