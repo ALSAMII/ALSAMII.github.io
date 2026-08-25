@@ -31,7 +31,13 @@ OUT_DIR = "read"
 # used to read that measurement.
 
 HEAD_RATIO = 1.18    # larger than the body by this much: a heading
-FURNITURE  = 0.92    # smaller than the body by this much: page furniture
+FURNITURE  = 0.90    # smaller than the body by this much: page furniture
+# 0.92 dropped the glossaries. A glossary is set a step down from
+# the body — in No. 64 it is 8.2pt against a 9.0pt body, a ratio of
+# 0.911 — so a 0.92 cutoff read every entry as a running head and
+# threw it away, leaving the GLOSSARY heading with nothing under it.
+# 0.90 keeps the entries and still discards the folios and the
+# running heads, which sit far below it.
 INDENT_PT  = 4       # further right than the margin: a new paragraph
 MARGIN_PT  = 42      # this close to the top or foot: not the text
 
@@ -94,6 +100,15 @@ def is_verse_head(text):
     return bool(re.match(r"^\s*VERSE\b", text.strip(), re.I))
 
 
+def line_is_italic(line):
+    """True when the whole line is set in italic — not a word of it,
+       all of it. Emphasis inside a sentence fails this; an epigraph
+       set as a block passes."""
+    marks = [("Italic" in c["fontname"] or "Oblique" in c["fontname"])
+             for c in line["chars"] if c["text"].strip()]
+    return bool(marks) and all(marks)
+
+
 def extract(path):
     """Walk the pages and turn lines into blocks. A block is a
        paragraph, a heading, or a line of verse. What sorts them is the
@@ -101,6 +116,10 @@ def extract(path):
        reads the same as one set at 9."""
     blocks = []
     in_verse = False
+    # True from a chapter heading until the first line of ordinary
+    # prose under it. Only inside that window can a line be taken for
+    # verse on its italics alone.
+    at_chapter_top = False
     para = []
 
     def flush():
@@ -142,6 +161,7 @@ def extract(path):
                 if size >= head_at:
                     flush()
                     in_verse = is_verse_head(text)
+                    at_chapter_top = True
                     blocks.append({"t": "h", "h": html})
                     continue
 
@@ -153,6 +173,7 @@ def extract(path):
                         and len(letters) > 2):
                     flush()
                     in_verse = is_verse_head(text)
+                    at_chapter_top = True
                     blocks.append({"t": "h", "h": html})
                     continue
 
@@ -162,8 +183,30 @@ def extract(path):
                     blocks.append({"t": "v", "h": html})
                     continue
 
+                # An epigraph standing under a chapter heading: whole
+                # line italic, and set a step down from the body. The
+                # older rule only knew verse when a heading said the
+                # word VERSE, so a book that opens its chapters with a
+                # prayer instead had those lines rejoined into prose —
+                # and in verse the breaks are the writing.
+                #
+                # Deliberately narrow. It asks for all three at once:
+                # inside the opening run of a chapter, every character
+                # italic, and smaller than the body. Emphasis inside a
+                # sentence is set at body size and fails on the third
+                # count; a whole italic chapter would fail on it too.
+                if (at_chapter_top and line_is_italic(line)
+                        and small_at <= size < body):
+                    flush()
+                    blocks.append({"t": "v", "h": html})
+                    continue
+
                 if size < small_at:
                     continue          # a caption or a stray running head
+
+                # Ordinary prose has begun; the window closes until the
+                # next heading.
+                at_chapter_top = False
 
                 # Two ways a book opens a paragraph, and these ten
                 # use both: an indented first line, or a line of air

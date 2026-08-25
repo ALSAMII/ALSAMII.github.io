@@ -796,6 +796,18 @@ const STORIES = [
     key: "Eleven Cans \u2014 film shot in a walled colony in 1962, delivered by two lawyers when he was nineteen",
     notes: [1, 3, 2],
     synopsis: "Outside Tabriz there is a walled village that appears on no map, built for people whose nerves have stopped reporting and who can no longer be trusted to feel what is happening to them. In 1962 a camera was allowed inside for eleven days. Thirty-four years later a man runs those eleven cans frame by frame and finds what nobody in the room was meant to keep: a clinic cabinet that was never empty, four minutes along the back row of a classroom, and eleven minutes of a woman speaking into the lens in a dialect none of the crew could follow, subtitled in nine languages as a prayer. She is not praying. He is the only person left alive who can hear what she actually said, because she was his mother and she was speaking to him."
+  },
+
+  {
+    num: 64,
+    title: "The House Is Ours",
+    words: "27,800 words",
+    hook: "Between one and three in the afternoon the House sits down, and does not move",
+    door: "Rite",
+    room: "The Garden \u2014 swept earth, a wall with no gate anywhere in it, one pomegranate that stays the same distance away",
+    key: "Kh\u0101m\u016bsh\u012b \u2014 the stillness of the flat hour, which for four years was only people resting",
+    notes: [2, 2, 2],
+    synopsis: "Outside Tabriz, 1938. Homa is twenty-six, a teacher who believed in a country being cured by decree and who signed her name to something she cannot take back, and she comes to a bowl of ground eleven kilometres past the end of a road where forty-one people live without a wall. She is one of the nineteen in twenty who cannot catch what has been done to everybody around her \u2014 the only person there whose body still tells her anything \u2014 and she stays twenty-four years. In the worst week of her life she sits down against the northern wall in the afternoon and does not come back for most of a day, and what she finds she tells one dying girl, as a kindness, because she has nothing else in her hands. By the following spring a hundred people are standing in a garden she has never been able to explain."
   }
 
 
@@ -927,5 +939,15 @@ const TRILOGIES = [
     label: "",
     books: [61, 62],
     synopsis: "Two novellas about one boy and the ritual he was raised inside. In Tehran he beats himself with a chain every Muharram, and in the state that follows he sees something happening three streets from his uncle\u2019s door. Eleven years later in Los Angeles he has built an entire life alone, and cannot say why he knows where all nine mourning halls are and has never once been in one. Ghariban: the stranger, the one far from home, the one nobody came for."
+  },
+  {
+    title: "The Unheard House",
+    /* Two books, so no label \u2014 left empty it takes a plain heading.
+       Without a "banner" the row shows the two spines side by side,
+       which is right until there is a painting of the place itself.
+       When one exists, add banner: "assets/unheard-house.jpg" here. */
+    label: "",
+    books: [63, 64],
+    synopsis: "Two novellas about a walled village outside Tabriz that appears on no map, and about the twenty-two minutes of film that are the only record anyone outside ever saw. One book watches from the cutting room, thirty-four years late, frame by frame. The other is written from inside the wall by the one person there who was never ill, who stayed twenty-four years and paid nothing, and who is the reason a hundred people ended up standing in a garden none of them could describe."
   }
 ];
