@@ -795,7 +795,7 @@ const STORIES = [
     room: "The Cold Room \u2014 fifteen degrees, one frame at a time, eight hours at a stretch",
     key: "Eleven Cans \u2014 film shot in a walled colony in 1962, delivered by two lawyers when he was nineteen",
     notes: [1, 3, 2],
-    synopsis: "Outside Tabriz there is a walled village that appears on no map, built for people whose nerves have stopped reporting and who can no longer be trusted to feel what is happening to them. In 1962 a camera was allowed inside for eleven days. Thirty-four years later a man runs those eleven cans frame by frame and finds what nobody in the room was meant to keep: a clinic cabinet that was never empty, four minutes along the back row of a classroom, and eleven minutes of a woman speaking into the lens in a dialect none of the crew could follow, subtitled in nine languages as a prayer. She is not praying. He is the only person left alive who can hear what she actually said, because she was his mother and she was speaking to him."
+    synopsis: "In 1962 a camera was allowed eleven days inside a walled colony outside Tabriz, where the illness takes the nerve and nobody can be trusted to feel what is happening to them. Thirty-four years later a man runs those eleven cans frame by frame. Eleven minutes are a woman speaking into the lens in a dialect none of the crew could follow, subtitled in nine languages as a prayer. She is not praying. She was his mother, and she was speaking to him."
   },
 
   {
@@ -807,7 +807,7 @@ const STORIES = [
     room: "The Garden \u2014 swept earth, a wall with no gate anywhere in it, one pomegranate that stays the same distance away",
     key: "Kh\u0101m\u016bsh\u012b \u2014 the stillness of the flat hour, which for four years was only people resting",
     notes: [2, 2, 2],
-    synopsis: "Outside Tabriz, 1938. Homa is twenty-six, a teacher who believed in a country being cured by decree and who signed her name to something she cannot take back, and she comes to a bowl of ground eleven kilometres past the end of a road where forty-one people live without a wall. She is one of the nineteen in twenty who cannot catch what has been done to everybody around her \u2014 the only person there whose body still tells her anything \u2014 and she stays twenty-four years. In the worst week of her life she sits down against the northern wall in the afternoon and does not come back for most of a day, and what she finds she tells one dying girl, as a kindness, because she has nothing else in her hands. By the following spring a hundred people are standing in a garden she has never been able to explain."
+    synopsis: "Outside Tabriz, 1938. Homa is twenty-six, a teacher who believed a country could be cured by decree, sent eleven kilometres past the end of the road. She is the only person there who will never fall ill, the only one whose body still reports to her, and she stays twenty-four years. In the worst week of her life she sits down against the wall in the afternoon and does not come back for most of a day. By spring a hundred people are standing in a garden she cannot explain."
   }
 
 
