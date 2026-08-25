@@ -416,12 +416,28 @@
   }
 
   /* Leaving a book starts a short grace period, so the reader can
-     move the mouse onto the feature and click the PDF link. If a book
-     is pinned, the stage falls back to it instead of the theme text. */
+     move the mouse onto the feature and click the PDF link.
+
+     Then the stage goes back to About — always. It used to fall back
+     to the pinned book instead, which is why a book's synopsis could
+     seem stuck: clicking a title pins it, and from that point every
+     hover-away restored the pin rather than the guide. Nothing was
+     holding on to the hover; the pin was being put back.
+
+     So a pinned book is let go here rather than restored. unpin()
+     clears the marker on the row and the address in the bar as well,
+     so nothing is left half-held: what the reader sees, the row and
+     the URL all say the same thing.
+
+     Pinning still does its job everywhere it matters — a book is
+     still pinned when the page is opened on its own address, so a
+     shared link lands on the book. And the SHARE button beside each
+     row is the real way to get that address; it does not depend on
+     this at all. */
   function scheduleHide() {
     clearTimeout(hideTimer);
     hideTimer = setTimeout(function () {
-      if (pinned) restorePinned(); else showPanel(DEFAULT_PANEL);
+      if (pinned) unpin(); else showPanel(DEFAULT_PANEL);
     }, 400);
   }
 

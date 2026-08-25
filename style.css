@@ -4699,6 +4699,25 @@ body.gallery-on { overflow: hidden; }
     transform-origin: left center;
   }
 
+  /* The links lift on hover by scaling 1.09. Across the top of the
+     page that was free — the header had width to spare either side.
+     In the rail there is no spare width: the block is centred and
+     already close to the rule, so 9% of "Author's Notes" pushed the
+     longest link straight through it.
+
+     The lift becomes light instead of size. Nothing in the rail
+     changes geometry on hover, so nothing can leave the column: the
+     gold comes up, the glow widens, and the glyph goes to full
+     strength beside it. */
+  .masthead nav a:hover,
+  .masthead nav .linklike:hover {
+    transform: none;
+    text-shadow: 0 0 30px rgba(216, 166, 95, 0.75);
+  }
+
+  .masthead nav a:hover .nav-ico,
+  .masthead nav .linklike:hover .nav-ico { opacity: 1; }
+
   .masthead nav .nav-ico {
     display: block;
     flex: none;
@@ -5200,4 +5219,13 @@ html[data-theme="light"] .t-banner img {
      leaves them thin on a pale ground. They go to full strength and
      let the gold do the work of holding them back. */
   html[data-theme="light"] .masthead nav .nav-ico { opacity: 1; }
+
+  /* The hover lift is a glow, and a warm glow on a pale sheet is
+     invisible at best and a smudge at worst. On paper the link
+     simply darkens to the lit gold instead. */
+  html[data-theme="light"] .masthead nav a:hover,
+  html[data-theme="light"] .masthead nav .linklike:hover {
+    text-shadow: none;
+    color: var(--ember-lit);
+  }
 }
