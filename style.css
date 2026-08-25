@@ -5266,3 +5266,59 @@ html[data-theme="light"] .t-banner img {
     color: var(--ember-lit);
   }
 }
+
+/* ============================================================
+   Series cards — giving each recommendation its own ground
+   ------------------------------------------------------------
+   .series-cover hangs outside its card on purpose (top: -9%,
+   height: 118%) so the vertical fades fall beyond the box and
+   never read as a cut. On one card that is right. On two, each
+   picture reaches 9% of the card's height into the gap, and at
+   .series-rec's 1.35rem the two overhangs meet in the middle —
+   which is why 61 and 62 run together with no seam between them.
+
+   Three changes, all at 46rem and above, which is the same
+   breakpoint .series-rec already uses for its own spacing:
+   more room between the cards, a shallower hang, and a vertical
+   mask that closes sooner at both ends. The base rules are left
+   exactly as they are, so a phone in portrait — where the cards
+   are shorter and stack with more air — is untouched.
+   ============================================================ */
+@media (min-width: 46rem) {
+
+  /* Room for both overhangs and clean page between them. */
+  .series-rec { gap: 3.5rem; }
+
+  .series-cover {
+    /* Still outside the card, by 4% rather than 9%. */
+    top: -4%;
+    height: 108%;
+
+    /* And the picture finishes before the gap does: the bottom
+       fade begins at 82% and is gone by 93%, rather than running
+       to the very edge of a box that overhangs anyway. */
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.14) 18%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0.88) 56%, #000 68%, #000 95%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.28) 10%, #000 26%, #000 82%, rgba(0,0,0,0.28) 93%, transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.14) 18%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0.88) 56%, #000 68%, #000 95%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.28) 10%, #000 26%, #000 82%, rgba(0,0,0,0.28) 93%, transparent 100%);
+  }
+
+  /* The boundary said out loud, in the mark the shelf rows already
+     use between one book and the next. On ::after, not ::before —
+     the light theme owns .series-card::before for its paper veil. */
+  .series-card + .series-card::after {
+    content: "\25c8";
+    position: absolute;
+    left: 50%;
+    top: -1.75rem;
+    transform: translateX(-50%);
+    font-size: 0.5rem;
+    line-height: 1;
+    color: var(--ember-soft);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 2;
+  }
+}
