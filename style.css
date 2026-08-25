@@ -4627,12 +4627,20 @@ body.gallery-on { overflow: hidden; }
   .masthead .roya-link   { order: 1; }
   .masthead .brand-name  { order: 2; }
   .masthead nav          { order: 3; }
-  .masthead .nav-controls { order: 4; }
+  .masthead .nav-controls { order: 3; }
 
-  /* Sound and Theme sit on the floor of the rail: they are how the
-     room is set, not places to go, and the auto margin above them
-     takes up whatever height the column has left. */
-  .masthead .nav-controls { margin-top: auto; }
+  /* Sound and Theme sit directly under the count line, the pair side
+     by side and centred on the rail. They were pinned to the floor of
+     the column on an auto margin; that put the length of the page
+     between them and everything they belong with. The margin goes, so
+     they close up under the wordmark and the whole rail reads as one
+     block at the head of the page.
+
+     Nothing here centres them by hand — .nav-controls is already a
+     flex row with justify-content: center, and the rail stretches it
+     to the full column, so the pair finds the middle on its own and
+     stays there at any width. */
+  .masthead .nav-controls { margin-top: 0; }
 
   /* --- The stamp ------------------------------------------ */
   .masthead .roya-link { justify-self: stretch; text-align: center; }
@@ -4764,15 +4772,18 @@ body.gallery-on { overflow: hidden; }
      Notes"), that block centres on the strip, and the links range
      left inside it: the icons hold a common edge and the set still
      reads as centred. */
-  /* Spread the full width of the bar: first flush left under the
-     rule, last flush right on the frame's edge, the third exactly
-     between them. Even spacing without a number to keep in step —
-     the three stay evenly placed at every window size. */
+  /* Evenly spread, but only across a measure — not across the whole
+     room. Spread edge to edge the three sat 928px apart on a large
+     screen, which is not a menu, it is three separate labels. Bounded
+     to 40rem they keep even spacing and close up to a set: the gaps
+     come out the same at every window size, and the first link still
+     starts on the shelf's own left edge. */
   .masthead .nav-links {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: min(100%, 40rem);
     gap: 1rem;
   }
 
