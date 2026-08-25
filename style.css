@@ -4538,7 +4538,10 @@ body.gallery-on { overflow: hidden; }
        one for the whole height; column two carries the menu bar, then
        the room, then the floor. */
     --topnav-h: clamp(4rem, 8vh, 5.5rem);
-    grid-template-rows: var(--topnav-h) 1fr auto;
+    /* Two rows now, not three. The small print has gone to the foot
+       of the rail, so the room runs all the way to the bottom of the
+       window. */
+    grid-template-rows: var(--topnav-h) 1fr;
     column-gap: var(--rail-gap);
     /* The menu bar and the rail's rule are both positioned against
        this box. */
@@ -4546,8 +4549,44 @@ body.gallery-on { overflow: hidden; }
   }
 
   .masthead { grid-column: 1; grid-row: 1 / -1; }
-  .hall     { grid-column: 2; grid-row: 2; }
-  .floor    { grid-column: 2; grid-row: 3; }
+  .hall     { grid-column: 2; grid-row: 2 / -1; }
+
+  /* ── THE SMALL PRINT, IN THE RAIL ──────────────────────────
+     It was a bar across the foot of the room: full width, and the
+     room stopped short of the window to make space for two lines
+     nobody reads twice. Stood on end in the rail instead, where
+     there was nothing under the settings but empty column, it costs
+     the reading area nothing at all.
+
+     Positioned against .frame rather than placed in the grid, for
+     the same reason as the menu bar — the markup stays as it is, so
+     every narrow width keeps the footer it already had. */
+  .floor {
+    position: absolute;
+    left: 0;
+    width: calc(var(--frame-pad) + var(--rail-w));
+    bottom: clamp(1rem, 2.2vh, 1.9rem);
+    grid-column: auto;
+    grid-row: auto;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    gap: clamp(0.5rem, 1.1vh, 0.9rem);
+    padding: 0 clamp(0.75rem, 1.4vw, 1.25rem);
+    border-top: 0;
+  }
+
+  /* The notice is the smallest print on the page and belongs at the
+     very bottom of it; the newsletter line is the one with something
+     to say, so it goes above. Reordered here rather than in the
+     markup, where the copyright rightly comes first. */
+  .floor .subscribe-block { order: 1; }
+  .floor p                { order: 2; }
+
+  /* The type for these two lines is set in the footer block further
+     down, after the 56.01rem rule it has to beat. */
 
   /* The rail's rule moves here from .masthead::after.
      It has to: the menu bar is positioned against .frame, and it can
@@ -4668,7 +4707,12 @@ body.gallery-on { overflow: hidden; }
      It hangs off .brand-name rather than off the wrapper, because
      the wrapper is display:contents up above and a dissolved box
      is no place to pin an ornament. */
-  .masthead .brand-name::before {
+  /* The ornament between the stamp and the wordmark is gone. The two
+     are one identity, not two things needing a rule drawn between
+     them, and the column's own step separates them well enough. */
+  .masthead .brand-name::before { content: none; }
+
+  .masthead .brand-name-ornament-retired::before {
     content: "";
     display: block;
     width: 100%;
@@ -4861,6 +4905,17 @@ body.gallery-on { overflow: hidden; }
   /* The bar holds the top of the page open now; this is only the
      air between its rule and the first line under it. */
   .hall { padding-top: clamp(1.1rem, 2.2vh, 1.75rem); }
+
+  /* "64 stories · more coming" is the one line saying how much there
+     is. It was set at body size and floated a good 60px clear of the
+     bottom; it takes real size now and sits on the floor of its
+     column, level with the small print across the rule. */
+  .shelf { padding-bottom: 0; }
+  .more {
+    margin-top: auto;
+    padding: clamp(0.6rem, 1.4vh, 1rem) 0.25rem clamp(0.9rem, 2vh, 1.6rem);
+    font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  }
 }
 
 /* ============================================================
@@ -4952,6 +5007,18 @@ body.gallery-on { overflow: hidden; }
     font-size: 0.5625rem;
     letter-spacing: 0.2em;
     line-height: 1.4;
+  }
+}
+
+/* In the rail the two lines have a 193px column instead of the width
+   of the room, so they come down again and the notice wraps to two
+   lines. This has to sit after the rule above to beat it — same
+   selector, same specificity, so order is all there is. */
+@media (min-width: 64rem) {
+  .floor .caps {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    line-height: 1.65;
   }
 }
 
