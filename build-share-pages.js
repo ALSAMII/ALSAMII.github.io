@@ -61,9 +61,53 @@ function blurb(s) {
   return cut.slice(0, cut.lastIndexOf(" ")) + "…";
 }
 
+/* The size of a cover, read from the file rather than assumed.
+
+   Scrapers that trust og:image:width will also be misled by it, and a
+   wrong number is worse than no number: the catalogue is not uniform —
+   No. 64 is 1000x1499 where No. 65 is 1000x1500 — so stating a
+   constant would have been wrong for some books and quietly wrong at
+   that. This walks the JPEG's segment markers to the frame header and
+   reads the two numbers actually in the file. No dependency: it is
+   twenty lines of byte-counting against a format that has not changed
+   since 1992.
+
+   Returns null when the cover is missing or unreadable, and the tags
+   are then left out entirely, which every scraper handles. */
+function coverSize(file) {
+  let buf;
+  try { buf = fs.readFileSync(file); } catch { return null; }
+  if (buf.length < 4 || buf[0] !== 0xFF || buf[1] !== 0xD8) return null;  /* not a JPEG */
+
+  let i = 2;
+  while (i < buf.length - 9) {
+    if (buf[i] !== 0xFF) { i++; continue; }                 /* resync */
+    const marker = buf[i + 1];
+    if (marker === 0xD8 || marker === 0x01 ||
+        (marker >= 0xD0 && marker <= 0xD7)) { i += 2; continue; }  /* no payload */
+    const len = buf.readUInt16BE(i + 2);
+
+    /* SOF0/1/2/3/5/6/7/9/10/11/13/14/15 — every frame header carries
+       height then width at the same offset. DHT/DAC/DNL are excluded. */
+    const isSOF = (marker >= 0xC0 && marker <= 0xCF) &&
+                  marker !== 0xC4 && marker !== 0xC8 && marker !== 0xCC;
+    if (isSOF) {
+      return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    }
+    i += 2 + len;
+  }
+  return null;
+}
+
 function page(s) {
   const slug = slugFor(s);
+  const coverFile = path.join("covers", pad(s.num) + ".jpg");
   const cover = `${SITE}/covers/${pad(s.num)}.jpg`;
+  const size = coverSize(coverFile);
+  const sizeTags = size
+    ? `<meta property="og:image:width" content="${size.width}">\n` +
+      `<meta property="og:image:height" content="${size.height}">\n`
+    : "";
   const target = `${SITE}/#${slug}`;
   const title = `${s.title} — Chew Z`;
   const desc = blurb(s);
@@ -87,7 +131,12 @@ function page(s) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="${esc(cover)}">
-<meta property="og:image:alt" content="${esc(s.title)} — cover">
+<meta property="og:image:secure_url" content="${esc(cover)}">
+<meta property="og:image:type" content="image/jpeg">
+<!-- Dimensions, read from the file itself. Several scrapers — Slack,
+     LinkedIn, Facebook — will skip an image rather than fetch it to
+     find out how big it is. Omitted when the cover cannot be read. -->
+${sizeTags}<meta property="og:image:alt" content="${esc(s.title)} — cover">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
