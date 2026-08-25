@@ -5322,3 +5322,86 @@ html[data-theme="light"] .t-banner img {
     z-index: 2;
   }
 }
+
+/* ============================================================
+   The rail's three links — held off the divider
+   ------------------------------------------------------------
+   At 64rem and up the nav becomes a vertical rail in the left
+   column, each link an icon and a word. The base size, written
+   for a stack that had a column to itself, tops out at 1.0625rem
+   with 0.14em of tracking — which on the widest screens carries
+   ALL COVERS and AUTHOR'S NOTES right up to the vertical rule
+   that closes the sidebar.
+
+   Two points smaller and a touch tighter. Same breakpoint the
+   rail itself uses, so nothing below 64rem — every phone, in
+   either orientation, and the tablet layouts — is affected.
+   ============================================================ */
+@media (min-width: 64rem) {
+
+  .masthead nav a,
+  .masthead nav .linklike {
+    font-size: clamp(0.75rem, 0.92vw, 0.875rem);
+    letter-spacing: 0.11em;
+  }
+
+  /* The glyph comes down with the words, or it starts to read as
+     the larger of the two things on the line. */
+  .masthead nav .nav-ico {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  /* A little more air between the rail and the rule beside it.
+     The links begin where they always did; it is the right-hand
+     end that is pulled back. */
+  .masthead nav { padding-right: clamp(0.75rem, 1.6vw, 1.5rem); }
+}
+
+/* ============================================================
+   Author's Notes — the reading size, and the hand at the foot
+   ------------------------------------------------------------
+   Two things on this panel.
+
+   The note itself tops out at 1.125rem. On a wide screen that is
+   a short measure of italic set very small in a column with room
+   to spare — the panel reads as a caption rather than as the one
+   place on the site where the author speaks in his own voice.
+   Raised at 64rem and above only, so every phone and tablet size
+   keeps the reading scale already tuned for it.
+
+   And the signature. It was carrying .caps — sans, 11px, 0.28em
+   of tracking, uppercase, and the panel's near-white ink — which
+   is the dress of a label, not of a name at the end of a piece of
+   writing. It is set in the covers' serif now, italic, in gold,
+   at a size that closes the passage.
+   ============================================================ */
+@media (min-width: 64rem) {
+  .panel .note {
+    font-size: calc(clamp(1.0625rem, 1.35vw, 1.3125rem) * var(--read-up));
+    line-height: 1.75;
+  }
+}
+
+/* The name at the foot. Unscoped: it was wrong at every width, and
+   a signature that changes character between a phone and a desk is
+   two signatures. Specificity stays under the light theme's own
+   rule above, which restates the halo and nothing else. */
+.panel .signature {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.375rem, 1.8vw, 1.75rem);
+  /* .caps set both of these and neither belongs on a name. */
+  letter-spacing: 0.015em;
+  text-transform: none;
+  color: var(--ember);
+  /* Air above it, so it sits apart from the last line rather than
+     reading as one more line of the note. */
+  margin-top: 1.9rem;
+  opacity: 0.92;
+}
+
+/* The em dash is a lead-in, not part of the name — held back a
+   little so the eye lands on CHEW Z. */
+.panel .signature { text-shadow: 0 1px 20px rgba(5, 4, 3, 0.65); }
