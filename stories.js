@@ -187,7 +187,7 @@ const STORIES = [
   {
     num: 13,
     title: "A Stranger's Favorite Song",
-    words: "22,200 words",
+    words: "26,500 words",
     hook: "What song did his father love? He can't answer",
     door: "Rite",
     room: "Losing Him Twice \u2014 once to the forgetting, once to the death",
@@ -451,7 +451,7 @@ const STORIES = [
   {
     num: 35,
     title: "The Weight of Her",
-    words: "26,500 words",
+    words: "25,400 words",
     hook: "The first year has visitors and casseroles",
     door: "Withholding",
     room: "The Sixth Year \u2014 the visitors stopped, and nobody noticed they had",
@@ -765,7 +765,7 @@ const STORIES = [
   {
     num: 61,
     title: "The Road to Shaam",
-    words: "48,400 words",
+    words: "49,000 words",
     hook: "On the seventh night he leaves his body and sees an alley three streets from his uncle\u2019s door",
     door: "Rite",
     room: "The Yard \u2014 a walled space behind a butcher\u2019s shop in south Tehran, every Muharram since he was nine",
@@ -777,7 +777,7 @@ const STORIES = [
   {
     num: 62,
     title: "The Evening of Strangers",
-    words: "28,400 words",
+    words: "28,600 words",
     hook: "Nine mourning halls in Los Angeles, and he has never once decided not to go",
     door: "Withholding",
     room: "Eleven Years \u2014 a life built alone, entirely, and the strength that took",
