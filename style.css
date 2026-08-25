@@ -4785,11 +4785,6 @@ body.gallery-on { overflow: hidden; }
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* Centred on the bar. The set used to start on the shelf's left
-       edge and run out halfway, leaving the whole right half of the
-       bar empty; centred, it sits over the middle of the page and
-       the space falls evenly either side of it. */
-    justify-content: center;
     justify-self: auto;
     padding-left: 0;
     margin-top: 0;
