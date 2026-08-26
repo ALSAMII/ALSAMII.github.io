@@ -1623,15 +1623,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    little low, the winged figure centred on her own light. */
 .start-row--whirl  .start-scene { object-position: 50% 44%; }
 
-/* Mang and Mustard keeps its subject in the middle band of its own
-   frame rather than running the full height, so unlike the other
-   two it needed no widening — a plain crop holds the masked figure,
-   the burning horizon behind him and the base of the gas cloud at
-   every card shape. Held right and a little high: right because a
-   portrait card crops hard from the sides and he sits far over,
-   high because what is below him is open water and what is above is
-   the cloud, which is the thing worth keeping. */
-.start-row--mustard .start-scene { object-position: 80% 46%; }
+/* Mang and Mustard, The Second Swimmer, Samba and Meat That Dreams
+   were repainted as wider, zoomed-out scenes in August 2026, each with
+   its subject at the right-hand end and its own dark to the left. All
+   four now take the widened-picture treatment described under The
+   Glow below, and their crops are set there with the other two. */
 /* The can, its flame and the burning figure above it stack into one
    tall column, so a short landscape card cropped it to a waistband
    of the can and lost both ends. The picture was widened to 3:1
@@ -1643,15 +1639,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--alarm  .start-scene { object-position: 92% 50%; }
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
-.start-row--swimmer .start-scene { object-position: 58% 56%; }
-
-/* Meat That Dreams is a single deep corridor with the figure standing
-   in it, so almost everything that matters sits in one narrow vertical
-   strip — and the strip runs nearly the full height of the picture.
-   A centred crop keeps his suit and loses his head, which is the one
-   part that tells you something is wrong with him. The values below
-   are measured off that. */
-.start-row--dreams .start-scene { object-position: 62% 30%; }
 
 /* The Glow's picture is a standing figure that fills the height of its
    own frame, which "cover" cannot survive on a short landscape card —
@@ -1712,19 +1699,55 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    strip is fully on the glass at 43.5rem and disappears entirely by
    38.5rem; the clamp runs the pull-back from nothing to the full
    5rem across that range, and holds it there on every phone. */
-.start-row--face .start-scene,
-.start-row--glow .start-scene { object-position: calc(100% - 4rem) 50%; }
+.start-row--face    .start-scene,
+.start-row--glow    .start-scene,
+.start-row--mustard .start-scene,
+.start-row--swimmer .start-scene,
+.start-row--samba   .start-scene,
+.start-row--dreams  .start-scene { object-position: calc(100% - 4rem) 50%; }
 
 @media (min-width: 56.01rem) and (max-width: 59.99rem) {
-  .start-row--face .start-scene,
-  .start-row--glow .start-scene { object-position: calc(100% - 4.5rem) 50%; }
+  .start-row--face    .start-scene,
+  .start-row--glow    .start-scene,
+  .start-row--mustard .start-scene,
+  .start-row--swimmer .start-scene,
+  .start-row--samba   .start-scene,
+  .start-row--dreams  .start-scene { object-position: calc(100% - 4.5rem) 50%; }
 }
 
 @media (max-width: 56rem) {
-  .start-row--face .start-scene,
-  .start-row--glow .start-scene {
+  .start-row--face    .start-scene,
+  .start-row--glow    .start-scene,
+  .start-row--mustard .start-scene,
+  .start-row--swimmer .start-scene,
+  .start-row--samba   .start-scene,
+  .start-row--dreams  .start-scene {
     object-position: calc(100% - clamp(0rem, 43.5rem - 100vw, 5rem)) 50%;
   }
+}
+
+/* The four repainted scenes are 3:1 like The Glow. Their cards are
+   short, so on the panel the slot is a little wider than that and
+   cover takes a small crop from the top and bottom — more on Mang and
+   Mustard, whose note is the shortest on the panel. The figure below
+   says which end to keep: the gas cloud and the lamp sit low, so that
+   picture is held a little low; the boat's lamps and the sunset sit at
+   the horizon and the swimmer below it, so the sea is held low too;
+   the diver hangs below the surface light; the corridor is centred on
+   its doorway. The vertical figure only ever acts on the panel — on a
+   phone the slot is taller than the picture and shows all of it. */
+@media (min-width: 60rem) {
+  .start-row--mustard .start-scene { object-position: calc(100% - 4rem) 62%; }
+  .start-row--swimmer .start-scene { object-position: calc(100% - 4rem) 62%; }
+  .start-row--samba   .start-scene { object-position: calc(100% - 4rem) 64%; }
+  .start-row--dreams  .start-scene { object-position: calc(100% - 4rem) 48%; }
+}
+
+@media (min-width: 56.01rem) and (max-width: 59.99rem) {
+  .start-row--mustard .start-scene { object-position: calc(100% - 4.5rem) 62%; }
+  .start-row--swimmer .start-scene { object-position: calc(100% - 4.5rem) 62%; }
+  .start-row--samba   .start-scene { object-position: calc(100% - 4.5rem) 64%; }
+  .start-row--dreams  .start-scene { object-position: calc(100% - 4.5rem) 48%; }
 }
 
 /* ---- The two deep-water cards ----
@@ -1761,44 +1784,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
       radial-gradient(112% 110% at 62% 46%, #000 32%, rgba(0,0,0,0.6) 68%, transparent 100%);
   }
 
-  /* Anchored high rather than centred: on a tall card "cover" takes its
-     crop off both ends, and what Samba loses that way is the surface
-     light — the thing that tells you which way is up. */
-  .start-row--samba .start-scene { object-position: 54% 30%; }
-
-  /* A tall card crops the sides off a wide picture, and a centred crop
-     takes the boat's bow with them. Held right instead: the whole boat
-     survives, both its lamps with it, and the swimmer stays where the
-     mask is still solid. Nothing is lost on the left but empty water,
-     which is the half the words want anyway. */
-  .start-row--swimmer .start-scene { object-position: 70% 50%; }
-
-  /* A tall card crops the sides away, and centring loses the figure to
-     the right edge. Held well right, the whole of him stands in frame
-     head to shoe with the corridor and its far window beside him, and
-     what goes is only the empty wall on the left — which is the half
-     the words are sitting on. */
-  .start-row--dreams .start-scene { object-position: 78% 50%; }
+  /* The crops that used to follow here — Samba held high, the boat and
+     the corridor held right — belonged to the pictures these three
+     rows carried before August 2026. The repainted scenes are widened
+     and anchored with the other full-height rows above, and on a tall
+     card the slot shows their full height, so nothing is chosen
+     here any more. */
 }
 
-/* On a wide card "cover" shows a horizontal band of the picture and
-   drops the rest. The Second Swimmer's band is measured off her: a
-   centred one cuts her at the bottom edge, where the mask is already
-   thinning, and she is the subject the card is about. Lowered to 62%
-   she sits at roughly two-thirds down the card — clear of the fade,
-   with the boat's hull and its column of light still in frame above
-   her, even though the crew go. */
-@media (min-width: 56.01rem), (orientation: landscape) and (max-height: 30rem) {
-  .start-row--swimmer .start-scene { object-position: 50% 62%; }
-
-  /* A wide card shows a shallow horizontal band. Centred, that band
-     lands on his jacket and cuts the head clean off, which turns the
-     one uncanny thing in the picture into an anonymous suit. Raised to
-     22% the band holds his head and shoulders, the receding doorframes
-     and the lit window at the end of the corridor — everything the
-     scene is actually for. */
-  .start-row--dreams .start-scene { object-position: 50% 22%; }
-}
+/* Likewise the wide-card bands once set here for The Second Swimmer
+   (62%) and Meat That Dreams (22%): the repainted pictures are widened
+   so a wide card shows nearly all of their height, and what little it
+   chooses is set with the others above. */
 
 /* ---- Text ---- */
 /* The words, held to the side of the card the mask has cleared. A
@@ -2572,7 +2569,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    65 — she and her chair fill the lower two thirds; anchored low. */
 .series-card[data-book="63"] .series-cover     { width: 100%; }
 .series-card[data-book="63"] .series-cover img { object-position: 100% 82%; }
-.series-card[data-book="64"] .series-cover img { object-position: 62% 12%; }
+.series-card[data-book="64"] .series-cover img { object-position: 82% 12%; }
 .series-card[data-book="65"] .series-cover img { object-position: 78% 92%; }
 
 /* Brighter than it came. Both pictures were painted dark for a slot
@@ -2737,6 +2734,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   white-space: normal;
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
 }
+
+/* Beneath the title line rather than beside it — a line of its own,
    so the title and its Persian twin have the whole width and the label
    never decides where they break. */
 .series-span {
