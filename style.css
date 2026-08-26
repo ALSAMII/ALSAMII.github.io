@@ -5977,12 +5977,16 @@ html[data-theme="light"] .panel .signature {
    softening the letters. Plain ink on plain page, one step darker than
    the secondary grey, is what actually reads. */
 html[data-theme="light"] .start-note {
-  color: #2c3136;
-  /* A faint page-coloured halo, only where a line runs onto the
-     picture — enough to keep the letters whole without the glow that
-     was softening them before. */
-  text-shadow: 0 0 6px rgba(240, 241, 241, 0.95),
-               0 0 2px rgba(240, 241, 241, 0.9);
+  /* Darker than the #2c3136 it was — that was a slate grey chosen to
+     sit politely on a picture, and the picture is no longer there to
+     sit on. On clean paper it read as washed out at this size. */
+  color: #16191d;
+  /* NO text-shadow. The halo was holding the letters off the artwork,
+     and now that the veil above is opaque there is nothing to hold
+     them off — all it was doing was putting a soft edge on every
+     stroke, which at this size is exactly what made the synopses look
+     unclear. Plain ink on plain paper is sharper. */
+  text-shadow: none;
 }
 
 html[data-theme="light"] .start-title,
@@ -6002,11 +6006,40 @@ html[data-theme="light"] .start-heading {
 html[data-theme="light"] .series-card::before {
   content: "";
   position: absolute;
-  z-index: 0;
-  inset: -8% -5rem -8% -1rem;
+  /* ONE, not nought. This is the whole reason the cards looked grey on
+     paper: .series-cover is also z-index 0, and two absolutely
+     positioned boxes at the same level are stacked in document order —
+     so the picture, being a real child, painted over a veil that is a
+     generated one, and the veil did nothing at all. It has to sit
+     ABOVE the artwork to veil it. .series-body is z-index 1 as well
+     and comes later still, so the words stay on top of both. This is
+     how .start-row::before has always been written; this rule had
+     simply been missed. */
+  z-index: 1;
+  inset: -10% -5rem -10% -1.5rem;
+  /* Opaque, not 'nearly'. At 0.95 the page still let five per cent of
+     a near-black painting through, which over the measure of a
+     paragraph is the difference between paper and grey paper. It holds
+     flat until past the end of the longest line and only then falls
+     away.
+
+     And it is written out in full. This rule asked for var(--page),
+     which is not a variable this stylesheet has ever defined — so the
+     gradient was invalid, the background computed to `none`, and the
+     veil was dead twice over: behind the picture AND unpainted. The
+     page base is --night, set to #eceded in the light block. A veil
+     whose whole job is to BE the page should not depend on a name
+     that might not resolve, so the literal is used here, exactly as
+     .start-row::before uses it. */
   background: linear-gradient(to right,
-    var(--page) 0, var(--page) 46%, rgba(240, 241, 241, 0.72) 68%,
-    rgba(240, 241, 241, 0.2) 88%, transparent 100%);
+    rgb(236, 237, 237) 0, rgb(236, 237, 237) 56%,
+    rgba(236, 237, 237, 0.88) 66%, rgba(236, 237, 237, 0.5) 76%,
+    rgba(236, 237, 237, 0.16) 86%, transparent 96%);
+  /* Taken to nothing top and bottom so the veil has no edge of its
+     own — a flat rectangle of page colour over a textured backdrop
+     reads as a panel, which is what it must not look like. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
   pointer-events: none;
 }
 
@@ -6020,14 +6053,31 @@ html[data-theme="light"] .series-cover {
 /* The dedication portrait on a pale page: a dark blue painting behind
    near-black type needs to stand further back still. */
 html[data-theme="light"] .series-portrait {
-  opacity: 0.22;
-  filter: saturate(0.85) brightness(1.1);
+  /* A near-black painting cannot be laid on paper at any strength
+     without greying it: at 0.22 the empty ground of the canvas came
+     out around 185 against a page of 234, which is a soft grey box
+     with two faces in it rather than two faces. The picture is taken
+     back until the ground is within a dozen units of the paper and
+     only the lit part of each face still registers.
+
+     Brightening it further is not the answer and was tried: lifting
+     the picture until the ground reaches paper clips her skin to white
+     first, so the residue outlives the subject. Nor is inverting it
+     and multiplying into the page, which does clear the ground
+     perfectly and turns both women into photographic negatives — light
+     eyes in dark cheeks — which is worse than the grey ever was. Faint
+     and the right way up is the trade that works. */
+  opacity: 0.08;
+  filter: saturate(0.75) brightness(1.12) contrast(0.95);
 }
 
-html[data-theme="light"] .series-dedication em { color: #2c3136; }
+html[data-theme="light"] .series-dedication em { color: #1c2026; }
 
 html[data-theme="light"] .series-note,
-html[data-theme="light"] .series-blurb { color: #2c3136; }
+html[data-theme="light"] .series-blurb {
+  color: #16191d;
+  text-shadow: none;
+}
 
 html[data-theme="light"] .series-title,
 html[data-theme="light"] .series-num,
@@ -6162,12 +6212,12 @@ html[data-theme="light"] .start-row::before {
      so the veil has to match it at every width rather than fading on
      its own schedule. */
   background: linear-gradient(to right,
-    rgba(236, 237, 237, 0.95) 0,
-    rgba(236, 237, 237, 0.94) 52%,
-    rgba(236, 237, 237, 0.86) 63%,
-    rgba(236, 237, 237, 0.45) 72%,
-    rgba(236, 237, 237, 0.15) 80%,
-    transparent 88%);
+    rgb(236, 237, 237) 0,
+    rgb(236, 237, 237) 58%,
+    rgba(236, 237, 237, 0.88) 67%,
+    rgba(236, 237, 237, 0.5) 76%,
+    rgba(236, 237, 237, 0.16) 85%,
+    transparent 94%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
 }
