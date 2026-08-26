@@ -1666,7 +1666,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    edge sitting mid-card as a hard line the mask cannot reach, and
    darkening the picture to hide it puts a black rectangle over a page
    that is warm dark grey. */
-.start-row--glow .start-scene { object-position: 86% 50%; }
+/* Its crop is set with The Illuminated Face's below — the two pictures
+   are the same shape and want the same frame. */
 
 /* The Illuminated Face is one head that fills the height of its own
    frame, split down the middle by a seam of gold — the same problem
@@ -1679,16 +1680,36 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    else. Its .webp is written at 2400px rather than the script's
    1440px cap, because a 3:1 picture at 1440px leaves the face itself
    at about 600px, which is soft on a 2x screen. */
-.start-row--face .start-scene { object-position: calc(100% - 4.5rem) 50%; }
+/* The Glow's picture is the same shape — a standing figure at the
+   right-hand end of a 3:1 canvas that is otherwise its own dark — and
+   has had the same treatment, with 22% of dark added above and below
+   as well, so her head and feet sit inside the band the mask holds
+   solid rather than in the fades at either end.
 
-/* Not quite hard right. The scene's frame runs 5rem past the card
-   and the page clips it about 1rem past the panel, so a picture
-   anchored at 100% put the lit half of her face in the clipped
-   strip. Pulled back by the width of that strip, the face ends where
-   the visible picture ends. On a phone the whole 5rem is off the
-   glass, so it pulls back a little further. */
+   Both are anchored hard right, where the figure is. But the scene's
+   frame runs 5rem past the card and the page clips it about 1rem past
+   the panel, so a picture anchored at 100% puts its subject in the
+   clipped strip. The first fix tried — pulling the picture back with
+   object-position — left the frame's last 3rem empty, and on a tablet,
+   where that strip is on the glass, the picture ended in a hard
+   vertical edge mid-page, exactly the line the note above warns
+   about. The frame itself is narrowed instead: its right edge sits at
+   the clip line, so the picture ends where the visible picture ends
+   and the mask's own right-hand fade is what closes it. On a phone the
+   panel is the whole glass, so the frame ends at the card's edge. */
+.start-row--face .start-scene,
+.start-row--glow .start-scene {
+  right: -1rem;
+  width: calc(124% - 4rem);
+  object-position: 100% 50%;
+}
+
 @media (max-width: 56rem) {
-  .start-row--face .start-scene { object-position: calc(100% - 3rem) 50%; }
+  .start-row--face .start-scene,
+  .start-row--glow .start-scene {
+    right: 0;
+    width: calc(124% - 5rem);
+  }
 }
 
 /* ---- The two deep-water cards ----
