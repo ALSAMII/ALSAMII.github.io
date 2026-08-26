@@ -2376,25 +2376,44 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   position: absolute;
   z-index: 0;
   left: 50%;
-  /* Centred now. The old translateX(-38%) pushed her right so her eyes
-     fell past the ends of the lines; a wreath has to be concentric
-     with the words or one of its two faces is off the page. */
-  transform: translateX(-50%);
-  top: -20%;
-  height: 140%;
-  /* Wider than the block, so the two faces are carried out toward its
-     edges and the black middle covers the measure the text is set to.
+  /* Centred sideways, and lifted by a share of its OWN height rather
+     than the block's, so the band of faces keeps the same place
+     against the paragraph whatever the block does. The faces sit
+     28.7–50.5% down the canvas, centred at 39.6%; taking 11% back off
+     the top leaves that centre a little under a third of the way down
+     the picture, which is where the paragraph is. */
+  top: 0;
+  transform: translate(-50%, -11%);
+  /* Height is not asked for — it follows the width, and it follows it
+     at the artwork's own proportion, so the box and the picture are
+     the same shape and `cover` never has anything to crop. That is
+     what makes every figure in this rule exact: crop it and the faces
+     move, and the measure the text is set to stops matching the gap
+     between them. It was cropping before, which is why the picture
+     came apart between 900 and 1200px, where the block is at its
+     tallest and narrowest. */
+  aspect-ratio: 1592 / 1254;
+  height: auto;
+  /* Barely wider than the block, and that is the whole of the fix for
+     a picture that used to stick out over the shelf.
 
-     148% is not a taste figure, it is the geometry. The faces run from
-     16% to 84% of the canvas, so at 148% that 68% band is 1.006 of the
-     block — both heads whole, each just touching an edge. Wider and
-     they start going off the page; narrower and they close in on the
-     words. Everything below is measured from this number: the black
-     between them is the 41% from 31% to 72%, which at 148% is 61% of
-     the block, and that is the measure the text is held to. Change
-     this and .series-blurb and .series-dedication have to move with
-     it or the lines will cross a face again. */
-  width: 148%;
+     The artwork carries its own gutter now: the two heads run 12.8% to
+     24.6% and 78.3% to 87.2% across the canvas, so their outer span is
+     74.4% and the black between them is 53.7%. At 114% of the block
+     that gap is 61% — the measure the paragraph is set to — while the
+     heads span only 85% of the block, which leaves them a margin of
+     nearly 8% at each side and puts the faces WHOLLY INSIDE the block.
+     Nothing lit is ever drawn outside it.
+
+     Before, the same 61% gap was got by blowing the picture up to 148%
+     and letting the heads hang 161px past the block on each side, over
+     the shelf column, where the mask had already gone fully opaque.
+     Widening the void in the painting instead buys the same gap at a
+     third of the overhang and makes the faces smaller into the
+     bargain. If the artwork is ever repainted, re-measure those three
+     figures — everything here and the 61% on .series-blurb comes off
+     them. */
+  width: 114%;
   pointer-events: none;
   /* Only the outer edge is masked now, and only just: the painting
      carries its own darkness into the middle, so there is nothing for
@@ -2408,10 +2427,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      it they add instead of intersect, which is the bug that used to
      leave the card paintings ending in a hard edge. One mask per
      element needs no compositing anywhere. */
+     The fade is finished by 6%, which is where the block's edge falls:
+     the box is 114% of the block, so the overhang is 7% of the block
+     at each side, and 7 of 114 is 6.1% of the box. Everything drawn
+     outside the block is therefore inside the fade, and what is there
+     to fade is empty canvas — the nearest lit pixel is at 12.8%. A
+     gentler ramp would put opaque paint over the shelf again, which
+     was the bug. Move the width and this moves with it. */
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.55) 5%, #000 12%, #000 88%, rgba(0,0,0,0.55) 95%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 2.5%, #000 6%, #000 94%, rgba(0,0,0,0.4) 97.5%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.55) 5%, #000 12%, #000 88%, rgba(0,0,0,0.55) 95%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 2.5%, #000 6%, #000 94%, rgba(0,0,0,0.4) 97.5%, transparent 100%);
   /* Stronger than the 0.42 she was held to. That figure was set when
      her face was directly under the densest part of the paragraph and
      had to be whispered; the words now fall on painted black, so she
@@ -2427,18 +2453,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    and bottom instead, where this painting has nothing but dark. */
 @media (max-width: 46rem) {
   .series-portrait {
-    /* Wider than the panel's 148%, and for the opposite reason. A phone
-       block is 373px of which the words need most, so holding both
-       faces whole inside it would leave a measure of about 220px —
-       five words to a line. Here the two heads are allowed to run off
-       the sides instead: at 190% the black between them is 78% of the
-       block, which is a line a phone can read, and what goes off the
-       edge is the outer half of each head, which is hair. */
-    width: 190%;
-    top: -5%;
-    height: 110%;
+    /* A phone block is 373px and the words need most of it, so the
+       picture is opened out until the two heads just fill the block
+       edge to edge — 74.4% of the canvas at 134% is 1.00 — which is
+       as far as it can go before lit paint starts leaving the block.
+       The gap between them is then 72%, and that is the measure the
+       paragraph takes here. */
+    width: min(134%, 98vw);
+    transform: translate(-50%, -9%);
     opacity: 0.62;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
   }
+
 }
 
 .series-portrait img {
@@ -2518,10 +2547,20 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .series-dedication em { text-wrap: balance; }
 }
 
-/* Sideways on a phone the block is short and wide, and a portrait
-   stretched across it is mostly mask; let it go. */
+/* Sideways on a phone the picture used to be switched off outright:
+   the block goes short and wide, and a single face stretched across it
+   was mostly mask. A wreath is the one arrangement that WANTS a short
+   wide block — the two heads sit at the ends of a long line and the
+   dedication runs between them — so it stays on. What it needs instead
+   is holding back in size: the block is 810px across here on a screen
+   only 390px tall, and a box scaled off that width alone stands taller
+   than the screen and runs into the sections above and below. */
 @media (orientation: landscape) and (max-height: 30rem) {
-  .series-portrait { display: none; }
+  .series-portrait {
+    width: 92%;
+    transform: translate(-50%, -13%);
+    opacity: 0.55;
+  }
 }
 
 .series-blurb {
@@ -2562,19 +2601,58 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    wins where container queries are understood; where they are not,
    the phone rules still cover the phone. */
 @container intro (max-width: 34rem) {
-  .series-blurb { max-width: 78%; }
+  /* The gap between the heads is 53.7% of whichever of the two widths
+     below actually wins, so the measure is written the same way and
+     the two can never disagree: 0.537 × 134% ≈ 72%, 0.537 × 98vw ≈
+     52.6vw. */
+  .series-blurb { max-width: min(72%, 52.6vw); }
 
   .series-portrait {
-    width: 190%;
-    top: -8%;
-    height: 116%;
+    /* 134% opens the heads out to the block's own edges. The second
+       term is what stops them going past the SCREEN'S: on a phone the
+       block is very nearly the window, so 134% of it hangs 43px off
+       the side, where the page's overflow clip cuts it dead straight —
+       a picture with a sliced edge, which is what "sticks out" looks
+       like on a phone. Held to the window instead, the box ends where
+       the screen does and the fade below has room to finish first.
+       98 rather than 100 so a desktop scrollbar cannot make vw wider
+       than the space actually painted. */
+    width: min(134%, 98vw);
+    transform: translate(-50%, -9%);
     opacity: 0.62;
+    /* The fade finishes at 12.5%, and the first lit pixel is at 12.8% —
+       so the picture is at full strength exactly where the faces
+       start, and everything outside them is on its way to nothing. */
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
   }
 
   /* The hand-placed break in the dedication was measured for a wide
      line and strands a word on a narrow one. */
   .series-dedication em br { display: none; }
   .series-dedication em { text-wrap: balance; }
+}
+
+/* ---- The measure, where the box is set by something other than the
+   block ----
+   Two cases size the picture off the window rather than off the block,
+   and the paragraph has to be told about both or it goes on using the
+   61% that belongs to the 114% box and runs its lines back over the
+   faces. They are written here, after .series-blurb's own rule, purely
+   so they win: they carry no more weight than it does, and up beside
+   the portrait rules they were being overruled by it — which is what
+   left the 600px window and the sideways phone with a paragraph wider
+   than the gap it was supposed to sit in. */
+@media (max-width: 46rem) {
+  .series-blurb { max-width: min(72%, 52.6vw); }
+}
+
+/* Sideways on a phone the box is 92% of the block, so the gap between
+   the heads is 53.7% of that — 49%. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .series-blurb { max-width: min(34rem, 49%); }
 }
 
 .series-rec {
