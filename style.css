@@ -1668,6 +1668,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    that is warm dark grey. */
 .start-row--glow .start-scene { object-position: 86% 50%; }
 
+/* The Illuminated Face is one head that fills the height of its own
+   frame, split down the middle by a seam of gold — the same problem
+   The Glow had, and the same answer: the picture was widened to 3:1,
+   extended leftward with its own night and cross-faded so the join is
+   invisible, so cover scales it by width and keeps the whole head at
+   every card shape. Anchored hard right, where the face is: a short
+   landscape card shows the head with the seam under the clear side of
+   the mask, and a portrait card's narrow slice is the face and nothing
+   else. Its .webp is written at 2400px rather than the script's
+   1440px cap, because a 3:1 picture at 1440px leaves the face itself
+   at about 600px, which is soft on a 2x screen. */
+.start-row--face .start-scene { object-position: calc(100% - 4.5rem) 50%; }
+
+/* Not quite hard right. The scene's frame runs 5rem past the card
+   and the page clips it about 1rem past the panel, so a picture
+   anchored at 100% put the lit half of her face in the clipped
+   strip. Pulled back by the width of that strip, the face ends where
+   the visible picture ends. On a phone the whole 5rem is off the
+   glass, so it pulls back a little further. */
+@media (max-width: 56rem) {
+  .start-row--face .start-scene { object-position: calc(100% - 3rem) 50%; }
+}
+
 /* ---- The two deep-water cards ----
    Both of these rows carry long summaries, so their cards are tall —
    and the shared mask fades the picture out from four-fifths down,
@@ -2652,7 +2675,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    break the joins — and no italic. A touch smaller than the Latin,
    because nastaliq carries its height in the descenders and reads
    larger than its em size. */
-.series-title-fa {
+.series-title-fa,
+.start-title-fa {
   margin-left: 0.6rem;
   font-family: "Gulzar", "Noto Nastaliq Urdu", "Markazi Text", serif;
   font-weight: 400;
@@ -2664,7 +2688,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 0.9;
 }
 
-/* Beneath the title line rather than beside it — a line of its own,
+/* On a Start Here card the title line is nowrap, so the Persian name
+   carries its own leading space and is the one thing allowed to
+   break: too wide for the line, it drops whole to the next one. The
+   text-shadow is the title's, so it sits on the picture the same
+   way. */
+.start-title-fa {
+  /* The margin stays: the span's own leading space is a right-to-left
+     one, so it lands on the far side of the name, not between it and
+     the English. */
+  margin-left: 0.6rem;
+  white-space: normal;
+  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
+}
    so the title and its Persian twin have the whole width and the label
    never decides where they break. */
 .series-span {
