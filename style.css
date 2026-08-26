@@ -2575,18 +2575,23 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    painting, so only the vertical figure does anything there; on a
    phone it is taller, so only the horizontal one does.
 
-   63 — the restorer is at the right and the desk runs to the bottom,
-   so the slot is anchored low and to the right, and the picture is
-   narrowed a little so it sits further right of the words and shows
-   more of its height.
+   63 — repainted (Aug 2026): a wider room, the shelves of cans on
+   the left in the dark and the restorer, his lit screen and the window
+   all in the right third. Anchored right and a little low, so the slot
+   keeps the screen, his hands and the city and loses the bare ceiling
+   first. The picture keeps the shared 112% width now that its left is
+   painted empty — what reaches under the words is shelf-dark.
    64 — the tree's crown is at the very top and the seated figures'
    feet near the bottom; anchored high, which keeps the crown and
    loses only bare ground.
-   65 — she and her chair fill the lower two thirds; anchored low. */
-.series-card[data-book="63"] .series-cover     { width: 100%; }
-.series-card[data-book="63"] .series-cover img { object-position: 100% 82%; }
+   65 — repainted (Aug 2026): she sits against the window in the right
+   half, the desk with its lamp and film-strip below her to the right,
+   and the whole left half is bare wall and floor. Anchored right and
+   just below centre: her head is at mid-height and the lit desk is in
+   the lower third, and both are wanted. */
+.series-card[data-book="63"] .series-cover img { object-position: 100% 64%; }
 .series-card[data-book="64"] .series-cover img { object-position: 82% 12%; }
-.series-card[data-book="65"] .series-cover img { object-position: 78% 92%; }
+.series-card[data-book="65"] .series-cover img { object-position: 88% 66%; }
 
 /* Brighter than it came. Both pictures were painted dark for a slot
    that fades them further, and behind a mask on a black page they were
@@ -2634,6 +2639,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 @media (max-width: 23.5rem) { .series-body { max-width: 74%; } }
 
+/* On the panel the paragraph is set narrower still, so it runs to five
+   or six short lines instead of three long ones and stops where the
+   painting is still thin. At 70% the last words of every line were
+   lying on the lit half of the picture — the restorer's screen, the
+   tea glass on the sill — and the picture was being read through the
+   prose. The title line is let out past the block on its own (below)
+   so the number, the name and its Persian twin still share a line;
+   only the paragraph takes the shorter measure. */
+@media (min-width: 46rem) {
+  .series-body { max-width: 54%; }
+}
+
 /* The number, the name and Book One on one line. Block with inline
    children, not flex — as flex items they broke apart the moment the
    column narrowed. As inline text they wrap the way a line of type
@@ -2668,6 +2685,16 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      about 32px. At 112% that left 12px in hand — close enough that a
      different phone would have wrapped it. This restores the margin. */
   .series-head { width: 118%; }
+}
+
+/* On the panel the paragraph block is 54% of the card (see
+   .series-body), which is too short a line for the number, the name
+   and the Persian title together. The title line is let out to 175%
+   of the block — the full width of the card — so it keeps to one line as
+   before; the paragraph beneath it still wraps at the block. Placed
+   after the phone rule above so that it wins from 46rem up. */
+@media (min-width: 46rem) {
+  .series-head { width: 185%; }
 }
 
 /* Same face and weight as the title, and the same scale, so the two
