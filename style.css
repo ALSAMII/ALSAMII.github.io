@@ -5442,16 +5442,23 @@ body.gallery-on { overflow: hidden; }
      stays there at any width. */
   .masthead .nav-controls { margin-top: 0; }
 
-  /* The rights notice, directly under Sound and Theme. It is the
-     brand column's own copy of the footer line (see index.html), shown
-     only here; the footer's copy is hidden below so the floor of the
-     rail carries the newsletter line alone. Set like the footer's
-     small print, centred on the rail, and closed up under the pair of
-     settings by taking back most of the rail step above it. */
+  /* The rights notice, under Sound and Theme. It is the brand column's
+     own copy of the footer line (see index.html), shown only here; the
+     footer's copy is hidden below so the floor of the rail carries the
+     newsletter line alone. Set like the footer's small print, centred
+     on the rail.
+
+     It used to take back most of the rail step above it — the margin
+     was -0.45 of a step — which left ten pixels between the captions
+     and this line and read as one block of small type in two sizes
+     rather than a setting and a footnote. It now ADDS half a step
+     instead, which is about thirty: a clear step down, in the same
+     unit as every other gap in the rail, so it keeps its proportion as
+     the rail grows and shrinks with the window's height. */
   .masthead .rights {
     display: block;
     order: 4;
-    margin: calc(var(--rail-step) * -0.45) 0 0;
+    margin: calc(var(--rail-step) * 0.6) 0 0;
     padding: 0 clamp(0.75rem, 1.4vw, 1.25rem);
     text-align: center;
     font-size: 0.5rem;
