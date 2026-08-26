@@ -1702,17 +1702,18 @@
             book ? (book.cover || coverFor(book.num)) : null);
   });
 
-  /* The recommended series cards. A series card reads data-books — the
-     numbers it spans — and shows the time for all of them together,
-     because what is being recommended is the whole run and not the book
-     whose cover happens to be on the card. Everything else about the
-     card, including the click, is already handled above: it carries
-     data-book too, so it opens the first of its books. */
-  document.querySelectorAll(".series-card[data-books]").forEach(function (card) {
+  /* The recommended series cards. A card shows the reading time for
+     its own book — the one on data-book, which is also the one it
+     opens. A card may carry data-books instead, the numbers of a whole
+     run, and then it shows the time for all of them together; the
+     Ghariban cards did that, and it read as one six-hour book beside a
+     title that was a two-hour one. Everything else about the card,
+     including the click, is already handled above. */
+  document.querySelectorAll(".series-card").forEach(function (card) {
     var slot = card.querySelector(".series-time");
     if (!slot) return;
 
-    var nums = card.dataset.books.split(",")
+    var nums = (card.dataset.books || card.dataset.book || "").split(",")
       .map(function (n) { return Number(n.trim()); })
       .filter(function (n) { return n; });
 

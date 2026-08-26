@@ -558,11 +558,12 @@
              One series is featured — The Unheard House — named and
              described once, then one card per book. To change what is
              featured, edit the cards below. Each one needs: data-book
-             (the book the card opens), data-books (every book in the
-             series, which is what the reading time is summed from), the
-             painting path, the title, the Book One / Two / Three label,
-             and the note. The number and the reading time are written by
-             script.js, so both are left empty. -->
+             (the book the card opens and the book its reading time is
+             for), the painting path, the title, the Book One / Two /
+             Three label, and the note. The number and the reading time
+             are written by script.js, so both are left empty. A card may
+             carry data-books="63,64,65" instead to show the time for the
+             whole run, which is what the Ghariban cards did. -->
                 <p class="series-heading">
           <span class="sh-rule" aria-hidden="true"></span>
           <span class="sh-core">
@@ -622,7 +623,7 @@
 
         <div class="series-rec">
 
-          <button class="series-card" type="button" data-book="63" data-books="63,64,65">
+          <button class="series-card" type="button" data-book="63">
             <span class="series-cover">
               <img data-art="assets/series-63.png" alt="" aria-hidden="true">
             </span>
@@ -645,7 +646,7 @@
             </span>
           </button>
 
-          <button class="series-card" type="button" data-book="64" data-books="63,64,65">
+          <button class="series-card" type="button" data-book="64">
             <span class="series-cover">
               <img data-art="assets/series-64.png" alt="" aria-hidden="true">
             </span>
@@ -668,7 +669,7 @@
             </span>
           </button>
 
-          <button class="series-card" type="button" data-book="65" data-books="63,64,65">
+          <button class="series-card" type="button" data-book="65">
             <span class="series-cover">
               <img data-art="assets/series-65.png" alt="" aria-hidden="true">
             </span>

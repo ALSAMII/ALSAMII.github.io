@@ -2269,64 +2269,47 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   z-index: 1;
 }
 
-/* On the panel the paragraph and the dedication give up their last
-   few rem on the right, so the words end where her face begins rather
-   than running across it. The stage clips 1rem past the block's edge,
-   so the portrait cannot be moved out any further — the text moves in
-   instead. The series name stays centred on the full width like the
-   one above it; it is short and never reaches her. */
-@media (min-width: 46rem) {
-  .series-intro .series-blurb,
-  .series-intro .series-dedication {
-    max-width: 30rem;
-    margin-left: 0;
-    margin-right: auto;
-  }
-  /* The dedication sits below her face, where the mask has already
-     let go, so it may keep a little more of its width — enough for its
-     first line to stay one line. */
-  .series-intro .series-dedication { max-width: 32.5rem; }
-}
-
+/* The portrait is a background, not a neighbour: the name, the
+   paragraph and the dedication stay centred on the panel exactly as a
+   series without a portrait would be set, and she stands behind all of
+   it, faded far enough that the words are never reading against her.
+   She sits a little right of centre — her eyes under the end of the
+   lines rather than under the middle of them, where the type is
+   densest — and large, so that what shows is a face and not a
+   thumbnail. */
 .series-portrait {
   position: absolute;
   z-index: 0;
-  /* Out past the card's edge like the paintings, but not as far: the
-     face should sit just beyond the last words of the paragraph, not
-     off in the margin. */
-  right: -5rem;
-  top: -12%;
-  height: 124%;
-  /* Narrower than it was, which — with the right edge pinned — moves
-     her face further from the words; the paragraph beside her has
-     given up its last few rem to make the room. */
-  width: 46%;
+  left: 50%;
+  top: -16%;
+  height: 132%;
+  width: 66%;
+  /* Box centre at 62% of the block: 50% plus the 12% left over from
+     the 38% of its own width it is pulled back by. */
+  transform: translateX(-38%);
   pointer-events: none;
-  /* Not the left-to-right ramp the card paintings use. This is a face,
-     and a ramp lit her hair and the writing beside her while it took
-     the face itself to half. A soft ellipse centred on her eyes shows
-     the one thing that matters and lets everything else — the script,
-     the blue, the edges of the painting — dissolve into the page. */
+  /* A soft ellipse centred on her eyes: the face shows, and the
+     script, the blue and the edges of the painting dissolve into the
+     page in every direction. Wider and softer than a spotlight, so
+     it reads as a painting under the words rather than a face cut out
+     and placed beside them. */
   -webkit-mask-image:
-    radial-gradient(ellipse 64% 52% at 50% 34%,
-      #000 0, #000 30%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.18) 84%, transparent 100%);
+    radial-gradient(ellipse 60% 52% at 50% 36%,
+      #000 0, #000 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.15) 82%, transparent 100%);
   mask-image:
-    radial-gradient(ellipse 64% 52% at 50% 34%,
-      #000 0, #000 30%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.18) 84%, transparent 100%);
-  /* Held back, but less than before: now that the words stop short of
-     her, she can carry more of herself. */
-  opacity: 0.72;
-  filter: saturate(0.9) brightness(1.08);
+    radial-gradient(ellipse 60% 52% at 50% 36%,
+      #000 0, #000 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.15) 82%, transparent 100%);
+  /* Far back. This is the one picture on the panel with words set
+     across it, and a dedication wants the face as a presence behind
+     the page, not a competitor for it. */
+  opacity: 0.42;
+  filter: saturate(0.85) brightness(1.1);
 }
 
-/* On a phone the card is the whole screen and anything past its edge
-   is gone, so the portrait comes in from the margin and widens a
-   little, which puts her face under the end of the lines rather than
-   half off the glass. */
-@media (max-width: 56rem) {
-  /* And a step fainter: here the paragraph runs right across her, and
-     eyes under words want to be a presence, not a competitor. */
-  .series-portrait { right: -2rem; width: 60%; opacity: 0.5; }
+/* On a phone the block is narrow and tall and the paragraph fills the
+   width, so she goes fainter still and a little wider. */
+@media (max-width: 46rem) {
+  .series-portrait { width: 80%; transform: translateX(-42%); opacity: 0.36; }
 }
 
 .series-portrait img {
@@ -2412,15 +2395,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-rec {
   display: grid;
   grid-template-columns: 1fr;
-  /* Air between the two, since neither has a border to separate them
-     any more. */
-  gap: 1.15rem;
+  /* Air between the cards, since none has a border to separate it
+     from the next — and enough of it that each painting has faded to
+     nothing before the next one's title. */
+  gap: 2rem;
   margin: 0;
   padding: 0.75rem 0 0;
 }
 
 @media (min-width: 46rem) {
-  .series-rec { gap: 1.35rem; padding: 1rem 0 0; }
+  /* Wider than the 1.35rem it was. The pictures now reach further
+     above and below their cards (see .series-cover), and the gap is
+     where each one finishes fading before the next begins — without
+     it the foot of one painting ran into the head of the next and the
+     three read as a single smear. */
+  .series-rec { gap: 2.5rem; padding: 1rem 0 0; }
 }
 
 .series-card {
@@ -2440,17 +2429,36 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   overflow: visible;
 }
 
+/* On the panel a card is held to a minimum height and its words are
+   centred in it. The paintings are 5:4 and the picture slot is a
+   little taller than the card, so the card's height is what decides
+   how much of each painting survives: at the height the text alone
+   made — about 275px against a 726px slot — the slot showed a band
+   through the middle of the picture and threw away the top and bottom
+   quarters. Held to 21rem it shows about three quarters of the
+   painting's height instead, with the words sitting in the middle of
+   it rather than along its top edge. */
+@media (min-width: 46rem) {
+  .series-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 21rem;
+  }
+}
+
 .series-cover {
   position: absolute;
   z-index: 0;
   /* Far enough right to clear the card, the panel and the frame, the
      same reach the shelf scenes use. */
   right: -5rem;
-  /* Taller than the card so the fades top and bottom fall outside it,
-     and the two pictures nearly meet rather than leaving a band of bare
-     page between them. */
-  top: -9%;
-  height: 118%;
+  /* Taller than the card so the fades top and bottom fall outside it.
+     Each picture is taken to nothing by the vertical mask below before
+     the next card's picture begins, and the gap between cards is sized
+     so that the two fades never overlap where either still shows. */
+  top: -12%;
+  height: 124%;
   /* Wide enough to reach back under the words. At 76% the picture only
      covered the card's right half — two thirds of each painting was off
      the screen while the space beside the text sat empty. At 112% it
@@ -2458,15 +2466,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      long before the words, so what shows there is atmosphere rather
      than picture. */
   width: 112%;
-  /* Faded on its left edge into the words, and softened top and bottom
-     so neither reads as a cut. */
+  /* Faded on its left edge into the words, and taken all the way to
+     nothing at the top and bottom, so neither reads as a cut and no
+     painting touches its neighbour. The vertical ramp is longer than it
+     was — it used to reach full strength at 22% and hold it to 88%,
+     which left each picture's foot still half-lit where the next one's
+     head was already half-lit. */
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.14) 18%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0.88) 56%, #000 68%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 22%, #000 88%, rgba(0,0,0,0.3) 96%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 34%, rgba(0,0,0,0.85) 54%, #000 66%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 10%, rgba(0,0,0,0.7) 20%, #000 30%, #000 74%, rgba(0,0,0,0.7) 84%, rgba(0,0,0,0.25) 93%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.14) 18%, rgba(0,0,0,0.5) 38%, rgba(0,0,0,0.88) 56%, #000 68%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 8%, #000 22%, #000 88%, rgba(0,0,0,0.3) 96%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 34%, rgba(0,0,0,0.85) 54%, #000 66%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 10%, rgba(0,0,0,0.7) 20%, #000 30%, #000 74%, rgba(0,0,0,0.7) 84%, rgba(0,0,0,0.25) 93%, transparent 100%);
   mask-composite: intersect;
 }
 
@@ -5386,7 +5398,7 @@ html[data-theme="light"] .series-cover {
 /* The dedication portrait on a pale page: a dark blue painting behind
    near-black type needs to stand further back still. */
 html[data-theme="light"] .series-portrait {
-  opacity: 0.3;
+  opacity: 0.22;
   filter: saturate(0.85) brightness(1.1);
 }
 
