@@ -2780,18 +2780,47 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .series-blurb { max-width: min(45%, 44vw); }
 }
 
-/* Sideways on a phone the box is 92% of the block, so the gap between
-   the heads is 53.7% of that — 49%. The block is wide here and the
-   paragraph short, so it keeps one measure the whole way down and the
-   shape floats go off again: a narrow phone turned on its side matches
-   the rule above as well as this one, and this one is written second
-   so that it wins. */
-@media (orientation: landscape) and (max-height: 30rem) {
-  .series-blurb { max-width: min(34rem, 40%); }
-  .blurb-cut { display: none; }
+/* ---- The shape, on a panel ----
+   The paragraph used to be held to one narrow measure the whole way
+   down here, which is right beside the two faces and wasted below
+   them: the lines that had cleared her chin went on threading the same
+   gap for another five or six rows. It is cut to the picture instead,
+   the way the narrow block already was.
+
+   The height is the figure that matters, and it is measured off the
+   LIT part of the painting, not the whole canvas. Her skin runs from
+   28.7% to 50.5% down; below that is collar and dark ground, which the
+   words can cross freely — on black it is invisible, and on paper the
+   two windows in the light-theme mask do not reach that far down, so
+   there is nothing drawn there at all.
+
+   Where that lands: the box is 112% of the block and its own height is
+   its width over 1.518, so the bottom of her face sits (0.505 − 0.11)
+   × 0.738 ≈ 0.29 of the block's WIDTH below the block's top. The 4rem
+   is the heading and its margins, which the paragraph starts beneath.
+   Both terms have to be there — one scales with the column, the other
+   does not. */
+@container intro (min-width: 34.01rem) {
+  /* Let out to the site's usual measure below the floats, not to the
+     whole block: 34rem is what the dedication under it is set to, and
+     a paragraph running wider than the line beneath it looks like a
+     mistake rather than a decision. */
+  .series-blurb { max-width: min(34rem, 92%); }
+
+  .blurb-cut {
+    display: block;
+    /* 48cqw is 48% of the block — the measure the single column used,
+       and the channel the opening lines keep. Written in container
+       units so it stays that share of the block whichever term of the
+       max-width above wins. */
+    width: calc((100% - 48cqw) / 2);
+    height: calc(29cqw - 4rem);
+  }
+  .blurb-cut--l { float: left; }
+  .blurb-cut--r { float: right; }
 }
 
-/* ---- The shape, last ----
+/* ---- The shape, on a narrow block ----
    Everything above holds the paragraph to ONE measure, narrow enough
    to clear the figures for its whole depth. That is the safe answer
    and the only one available to a browser that cannot measure this
@@ -2807,13 +2836,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    first place. Where it does not apply, the single measure above still
    stands and nothing is broken, only a little taller.
 
-   The height is the one figure that cannot be a constant. The picture
-   is as tall as it is wide divided by 1.518, and its width is a share
-   of this block, so the depth of the figures is a share of the block's
-   width too — 40cqw, measured, covering the 3.6 lines they occupy at
-   360px and the 12.6 at 1680 alike. In em it was five lines
-   everywhere, which was two too many on a phone and three too few at
-   1100, where the lines below them ran back across her collar. */
+   The height is measured the same way as the panel's, off the LIT part
+   of the painting rather than the whole canvas: her skin ends 50.5%
+   down, the box is hung 9% above the block, so the bottom of her face
+   is (0.505 − 0.09) × the box's height below the block's top, and the
+   box's height is its width over 1.518. That comes to 31cqw, less the
+   heading above the paragraph.
+
+   It was a flat 40cqw, which was measured against the whole figure
+   including the collar. That held four rows more than it needed to at
+   1100 and three more at 900 — the lines had cleared her chin and went
+   on threading the same gap anyway. In em it was worse still: five
+   lines everywhere, two too many on a phone and three too few at
+   1100. */
 @container intro (max-width: 34rem) {
   .series-blurb { max-width: 100%; }
 
@@ -2823,10 +2858,22 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
        column would have used — so the channel the opening lines run in
        is exactly the column they would have had. */
     width: calc((100% - min(45%, 44vw)) / 2);
-    height: 40cqw;
+    height: calc(31cqw - 2.5rem);
   }
   .blurb-cut--l { float: left; }
   .blurb-cut--r { float: right; }
+}
+
+/* Sideways on a phone the box is only 92% of the block, so the gap
+   between the heads is narrower than either container rule assumes —
+   49% rather than 48 or 45. The block is wide here and the paragraph
+   short, so it keeps one measure the whole way down and the shape
+   floats go off again. Written after BOTH container rules because a
+   sideways phone's block is wide enough to match the first of them,
+   and this has to be the one that wins. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .series-blurb { max-width: min(34rem, 40%); }
+  .blurb-cut { display: none; }
 }
 
 .series-rec {
@@ -6053,10 +6100,15 @@ html[data-theme="light"] .series-card::before {
      lets the percentages below mean what they say, and the part of the
      picture that hangs past the card is left alone entirely.
 
-     Top and bottom reach further than the picture does (it overhangs
-     by 12%), so the veil covers its whole height rather than leaving a
-     strip of untreated artwork above and below each card. */
-  inset: -20% 0 -20% -1.5rem;
+     Top and bottom barely reach past the card at all, and MUST NOT.
+     They were taken to -20% to cover the painting's 12% overhang, and
+     that put page-coloured veil 77px above the card — straight over
+     the dedication line above it, whose left half simply vanished into
+     it. The overhang no longer needs covering: the light-theme mask on
+     the picture below takes it to nothing by 12% of its own box, which
+     is inside the card's own top and bottom edges. Three per cent is
+     margin, not coverage. */
+  inset: -3% 0 -3% -1.5rem;
   /* Opaque, not 'nearly'. At 0.95 the page still let five per cent of
      a near-black painting through, which over the measure of a
      paragraph is the difference between paper and grey paper. It holds
@@ -6078,8 +6130,8 @@ html[data-theme="light"] .series-card::before {
   /* Taken to nothing top and bottom so the veil has no edge of its
      own — a flat rectangle of page colour over a textured backdrop
      reads as a panel, which is what it must not look like. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 4%, #000 96%, transparent 100%);
   pointer-events: none;
 }
 
