@@ -2435,15 +2435,16 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    how much of each painting survives: at the height the text alone
    made — about 275px against a 726px slot — the slot showed a band
    through the middle of the picture and threw away the top and bottom
-   quarters. Held to 21rem it shows about three quarters of the
-   painting's height instead, with the words sitting in the middle of
-   it rather than along its top edge. */
+   quarters. Held to 24rem it shows about four fifths of the painting's
+   height instead — enough for a tree and the people under it, or a
+   woman and the whole of her chair — with the words sitting in the
+   middle of it rather than along its top edge. */
 @media (min-width: 46rem) {
   .series-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 21rem;
+    min-height: 24rem;
   }
 }
 
@@ -2466,20 +2467,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      long before the words, so what shows there is atmosphere rather
      than picture. */
   width: 112%;
-  /* Faded on its left edge into the words, and taken all the way to
-     nothing at the top and bottom, so neither reads as a cut and no
-     painting touches its neighbour. The vertical ramp is longer than it
-     was — it used to reach full strength at 22% and hold it to 88%,
-     which left each picture's foot still half-lit where the next one's
-     head was already half-lit. */
+  /* Faded on its left edge into the words. Only the sideways fade is
+     here; the top-and-bottom fade is on the image inside (below). They
+     used to be two gradients on this one element, combined with
+     mask-composite — and where a browser did not honour the composite
+     they were added together instead of intersected, so the sideways
+     fade covered every height and the vertical fade never happened:
+     each painting ended in a hard edge and ran straight into the
+     next. One mask per element needs no compositing anywhere. */
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 34%, rgba(0,0,0,0.85) 54%, #000 66%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 10%, rgba(0,0,0,0.7) 20%, #000 30%, #000 74%, rgba(0,0,0,0.7) 84%, rgba(0,0,0,0.25) 93%, transparent 100%);
-  -webkit-mask-composite: source-in;
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 34%, rgba(0,0,0,0.85) 54%, #000 66%, #000 95%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 34%, rgba(0,0,0,0.85) 54%, #000 66%, #000 95%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 10%, rgba(0,0,0,0.7) 20%, #000 30%, #000 74%, rgba(0,0,0,0.7) 84%, rgba(0,0,0,0.25) 93%, transparent 100%);
-  mask-composite: intersect;
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.12) 16%, rgba(0,0,0,0.45) 34%, rgba(0,0,0,0.85) 54%, #000 66%, #000 95%, transparent 100%);
 }
 
 .series-cover img {
@@ -2487,11 +2486,35 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Centred. These are painted 5:4 to fit the slot, so the crop is
-     shallow either way, and both put their subject in the middle
-     band. */
+  /* Centred unless a card says otherwise below. */
   object-position: 50% 50%;
+  /* Taken all the way to nothing at the top and bottom, so no painting
+     touches its neighbour: each one is black before the gap between
+     the cards, and the next is black until well after it. */
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.2) 9%, rgba(0,0,0,0.65) 18%, #000 27%, #000 75%, rgba(0,0,0,0.65) 84%, rgba(0,0,0,0.2) 93%, transparent 100%);
+  mask-image:
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.2) 9%, rgba(0,0,0,0.65) 18%, #000 27%, #000 75%, rgba(0,0,0,0.65) 84%, rgba(0,0,0,0.2) 93%, transparent 100%);
 }
+
+/* How each painting sits in its slot — the one place per-card framing
+   lives. object-position chooses which part of the picture the slot
+   shows when it has to crop: on the panel the slot is wider than the
+   painting, so only the vertical figure does anything there; on a
+   phone it is taller, so only the horizontal one does.
+
+   63 — the restorer is at the right and the desk runs to the bottom,
+   so the slot is anchored low and to the right, and the picture is
+   narrowed a little so it sits further right of the words and shows
+   more of its height.
+   64 — the tree's crown is at the very top and the seated figures'
+   feet near the bottom; anchored high, which keeps the crown and
+   loses only bare ground.
+   65 — she and her chair fill the lower two thirds; anchored low. */
+.series-card[data-book="63"] .series-cover     { width: 100%; }
+.series-card[data-book="63"] .series-cover img { object-position: 100% 82%; }
+.series-card[data-book="64"] .series-cover img { object-position: 62% 12%; }
+.series-card[data-book="65"] .series-cover img { object-position: 78% 92%; }
 
 /* Brighter than it came. Both pictures were painted dark for a slot
    that fades them further, and behind a mask on a black page they were
@@ -2624,12 +2647,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   white-space: nowrap;
 }
 
-/* Beside the title rather than beneath it. Held to one piece, so if
-   the line runs out it moves down whole instead of splitting into
-   "BOOK" and "ONE". */
+/* The Persian title, beside the English one on the same line, in the
+   nastaliq face the dedication wears. No letter-spacing — it would
+   break the joins — and no italic. A touch smaller than the Latin,
+   because nastaliq carries its height in the descenders and reads
+   larger than its em size. */
+.series-title-fa {
+  margin-left: 0.6rem;
+  font-family: "Gulzar", "Noto Nastaliq Urdu", "Markazi Text", serif;
+  font-weight: 400;
+  font-size: clamp(0.9375rem, 3.6vw, 1.25rem);
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--ember);
+  opacity: 0.9;
+}
+
+/* Beneath the title line rather than beside it — a line of its own,
+   so the title and its Persian twin have the whole width and the label
+   never decides where they break. */
 .series-span {
-  display: inline;
-  margin-left: 0.45rem;
+  display: block;
+  margin: 0.3rem 0 0;
   font-size: 0.5625rem;
   letter-spacing: 0.14em;
   white-space: nowrap;
