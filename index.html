@@ -49,14 +49,14 @@
 <meta property="og:url" content="https://www.chewzfiction.com/">
 <meta property="og:title" content="Chew Z — Sixty-seven Short Noir Novellas">
 <meta property="og:description" content="Sixty-seven short noir novellas about people who find out something true about themselves and can't put it back.">
-<meta property="og:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=325">
+<meta property="og:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=326">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="The Roya Publication imprint mark — a gold card reading ROYA PUBLICATION FICTION, with two dark hare’s ears rising from the lower half.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Chew Z — Sixty-seven Short Noir Novellas">
 <meta name="twitter:description" content="Sixty-seven short noir novellas about people who find out something true about themselves and can't put it back.">
-<meta name="twitter:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=325">
+<meta name="twitter:image" content="https://www.chewzfiction.com/assets/og-roya.png?v=326">
 <meta name="twitter:image:alt" content="The Roya Publication imprint mark — a gold card reading ROYA PUBLICATION FICTION, with two dark hare’s ears rising from the lower half.">
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -74,7 +74,7 @@
      preload scanner start it while the HTML is still arriving.
      If the .webp is not there this 404s harmlessly and the script
      falls back to the .jpg, as it does for every other picture. -->
-<link rel="preload" as="image" href="assets/start-07.webp?v=325" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/start-07.webp?v=326" type="image/webp" fetchpriority="high">
 
 <!-- Which scene this visit gets. Runs here, in the head, so the
      choice is made before anything paints — picking it later would
@@ -122,7 +122,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=325">
+<link rel="stylesheet" href="style.css?v=326">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -201,17 +201,24 @@
       <div class="nav-controls">
         <button class="sound" id="soundToggle" aria-pressed="false"
                   title="Ambient sound">
-            <svg id="soundIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            <!-- Five bars rather than a speaker, alternating ember and
+                 parchment out from the middle. The two states are still
+                 called waveOn and waveOff and still swap by display, so
+                 script.js needs to know nothing about the change: sound
+                 on is the standing wave, sound off is the same five bars
+                 laid flat. Colours are set per class in style.css, not
+                 by currentColor, because this icon is two-tone. -->
+            <svg id="soundIcon" viewBox="0 0 24 24" fill="none"
+                 stroke-width="1.3" stroke-linecap="round"
                  aria-hidden="true">
-              <path d="M11 5 6 9H2v6h4l5 4V5z"/>
               <g id="waveOn">
-                <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
-                <path d="M18.5 5.5a9.4 9.4 0 0 1 0 13"/>
+                <path class="bar-em" d="M5.2 9.6v4.8M18.8 9.6v4.8"/>
+                <path class="bar-pa" d="M8.6 6.5v11M15.4 6.5v11"/>
+                <path class="bar-em" d="M12 3v18"/>
               </g>
               <g id="waveOff" style="display:none">
-                <path d="M16 9.5l5 5"/>
-                <path d="M21 9.5l-5 5"/>
+                <path class="bar-em" d="M5.2 10.9v2.2M18.8 10.9v2.2M12 10.9v2.2"/>
+                <path class="bar-pa" d="M8.6 10.9v2.2M15.4 10.9v2.2"/>
               </g>
             </svg>
             <span class="icon-label caps">Sound</span>
@@ -219,15 +226,28 @@
 
         <button class="theme" id="themeToggle" type="button"
                 aria-pressed="false" title="Switch to the light theme">
+          <!-- One circle, half of it filled. The ring is always drawn;
+               the half that is solid is the one that swaps, so the
+               button reads as a thing being flipped rather than two
+               different pictures. The group names are the old ones —
+               themeMoon is the dark theme's face, themeSun the light
+               one's — so script.js is untouched here too.
+
+               Each half is one arc whose start and end are the top and
+               bottom of the ring, 17.2 apart on a radius of 8.6: a
+               chord equal to the diameter, which is the only case where
+               the arc is exactly a semicircle. The sweep flag is the
+               whole difference between the two — 0 leans left, 1 leans
+               right — and `z` shuts the shape along the diameter. -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+               stroke-width="1.3" stroke-linecap="round"
                aria-hidden="true">
+            <circle cx="12" cy="12" r="8.6"/>
             <g id="themeMoon">
-              <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+              <path d="M12 3.4a8.6 8.6 0 0 0 0 17.2z" fill="currentColor" stroke="none"/>
             </g>
             <g id="themeSun" style="display:none">
-              <circle cx="12" cy="12" r="4.2"/>
-              <path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/>
+              <path d="M12 3.4a8.6 8.6 0 0 1 0 17.2z" fill="currentColor" stroke="none"/>
             </g>
           </svg>
           <span class="icon-label caps">Theme</span>
@@ -839,7 +859,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=325"></script>
-<script src="script.js?v=325"></script>
+<script src="stories.js?v=326"></script>
+<script src="script.js?v=326"></script>
 </body>
 </html>
