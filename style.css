@@ -704,7 +704,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   max-width: min(30rem, calc(100vw - 2.5rem));
   max-height: 21rem;
   margin: 0;
-  padding: 0.3rem;
+  /* The extra on the right is the same allowance the shelf list makes:
+     this box scrolls once the order list is long enough, and an overlay
+     scrollbar would otherwise sit on the ends of the options. */
+  padding: 0.3rem 0.85rem 0.3rem 0.3rem;
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
@@ -823,6 +826,32 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   scrollbar-color: var(--hairline) transparent;
   flex: 1 1 auto;
   min-height: 9rem;
+
+  /* ---- Room for the scrollbar to live IN rather than ON ----
+     The rows used to run to this box's right edge exactly — the PDF,
+     Read and Share column ended on the same pixel the list ended. That
+     is fine on a machine whose scrollbars take up space, because the
+     browser narrows the content to make room. It is not fine anywhere
+     scrollbars float: macOS, iPadOS, and Chrome's own overlay mode all
+     draw the bar ON TOP of whatever is beneath it, which here was the
+     word SHARE and the book's number.
+
+     Two properties, because the two kinds of scrollbar need different
+     things and a page is served to both:
+
+     padding-right is what saves the overlay case. The bar floats over
+     the padding instead of over the words, and 0.75rem clears a
+     hovered overlay thumb, and where the gutter below is honoured as
+     well the two together read as one ordinary margin.
+
+     scrollbar-gutter: stable is for the other kind, and is not about
+     overlap at all — it holds the gutter open even when the list is
+     short enough not to need one, so filtering the shelf down to a
+     handful of books no longer jolts every row sideways as the bar
+     appears and disappears. Overlay scrollbars reserve no gutter, so
+     this costs them nothing; the two never both apply. */
+  padding-right: 0.65rem;
+  scrollbar-gutter: stable;
 }
 
 /* The rule between one book and the next, with a diamond set into the
