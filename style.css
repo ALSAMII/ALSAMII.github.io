@@ -1695,10 +1695,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    The two-column layout just below it clips a little inside the card
    at its narrowest; 4.5rem is the figure that never leaves an empty
    tail there, at the cost of a few pixels of hair at the very edge.
-   Under 56rem the panel is at most 37rem wide and centred, so the
-   strip is fully on the glass at 43.5rem and disappears entirely by
-   38.5rem; the clamp runs the pull-back from nothing to the full
-   5rem across that range, and holds it there on every phone. */
+   Under 56rem there is no pull-back at all. A phone is not the fixed
+   width it looks: the viewport meta sets a scale and no width, so iOS
+   lays the page out to its content and the whole 5rem overhang lands
+   on the glass — a pull-back sized for an overhang off the glass left
+   a bare strip down the right of every one of these cards, while the
+   series cards, which have none, ran to the edge. Anchored at 100%
+   the picture always fills its frame to the frame's own edge, which
+   is what every other row does; where the overhang is clipped after
+   all, what is lost is the last inch of a subject, not the edge. */
 .start-row--face    .start-scene,
 .start-row--glow    .start-scene,
 .start-row--mustard .start-scene,
@@ -1721,9 +1726,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--mustard .start-scene,
   .start-row--swimmer .start-scene,
   .start-row--samba   .start-scene,
-  .start-row--dreams  .start-scene {
-    object-position: calc(100% - clamp(0rem, 43.5rem - 100vw, 5rem)) 50%;
-  }
+  .start-row--dreams  .start-scene { object-position: 100% 50%; }
 }
 
 /* The four repainted scenes are 3:1 like The Glow. Their cards are
