@@ -4891,6 +4891,26 @@ body.gallery-on { overflow: hidden; }
      stays there at any width. */
   .masthead .nav-controls { margin-top: 0; }
 
+  /* The rights notice, directly under Sound and Theme. It is the
+     brand column's own copy of the footer line (see index.html), shown
+     only here; the footer's copy is hidden below so the floor of the
+     rail carries the newsletter line alone. Set like the footer's
+     small print, centred on the rail, and closed up under the pair of
+     settings by taking back most of the rail step above it. */
+  .masthead .rights {
+    display: block;
+    order: 4;
+    margin: calc(var(--rail-step) * -0.45) 0 0;
+    padding: 0 clamp(0.75rem, 1.4vw, 1.25rem);
+    text-align: center;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    line-height: 1.65;
+    color: var(--faded);
+  }
+
+  .floor p { display: none; }
+
   /* --- The stamp ------------------------------------------ */
   .masthead .roya-link { justify-self: stretch; text-align: center; }
 
@@ -5207,6 +5227,10 @@ body.gallery-on { overflow: hidden; }
    ============================================================ */
 
 .floor p { margin: 0; }
+
+/* The brand column's copy of the rights notice exists for the desktop
+   rail alone; see .masthead .rights in the 64rem block. */
+.rights { display: none; }
 
 @media (min-width: 56.01rem) {
   .floor {
