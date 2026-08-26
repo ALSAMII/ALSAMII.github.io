@@ -1739,6 +1739,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    the diver hangs below the surface light; the corridor is centred on
    its doorway. The vertical figure only ever acts on the panel — on a
    phone the slot is taller than the picture and shows all of it. */
+/* Mang and Mustard's note is the shortest on the panel, so its card is
+   the shortest and its picture — sized from the card — the smallest,
+   with the top fade landing at the title and a band of bare page
+   between it and the corridor above. The frame reaches 3.5rem further
+   up than the standard 9%, so the gas cloud climbs into that band the
+   way Samba's surface light climbs toward the boat above it, and the
+   picture scales with the taller frame. It still ends 9% below the
+   card like every other scene. */
+.start-row--mustard .start-scene {
+  top: -3.5rem;
+  height: calc(109% + 3.5rem);
+}
+
 @media (min-width: 60rem) {
   .start-row--mustard .start-scene { object-position: calc(100% - 4rem) 62%; }
   .start-row--swimmer .start-scene { object-position: calc(100% - 4rem) 62%; }
