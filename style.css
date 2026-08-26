@@ -1686,29 +1686,44 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    as well, so her head and feet sit inside the band the mask holds
    solid rather than in the fades at either end.
 
-   Both are anchored hard right, where the figure is. But the scene's
-   frame runs 5rem past the card and the page clips it about 1rem past
-   the panel, so a picture anchored at 100% puts its subject in the
-   clipped strip. The first fix tried — pulling the picture back with
-   object-position — left the frame's last 3rem empty, and on a tablet,
-   where that strip is on the glass, the picture ended in a hard
-   vertical edge mid-page, exactly the line the note above warns
-   about. The frame itself is narrowed instead: its right edge sits at
-   the clip line, so the picture ends where the visible picture ends
-   and the mask's own right-hand fade is what closes it. On a phone the
-   panel is the whole glass, so the frame ends at the card's edge. */
+   Both are anchored hard right, where the figure is — but not at
+   100%. The scene's frame runs 5rem past the card, and how much of
+   that strip is on the glass depends on the layout: about 1rem on the
+   desktop rail, none on a phone, all of it on a tablet where the panel
+   is narrower than the screen. A picture anchored at 100% puts its
+   subject in whatever part of the strip is clipped; a picture pulled
+   back further than the clipped part leaves the frame's tail empty,
+   and the mask cannot reach an edge that sits inside its own solid
+   ground, so the picture ends in a hard vertical line. The pull-back
+   below is measured to match the clipped part at each layout: the
+   picture ends where the visible frame ends, and the frame itself is
+   the same one every other row has, so these two run off the page in
+   step with the rest. Two wrong turns on the way here are worth
+   recording — narrowing the frame stopped both pictures short of the
+   glass while their neighbours ran off it, and padding the pictures
+   with their own dark scaled with the card's height, so on a tall
+   phone card the figure stood a third of the way in from the edge.
+
+   Desktop rail (60rem up): 1rem of the strip shows, so 4rem back.
+   The two-column layout just below it clips a little inside the card
+   at its narrowest; 4.5rem is the figure that never leaves an empty
+   tail there, at the cost of a few pixels of hair at the very edge.
+   Under 56rem the panel is at most 37rem wide and centred, so the
+   strip is fully on the glass at 43.5rem and disappears entirely by
+   38.5rem; the clamp runs the pull-back from nothing to the full
+   5rem across that range, and holds it there on every phone. */
 .start-row--face .start-scene,
-.start-row--glow .start-scene {
-  right: -1rem;
-  width: calc(124% - 4rem);
-  object-position: 100% 50%;
+.start-row--glow .start-scene { object-position: calc(100% - 4rem) 50%; }
+
+@media (min-width: 56.01rem) and (max-width: 59.99rem) {
+  .start-row--face .start-scene,
+  .start-row--glow .start-scene { object-position: calc(100% - 4.5rem) 50%; }
 }
 
 @media (max-width: 56rem) {
   .start-row--face .start-scene,
   .start-row--glow .start-scene {
-    right: 0;
-    width: calc(124% - 5rem);
+    object-position: calc(100% - clamp(0rem, 43.5rem - 100vw, 5rem)) 50%;
   }
 }
 
