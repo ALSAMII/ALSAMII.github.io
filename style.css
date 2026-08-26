@@ -2392,28 +2392,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      between them. It was cropping before, which is why the picture
      came apart between 900 and 1200px, where the block is at its
      tallest and narrowest. */
-  aspect-ratio: 1592 / 1254;
+  aspect-ratio: 1904 / 1254;
   height: auto;
   /* Barely wider than the block, and that is the whole of the fix for
      a picture that used to stick out over the shelf.
 
-     The artwork carries its own gutter now: the two heads run 12.8% to
-     24.6% and 78.3% to 87.2% across the canvas, so their outer span is
-     74.4% and the black between them is 53.7%. At 114% of the block
-     that gap is 61% — the measure the paragraph is set to — while the
-     heads span only 85% of the block, which leaves them a margin of
-     nearly 8% at each side and puts the faces WHOLLY INSIDE the block.
-     Nothing lit is ever drawn outside it.
+     The artwork carries its own gutter, widened twice now. Measured on
+     the current canvas: lit skin runs 10.4%–20.8% and 81.6%–89.8%
+     across, the whole figure including hair and collar 9.3%–21.0% and
+     81.5%–94.0%, and the void between them is 60.5%. 112% is set by
+     the least generous of those — her right-hand figure reaches 94.0%,
+     so any box wider than 113.6% pushes it past the block's edge, and
+     at 118% it was being sliced by the panel. Everything of her is
+     inside the block at 112%; nothing of her is ever drawn outside
+     it.
 
-     Before, the same 61% gap was got by blowing the picture up to 148%
-     and letting the heads hang 161px past the block on each side, over
-     the shelf column, where the mask had already gone fully opaque.
-     Widening the void in the painting instead buys the same gap at a
-     third of the overhang and makes the faces smaller into the
-     bargain. If the artwork is ever repainted, re-measure those three
-     figures — everything here and the 61% on .series-blurb comes off
-     them. */
-  width: 114%;
+     Widening the void in the painting, rather than blowing the picture
+     up, is what buys the gap: it was 148% of the block once, hanging
+     161px over the shelf column on each side. Each widening also makes
+     the faces smaller, which is the other half of what was wanted. If
+     the artwork is ever repainted, re-measure those figures — every
+     number here, the mask stops, and the 48% on .series-blurb all come
+     off them. */
+  width: 112%;
   pointer-events: none;
   /* Only the outer edge is masked now, and only just: the painting
      carries its own darkness into the middle, so there is nothing for
@@ -2428,12 +2429,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      leave the card paintings ending in a hard edge. One mask per
      element needs no compositing anywhere. */
      The fade is finished by 6%, which is where the block's edge falls:
-     the box is 114% of the block, so the overhang is 7% of the block
-     at each side, and 7 of 114 is 6.1% of the box. Everything drawn
-     outside the block is therefore inside the fade, and what is there
-     to fade is empty canvas — the nearest lit pixel is at 12.8%. A
-     gentler ramp would put opaque paint over the shelf again, which
-     was the bug. Move the width and this moves with it. */
+     the box is 112% of the block, so the overhang is 6% of the block
+     at each side, which is 5.4% of the box. The ramp is finished by 7%
+     and her figure does not begin until 9.3%, so what lies outside the
+     block is faded canvas and what lies on her is not faded at all.
+
+     The two stops in the middle are the other half of this. From 21% —
+     where her collar ends — the picture falls away to nothing by 31%
+     and stays there until 69%, so the paragraph is set on bare page
+     rather than on the painting, and each figure dissolves on the side
+     that faces the words instead of stopping against them. A gentler
+     outer ramp would put opaque paint over the shelf again, which was
+     the bug; a longer inner one would start eating her face, which is
+     on the inward side of both heads. */
      Many stops, not three. A ramp built from two or three stops has a
      kink at each one, and on a field this dark a kink is a visible
      line — which is what made the picture read as a rectangle laid on
@@ -2442,21 +2450,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      so there is no point along it where the eye can find an edge. */
   -webkit-mask-image:
     linear-gradient(to right,
-      rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 1.5%, rgba(0,0,0,0.24) 3%,
-      rgba(0,0,0,0.55) 4.5%, rgba(0,0,0,0.85) 5.5%, #000 6.5%,
-      #000 93.5%, rgba(0,0,0,0.85) 94.5%, rgba(0,0,0,0.55) 95.5%,
-      rgba(0,0,0,0.24) 97%, rgba(0,0,0,0.06) 98.5%, rgba(0,0,0,0) 100%);
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 1.5%, rgba(0,0,0,0.38) 3.5%,
+      rgba(0,0,0,0.76) 5.5%, #000 7%,
+      #000 21%, rgba(0,0,0,0.86) 22.5%, rgba(0,0,0,0.58) 24.5%,
+      rgba(0,0,0,0.28) 27%, rgba(0,0,0,0.08) 29%, rgba(0,0,0,0) 31%,
+      rgba(0,0,0,0) 69%, rgba(0,0,0,0.08) 71%, rgba(0,0,0,0.28) 73%,
+      rgba(0,0,0,0.58) 75.5%, rgba(0,0,0,0.86) 77.5%, #000 79%,
+      #000 94%, rgba(0,0,0,0.76) 95.5%, rgba(0,0,0,0.38) 97%,
+      rgba(0,0,0,0.10) 98.5%, rgba(0,0,0,0) 100%);
   mask-image:
     linear-gradient(to right,
-      rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 1.5%, rgba(0,0,0,0.24) 3%,
-      rgba(0,0,0,0.55) 4.5%, rgba(0,0,0,0.85) 5.5%, #000 6.5%,
-      #000 93.5%, rgba(0,0,0,0.85) 94.5%, rgba(0,0,0,0.55) 95.5%,
-      rgba(0,0,0,0.24) 97%, rgba(0,0,0,0.06) 98.5%, rgba(0,0,0,0) 100%);
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 1.5%, rgba(0,0,0,0.38) 3.5%,
+      rgba(0,0,0,0.76) 5.5%, #000 7%,
+      #000 21%, rgba(0,0,0,0.86) 22.5%, rgba(0,0,0,0.58) 24.5%,
+      rgba(0,0,0,0.28) 27%, rgba(0,0,0,0.08) 29%, rgba(0,0,0,0) 31%,
+      rgba(0,0,0,0) 69%, rgba(0,0,0,0.08) 71%, rgba(0,0,0,0.28) 73%,
+      rgba(0,0,0,0.58) 75.5%, rgba(0,0,0,0.86) 77.5%, #000 79%,
+      #000 94%, rgba(0,0,0,0.76) 95.5%, rgba(0,0,0,0.38) 97%,
+      rgba(0,0,0,0.10) 98.5%, rgba(0,0,0,0) 100%);
   /* Stronger than the 0.42 she was held to. That figure was set when
      her face was directly under the densest part of the paragraph and
      had to be whispered; the words now fall on painted black, so she
      can be looked at. */
-  opacity: 0.72;
+  opacity: 0.58;
   filter: saturate(0.88) brightness(1.04);
 }
 
@@ -2469,25 +2485,31 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .series-portrait {
     /* A phone block is 373px and the words need most of it, so the
        picture is opened out until the two heads just fill the block
-       edge to edge — 74.4% of the canvas at 134% is 1.00 — which is
-       as far as it can go before lit paint starts leaving the block.
-       The gap between them is then 72%, and that is the measure the
-       paragraph takes here. */
-    width: min(134%, 98vw);
+       edge to edge, which is as far as it can go before her figure
+       starts leaving the block. */
+    width: min(113%, 98vw);
     transform: translate(-50%, -9%);
-    opacity: 0.62;
+    opacity: 0.52;
     -webkit-mask-image:
       linear-gradient(to right,
-        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
-        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
-        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
-        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 1.5%, rgba(0,0,0,0.38) 3.5%,
+      rgba(0,0,0,0.76) 5.5%, #000 7%,
+      #000 21%, rgba(0,0,0,0.86) 22.5%, rgba(0,0,0,0.58) 24.5%,
+      rgba(0,0,0,0.28) 27%, rgba(0,0,0,0.08) 29%, rgba(0,0,0,0) 31%,
+      rgba(0,0,0,0) 69%, rgba(0,0,0,0.08) 71%, rgba(0,0,0,0.28) 73%,
+      rgba(0,0,0,0.58) 75.5%, rgba(0,0,0,0.86) 77.5%, #000 79%,
+      #000 94%, rgba(0,0,0,0.76) 95.5%, rgba(0,0,0,0.38) 97%,
+      rgba(0,0,0,0.10) 98.5%, rgba(0,0,0,0) 100%);
     mask-image:
       linear-gradient(to right,
-        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
-        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
-        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
-        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 1.5%, rgba(0,0,0,0.38) 3.5%,
+      rgba(0,0,0,0.76) 5.5%, #000 7%,
+      #000 21%, rgba(0,0,0,0.86) 22.5%, rgba(0,0,0,0.58) 24.5%,
+      rgba(0,0,0,0.28) 27%, rgba(0,0,0,0.08) 29%, rgba(0,0,0,0) 31%,
+      rgba(0,0,0,0) 69%, rgba(0,0,0,0.08) 71%, rgba(0,0,0,0.28) 73%,
+      rgba(0,0,0,0.58) 75.5%, rgba(0,0,0,0.86) 77.5%, #000 79%,
+      #000 94%, rgba(0,0,0,0.76) 95.5%, rgba(0,0,0,0.38) 97%,
+      rgba(0,0,0,0.10) 98.5%, rgba(0,0,0,0) 100%);
   }
 
 }
@@ -2602,21 +2624,22 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .series-portrait {
     width: 92%;
     transform: translate(-50%, -13%);
-    opacity: 0.55;
+    opacity: 0.5;
   }
 }
 
 .series-blurb {
-  /* Set in the hole in the painting rather than across it. 61% is the
-     width of the black gap between the two faces: their inner edges
-     are at 31% and 72% of the canvas, and the box that carries it is
-     148% of this block, so 0.41 × 148 ≈ 61. The figure belongs to
-     .series-portrait — if the box width moves, this moves with it.
+  /* Set in the hole in the painting rather than across it. Her figure
+     ends at 21% of the canvas and the mask has taken the picture to
+     nothing by 31%; at a box of 112% that leaves the middle 48% of the
+     block standing on bare page, with about 80px of clearance to her
+     collar at a laptop width. The figure belongs to .series-portrait —
+     if the box width moves, this moves with it.
 
      The dedication below is not held to this, and does not need to be:
      the faces are a band across the middle of the block and finish
      above where it starts. */
-  max-width: min(34rem, 61%);
+  max-width: min(34rem, 48%);
   margin: 0 auto;
   padding: 0 var(--text-edge);
   font-family: var(--serif);
@@ -2649,58 +2672,42 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    wins where container queries are understood; where they are not,
    the phone rules still cover the phone. */
 @container intro (max-width: 34rem) {
-  /* The paragraph now takes the whole block and is cut into the shape
-     of the picture instead, by the two floats below. Holding all of it
-     to the gap between the faces cost fifteen lines on a phone, and
-     ten of them were sitting under her shoulders where there was
-     nothing to avoid. */
-  .series-blurb { max-width: 100%; }
-
-  /* The width each side has to give up for the faces: half of whatever
-     the block has over and above the gap between them. Written from
-     the same two figures as the box, so it cannot drift out of step —
-     0.537 × 134% ≈ 72%, 0.537 × 98vw ≈ 52.6vw. */
-  .blurb-cut {
-    display: block;
-    width: calc((100% - min(72%, 52.6vw)) / 2);
-    /* Five lines. The line box is 1.6em, so 8em is five of them, and
-       it stays five whatever size the type resolves to. Measured off
-       the picture: on a 393px phone the paragraph starts at the top of
-       the face band and her hair and collar are done a little over
-       five lines later. */
-    height: 8em;
-  }
-  .blurb-cut--l { float: left; }
-  .blurb-cut--r { float: right; }
-
   .series-portrait {
-    /* 134% opens the heads out to the block's own edges. The second
-       term is what stops them going past the SCREEN'S: on a phone the
-       block is very nearly the window, so 134% of it hangs 43px off
-       the side, where the page's overflow clip cuts it dead straight —
-       a picture with a sliced edge, which is what "sticks out" looks
-       like on a phone. Held to the window instead, the box ends where
-       the screen does and the fade below has room to finish first.
-       98 rather than 100 so a desktop scrollbar cannot make vw wider
-       than the space actually painted. */
-    width: min(134%, 98vw);
+    /* 113% is the widest the box can be before her right-hand figure
+       leaves the block. The second term is what stops the box leaving
+       the SCREEN: on a phone the block is very nearly the window, so a
+       box wider than it hangs off the side, where the page's overflow
+       clip cuts it dead straight — a picture with a sliced edge, which
+       is what "sticks out" looks like on a phone. Held to the window
+       instead, the box ends where the screen does. 98 rather than 100
+       so a desktop scrollbar cannot make vw wider than the space
+       actually painted. */
+    width: min(113%, 98vw);
     transform: translate(-50%, -9%);
-    opacity: 0.62;
-    /* The fade finishes at 12.5%, and the first lit pixel is at 12.8% —
-       so the picture is at full strength exactly where the faces
-       start, and everything outside them is on its way to nothing. */
+    opacity: 0.52;
+    /* Same mask as the panel's: the stops are shares of the box, and
+       the box is the same shape as the canvas at every size, so one
+       set of them is right everywhere. */
     -webkit-mask-image:
       linear-gradient(to right,
-        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
-        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
-        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
-        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 1.5%, rgba(0,0,0,0.38) 3.5%,
+      rgba(0,0,0,0.76) 5.5%, #000 7%,
+      #000 21%, rgba(0,0,0,0.86) 22.5%, rgba(0,0,0,0.58) 24.5%,
+      rgba(0,0,0,0.28) 27%, rgba(0,0,0,0.08) 29%, rgba(0,0,0,0) 31%,
+      rgba(0,0,0,0) 69%, rgba(0,0,0,0.08) 71%, rgba(0,0,0,0.28) 73%,
+      rgba(0,0,0,0.58) 75.5%, rgba(0,0,0,0.86) 77.5%, #000 79%,
+      #000 94%, rgba(0,0,0,0.76) 95.5%, rgba(0,0,0,0.38) 97%,
+      rgba(0,0,0,0.10) 98.5%, rgba(0,0,0,0) 100%);
     mask-image:
       linear-gradient(to right,
-        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
-        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
-        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
-        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 1.5%, rgba(0,0,0,0.38) 3.5%,
+      rgba(0,0,0,0.76) 5.5%, #000 7%,
+      #000 21%, rgba(0,0,0,0.86) 22.5%, rgba(0,0,0,0.58) 24.5%,
+      rgba(0,0,0,0.28) 27%, rgba(0,0,0,0.08) 29%, rgba(0,0,0,0) 31%,
+      rgba(0,0,0,0) 69%, rgba(0,0,0,0.08) 71%, rgba(0,0,0,0.28) 73%,
+      rgba(0,0,0,0.58) 75.5%, rgba(0,0,0,0.86) 77.5%, #000 79%,
+      #000 94%, rgba(0,0,0,0.76) 95.5%, rgba(0,0,0,0.38) 97%,
+      rgba(0,0,0,0.10) 98.5%, rgba(0,0,0,0) 100%);
   }
 
   /* The hand-placed break in the dedication was measured for a wide
@@ -2713,21 +2720,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    block ----
    Two cases size the picture off the window rather than off the block,
    and the paragraph has to be told about both or it goes on using the
-   61% that belongs to the 114% box and runs its lines back over the
+   48% that belongs to the 112% box and runs its lines back over the
    faces. They are written here, after .series-blurb's own rule, purely
    so they win: they carry no more weight than it does, and up beside
    the portrait rules they were being overruled by it — which is what
    left the 600px window and the sideways phone with a paragraph wider
    than the gap it was supposed to sit in. */
 @media (max-width: 46rem) {
-  .series-blurb { max-width: 100%; }
-  .blurb-cut {
-    display: block;
-    width: calc((100% - min(72%, 52.6vw)) / 2);
-    height: 8em;
-  }
-  .blurb-cut--l { float: left; }
-  .blurb-cut--r { float: right; }
+  .series-blurb { max-width: min(45%, 44vw); }
 }
 
 /* Sideways on a phone the box is 92% of the block, so the gap between
@@ -2737,8 +2737,46 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    the rule above as well as this one, and this one is written second
    so that it wins. */
 @media (orientation: landscape) and (max-height: 30rem) {
-  .series-blurb { max-width: min(34rem, 49%); }
+  .series-blurb { max-width: min(34rem, 40%); }
   .blurb-cut { display: none; }
+}
+
+/* ---- The shape, last ----
+   Everything above holds the paragraph to ONE measure, narrow enough
+   to clear the figures for its whole depth. That is the safe answer
+   and the only one available to a browser that cannot measure this
+   block; it is also a wasteful one on a phone, where it spent six of
+   its lines threading a gap that the picture had already stopped
+   needing. This block spends the width back: the paragraph takes the
+   whole block, and the two floats cut its opening lines to the shape
+   of the picture instead.
+
+   It is written after the media rules and not among them because it
+   has to beat them on order alone — and because the height below only
+   means anything to a browser that understood the container in the
+   first place. Where it does not apply, the single measure above still
+   stands and nothing is broken, only a little taller.
+
+   The height is the one figure that cannot be a constant. The picture
+   is as tall as it is wide divided by 1.518, and its width is a share
+   of this block, so the depth of the figures is a share of the block's
+   width too — 40cqw, measured, covering the 3.6 lines they occupy at
+   360px and the 12.6 at 1680 alike. In em it was five lines
+   everywhere, which was two too many on a phone and three too few at
+   1100, where the lines below them ran back across her collar. */
+@container intro (max-width: 34rem) {
+  .series-blurb { max-width: 100%; }
+
+  .blurb-cut {
+    display: block;
+    /* Half of whatever the block has spare over the measure the single
+       column would have used — so the channel the opening lines run in
+       is exactly the column they would have had. */
+    width: calc((100% - min(45%, 44vw)) / 2);
+    height: 40cqw;
+  }
+  .blurb-cut--l { float: left; }
+  .blurb-cut--r { float: right; }
 }
 
 .series-rec {
