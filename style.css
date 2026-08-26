@@ -3265,6 +3265,86 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .masthead nav .linklike { font-size: 0.5625rem; letter-spacing: 0.02em; }
 }
 
+/* ---- The phone header, rearranged -----------------------------
+   Three things across the row: the wordmark's column, the stamp, the
+   links. The wordmark's column carries four lines — the name, the
+   count, the rights notice, and the two settings side by side under
+   it — and the stamp and the links stand the full height of it. The
+   settings live inside the wordmark's column in the markup, so as in
+   the rail the wrapper is dissolved with display:contents and its
+   children become grid items of their own, each placed in its row.
+   The narrowest phones (21.5rem and under) keep their two-row header
+   from the block above, so this starts just past it. */
+@media (max-width: 56rem) and (min-width: 21.51rem) {
+  .masthead {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-rows: auto auto auto;
+    column-gap: 0.6rem;
+    row-gap: 0;
+    align-items: center;
+    /* More at the foot, so the hairline sits a clear step below the
+       last line of the column rather than on its heels. */
+    padding: 1.1rem 0 1.6rem;
+  }
+
+  .masthead .brand-col { display: contents; }
+
+  .masthead .brand-name { grid-column: 1; grid-row: 1; align-self: end; }
+
+  /* The count, up from 0.5rem: it is the line under the wordmark now
+     and was reading as fine print. */
+  .brand-name .tag { font-size: 0.6875rem; letter-spacing: 0.12em; }
+
+  /* The rights notice, in from the foot of the page to sit under the
+     count. Two short lines in the wordmark's column, a clear step
+     below the count so the two read as a title line and a footnote. */
+  .masthead .rights {
+    display: block;
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    margin: 0.55rem 0 0;
+    max-width: 10.5rem;
+    text-wrap: balance;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+    color: var(--faded);
+  }
+
+  /* Sound and Theme side by side under the notice, ranged left with
+     everything above them, with room over the notice so the pair is
+     its own line and not the notice's third. */
+  /* Three classes deep on purpose: the base rule that centres the
+     pair sits later in the file at two, and would otherwise win. */
+  .masthead .brand-col .nav-controls {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: start;
+    justify-self: start;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.1rem;
+    margin: 0.9rem 0 0;
+    padding: 0;
+  }
+
+  .brand-col .sound svg,
+  .brand-col .theme svg { width: 1.15rem; height: 1.15rem; }
+  .brand-col .icon-label { font-size: 0.5rem; letter-spacing: 0.1em; }
+  .brand-col .sound,
+  .brand-col .theme { padding: 0.1rem 0.1rem 0.05rem; }
+
+  .masthead .roya-link { grid-column: 2; grid-row: 1 / 4; }
+
+  .masthead nav { grid-column: 3; grid-row: 1 / 4; justify-self: end; }
+
+  /* And gone from the footer here, so the notice is not on the page
+     twice; the newsletter line keeps the foot to itself. */
+  .floor p { display: none; }
+}
+
 /* ---- A phone held sideways ---------------------------------
    Wide but very short. The header is built for height it doesn't have
    here — at full size it took a third of the screen, and what was left
