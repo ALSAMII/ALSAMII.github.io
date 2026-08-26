@@ -116,7 +116,7 @@
      but not used: a browser only downloads the faces a rule actually
      matches, so listing them costs nothing and means the panel can be
      set heavier by changing one word in the CSS rather than this URL. -->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=Gulzar&display=swap" rel="stylesheet">
 
 <!-- The ?v= number is a cache-buster. Browsers hold on to these three
      files hard; changing the number makes each one a new address, so a
@@ -555,12 +555,14 @@
              is about. Two cards sit side by side where there is room and
              stack on a phone.
 
-             To change what is featured, edit the two cards below. Each
-             one needs: data-book (the first book of the series, which is
-             what the card opens), the cover path, the series name, the
-             shape and span, and the note. The reading time is written by
-             script.js from the books in the series, so it is left
-             empty. -->
+             One series is featured — The Unheard House — named and
+             described once, then one card per book. To change what is
+             featured, edit the cards below. Each one needs: data-book
+             (the book the card opens), data-books (every book in the
+             series, which is what the reading time is summed from), the
+             painting path, the title, the Book One / Two / Three label,
+             and the note. The number and the reading time are written by
+             script.js, so both are left empty. -->
                 <p class="series-heading">
           <span class="sh-rule" aria-hidden="true"></span>
           <span class="sh-core">
@@ -579,28 +581,58 @@
           <span class="sh-rule" aria-hidden="true"></span>
         </p>
 
-        <!-- The series itself, named and described once above its books,
-             so each card can be about its own volume. Change the name and
-             the paragraph together when the featured series changes. -->
-        <p class="series-name caps"><span>The Ghariban</span></p>
-        <p class="series-blurb">Ghariban means the one far from home. Two
-          novellas, twenty years apart, about a boy in Tehran and a man in
-          Los Angeles &mdash; and about the things people carry so well that
-          nobody, including them, notices the weight.</p>
+        <!-- The series, named and described once above its books, so
+             each card can be about its own volume. Change the name, the
+             paragraph and the dedication together when the featured
+             series changes; a series without a dedication drops the
+             portrait and the dedication paragraph and keeps the rest.
+
+             The paintings are assets/series-63.png, -64 and -65. Should
+             one ever be missing, script.js shows the book's own cover in
+             the slot instead, so the cards are never bare. -->
+        <div class="series-intro">
+          <span class="series-portrait" aria-hidden="true">
+            <img data-art="assets/forough.jpg" alt="">
+          </span>
+          <p class="series-name caps"><span>The Unheard House</span></p>
+          <p class="series-blurb">The House is a walled colony outside Tabriz
+            where the illness takes the nerve, and nobody inside can be
+            trusted to feel what is happening to them. Three novellas &mdash;
+            a cutting room thirty-four years late, the wall itself in 1938,
+            and a company in Rotterdam that has worked out what the place
+            was for &mdash; about what two hundred people gave their hands
+            and their eyes to protect.</p>
+          <!-- In Persian, set right-to-left in a nastaliq face (Gulzar,
+               loaded with the other Google Fonts above). The English
+               reads: For Forough Farrokhzad, 1934–1967 — who could look
+               at a thing for as long as it took, in a country that was
+               not asking her to, and never once turned her face away to
+               make the looking easier. The years are given in the
+               Iranian calendar, 1313–1345. -->
+          <p class="series-dedication" lang="fa" dir="rtl">
+            <!-- The years are isolated left-to-right so they read
+                 1313–1345 with the earlier year on the left, as they
+                 would on the book's own page; left to the paragraph's
+                 direction the browser mirrors the pair. -->
+            <span class="dedication-to">تقدیم به فروغ فرخزاد، <span dir="ltr">۱۳۱۳–۱۳۴۵</span></span>
+            <em>که می‌توانست به چیزی نگاه کند، هر قدر که طول می‌کشید، در کشوری که این را از او نمی‌خواست،<br>
+              و هرگز، حتی یک بار، رویش را برنگرداند تا نگاه کردن آسان‌تر شود.</em>
+          </p>
+        </div>
 
         <div class="series-rec">
 
-          <button class="series-card" type="button" data-book="61" data-books="61,62">
+          <button class="series-card" type="button" data-book="63" data-books="63,64,65">
             <span class="series-cover">
-              <img data-art="assets/series-61.png" alt="" aria-hidden="true">
+              <img data-art="assets/series-63.png" alt="" aria-hidden="true">
             </span>
             <span class="series-body">
               <span class="series-head">
                 <span class="series-num"></span>
-                <span class="series-title">The Road to Shaam</span>
+                <span class="series-title">The House Is Patient</span>
                 <span class="series-span caps">Book One</span>
               </span>
-              <span class="series-note">Ali is fifteen, from a comfortable secular family in the north of Tehran, and for six years he has crossed the city each Muharram for <em>zanjir zani</em> &mdash; the chain, the yard, the blood through his shirt. On the seventh night the trance lifts him clear of his body, and he watches a man beaten in an alley.</span>
+              <span class="series-note">Rotterdam, 1996. Dariush restores film one frame at a time in a room kept at fifteen degrees, and in March he burns his forearm and does not know it for four hours. Upstairs are eleven cans shot inside a walled colony in 1962, wept at by festival audiences for thirty-four years. Run frame by frame, they hold what nobody was meant to see. Eleven minutes of it are a woman speaking to him.</span>
               <span class="series-foot">
                 <span class="series-fact caps">
                   <svg class="series-ico" viewBox="0 0 24 24" fill="none"
@@ -613,17 +645,40 @@
             </span>
           </button>
 
-          <button class="series-card" type="button" data-book="62" data-books="61,62">
+          <button class="series-card" type="button" data-book="64" data-books="63,64,65">
             <span class="series-cover">
-              <img data-art="assets/series-62.png" alt="" aria-hidden="true">
+              <img data-art="assets/series-64.png" alt="" aria-hidden="true">
             </span>
             <span class="series-body">
               <span class="series-head">
                 <span class="series-num"></span>
-                <span class="series-title">The Evening of Strangers</span>
+                <span class="series-title">The House Is Ours</span>
                 <span class="series-span caps">Book Two</span>
               </span>
-              <span class="series-note">Ali arrives in Los Angeles with one suitcase, hands that will not fully close, and a story he can tell nobody. Eleven years on he has built every part of his life himself, and he is happy. Then a nineteen-year-old in a Highland Park garage looks at him with an expression he once wore himself.</span>
+              <span class="series-note">Outside Tabriz, 1938. Homa is twenty-six, a teacher who believed a country could be cured by decree, sent eleven kilometres past the end of the road. She is the only person there who will never fall ill, and she stays twenty-four years. In the worst week of her life she sits down against the wall in the flat hour and finds somewhere to go. By spring a hundred people are standing in a garden she cannot explain.</span>
+              <span class="series-foot">
+                <span class="series-fact caps">
+                  <svg class="series-ico" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>
+                  </svg>
+                  <span class="series-time"></span>
+                </span>
+                </span>
+            </span>
+          </button>
+
+          <button class="series-card" type="button" data-book="65" data-books="63,64,65">
+            <span class="series-cover">
+              <img data-art="assets/series-65.png" alt="" aria-hidden="true">
+            </span>
+            <span class="series-body">
+              <span class="series-head">
+                <span class="series-num"></span>
+                <span class="series-title">The Room Is Quiet</span>
+                <span class="series-span caps">Book Three</span>
+              </span>
+              <span class="series-note">Rotterdam, now. Bahar Kamrani is forty, and every evening at seven she sits down by the window and goes somewhere. A company that has tested four hundred thousand people finds the forty-one who sit off the end of the instrument, every one of them from a village outside Tabriz that is a weighbridge now. Nine in ten reach it on their first afternoon. She spends two years telling them why it must not be done.</span>
               <span class="series-foot">
                 <span class="series-fact caps">
                   <svg class="series-ico" viewBox="0 0 24 24" fill="none"

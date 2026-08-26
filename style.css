@@ -2239,6 +2239,164 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 .series-name > span { flex: 0 0 auto; }
 
+/* UNUSED at present. For a second series under the first: its name
+   follows the last card of the series before it, and the 1.1rem the
+   name normally carries — set for sitting directly under the heading
+   device — reads as the next card in the same run rather than a new
+   run. The extra air is the only thing that separates the two, since
+   neither has a rule or a border, so it is generous. Left standing so
+   that featuring two series again is a class on the second name and
+   nothing else. */
+.series-name--next { margin-top: 2.6rem; }
+
+@media (min-width: 46rem) {
+  .series-name--next { margin-top: 3rem; }
+}
+
+/* A series with a dedication. The name, the paragraph and the
+   dedication share one block so a portrait can stand behind all three:
+   it dissolves in from the right exactly as the card paintings do, and
+   is held far enough back that the words never have to compete with a
+   face. The block is not clipped — the picture is meant to run off the
+   page the way the paintings below it do, and the root clips it. */
+.series-intro {
+  position: relative;
+  overflow: visible;
+}
+
+.series-intro > p {
+  position: relative;
+  z-index: 1;
+}
+
+/* On the panel the paragraph and the dedication give up their last
+   few rem on the right, so the words end where her face begins rather
+   than running across it. The stage clips 1rem past the block's edge,
+   so the portrait cannot be moved out any further — the text moves in
+   instead. The series name stays centred on the full width like the
+   one above it; it is short and never reaches her. */
+@media (min-width: 46rem) {
+  .series-intro .series-blurb,
+  .series-intro .series-dedication {
+    max-width: 30rem;
+    margin-left: 0;
+    margin-right: auto;
+  }
+  /* The dedication sits below her face, where the mask has already
+     let go, so it may keep a little more of its width — enough for its
+     first line to stay one line. */
+  .series-intro .series-dedication { max-width: 32.5rem; }
+}
+
+.series-portrait {
+  position: absolute;
+  z-index: 0;
+  /* Out past the card's edge like the paintings, but not as far: the
+     face should sit just beyond the last words of the paragraph, not
+     off in the margin. */
+  right: -5rem;
+  top: -12%;
+  height: 124%;
+  /* Narrower than it was, which — with the right edge pinned — moves
+     her face further from the words; the paragraph beside her has
+     given up its last few rem to make the room. */
+  width: 46%;
+  pointer-events: none;
+  /* Not the left-to-right ramp the card paintings use. This is a face,
+     and a ramp lit her hair and the writing beside her while it took
+     the face itself to half. A soft ellipse centred on her eyes shows
+     the one thing that matters and lets everything else — the script,
+     the blue, the edges of the painting — dissolve into the page. */
+  -webkit-mask-image:
+    radial-gradient(ellipse 64% 52% at 50% 34%,
+      #000 0, #000 30%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.18) 84%, transparent 100%);
+  mask-image:
+    radial-gradient(ellipse 64% 52% at 50% 34%,
+      #000 0, #000 30%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.18) 84%, transparent 100%);
+  /* Held back, but less than before: now that the words stop short of
+     her, she can carry more of herself. */
+  opacity: 0.72;
+  filter: saturate(0.9) brightness(1.08);
+}
+
+/* On a phone the card is the whole screen and anything past its edge
+   is gone, so the portrait comes in from the margin and widens a
+   little, which puts her face under the end of the lines rather than
+   half off the glass. */
+@media (max-width: 56rem) {
+  /* And a step fainter: here the paragraph runs right across her, and
+     eyes under words want to be a presence, not a competitor. */
+  .series-portrait { right: -2rem; width: 60%; opacity: 0.5; }
+}
+
+.series-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The eyes sit a third of the way down the painting, where the
+     ellipse above is centred. */
+  object-position: 50% 30%;
+}
+
+/* The dedication, set under the paragraph in the same measure, in
+   Persian: a line in ember naming her, then the four lines from the
+   book's dedication page. Nastaliq — Gulzar, with Noto Nastaliq behind
+   it — because this is the hand Persian poetry is written in, and the
+   page is dedicating itself to a poet.
+
+   Three things connected script needs that the Latin around it does
+   not. No letter-spacing, ever: it breaks the joins between letters.
+   No italic: nastaliq has none, and a browser asked for one slants the
+   glyphs by force. And a much taller line, because the words hang
+   below the baseline on a diagonal and the descenders of one line
+   reach a long way down toward the next. */
+.series-dedication {
+  max-width: 34rem;
+  margin: 1.1rem auto 0;
+  padding: 0 var(--text-edge);
+  text-align: center;
+  font-family: "Gulzar", "Noto Nastaliq Urdu", "Markazi Text", serif;
+  letter-spacing: 0;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+}
+
+.dedication-to {
+  display: block;
+  margin-bottom: 0.1rem;
+  font-size: clamp(1.1875rem, 3.4vw, 1.375rem);
+  line-height: 2;
+  color: var(--ember);
+  opacity: 0.92;
+}
+
+.series-dedication em {
+  display: block;
+  font-style: normal;
+  /* Two lines on the panel's 34rem measure. A phone is narrower than
+     the first of them, so there it steps down a size and is allowed
+     to wrap; it cannot be held to two lines without becoming small
+     enough to lose the hand. */
+  font-size: clamp(1rem, 2.8vw, 1.125rem);
+  line-height: 2.1;
+  color: var(--parchment);
+  opacity: 0.82;
+}
+
+/* On a phone the two written lines become three, and the break that
+   shaped them on the panel now strands one word on a line of its own.
+   The break goes, and the browser balances the three lines itself. */
+@media (max-width: 46rem) {
+  .series-dedication em br { display: none; }
+  .series-dedication em { text-wrap: balance; }
+}
+
+/* Sideways on a phone the block is short and wide, and a portrait
+   stretched across it is mostly mask; let it go. */
+@media (orientation: landscape) and (max-height: 30rem) {
+  .series-portrait { display: none; }
+}
+
 .series-blurb {
   max-width: 34rem;
   margin: 0 auto;
@@ -5224,6 +5382,15 @@ html[data-theme="light"] .series-cover {
   filter: saturate(0.98) brightness(1.04) contrast(0.96);
   opacity: 0.95;
 }
+
+/* The dedication portrait on a pale page: a dark blue painting behind
+   near-black type needs to stand further back still. */
+html[data-theme="light"] .series-portrait {
+  opacity: 0.3;
+  filter: saturate(0.85) brightness(1.1);
+}
+
+html[data-theme="light"] .series-dedication em { color: #2c3136; }
 
 html[data-theme="light"] .series-note,
 html[data-theme="light"] .series-blurb { color: #2c3136; }

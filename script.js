@@ -1679,16 +1679,27 @@
     btn.addEventListener("click", function () { revealBook(s, true); });
   });
 
-  /* The two series paintings. Their filenames stay in index.html, on a
+  /* The series paintings. Their filenames stay in index.html, on a
      data-art attribute rather than src, so the picture is requested
      once — through loadArt, which gets the WebP if it exists — instead
      of the browser starting the PNG and the script then replacing it.
      They sit well below the fold, so nothing is lost by letting the
-     script name them. */
-  document.querySelectorAll(".series-cover img[data-art]").forEach(function (im) {
+     script name them.
+
+     A painting that is not there yet falls back to the book's own
+     cover, read off the card's data-book — the same net the Start Here
+     scenes use. A series can be featured the day its books go up and
+     collect its paintings afterwards; each one takes over the moment
+     its file lands in assets/, with no change to the markup. */
+  document.querySelectorAll(".series-cover img[data-art], .series-portrait img[data-art]").forEach(function (im) {
     im.loading = "lazy";
     im.setAttribute("fetchpriority", "low");
-    loadArt(im, im.dataset.art);
+    /* A dedication portrait stands on no card, so it has no book to
+       fall back to; missing, it simply goes. */
+    var card = im.closest("[data-book]");
+    var book = card ? byNum[Number(card.dataset.book)] : null;
+    loadArt(im, im.dataset.art,
+            book ? (book.cover || coverFor(book.num)) : null);
   });
 
   /* The recommended series cards. A series card reads data-books — the
