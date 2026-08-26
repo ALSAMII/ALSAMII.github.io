@@ -3277,14 +3277,20 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    from the block above, so this starts just past it. */
 @media (max-width: 56rem) and (min-width: 21.51rem) {
   .masthead {
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    /* Equal side columns, so the stamp sits on the true centre of the
+       hairline rather than wherever the wordmark's column leaves it.
+       minmax(0, …) keeps them equal even when one side's content
+       would rather be wider; the content wraps instead. */
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     grid-template-rows: auto auto auto;
     column-gap: 0.6rem;
     row-gap: 0;
     align-items: center;
-    /* More at the foot, so the hairline sits a clear step below the
-       last line of the column rather than on its heels. */
-    padding: 1.1rem 0 1.6rem;
+    /* A little more at the foot than the 1rem the old one-line
+       column had, so the hairline clears the captions under the two
+       settings — but only a little; the column is four lines tall now
+       and the header does not need to be taller still. */
+    padding: 1.1rem 0 1.15rem;
   }
 
   .masthead .brand-col { display: contents; }
@@ -3326,17 +3332,32 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     align-items: flex-start;
     justify-content: flex-start;
     gap: 1.1rem;
-    margin: 0.9rem 0 0;
+    margin: 0.75rem 0 0;
     padding: 0;
   }
 
+  /* Ranged hard left. A button is a column with the drawing centred
+     over its caption, and the caption is the wider of the two, so the
+     drawing sat a few pixels in from the edge every line above it
+     starts on. Left-aligned inside the button, with no padding on
+     that side, the speaker starts on the same line as the wordmark. */
   .brand-col .sound svg,
   .brand-col .theme svg { width: 1.15rem; height: 1.15rem; }
   .brand-col .icon-label { font-size: 0.5rem; letter-spacing: 0.1em; }
   .brand-col .sound,
-  .brand-col .theme { padding: 0.1rem 0.1rem 0.05rem; }
+  .brand-col .theme {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0.1rem 0.1rem 0.05rem 0;
+  }
 
   .masthead .roya-link { grid-column: 2; grid-row: 1 / 4; }
+
+  /* Up from 6.25rem. The column beside it is four lines tall now and
+     the hairline has moved down with it, so the stamp has the room to
+     be the centrepiece again rather than a mark parked between two
+     columns of small print. */
+  .masthead .roya { height: 7.75rem; padding: 0.1rem 0.4rem; }
 
   .masthead nav { grid-column: 3; grid-row: 1 / 4; justify-self: end; }
 
