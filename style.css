@@ -2434,10 +2434,24 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      to fade is empty canvas — the nearest lit pixel is at 12.8%. A
      gentler ramp would put opaque paint over the shelf again, which
      was the bug. Move the width and this moves with it. */
+     Many stops, not three. A ramp built from two or three stops has a
+     kink at each one, and on a field this dark a kink is a visible
+     line — which is what made the picture read as a rectangle laid on
+     the page rather than something dissolving into it. The stops below
+     are an eased curve, shallow at both ends and steep in the middle,
+     so there is no point along it where the eye can find an edge. */
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 2.5%, #000 6%, #000 94%, rgba(0,0,0,0.4) 97.5%, transparent 100%);
+    linear-gradient(to right,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 1.5%, rgba(0,0,0,0.24) 3%,
+      rgba(0,0,0,0.55) 4.5%, rgba(0,0,0,0.85) 5.5%, #000 6.5%,
+      #000 93.5%, rgba(0,0,0,0.85) 94.5%, rgba(0,0,0,0.55) 95.5%,
+      rgba(0,0,0,0.24) 97%, rgba(0,0,0,0.06) 98.5%, rgba(0,0,0,0) 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 2.5%, #000 6%, #000 94%, rgba(0,0,0,0.4) 97.5%, transparent 100%);
+    linear-gradient(to right,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 1.5%, rgba(0,0,0,0.24) 3%,
+      rgba(0,0,0,0.55) 4.5%, rgba(0,0,0,0.85) 5.5%, #000 6.5%,
+      #000 93.5%, rgba(0,0,0,0.85) 94.5%, rgba(0,0,0,0.55) 95.5%,
+      rgba(0,0,0,0.24) 97%, rgba(0,0,0,0.06) 98.5%, rgba(0,0,0,0) 100%);
   /* Stronger than the 0.42 she was held to. That figure was set when
      her face was directly under the densest part of the paragraph and
      had to be whispered; the words now fall on painted black, so she
@@ -2463,9 +2477,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     transform: translate(-50%, -9%);
     opacity: 0.62;
     -webkit-mask-image:
-      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
+      linear-gradient(to right,
+        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
+        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
+        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
+        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
     mask-image:
-      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
+      linear-gradient(to right,
+        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
+        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
+        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
+        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
   }
 
 }
@@ -2480,13 +2502,34 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      just slides the ring off its own axis and crops one side of it. */
   object-position: 50% 50%;
   /* The up-and-down half of the edge mask; the sideways half is on the
-     box above. Held open a long way at both ends, because what the top
-     and bottom of this painting carry is her hair and her shoulders,
-     and they are what stop the two heads reading as cut-outs. */
+     box above. Two masks on one element need mask-composite, and where
+     a browser does not honour it they add instead of intersect — one
+     each is the arrangement that needs no compositing anywhere.
+
+     This one runs a long way in from both ends, much further than the
+     sideways fade does, because it can afford to: the lit faces are a
+     narrow band from 28.7% to 50.5% down the canvas, so everything
+     above 24% and below 58% is hair, collar and empty ground, and can
+     be given over to the dissolve. Full strength is held only across
+     the faces; from there the painting thins the whole way out, and by
+     the top and bottom edges there is nothing left to draw a line
+     with. Same eased curve as the sideways one, for the same reason —
+     three stops leave kinks, and a kink on a field this dark reads as
+     the edge of a rectangle. */
   -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 5%, #000 13%, #000 87%, rgba(0,0,0,0.5) 95%, transparent 100%);
+    linear-gradient(to bottom,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 4%, rgba(0,0,0,0.18) 9%,
+      rgba(0,0,0,0.42) 14%, rgba(0,0,0,0.72) 19%, rgba(0,0,0,0.93) 22%,
+      #000 25%, #000 55%, rgba(0,0,0,0.93) 61%, rgba(0,0,0,0.72) 68%,
+      rgba(0,0,0,0.42) 77%, rgba(0,0,0,0.18) 86%, rgba(0,0,0,0.05) 94%,
+      rgba(0,0,0,0) 100%);
   mask-image:
-    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 5%, #000 13%, #000 87%, rgba(0,0,0,0.5) 95%, transparent 100%);
+    linear-gradient(to bottom,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 4%, rgba(0,0,0,0.18) 9%,
+      rgba(0,0,0,0.42) 14%, rgba(0,0,0,0.72) 19%, rgba(0,0,0,0.93) 22%,
+      #000 25%, #000 55%, rgba(0,0,0,0.93) 61%, rgba(0,0,0,0.72) 68%,
+      rgba(0,0,0,0.42) 77%, rgba(0,0,0,0.18) 86%, rgba(0,0,0,0.05) 94%,
+      rgba(0,0,0,0) 100%);
 }
 
 /* The dedication, set under the paragraph in the same measure, in
@@ -2584,6 +2627,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 0.86;
 }
 
+/* The two shape floats are off unless a narrow block turns them on.
+   On the panel the paragraph is only seven lines and the faces stand
+   beside all of them, so there is nothing to cut around. */
+.blurb-cut { display: none; }
+
 /* ---- A narrow block ----
    Under about 34rem across there is not enough room to stand both
    heads whole inside the block and still leave a line worth reading
@@ -2601,11 +2649,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    wins where container queries are understood; where they are not,
    the phone rules still cover the phone. */
 @container intro (max-width: 34rem) {
-  /* The gap between the heads is 53.7% of whichever of the two widths
-     below actually wins, so the measure is written the same way and
-     the two can never disagree: 0.537 × 134% ≈ 72%, 0.537 × 98vw ≈
-     52.6vw. */
-  .series-blurb { max-width: min(72%, 52.6vw); }
+  /* The paragraph now takes the whole block and is cut into the shape
+     of the picture instead, by the two floats below. Holding all of it
+     to the gap between the faces cost fifteen lines on a phone, and
+     ten of them were sitting under her shoulders where there was
+     nothing to avoid. */
+  .series-blurb { max-width: 100%; }
+
+  /* The width each side has to give up for the faces: half of whatever
+     the block has over and above the gap between them. Written from
+     the same two figures as the box, so it cannot drift out of step —
+     0.537 × 134% ≈ 72%, 0.537 × 98vw ≈ 52.6vw. */
+  .blurb-cut {
+    display: block;
+    width: calc((100% - min(72%, 52.6vw)) / 2);
+    /* Five lines. The line box is 1.6em, so 8em is five of them, and
+       it stays five whatever size the type resolves to. Measured off
+       the picture: on a 393px phone the paragraph starts at the top of
+       the face band and her hair and collar are done a little over
+       five lines later. */
+    height: 8em;
+  }
+  .blurb-cut--l { float: left; }
+  .blurb-cut--r { float: right; }
 
   .series-portrait {
     /* 134% opens the heads out to the block's own edges. The second
@@ -2624,9 +2690,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
        so the picture is at full strength exactly where the faces
        start, and everything outside them is on its way to nothing. */
     -webkit-mask-image:
-      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
+      linear-gradient(to right,
+        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
+        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
+        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
+        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
     mask-image:
-      linear-gradient(to right, transparent 0, rgba(0,0,0,0.4) 5%, #000 12.5%, #000 87.5%, rgba(0,0,0,0.4) 95%, transparent 100%);
+      linear-gradient(to right,
+        rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 3%, rgba(0,0,0,0.24) 6%,
+        rgba(0,0,0,0.55) 9%, rgba(0,0,0,0.85) 11%, #000 12.8%,
+        #000 87.2%, rgba(0,0,0,0.85) 89%, rgba(0,0,0,0.55) 91%,
+        rgba(0,0,0,0.24) 94%, rgba(0,0,0,0.06) 97%, rgba(0,0,0,0) 100%);
   }
 
   /* The hand-placed break in the dedication was measured for a wide
@@ -2646,13 +2720,25 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    left the 600px window and the sideways phone with a paragraph wider
    than the gap it was supposed to sit in. */
 @media (max-width: 46rem) {
-  .series-blurb { max-width: min(72%, 52.6vw); }
+  .series-blurb { max-width: 100%; }
+  .blurb-cut {
+    display: block;
+    width: calc((100% - min(72%, 52.6vw)) / 2);
+    height: 8em;
+  }
+  .blurb-cut--l { float: left; }
+  .blurb-cut--r { float: right; }
 }
 
 /* Sideways on a phone the box is 92% of the block, so the gap between
-   the heads is 53.7% of that — 49%. */
+   the heads is 53.7% of that — 49%. The block is wide here and the
+   paragraph short, so it keeps one measure the whole way down and the
+   shape floats go off again: a narrow phone turned on its side matches
+   the rule above as well as this one, and this one is written second
+   so that it wins. */
 @media (orientation: landscape) and (max-height: 30rem) {
   .series-blurb { max-width: min(34rem, 49%); }
+  .blurb-cut { display: none; }
 }
 
 .series-rec {
