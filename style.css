@@ -2334,6 +2334,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-intro {
   position: relative;
   overflow: visible;
+  /* Queried by its own width below, not by the window's.
+
+     This block is not as wide as the screen and does not grow with it:
+     the panel is 592px across at a 760px window, drops to 398px at
+     900px when the shelf takes its column back, and only passes 592
+     again around 1280. Measured against the window, the backdrop would
+     get its wide treatment at 760, its narrow one at 900 and its wide
+     one again at 1280 — the one arrangement that is wrong at each. The
+     painting cares about the width of the block it is behind, so that
+     is what is asked.
+
+     `inline-size` contains layout and style but not paint, so the
+     picture still runs out of the block and off the page as before. */
+  container-type: inline-size;
+  container-name: intro;
 }
 
 .series-intro > p {
@@ -2344,44 +2359,86 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* The portrait is a background, not a neighbour: the name, the
    paragraph and the dedication stay centred on the panel exactly as a
    series without a portrait would be set, and she stands behind all of
-   it, faded far enough that the words are never reading against her.
-   She sits a little right of centre — her eyes under the end of the
-   lines rather than under the middle of them, where the type is
-   densest — and large, so that what shows is a face and not a
-   thumbnail. */
+   it.
+
+   The painting is now a wreath rather than a portrait — the same woman
+   twice, facing inward from either side, with the whole middle of the
+   canvas painted out to black. So she is centred on the block, not set
+   to one side: the dedication is meant to sit in the hole she leaves,
+   with a face at each end of the lines.
+
+   Measured off the artwork, the lit skin is at 16–31% and 72–84%
+   across and 29–51% down, and everything from 35% to 65% across is
+   black to within a hundredth. Those three figures are what every
+   number below is set against; a repainted wreath that puts the faces
+   elsewhere wants them re-measured, not guessed. */
 .series-portrait {
   position: absolute;
   z-index: 0;
   left: 50%;
-  top: -16%;
-  height: 132%;
-  width: 66%;
-  /* Box centre at 62% of the block: 50% plus the 12% left over from
-     the 38% of its own width it is pulled back by. */
-  transform: translateX(-38%);
+  /* Centred now. The old translateX(-38%) pushed her right so her eyes
+     fell past the ends of the lines; a wreath has to be concentric
+     with the words or one of its two faces is off the page. */
+  transform: translateX(-50%);
+  top: -20%;
+  height: 140%;
+  /* Wider than the block, so the two faces are carried out toward its
+     edges and the black middle covers the measure the text is set to.
+
+     148% is not a taste figure, it is the geometry. The faces run from
+     16% to 84% of the canvas, so at 148% that 68% band is 1.006 of the
+     block — both heads whole, each just touching an edge. Wider and
+     they start going off the page; narrower and they close in on the
+     words. Everything below is measured from this number: the black
+     between them is the 41% from 31% to 72%, which at 148% is 61% of
+     the block, and that is the measure the text is held to. Change
+     this and .series-blurb and .series-dedication have to move with
+     it or the lines will cross a face again. */
+  width: 148%;
   pointer-events: none;
-  /* A soft ellipse centred on her eyes: the face shows, and the
-     script, the blue and the edges of the painting dissolve into the
-     page in every direction. Wider and softer than a spotlight, so
-     it reads as a painting under the words rather than a face cut out
-     and placed beside them. */
+  /* Only the outer edge is masked now, and only just: the painting
+     carries its own darkness into the middle, so there is nothing for
+     a mask to do there, and an inner hole would have taken the faces
+     with it. What is left to hide is the painted panel border — the
+     warm marks along the outside of the canvas — which would otherwise
+     read as a rectangle laid on the page.
+
+     Sideways here, up-and-down on the image below. Two masks on one
+     element need mask-composite, and where a browser does not honour
+     it they add instead of intersect, which is the bug that used to
+     leave the card paintings ending in a hard edge. One mask per
+     element needs no compositing anywhere. */
   -webkit-mask-image:
-    radial-gradient(ellipse 60% 52% at 50% 36%,
-      #000 0, #000 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.15) 82%, transparent 100%);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.55) 5%, #000 12%, #000 88%, rgba(0,0,0,0.55) 95%, transparent 100%);
   mask-image:
-    radial-gradient(ellipse 60% 52% at 50% 36%,
-      #000 0, #000 20%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.15) 82%, transparent 100%);
-  /* Far back. This is the one picture on the panel with words set
-     across it, and a dedication wants the face as a presence behind
-     the page, not a competitor for it. */
-  opacity: 0.42;
-  filter: saturate(0.85) brightness(1.1);
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.55) 5%, #000 12%, #000 88%, rgba(0,0,0,0.55) 95%, transparent 100%);
+  /* Stronger than the 0.42 she was held to. That figure was set when
+     her face was directly under the densest part of the paragraph and
+     had to be whispered; the words now fall on painted black, so she
+     can be looked at. */
+  opacity: 0.72;
+  filter: saturate(0.88) brightness(1.04);
 }
 
-/* On a phone the block is narrow and tall and the paragraph fills the
-   width, so she goes fainter still and a little wider. */
+/* On a phone the block is narrow and taller than it is wide, and a box
+   that stays 136% tall is cropped hard from the sides — which is where
+   both faces are. The box is widened and shortened together: wider
+   carries them out past the text, shorter takes the crop off the top
+   and bottom instead, where this painting has nothing but dark. */
 @media (max-width: 46rem) {
-  .series-portrait { width: 80%; transform: translateX(-42%); opacity: 0.36; }
+  .series-portrait {
+    /* Wider than the panel's 148%, and for the opposite reason. A phone
+       block is 373px of which the words need most, so holding both
+       faces whole inside it would leave a measure of about 220px —
+       five words to a line. Here the two heads are allowed to run off
+       the sides instead: at 190% the black between them is 78% of the
+       block, which is a line a phone can read, and what goes off the
+       edge is the outer half of each head, which is hair. */
+    width: 190%;
+    top: -5%;
+    height: 110%;
+    opacity: 0.62;
+  }
 }
 
 .series-portrait img {
@@ -2389,9 +2446,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* The eyes sit a third of the way down the painting, where the
-     ellipse above is centred. */
-  object-position: 50% 30%;
+  /* Dead centre. A wreath is symmetrical about its own middle, and the
+     old 30% — set to bring one face's eyes up under the lines — now
+     just slides the ring off its own axis and crops one side of it. */
+  object-position: 50% 50%;
+  /* The up-and-down half of the edge mask; the sideways half is on the
+     box above. Held open a long way at both ends, because what the top
+     and bottom of this painting carry is her hair and her shoulders,
+     and they are what stop the two heads reading as cut-outs. */
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 5%, #000 13%, #000 87%, rgba(0,0,0,0.5) 95%, transparent 100%);
+  mask-image:
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.5) 5%, #000 13%, #000 87%, rgba(0,0,0,0.5) 95%, transparent 100%);
 }
 
 /* The dedication, set under the paragraph in the same measure, in
@@ -2407,6 +2473,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    below the baseline on a diagonal and the descenders of one line
    reach a long way down toward the next. */
 .series-dedication {
+  /* Full measure, unlike the paragraph above it. The two faces in the
+     backdrop are a band across the middle of the block — they finish
+     well above where the dedication starts — so these lines have the
+     whole width to themselves and there is nothing here for them to
+     cross. Only .series-blurb, which sits level with the faces, is
+     held to the gap between them. */
   max-width: 34rem;
   margin: 1.1rem auto 0;
   padding: 0 var(--text-edge);
@@ -2453,7 +2525,16 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 .series-blurb {
-  max-width: 34rem;
+  /* Set in the hole in the painting rather than across it. 61% is the
+     width of the black gap between the two faces: their inner edges
+     are at 31% and 72% of the canvas, and the box that carries it is
+     148% of this block, so 0.41 × 148 ≈ 61. The figure belongs to
+     .series-portrait — if the box width moves, this moves with it.
+
+     The dedication below is not held to this, and does not need to be:
+     the faces are a band across the middle of the block and finish
+     above where it starts. */
+  max-width: min(34rem, 61%);
   margin: 0 auto;
   padding: 0 var(--text-edge);
   font-family: var(--serif);
@@ -2462,6 +2543,38 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   text-align: center;
   color: var(--parchment);
   opacity: 0.86;
+}
+
+/* ---- A narrow block ----
+   Under about 34rem across there is not enough room to stand both
+   heads whole inside the block and still leave a line worth reading
+   between them: 61% of 400px is 244px, which sets the paragraph five
+   words to a line and runs it to thirteen. So the arrangement changes
+   rather than shrinking. The box is widened past the block and the
+   outer half of each head is allowed to go off the sides — what is
+   lost there is hair — which opens the gap between them to 78% and
+   gives the paragraph a line it can hold.
+
+   This is the same treatment the phone rules above set, reached by
+   the block's width rather than the window's, and it lands on the
+   narrow middle of the range as well — the 900 to 1200px windows
+   where the panel is at its most squeezed. Written after them so it
+   wins where container queries are understood; where they are not,
+   the phone rules still cover the phone. */
+@container intro (max-width: 34rem) {
+  .series-blurb { max-width: 78%; }
+
+  .series-portrait {
+    width: 190%;
+    top: -8%;
+    height: 116%;
+    opacity: 0.62;
+  }
+
+  /* The hand-placed break in the dedication was measured for a wide
+     line and strands a word on a narrow one. */
+  .series-dedication em br { display: none; }
+  .series-dedication em { text-wrap: balance; }
 }
 
 .series-rec {
