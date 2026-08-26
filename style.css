@@ -6045,7 +6045,18 @@ html[data-theme="light"] .series-card::before {
      how .start-row::before has always been written; this rule had
      simply been missed. */
   z-index: 1;
-  inset: -10% -5rem -10% -1.5rem;
+  /* The right edge is the CARD's, not five rem past it. It used to
+     reach -5rem, which put the gradient's own 100% beyond the card and
+     meant every stop landed early: the veil was still half-dense over
+     the middle of the painting and a fifth dense at its right edge, so
+     the artwork came out washed. Ending the box where the card ends
+     lets the percentages below mean what they say, and the part of the
+     picture that hangs past the card is left alone entirely.
+
+     Top and bottom reach further than the picture does (it overhangs
+     by 12%), so the veil covers its whole height rather than leaving a
+     strip of untreated artwork above and below each card. */
+  inset: -20% 0 -20% -1.5rem;
   /* Opaque, not 'nearly'. At 0.95 the page still let five per cent of
      a near-black painting through, which over the measure of a
      paragraph is the difference between paper and grey paper. It holds
@@ -6061,15 +6072,40 @@ html[data-theme="light"] .series-card::before {
      that might not resolve, so the literal is used here, exactly as
      .start-row::before uses it. */
   background: linear-gradient(to right,
-    rgb(236, 237, 237) 0, rgb(236, 237, 237) 56%,
-    rgba(236, 237, 237, 0.88) 66%, rgba(236, 237, 237, 0.5) 76%,
-    rgba(236, 237, 237, 0.16) 86%, transparent 96%);
+    rgb(236, 237, 237) 0, rgb(236, 237, 237) 61%,
+    rgba(236, 237, 237, 0.85) 67%, rgba(236, 237, 237, 0.5) 74%,
+    rgba(236, 237, 237, 0.18) 80%, transparent 86%);
   /* Taken to nothing top and bottom so the veil has no edge of its
      own — a flat rectangle of page colour over a textured backdrop
      reads as a panel, which is what it must not look like. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%);
   pointer-events: none;
+}
+
+/* ---- The line between one card and the next ----
+   Each painting is drawn 124% of its card's height and hung 12% above
+   it, so it overhangs by about 46px at each end while the gap between
+   cards is only 40px. The two neighbours therefore overlap by some
+   fifty pixels, and where they overlap their two faded tails add
+   together. On black that is invisible — dark on dark. On paper it is
+   a grey bar straight across the gap, which is the "black line".
+
+   The dark theme keeps its long soft tails; here they are cut short
+   instead. The picture is taken to nothing inside its own overhang —
+   fully clear by 12%, which is more than the 11% the neighbours share
+   — so no two paintings are ever both drawing on the same pixel. It
+   costs a little of the artwork at top and bottom, all of it outside
+   the card in any case. */
+html[data-theme="light"] .series-cover img {
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0, transparent 12%,
+      rgba(0,0,0,0.45) 18%, #000 26%, #000 74%,
+      rgba(0,0,0,0.45) 82%, transparent 88%, transparent 100%);
+  mask-image:
+    linear-gradient(to bottom, transparent 0, transparent 12%,
+      rgba(0,0,0,0.45) 18%, #000 26%, #000 74%,
+      rgba(0,0,0,0.45) 82%, transparent 88%, transparent 100%);
 }
 
 /* On paper the picture is already light enough; the dark theme's lift
@@ -6096,8 +6132,37 @@ html[data-theme="light"] .series-portrait {
      perfectly and turns both women into photographic negatives — light
      eyes in dark cheeks — which is worse than the grey ever was. Faint
      and the right way up is the trade that works. */
-  opacity: 0.08;
-  filter: saturate(0.75) brightness(1.12) contrast(0.95);
+  /* Two windows, not a whole picture. Rather than laying the entire
+     canvas on the page and taking it down until the grey is bearable —
+     which also takes the faces down with it — the mask is replaced
+     here by a pair of soft ellipses over the two heads. Everything
+     between and around them is masked out completely, so there is no
+     field left to go grey, and what remains can be shown at six times
+     the strength it could be before.
+
+     Measured off the artwork: the lit skin sits at 10.4%–20.8% and
+     81.6%–89.8% across and 28.7%–50.5% down. Each ellipse is centred
+     on a face and given radii a little larger, so it takes the hair
+     with it and lands on empty ground everywhere it stops. Two mask
+     layers, comma-separated, are unioned by default — no compositing
+     needed and no bug to trip over.
+
+     The vertical mask on the image below is switched off in this
+     theme: the windows already decide the whole shape, and the two
+     would only fight. */
+  -webkit-mask-image:
+    radial-gradient(ellipse 7% 15% at 15.6% 39.6%, #000 0, #000 42%, rgba(0,0,0,0.28) 73%, transparent 100%),
+    radial-gradient(ellipse 7% 15% at 85.7% 39.6%, #000 0, #000 42%, rgba(0,0,0,0.28) 73%, transparent 100%);
+  mask-image:
+    radial-gradient(ellipse 7% 15% at 15.6% 39.6%, #000 0, #000 42%, rgba(0,0,0,0.28) 73%, transparent 100%),
+    radial-gradient(ellipse 7% 15% at 85.7% 39.6%, #000 0, #000 42%, rgba(0,0,0,0.28) 73%, transparent 100%);
+  opacity: 0.46;
+  filter: saturate(0.8) brightness(1.08) contrast(0.94);
+}
+
+html[data-theme="light"] .series-portrait img {
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 html[data-theme="light"] .series-dedication em { color: #1c2026; }
