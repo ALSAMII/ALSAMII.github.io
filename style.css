@@ -471,16 +471,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .sound svg { display: block; width: 1.25rem; height: 1.25rem; }
 
 /* The bars carry their own two colours instead of taking currentColor,
-   so the state has to be shown some other way than by recolouring
-   them: the whole icon lifts out of the page instead. Muted sits below
-   the resting weight, playing above it. Both figures are theme
-   variables, so the light theme is already handled. */
+   so the state cannot be shown by recolouring them; the whole icon
+   lifts out of the page instead. Both figures are theme variables, so
+   the light theme is already handled.
+
+   There is deliberately NO rule dimming the muted state. It had one —
+   0.48 — and between that and the shorter bars it was drawn twice: a
+   smaller figure at half the weight, which on a dark rail is nearly
+   nothing. The two states now differ in what is drawn, not in how
+   brightly, so off is exactly as easy to see as on. Anything added
+   back here will undo that. */
 .sound .bar-em { stroke: var(--ember); }
 .sound .bar-pa { stroke: var(--parchment); }
-.sound svg { opacity: 0.76; transition: opacity 0.25s ease; }
+.sound svg { opacity: 0.8; transition: opacity 0.25s ease; }
 .sound:hover svg,
 .sound[aria-pressed="true"] svg { opacity: 1; }
-.sound.muted svg { opacity: 0.48; }
 
 /* Light and dark, beside the sound. Same weight as the speaker — it is
    a setting, not a feature to be advertised. */
