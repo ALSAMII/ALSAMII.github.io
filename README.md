@@ -82,16 +82,18 @@ In `index.html`:
 
 ## Series
 
-Seven of them, declared in the `TRILOGIES` block at the bottom of
+Nine of them, declared in the `TRILOGIES` block at the bottom of
 `stories.js`. Each names its books by number; every book in one then
 labels itself on its own row — "LES FOLIES · 2 OF 3" — with nothing
 written per book.
 
-Each series also carries a painted panorama, shown in place of a row of
-spines, with the written heading above it. Three of the paintings have
-the series name lettered into the artwork itself; those three are named
-in `style.css` and take the written heading out of sight so it isn't
-said twice. See CUSTOMISING.md for sizes and for that rule.
+Five of them carry a painted panorama, shown in place of a row of
+spines, with the written heading above it: Daughters of Anahita, Les
+Folies, The Borrowed Sun Cycle, The Water Ordeals and The Ghariban. The
+other four — The Unwitnessed Wars, The Unguarded Hours, The Sovereign
+Rooms and The Unheard House — have no `banner` line and show their
+books' spines instead, which is the default. See CUSTOMISING.md for
+sizes.
 
 ## The backdrop and the ambient sound
 
@@ -123,7 +125,7 @@ isn't set for reading here yet and points at the PDF.
 
 ## The shelf count
 
-The label above the order menu — "All 55 stories · order" — is written
+The label above the order menu — "All 67 stories · order" — is written
 by `script.js` from the length of `STORIES`, so it counts itself and
 never needs editing. The number typed into `index.html` is only what
 shows for the half-second before the script runs; it is worth keeping
@@ -131,9 +133,19 @@ roughly right, but nothing depends on it.
 
 ## Cache-busting
 
-Three lines near the top of `index.html` end in `?v=` and a number.
-Raise all three together after any change to `style.css`, `script.js`,
+Six lines in `index.html` end in `?v=` and a number — the stylesheet,
+the two scripts, the preloaded first painting and the two share images.
+Raise them all together after any change to `style.css`, `script.js`
 or `stories.js`, or returning readers keep seeing the old version.
+
+**`index.html` itself has no `?v=`, and cannot have one** — it is the
+entry point, so nothing can ask for it by version. That is the trap:
+raising the number only takes effect once the browser fetches the new
+`index.html`. Until it does, the old copy goes on asking for the old
+`style.css?v=`, which the browser also still holds, and an upload looks
+as though it did nothing at all. GitHub Pages can hold HTML for several
+minutes on top of that. Check with a hard reload (⌘⇧R) or a private
+window before believing a change failed.
 
 ## Hosting
 
@@ -155,5 +167,10 @@ on a site that needs no building.)
 
 Nine times in ten it's `stories.js`: a missing comma between blocks or
 an unclosed quote, which takes the whole list down. Undo, save, refresh.
-The other one time is the `?v=` number not being raised, so the browser
-is still showing yesterday's file.
+
+The other one time is caching, and it wears two faces. Either the `?v=`
+number was not raised — or it was raised, uploaded, and the browser is
+still serving its own cached `index.html`, which asks for the old files
+by their old numbers. **Before investigating anything, open the site in
+a private window.** If the fault is not there, it was never in the
+files. See Cache-busting above.
