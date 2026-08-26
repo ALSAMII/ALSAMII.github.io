@@ -1347,6 +1347,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
               visibility 0s linear 0.2s;
 }
 
+/* A panel that is not the one on show is taken OUT OF THE LAYOUT, not
+   merely made invisible.
+
+   opacity and visibility alone stop it being seen; they do not stop it
+   being tall. All three panels sit in the same grid cell, so the cell
+   is as tall as the tallest of them — the About panel, at some 3,700px
+   — whatever is actually on show. Open a book and the feature that
+   replaces them is 729px, but the stage went on scrolling to 3,809:
+   three thousand pixels of empty room under the book, with whatever
+   parts of the hidden panel do not inherit `visibility: hidden` — a
+   series card's covers, for instance — still painting into it. That is
+   the "why is The Road to Shaam at the bottom of the page": it was not
+   at the bottom of the page, it was the About panel underneath,
+   showing through.
+
+   This rule already existed for phones, inside the narrow breakpoint
+   further down, which is why the fault never appeared on one. It
+   belongs here, where every width gets it. */
+.panel:not(.is-active) { display: none; }
+
 .panel.is-active {
   opacity: 1;
   visibility: visible;
@@ -3559,7 +3579,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     justify-self: stretch;
     margin-right: calc(-1 * var(--frame-pad));
   }
-  .panel:not(.is-active) { display: none; }
 
   .floor { flex-wrap: wrap; justify-content: center; text-align: center; }
 
