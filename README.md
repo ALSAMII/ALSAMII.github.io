@@ -87,13 +87,13 @@ Nine of them, declared in the `TRILOGIES` block at the bottom of
 labels itself on its own row — "LES FOLIES · 2 OF 3" — with nothing
 written per book.
 
-Five of them carry a painted panorama, shown in place of a row of
-spines, with the written heading above it: Daughters of Anahita, Les
-Folies, The Borrowed Sun Cycle, The Water Ordeals and The Ghariban. The
-other four — The Unwitnessed Wars, The Unguarded Hours, The Sovereign
-Rooms and The Unheard House — have no `banner` line and show their
-books' spines instead, which is the default. See CUSTOMISING.md for
-sizes.
+Two of them carry a painted panorama, shown in place of a row of
+spines, with the written heading above it: Daughters of Anahita and The
+Borrowed Sun Cycle. The other seven have no `banner` line and show
+their books' spines instead, which is the default — right for a
+thematic group, where the books share a subject rather than a story and
+a single panorama would claim more continuity than there is. See
+CUSTOMISING.md for sizes.
 
 ## The backdrop and the ambient sound
 

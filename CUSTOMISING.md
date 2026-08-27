@@ -85,10 +85,15 @@ Banner images want to be **wide** — between 2:1 and 3:1 — around
 `assets/` named for the series. Leave `banner` out and the series shows
 its books' spines instead, which suits a small group.
 
-Five of the nine carry one at the moment — Daughters of Anahita, Les
-Folies, The Borrowed Sun Cycle, The Water Ordeals, The Ghariban. The
-Unwitnessed Wars, The Unguarded Hours, The Sovereign Rooms and The
-Unheard House show spines.
+Two of the nine carry one at the moment — Daughters of Anahita and The
+Borrowed Sun Cycle. The other seven show spines.
+
+Which to choose is not really a picture question. A panorama says the
+books share one world; spines say they share a subject. Les Folies, The
+Water Ordeals and The Ghariban all had paintings and gave them up for
+exactly that reason — they are thematic groups, and a single panorama
+was claiming a continuity the books do not have. Their paintings are
+still in `assets/` if that judgement is ever reversed.
 
 **A `banner` naming a file that is not there loses the picture
 entirely** — it does not fall back to spines. The code takes the banner
