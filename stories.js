@@ -844,6 +844,18 @@ const STORIES = [
     key: "Esfand \u2014 wild rue, burned in every doorway in Iran against the evil eye, and nobody there has ever called it a drug",
     notes: [1, 2, 1],
     synopsis: "A career burglar walks out of a hospital in Mashhad in a dead cleric's clothes, taken because they were on a chair and nobody was watching the chair. He does not check the colour of the turban. It is black, which means sayyid \u2014 descent from the Prophet. He has not faked a job, he has faked a bloodline. He gets off a bus in a salt town meaning to stay twelve days, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. He stays fourteen months."
+  },
+
+  {
+    num: 68,
+    title: "Fill in the Blanks",
+    words: "15,000 words",
+    hook: "He supplies the jokes a country repeats, and has not laughed himself in fifteen years",
+    door: "Rite",
+    room: "The Third Hour \u2014 between three and five in the morning, when the thing arrives with the turn already in position and all he does is hold the paper",
+    key: "The Joke \u2014 a sentence that travels without a sender, that no one will admit to writing, and that the body answers before its owner can rule on it",
+    notes: [2, 2, 3],
+    synopsis: "Manuchehr Delgosh\u0101 is the most widely read unpublished writer in the Persian language: a satirical channel with two million subscribers, three comedians who each believe they are his only client, a state programme that pays properly and takes his teeth out. By day he subtitles pirated American sitcoms into a language that will not hold the punchlines; by night, in a chair with a broken caster, he takes dictation from something he does not care to name. It is not a novel but a notebook \u2014 eighty-four entries, some nine pages and some four lines, in the shape of a fourteenth-century treatise that has been censored in every edition printed since. A man who can see a laugh coming before the room can, and who has not laughed in fifteen years, sets down everything except the parts he cannot write, and leaves the reader to supply them."
   }
 
 ];
