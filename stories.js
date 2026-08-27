@@ -813,7 +813,7 @@ const STORIES = [
   {
     num: 65,
     title: "The Room Is Quiet",
-    words: "31,500 words",
+    words: "32,500 words",
     hook: "Every evening at seven she sits down in a chair by the window and goes somewhere",
     door: "Rite",
     room: "The Walled Enclosure \u2014 dry, water down the middle, something living at the far end that cannot be reached, and something behind you that you do not turn round on",
