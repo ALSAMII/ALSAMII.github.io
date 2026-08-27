@@ -908,7 +908,6 @@ const TRILOGIES = [
   },
   {
     title: "Les Folies",
-    banner: "assets/les-folies.jpg",
     books: [22, 23, 24],
     synopsis: "One city, three books, no villains. A clerk, then a crowd, then a congregation \u2014 each does everything correctly, and the result is wrong every time. Nobody breaks a law, nobody raises a voice, and by the final rule, you may already have agreed to it."
   },
@@ -958,19 +957,10 @@ const TRILOGIES = [
     title: "The Water Ordeals",
     label: "",
     books: [51, 52, 53, 54, 55],
-    /* A single painted panorama rather than a row of covers \u2014 quarry
-       wall, open sea, the wave and the weed all belong to one body of
-       water, and the picture says so where five spines would not. */
-    banner: "assets/water-ordeals.jpg",
     synopsis: "Five novellas about people who go into water that will not permit assistance \u2014 a flooded quarry, a cave under limestone, the largest wave in Europe, six hundred days alone at sea, a channel in twelve degrees. Each leaves a record, and each record is accurate, complete, and wrong about the only thing that matters. Somebody came up. Somebody did not. The survivor is the sole witness, and memory is not a document but a reconstruction, rebuilt every time it is opened."
   },
   {
     title: "The Ghariban",
-    /* One picture of the world the two books share — Tehran under snow
-       on the left, Los Angeles under palms on the right, one figure on
-       the wet road between them. Two spines side by side could not say
-       that. No lettering in the artwork, so the written heading stays. */
-    banner: "assets/ghariban.jpg",
     label: "",
     books: [61, 62],
     synopsis: "Two novellas about one boy and the ritual he was raised inside. In Tehran he beats himself with a chain every Muharram, and in the state that follows he sees something happening three streets from his uncle\u2019s door. Eleven years later in Los Angeles he has built an entire life alone, and cannot say why he knows where all nine mourning halls are and has never once been in one. Ghariban: the stranger, the one far from home, the one nobody came for."
