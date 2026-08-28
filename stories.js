@@ -830,7 +830,11 @@ const STORIES = [
     door: "Rite",
     room: "The Front Room \u2014 his wife in her own chair, ratified, visited, photographed and transcribed by strangers who have come to read her",
     key: "The Reading Angle \u2014 a lamp set on the floor, low and oblique, because light from above fills the ground and light from below throws the lines",
-    notes: [3, 3, 1],
+    /* Was 1, "Not possible", which the book is not: Hurufism was a
+       real doctrine and the reading of it here is a real practice.
+       The one thing in it that could not happen is what the ruin of
+       her face turns out to be writing, and that is a 2. */
+    notes: [3, 3, 2],
     synopsis: "A provincial Iranian city, and three families keeping a doctrine the world burned six hundred years ago: that the human face is not like scripture but is scripture, fourteen lines of divine writing laid out in hair and bone. Mansur Sarmadi is their reader \u2014 when one of them dies he reads the face aloud, and the reading is the funeral. Then his wife's face begins to fail. He starts reading her in secret while she sleeps, and finds that what the ruin is writing is better than anything the old text ever said."
   },
 
@@ -842,7 +846,10 @@ const STORIES = [
     door: "Dose",
     room: "The Inner Chamber \u2014 four paces by five, one door, no window, and a vent bricked up in 1961",
     key: "Esfand \u2014 wild rue, burned in every doorway in Iran against the evil eye, and nobody there has ever called it a drug",
-    notes: [1, 2, 1],
+    /* Was 1, "Not possible". There is nothing in this book that could
+       not happen \u2014 a man in the wrong turban, and a village that
+       needs a custodian more than it needs to check. */
+    notes: [1, 2, 3],
     synopsis: "A career burglar walks out of a hospital in Mashhad in a dead cleric's clothes, taken because they were on a chair and nobody was watching the chair. He does not check the colour of the turban. It is black, which means sayyid \u2014 descent from the Prophet. He has not faked a job, he has faked a bloodline. He gets off a bus in a salt town meaning to stay twelve days, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. He stays fourteen months."
   },
 
@@ -904,14 +911,14 @@ const STORIES = [
    ============================================================ */
 
 const GLOSSARY = {
-  notes: [
-    { name: "Noir",
-      levels: ["Warmth survives it", "Cold, but bearable", "No rescue at all"] },
-    { name: "Transgressive",
-      levels: ["Mildly unsettling", "Moderately disturbing", "Genuinely harrowing"] },
-    { name: "Uncanny",
-      levels: ["Only slightly off", "Something is wrong here", "The world itself is wrong"] }
-  ],
+  /* There were two "notes" blocks here, this one naming the third
+     dial "Uncanny" and the one further down naming it "Plausible".
+     A repeated key in an object literal is not an error in
+     JavaScript — the later one simply wins — so the site had been
+     showing Plausible all along while this block sat above it
+     looking authoritative and doing nothing. Removed, because a
+     reader of this file could only be misled by it. The live
+     definition is the one below, under the dials comment. */
   doors: {
     "Dose":        "You took something",
     "Rite":        "You practiced it",
