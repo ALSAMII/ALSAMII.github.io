@@ -856,6 +856,30 @@ const STORIES = [
     key: "The Joke \u2014 a sentence that travels without a sender, that no one will admit to writing, and that the body answers before its owner can rule on it",
     notes: [2, 2, 3],
     synopsis: "Manuchehr Delgosh\u0101 is the most widely read unpublished writer in the Persian language: a satirical channel with two million subscribers, three comedians who each believe they are his only client, a state programme that pays properly and takes his teeth out. By day he subtitles pirated American sitcoms into a language that will not hold the punchlines; by night, in a chair with a broken caster, he takes dictation from something he does not care to name. It is not a novel but a notebook \u2014 eighty-four entries, some nine pages and some four lines, in the shape of a fourteenth-century treatise that has been censored in every edition printed since. A man who can see a laugh coming before the room can, and who has not laughed in fifteen years, sets down everything except the parts he cannot write, and leaves the reader to supply them."
+  },
+
+  {
+    num: 69,
+    title: "The Blind Lamp",
+    words: "15,500 words",
+    hook: "He read the same book every night for fifteen years by the one light that cannot show violet",
+    door: "Dose",
+    room: "The Thirteenth of Farvardin \u2014 one night and the working day after it, hours he was awake for, and talking, and driving a horse, and digging, and was not in",
+    key: "The Blind Lamp \u2014 the small oil flame a pipe is warmed over and a page is read by, which renders violet ink and printer's black the same colour",
+    notes: [3, 3, 3],
+    synopsis: "Tehran, 1951. Mahmud Sarshar paints the same girl's face on pen cases nobody buys, and has spent fifteen years looking for the grave he dug for his wife on a night he cannot remember one hour of. What he has instead is a book \u2014 one of fifty printed by hand in Bombay in 1936 and stamped not for sale or publication in Iran \u2014 which he has read every evening since by the lamp he warms his pipe over, and whose margins carry a second voice he has always taken for the author's. Then the author dies in Paris, and Mahmud carries the book to a window, and sees in daylight for the first time that the marginal hand is violet, and that he has never in his life bought violet ink."
+  },
+
+  {
+    num: 70,
+    title: "Under His Own Name",
+    words: "10,600 words",
+    hook: "His brother said eleven of his words out loud, under his own name, and has not come home",
+    door: "Withholding",
+    room: "The Queue \u2014 a country's attention, which is not a courtroom but a line that moves, where something has to fall off the bottom for anything to go on the top",
+    key: "The Line \u2014 eleven words built in February, on tea, given to nobody, and now the property of ninety million people, a dead poet and a shop on Vali Asr",
+    notes: [2, 2, 3],
+    synopsis: "Three years after a basement in the south of the city, eleven words are still travelling: seven of them in white paint on a wall in Narmak, all eleven under a photograph of a cat, and the whole line on state television, slightly wrong, getting a comedian the biggest laugh of his career. Manuchehr Delgosh\u0101 wrote them and gave them to nobody, and cannot say so, because saying so requires a sentence he will not put in his own mouth \u2014 that line is mine, and my brother took it, and look where he is. So he does the only thing his trade has taught him: he writes over it, two stories for every one of theirs, trying to bury what he is not able to correct. Ninety-nine entries later he has spent a year conducting a campaign against a sentence, and the sentence has not noticed."
   }
 
 ];
@@ -989,5 +1013,22 @@ const TRILOGIES = [
        When one exists, add banner: "assets/unheard-house.jpg" here. */
     books: [63, 64, 65],
     synopsis: "Three novellas about a walled village outside Tabriz that appears on no map, and about what the people inside it were protecting. One watches from a cutting room thirty-four years late, frame by frame. One is written from inside the wall, by the only person there who was never ill. The third is set in Rotterdam now, where a company works out that the thing two hundred people gave their hands and their eyes for can be reached by anybody, in ninety minutes, for four hundred euro."
+  },
+  {
+    title: "The Delgoshā Notebooks",
+    /* The first series here whose books are not consecutive — 69 sits
+       between them and belongs to nothing. Nothing special is needed
+       for that: the row labels itself from its position in this list,
+       not from its number, so 68 reads "1 OF 2" and 70 reads "2 OF 2"
+       with a stranger standing between them on the shelf.
+
+       Two books, and the label is emptied rather than left out: at
+       three, script.js would call the group "A Triptych" on its own.
+       Emptied now, it stays right when the third day arrives.
+
+       No banner — the two covers stand side by side. */
+    label: "",
+    books: [68, 70],
+    synopsis: "Two notebooks, three years apart, kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, on a stage, under his own name, and does not come home. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. This is the first day and the second."
   }
 ];

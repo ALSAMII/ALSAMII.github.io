@@ -18,7 +18,7 @@ because in verse the breaks are the writing.
 Nothing here is hand-edited. Rebuild after replacing a PDF.
 """
 
-import json, os, re, sys
+import json, os, re, statistics, sys
 import pdfplumber
 
 PDF_DIR = "pdfs"
@@ -40,6 +40,13 @@ FURNITURE  = 0.90    # smaller than the body by this much: page furniture
 # running heads, which sit far below it.
 INDENT_PT  = 4       # further right than the margin: a new paragraph
 MARGIN_PT  = 42      # this close to the top or foot: not the text
+FULL_LINE  = 0.90    # this near the right edge: the typesetter wrapped it
+# Verse is broken where the poet chose; prose is broken where the
+# measure ran out. A line reaching this far right was wrapped, not
+# written that way. Measured over the books that already use verse:
+# in No. 63, 1 of 83 verse lines reaches 0.90 of the measure, median
+# 0.62. In No. 69, whose italic captions under FROM THE BOOK are
+# prose, 15 of 29 reach it, median 0.95. The two do not overlap.
 
 
 def measure(pdf):
@@ -47,7 +54,7 @@ def measure(pdf):
        whatever size most of the words are set in, and the left margin
        is wherever most lines begin — everything else is judged against
        those two."""
-    sizes, lefts, gaps = {}, {}, {}
+    sizes, lefts, gaps, rights = {}, {}, {}, []
     for page in pdf.pages[:24]:
         prev = None
         for line in page.extract_text_lines():
@@ -57,19 +64,25 @@ def measure(pdf):
             sizes[size] = sizes.get(size, 0) + len(line["text"])
             x0 = round(line["x0"])
             lefts[x0] = lefts.get(x0, 0) + 1
+            rights.append((size, line["x1"]))
             if prev is not None:
                 g = round(line["top"] - prev)
                 if 0 < g < 60:
                     gaps[g] = gaps.get(g, 0) + 1
             prev = line["top"]
     if not sizes:
-        return 10.0, 60, 16
+        return 10.0, 60, 16, 999999.0
     body = max(sizes, key=sizes.get)
     left = max(lefts, key=lefts.get)
     # The ordinary step from one line to the next. Anything taller is
     # air the typesetter put there on purpose.
     lead = max(gaps, key=gaps.get) if gaps else 16
-    return body, left, lead
+    # Where a full line of body text ends. Taken from the widest body
+    # lines rather than the widest line of any kind, so a centred
+    # display heading that runs wide cannot stretch the measure.
+    body_x1 = sorted(x1 for s, x1 in rights if abs(s - body) < 0.15)
+    right = (statistics.median(body_x1[-40:]) if body_x1 else 999999.0)
+    return body, left, lead, right
 def line_html(line):
     """A line of text, with its italic runs marked.
 
@@ -121,14 +134,48 @@ def extract(path):
     # verse on its italics alone.
     at_chapter_top = False
     para = []
+    # Italic lines caught by the epigraph rule are held here rather
+    # than emitted one by one, because a single line cannot tell you
+    # whether it was broken by a poet or by the measure — only the run
+    # it belongs to can. See flush_italic.
+    ital = []
 
     def flush():
         if para:
             blocks.append({"t": "p", "h": " ".join(para)})
             para.clear()
 
+    def flush_italic():
+        """Decide what the run of whole-italic lines actually was.
+
+           A paragraph of prose that happens to be set in italic fills
+           every line it has and can only fall short on the last one:
+           the breaks are the measure running out, not the writing,
+           and joining them is a repair. Verse does not do that. Even
+           a long verse line that reaches the margin sits among short
+           ones, so the run fails the test and keeps its breaks.
+
+           The test is the shape of the whole run — every line but the
+           last one full — not whether any single line is full, and
+           that is what separates the two. It says nothing about the
+           last line, which may fall short or may happen to fill out.
+           Tested against every book here: the italic captions under
+           FROM THE BOOK and FROM THE MARGIN in No. 69, the ones in
+           No. 53 and the glossary heads in Nos. 61 and 62 all join;
+           the verse in Nos. 20, 63, 64 and 65 is untouched, including
+           the lines in it that do reach the margin."""
+        if not ital:
+            return
+        wrapped = len(ital) > 1 and all(w for _, w in ital[:-1])
+        if wrapped:
+            blocks.append({"t": "p", "h": " ".join(h for h, _ in ital)})
+        else:
+            for h, _ in ital:
+                blocks.append({"t": "v", "h": h})
+        ital.clear()
+
     with pdfplumber.open(path) as pdf:
-        body, left, lead = measure(pdf)
+        body, left, lead, right = measure(pdf)
         head_at = body * HEAD_RATIO
         small_at = body * FURNITURE
 
@@ -159,6 +206,7 @@ def extract(path):
 
                 # Set larger than the body: a chapter, a part title.
                 if size >= head_at:
+                    flush_italic()
                     flush()
                     in_verse = is_verse_head(text)
                     at_chapter_top = True
@@ -171,6 +219,7 @@ def extract(path):
                 letters = re.sub(r"[^A-Za-z]", "", text)
                 if (letters and len(text) < 70 and text == text.upper()
                         and len(letters) > 2):
+                    flush_italic()
                     flush()
                     in_verse = is_verse_head(text)
                     at_chapter_top = True
@@ -198,7 +247,7 @@ def extract(path):
                 if (at_chapter_top and line_is_italic(line)
                         and small_at <= size < body):
                     flush()
-                    blocks.append({"t": "v", "h": html})
+                    ital.append((html, line["x1"] >= right * FULL_LINE))
                     continue
 
                 if size < small_at:
@@ -206,6 +255,7 @@ def extract(path):
 
                 # Ordinary prose has begun; the window closes until the
                 # next heading.
+                flush_italic()
                 at_chapter_top = False
 
                 # Two ways a book opens a paragraph, and these ten
@@ -217,6 +267,7 @@ def extract(path):
                     flush()
                 para.append(html)
                 prev_top = line["top"]
+            flush_italic()
             flush()
     return blocks
 

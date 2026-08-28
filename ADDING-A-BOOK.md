@@ -100,14 +100,28 @@ the book — they aren't shared categories, so no glossary entry is
 needed.
 
 **`notes`** — three numbers, `1` to `3`, in this fixed order: Noir,
-Transgressive, Speculative. They draw the three dials under the
+Transgressive, Plausible. They draw the three dials under the
 synopsis.
 
 | | 1 | 2 | 3 |
 |---|---|---|---|
 | **Noir** | Warmth survives it | Cold, but bearable | No rescue at all |
 | **Transgressive** | You'll be fine | It will cost you | Genuinely harrowing |
-| **Speculative** | The real world | One invented thing | An invented world |
+| **Plausible** | Not possible | Almost possible | Entirely possible |
+
+**Watch the direction of the third one.** It runs the opposite way
+round from the other two: a `3` means the book could happen tomorrow,
+not that it is the strangest. The Water Ordeals and Les Folies are
+threes; the Gnostic books at the start of the catalogue are ones. An
+earlier version of this page called the dial "Speculative" and had
+the scale backwards, which is how Nos. 66 and 67 — both entirely
+possible — ended up marked "Not possible" on the site.
+
+The wording above is the live one. `stories.js` also carries an older
+`notes` block naming the third dial "Uncanny", further up the same
+`GLOSSARY` object; it is dead — a repeated key, so the later one is
+the one JavaScript keeps — but it is worth knowing it is there before
+editing the glossary and wondering why nothing changed.
 
 **`synopsis`** — three or four sentences, no line breaks.
 
@@ -213,24 +227,50 @@ copyright, and contents list.
 somewhere near 18,000 — the difference is the front matter it skips. A
 figure far below that means the typesetting did something the script
 hasn't seen before. Send it to Claude rather than shipping it: every
-book in the catalogue was checked this way, and four of them needed the
+book in the catalogue was checked this way, and five of them needed the
 script taught something new.
+
+The count is not the only thing worth a look. Open the book with
+**Read** and scroll a little: the fault the number cannot show is
+prose broken into short lines. The script keeps line breaks where
+they are the writing — verse, a prayer under a chapter head — and it
+tells verse from prose by the shape of the run: a paragraph fills
+every line it has and can only fall short on its last, while verse
+sits among short lines. No. 69 was the book that taught it that. Its
+italic captions under FROM THE BOOK were being read as verse, so each
+one broke mid-sentence at the right margin.
 
 ---
 
 ## 6. Raise the cache-buster
 
-In `index.html`, near the top, three lines end in `?v=` and a number:
+In `index.html`, **six** lines end in `?v=` and a number — three near
+the top for the share-preview and preloaded images, three at the foot
+for the stylesheet and the two scripts:
 
 ```html
-<link rel="stylesheet" href="style.css?v=140">
-<script src="stories.js?v=140"></script>
-<script src="script.js?v=140"></script>
+<meta property="og:image" content=".../og-roya.png?v=337">
+<meta name="twitter:image" content=".../og-roya.png?v=337">
+<link rel="preload" as="image" href="assets/start-07.webp?v=337" ...>
+<link rel="stylesheet" href="style.css?v=337">
+<script src="stories.js?v=337"></script>
+<script src="script.js?v=337"></script>
 ```
 
-Add one to all three, keeping them identical. Browsers hold these
-files hard; changing the number makes each one a new address, so a
+Add one to all six, keeping them identical. Browsers hold these files
+hard; changing the number makes each one a new address, so a
 returning reader gets the new book instead of yesterday's list.
+
+**`index.html` itself must never carry a `?v=`.** It is the page the
+browser asks for by name, and there is nothing upstream of it to
+rewrite the address — a version on it is a request for a file that
+does not exist, and the site goes blank.
+
+Note that `pdfs/NN.pdf` and `read/NN.json` carry no `?v=` either, and
+are not covered by this number. That is fine for a new book, which
+has no cached version to displace, but a reader who has already
+opened a book may be served the old text for a while after you
+replace it.
 
 ---
 
@@ -289,7 +329,10 @@ new block against the one above it.
 wrong. It must be `covers/NN.jpg`, two digits.
 
 **The old list keeps showing.** The `?v=` number didn't change, or
-only one of the three lines was changed. Check all three match.
+only some of the six lines were changed. Check all six match.
+
+**The page is blank.** Something put a `?v=` on `index.html` itself.
+Take it off; nothing else will fix it.
 
 **Read says the book isn't set for reading here yet.** `read/NN.json`
 was never built, or never uploaded. Everything else about the book
