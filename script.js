@@ -735,8 +735,47 @@
     }
   }
 
-  STORIES.forEach(function (s, i) {
-    if (trioByFirst[s.num]) buildTrilogyHead(trioByFirst[s.num]);
+  /* ---- The order the shelf is built in -----------------------
+     A series is one block. It stands where its first book stands and
+     holds every book it lists, in the order it lists them — and only
+     those. That last part only started mattering when a series
+     stopped being consecutive: The Delgoshā Notebooks is 68 and 70,
+     and No. 69 sits between them belonging to nothing.
+
+     Walking STORIES straight through put 69 physically inside the
+     block, under the heading and between two indented rows, which
+     said it was the middle book of a series it has nothing to do
+     with. A number is not a membership.
+
+     So members are gathered to their heading, and a book that is not
+     one is emitted at its own turn — which, once the block above has
+     taken the numbers it owns, puts it directly after the block. It
+     costs one book its exact place in the numbering. That is the
+     cheaper of the two errors: a reader can see 69 is out of step,
+     and could not see that it was never in the series. */
+  var SHELF = (function () {
+    var out = [], placed = {};
+    STORIES.forEach(function (s) {
+      if (placed[s.num]) return;
+      var t = trioByFirst[s.num];
+      if (t) {
+        out.push({ head: t });
+        t.books.forEach(function (n) {
+          if (!byNum[n] || placed[n]) return;
+          out.push({ story: byNum[n] });
+          placed[n] = true;
+        });
+        return;
+      }
+      out.push({ story: s });
+      placed[s.num] = true;
+    });
+    return out;
+  })();
+
+  SHELF.forEach(function (entry, i) {
+    if (entry.head) { buildTrilogyHead(entry.head); return; }
+    var s = entry.story;
 
     var num   = String(s.num || i + 1).padStart(2, "0");
     var pdf   = s.pdf   || "pdfs/" + num + ".pdf";
@@ -1492,20 +1531,38 @@
         });
 
       groupRows.forEach(function (g) {
-        var newest = -1;
-        g.group.books.forEach(function (n) { if (n > newest) newest = n; });
+        /* Newest member first, to match the shelf around it. */
+        var members = g.group.books.slice().sort(function (a, b) { return b - a; });
 
-        var anchor = null;
-        rows.forEach(function (r) { if (r.story.num === newest) anchor = r; });
+        var byRow = {};
+        rows.forEach(function (r) { byRow[r.story.num] = r; });
 
-        if (anchor) {
-          g.el.classList.remove("sorted-away");
-          list.insertBefore(g.el, anchor.el);
-        } else {
+        var anchor = byRow[members[0]];
+        if (!anchor) {
           /* Its newest book is not on the shelf — nothing to stand
              above, so it stays out rather than floating. */
           g.el.classList.add("sorted-away");
+          return;
         }
+
+        g.el.classList.remove("sorted-away");
+        list.insertBefore(g.el, anchor.el);
+
+        /* Then pull the rest of the series up under the heading. The
+           sort has laid the shelf out by number, so a series whose
+           books are not consecutive has strangers standing between
+           them — No. 69 was sitting under the Delgoshā heading,
+           indented rows above and below it, because it happens to
+           fall between 68 and 70. Gathering the members closes the
+           block over them and drops the stranger out of the bottom of
+           it, back onto the shelf on its own. */
+        var mark = g.el;
+        members.forEach(function (n) {
+          var r = byRow[n];
+          if (!r) return;
+          list.insertBefore(r.el, mark.nextSibling);
+          mark = r.el;
+        });
       });
     }
 
