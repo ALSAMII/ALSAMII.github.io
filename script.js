@@ -864,8 +864,17 @@
     if (series) {
       var mark2 = document.createElement("span");
       mark2.className = "story-series caps";
-      mark2.textContent = series.title + " \u00b7 " + series.place +
-                          " of " + series.of;
+      /* The title is fenced in an isolate \u2014 U+2068 in front, U+2069
+         behind \u2014 because one series carries its Persian, and a
+         right-to-left run loose in a line drags what follows it into
+         its own direction. Without the fence "Thursday Nights
+         \u0634\u0628\u200c\u0647\u0627\u06cc \u067e\u0646\u062c\u0634\u0646\u0628\u0647 \u00b7 2 of 2" came out as "THURSDAY NIGHTS 2
+         \u0634\u0628\u200c\u0647\u0627\u06cc \u067e\u0646\u062c\u0634\u0646\u0628\u0647 \u00b7 OF 2": the bidi algorithm had reached past
+         the Persian and taken the place number with it. Isolated,
+         the title is one opaque run and the count stays put. Harmless
+         on the ten titles that are all Latin. */
+      mark2.textContent = "\u2068" + series.title + "\u2069" +
+                          " \u00b7 " + series.place + " of " + series.of;
       sub.append(mark2);
     }
 

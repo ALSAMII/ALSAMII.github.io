@@ -887,6 +887,18 @@ const STORIES = [
     key: "The Line \u2014 eleven words built in February, on tea, given to nobody, and now the property of ninety million people, a dead poet and a shop on Vali Asr",
     notes: [2, 2, 3],
     synopsis: "Three years after a basement in the south of the city, eleven words are still travelling: seven of them in white paint on a wall in Narmak, all eleven under a photograph of a cat, and the whole line on state television, slightly wrong, getting a comedian the biggest laugh of his career. Manuchehr Delgosh\u0101 wrote them and gave them to nobody, and cannot say so, because saying so requires a sentence he will not put in his own mouth \u2014 that line is mine, and my brother took it, and look where he is. So he does the only thing his trade has taught him: he writes over it, two stories for every one of theirs, trying to bury what he is not able to correct. Ninety-nine entries later he has spent a year conducting a campaign against a sentence, and the sentence has not noticed."
+  },
+
+  {
+    num: 71,
+    title: "A Steady Hand",
+    words: "23,300 words",
+    hook: "He cannot read a drug name, and four hundred people have decided he is their doctor",
+    door: "Rite",
+    room: "Ab-Bidar \u2014 four hundred people on a dying qanat, and no door that closes on two of them without the village knowing which door and for how long",
+    key: "The Ampoule \u2014 a sealed glass vial, and in Iranian usage the injection itself: tablets are advice, a needle is treatment, and a consultation that ends without one has not happened",
+    notes: [2, 2, 3],
+    synopsis: "A burglar lifts an unattended bag off a luggage rack and finds a stethoscope, a perished blood-pressure cuff mended with electrical tape, a prescription pad, and a Ministry of Health card belonging to a man born eleven months before him. He wants it only so that he can say a sentence with a title in it if a policeman ever stops him. Then he gets off a bus in Ab-Bidar \u2014 four hundred people, a failing qanat, six locums promised in eleven months and five who never came \u2014 and a man outside the shop stands up and says: Doctor? They said Thursday. He intends to stay four days. Forty numbered notes to whoever comes next, set down by a man who cannot read a drug name and who works out that almost nobody, anywhere, can judge whether a treatment worked \u2014 only whether the correct procedure was performed by somebody with the standing to perform it."
   }
 
 ];
@@ -1037,5 +1049,20 @@ const TRILOGIES = [
     label: "",
     books: [68, 70],
     synopsis: "Two notebooks, three years apart, kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, on a stage, under his own name, and does not come home. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. This is the first day and the second."
+  },
+  {
+    /* The only series title here carrying its Persian. The heading is
+       set in Cormorant, which has no Arabic-script glyphs at all, so
+       .t-title in style.css names Gulzar behind it — a browser picks
+       a font per glyph, so the English stays in the serif and the
+       Persian falls to the nastaliq the dedication already uses. */
+    title: "Thursday Nights شب‌های پنجشنبه",
+    /* Not consecutive either: 68, 69 and 70 stand between these two.
+       See the note on The Delgoshā Notebooks above — the same rule
+       carries both, and script.js gathers a block's members to their
+       heading rather than swallowing whatever falls between them. */
+    label: "",
+    books: [67, 71],
+    synopsis: "Two novellas about a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Later he lifts an unattended bag off a luggage rack and steps off a bus into a village that has been promised a doctor six times in eleven months and seen five of them not arrive. He is qualified for neither, and at neither is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done."
   }
 ];

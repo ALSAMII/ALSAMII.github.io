@@ -4330,7 +4330,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    a series reads as a different kind of thing at a glance. */
 .t-title {
   margin: 0;
-  font-family: var(--serif);
+  /* Gulzar stands behind the serif for the one series title that
+     carries its Persian — Thursday Nights. A browser picks a font per
+     glyph rather than per element, so the English is set in Cormorant,
+     which has no Arabic script at all, and only the Persian falls
+     through to the nastaliq the dedication already uses.
+
+     font-synthesis stops the browser slanting that fall-through by
+     hand. Gulzar has no italic and a faked one on nastaliq, where the
+     letters already lean, is a mess. The English keeps its real
+     italic; it is a designed one, so nothing is synthesised there. */
+  font-family: var(--serif), "Gulzar", "Noto Nastaliq Urdu", serif;
+  font-synthesis: none;
   font-style: italic;
   font-weight: 500;
   font-size: 1.375rem;
