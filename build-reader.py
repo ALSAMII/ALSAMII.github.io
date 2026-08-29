@@ -329,6 +329,40 @@ def drop_contents(blocks):
     return [b for i, b in enumerate(blocks) if i not in drop]
 
 
+# An emphasis marker the typesetter italicised instead of removing.
+# The author writes *like this*, the setter turns the marked span
+# italic — and leaves the two asterisks in it, so the page carries the
+# emphasis twice, once in the font and once in punctuation. It shows
+# in the printed book as well; this only cleans the reading text.
+#
+# Kept deliberately narrow, because an asterisk is not always noise:
+# Nos. 13, 49, 61 and 62 use "* * *" as a scene break, and No. 11
+# marks its emphasis with asterisks and no italic at all, so there the
+# asterisk is carrying the meaning on its own. Both are left alone by
+# asking for an asterisk that touches an emphasis boundary — one that
+# opens a run with text after it, or one that follows a closing tag.
+# No. 19's lone italic asterisk survives the first rule for the same
+# reason: taking it out would leave an empty <em>.
+STAR_OPEN  = re.compile(r'(<em>\s?)\*(?=[^<])')
+STAR_CLOSE = re.compile(r'(</em>)\*')
+
+# A glyph the PDF draws but cannot name. No. 74 sets one Persian word
+# in Amiri with no usable character mapping, so it extracts as five
+# NULs — invisible in the file and nothing on the page. Dropped here;
+# the word is missing from the reading text either way, and that is a
+# fault in the PDF, not something this script can recover.
+NULLS = re.compile("\x00+")
+
+
+def unstar(blocks):
+    out = []
+    for b in blocks:
+        h = STAR_CLOSE.sub(r"\1", STAR_OPEN.sub(r"\1", b["h"]))
+        h = NULLS.sub("", h)
+        out.append({"t": b["t"], "h": h})
+    return out
+
+
 def drop_listed_headings(blocks):
     """Lose a contents list that carries no page numbers.
 
@@ -428,7 +462,9 @@ def tidy(blocks):
             out[-1]["h"] += " " + b["h"]
             continue
         out.append(b)
-    return out
+    # Last, so that a run of emphasis broken across a page break has
+    # already been joined back together before its markers are read.
+    return unstar(out)
 
 
 def build(num):

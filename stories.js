@@ -923,6 +923,54 @@ const STORIES = [
     key: "The Bread \u2014 flat travels better than round and stale better than fresh, because fresh tears itself apart on the way down, and never two pieces at once: she will hear one land, go to it, and lose the other",
     notes: [3, 3, 2],
     synopsis: "Eleven springs running, Manijeh has taken tents out to the same festival ground two days inside the Turanian border, and nothing has ever happened there. This spring a young man in Byzantine silk and a crown appears alone at the treeline, looking at the wrong thing, and her first clear thought is that somebody is going to get him killed. She is right, and she does it herself: on the third afternoon, rather than lose him, she puts the household medicine in his wine and has him carried out asleep in a chest with the baggage. They are found. Her father takes her rank, her women, her rings and her shoes, walks her out to the pit where he has put the Iranian, tells her that this is her house and home now, and gets on his horse. She begs door to door for eleven months, in a town where everyone knows exactly who she used to be, and carries what she is given out to a hole she cannot reach into and cannot see down."
+  },
+
+  {
+    num: 74,
+    title: "The Break Bell",
+    words: "21,600 words",
+    hook: "Forty children, six grades, no teacher since Mehr — and the man holding the keys cannot read",
+    door: "Ordeal",
+    room: "Tang-e Sorkh — two hundred people in a gorge, two rooms and six grades, and a pass that shuts in Azar and does not open until Farvardin",
+    key: "Tātureh — seeds on a coal and a cloth over the head, the village cure for a tooth since before there were dentists, which works, and which puts his mother in the room for two hours and does not lay down one word of it",
+    notes: [1, 2, 3],
+    synopsis: "He goes to his daughter's celebration in a black turban, because the man she invited was the cleric who signed her paper and not the father who left, and in the fourth hour his wife looks at him across the room and knows him in four seconds. She does not expose him. She counts him, for two hours, in front of witnesses, walks him to the door and says: Fine. Then you'll do something for me instead. He goes north-west because it is the only direction he has not used. In the second week of Azar the pass closes behind him and will not open until Farvardin, and for the first time since he was seventeen there is no door. There is a village of two hundred in the gorge, a school of two rooms and forty children across six grades, no teacher since Mehr, and a man in the shop who has been carrying the keys for eleven weeks and is tired of having them in his coat. Nobody checks anything, because there is nothing on this side of the mountain to check with. And he cannot read."
+  },
+
+  {
+    num: 75,
+    title: "Vision 1404",
+    words: "11,600 words",
+    hook: "He has never written more than forty words at a stretch, and she needs nine minutes",
+    door: "Rite",
+    room: "The Hall — six hundred seats and more than that in it, chairs down the sides against the fire regulations, and thirty feet of blue vinyl saying the bright future that will be thrown away on Sunday",
+    key: "Nine Minutes — a speech built for somebody else's mouth by a man who knows compression the way a locksmith knows a cylinder and has no idea how to build a room",
+    notes: [2, 2, 3],
+    synopsis: "A young woman ranked ninth in the national entrance examination out of six hundred thousand, whose face has been on a billboard outside a cram school ever since, is graduating top of her year at Sharif and is required to give the address. She cannot write it — not because she cannot write, she is the sharpest person in the building, but because there is nothing she is permitted to say, and she has spent four years being the proof of a system she has concluded is a machine for producing people like her and then losing them. So she finds a man who writes for other people's mouths and takes him entirely seriously, which nobody has ever done. Ninety-two entries, one of them eleven pages, on the difference between a sentence and a speech — and on the single variable that decides which of two people saying the unsayable thing gets on a plane."
+  },
+
+  {
+    num: 76,
+    title: "The Airing",
+    words: "23,200 words",
+    hook: "An escaped prisoner is taken for the inspector, and for three days nobody inside says no to him",
+    door: "Withholding",
+    room: "Havākhori — literally air-eating, the hour a wing is let out into the yard, in a building where an inspector can close a wing and cannot open one door, issue one blanket, or shorten one sentence by an hour",
+    key: "Cheshm — upon my eye: at once, certainly, consider it done. It carries no information about whether the thing will happen, because that was never the question. What was on the table was the relative position of two people, and it settles that instantly and closes it.",
+    notes: [2, 2, 3],
+    synopsis: "He has been in the town nine weeks doing nothing, which he is extremely good at and nobody has ever paid him for, with a folded page in his coat carrying a name written four times. On a Tuesday in the third week of Tir a car stops outside the wrong guesthouse, a man in a lanyard makes two telephone calls that are not answered, and then looks up a street containing four people — one of whom is a man of forty-seven sitting alone outside a tea place at twenty to nine, evidently waiting for something. Aqa-ye bāzras? He has four seconds. Underneath the arithmetic, faster than words, is the only thought that actually moves his mouth: that car goes through that gate. Forty findings by an escaped prisoner inspecting a provincial prison, in a building where nobody says no to him and nothing he is told is information."
+  },
+
+  {
+    num: 77,
+    title: "Opening Act",
+    words: "11,800 words",
+    hook: "At fifty-four he has begun to laugh, and it has ruined and remade him in the same movement",
+    door: "Ordeal",
+    room: "The Side Hall — a majles-e tarhim in a mosque: recitation, an address, tea and dates and halva, and a stranger who will not give his name stipulating three things about what is said over a woman he will not explain",
+    key: "The Laugh — arriving twenty-five years late in a man who could always see one coming and never once felt it, and who is now obliged to feel what he sells before he is allowed to sell it",
+    notes: [2, 2, 3],
+    synopsis: "Manuchehr Delgoshā is fifty-four and has begun laughing, and it has ruined and remade him in the same movement. For twenty-five years he could see the shape of a joke and never feel it land, and that was the whole of his gift — a man standing half a second ahead of every room in the country with a stopwatch. He can now do both at once. He is better than he has ever been, and he is also, for the first time, obliged to feel what he sells before he sells it, and there is a great deal in his own back catalogue he can no longer get through. His broker of twenty-six years dies between one Tuesday and the next. A young woman in Delft, the only person alive who can make him laugh, starts sending voice notes at two in the morning. And a man who will not give his name asks him for a funeral speech, and stipulates only three things."
   }
 
 ];
@@ -1058,21 +1106,27 @@ const TRILOGIES = [
     synopsis: "Three novellas about a walled village outside Tabriz that appears on no map, and about what the people inside it were protecting. One watches from a cutting room thirty-four years late, frame by frame. One is written from inside the wall, by the only person there who was never ill. The third is set in Rotterdam now, where a company works out that the thing two hundred people gave their hands and their eyes for can be reached by anybody, in ninety minutes, for four hundred euro."
   },
   {
-    title: "The Delgoshā Notebooks",
-    /* The first series here whose books are not consecutive — 69 sits
-       between them and belongs to nothing. Nothing special is needed
-       for that: the row labels itself from its position in this list,
-       not from its number, so 68 reads "1 OF 2" and 70 reads "2 OF 2"
-       with a stranger standing between them on the shelf.
+    /* Renamed from "The Delgoshā Notebooks" when the third day
+       arrived. "From the Delgoshā" is the books' own heading for the
+       passages they quote out of the censored treatise, and it holds
+       both senses at once: the Resāleh-ye Delgoshā that gives them
+       their form, and the man keeping the notebooks. Carries its
+       Persian, like Thursday Nights — see the note on .t-title in
+       style.css for how the two scripts are set. */
+    title: "From the Delgoshā · از دلگشا",
+    /* The first series here whose books were not consecutive — 69,
+       and now 71 to 74, stand between them and belong elsewhere.
+       Nothing special is needed: a row labels itself from its
+       position in this list, not from its number.
 
-       Two books, and the label is emptied rather than left out: at
-       three, script.js would call the group "A Triptych" on its own.
-       Emptied now, it stays right when the third day arrives.
+       The label is an empty string rather than absent, and stays
+       that way at any length: this is a seven-day frame and there
+       are three days still to come.
 
-       No banner — the two covers stand side by side. */
+       No banner — the covers stand side by side. */
     label: "",
-    books: [68, 70],
-    synopsis: "Two notebooks, three years apart, kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, on a stage, under his own name, and does not come home. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. This is the first day and the second."
+    books: [68, 70, 75, 77],
+    synopsis: "Four notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. These are the first four days."
   },
   {
     /* The only series title here carrying its Persian. The heading is
@@ -1081,13 +1135,25 @@ const TRILOGIES = [
        a font per glyph, so the English stays in the serif and the
        Persian falls to the nastaliq the dedication already uses. */
     title: "Thursday Nights شب‌های پنجشنبه",
-    /* Not consecutive either: 68, 69 and 70 stand between these two.
-       See the note on The Delgoshā Notebooks above — the same rule
-       carries both, and script.js gathers a block's members to their
-       heading rather than swallowing whatever falls between them. */
+    /* Not consecutive either: 68, 69, 70, 72 and 73 stand between
+       these three. See the note on The Delgoshā Notebooks above — the
+       same rule carries both, and script.js gathers a block's members
+       to their heading rather than swallowing whatever falls between
+       them.
+
+       Four accounts now, and one door each: Dose, Rite, Ordeal,
+       Withholding, in that order. That looks deliberate rather than
+       lucky, and if a fifth arrives it will have to repeat one.
+
+       The name pays off inside No. 76, which is where it comes from:
+       he worked Thursday nights and only Thursday nights, because
+       Thursday night the whole family is at somebody's mother's
+       house, and a man in Block Three called him Panjshanbeh for it.
+
+       The label stays an empty string rather than being removed. */
     label: "",
-    books: [67, 71],
-    synopsis: "Two novellas about a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Later he lifts an unattended bag off a luggage rack and steps off a bus into a village that has been promised a doctor six times in eleven months and seen five of them not arrive. He is qualified for neither, and at neither is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done."
+    books: [67, 71, 74, 76],
+    synopsis: "Three accounts by a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Then a bag on a luggage rack makes him the doctor a village of four hundred stopped expecting. Then a pass shuts behind him in a gorge and he is the teacher of forty children across six grades, and he cannot read. He is qualified for none of it, and at none of it is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done. Each account is written for whoever comes next, and each one is a little more honest than the last about what he is doing there."
   },
   {
     /* One story told twice, so this is the first group here whose two

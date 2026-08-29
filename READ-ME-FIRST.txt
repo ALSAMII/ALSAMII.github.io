@@ -1,0 +1,27 @@
+Books 74-77 for chewzfiction.com
+================================
+
+Drag each folder into the repository root, replacing what is there.
+
+  pdfs/        74, 75, 76, 77 (compressed)
+  covers/      74-77 as .jpg (what the site loads) and .webp twins
+  read/        the in-browser reading text; includes older books
+               rebuilt by parser fixes made along the way
+  share/       the whole folder, rebuilt - 77 pages
+
+  stories.js   the four new books, and both series updated
+  index.html   ?v=347 and the story count
+  script.js    series blocks gather their own members
+  style.css    nastaliq behind the serif for the two Persian titles
+  feed.xml     rebuilt
+  sitemap.xml  rebuilt
+
+  build-reader.py   three fixes: verse vs wrapped prose, contents
+                    lists, and stray emphasis asterisks
+  ADDING-A-BOOK.md  corrected
+
+  source-png/  your original cover art, 1024x1536, untouched.
+               NOT for upload - the site needs covers/NN.jpg.
+               Kept here so the originals travel with the set.
+
+Never delete CNAME.
