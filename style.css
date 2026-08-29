@@ -1135,13 +1135,49 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin-top: -0.2rem;
 }
 
-/* A book inside a series keeps its indent, and nothing else. The rule
-   that used to run down the left edge joined the row's own top and
-   bottom borders at the corners, which made a box around the group —
-   and a box is a heavier thing than a set of books needs. The line
-   naming the series under each reading time does the same work
-   without drawing anything. */
-.story.in-series { padding-left: 0.7rem; }
+/* A book inside a series is indented and carries a rule down its left
+   edge, so the group reads as one bracketed run and the first book
+   that is not in it visibly steps back out.
+
+   An earlier version of this used border-left, and that was the
+   mistake: a left border meets the row's own top and bottom borders
+   at the corners and closes a box around every single row. Drawn as
+   a pseudo-element instead, the rule has no corners to join, so what
+   the eye gets is one continuous line beside the whole group and
+   nothing around any individual book.
+
+   0.7rem of indent on its own was not enough to see. It reads at a
+   glance in a mockup and disappears on a shelf, which is how No. 69
+   came to look like the middle book of a series it has nothing to do
+   with. The rule is what does the work; the wider indent is only to
+   give it somewhere to stand. */
+.story.in-series {
+  padding-left: 1.15rem;
+}
+
+.story.in-series::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  /* Short of the row's own borders top and bottom, so consecutive
+     members read as one line with a breath in it rather than a weld,
+     and so the rule never touches a corner. */
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--ember-soft);
+  opacity: 0.5;
+}
+
+/* Shortest first hides the headings, and a rule pointing up at
+   nothing is worse than no rule at all — so in that order the group
+   marks come off entirely and every book stands on its own. This is
+   also what the sort's own comment always claimed happened: the
+   indent used to survive it, because .flat pads .story-row while
+   .in-series pads the li outside it. */
+.shelf ol.groups-hidden .story.in-series { padding-left: 0; }
+.shelf ol.groups-hidden .story.in-series::before { display: none; }
 
 /* The series and the book's place in it, under the reading time. */
 .story-series {

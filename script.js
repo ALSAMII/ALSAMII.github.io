@@ -1500,6 +1500,13 @@
   function applySort() {
     var mode = sortMenu ? sortMenu.value : "";
 
+    /* Whether the group headings are on the shelf at all. The member
+       rows carry a rule down their left edge that points up at the
+       heading above them, and in the one order that hides the
+       headings that rule would be pointing at nothing — so the
+       stylesheet takes the group marks off when this is set. */
+    list.classList.toggle("groups-hidden", mode === "Shortest first");
+
     if (!mode) {
       /* Back to the order the shelf was built in, headings and all. */
       shelfOrder.forEach(function (el) { list.append(el); });
