@@ -289,6 +289,25 @@ OPENER = re.compile(r"^\s*(A NOTE FROM THE AUTHOR|CHAPTER\b|PART\s+(ONE|I)\b)", 
 # start listing, so the shape has to be recognised on its own.
 CONTENTS_LINE = re.compile(r"^.{0,70}?\s\d{1,3}$")
 
+# A heading that is really a line of the contents list: a section
+# title with its page number beside it. It has to be told apart from a
+# real heading that merely ends in a number — CHAPTER 1, NOTE 12 —
+# and what separates them is how much title stands in front of the
+# number. A listed line carries three words or more ("PART ONE — THE
+# BAG 12", "Incident Log I 19"); a real heading carries one ("CHAPTER
+# 1"). Reusing CONTENTS_LINE here instead ate the CHAPTER 1 of No. 16
+# and left its first chapter opening on its title with no heading.
+CONTENTS_HEAD = re.compile(r"^\s*(?:\S+\s+){2,}\S+\s+\d{1,3}$")
+
+# A whole contents list run together into one paragraph. It happens
+# when the entries are set with no indent and no extra leading, so
+# nothing tells the paragraph rule to break them apart: "1. A bag on a
+# rack is a bag nobody has. 13 2. Never correct a man who is already
+# sure. 16 3. ...". What gives it away is the seam — a page number
+# followed straight away by the next entry's number. Two seams is
+# already more than prose does by accident.
+CONTENTS_RUN = re.compile(r"\d{1,3}\s+\d{1,3}\.\s")
+
 
 def drop_contents(blocks):
     """Lose the contents list. Alone, a line like "Hearing One — the
@@ -372,19 +391,33 @@ def tidy(blocks):
     out, skipping = [], False
     for b in blocks:
         plain = re.sub("<[^>]+>", "", b["h"]).strip()
-        if b["t"] == "h":
+        if b["t"] == "h" and not skipping:
             skipping = bool(re.match(r"^\s*CONTENTS\b", plain, re.I))
             if skipping:
                 continue
         if skipping:
-            # A contents list is a run of short lines. The moment a
-            # real paragraph turns up the list is over — some books
-            # have no heading after it to say so, and without this the
-            # rest of the novella went in the bin with the list.
-            if b["t"] == "p" and len(plain.split()) > 25:
+            # A heading inside the list is still the list. No. 71 sets
+            # its five part titles a size up, so they came through as
+            # headings — and the old rule, which re-decided on every
+            # heading, read the first of them as proof the list was
+            # over and let the whole contents page into the book. A
+            # heading that carries its own page number is a listed
+            # line; only one that does not means the list has ended.
+            if b["t"] == "h":
+                if CONTENTS_HEAD.match(plain):
+                    continue
                 skipping = False
             else:
-                continue
+                # A contents list is a run of short lines. The moment a
+                # real paragraph turns up the list is over — some books
+                # have no heading after it to say so, and without this
+                # the rest of the novella went in the bin with the list.
+                # Unless the paragraph is the list: see CONTENTS_RUN.
+                long_enough = b["t"] == "p" and len(plain.split()) > 25
+                if long_enough and len(CONTENTS_RUN.findall(plain)) < 2:
+                    skipping = False
+                else:
+                    continue
         if not plain:
             continue
         if BOILERPLATE.match(plain):

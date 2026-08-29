@@ -899,6 +899,30 @@ const STORIES = [
     key: "The Ampoule \u2014 a sealed glass vial, and in Iranian usage the injection itself: tablets are advice, a needle is treatment, and a consultation that ends without one has not happened",
     notes: [2, 2, 3],
     synopsis: "A burglar lifts an unattended bag off a luggage rack and finds a stethoscope, a perished blood-pressure cuff mended with electrical tape, a prescription pad, and a Ministry of Health card belonging to a man born eleven months before him. He wants it only so that he can say a sentence with a title in it if a policeman ever stops him. Then he gets off a bus in Ab-Bidar \u2014 four hundred people, a failing qanat, six locums promised in eleven months and five who never came \u2014 and a man outside the shop stands up and says: Doctor? They said Thursday. He intends to stay four days. Forty numbered notes to whoever comes next, set down by a man who cannot read a drug name and who works out that almost nobody, anywhere, can judge whether a treatment worked \u2014 only whether the correct procedure was performed by somebody with the standing to perform it."
+  },
+
+  {
+    num: 72,
+    title: "Bijan's Well",
+    words: "15,300 words",
+    hook: "Down here the dark makes things, and makes them well, so the voice that feeds him is probably not real",
+    door: "Ordeal",
+    room: "The Pit \u2014 deeper than a man can reach, one stone across the top of it, and dark enough that he cannot see his own hand or be sure of anything he hears",
+    key: "The Voice \u2014 the only thing that comes down the gap besides the food, unverifiable from the bottom, and not to be told apart from what the dark has already made for him",
+    notes: [2, 3, 2],
+    synopsis: "A man wakes at the bottom of a pit in the dark and cannot remember arriving. His name is Bijan, he is twenty-six and the grandson of the greatest house in Iran, and a week ago he was the only man in the Shah's hall who would stand up when there were boars ruining the crops on the eastern march. What happened after that he has in pieces: a guide who mentioned a festival two days over the Turanian border, a crown he put on to go and look at it, a woman's tent, three days of wine and lamps hung in a tree, and a cup handed to him on the last afternoon. The pit is deeper than he can reach and there is a stone across the top. Food comes through a gap he cannot get to, and with the food comes a voice that knows his name \u2014 and he decides quite early that the voice is not real, because the dark has already made him other things and made them well."
+  },
+
+  {
+    num: 73,
+    title: "Manijeh at the Rim",
+    words: "14,100 words",
+    hook: "A king's daughter is given a hole in the ground as an address",
+    door: "Withholding",
+    room: "The Rim \u2014 the lip of a hole two miles out of a town where everyone knows exactly who she used to be, and where she cannot be certain on any day of it that there is still anybody down there",
+    key: "The Bread \u2014 flat travels better than round and stale better than fresh, because fresh tears itself apart on the way down, and never two pieces at once: she will hear one land, go to it, and lose the other",
+    notes: [3, 3, 2],
+    synopsis: "Eleven springs running, Manijeh has taken tents out to the same festival ground two days inside the Turanian border, and nothing has ever happened there. This spring a young man in Byzantine silk and a crown appears alone at the treeline, looking at the wrong thing, and her first clear thought is that somebody is going to get him killed. She is right, and she does it herself: on the third afternoon, rather than lose him, she puts the household medicine in his wine and has him carried out asleep in a chest with the baggage. They are found. Her father takes her rank, her women, her rings and her shoes, walks her out to the pit where he has put the Iranian, tells her that this is her house and home now, and gets on his horse. She begs door to door for eleven months, in a town where everyone knows exactly who she used to be, and carries what she is given out to a hole she cannot reach into and cannot see down."
   }
 
 ];
@@ -1064,5 +1088,15 @@ const TRILOGIES = [
     label: "",
     books: [67, 71],
     synopsis: "Two novellas about a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Later he lifts an unattended bag off a luggage rack and steps off a bus into a village that has been promised a doctor six times in eleven months and seen five of them not arrive. He is qualified for neither, and at neither is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done."
+  },
+  {
+    /* One story told twice, so this is the first group here whose two
+       books cover the same days rather than following one another.
+       The reading order is still the listing order: 72 is the pit and
+       73 is the rim, and the rim knows things the pit does not. */
+    title: "From the Old Book",
+    label: "",
+    books: [72, 73],
+    synopsis: "Two novellas standing on either side of one hole in the ground, over the same eleven months. Bijan is at the bottom of it, in an iron collar, working out that the voice which feeds him is almost certainly something the dark has made. Manijeh is at the rim, barefoot, begging bread door to door in a town where everyone knows exactly who she used to be, and unable to be sure on any given day that there is still anybody down there. The story is the most famous love story in the Persian language, and Ferdowsi did not have it: he stops the Shāhnāma in the middle of a war to describe a night at his own house, when a woman came into the garden with a candle and told him there was a story in the old book, and that if he would listen he could put it into verse. She had the book. He did not. Nobody wrote her name down."
   }
 ];
