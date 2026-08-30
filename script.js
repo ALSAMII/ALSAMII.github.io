@@ -92,6 +92,16 @@
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
 
+  /* Arabic script in a line the rest of which is Latin. The nastaliq
+     face the site uses for Persian carries far more above and below
+     its baseline than a serif does, and a line box is only as tall as
+     the tallest font on the line asks for — so a title or a label
+     holding both scripts needs leading set for the nastaliq, not for
+     the serif. Only two titles carry Persian; the other ten are left
+     exactly as they were. */
+  function hasNastaliq(str) { return /[\u0600-\u06FF\u0750-\u077F]/.test(str || ""); }
+
+
   /* ---- Artwork: WebP first, the original as a safety net --------------
      Every painting on the site is a photograph-like image, and WebP
      carries those at roughly half the bytes of a JPEG and a twentieth
@@ -372,6 +382,11 @@
     ftLink.setAttribute("target", "_blank");
     ftLink.setAttribute("rel", "noopener");
 
+    /* And the other way round: a series leaves its row of spines
+       behind, so clear those before the single cover goes back up. */
+    easelSet.textContent = "";
+    easelSet.removeAttribute("data-count");
+
     easel.style.display = "";
     easel.alt = s.title + " — cover";
     easelCaption = num + " \u00b7 " + s.title;
@@ -400,6 +415,15 @@
     ftText.textContent = t.synopsis;
     setTriad(null);
     ftLink.style.display = "none";
+
+    /* Put the single cover away. It belongs to whichever book was on
+       the stage a moment ago, and nothing here was clearing it — so
+       opening a series after looking at a book left that book's cover
+       standing beside the series' own synopsis, which is how Black
+       Out came to be illustrating Thursday Nights. showFeature turns
+       it back on, so this only has to hide it. */
+    easel.style.display = "none";
+    easel.removeAttribute("src");
 
     /* Built fresh each time, so a group can hold any number of books. */
     easelSet.textContent = "";
@@ -642,7 +666,7 @@
     }
 
     var title = document.createElement("h2");
-    title.className = "t-title";
+    title.className = "t-title" + (hasNastaliq(t.title) ? " has-nastaliq" : "");
     title.textContent = t.title;
 
     var syn = document.createElement("div");
@@ -863,7 +887,8 @@
     var series = SERIES_OF[s.num];
     if (series) {
       var mark2 = document.createElement("span");
-      mark2.className = "story-series caps";
+      mark2.className = "story-series caps" +
+                        (hasNastaliq(series.title) ? " has-nastaliq" : "");
       /* The title is fenced in an isolate \u2014 U+2068 in front, U+2069
          behind \u2014 because one series carries its Persian, and a
          right-to-left run loose in a line drags what follows it into
@@ -873,8 +898,16 @@
          the Persian and taken the place number with it. Isolated,
          the title is one opaque run and the count stays put. Harmless
          on the ten titles that are all Latin. */
-      mark2.textContent = "\u2068" + series.title + "\u2069" +
-                          " \u00b7 " + series.place + " of " + series.of;
+      /* The count gets an isolate of its own as well. The title's
+         fence keeps the Persian from dragging the count around it,
+         but the digits and the separator are still neutrals sitting
+         next to a right-to-left run, and they were coming out spaced
+         wrong. Fenced, the count is one LTR run and reads the same
+         beside a Persian title as beside a Latin one. The width of
+         the spaces themselves is a separate matter — see the
+         word-spacing on .story-series.has-nastaliq in style.css. */
+      mark2.textContent = "\u2068" + series.title + "\u2069" + " \u00b7 " +
+                          "\u2068" + series.place + " of " + series.of + "\u2069";
       sub.append(mark2);
     }
 

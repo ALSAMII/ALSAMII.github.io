@@ -1310,7 +1310,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  /* Top, not centre. Centred, the cover floated up and down with the
+     length of the synopsis beside it — No. 66 sat it at 201px from
+     the top of the panel and No. 73 at 460px, so no two books put
+     their artwork in the same place and a long one looked as though
+     the picture had fallen down the page. Aligned to the top, every
+     cover starts level with the first line of text, whatever the
+     book. */
+  align-items: flex-start;
   gap: clamp(1.5rem, 3.5vw, 4.5rem);
   /* The pair was centred as one unit, so a wide cover pushed the words
      off to the left of the stage and they no longer sat under the panel
@@ -1335,7 +1342,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
 }
 
-.feature-text { flex: 1 1 20rem; max-width: 26rem; }
+/* The pair has to fit on one flex line, or the cover wraps underneath
+   the words and lands at the very bottom of the stage — which is what
+   was happening on every window narrower than about 1500px, and is
+   why the artwork appeared to be sitting at the foot of the page.
+   The text column keeps a real minimum; the cover is allowed to give
+   way instead, down to a width where it still reads as a cover. */
+/* A small flex-basis on purpose. Whether a flex line wraps is decided
+   from the items' base sizes, before any growing happens — so a text
+   column basing at 18rem plus a cover was overflowing the container
+   by a dozen pixels at some widths, wrapping, and only then growing
+   to its full 26rem on a line of its own. Based small it always fits,
+   and flex-grow fills the rest of the line with it. */
+.feature-text { flex: 1 1 12rem; max-width: 26rem; min-width: 0; }
 
 .feature-meta { color: var(--ember); margin: 0 0 1.25rem; }
 
@@ -1356,8 +1375,21 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* The cover: no frame — its edges feather away into the room */
 .easel {
   max-height: 62vh;
-  max-width: min(24rem, 36vw);
+  /* Capped against the feature's own width, not the window's. The
+     window was the wrong thing to measure: the stage the feature
+     sits in is narrower than the viewport by a sidebar and by its own
+     margins, and by different amounts at different sizes — so a cover
+     sized at 36vw fitted beside the words at 1920 and 1440 and did
+     not at 1200, where it wrapped onto a second flex line and came to
+     rest at the bottom of the stage. A percentage here resolves
+     against the flex container, so the cover can never take more room
+     than is left after the words, at any width. */
+  max-width: min(24rem, 42%);
   width: auto;
+  /* Never the thing that forces a second line: the cover gives way
+     rather than dropping below the synopsis. */
+  flex: 0 1 auto;
+  min-width: 0;
   -webkit-mask-image:
     linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
     linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
@@ -4387,6 +4419,42 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: color 0.25s ease;
 }
 
+/* Leading for a line that carries both scripts.
+
+   Cormorant at 22px is comfortable in a 27.5px line box. Gulzar is
+   not: nastaliq climbs and descends a long way from its baseline,
+   and a line box takes its height from what the tallest font on the
+   line asks for — which the browser computes from the font's own
+   metrics, and Gulzar's are modest compared to the ink it actually
+   paints. So the box says there is room and the glyphs say otherwise,
+   and the Persian on one line lands on the English above it.
+
+   Setting the leading from the nastaliq rather than from the serif
+   fixes it. Only the two titles that carry Persian are touched; the
+   other ten keep the tighter line they were designed with. The same
+   applies to the small-caps line under a book's reading time, which
+   repeats the series name and wraps at exactly the widths where the
+   overlap was worst. */
+.t-title.has-nastaliq {
+  line-height: 2.05;
+  /* Nastaliq sits low in its box. Without this the extra leading all
+     lands above the words and the group heading drifts off centre. */
+  padding-block: 0.1em 0.35em;
+}
+
+.story-series.has-nastaliq {
+  line-height: 2.3;
+  margin-top: 0.15rem;
+  /* The spaces on either side of the Persian are set in the nastaliq
+     too — a browser picks the font glyph by glyph, and a space next
+     to Arabic falls to the Arabic face, whose space is much narrower
+     than the small-caps face around it. That is why the count read as
+     "5OF 5" with the separator crowding it. Widening the word space
+     for this one label puts the gaps back without touching the ten
+     labels that are all Latin. */
+  word-spacing: 0.28em;
+}
+
 .trilogy:hover .t-title,
 .trilogy:focus-visible .t-title { color: var(--ember-lit); }
 
@@ -4438,9 +4506,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    artwork. It shrinks instead, and the text column narrows to match. */
 @media (max-width: 72rem) {
   .feature { gap: clamp(1rem, 2.5vw, 2rem); }
-  .feature-text { flex: 1 1 15rem; max-width: 21rem; }
+  .feature-text { flex: 1 1 10rem; max-width: 21rem; min-width: 0; }
   .easel {
-    max-width: min(11rem, 26vw);
+    max-width: min(11rem, 42%);
     max-height: 46vh;
   }
 }

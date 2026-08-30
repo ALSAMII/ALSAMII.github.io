@@ -1,21 +1,19 @@
-chewzfiction.com — books 78 and 79
-==================================
-Cache version ?v=349. Seventy-nine stories, twelve series.
+chewzfiction.com — five fixes
+=============================
+Cache version ?v=350. Seventy-nine stories, twelve series.
 
-This set assumes the previous one (?v=348) is already up. If it is
-not, say so and I will rebuild a full set instead — script.js and
-style.css are unchanged here and are NOT included.
+No new books here. Nothing in pdfs/, covers/ or read/ changed, so
+those folders are not included — upload only what is below.
 
-Drag each folder into the repository root, replacing what is there.
-
-  pdfs/        78.pdf, 79.pdf
-  covers/      78 and 79 as .jpg (what the site loads) + .webp
-  read/        78.json, 79.json
-  share/       the whole folder, rebuilt — 79 pages
-
-  stories.js   both new books; 79 added to From the Delgoshā
-  index.html   ?v=349 and the story count
+  stories.js   eleven synopses cut to house length (69-79), and the
+               Thursday Nights blurb brought up to four accounts
+  script.js    series panel clears the single cover; Persian titles
+               and labels tagged so the stylesheet can lead them
+  style.css    leading for the two-script titles; the feature cover
+               top-aligned and no longer wrapping below the synopsis
+  index.html   ?v=350
   feed.xml     rebuilt
   sitemap.xml  rebuilt
+  share/       the whole folder, rebuilt - 79 pages
 
 Never delete CNAME.
