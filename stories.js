@@ -971,6 +971,30 @@ const STORIES = [
     key: "The Laugh — arriving twenty-five years late in a man who could always see one coming and never once felt it, and who is now obliged to feel what he sells before he is allowed to sell it",
     notes: [2, 2, 3],
     synopsis: "Manuchehr Delgoshā is fifty-four and has begun laughing, and it has ruined and remade him in the same movement. For twenty-five years he could see the shape of a joke and never feel it land, and that was the whole of his gift — a man standing half a second ahead of every room in the country with a stopwatch. He can now do both at once. He is better than he has ever been, and he is also, for the first time, obliged to feel what he sells before he sells it, and there is a great deal in his own back catalogue he can no longer get through. His broker of twenty-six years dies between one Tuesday and the next. A young woman in Delft, the only person alive who can make him laugh, starts sending voice notes at two in the morning. And a man who will not give his name asks him for a funeral speech, and stipulates only three things."
+  },
+
+  {
+    num: 78,
+    title: "Black Out",
+    words: "15,800 words",
+    hook: "She told her son not to go, and he asked her where she thought he got it",
+    door: "Withholding",
+    room: "The Ward — Fridays, four until half past five, a chair by a window, and a different woman at the desk each week asking what your relation is",
+    key: "The Dream Manual — her mother's book, ordered by the thing dreamed of, with door and demon as neighbouring headings; he reads it to her aloud every Friday and has started making the entries up",
+    notes: [3, 3, 3],
+    synopsis: "Farkhondeh Nikkhah has taught Persian literature in the same district of Tehran for thirty-one years. There is a son of twenty who grew up at a table where the government was discussed every night of his life, and a second boy who arrived in the alley the summer the two of them were six and eight and has eaten at that table ever since — and there is no word in the language for what he is to her. In Dey the shops come down early, the street fills, and she stands in her own hallway and tells her son not to go. He asks her where she thinks he got it. At eight that evening the country's internet and telephones are switched off together, and then the shooting starts, and there is no way for anything that happens to be filmed and sent anywhere."
+  },
+
+  {
+    num: 79,
+    title: "The Twelfth Minute",
+    words: "11,800 words",
+    hook: "Two rooms in one night, and nobody who books her can understand a word of the real one",
+    door: "Rite",
+    room: "The Second Room — ten o'clock in Hässelby, four hundred Iranians in Persian who heckle in three registers and know precisely when she is lying about home",
+    key: "The Twelfth Minute — the part where somebody else is doing it. It arrives about a quarter of the way in, runs ten or fourteen minutes, cannot be summoned, and does not come back with you.",
+    notes: [2, 2, 3],
+    synopsis: "Roshanak Azimi is twenty-six and has built something in Europe out of night buses, other people's floors, and a working knowledge of how festivals are structured to make performers pay for the privilege of appearing. She is on a tour poster; she is third and her name is small. She plays two rooms in Stockholm on the same night — at eight, fifty Swedes in English who are attentive and generous and laugh in the wrong places and afterwards ask whether things are getting better; at ten, four hundred Iranians in a hall in Hässelby, in Persian, who heckle in three registers. Neither audience knows the other exists, the second is where her real material lives, and nobody who books her can understand a word of it. Then she brings over a comic who is not funny, and Europe falls in love with him, because Europe is not buying comedy."
   }
 
 ];
@@ -1125,8 +1149,8 @@ const TRILOGIES = [
 
        No banner — the covers stand side by side. */
     label: "",
-    books: [68, 70, 75, 77],
-    synopsis: "Four notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. These are the first four days."
+    books: [68, 70, 75, 77, 79],
+    synopsis: "Five notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. These are the first five days."
   },
   {
     /* The only series title here carrying its Persian. The heading is
