@@ -1,4 +1,4 @@
-/* Version 351 · last updated 2026-08-31 10:19 PDT */
+/* Version 353 · last updated 2026-08-31 14:30 PDT */
 /* ============================================================
    CHEW Z — Short Fiction
    One dark screen: story list on the left, a "stage" in the
@@ -4283,7 +4283,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    spines a line lower down, so below the floor the covers drop to
    their own row — the same stacking a phone already gets, decided by
    the room actually there rather than by the width of the window,
-   which in this column says nothing about it. */
+   which in this column says nothing about it.
+
+   The 16rem is a WIDTH, and it is only a width while this row is a
+   row. flex-basis follows the main axis, so wherever .t-head turns
+   into a column — a series with a banner, and every series on a phone
+   — the same declaration reads as a minimum HEIGHT, and the words sat
+   in a 256px box with the title alone at the top of it and a quarter
+   of a screen of nothing between the title and the picture. Both of
+   those cases put the basis back to auto below. */
 .t-words { flex: 1 1 16rem; min-width: 0; }
 
 .t-covers {
@@ -4366,6 +4374,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   gap: 0.85rem;
 }
 
+/* A column, so the words' 16rem basis would be read as a height. */
+.trilogy.has-banner .t-words { flex: 0 0 auto; }
+
 /* The list is empty at the moment. The three series that used to be
    here — The Unwitnessed Wars, The Unguarded Hours, The Sovereign
    Rooms — now show their covers rather than a painted banner, so there
@@ -4395,6 +4406,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    series that has both stacks them. */
 @media (max-width: 40rem) {
   .t-head { flex-direction: column; align-items: stretch; gap: 0.85rem; }
+  /* Same as above: a column reads the basis as a height. */
+  .t-words { flex: 0 0 auto; }
   .t-banner { max-width: 100%; }
 }
 
