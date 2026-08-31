@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Version 351 · last updated 2026-08-31 10:19 PDT -->
+<!-- Version 352 · last updated 2026-08-31 13:45 PDT -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.chewzfiction.com/</loc><lastmod>2026-08-31</lastmod><priority>1.0</priority></url>
   <url><loc>https://www.chewzfiction.com/#01-the-memory-liturgy</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
@@ -81,6 +81,10 @@
   <url><loc>https://www.chewzfiction.com/#77-opening-act</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.chewzfiction.com/#78-black-out</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.chewzfiction.com/#79-the-twelfth-minute</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.chewzfiction.com/#80-the-reminder</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.chewzfiction.com/#81-one-was-one-was-not</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.chewzfiction.com/#82-hooshang</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.chewzfiction.com/#83-permitted-capacity</loc><lastmod>2026-08-31</lastmod><priority>0.8</priority></url>
   <url><loc>https://www.chewzfiction.com/#triptych-daughters-of-anahita</loc><lastmod>2026-08-31</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.chewzfiction.com/#triptych-les-folies</loc><lastmod>2026-08-31</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.chewzfiction.com/#series-the-unwitnessed-wars-i-v</loc><lastmod>2026-08-31</lastmod><priority>0.6</priority></url>
@@ -93,6 +97,7 @@
   <url><loc>https://www.chewzfiction.com/#series-from-the-delgosh</loc><lastmod>2026-08-31</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.chewzfiction.com/#series-thursday-nights</loc><lastmod>2026-08-31</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.chewzfiction.com/#series-from-the-old-book</loc><lastmod>2026-08-31</lastmod><priority>0.6</priority></url>
+  <url><loc>https://www.chewzfiction.com/#triptych-from-the-unsaid</loc><lastmod>2026-08-31</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.chewzfiction.com/pdfs/01.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.chewzfiction.com/pdfs/02.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.chewzfiction.com/pdfs/03.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
@@ -172,4 +177,8 @@
   <url><loc>https://www.chewzfiction.com/pdfs/77.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.chewzfiction.com/pdfs/78.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.chewzfiction.com/pdfs/79.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.chewzfiction.com/pdfs/80.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.chewzfiction.com/pdfs/81.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.chewzfiction.com/pdfs/82.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.chewzfiction.com/pdfs/83.pdf</loc><lastmod>2026-08-31</lastmod><priority>0.7</priority></url>
 </urlset>

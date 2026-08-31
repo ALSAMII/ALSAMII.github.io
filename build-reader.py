@@ -1,3 +1,4 @@
+# Version 352 · last updated 2026-08-31 13:45 PDT
 """
 BUILDS THE READING TEXT FROM THE PDFs, INTO /read
 
@@ -139,6 +140,8 @@ def extract(path):
     # whether it was broken by a poet or by the measure — only the run
     # it belongs to can. See flush_italic.
     ital = []
+    # Page and vertical position of the last heading line emitted.
+    head_pos = None
 
     def flush():
         if para:
@@ -179,7 +182,7 @@ def extract(path):
         head_at = body * HEAD_RATIO
         small_at = body * FURNITURE
 
-        for page in pdf.pages:
+        for pageno, page in enumerate(pdf.pages):
             prev_top = None
             top_edge = MARGIN_PT
             foot_edge = page.height - MARGIN_PT
@@ -188,6 +191,16 @@ def extract(path):
                 text = line["text"].strip()
                 if not text:
                     continue
+                # Where the last heading line was put, so the next one
+                # can be asked whether it follows at ordinary leading.
+                # Measured against the previous HEADING rather than the
+                # previous line of any kind: a part title alone on its
+                # page is followed by a folio and then, overleaf, a
+                # section heading two lines below the top of the sheet,
+                # and against those two neighbours it looks continuous.
+                near = (head_pos is not None
+                        and head_pos[0] == pageno
+                        and 0 < line["top"] - head_pos[1] <= lead * 1.6)
 
                 size = round(max(c["size"] for c in line["chars"]), 1)
 
@@ -205,12 +218,17 @@ def extract(path):
                 html = line_html(line)
 
                 # Set larger than the body: a chapter, a part title.
+                # "full" says the line reached the right edge, so the
+                # typesetter wrapped it — see join_heads in tidy().
                 if size >= head_at:
                     flush_italic()
                     flush()
                     in_verse = is_verse_head(text)
                     at_chapter_top = True
-                    blocks.append({"t": "h", "h": html})
+                    blocks.append({"t": "h", "h": html,
+                                   "full": line["x1"] >= right * FULL_LINE,
+                                   "near": near})
+                    head_pos = (pageno, line["top"])
                     continue
 
                 # Some of these books mark their sections in capitals
@@ -223,7 +241,10 @@ def extract(path):
                     flush()
                     in_verse = is_verse_head(text)
                     at_chapter_top = True
-                    blocks.append({"t": "h", "h": html})
+                    blocks.append({"t": "h", "h": html,
+                                   "full": line["x1"] >= right * FULL_LINE,
+                                   "near": near})
+                    head_pos = (pageno, line["top"])
                     continue
 
                 if in_verse:
@@ -354,6 +375,48 @@ STAR_CLOSE = re.compile(r'(</em>)\*')
 NULLS = re.compile("\x00+")
 
 
+def join_heads(blocks):
+    """Put a heading that wrapped back on one line.
+
+       Books 80 and 83 head every entry with a whole sentence — a
+       detained woman's pledge, a crane driver's lift plan — and those
+       run past the measure and wrap. Each line arrived here as its own
+       heading, so the reader showed "PLAN 4471 · 12 ORDIBEHESHT 1403 ·
+       GLAZING UNIT TO" and then, a heading's worth of space below it,
+       "ROOF, TWO STOREYS, SOUTH SIDE".
+
+       Two things have to be true, and the second one is what stops it
+       eating real headings. The line above has to have reached the
+       right edge — the italic buffer's own test, so it wrapped rather
+       than ended — and the line below has to follow it at ordinary
+       leading, on the same page. A part title and the section heading
+       under it are separated by air the typesetter put there on
+       purpose, so they fail the second test even where a display size
+       carries the part title far enough right to pass the first."""
+    out = []
+    i = 0
+    while i < len(blocks):
+        if blocks[i]["t"] != "h":
+            out.append(blocks[i])
+            i += 1
+            continue
+        j = i
+        while j < len(blocks) and blocks[j]["t"] == "h":
+            j += 1
+        run, k = blocks[i:j], i
+        while k < j:
+            line = [blocks[k]]
+            while (k + 1 < j and blocks[k].get("full")
+                   and blocks[k + 1].get("near")):
+                k += 1
+                line.append(blocks[k])
+            out.append({"t": "h", "h": " ".join(b["h"] for b in line)}
+                       if len(line) > 1 else blocks[k])
+            k += 1
+        i = j
+    return out
+
+
 def unstar(blocks):
     out = []
     for b in blocks:
@@ -464,7 +527,7 @@ def tidy(blocks):
         out.append(b)
     # Last, so that a run of emphasis broken across a page break has
     # already been joined back together before its markers are read.
-    return unstar(out)
+    return unstar(join_heads(out))
 
 
 def build(num):

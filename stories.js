@@ -1,3 +1,4 @@
+/* Version 352 · last updated 2026-08-31 13:45 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -597,7 +598,7 @@ const STORIES = [
   {
     num: 47,
     title: "The Fourth Dawn",
-    words: "17,200 words",
+    words: "16,600 words",
     hook: "The same tall stranger, at ground zero, who did not run",
     door: "Ordeal",
     room: "The Registry \u2014 thirty years of counting what was done that morning",
@@ -669,7 +670,7 @@ const STORIES = [
   {
     num: 53,
     title: "The Vagabond Watch",
-    words: "17,200 words",
+    words: "16,600 words",
     hook: "A second hand has started writing in his logbook",
     door: "Withholding",
     room: "The Margins \u2014 a companion that is neither comfort nor intruder, and is never wrong",
@@ -995,6 +996,54 @@ const STORIES = [
     key: "The Twelfth Minute — the part where somebody else is doing it. It arrives about a quarter of the way in, runs ten or fourteen minutes, cannot be summoned, and does not come back with you.",
     notes: [2, 2, 3],
     synopsis: "Roshanak Azimi is twenty-six and has built something in Europe out of night buses, other people's floors, and a working knowledge of how festivals are structured to make performers pay for the privilege of appearing. She plays two rooms in Stockholm on the same night: at eight, fifty Swedes in English who laugh in the wrong places; at ten, four hundred Iranians in a hall in Hässelby who heckle in three registers. Neither audience knows the other exists, and nobody who books her can understand a word of the second."
+  },
+
+  {
+    num: 80,
+    title: "The Reminder",
+    words: "16,600 words",
+    hook: "Twelve years spent looking at the top two centimetres of strangers, and she has stopped seeing faces",
+    door: "Rite",
+    room: "The Van — three of them and no air conditioning through a summer that reaches forty-three degrees, working a street that has less on it to find every week",
+    key: "The Ta'ahhod — an undertaking not to repeat the offence, written in the woman's own hand in wording dictated to her. Forty-nine of them head this account, and the last one is hers.",
+    notes: [3, 2, 3],
+    synopsis: "Zeynab Moradi is thirty-eight and has worked the guidance patrol for twelve years, because there was a job in it. She is good at it the way anybody is good at a thing done every day: she has a private taxonomy for scarves that is on no form anywhere, and she can tell from a woman's hands whether one will stay fixed past the corner. Then her numbers begin to fall — not because she has softened, but because a rule that everybody breaks is not a rule."
+  },
+
+  {
+    num: 81,
+    title: "One Was, One Was Not",
+    words: "20,100 words",
+    hook: "A woman of seventy-four looks at his hands for four seconds and says: you have his hands",
+    door: "Withholding",
+    room: "The Chair — kept at the table for a man who walked out in 1364, sent three letters and then nothing; still there at the end, and nobody in that house able to say which of the two of them it is for now",
+    key: "You have his hands — four seconds at a door, and no document anywhere in the world that can contradict it, because a family is not an institution but a story a number of people have agreed to",
+    notes: [1, 2, 3],
+    synopsis: "He is fifty, has no papers in any name, and has been in that border town four months because a border town is the only kind of place where nobody asks a stranger anything. A woman of seventy-four opens a door, looks at his hands, and gives him a name — her husband's brother, who walked out in 1364 and sent three letters and then nothing. He does not correct her. He takes his shoes off and goes in, and thirty people adjust, and by the end of the week it has always been true."
+  },
+
+  {
+    num: 82,
+    title: "Hooshang",
+    words: "9,400 words",
+    hook: "Five months asking a machine for the joke he has just written, to see if it can tell",
+    door: "Ordeal",
+    room: "The Median — what a thing returns when it has read very nearly everything: the centre of it, in four seconds, which is also a map of exactly where a Persian audience expects the operative word",
+    key: "Hooshang — a perfect model of the average, run for five months against a man whose whole trade is putting the operative word where the room is not expecting it",
+    notes: [2, 2, 3],
+    synopsis: "Manuchehr Delgoshā is fifty-eight and has spent thirty-one years finding where a room expects the operative word and putting it somewhere else. That is the whole trade, and everything else is in service of it. He can now generate the expected version in four seconds by asking a machine, and he has spent five months doing exactly that, one night at a time, in the chair, with the log open beside him. At four fifty-three one morning the machine says something back that neither of them can claim."
+  },
+
+  {
+    num: 83,
+    title: "Permitted Capacity",
+    words: "16,500 words",
+    hook: "He can feel what a load weighs, and four times he has not let himself know",
+    door: "Withholding",
+    room: "Before Six — set up in the dark, off the road by twenty past, with his back to the load and the sheet on his knee, and nothing in the record of the day to say what the job was",
+    key: "The Load Box — the square on a lift plan where a driver writes the weight before he lifts it. It is a prediction rather than a record, and nobody in that country is required to write one at all.",
+    notes: [3, 3, 3],
+    synopsis: "Sattār Fallāhi is sixty-one and owns one truck-mounted loader crane. For thirty years he has put things on the roofs of a provincial city at an hourly rate with a four-hour minimum, and the reputation that keeps him working rests on one thing: he knows what a load weighs. Not by looking — through the machine, in the half-second when it leaves the ground, right to within twenty kilos. Four times in twenty years a man has come to the yard and asked what it can do at four metres."
   }
 
 ];
@@ -1149,8 +1198,8 @@ const TRILOGIES = [
 
        No banner — the covers stand side by side. */
     label: "",
-    books: [68, 70, 75, 77, 79],
-    synopsis: "Five notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. These are the first five days."
+    books: [68, 70, 75, 77, 79, 82],
+    synopsis: "Six notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. These are the first six days."
   },
   {
     /* The only series title here carrying its Persian. The heading is
@@ -1165,9 +1214,11 @@ const TRILOGIES = [
        to their heading rather than swallowing whatever falls between
        them.
 
-       Four accounts now, and one door each: Dose, Rite, Ordeal,
-       Withholding, in that order. That looks deliberate rather than
-       lucky, and if a fifth arrives it will have to repeat one.
+       Four accounts had one door each — Dose, Rite, Ordeal,
+       Withholding, in that order — which looked deliberate rather
+       than lucky. The fifth repeated one, as it was always going to:
+       No. 81 is a Withholding, like No. 76, and for the same reason.
+       He is handed something and declines to correct it.
 
        The name pays off inside No. 76, which is where it comes from:
        he worked Thursday nights and only Thursday nights, because
@@ -1176,8 +1227,8 @@ const TRILOGIES = [
 
        The label stays an empty string rather than being removed. */
     label: "",
-    books: [67, 71, 74, 76],
-    synopsis: "Four accounts by a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Then a bag on a luggage rack makes him the doctor a village of four hundred stopped expecting. Then a pass shuts behind him in a gorge and he is the teacher of forty children across six grades, and he cannot read. Then a man in a lanyard takes him for the inspector, and he walks into a prison. He is qualified for none of it, and at none of it is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done. Each account is written for whoever comes next, and each one is a little more honest than the last about what he is doing there."
+    books: [67, 71, 74, 76, 81],
+    synopsis: "Five accounts by a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Then a bag on a luggage rack makes him the doctor a village of four hundred stopped expecting. Then a pass shuts behind him in a gorge and he is the teacher of forty children across six grades, and he cannot read. Then a man in a lanyard takes him for the inspector, and he walks into a prison. Then a woman of seventy-four looks at his hands on a doorstep and gives him a dead man's place at her table, and there is no uniform this time and no institution to check him — a family is not an institution, it is a story a number of people have agreed to. He is qualified for none of it, and at none of it is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done. Each account is written for whoever comes next, and each one is a little more honest than the last about what he is doing there."
   },
   {
     /* One story told twice, so this is the first group here whose two
@@ -1188,5 +1239,25 @@ const TRILOGIES = [
     label: "",
     books: [72, 73],
     synopsis: "Two novellas standing on either side of one hole in the ground, over the same eleven months. Bijan is at the bottom of it, in an iron collar, working out that the voice which feeds him is almost certainly something the dark has made. Manijeh is at the rim, barefoot, begging bread door to door in a town where everyone knows exactly who she used to be, and unable to be sure on any given day that there is still anybody down there. The story is the most famous love story in the Persian language, and Ferdowsi did not have it: he stops the Shāhnāma in the middle of a war to describe a night at his own house, when a woman came into the garden with a candle and told him there was a story in the old book, and that if he would listen he could put it into verse. She had the book. He did not. Nobody wrote her name down."
+  },
+  {
+    /* Nāgofteh — the past participle of not saying. A thing that was
+       not said: not banned, not censored, which are words about the
+       state, but a word about the silence itself.
+
+       Carries its Persian like Thursday Nights and the Delgoshā, so
+       the heading sets in two lines — see splitScripts in script.js
+       and .t-en/.t-fa in style.css.
+
+       Not consecutive: 79, 81 and 82 stand between these three and
+       belong elsewhere. The books are standalones with no shared
+       narrator and no continuing plot; what makes them one line is
+       that every one of them stands beside the machinery rather than
+       in front of it, and puts the reader in the head of whoever
+       signs, files, weighs or looks away. */
+    title: "From the Unsaid · ناگفته",
+    label: "",
+    books: [78, 80, 83],
+    synopsis: "Three books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
   }
 ];
