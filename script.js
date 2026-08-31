@@ -1,3 +1,4 @@
+/* Version 351 · last updated 2026-08-31 10:19 PDT */
 /* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -100,6 +101,32 @@
      the serif. Only two titles carry Persian; the other ten are left
      exactly as they were. */
   function hasNastaliq(str) { return /[\u0600-\u06FF\u0750-\u077F]/.test(str || ""); }
+
+  /* Split a title that carries its Persian into the two scripts, so
+     each can be given a line of its own. Everything up to the first
+     Arabic letter is the English; everything from there is the
+     Persian. Any separator left stranded on the end of the English —
+     the middle dot in "From the Delgosha \u00b7 az Delgosha" — comes off
+     with it, because a separator earns its keep on one line and
+     dangles on two. A title with no Persian in it is not split. */
+  function splitScripts(str) {
+    var m = /[\u0600-\u06FF\u0750-\u077F]/.exec(str || "");
+    if (!m) return null;
+    var en = str.slice(0, m.index).replace(/[\s\u00b7\u2013\u2014\-:,]+$/, "");
+    var fa = str.slice(m.index).trim();
+    return en && fa ? { en: en, fa: fa } : null;
+  }
+
+  /* One Persian run, marked as its own language and direction, for
+     dropping into a line that is otherwise Latin. */
+  function makeFa(text) {
+    var el = document.createElement("span");
+    el.className = "fa-run";
+    el.setAttribute("dir", "rtl");
+    el.setAttribute("lang", "fa");
+    el.textContent = text;
+    return el;
+  }
 
 
   /* ---- Artwork: WebP first, the original as a safety net --------------
@@ -666,8 +693,27 @@
     }
 
     var title = document.createElement("h2");
-    title.className = "t-title" + (hasNastaliq(t.title) ? " has-nastaliq" : "");
-    title.textContent = t.title;
+    var parts = splitScripts(t.title);
+    title.className = "t-title" + (parts ? " has-nastaliq" : "");
+    if (parts) {
+      /* Two lines, always: the English sets its own, and the Persian
+         starts a new one underneath rather than running on from
+         wherever the English happened to wrap. Left as one string it
+         broke wherever the column ran out — "From the / Delgosha \u00b7
+         az / Delgosha" — which put half the Persian on a line with
+         English and the other half alone. */
+      var en = document.createElement("span");
+      en.className = "t-en";
+      en.textContent = parts.en;
+      var fa = document.createElement("span");
+      fa.className = "t-fa";
+      fa.setAttribute("dir", "rtl");
+      fa.setAttribute("lang", "fa");
+      fa.textContent = parts.fa;
+      title.append(en, fa);
+    } else {
+      title.textContent = t.title;
+    }
 
     var syn = document.createElement("div");
     syn.className = "synopsis";
@@ -906,8 +952,33 @@
          beside a Persian title as beside a Latin one. The width of
          the spaces themselves is a separate matter — see the
          word-spacing on .story-series.has-nastaliq in style.css. */
-      mark2.textContent = "\u2068" + series.title + "\u2069" + " \u00b7 " +
-                          "\u2068" + series.place + " of " + series.of + "\u2069";
+      /* Where the series carries its Persian, the two scripts get a
+         line each here as well, the same way the heading does. Left as
+         one string the Persian sat on whichever line the English ran
+         out on \u2014 "FROM THE DELGOSH\u0100 \u00b7" then "\u0627\u0632 \u062f\u0644\u06af\u0634\u0627 \u00b7 5 OF 5" at one
+         width, both on a line at another, and the Persian broken
+         across two at a third. Split, the English and the count keep
+         the first line and the Persian always has the second. */
+      var sparts = splitScripts(series.title);
+      var count = series.place + " of " + series.of;
+      if (sparts) {
+        var sen = document.createElement("span");
+        sen.className = "s-en";
+        sen.textContent = sparts.en;
+        /* The second line stays a left-to-right box holding an isolated
+           Persian run and the count, rather than a right-to-left one:
+           that keeps the Persian at the left edge under the English and
+           the count reading forwards after it, which is where they both
+           already were on the line this used to wrap onto. */
+        var sfa = document.createElement("span");
+        sfa.className = "s-fa";
+        sfa.append(makeFa(sparts.fa));
+        sfa.append(document.createTextNode(" \u00b7 \u2068" + count + "\u2069"));
+        mark2.append(sen, sfa);
+      } else {
+        mark2.textContent = "\u2068" + series.title + "\u2069" + " \u00b7 " +
+                            "\u2068" + count + "\u2069";
+      }
       sub.append(mark2);
     }
 
