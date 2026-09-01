@@ -1,4 +1,4 @@
-/* Version 356 · last updated 2026-09-01 05:46 PDT */
+/* Version 361 · last updated 2026-09-01 14:16 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -835,7 +835,7 @@ const STORIES = [
        real doctrine and the reading of it here is a real practice.
        The one thing in it that could not happen is what the ruin of
        her face turns out to be writing, and that is a 2. */
-    notes: [3, 3, 2],
+    notes: [2, 3, 2],
     synopsis: "A provincial Iranian city, and three families keeping a doctrine the world burned six hundred years ago: that the human face is not like scripture but is scripture, fourteen lines of divine writing laid out in hair and bone. Mansur Sarmadi is their reader \u2014 when one of them dies he reads the face aloud, and the reading is the funeral. Then his wife's face begins to fail. He starts reading her in secret while she sleeps, and finds that what the ruin is writing is better than anything the old text ever said."
   },
 
@@ -862,7 +862,7 @@ const STORIES = [
     door: "Rite",
     room: "The Third Hour \u2014 between three and five in the morning, when the thing arrives with the turn already in position and all he does is hold the paper",
     key: "The Joke \u2014 a sentence that travels without a sender, that no one will admit to writing, and that the body answers before its owner can rule on it",
-    notes: [2, 2, 3],
+    notes: [1, 2, 3],
     synopsis: "Manuchehr Delgosh\u0101 is the most widely read unpublished writer in the Persian language: a satirical channel with two million subscribers, three comedians who each believe they are his only client, a state programme that pays properly and takes his teeth out. By day he subtitles pirated American sitcoms into a language that will not hold the punchlines; by night, in a chair with a broken caster, he takes dictation from something he does not care to name. It is not a novel but a notebook \u2014 eighty-four entries, some nine pages and some four lines, in the shape of a fourteenth-century treatise that has been censored in every edition printed since. A man who can see a laugh coming before the room can, and who has not laughed in fifteen years, sets down everything except the parts he cannot write, and leaves the reader to supply them."
   },
 
@@ -874,7 +874,7 @@ const STORIES = [
     door: "Dose",
     room: "The Thirteenth of Farvardin \u2014 one night and the working day after it, hours he was awake for, and talking, and driving a horse, and digging, and was not in",
     key: "The Blind Lamp \u2014 the small oil flame a pipe is warmed over and a page is read by, which renders violet ink and printer's black the same colour",
-    notes: [3, 3, 3],
+    notes: [3, 2, 2],
     synopsis: "Tehran, 1951. Mahmud Sarshar paints the same girl's face on pen cases nobody buys, and has spent fifteen years looking for the grave he dug for his wife on a night he cannot remember an hour of. What he has instead is a book — one of fifty printed by hand in Bombay in 1936 — which he has read every evening since by the lamp he warms his pipe over, and whose margins carry a second voice he has always taken for the author's. Then he carries it to a window, and sees in daylight that the marginal hand is violet."
   },
 
@@ -886,7 +886,7 @@ const STORIES = [
     door: "Withholding",
     room: "The Queue \u2014 a country's attention, which is not a courtroom but a line that moves, where something has to fall off the bottom for anything to go on the top",
     key: "The Line \u2014 eleven words built in February, on tea, given to nobody, and now the property of ninety million people, a dead poet and a shop on Vali Asr",
-    notes: [2, 2, 3],
+    notes: [1, 2, 3],
     synopsis: "Three years after a basement in the south of the city, eleven words are still travelling: seven of them in white paint on a wall in Narmak, and the whole line on state television, slightly wrong, getting a comedian the biggest laugh of his career. Manuchehr Delgoshā wrote them and gave them to nobody, and cannot say so, because saying so requires a sentence he will not put in his own mouth. So he does the only thing his trade has taught him: he writes over it, trying to bury what he cannot correct."
   },
 
@@ -898,7 +898,7 @@ const STORIES = [
     door: "Rite",
     room: "Ab-Bidar \u2014 four hundred people on a dying qanat, and no door that closes on two of them without the village knowing which door and for how long",
     key: "The Ampoule \u2014 a sealed glass vial, and in Iranian usage the injection itself: tablets are advice, a needle is treatment, and a consultation that ends without one has not happened",
-    notes: [2, 2, 3],
+    notes: [2, 1, 3],
     synopsis: "A burglar lifts an unattended bag off a luggage rack and finds a stethoscope, a perished blood-pressure cuff mended with electrical tape, and a Ministry of Health card belonging to a man born eleven months before him. He wants it only so that he can say a sentence with a title in it if a policeman stops him. Then he gets off a bus in Ab-Bidar, where a doctor has been promised six times in eleven months, and a man outside the shop stands up and says: Doctor? They said Thursday."
   },
 
@@ -910,7 +910,7 @@ const STORIES = [
     door: "Ordeal",
     room: "The Pit \u2014 deeper than a man can reach, one stone across the top of it, and dark enough that he cannot see his own hand or be sure of anything he hears",
     key: "The Voice \u2014 the only thing that comes down the gap besides the food, unverifiable from the bottom, and not to be told apart from what the dark has already made for him",
-    notes: [2, 3, 2],
+    notes: [2, 3, 1],
     synopsis: "A man wakes at the bottom of a pit in the dark and cannot remember arriving. His name is Bijan, and a week ago he was the only man in the Shah's hall who would stand up. What happened after that he has in pieces: a guide, a festival two days over the Turanian border, a woman's tent, and a cup handed to him on the last afternoon. Food comes through a gap he cannot reach, and with it a voice that knows his name — and he decides quite early that the voice is not real."
   },
 
@@ -922,7 +922,7 @@ const STORIES = [
     door: "Withholding",
     room: "The Rim \u2014 the lip of a hole two miles out of a town where everyone knows exactly who she used to be, and where she cannot be certain on any day of it that there is still anybody down there",
     key: "The Bread \u2014 flat travels better than round and stale better than fresh, because fresh tears itself apart on the way down, and never two pieces at once: she will hear one land, go to it, and lose the other",
-    notes: [3, 3, 2],
+    notes: [3, 3, 1],
     synopsis: "Eleven springs running, Manijeh has taken tents out to the same festival ground two days inside the Turanian border, and nothing has ever happened there. This spring a young man in Byzantine silk appears alone at the treeline, and her first clear thought is that somebody is going to get him killed. She is right, and she does it herself. Her father takes her rank, her women, her rings and her shoes, walks her out to the pit where he has put the Iranian, and tells her this is her house now."
   },
 
@@ -946,7 +946,7 @@ const STORIES = [
     door: "Rite",
     room: "The Hall — six hundred seats and more than that in it, chairs down the sides against the fire regulations, and thirty feet of blue vinyl saying the bright future that will be thrown away on Sunday",
     key: "Nine Minutes — a speech built for somebody else's mouth by a man who knows compression the way a locksmith knows a cylinder and has no idea how to build a room",
-    notes: [2, 2, 3],
+    notes: [1, 1, 3],
     synopsis: "A young woman ranked ninth in the national entrance examination out of six hundred thousand is graduating top of her year at Sharif and is required to give the address. She cannot write it — not because she cannot write, but because there is nothing she is permitted to say, and she has spent four years being the proof of a system she has concluded is a machine for producing people like her and then losing them. So she finds a man who writes for other people's mouths, and takes him entirely seriously, which nobody has ever done."
   },
 
@@ -958,7 +958,7 @@ const STORIES = [
     door: "Withholding",
     room: "Havākhori — literally air-eating, the hour a wing is let out into the yard, in a building where an inspector can close a wing and cannot open one door, issue one blanket, or shorten one sentence by an hour",
     key: "Cheshm — upon my eye: at once, certainly, consider it done. It carries no information about whether the thing will happen, because that was never the question. What was on the table was the relative position of two people, and it settles that instantly and closes it.",
-    notes: [2, 2, 3],
+    notes: [2, 1, 3],
     synopsis: "He has been in the town nine weeks doing nothing, which he is extremely good at and nobody has ever paid him for. On a Tuesday in the third week of Tir a car stops outside the wrong guesthouse, a man in a lanyard makes two telephone calls that are not answered, and then looks up a street containing four people. Aqa-ye bāzras? He has four seconds, and underneath the arithmetic is the only thought that moves his mouth: that car goes through that gate."
   },
 
@@ -970,7 +970,7 @@ const STORIES = [
     door: "Ordeal",
     room: "The Side Hall — a majles-e tarhim in a mosque: recitation, an address, tea and dates and halva, and a stranger who will not give his name stipulating three things about what is said over a woman he will not explain",
     key: "The Laugh — arriving twenty-five years late in a man who could always see one coming and never once felt it, and who is now obliged to feel what he sells before he is allowed to sell it",
-    notes: [2, 2, 3],
+    notes: [1, 1, 3],
     synopsis: "Manuchehr Delgoshā is fifty-four and has begun laughing, and it has ruined and remade him in the same movement. For twenty-five years he could see the shape of a joke and never feel it land, and that was the whole of his gift. He can now do both at once, and is obliged for the first time to feel what he sells before he sells it. His broker of twenty-six years dies between one Tuesday and the next. And a man who will not give his name asks him for a funeral speech."
   },
 
@@ -1030,7 +1030,7 @@ const STORIES = [
     door: "Ordeal",
     room: "The Median — what a thing returns when it has read very nearly everything: the centre of it, in four seconds, which is also a map of exactly where a Persian audience expects the operative word",
     key: "Hooshang — a perfect model of the average, run for five months against a man whose whole trade is putting the operative word where the room is not expecting it",
-    notes: [2, 2, 3],
+    notes: [2, 1, 3],
     synopsis: "Manuchehr Delgoshā is fifty-eight and has spent thirty-one years finding where a room expects the operative word and putting it somewhere else. That is the whole trade, and everything else is in service of it. He can now generate the expected version in four seconds by asking a machine, and he has spent five months doing exactly that, one night at a time, in the chair, with the log open beside him. At four fifty-three one morning the machine says something back that neither of them can claim."
   },
 
@@ -1042,7 +1042,7 @@ const STORIES = [
     door: "Withholding",
     room: "Before Six — set up in the dark, off the road by twenty past, with his back to the load and the sheet on his knee, and nothing in the record of the day to say what the job was",
     key: "The Load Box — the square on a lift plan where a driver writes the weight before he lifts it. It is a prediction rather than a record, and nobody in that country is required to write one at all.",
-    notes: [3, 3, 3],
+    notes: [2, 2, 3],
     synopsis: "Sattār Fallāhi is sixty-one and owns one truck-mounted loader crane. For thirty years he has put things on the roofs of a provincial city at an hourly rate with a four-hour minimum, and the reputation that keeps him working rests on one thing: he knows what a load weighs. Not by looking — through the machine, in the half-second when it leaves the ground, right to within twenty kilos. Four times in twenty years a man has come to the yard and asked what it can do at four metres."
   },
 
@@ -1054,7 +1054,7 @@ const STORIES = [
     door: "Rite",
     room: "The Ridge — a low stone room, a wall built against the wind, and a fire he keeps, where he prays all night the way you sit up with a sick animal",
     key: "The Rope — taken the way you take a coat on that ground, used once on a man who had gone down into a crack in the rock, and hanging on the hook by the door ever since, unused, with work up there that wants one",
-    notes: [2, 2, 2],
+    notes: [2, 2, 1],
     synopsis: "He lives on a ridge in the north-west, alone, and prays through the night. He gathers at first light from a shelf of rock, takes the stems and not the roots, and that is the whole of his life. Then a crack in the ground starts breathing out cold air and the sound of a man crying, and he goes down after it with a rope he brought the way you bring a coat. What he pulls up is a king sixty years into a war, and nobody will believe how he knew."
   },
 
@@ -1066,7 +1066,7 @@ const STORIES = [
     door: "Withholding",
     room: "The Room — warm and dark and moving, which took some years to get used to and which he would now miss",
     key: "The Gate — not rusted, not broken, not stuck. Somebody puts their weight against it every hour the building is awake and keeps it exactly where it is, deliberately, with attention, the way a man holds a door in a wind.",
-    notes: [1, 2, 1],
+    notes: [1, 2, 2],
     synopsis: "He has been here since the beginning and nobody has told him why. There is a room, and there is a gate, and the gate works perfectly — it is simply held, every waking hour, by somebody on the other side. No charge has been laid, no hearing convened, no period specified. He is not mistreated: he is fed, he is kept warm, nobody has ever raised a hand to him. He has simply never been let out, and after seventy years he would like the matter looked at."
   },
 
@@ -1078,7 +1078,7 @@ const STORIES = [
     door: "Withholding",
     room: "Branch 26 — a lift out since 1387, a basement archive that floods, a clerk whose filing nobody else can operate, and a form with a box that cannot be filled",
     key: "Mohlat — the time you are allowed to object to a judgment. Twenty days in the law; also what his mother said when she wanted a few minutes more, and what a shopkeeper says when he lets you pay next week.",
-    notes: [3, 3, 3],
+    notes: [3, 2, 3],
     synopsis: "A judge applies the law exactly. Where the code runs out he is required to go to the sources, because the constitution says so, and that is not a cleric improvising — it is the job. A mother counts the days from her son's arrest and keeps a folder: a school certificate, two letters from teachers, nine signatures from the building. He heads his entries with the order he wrote and its file number. She heads hers with the day and the time on the clock. One event, two units, and they never touch."
   },
 
@@ -1090,7 +1090,7 @@ const STORIES = [
     door: "Ordeal",
     room: "The Boardwalk — unlicensed vendors, permits that are technically real, and an entire informal economy running beside a legal one that has decided not to see it, which is Javadiyeh with better weather",
     key: "The Accent — the thing that lets four hundred people in a hall in Hässelby catch every word, and that a room of Americans hears before it hears the joke",
-    notes: [2, 2, 3],
+    notes: [1, 1, 3],
     synopsis: "She moves to Los Angeles and takes a room in Venice on purpose, forty minutes from the forty thousand Iranians in Westwood, because she has worked out that if she goes there in the first year she will never leave. It is not contempt. It is arithmetic. She has come from four years in a hall where four hundred people understood every word and let her get away with nothing, and she is now starting again in a language that hears her before it hears the joke."
   }
 
