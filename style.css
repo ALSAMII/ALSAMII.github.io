@@ -1,4 +1,4 @@
-/* Version 358 · last updated 2026-09-01 06:05 PDT */
+/* Version 359 · last updated 2026-09-01 07:05 PDT */
 /* ============================================================
    CHEW Z — Short Fiction
    One dark screen: story list on the left, a "stage" in the
@@ -4042,7 +4042,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    separation. */
 .notes {
   display: grid;
-  grid-template-columns: minmax(4.5rem, 7rem) minmax(5rem, 1fr) auto;
+  /* The meter is a gauge, not a progress bar: three notches that mean
+     1, 2 or 3, and the width they are drawn at carries no information.
+     As 1fr it took every spare pixel in the row, so the same three
+     notches were 22px each in a 375px panel and 185px each in an 864px
+     one — an eight-fold swing, and at the top of it a bar 6px tall and
+     185px long stopped reading as a bar at all and became a rule
+     ruled across the panel. Capped, it is the same object at every
+     width, and the slack goes to the words on its right. */
+  grid-template-columns: minmax(4.5rem, 8.5rem) minmax(5rem, 10rem) auto;
   align-items: center;
   gap: 0.75rem 1rem;
   /* No rules top or bottom: the band is already set apart by the space
@@ -4195,9 +4203,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.9rem;
   }
-  .feature-substance .tri-def { font-size: 0.875rem; line-height: 1.35; }
+  /* These were set down small — the terms to eight pixels — to fit
+     three columns of definition into a 26rem text column beside the
+     cover. The synopsis wraps the cover now and this band has the
+     whole measure, roughly 585 to 864px, so the sizes go back up to
+     something meant to be read rather than deciphered. */
+  .feature-substance .tri-def { font-size: 1rem; line-height: 1.45; }
   .feature-substance .tri-term,
-  .feature-substance .note-name { font-size: 0.5rem; }
+  .feature-substance .note-name { font-size: 0.625rem; }
+  .feature-substance .note-word { font-size: 1rem; }
 }
 
 .tri-row { display: block; }
