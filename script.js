@@ -1,4 +1,4 @@
-/* Version 355 · last updated 2026-09-01 06:05 PDT */
+/* Version 356 · last updated 2026-09-01 05:46 PDT */
 /* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -57,6 +57,12 @@
         title: t.title,
         place: String(i + 1),
         of: t.books.length,
+        /* Whether the row says which one of how many. A cycle that has
+           to be read in order earns it; a group of standalones does
+           not, and saying "2 of 4" of books that share nothing but a
+           preoccupation tells a reader they have started in the wrong
+           place. Set per series in stories.js. */
+        numbered: t.numbered !== false,
         first: i === 0,
         last: i === t.books.length - 1
       };
@@ -970,7 +976,11 @@
          across two at a third. Split, the English and the count keep
          the first line and the Persian always has the second. */
       var sparts = splitScripts(series.title);
-      var count = series.place + " of " + series.of;
+      /* An unnumbered series says its name and stops. See numbered in
+         SERIES_OF above for why four of them do. */
+      var count = series.numbered
+        ? " \u00b7 \u2068" + series.place + " of " + series.of + "\u2069"
+        : "";
       if (sparts) {
         var sen = document.createElement("span");
         sen.className = "s-en";
@@ -983,11 +993,10 @@
         var sfa = document.createElement("span");
         sfa.className = "s-fa";
         sfa.append(makeFa(sparts.fa));
-        sfa.append(document.createTextNode(" \u00b7 \u2068" + count + "\u2069"));
+        if (count) sfa.append(document.createTextNode(count));
         mark2.append(sen, sfa);
       } else {
-        mark2.textContent = "\u2068" + series.title + "\u2069" + " \u00b7 " +
-                            "\u2068" + count + "\u2069";
+        mark2.textContent = "\u2068" + series.title + "\u2069" + count;
       }
       sub.append(mark2);
     }

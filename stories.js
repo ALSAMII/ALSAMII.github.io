@@ -1,4 +1,4 @@
-/* Version 354 · last updated 2026-09-01 05:09 PDT */
+/* Version 356 · last updated 2026-09-01 05:46 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1249,6 +1249,15 @@ const TRILOGIES = [
        No banner — the covers stand side by side. */
     label: "",
     books: [68, 70, 75, 77, 79, 82, 87],
+    /* No "3 of 7" on the rows. These books are standalones that share
+       a narrator, a form or a preoccupation, and they say so
+       themselves — No. 81 opens by telling a reader they may be read
+       in any order. A count on the row contradicts that: it tells
+       somebody who has just found one of them that they have started
+       in the wrong place. The heading still gathers them and the
+       panel still shows the whole set, which is the part that is
+       true. The ordered groups below keep their numbering. */
+    numbered: false,
     synopsis: "Seven notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. On the seventh she is in Los Angeles, working in a language that hears her before it hears the joke, and a researcher writes to say she knows who Romanu is. In the old story the vow ends on the seventh day and the prince speaks. These are the seven days."
   },
   {
@@ -1278,6 +1287,15 @@ const TRILOGIES = [
        The label stays an empty string rather than being removed. */
     label: "",
     books: [67, 71, 74, 76, 81],
+    /* No "3 of 7" on the rows. These books are standalones that share
+       a narrator, a form or a preoccupation, and they say so
+       themselves — No. 81 opens by telling a reader they may be read
+       in any order. A count on the row contradicts that: it tells
+       somebody who has just found one of them that they have started
+       in the wrong place. The heading still gathers them and the
+       panel still shows the whole set, which is the part that is
+       true. The ordered groups below keep their numbering. */
+    numbered: false,
     synopsis: "Five accounts by a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Then a bag on a luggage rack makes him the doctor a village of four hundred stopped expecting. Then a pass shuts behind him in a gorge and he is the teacher of forty children across six grades, and he cannot read. Then a man in a lanyard takes him for the inspector, and he walks into a prison. Then a woman of seventy-four looks at his hands on a doorstep and gives him a dead man's place at her table, and there is no uniform this time and no institution to check him — a family is not an institution, it is a story a number of people have agreed to. He is qualified for none of it, and at none of it is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done. Each account is written for whoever comes next, and each one is a little more honest than the last about what he is doing there."
   },
   {
@@ -1295,6 +1313,15 @@ const TRILOGIES = [
     title: "From the Old Book",
     label: "",
     books: [72, 73, 84],
+    /* No "3 of 7" on the rows. These books are standalones that share
+       a narrator, a form or a preoccupation, and they say so
+       themselves — No. 81 opens by telling a reader they may be read
+       in any order. A count on the row contradicts that: it tells
+       somebody who has just found one of them that they have started
+       in the wrong place. The heading still gathers them and the
+       panel still shows the whole set, which is the part that is
+       true. The ordered groups below keep their numbering. */
+    numbered: false,
     synopsis: "Three novellas out of Ferdowsi. Two of them stand on either side of one hole in the ground, over the same eleven months. Bijan is at the bottom of it, in an iron collar, working out that the voice which feeds him is almost certainly something the dark has made. Manijeh is at the rim, barefoot, begging bread door to door in a town where everyone knows exactly who she used to be, and unable to be sure on any given day that there is still anybody down there. The story is the most famous love story in the Persian language, and Ferdowsi did not have it: he stops the Shāhnāma in the middle of a war to describe a night at his own house, when a woman came into the garden with a candle and told him there was a story in the old book, and that if he would listen he could put it into verse. She had the book. He did not. Nobody wrote her name down. The third is the same shape from the other end: a hermit on a ridge hears crying come up out of a crack in the rock, goes down after it with a rope, and pulls out the king the whole war has been about — and spends the rest of his life being the man nobody believes about how he knew."
   },
   {
@@ -1315,6 +1342,15 @@ const TRILOGIES = [
     title: "From the Unsaid · ناگفته",
     label: "",
     books: [78, 80, 83, 86],
+    /* No "3 of 7" on the rows. These books are standalones that share
+       a narrator, a form or a preoccupation, and they say so
+       themselves — No. 81 opens by telling a reader they may be read
+       in any order. A count on the row contradicts that: it tells
+       somebody who has just found one of them that they have started
+       in the wrong place. The heading still gathers them and the
+       panel still shows the whole set, which is the part that is
+       true. The ordered groups below keep their numbering. */
+    numbered: false,
     synopsis: "Four books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
   }
 ];
