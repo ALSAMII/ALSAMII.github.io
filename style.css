@@ -1,4 +1,4 @@
-/* Version 353 · last updated 2026-08-31 14:30 PDT */
+/* Version 354 · last updated 2026-09-01 05:09 PDT */
 /* ============================================================
    CHEW Z — Short Fiction
    One dark screen: story list on the left, a "stage" in the
@@ -4303,10 +4303,19 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 /* Faded like the covers on the shelf, so a row of three reads as books
-   standing together rather than three pasted cards. */
+   standing together rather than three pasted cards.
+
+   min-width: 0 is what lets them give way. .t-covers can shrink, but a
+   replaced element's automatic minimum size is its own specified
+   width, so the images inside it would not: at seven spines the row
+   needed 330px, the column offered 252, and the last two hung 78px out
+   over the reading panel. Nothing showed it until the Delgoshā reached
+   seven, because five fitted. Free to shrink, they land at the size
+   they already take on a phone, and height: auto keeps the ratio. */
 .t-covers img {
   display: block;
   width: clamp(2.5rem, 9vw, 3.5rem);
+  min-width: 0;
   height: auto;
   border-radius: 5px;
   -webkit-mask-image:

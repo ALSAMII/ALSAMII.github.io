@@ -1,4 +1,4 @@
-/* Version 352 · last updated 2026-08-31 13:45 PDT */
+/* Version 354 · last updated 2026-09-01 05:09 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1044,6 +1044,54 @@ const STORIES = [
     key: "The Load Box — the square on a lift plan where a driver writes the weight before he lifts it. It is a prediction rather than a record, and nobody in that country is required to write one at all.",
     notes: [3, 3, 3],
     synopsis: "Sattār Fallāhi is sixty-one and owns one truck-mounted loader crane. For thirty years he has put things on the roofs of a provincial city at an hourly rate with a four-hour minimum, and the reputation that keeps him working rests on one thing: he knows what a load weighs. Not by looking — through the machine, in the half-second when it leaves the ground, right to within twenty kilos. Four times in twenty years a man has come to the yard and asked what it can do at four metres."
+  },
+
+  {
+    num: 84,
+    title: "None But Afrasiyab",
+    words: "8,800 words",
+    hook: "A crack in the rock breathes out cold air and the sound of a man crying",
+    door: "Rite",
+    room: "The Ridge — a low stone room, a wall built against the wind, and a fire he keeps, where he prays all night the way you sit up with a sick animal",
+    key: "The Rope — taken the way you take a coat on that ground, used once on a man who had gone down into a crack in the rock, and hanging on the hook by the door ever since, unused, with work up there that wants one",
+    notes: [2, 2, 2],
+    synopsis: "He lives on a ridge in the north-west, alone, and prays through the night. He gathers at first light from a shelf of rock, takes the stems and not the roots, and that is the whole of his life. Then a crack in the ground starts breathing out cold air and the sound of a man crying, and he goes down after it with a rope he brought the way you bring a coat. What he pulls up is a king sixty years into a war, and nobody will believe how he knew."
+  },
+
+  {
+    num: 85,
+    title: "Kafka at the Gate",
+    words: "9,900 words",
+    hook: "Seventy years behind a working gate, and no charge, no hearing, and nobody to ask",
+    door: "Withholding",
+    room: "The Room — warm and dark and moving, which took some years to get used to and which he would now miss",
+    key: "The Gate — not rusted, not broken, not stuck. Somebody puts their weight against it every hour the building is awake and keeps it exactly where it is, deliberately, with attention, the way a man holds a door in a wind.",
+    notes: [1, 2, 1],
+    synopsis: "He has been here since the beginning and nobody has told him why. There is a room, and there is a gate, and the gate works perfectly — it is simply held, every waking hour, by somebody on the other side. No charge has been laid, no hearing convened, no period specified. He is not mistreated: he is fed, he is kept warm, nobody has ever raised a hand to him. He has simply never been let out, and after seventy years he would like the matter looked at."
+  },
+
+  {
+    num: 86,
+    title: "The Time Allowed",
+    words: "15,600 words",
+    hook: "The right is not withheld. It is spent, early, by the man appointed to protect it.",
+    door: "Withholding",
+    room: "Branch 26 — a lift out since 1387, a basement archive that floods, a clerk whose filing nobody else can operate, and a form with a box that cannot be filled",
+    key: "Mohlat — the time you are allowed to object to a judgment. Twenty days in the law; also what his mother said when she wanted a few minutes more, and what a shopkeeper says when he lets you pay next week.",
+    notes: [3, 3, 3],
+    synopsis: "A judge applies the law exactly. Where the code runs out he is required to go to the sources, because the constitution says so, and that is not a cleric improvising — it is the job. A mother counts the days from her son's arrest and keeps a folder: a school certificate, two letters from teachers, nine signatures from the building. He heads his entries with the order he wrote and its file number. She heads hers with the day and the time on the clock. One event, two units, and they never touch."
+  },
+
+  {
+    num: 87,
+    title: "Homeland Security",
+    words: "10,400 words",
+    hook: "The same two words are a department in one country and a charge in the other",
+    door: "Ordeal",
+    room: "The Boardwalk — unlicensed vendors, permits that are technically real, and an entire informal economy running beside a legal one that has decided not to see it, which is Javadiyeh with better weather",
+    key: "The Accent — the thing that lets four hundred people in a hall in Hässelby catch every word, and that a room of Americans hears before it hears the joke",
+    notes: [2, 2, 3],
+    synopsis: "She moves to Los Angeles and takes a room in Venice on purpose, forty minutes from the forty thousand Iranians in Westwood, because she has worked out that if she goes there in the first year she will never leave. It is not contempt. It is arithmetic. She has come from four years in a hall where four hundred people understood every word and let her get away with nothing, and she is now starting again in a language that hears her before it hears the joke."
   }
 
 ];
@@ -1193,13 +1241,15 @@ const TRILOGIES = [
        position in this list, not from its number.
 
        The label is an empty string rather than absent, and stays
-       that way at any length: this is a seven-day frame and there
-       are three days still to come.
+       that way at any length. Seven days is the whole frame, and
+       No. 87 is headed THE SEVENTH DAY, so the group is complete —
+       which is a reason to leave the label alone rather than to
+       start calling it a septet.
 
        No banner — the covers stand side by side. */
     label: "",
-    books: [68, 70, 75, 77, 79, 82],
-    synopsis: "Six notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. These are the first six days."
+    books: [68, 70, 75, 77, 79, 82, 87],
+    synopsis: "Seven notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. On the seventh she is in Los Angeles, working in a language that hears her before it hears the joke, and a researcher writes to say she knows who Romanu is. In the old story the vow ends on the seventh day and the prince speaks. These are the seven days."
   },
   {
     /* The only series title here carrying its Persian. The heading is
@@ -1231,14 +1281,21 @@ const TRILOGIES = [
     synopsis: "Five accounts by a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Then a bag on a luggage rack makes him the doctor a village of four hundred stopped expecting. Then a pass shuts behind him in a gorge and he is the teacher of forty children across six grades, and he cannot read. Then a man in a lanyard takes him for the inspector, and he walks into a prison. Then a woman of seventy-four looks at his hands on a doorstep and gives him a dead man's place at her table, and there is no uniform this time and no institution to check him — a family is not an institution, it is a story a number of people have agreed to. He is qualified for none of it, and at none of it is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done. Each account is written for whoever comes next, and each one is a little more honest than the last about what he is doing there."
   },
   {
-    /* One story told twice, so this is the first group here whose two
-       books cover the same days rather than following one another.
-       The reading order is still the listing order: 72 is the pit and
-       73 is the rim, and the rim knows things the pit does not. */
+    /* 72 and 73 tell one story twice, so this was the first group
+       here whose books covered the same days rather than following
+       one another. The reading order is still the listing order: 72
+       is the pit and 73 is the rim, and the rim knows things the pit
+       does not.
+
+       84 is a different episode of the same poem rather than a third
+       telling of that one, which is what the series is for: anything
+       drawn from the Shāhnāma belongs here. It answers the pair
+       across the hole all the same — the pit again, and this time the
+       narrator is the one at the top of it. */
     title: "From the Old Book",
     label: "",
-    books: [72, 73],
-    synopsis: "Two novellas standing on either side of one hole in the ground, over the same eleven months. Bijan is at the bottom of it, in an iron collar, working out that the voice which feeds him is almost certainly something the dark has made. Manijeh is at the rim, barefoot, begging bread door to door in a town where everyone knows exactly who she used to be, and unable to be sure on any given day that there is still anybody down there. The story is the most famous love story in the Persian language, and Ferdowsi did not have it: he stops the Shāhnāma in the middle of a war to describe a night at his own house, when a woman came into the garden with a candle and told him there was a story in the old book, and that if he would listen he could put it into verse. She had the book. He did not. Nobody wrote her name down."
+    books: [72, 73, 84],
+    synopsis: "Three novellas out of Ferdowsi. Two of them stand on either side of one hole in the ground, over the same eleven months. Bijan is at the bottom of it, in an iron collar, working out that the voice which feeds him is almost certainly something the dark has made. Manijeh is at the rim, barefoot, begging bread door to door in a town where everyone knows exactly who she used to be, and unable to be sure on any given day that there is still anybody down there. The story is the most famous love story in the Persian language, and Ferdowsi did not have it: he stops the Shāhnāma in the middle of a war to describe a night at his own house, when a woman came into the garden with a candle and told him there was a story in the old book, and that if he would listen he could put it into verse. She had the book. He did not. Nobody wrote her name down. The third is the same shape from the other end: a hermit on a ridge hears crying come up out of a crack in the rock, goes down after it with a rope, and pulls out the king the whole war has been about — and spends the rest of his life being the man nobody believes about how he knew."
   },
   {
     /* Nāgofteh — the past participle of not saying. A thing that was
@@ -1249,15 +1306,15 @@ const TRILOGIES = [
        the heading sets in two lines — see splitScripts in script.js
        and .t-en/.t-fa in style.css.
 
-       Not consecutive: 79, 81 and 82 stand between these three and
-       belong elsewhere. The books are standalones with no shared
-       narrator and no continuing plot; what makes them one line is
-       that every one of them stands beside the machinery rather than
-       in front of it, and puts the reader in the head of whoever
-       signs, files, weighs or looks away. */
+       Not consecutive: 79, 81, 82, 84, 85 and 87 stand between these
+       four and belong elsewhere. The books are standalones with no
+       shared narrator and no continuing plot; what makes them one
+       line is that every one of them stands beside the machinery
+       rather than in front of it, and puts the reader in the head of
+       whoever signs, files, weighs or looks away. */
     title: "From the Unsaid · ناگفته",
     label: "",
-    books: [78, 80, 83],
-    synopsis: "Three books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
+    books: [78, 80, 83, 86],
+    synopsis: "Four books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
   }
 ];

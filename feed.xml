@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Version 352 · last updated 2026-08-31 13:45 PDT -->
+<!-- Version 354 · last updated 2026-09-01 05:09 PDT -->
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chew Z — Short Fiction</title>
@@ -7,7 +7,39 @@
     <atom:link href="https://www.chewzfiction.com/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Short noir novellas about people who find out something true about themselves and can't put it back.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 31 Aug 2026 21:00:01 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2026 12:02:02 GMT</lastBuildDate>
+    <item>
+      <title>87. Homeland Security</title>
+      <link>https://www.chewzfiction.com/#87-homeland-security</link>
+      <guid isPermaLink="false">chewz-87</guid>
+      <pubDate>Mon, 01 Sep 2025 00:00:00 GMT</pubDate>
+      <category>Ordeal</category>
+      <description>She moves to Los Angeles and takes a room in Venice on purpose, forty minutes from the forty thousand Iranians in Westwood, because she has worked out that if she goes there in the first year she will never leave. It is not contempt. It is arithmetic. She has come from four years in a hall where four hundred people understood every word and let her get away with nothing, and she is now starting again in a language that hears her before it hears the joke.</description>
+    </item>
+    <item>
+      <title>86. The Time Allowed</title>
+      <link>https://www.chewzfiction.com/#86-the-time-allowed</link>
+      <guid isPermaLink="false">chewz-86</guid>
+      <pubDate>Mon, 25 Aug 2025 00:00:00 GMT</pubDate>
+      <category>Withholding</category>
+      <description>A judge applies the law exactly. Where the code runs out he is required to go to the sources, because the constitution says so, and that is not a cleric improvising — it is the job. A mother counts the days from her son's arrest and keeps a folder: a school certificate, two letters from teachers, nine signatures from the building. He heads his entries with the order he wrote and its file number. She heads hers with the day and the time on the clock. One event, two units, and they never touch.</description>
+    </item>
+    <item>
+      <title>85. Kafka at the Gate</title>
+      <link>https://www.chewzfiction.com/#85-kafka-at-the-gate</link>
+      <guid isPermaLink="false">chewz-85</guid>
+      <pubDate>Mon, 18 Aug 2025 00:00:00 GMT</pubDate>
+      <category>Withholding</category>
+      <description>He has been here since the beginning and nobody has told him why. There is a room, and there is a gate, and the gate works perfectly — it is simply held, every waking hour, by somebody on the other side. No charge has been laid, no hearing convened, no period specified. He is not mistreated: he is fed, he is kept warm, nobody has ever raised a hand to him. He has simply never been let out, and after seventy years he would like the matter looked at.</description>
+    </item>
+    <item>
+      <title>84. None But Afrasiyab</title>
+      <link>https://www.chewzfiction.com/#84-none-but-afrasiyab</link>
+      <guid isPermaLink="false">chewz-84</guid>
+      <pubDate>Mon, 11 Aug 2025 00:00:00 GMT</pubDate>
+      <category>Rite</category>
+      <description>He lives on a ridge in the north-west, alone, and prays through the night. He gathers at first light from a shelf of rock, takes the stems and not the roots, and that is the whole of his life. Then a crack in the ground starts breathing out cold air and the sound of a man crying, and he goes down after it with a rope he brought the way you bring a coat. What he pulls up is a king sixty years into a war, and nobody will believe how he knew.</description>
+    </item>
     <item>
       <title>83. Permitted Capacity</title>
       <link>https://www.chewzfiction.com/#83-permitted-capacity</link>
