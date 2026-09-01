@@ -1,4 +1,4 @@
-/* Version 354 · last updated 2026-09-01 05:09 PDT */
+/* Version 355 · last updated 2026-09-01 06:05 PDT */
 /* ============================================================
    CHEW Z — Short Fiction
    One dark screen: story list on the left, a "stage" in the
@@ -1308,18 +1308,20 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .feature {
   grid-area: 1 / 1;
   place-self: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  /* Top, not centre. Centred, the cover floated up and down with the
-     length of the synopsis beside it — No. 66 sat it at 201px from
-     the top of the panel and No. 73 at 460px, so no two books put
-     their artwork in the same place and a long one looked as though
-     the picture had fallen down the page. Aligned to the top, every
-     cover starts level with the first line of text, whatever the
-     book. */
-  align-items: flex-start;
-  gap: clamp(1.5rem, 3.5vw, 4.5rem);
+  /* A float, not a flex row.
+
+     Side by side, the words were a column and the cover was a column,
+     and the moment the words ran out the column stopped — so a book
+     with a short synopsis left a block of empty stage the height of
+     the cover and the width of it, with the dials and the door/room/
+     key squeezed into the narrow strip on the left beside nothing.
+     Floated, the text sets beside the cover and then carries straight
+     on underneath it, and the substance below gets the whole measure.
+
+     flow-root rather than a clearfix: the panel has to contain the
+     float or its own height collapses to the height of the words, and
+     overflow:hidden would cut the mask off the artwork. */
+  display: flow-root;
   /* The pair was centred as one unit, so a wide cover pushed the words
      off to the left of the stage and they no longer sat under the panel
      they replace. Held to the same measure the panels use, and the text
@@ -1343,19 +1345,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: opacity 0.45s ease, transform 0.45s ease, visibility 0s;
 }
 
-/* The pair has to fit on one flex line, or the cover wraps underneath
-   the words and lands at the very bottom of the stage — which is what
-   was happening on every window narrower than about 1500px, and is
-   why the artwork appeared to be sitting at the foot of the page.
-   The text column keeps a real minimum; the cover is allowed to give
-   way instead, down to a width where it still reads as a cover. */
-/* A small flex-basis on purpose. Whether a flex line wraps is decided
-   from the items' base sizes, before any growing happens — so a text
-   column basing at 18rem plus a cover was overflowing the container
-   by a dozen pixels at some widths, wrapping, and only then growing
-   to its full 26rem on a line of its own. Based small it always fits,
-   and flex-grow fills the rest of the line with it. */
-.feature-text { flex: 1 1 12rem; max-width: 26rem; min-width: 0; }
+/* No width of its own any more. It is the block the float sits in, so
+   it takes the whole measure and the cover reserves its own corner of
+   it. The old flex-basis arithmetic — which existed to stop the cover
+   wrapping onto a line of its own and landing at the foot of the
+   stage — has nothing left to go wrong: a float cannot wrap. */
+.feature-text { max-width: none; min-width: 0; }
 
 .feature-meta { color: var(--ember); margin: 0 0 1.25rem; }
 
@@ -1375,6 +1370,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
 /* The cover: no frame — its edges feather away into the room */
 .easel {
+  /* Ranged right, out of the flow, so the words close round it. The
+     left margin is the old flex gap; the bottom one keeps the lines
+     that pass underneath off the picture's edge. */
+  float: right;
+  margin: 0 0 1.1rem clamp(1.5rem, 3.5vw, 4rem);
   max-height: 62vh;
   /* Capped against the feature's own width, not the window's. The
      window was the wrong thing to measure: the stage the feature
@@ -4235,8 +4235,35 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   line-height: 1.7;
 }
 
+/* The group's covers take the cover's place: floated into the same
+   corner, with the synopsis closing round them and running on
+   underneath. A flex row of its own, so a set of any size wraps into
+   tidy rows inside the width it is given rather than being laid out
+   as a line of inline images and taking whatever width that needs. */
+.easel-set {
+  --set-gap: 0.75rem;
+  float: right;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  gap: var(--set-gap);
+  margin: 0 0 1.1rem clamp(1.5rem, 3.5vw, 4rem);
+  max-width: min(24rem, 46%);
+}
+
+.easel-set:empty { display: none; }
+
+/* Three to a row, always, taken from the set's own width rather than
+   from the viewport. Sized off vw the covers were a fixed number of
+   pixels and the row either fitted or it did not: a triptych at 132px
+   needed 420 and had 352, and four at 88px came to 356 against the
+   same 352 and broke as three and a lonely one. A third of the box,
+   less its gaps, cannot be wrong at any width or any number — three
+   go in a row, four as 3 + 1, seven as 3 + 3 + 1. */
 .easel-set img {
-  width: clamp(6.25rem, 8.25vw, 8.75rem);
+  width: calc((100% - 2 * var(--set-gap)) / 3);
+  min-width: 0;
   border: 0;
   box-shadow: 0 26px 52px rgba(0, 0, 0, 0.7);
   -webkit-mask-image:
@@ -4576,8 +4603,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    hidden outright, which meant most laptop visitors never saw the
    artwork. It shrinks instead, and the text column narrows to match. */
 @media (max-width: 72rem) {
-  .feature { gap: clamp(1rem, 2.5vw, 2rem); }
-  .feature-text { flex: 1 1 10rem; max-width: 21rem; min-width: 0; }
+  /* The gap and the text column's own width went with the flex row;
+     what is left to say here is how far the artwork gives way, which
+     is the margin it holds off the words and how wide it may be. */
+  .easel,
+  .easel-set { margin-left: clamp(1rem, 2.5vw, 2rem); }
+  .easel-set { max-width: min(15rem, 46%); }
   .easel {
     max-width: min(11rem, 42%);
     max-height: 46vh;
@@ -4587,29 +4618,24 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* Three covers plus a long triptych synopsis need real width, so the
    set scales down rather than disappearing. */
 @media (max-width: 82rem) {
-  .feature.trio .easel-set { gap: 0.6rem; }
-  .feature.trio .easel-set img { width: clamp(4.25rem, 6.5vw, 6rem); }
+  .feature.trio .easel-set { --set-gap: 0.6rem; }
 }
 
-/* Groups larger than three (the five-book cycle): the covers go
-   smaller and wrap, so five stand as three above two rather than
-   pushing the synopsis off the stage. Triptychs are untouched. */
-.easel-set[data-count="4"] img,
-.easel-set[data-count="5"] img { width: clamp(4.5rem, 5.5vw, 6.5rem); }
+/* Groups larger than three: the covers go smaller and wrap, so a
+   handful stand in rows rather than pushing the synopsis off the
+   stage. Triptychs are untouched.
 
-.feature.trio .easel-set[data-count="4"],
-.feature.trio .easel-set[data-count="5"] {
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  max-width: 22rem;
-}
+   Keyed on .many, not on data-count. These rules used to name 4 and
+   5 by number, and the day the Delgoshā reached six they stopped
+   matching it: the set fell back to the triptych's large covers on
+   one unwrapped line, ran 779px across a stage 736px wide, and was
+   pushed below the synopsis with the words squeezed up beside the
+   empty space it left. script.js sets the class from books.length >
+   3, so there is no number here to fall out of date. */
+.feature.trio .easel-set.many { max-width: min(22rem, 46%); }
 
 @media (max-width: 82rem) {
-  .feature.trio .easel-set[data-count="4"],
-  .feature.trio .easel-set[data-count="5"] { max-width: 17rem; gap: 0.6rem; }
-  .feature.trio .easel-set[data-count="4"] img,
-  .feature.trio .easel-set[data-count="5"] img { width: clamp(3.75rem, 5vw, 5rem); }
+  .feature.trio .easel-set.many { max-width: min(17rem, 46%); --set-gap: 0.6rem; }
 }
 
 /* Phones: the inline row of little covers wraps instead of

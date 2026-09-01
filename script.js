@@ -1,4 +1,4 @@
-/* Version 351 · last updated 2026-08-31 10:19 PDT */
+/* Version 355 · last updated 2026-09-01 06:05 PDT */
 /* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -413,6 +413,7 @@
        behind, so clear those before the single cover goes back up. */
     easelSet.textContent = "";
     easelSet.removeAttribute("data-count");
+    easelSet.classList.remove("many");
 
     easel.style.display = "";
     easel.alt = s.title + " — cover";
@@ -452,9 +453,18 @@
     easel.style.display = "none";
     easel.removeAttribute("src");
 
-    /* Built fresh each time, so a group can hold any number of books. */
+    /* Built fresh each time, so a group can hold any number of books.
+
+       "many" rather than a count, for the same reason the shelf row
+       uses it: the stylesheet used to name data-count 4 and 5, and
+       when the Delgoshā reached six those rules simply stopped
+       matching. The set kept the triptych's large covers on one
+       unwrapped line, overran the stage and was pushed below the
+       synopsis — a series growing by one book should not be able to
+       do that. Over three is over three, at any number. */
     easelSet.textContent = "";
     easelSet.setAttribute("data-count", t.books.length);
+    easelSet.classList.toggle("many", t.books.length > 3);
     t.books.forEach(function (n) {
       var im = document.createElement("img");
       im.alt = "";
