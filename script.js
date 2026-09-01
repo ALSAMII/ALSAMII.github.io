@@ -1,4 +1,4 @@
-/* Version 358 · last updated 2026-09-01 06:05 PDT */
+/* Version 360 · last updated 2026-09-01 09:05 PDT */
 /* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2092,7 +2092,16 @@
     if (textCache[n]) { renderBlocks(textCache[n]); settle(); return; }
 
     readerPage.innerHTML = '<p class="r-wait">Opening\u2026</p>';
-    fetch("read/" + n + ".json")
+    /* Stamped, like every other asset. This was the one fetch on the
+       site without a version on it, and it did not matter while a
+       reader file only ever appeared alongside a book that was new —
+       nobody could be holding an old copy of a file that had never
+       existed. The first time a published book was re-typeset (No. 85,
+       whose last page was rewritten and whose spacing after italics
+       was corrected on eight pages) it mattered at once: a reader who
+       had opened it before would have gone on being served the old
+       text out of their own cache, with nothing to tell either of us. */
+    fetch(stamped("read/" + n + ".json"))
       .then(function (r) {
         if (!r.ok) throw new Error("no text");
         return r.json();
