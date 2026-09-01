@@ -1,4 +1,4 @@
-/* Version 356 · last updated 2026-09-01 05:46 PDT */
+/* Version 358 · last updated 2026-09-01 06:05 PDT */
 /* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -99,15 +99,6 @@
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
 
-  /* Arabic script in a line the rest of which is Latin. The nastaliq
-     face the site uses for Persian carries far more above and below
-     its baseline than a serif does, and a line box is only as tall as
-     the tallest font on the line asks for — so a title or a label
-     holding both scripts needs leading set for the nastaliq, not for
-     the serif. Only two titles carry Persian; the other ten are left
-     exactly as they were. */
-  function hasNastaliq(str) { return /[\u0600-\u06FF\u0750-\u077F]/.test(str || ""); }
-
   /* Split a title that carries its Persian into the two scripts, so
      each can be given a line of its own. Everything up to the first
      Arabic letter is the English; everything from there is the
@@ -121,17 +112,6 @@
     var en = str.slice(0, m.index).replace(/[\s\u00b7\u2013\u2014\-:,]+$/, "");
     var fa = str.slice(m.index).trim();
     return en && fa ? { en: en, fa: fa } : null;
-  }
-
-  /* One Persian run, marked as its own language and direction, for
-     dropping into a line that is otherwise Latin. */
-  function makeFa(text) {
-    var el = document.createElement("span");
-    el.className = "fa-run";
-    el.setAttribute("dir", "rtl");
-    el.setAttribute("lang", "fa");
-    el.textContent = text;
-    return el;
   }
 
 
@@ -949,55 +929,35 @@
     var series = SERIES_OF[s.num];
     if (series) {
       var mark2 = document.createElement("span");
-      mark2.className = "story-series caps" +
-                        (hasNastaliq(series.title) ? " has-nastaliq" : "");
-      /* The title is fenced in an isolate \u2014 U+2068 in front, U+2069
-         behind \u2014 because one series carries its Persian, and a
-         right-to-left run loose in a line drags what follows it into
-         its own direction. Without the fence "Thursday Nights
-         \u0634\u0628\u200c\u0647\u0627\u06cc \u067e\u0646\u062c\u0634\u0646\u0628\u0647 \u00b7 2 of 2" came out as "THURSDAY NIGHTS 2
-         \u0634\u0628\u200c\u0647\u0627\u06cc \u067e\u0646\u062c\u0634\u0646\u0628\u0647 \u00b7 OF 2": the bidi algorithm had reached past
-         the Persian and taken the place number with it. Isolated,
-         the title is one opaque run and the count stays put. Harmless
-         on the ten titles that are all Latin. */
-      /* The count gets an isolate of its own as well. The title's
-         fence keeps the Persian from dragging the count around it,
-         but the digits and the separator are still neutrals sitting
-         next to a right-to-left run, and they were coming out spaced
-         wrong. Fenced, the count is one LTR run and reads the same
-         beside a Persian title as beside a Latin one. The width of
-         the spaces themselves is a separate matter — see the
-         word-spacing on .story-series.has-nastaliq in style.css. */
-      /* Where the series carries its Persian, the two scripts get a
-         line each here as well, the same way the heading does. Left as
-         one string the Persian sat on whichever line the English ran
-         out on \u2014 "FROM THE DELGOSH\u0100 \u00b7" then "\u0627\u0632 \u062f\u0644\u06af\u0634\u0627 \u00b7 5 OF 5" at one
-         width, both on a line at another, and the Persian broken
-         across two at a third. Split, the English and the count keep
-         the first line and the Persian always has the second. */
+      mark2.className = "story-series caps";
+      /* The English half of the name only.
+
+         This line is a footnote on a book's row — it says which
+         shelf the book belongs to, under the reading time, in small
+         caps at eleven pixels. The series HEADING a few rows up
+         carries the Persian, at size, where it can be read; repeating
+         it here in nastaliq at this size was a second and worse
+         setting of the same words on every row that has a series. The
+         name in one script is enough for a footnote.
+
+         splitScripts does the trimming: it hands back the English with
+         the separator taken off the end, and the Persian, which is
+         dropped. A Latin-only title has no split and is used whole.
+
+         The isolates stay. The title is fenced — U+2068 in front,
+         U+2069 behind — and the count is fenced separately. There
+         is no right-to-left run left on this line to need them, but
+         they cost nothing, and the day a name carries a Persian word
+         inside its English half they are what stops "2 of 2" coming
+         out as "2 ... OF 2". */
       var sparts = splitScripts(series.title);
       /* An unnumbered series says its name and stops. See numbered in
          SERIES_OF above for why four of them do. */
       var count = series.numbered
         ? " \u00b7 \u2068" + series.place + " of " + series.of + "\u2069"
         : "";
-      if (sparts) {
-        var sen = document.createElement("span");
-        sen.className = "s-en";
-        sen.textContent = sparts.en;
-        /* The second line stays a left-to-right box holding an isolated
-           Persian run and the count, rather than a right-to-left one:
-           that keeps the Persian at the left edge under the English and
-           the count reading forwards after it, which is where they both
-           already were on the line this used to wrap onto. */
-        var sfa = document.createElement("span");
-        sfa.className = "s-fa";
-        sfa.append(makeFa(sparts.fa));
-        if (count) sfa.append(document.createTextNode(count));
-        mark2.append(sen, sfa);
-      } else {
-        mark2.textContent = "\u2068" + series.title + "\u2069" + count;
-      }
+      mark2.textContent = "\u2068" + (sparts ? sparts.en : series.title) +
+                          "\u2069" + count;
       sub.append(mark2);
     }
 

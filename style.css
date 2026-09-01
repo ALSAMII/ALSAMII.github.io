@@ -1,4 +1,4 @@
-/* Version 355 · last updated 2026-09-01 06:05 PDT */
+/* Version 358 · last updated 2026-09-01 06:05 PDT */
 /* ============================================================
    CHEW Z — Short Fiction
    One dark screen: story list on the left, a "stage" in the
@@ -4526,32 +4526,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-size: 0.92em;
 }
 
-.story-series.has-nastaliq {
-  margin-top: 0.15rem;
-  /* The spaces on either side of the Persian are set in the nastaliq
-     too — a browser picks the font glyph by glyph, and a space next
-     to Arabic falls to the Arabic face, whose space is much narrower
-     than the small-caps face around it. That is why the count read as
-     "5OF 5" with the separator crowding it. Widening the word space
-     for this one label puts the gaps back without touching the ten
-     labels that are all Latin. */
-  word-spacing: 0.28em;
-}
-
-/* A line each, as in the heading above. The first carries the English
-   name and the count and keeps the small-caps line it was designed
-   with; only the second is led for the nastaliq, so a row in a series
-   without Persian is untouched and a row in one with it grows by a
-   single line rather than by two. fit-content keeps the Persian at the
-   left edge under the English — dir is for the order of its own
-   glyphs, not for which side of the row it sits on. */
-.story-series .s-en { display: block; }
-
-.story-series .s-fa {
-  display: block;
-  line-height: 2;
-  padding-block: 0.05em 0.2em;
-}
+/* The row label carries no Persian any more — see the note beside it
+   in script.js — so the rules that set a second line for it, and the
+   word-spacing that kept the nastaliq's narrow space from crowding
+   the count, have gone with it. Every one of these labels is now one
+   line of small caps, which is what the class was designed for. The
+   heading above the rows still sets both scripts: .t-en and .t-fa. */
 
 .trilogy:hover .t-title,
 .trilogy:focus-visible .t-title { color: var(--ember-lit); }
