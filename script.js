@@ -2035,6 +2035,7 @@
   var readerPage   = document.getElementById("readerPage");
   var readerScroll = document.getElementById("readerScroll");
   var readerTitle  = document.getElementById("readerTitle");
+  var readerTimeLeft = document.getElementById("readerTimeLeft");
   var readerEnd    = document.getElementById("readerEnd");
   var readerBar    = document.getElementById("readerBar");
 
@@ -2057,11 +2058,50 @@
   var currentSync  = null;
   var highlightedEl = null;
   var audioSaveTimer = null;
+  var wordCountCache = {};  /* book number -> total words, counted once */
+  var readerTotalWords = 0; /* for the book currently open */
+
+  /* Average adult silent-reading pace. Nothing about this site tracks
+     how fast any one person actually reads — it's a single constant
+     used only to turn a word count into a rough estimate, the same
+     way an e-reader's "12 min left" is a guess, not a measurement. */
+  var WPM = 235;
 
   function fmtTime(t) {
     t = Math.max(0, Math.floor(t || 0));
     var m = Math.floor(t / 60), sec = t % 60;
     return m + ":" + (sec < 10 ? "0" : "") + sec;
+  }
+
+  /* Plain word count across every block, headings and verse included —
+     close enough for an estimate, and simpler than trying to weight
+     block types differently. */
+  function countWords(blocks) {
+    var total = 0;
+    for (var i = 0; i < blocks.length; i++) {
+      var plain = blocks[i].h.replace(/<[^>]+>/g, " ");
+      var words = plain.match(/\S+/g);
+      if (words) total += words.length;
+    }
+    return total;
+  }
+
+  /* "42 min left", "1h 12m left" — from how far scrolled, against the
+     word count taken when the book opened. Approximate on purpose: it
+     assumes words are spread evenly through the scroll height, which
+     is true enough for prose to be useful and never claims to be more
+     than a guess. Blank for anything under a minute of reading left,
+     or before a word count exists at all — the element collapses when
+     empty, so the bar just carries the title alone in that case. */
+  function fmtTimeLeft(fractionDone) {
+    if (!readerTotalWords) return "";
+    var wordsLeft = readerTotalWords * Math.max(0, 1 - fractionDone);
+    var minutes = wordsLeft / WPM;
+    if (minutes < 1) return "";
+    var mins = Math.round(minutes);
+    if (mins < 60) return mins + " min left";
+    var h = Math.floor(mins / 60), m = mins % 60;
+    return h + "h" + (m ? " " + m + "m" : "") + " left";
   }
 
   /* read/NN.sync.json exists only for a book that has been through
@@ -2112,6 +2152,7 @@
     var at  = max > 0 ? readerScroll.scrollTop / max : 0;
     readerSave("place:" + readerBook, at.toFixed(4));
     if (readerBar) readerBar.style.width = (at * 100).toFixed(1) + "%";
+    if (readerTimeLeft) readerTimeLeft.textContent = fmtTimeLeft(at);
   }
 
   /* sync is read/NN.sync.json, or null for a book without one — in
@@ -2211,11 +2252,20 @@
     }
   }
 
+  function wordCountFor(n, blocks) {
+    if (!Object.prototype.hasOwnProperty.call(wordCountCache, n)) {
+      wordCountCache[n] = countWords(blocks);
+    }
+    return wordCountCache[n];
+  }
+
   function openReader(s) {
     var n = String(s.num).padStart(2, "0");
     readerBook = n;
     readerTitle.textContent = s.title;
     readerEnd.textContent = "End \u00b7 " + s.title;
+    readerTotalWords = 0;
+    if (readerTimeLeft) readerTimeLeft.textContent = "";
     reader.hidden = false;
     document.body.classList.add("gallery-on");
     applyTypeSize();
@@ -2241,6 +2291,7 @@
     var syncPromise = s.audio ? fetchSync(n) : Promise.resolve(null);
 
     if (textCache[n]) {
+      readerTotalWords = wordCountFor(n, textCache[n]);
       syncPromise.then(function (sync) {
         renderBlocks(textCache[n], sync);
         setupAudio(s, n, sync);
@@ -2269,6 +2320,7 @@
       .then(function (results) {
         var data = results[0], sync = results[1];
         textCache[n] = data.blocks;
+        readerTotalWords = wordCountFor(n, data.blocks);
         renderBlocks(data.blocks, sync);
         setupAudio(s, n, sync);
         settle();

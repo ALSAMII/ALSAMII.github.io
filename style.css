@@ -4936,9 +4936,18 @@ body.gallery-on .to-top { display: none; }
   border-bottom: 1px solid var(--hairline);
 }
 
+.reader-title-wrap {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 .reader-title {
   margin: 0;
   min-width: 0;
+  max-width: 100%;
   text-align: center;
   font-size: 0.5625rem;
   letter-spacing: 0.22em;
@@ -4947,6 +4956,19 @@ body.gallery-on .to-top { display: none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* How much of the book is left, in minutes rather than percent —
+   updated on every scroll from the same fraction that fills
+   .reader-progress, against a word count taken once when the book
+   opens. Empty (and taking up no room) until that number exists, and
+   for a book too short to bother estimating. */
+.reader-time-left {
+  margin: 0;
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  color: var(--ember-dim);
+}
+.reader-time-left:empty { display: none; }
 
 .reader-tools { display: flex; gap: 0.35rem; }
 
