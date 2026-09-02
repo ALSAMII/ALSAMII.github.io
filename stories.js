@@ -1,4 +1,4 @@
-/* Version 366 · last updated 2026-09-02 14:35 PDT */
+/* Version 367 · last updated 2026-09-02 14:46 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -175,7 +175,7 @@ const STORIES = [
   {
     num: 11,
     title: "The Marriage of Stones",
-    words: "14,400 words",
+    words: "13,900 words",
     hook: "Half seduction, half interrogation \u2014 of her",
     door: "Ordeal",
     room: "Back There Again \u2014 one touch and she is in another year",
@@ -187,7 +187,7 @@ const STORIES = [
   {
     num: 12,
     title: "Semazen",
-    words: "12,700 words",
+    words: "12,600 words",
     hook: "He spins until the grief goes into the floor",
     door: "Rite",
     room: "A Doorway For Grief \u2014 it comes in through you and grounds out",
@@ -199,7 +199,7 @@ const STORIES = [
   {
     num: 13,
     title: "A Stranger's Favorite Song",
-    words: "26,500 words",
+    words: "26,600 words",
     hook: "What song did his father love? He can't answer",
     door: "Rite",
     room: "Losing Him Twice \u2014 once to the forgetting, once to the death",
@@ -211,7 +211,7 @@ const STORIES = [
   {
     num: 14,
     title: "Fourteenth Trial",
-    words: "11,900 words",
+    words: "11,300 words",
     hook: "Only one of the two collars was treated",
     door: "Dose",
     room: "Certainty That Isn't Yours \u2014 you feel gifted, and it came in the collar",
@@ -223,7 +223,7 @@ const STORIES = [
   {
     num: 15,
     title: "The Archon's Ledger",
-    words: "16,000 words",
+    words: "15,600 words",
     hook: "Six deaths too clean to be deaths",
     door: "Rite",
     room: "The Half-Percent \u2014 the deaths that read too clean to be deaths",
@@ -235,7 +235,7 @@ const STORIES = [
   {
     num: 16,
     title: "The Fasting Ground",
-    words: "15,400 words",
+    words: "14,900 words",
     hook: "Fifteen years of proof that changed nothing",
     door: "Ordeal",
     room: "One True Thing \u2014 something about yourself you can't talk your way out of",
@@ -247,7 +247,7 @@ const STORIES = [
   {
     num: 17,
     title: "Natural Noise",
-    words: "17,400 words",
+    words: "17,000 words",
     hook: "The bees remember the hours. He doesn't",
     door: "Rite",
     room: "A Year Unaccounted For \u2014 the bees remember the hours; he doesn't",
@@ -259,7 +259,7 @@ const STORIES = [
   {
     num: 18,
     title: "Between Kenoma and Pleroma",
-    words: "11,900 words",
+    words: "11,600 words",
     hook: "The kindness turns out to have a floor",
     door: "Rite",
     room: "Kindness With A Floor \u2014 the valley decides which griefs stay worth seeing",
@@ -271,7 +271,7 @@ const STORIES = [
   {
     num: 19,
     title: "The Gardener's Century",
-    words: "28,000 words",
+    words: "27,500 words",
     hook: "Three centuries of patience, and one dying bathhouse",
     door: "Rite",
     room: "Planted Generations Ago \u2014 the wanting was sown before you were born",
@@ -283,7 +283,7 @@ const STORIES = [
   {
     num: 20,
     title: "The First Flame",
-    words: "27,000 words",
+    words: "26,500 words",
     hook: "One want, ungoverned, and a kingdom burns",
     door: "Rite",
     room: "A Kingdom On Fire \u2014 one want, ungoverned, and a country burns down",
@@ -1027,10 +1027,10 @@ const STORIES = [
     words: "20,100 words",
     hook: "A woman of seventy-four looks at his hands for four seconds and says: you have his hands",
     door: "Withholding",
-    room: "The Chair — kept at the table for a man who walked out in 1366, sent three letters and then nothing; still there at the end, and nobody in that house able to say which of the two of them it is for now",
+    room: "The Chair — kept at the table for a man who walked out in 1367, sent three letters and then nothing; still there at the end, and nobody in that house able to say which of the two of them it is for now",
     key: "You have his hands — four seconds at a door, and no document anywhere in the world that can contradict it, because a family is not an institution but a story a number of people have agreed to",
     notes: [1, 2, 3],
-    synopsis: "He is fifty, has no papers in any name, and has been in that border town four months because a border town is the only kind of place where nobody asks a stranger anything. A woman of seventy-four opens a door, looks at his hands, and gives him a name — her husband's brother, who walked out in 1366 and sent three letters and then nothing. He does not correct her. He takes his shoes off and goes in, and thirty people adjust, and by the end of the week it has always been true."
+    synopsis: "He is fifty, has no papers in any name, and has been in that border town four months because a border town is the only kind of place where nobody asks a stranger anything. A woman of seventy-four opens a door, looks at his hands, and gives him a name — her husband's brother, who walked out in 1367 and sent three letters and then nothing. He does not correct her. He takes his shoes off and goes in, and thirty people adjust, and by the end of the week it has always been true."
   },
 
   {
