@@ -403,7 +403,8 @@
     easel.style.display = "";
     easel.alt = s.title + " — cover";
     easelCaption = num + " \u00b7 " + s.title;
-    if (easel.getAttribute("src") !== cover) easel.src = cover;
+    var stampedCover = stamped(cover);
+    if (easel.getAttribute("src") !== stampedCover) easel.src = stampedCover;
 
     feature.classList.add("show");
     stageToTop();
