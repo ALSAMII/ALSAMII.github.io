@@ -1,4 +1,4 @@
-/* Version 365 · last updated 2026-09-02 14:17 PDT */
+/* Version 366 · last updated 2026-09-02 14:35 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -51,7 +51,7 @@ const STORIES = [
   {
     num: 1,
     title: "The Memory Liturgy",
-    words: "8,000 words",
+    words: "9,600 words",
     hook: "Seven months of his own life, unaccounted for",
     door: "Dose",
     room: "Someone Else's Hour \u2014 you live an hour that was never yours",
@@ -67,7 +67,7 @@ const STORIES = [
   {
     num: 2,
     title: "Bright Mercy",
-    words: "31,500 words",
+    words: "9,500 words",
     hook: "\u201cRise now, rise now, let the chorus swell\u201d",
     door: "Rite",
     room: "The Song Decides \u2014 four notes make the choice, and the room agrees",
@@ -79,7 +79,7 @@ const STORIES = [
   {
     num: 3,
     title: "The Painless Reel",
-    words: "3,300 words",
+    words: "3,800 words",
     hook: "An hour inside a man who never flinched",
     door: "Dose",
     room: "A Night Without Dread \u2014 his worst hour, and none of the fear",
@@ -91,7 +91,7 @@ const STORIES = [
   {
     num: 4,
     title: "The Weeping Hour",
-    words: "12,000 words",
+    words: "11,200 words",
     hook: "One second the machine cannot account for",
     door: "Dose",
     room: "The Second They Took \u2014 the moment the machine edited out of you",
@@ -103,7 +103,7 @@ const STORIES = [
   {
     num: 5,
     title: "Glass Savanna",
-    words: "19,900 words",
+    words: "18,800 words",
     hook: "The mushroom that made us, eaten again",
     door: "Rite",
     room: "The Archaic Revival \u2014 back in a hunter-gatherer's body, cold and awake",
@@ -115,7 +115,7 @@ const STORIES = [
   {
     num: 6,
     title: "Undertow",
-    words: "15,100 words",
+    words: "15,300 words",
     hook: "Everything you meet down there is real",
     door: "Dose",
     room: "The Riverbed \u2014 the floor of you, where the first wound was cut",
@@ -127,7 +127,7 @@ const STORIES = [
   {
     num: 7,
     title: "Meat That Dreams",
-    words: "20,400 words",
+    words: "19,300 words",
     hook: "The voice in your head switches off",
     door: "Dose",
     room: "No One Narrating \u2014 the voice stops, and something older sits up",
@@ -139,7 +139,7 @@ const STORIES = [
   {
     num: 8,
     title: "The Mercy Dose",
-    words: "24,200 words",
+    words: "23,500 words",
     hook: "Eight chairs. The last one is his father's",
     door: "Dose",
     room: "Their Confession, Your Shame \u2014 you feel it as though you did it",
@@ -151,7 +151,7 @@ const STORIES = [
   {
     num: 9,
     title: "The Kindred Stone",
-    words: "21,100 words",
+    words: "20,500 words",
     hook: "Auditing whether a god's grief is genuine",
     door: "Rite",
     room: "A God's Grief, Piped In \u2014 a whole city mourning on one signal",
@@ -163,7 +163,7 @@ const STORIES = [
   {
     num: 10,
     title: "The Gospel of Broken Skin",
-    words: "8,000 words",
+    words: "7,400 words",
     hook: "He walked smiling out of a wreck",
     door: "Ordeal",
     room: "Proof You're Alive \u2014 the one feeling a numbed city cannot fake",
@@ -1027,10 +1027,10 @@ const STORIES = [
     words: "20,100 words",
     hook: "A woman of seventy-four looks at his hands for four seconds and says: you have his hands",
     door: "Withholding",
-    room: "The Chair — kept at the table for a man who walked out in 1365, sent three letters and then nothing; still there at the end, and nobody in that house able to say which of the two of them it is for now",
+    room: "The Chair — kept at the table for a man who walked out in 1366, sent three letters and then nothing; still there at the end, and nobody in that house able to say which of the two of them it is for now",
     key: "You have his hands — four seconds at a door, and no document anywhere in the world that can contradict it, because a family is not an institution but a story a number of people have agreed to",
     notes: [1, 2, 3],
-    synopsis: "He is fifty, has no papers in any name, and has been in that border town four months because a border town is the only kind of place where nobody asks a stranger anything. A woman of seventy-four opens a door, looks at his hands, and gives him a name — her husband's brother, who walked out in 1365 and sent three letters and then nothing. He does not correct her. He takes his shoes off and goes in, and thirty people adjust, and by the end of the week it has always been true."
+    synopsis: "He is fifty, has no papers in any name, and has been in that border town four months because a border town is the only kind of place where nobody asks a stranger anything. A woman of seventy-four opens a door, looks at his hands, and gives him a name — her husband's brother, who walked out in 1366 and sent three letters and then nothing. He does not correct her. He takes his shoes off and goes in, and thirty people adjust, and by the end of the week it has always been true."
   },
 
   {
