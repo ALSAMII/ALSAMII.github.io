@@ -4214,6 +4214,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .feature-substance .tri-term,
   .feature-substance .note-name { font-size: 0.625rem; }
   .feature-substance .note-word { font-size: 1rem; }
+
+  /* At this size TRANSGRESSIVE — the longest of the three names —
+     renders about 7.6rem wide. The shared .notes rule lets its first
+     column shrink to 4.5rem under a tight measure, which the cover
+     float can hand it at some widths in the laptop range even though
+     the panel itself has plenty of room; the label then runs past its
+     own column and paints over the meter beside it. Raised to match
+     what the word actually needs, so it never has anywhere to shrink
+     to but has to keep fitting instead. */
+  .feature-substance .notes {
+    grid-template-columns: minmax(7.75rem, 8.5rem) minmax(5rem, 10rem) auto;
+  }
 }
 
 .tri-row { display: block; }
