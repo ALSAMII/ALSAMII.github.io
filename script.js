@@ -2049,7 +2049,7 @@
   var readerAudioTime  = document.getElementById("readerAudioTime");
   var readerAudioEl    = document.getElementById("readerAudioEl");
 
-  var STEPS = [0.95, 1.05, 1.15, 1.3, 1.45];   /* type sizes on offer */
+  var STEPS = [1.05, 1.15, 1.3, 1.45, 1.6];   /* type sizes on offer */
   var readerBook = null;
   var textCache  = {};
   var syncCache  = {};    /* book number -> parsed NN.sync.json, or null */

@@ -83,6 +83,18 @@ where an `<em>` run crosses what looks like a sentence boundary in a way
 the script couldn't cleanly separate. That block still reads fine, it
 just won't highlight; everything else in the book is unaffected.
 
+**A bug this caught, worth knowing about if a future book's reading
+type ever looks wrong out of nowhere:** an earlier version of the
+script could hand back a sentence with an `<em>` that opened but never
+closed — well-formed on its own inside the JSON, but the moment the
+page concatenates every block into one string, an unclosed `<em>`
+doesn't stay local. A browser reconstructs it through every block that
+follows until some later `</em>` happens to close it, so one bad
+sentence could italicise the rest of the book from that point on. Book
+1 had sixteen of these. Fixed now — `build-audio-sync.py` checks its
+own output for exactly this before it writes the file, and warns if it
+ever finds one again.
+
 ## What this needs installed
 
 Already set up in this environment:

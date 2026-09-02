@@ -115,15 +115,28 @@ def _normalise_for_speech(text):
 def _slice_with_tags(raw, start, end):
     """raw[start:end], with any <em> left open at `start` reopened at the
     front and any left unclosed at `end` closed at the back — so a slice
-    that lands mid-italic still parses as HTML on its own."""
+    that lands mid-italic still parses as HTML on its own.
+
+    Bug fixed here: the old check for "does this slice need a closing
+    tag" looked only inside body (raw[start:end]) for an unmatched
+    <em> — so a slice like "<em>foo" (body has zero tags in it at all,
+    because start already sits just past the opening tag) never
+    triggered it. The italic stayed open, and every block rendered
+    after it in the page inherited it: a browser reconstructs an
+    unclosed inline tag through however many block-level elements
+    follow until some later </em> happens to close it. One `<em>` with
+    no matching close in read/NN.json could italicise the rest of the
+    book. What actually matters is whether the tag is still open at
+    `end` — counted against the whole of `raw`, not just body — so
+    that's what decides whether to append the close now."""
     open_tag = "<%s>" % INLINE_TAG
     close_tag = "</%s>" % INLINE_TAG
     open_before = raw.count(open_tag, 0, start) > raw.count(close_tag, 0, start)
+    open_at_end = raw.count(open_tag, 0, end) > raw.count(close_tag, 0, end)
     body = raw[start:end]
-    open_within = body.count(open_tag) > body.count(close_tag)
     if open_before:
         body = open_tag + body
-    if open_within:
+    if open_at_end:
         body = body + close_tag
     return body.strip()
 
@@ -262,6 +275,17 @@ def main():
             blocks_out.setdefault(bi, []).append(
                 {"html": orig, "start": round(start, 2), "end": round(end, 2)}
             )
+
+        # Every sentence's own html has to be independently well-formed —
+        # one with an <em> left open bleeds italic through every block
+        # the page renders after it (see the note on _slice_with_tags).
+        # Cheap to catch here, expensive to catch by eye in the reader.
+        unbalanced = [orig for orig in orig_texts
+                      if orig.count("<em>") != orig.count("</em>")]
+        if unbalanced:
+            print("WARNING: %d sentence(s) have an unmatched <em>/</em> — "
+                  "italics would leak into everything rendered after them. "
+                  "First one: %r" % (len(unbalanced), unbalanced[0][:80]))
 
         duration = max((e for _, e in by_id.values()), default=0)
         out = {
