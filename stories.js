@@ -1,4 +1,4 @@
-/* Version 364 · last updated 2026-09-02 12:08 PDT */
+/* Version 365 · last updated 2026-09-02 14:17 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -57,8 +57,11 @@ const STORIES = [
     room: "Someone Else's Hour \u2014 you live an hour that was never yours",
     key: "Verity \u2014 the sacrament auditors take to read a stranger's memory",
     notes: [2, 1, 1],
-    synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him.",
-    audio: "assets/audio/01.mp3"
+    synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him."
+    // audio: "assets/audio/01.mp3"  \u2014 held back for changes before publishing.
+    // The download icon, the narration bar, and the sentence highlighting
+    // in the Read view all key off this one field being present \u2014 put it
+    // back and both come back exactly as they were. Nothing else to touch.
   },
 
   {
@@ -1024,10 +1027,10 @@ const STORIES = [
     words: "20,100 words",
     hook: "A woman of seventy-four looks at his hands for four seconds and says: you have his hands",
     door: "Withholding",
-    room: "The Chair — kept at the table for a man who walked out in 1364, sent three letters and then nothing; still there at the end, and nobody in that house able to say which of the two of them it is for now",
+    room: "The Chair — kept at the table for a man who walked out in 1365, sent three letters and then nothing; still there at the end, and nobody in that house able to say which of the two of them it is for now",
     key: "You have his hands — four seconds at a door, and no document anywhere in the world that can contradict it, because a family is not an institution but a story a number of people have agreed to",
     notes: [1, 2, 3],
-    synopsis: "He is fifty, has no papers in any name, and has been in that border town four months because a border town is the only kind of place where nobody asks a stranger anything. A woman of seventy-four opens a door, looks at his hands, and gives him a name — her husband's brother, who walked out in 1364 and sent three letters and then nothing. He does not correct her. He takes his shoes off and goes in, and thirty people adjust, and by the end of the week it has always been true."
+    synopsis: "He is fifty, has no papers in any name, and has been in that border town four months because a border town is the only kind of place where nobody asks a stranger anything. A woman of seventy-four opens a door, looks at his hands, and gives him a name — her husband's brother, who walked out in 1365 and sent three letters and then nothing. He does not correct her. He takes his shoes off and goes in, and thirty people adjust, and by the end of the week it has always been true."
   },
 
   {
