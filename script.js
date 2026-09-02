@@ -301,15 +301,17 @@
 
   /* ---- Reading time ---------------------------------------
      "31,500 words" tells a writer something; "about 2 hours"
-     tells a reader something. 250 wpm is the usual estimate for
-     fiction; a page is counted as roughly 275 words. */
+     tells a reader something. 200 wpm is a more generous estimate
+     than the 250 this used to run at — comfortable literary-fiction
+     pace rather than a brisk one; a page is counted as roughly 275
+     words. */
 
   function readingTime(words) {
     if (!words) return "";
     var n = parseInt(String(words).replace(/[^0-9]/g, ""), 10);
     if (!n) return "";
     if (/page/i.test(words)) n = n * 275;
-    var mins = Math.round(n / 250);
+    var mins = Math.round(n / 200);
     if (mins < 60) return mins + " min read";
     var hrs = mins / 60;
     /* Round to the nearest half hour — false precision helps nobody. */
@@ -1601,7 +1603,7 @@
   function minutesOf(s) {
     var n = parseInt(String(s.words).replace(/[^0-9]/g, ""), 10) || 0;
     if (/page/i.test(s.words)) n = n * 275;
-    return Math.round(n / 250);
+    return Math.round(n / 200);
   }
 
   function applySort() {
