@@ -1,4 +1,3 @@
-/* Version 360 · last updated 2026-09-01 09:05 PDT */
 /* ============================================================
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -522,6 +521,13 @@
     '<circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>' +
     '<path d="M8.6 10.5l6.8-4"/><path d="M8.6 13.5l6.8 4"/></svg>';
 
+  var AUDIO_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+    ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"' +
+    ' aria-hidden="true"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/>' +
+    '<rect x="2" y="14" width="5" height="7" rx="1.5"/>' +
+    '<rect x="17" y="14" width="5" height="7" rx="1.5"/></svg>';
+
   /* The two icons are not self-explanatory — one opens the PDF, one
      unfolds the synopsis — so each carries a word underneath. */
   function iconLabel(text) {
@@ -899,6 +905,21 @@
     pdfBtn.innerHTML = PDF_ICON;
     pdfBtn.append(iconLabel("PDF"));
 
+    /* The recording, offered as a download beside the PDF — only for
+       the books that have one. Most don't yet, so this is absent from
+       the column entirely rather than shown disabled. */
+    var audioBtn = null;
+    if (s.audio) {
+      audioBtn = document.createElement("a");
+      audioBtn.className = "icon-btn";
+      audioBtn.href = s.audio;
+      audioBtn.download = "";
+      audioBtn.title = "Download the audio";
+      audioBtn.setAttribute("aria-label", s.title + " — download the audio");
+      audioBtn.innerHTML = AUDIO_ICON;
+      audioBtn.append(iconLabel("Audio"));
+    }
+
     /* Title, then the hook and the reading time under it. Thirty-five
        bare titles told a new visitor nothing; this is what they scroll
        past, so it is where the book has to make its case. */
@@ -1078,7 +1099,9 @@
     /* The number closes the column, below the three actions: set
        plainly and large, it reads as the plate number of the volume
        rather than as a fourth thing to press. */
-    acts.append(pdfBtn, readBtn, shareBtn, numEl);
+    acts.append(pdfBtn, readBtn);
+    if (audioBtn) acts.append(audioBtn);
+    acts.append(shareBtn, numEl);
 
     row.append(mark, main, acts);
 
@@ -2015,9 +2038,46 @@
   var readerEnd    = document.getElementById("readerEnd");
   var readerBar    = document.getElementById("readerBar");
 
+  /* The narration player — present in the markup for every book, shown
+     only for the ones that have both a recording and sentence timing. */
+  var readerAudioBar  = document.getElementById("readerAudioBar");
+  var readerPlay      = document.getElementById("readerPlay");
+  var readerPlayIcon  = document.getElementById("readerPlayIcon");
+  var readerPauseIcon = document.getElementById("readerPauseIcon");
+  var readerAudioTrack = document.getElementById("readerAudioTrack");
+  var readerAudioFill  = document.getElementById("readerAudioFill");
+  var readerAudioTime  = document.getElementById("readerAudioTime");
+  var readerAudioEl    = document.getElementById("readerAudioEl");
+
   var STEPS = [0.95, 1.05, 1.15, 1.3, 1.45];   /* type sizes on offer */
   var readerBook = null;
   var textCache  = {};
+  var syncCache  = {};    /* book number -> parsed NN.sync.json, or null */
+  var syncTimeline = [];  /* flat, reading-order list of {start, el} for the open book */
+  var currentSync  = null;
+  var highlightedEl = null;
+  var audioSaveTimer = null;
+
+  function fmtTime(t) {
+    t = Math.max(0, Math.floor(t || 0));
+    var m = Math.floor(t / 60), sec = t % 60;
+    return m + ":" + (sec < 10 ? "0" : "") + sec;
+  }
+
+  /* read/NN.sync.json exists only for a book that has been through
+     build-audio-sync.py. A missing file is the ordinary case, not an
+     error — it just means this book has no synced narration yet, and
+     is cached as null so a book without one is only ever asked for
+     once per visit. */
+  function fetchSync(n) {
+    if (Object.prototype.hasOwnProperty.call(syncCache, n)) {
+      return Promise.resolve(syncCache[n]);
+    }
+    return fetch(stamped("read/" + n + ".sync.json"))
+      .then(function (r) { if (!r.ok) throw new Error("no sync"); return r.json(); })
+      .then(function (data) { syncCache[n] = data; return data; })
+      .catch(function () { syncCache[n] = null; return null; });
+  }
 
   function readerPref(key, fallback) {
     try {
@@ -2054,15 +2114,101 @@
     if (readerBar) readerBar.style.width = (at * 100).toFixed(1) + "%";
   }
 
-  function renderBlocks(blocks) {
+  /* sync is read/NN.sync.json, or null for a book without one — in
+     which case every block renders exactly as it always has. Where a
+     block does have timing, its sentences are wrapped individually so
+     playback can light one up at a time; a block sync had to skip (see
+     build-audio-sync.py) falls back to the same plain rendering. */
+  function renderBlocks(blocks, sync) {
+    var byBlock = {};
+    if (sync && sync.blocks) {
+      sync.blocks.forEach(function (b) { byBlock[b.i] = b.sentences; });
+    }
     var html = "";
     for (var i = 0; i < blocks.length; i++) {
       var b = blocks[i];
-      if (b.t === "h") html += '<h2 class="r-h">' + b.h + "</h2>";
-      else if (b.t === "v") html += '<p class="r-v">' + b.h + "</p>";
-      else html += "<p>" + b.h + "</p>";
+      var tag = b.t === "h" ? "h2" : "p";
+      var cls = b.t === "h" ? "r-h" : (b.t === "v" ? "r-v" : "");
+      var sentences = byBlock[i];
+      var inner = sentences
+        ? sentences.map(function (sent) {
+            return '<span class="r-sent" data-t="' + sent.start + '">' +
+                   sent.html + "</span>";
+          }).join(" ")
+        : b.h;
+      html += "<" + tag + (cls ? ' class="' + cls + '"' : "") + ">" +
+              inner + "</" + tag + ">";
     }
     readerPage.innerHTML = html;
+  }
+
+  /* Ties the just-rendered spans to the narration: builds the lookup
+     used to find "what's playing right now", and shows or hides the
+     player itself. Called every time the reader opens a book, whether
+     or not that book has a recording. */
+  function setupAudio(s, n, sync) {
+    syncTimeline = [];
+    highlightedEl = null;
+    currentSync = (sync && s.audio) ? sync : null;
+
+    readerAudioEl.pause();
+
+    if (!currentSync) {
+      readerAudioBar.hidden = true;
+      readerAudioEl.removeAttribute("src");
+      return;
+    }
+
+    document.querySelectorAll("#readerPage .r-sent").forEach(function (el) {
+      syncTimeline.push({ start: parseFloat(el.dataset.t), el: el });
+    });
+
+    readerAudioBar.hidden = false;
+    readerPlayIcon.style.display = "";
+    readerPauseIcon.style.display = "none";
+    readerAudioFill.style.width = "0%";
+    readerAudioTrack.style.setProperty("--pos", "0%");
+    readerAudioTrack.setAttribute("aria-valuenow", "0");
+    readerAudioTime.textContent = "0:00 / " + fmtTime(currentSync.duration);
+
+    /* A new src always resets playback to the start; the saved spot is
+       reapplied as soon as the browser knows how long the file is. */
+    readerAudioEl.src = s.audio;
+    var savedT = Number(readerPref("audioPlace:" + n, 0));
+    if (savedT > 0) {
+      readerAudioEl.addEventListener("loadedmetadata", function once() {
+        readerAudioEl.removeEventListener("loadedmetadata", once);
+        if (readerAudioEl.duration) {
+          readerAudioEl.currentTime = Math.min(savedT, Math.max(0, readerAudioEl.duration - 0.5));
+        }
+      });
+    }
+  }
+
+  /* Finds the sentence whose start time is the latest one at or before
+     t, and lights it up in place of whichever was lit before. Gaps
+     between sentences (a breath, a paragraph break) simply leave the
+     previous one highlighted until the next begins, which is how a
+     listener actually experiences a pause — not as "nothing playing". */
+  function updateHighlight(t) {
+    if (!syncTimeline.length) return;
+    var lo = 0, hi = syncTimeline.length - 1, idx = 0;
+    while (lo <= hi) {
+      var mid = (lo + hi) >> 1;
+      if (syncTimeline[mid].start <= t) { idx = mid; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    var el = syncTimeline[idx].el;
+    if (el === highlightedEl) return;
+    if (highlightedEl) highlightedEl.classList.remove("playing");
+    el.classList.add("playing");
+    highlightedEl = el;
+
+    var r = el.getBoundingClientRect();
+    var sr = readerScroll.getBoundingClientRect();
+    if (r.top < sr.top + 40 || r.bottom > sr.bottom - 40) {
+      el.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
   }
 
   function openReader(s) {
@@ -2089,7 +2235,19 @@
       });
     };
 
-    if (textCache[n]) { renderBlocks(textCache[n]); settle(); return; }
+    /* Only a book with an audio field ever asks for a sync file \u2014
+       every other book skips the request entirely, same as before this
+       feature existed. */
+    var syncPromise = s.audio ? fetchSync(n) : Promise.resolve(null);
+
+    if (textCache[n]) {
+      syncPromise.then(function (sync) {
+        renderBlocks(textCache[n], sync);
+        setupAudio(s, n, sync);
+        settle();
+      });
+      return;
+    }
 
     readerPage.innerHTML = '<p class="r-wait">Opening\u2026</p>';
     /* Stamped, like every other asset. This was the one fetch on the
@@ -2101,19 +2259,24 @@
        was corrected on eight pages) it mattered at once: a reader who
        had opened it before would have gone on being served the old
        text out of their own cache, with nothing to tell either of us. */
-    fetch(stamped("read/" + n + ".json"))
-      .then(function (r) {
+    Promise.all([
+      fetch(stamped("read/" + n + ".json")).then(function (r) {
         if (!r.ok) throw new Error("no text");
         return r.json();
-      })
-      .then(function (data) {
+      }),
+      syncPromise
+    ])
+      .then(function (results) {
+        var data = results[0], sync = results[1];
         textCache[n] = data.blocks;
-        renderBlocks(data.blocks);
+        renderBlocks(data.blocks, sync);
+        setupAudio(s, n, sync);
         settle();
       })
       .catch(function () {
         /* No reading text for this one yet — say so plainly, and
            point at the file that certainly exists. */
+        readerAudioBar.hidden = true;
         readerPage.innerHTML =
           '<p class="r-wait">This one isn\u2019t set for reading here yet. ' +
           '<a href="' + (s.pdf || "pdfs/" + n + ".pdf") + '" target="_blank" rel="noopener">' +
@@ -2123,6 +2286,7 @@
 
   function closeReader() {
     markPlace();
+    if (readerAudioEl) readerAudioEl.pause();
     reader.classList.remove("show");
     document.body.classList.remove("gallery-on");
     setTimeout(function () { reader.hidden = true; }, 250);
@@ -2143,6 +2307,103 @@
     document.addEventListener("keydown", function (e) {
       if (reader.hidden) return;
       if (e.key === "Escape") closeReader();
+    });
+
+    /* Clicking a sentence in the text jumps the narration to it —
+       one listener on the page rather than one per span, since the
+       page's contents are replaced wholesale on every render. */
+    readerPage.addEventListener("click", function (e) {
+      var el = e.target.closest ? e.target.closest(".r-sent") : null;
+      if (!el || !readerAudioEl.src) return;
+      var t = parseFloat(el.dataset.t);
+      if (isNaN(t)) return;
+      readerAudioEl.currentTime = t;
+      updateHighlight(t);
+    });
+
+    readerPlay.addEventListener("click", function () {
+      if (readerAudioEl.paused) readerAudioEl.play().catch(function () { /* blocked or no src */ });
+      else readerAudioEl.pause();
+    });
+
+    readerAudioEl.addEventListener("play", function () {
+      readerPlayIcon.style.display = "none";
+      readerPauseIcon.style.display = "";
+    });
+    readerAudioEl.addEventListener("pause", function () {
+      readerPlayIcon.style.display = "";
+      readerPauseIcon.style.display = "none";
+    });
+
+    readerAudioEl.addEventListener("timeupdate", function () {
+      var t = readerAudioEl.currentTime;
+      var d = readerAudioEl.duration;
+      if (!d || isNaN(d)) d = currentSync ? currentSync.duration : 0;
+      updateHighlight(t);
+      if (d > 0) {
+        var pct = Math.max(0, Math.min(100, t / d * 100));
+        readerAudioFill.style.width = pct.toFixed(2) + "%";
+        readerAudioTrack.style.setProperty("--pos", pct.toFixed(2) + "%");
+        readerAudioTrack.setAttribute("aria-valuenow", Math.round(pct));
+      }
+      readerAudioTime.textContent = fmtTime(t) + " / " + fmtTime(d);
+
+      /* Saved the same way the scroll position is: a little after
+         things settle, keyed to the book, so a return visit picks up
+         roughly where playback stopped. */
+      clearTimeout(audioSaveTimer);
+      var book = readerBook;
+      audioSaveTimer = setTimeout(function () {
+        if (book) readerSave("audioPlace:" + book, t.toFixed(1));
+      }, 400);
+    });
+
+    readerAudioEl.addEventListener("ended", function () {
+      if (readerBook) readerSave("audioPlace:" + readerBook, "0");
+    });
+
+    /* The seek strip: a click or drag anywhere along it jumps there,
+       same gesture as the volume/type-size controls elsewhere in the
+       reader. Arrow keys move it five seconds either way, for anyone
+       working the reader from a keyboard. */
+    var seekFromEvent = function (e) {
+      var rect = readerAudioTrack.getBoundingClientRect();
+      var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      var frac = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      var d = readerAudioEl.duration;
+      if (!d || isNaN(d)) d = currentSync ? currentSync.duration : 0;
+      if (d > 0) {
+        readerAudioEl.currentTime = frac * d;
+        updateHighlight(frac * d);
+        var pct = (frac * 100).toFixed(2) + "%";
+        readerAudioFill.style.width = pct;
+        readerAudioTrack.style.setProperty("--pos", pct);
+        readerAudioTrack.setAttribute("aria-valuenow", Math.round(frac * 100));
+        readerAudioTime.textContent = fmtTime(frac * d) + " / " + fmtTime(d);
+      }
+    };
+    readerAudioTrack.addEventListener("pointerdown", function (e) {
+      if (!readerAudioEl.src) return;
+      seekFromEvent(e);
+      var move = function (e2) { seekFromEvent(e2); };
+      var up = function () {
+        document.removeEventListener("pointermove", move);
+        document.removeEventListener("pointerup", up);
+      };
+      document.addEventListener("pointermove", move);
+      document.addEventListener("pointerup", up);
+    });
+    readerAudioTrack.addEventListener("keydown", function (e) {
+      var d = readerAudioEl.duration;
+      if (!d || isNaN(d)) d = currentSync ? currentSync.duration : 0;
+      if (!d) return;
+      if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+        readerAudioEl.currentTime = Math.min(d, readerAudioEl.currentTime + 5);
+        e.preventDefault();
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+        readerAudioEl.currentTime = Math.max(0, readerAudioEl.currentTime - 5);
+        e.preventDefault();
+      }
     });
   }
 

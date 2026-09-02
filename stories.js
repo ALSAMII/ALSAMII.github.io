@@ -1,4 +1,4 @@
-/* Version 361 · last updated 2026-09-01 14:16 PDT */
+/* Version 362 · last updated 2026-09-02 09:13 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -37,6 +37,13 @@
    the em dash. They belong to one book each, so there is no list to
    reuse from — write whatever is true of that story. door is shared
    and must be one of the four in GLOSSARY below.
+
+   audio is optional: assets/audio/NN.mp3, for a book with a narrated
+   recording. It adds a download link beside PDF/Read. For the synced,
+   highlighted read-along in the reader, build read/NN.sync.json first
+   with build-audio-sync.py (see ADDING-AUDIO.md) \u2014 that file is what
+   turns the download into a synced player; the audio field alone only
+   offers the download.
    ============================================================ */
 
 const STORIES = [
@@ -50,7 +57,8 @@ const STORIES = [
     room: "Someone Else's Hour \u2014 you live an hour that was never yours",
     key: "Verity \u2014 the sacrament auditors take to read a stranger's memory",
     notes: [2, 1, 1],
-    synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him."
+    synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him.",
+    audio: "assets/audio/01.mp3"
   },
 
   {

@@ -1,4 +1,3 @@
-/* Version 359 · last updated 2026-09-01 07:05 PDT */
 /* ============================================================
    CHEW Z — Short Fiction
    One dark screen: story list on the left, a "stage" in the
@@ -4964,6 +4963,76 @@ body.gallery-on .to-top { display: none; }
 .reader-progress { flex: 0 0 auto; height: 1px; background: var(--hairline); }
 .reader-progress i { display: block; height: 100%; width: 0; background: var(--ember); }
 
+/* The narration bar. Only ever present for a book with a synced
+   recording — hidden by script.js for every other one, so this never
+   costs the plain reader any space. A second, thicker thread under the
+   reader-bar rather than a native <audio controls>, which looks like a
+   different application dropped into the room. */
+.reader-audio {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem clamp(0.9rem, 3vw, 1.75rem);
+  border-bottom: 1px solid var(--hairline);
+}
+.reader-audio[hidden] { display: none; }
+
+.reader-play {
+  flex: 0 0 auto;
+  padding: 0.3rem;
+}
+.reader-play svg { width: 1.3rem; height: 1.3rem; }
+
+.reader-audio-track {
+  flex: 1 1 auto;
+  position: relative;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--hairline);
+  cursor: pointer;
+  touch-action: none;
+}
+.reader-audio-track:focus-visible {
+  outline: 1px solid var(--ember);
+  outline-offset: 4px;
+}
+.reader-audio-track i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--ember);
+}
+/* A small handle at the head of the fill — the thread alone reads fine
+   at rest, but under a finger or cursor it helps to see exactly where
+   a drag will land. */
+.reader-audio-track::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: var(--pos, 0%);
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--ember);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.15s ease;
+}
+.reader-audio-track:hover::after,
+.reader-audio-track:focus-visible::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.reader-audio-time {
+  flex: 0 0 auto;
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  color: var(--faded);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .reader-scroll {
   flex: 1 1 auto;
   overflow-y: auto;
@@ -5024,6 +5093,24 @@ body.gallery-on .to-top { display: none; }
   color: var(--faded);
 }
 .reader-page .r-wait a { color: var(--ember); }
+
+/* One sentence at a time, wherever the narration has reached — a book
+   with no recording never gets these spans at all, so this only ever
+   shows up alongside the player. Background rather than only a color
+   change: color alone was too quiet against the size and warmth of
+   the reading type, and easy to lose track of mid-paragraph. */
+.r-sent {
+  transition: background-color 0.4s ease;
+  border-radius: 0.15em;
+  cursor: pointer;
+}
+.r-sent.playing {
+  /* A wash rather than the full-strength --ember-soft used for borders
+     and rules elsewhere — over a whole sentence of reading type, full
+     strength read as a highlighter pen rather than a place being read
+     aloud. */
+  background: color-mix(in srgb, var(--ember) 22%, transparent);
+}
 
 .reader-end {
   max-width: 34rem;
