@@ -1,4 +1,4 @@
-/* Version 380 · last updated 2026-09-02 20:45 PDT */
+/* Version 381 · last updated 2026-09-02 21:12 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -295,7 +295,7 @@ const STORIES = [
   {
     num: 21,
     title: "The Final Bloom",
-    words: "21,000 words",
+    words: "20,500 words",
     hook: "She was designed. He works it out anyway",
     door: "Rite",
     room: "Knowing, And Staying \u2014 he works out exactly what is being done to him",
@@ -307,7 +307,7 @@ const STORIES = [
   {
     num: 22,
     title: "Folie Douce",
-    words: "21,400 words",
+    words: "20,800 words",
     hook: "Nothing in the world requires him to hurry",
     door: "Withholding",
     room: "Nothing Making You Hurry \u2014 no rule anywhere requires him to be quick",
@@ -319,7 +319,7 @@ const STORIES = [
   {
     num: 23,
     title: "Folie Générale",
-    words: "15,900 words",
+    words: "15,300 words",
     hook: "Forty extra seconds of hold. Then a heatwave",
     door: "Withholding",
     room: "The City Burning Quietly \u2014 nobody screams; the calls simply don't land",
@@ -331,7 +331,7 @@ const STORIES = [
   {
     num: 24,
     title: "Folie Imposée",
-    words: "16,200 words",
+    words: "15,500 words",
     hook: "Two words in white paint: NO ETA",
     door: "Withholding",
     room: "Somebody Came \u2014 he says your whole name and your legs give way",
@@ -343,7 +343,7 @@ const STORIES = [
   {
     num: 25,
     title: "Doubling Time",
-    words: "16,900 words",
+    words: "16,500 words",
     hook: "The treatment works. Then it keeps working",
     door: "Dose",
     room: "It Doesn't Stop \u2014 the repair works, and then it keeps working",
@@ -355,7 +355,7 @@ const STORIES = [
   {
     num: 26,
     title: "Mang and Mustard",
-    words: "26,000 words",
+    words: "25,500 words",
     hook: "Twelve needles missing from the antidote count",
     door: "Dose",
     room: "The Dead Are Waiting \u2014 on the far side, and they have questions",
@@ -367,7 +367,7 @@ const STORIES = [
   {
     num: 27,
     title: "The Clear Ones",
-    words: "18,600 words",
+    words: "19,800 words",
     hook: "A third kind of eyes in the queue",
     door: "Ordeal",
     room: "The Serene Ones \u2014 courteous, asking for nothing, dead within days",
@@ -379,7 +379,7 @@ const STORIES = [
   {
     num: 28,
     title: "Marsh and Machete",
-    words: "20,100 words",
+    words: "21,100 words",
     hook: "Ten motionless hours among the floating dead",
     door: "Ordeal",
     room: "Ten Hours Without Moving \u2014 mud for clothing, water for a roof",
@@ -391,7 +391,7 @@ const STORIES = [
   {
     num: 29,
     title: "The Quiet Ones",
-    words: "18,900 words",
+    words: "19,700 words",
     hook: "A ward of infants that has stopped crying",
     door: "Rite",
     room: "A Ward That Doesn't Cry \u2014 hundreds of infants who worked out nobody comes",
@@ -403,7 +403,7 @@ const STORIES = [
   {
     num: 30,
     title: "Model and Meadow",
-    words: "21,000 words",
+    words: "22,200 words",
     hook: "Thursdays, in a basement, she taught them to look",
     door: "Rite",
     room: "Two Truths At Once \u2014 a town dressed as a town, and certified",
