@@ -1,4 +1,4 @@
-/* Version 383 · last updated 2026-09-03 07:37 PDT */
+/* Version 384 · last updated 2026-09-03 11:11 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -138,7 +138,7 @@ const STORIES = [
 
   {
     num: 8,
-    title: "The Mercy Dose",
+    title: "The Soft Spot",
     words: "23,500 words",
     hook: "Eight chairs. The last one is his father's",
     door: "Dose",
