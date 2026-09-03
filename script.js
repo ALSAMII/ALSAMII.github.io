@@ -1294,16 +1294,32 @@
     STORIES.forEach(function (s) {
       var n = String(s.num).padStart(2, "0");
 
-      var card = document.createElement("button");
-      card.type = "button";
+      var coverSrc = stamped(s.cover || coverFor(s.num));
+
+      /* A plain wrapper, not itself a button: it holds two separate
+         controls — the card (cover, title, time) that goes to the
+         book, and a small zoom button riding over the corner of the
+         art. A button can't contain another button, so the zoom
+         control is this element's second child, not nested inside
+         the first — laid over the art with CSS, not the DOM. */
+      var card = document.createElement("div");
       card.className = "gcard";
-      card.setAttribute("aria-label", s.title + " — show on the stage");
+
+      var open = document.createElement("button");
+      open.type = "button";
+      open.className = "gcard-open";
+      open.setAttribute("aria-label", s.title + " — show on the stage");
+
+      var frame = document.createElement("span");
+      frame.className = "gcard-frame";
 
       var img = document.createElement("img");
-      img.src = stamped(s.cover || coverFor(s.num));
+      img.src = coverSrc;
       img.alt = s.title + " — cover";
       img.loading = "lazy";
       img.addEventListener("error", function () { card.classList.add("no-art"); });
+
+      frame.append(img);
 
       var cap = document.createElement("span");
       cap.className = "gcard-title";
@@ -1313,11 +1329,29 @@
       meta.className = "gcard-meta caps";
       meta.textContent = readingTime(s.words);
 
-      card.append(img, cap, meta);
-      card.addEventListener("click", function () {
+      open.append(frame, cap, meta);
+      open.addEventListener("click", function () {
         closeGallery();
         revealBook(s, true);
       });
+
+      var zoom = document.createElement("button");
+      zoom.type = "button";
+      zoom.className = "gcard-zoom";
+      zoom.setAttribute("aria-label", "View the " + s.title + " cover full size");
+      zoom.title = "View full size";
+      zoom.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+        'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ' +
+        'aria-hidden="true"><circle cx="10.3" cy="10.3" r="6.3"/>' +
+        '<path d="M10.3 7.6v5.4M7.6 10.3h5.4"/>' +
+        '<path d="M19.4 19.4l-4.3-4.3"/></svg>';
+      zoom.addEventListener("click", function (e) {
+        e.stopPropagation();
+        openCover(coverSrc, n + " \u00b7 " + s.title, zoom);
+      });
+
+      card.append(open, zoom);
       galleryGrid.append(card);
     });
   }

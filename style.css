@@ -5345,10 +5345,18 @@ body.gallery-on { overflow: hidden; }
   gap: clamp(1.25rem, 2.5vw, 2.25rem);
 }
 
+/* The plain wrapper. Not a button itself — see the comment in
+   buildGallery() — just a positioning context for the zoom button to
+   sit over the corner of the art inside it. */
 .gcard {
+  position: relative;
+}
+
+.gcard-open {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
   background: none;
   border: 0;
   padding: 0;
@@ -5358,7 +5366,9 @@ body.gallery-on { overflow: hidden; }
   cursor: pointer;
 }
 
-.gcard img {
+.gcard-frame { display: block; }
+
+.gcard-open img {
   width: 100%;
   height: auto;
   display: block;
@@ -5374,13 +5384,13 @@ body.gallery-on { overflow: hidden; }
   mask-composite: intersect;
 }
 
-.gcard:hover img,
-.gcard:focus-visible img {
+.gcard-open:hover img,
+.gcard-open:focus-visible img {
   transform: translateY(-4px);
   box-shadow: 0 26px 52px rgba(0, 0, 0, 0.75);
 }
 
-.gcard.no-art img { display: none; }
+.gcard.no-art .gcard-open img { display: none; }
 
 .gcard-title {
   font-family: var(--serif);
@@ -5389,9 +5399,63 @@ body.gallery-on { overflow: hidden; }
   color: var(--parchment);
   transition: color 0.25s ease;
 }
-.gcard:hover .gcard-title { color: var(--ember); }
+.gcard-open:hover .gcard-title,
+.gcard-open:focus-visible .gcard-title { color: var(--ember); }
 
 .gcard-meta { font-size: 0.6875rem; color: var(--faded); }
+
+/* ---- The zoom button --------------------------------------
+   A small circle riding the top corner of the cover, over the
+   .gcard-open button but not inside it — a button can't contain
+   another button. Faint until the card is hovered or focused, so the
+   grid still reads as covers first; always fully visible without
+   hover (touch, and a keyboard landing on it) so it's never a control
+   only a mouse can find. */
+.gcard-zoom {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  background: rgba(11, 9, 7, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(233, 223, 201, 0.35);
+  border-radius: 50%;
+  color: var(--parchment);
+  cursor: pointer;
+  opacity: 1;
+  transform: translateY(-2px);
+  transition: opacity 0.25s ease, transform 0.25s ease,
+              background 0.25s ease, border-color 0.25s ease;
+}
+
+.gcard-zoom svg { width: 1.05rem; height: 1.05rem; display: block; }
+
+.gcard-zoom:hover,
+.gcard-zoom:focus-visible {
+  background: rgba(11, 9, 7, 0.8);
+  border-color: var(--ember-soft);
+}
+
+.gcard.no-art .gcard-zoom { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .gcard-zoom {
+    opacity: 0;
+    transform: translateY(-2px) scale(0.9);
+  }
+  .gcard:hover .gcard-zoom,
+  .gcard-open:focus-visible ~ .gcard-zoom,
+  .gcard-zoom:focus-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 @media (max-width: 56rem) {
   .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); }
@@ -6693,8 +6757,8 @@ html[data-theme="light"] .gcard img {
           drop-shadow(0 10px 16px rgba(24, 28, 32, 0.16));
 }
 
-html[data-theme="light"] .gcard:hover img,
-html[data-theme="light"] .gcard:focus-visible img {
+html[data-theme="light"] .gcard-open:hover img,
+html[data-theme="light"] .gcard-open:focus-visible img {
   filter: brightness(1.12) contrast(0.94) saturate(0.95)
           drop-shadow(0 18px 28px rgba(24, 28, 32, 0.24));
   box-shadow: none;
