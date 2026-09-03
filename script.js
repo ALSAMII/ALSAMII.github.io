@@ -42,6 +42,7 @@
   var ftText    = document.getElementById("ftText");
   var ftLink    = document.getElementById("ftLink");
   var hideTimer = null;
+  var navHideTimer = null;   /* separate clock for the nav links, below */
 
   var TRIOS = (typeof TRILOGIES !== "undefined") ? TRILOGIES : [];
 
@@ -2500,21 +2501,36 @@
 
   var stageFor = { about: "panel-about", notes: "panel-notes" };
 
+  /* Leaving a nav link used to drop the panel the instant the cursor
+     left it — About is a couple of short paragraphs, so nobody
+     noticed, but Author's Notes is six, and a reader whose mouse
+     moves off "AUTHOR'S NOTES" on the way down to actually read it
+     lost the panel before the first line finished. Same fix as the
+     shelf's hover preview below (see scheduleHide): a short grace
+     period instead of an instant revert, so the pointer has time to
+     land somewhere that counts. */
+  function scheduleNavHide() {
+    clearTimeout(navHideTimer);
+    navHideTimer = setTimeout(function () {
+      if (pinned) restorePinned(); else showPanel(DEFAULT_PANEL);
+    }, 400);
+  }
+
   navLinks.forEach(function (link) {
     var target = stageFor[link.dataset.stage];
 
     if (canHover) {
       link.addEventListener("mouseenter", function () {
         clearTimeout(hideTimer);
+        clearTimeout(navHideTimer);
         showPanel(target);
       });
-      link.addEventListener("mouseleave", function () {
-        if (pinned) restorePinned(); else showPanel(DEFAULT_PANEL);
+      link.addEventListener("mouseleave", scheduleNavHide);
+      link.addEventListener("focus", function () {
+        clearTimeout(navHideTimer);
+        showPanel(target);
       });
-      link.addEventListener("focus", function () { showPanel(target); });
-      link.addEventListener("blur", function () {
-        if (pinned) restorePinned(); else showPanel(DEFAULT_PANEL);
-      });
+      link.addEventListener("blur", scheduleNavHide);
       link.addEventListener("click", function (e) { e.preventDefault(); });
     } else {
       /* Touch: tapping swaps the stage, as before */
@@ -2527,6 +2543,16 @@
       });
     }
   });
+
+  /* The other half of the fix: the grace period above only buys a
+     moment to get there. Landing on the panel itself — the actual
+     paragraphs — has to hold the hide off for as long as the reader
+     is there, the same way hovering the feature already does for a
+     book's synopsis (see feature's own mouseenter/mouseleave). */
+  if (canHover && stage) {
+    stage.addEventListener("mouseenter", function () { clearTimeout(navHideTimer); });
+    stage.addEventListener("mouseleave", scheduleNavHide);
+  }
 
   /* ---- Back to the top -------------------------------------
      Only shown once the reader is a screen and a half down, and only
