@@ -1,4 +1,4 @@
-/* Version 382 · last updated 2026-09-03 05:50 PDT */
+/* Version 383 · last updated 2026-09-03 07:37 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -50,7 +50,7 @@ const STORIES = [
 
   {
     num: 1,
-    title: "The Memory Liturgy",
+    title: "Quiet Street to the Long Evening",
     words: "9,600 words",
     hook: "Seven months of his own life, unaccounted for",
     door: "Dose",
