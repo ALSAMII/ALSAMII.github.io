@@ -6323,6 +6323,23 @@ body.gallery-on { overflow: hidden; }
   /* Bottoms are equal now, but baselines are what the eye reads, so
      ask for those directly and the row cannot drift again. */
   .masthead .nav-links { align-items: baseline; }
+
+  /* Belt and suspenders. .nav-sub is already off by default (see
+     .nav-sub { display: none } near .nav-ico, above), and the icon
+     and the two-line label are only ever switched on inside the
+     64rem block — so this rule should never have anything to do.
+     It's here anyway: a device that caches an older style.css
+     against a newer index.html (the two ship as separate files, so
+     they can land out of step on a real phone's cache) would
+     otherwise show the caption text as plain inline words with
+     nowhere to go, since a narrow column never got the two-line
+     column layout to put it in. This pins the label back to one
+     line no matter what else has gone stale. */
+  .masthead nav .nav-sub,
+  .masthead nav .nav-ico { display: none !important; }
+  .masthead nav a::before,
+  .masthead nav .linklike::before { content: none !important; }
+  .masthead nav .nav-label { display: inline !important; }
 }
 
 /* Upright, and the narrow end of sideways ------------------- */
