@@ -1000,6 +1000,50 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .story-mark {
   display: block;
   min-width: 0;
+  position: relative;
+}
+
+/* ---- The shelf's own zoom button ----------------------------
+   Same idea as .gcard-zoom on the All Covers grid, sized down for
+   a row's much smaller thumbnail. Sits over .row-cover (not inside
+   it — .row-cover is a plain clickable <img>, not a button, so no
+   button-in-button problem here) in the same top-right corner. */
+.row-zoom {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: rgba(11, 9, 7, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(233, 223, 201, 0.35);
+  border-radius: 50%;
+  color: var(--parchment);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.row-zoom svg { width: 0.75rem; height: 0.75rem; display: block; }
+
+.row-zoom:hover,
+.row-zoom:focus-visible {
+  background: rgba(11, 9, 7, 0.8);
+  border-color: var(--ember-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row-zoom { opacity: 0; }
+  .story:hover .row-zoom,
+  .row-cover:focus-visible ~ .row-zoom,
+  .row-zoom:focus-visible {
+    opacity: 1;
+  }
 }
 
 /* The cover on the shelf.

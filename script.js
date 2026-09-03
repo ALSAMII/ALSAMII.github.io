@@ -1066,7 +1066,26 @@
     rowImg.addEventListener("error", function () { rowImg.remove(); });
     makeCoverOpen(rowImg, num + " \u00b7 " + s.title);
 
-    mark.append(rowImg);
+    /* A small, visible cue that the cover enlarges \u2014 the row image
+       itself has always been clickable, but nothing showed it. Same
+       icon and behavior as the All Covers grid's zoom button. */
+    var rowZoom = document.createElement("button");
+    rowZoom.type = "button";
+    rowZoom.className = "row-zoom";
+    rowZoom.setAttribute("aria-label", "View the " + s.title + " cover full size");
+    rowZoom.title = "View full size";
+    rowZoom.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+      'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ' +
+      'aria-hidden="true"><circle cx="10.3" cy="10.3" r="6.3"/>' +
+      '<path d="M10.3 7.6v5.4M7.6 10.3h5.4"/>' +
+      '<path d="M19.4 19.4l-4.3-4.3"/></svg>';
+    rowZoom.addEventListener("click", function (e) {
+      e.stopPropagation();
+      openCover(rowImg.getAttribute("src"), num + " \u00b7 " + s.title, rowZoom);
+    });
+
+    mark.append(rowImg, rowZoom);
 
     /* Read here, rather than downloading the object. First of the two,
        because it is what most people want and the PDF is the keepsake. */
