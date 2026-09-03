@@ -1753,6 +1753,30 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   mask-composite: intersect;
 }
 
+/* The mask above fades the picture to nothing across the last 4% of
+   its OWN box (96%-100%) — but that box is 124% wide and pushed
+   right: -5rem, so its right edge sits well past the card, out where
+   only a wide window ever shows it. At most widths the root's
+   overflow-x:clip (line 73) cuts the picture first, and what it cuts
+   is still full strength: the fade exists but is off past where the
+   window ends, so the visible edge is a straight line, not a fade.
+   This is fixed to the one edge that's real instead of to the
+   picture's own box, so it dissolves the last stretch of whatever
+   made it on screen into the page, at every width. Sits inside
+   #panel-about (not on .start-row itself, and not as a global layer)
+   so it is only present while this panel is, and never a hairline
+   over the shelf's own cover art beside it. */
+.start-edge-veil {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(11rem, 16vw);
+  background: linear-gradient(to right, transparent, var(--night));
+  pointer-events: none;
+  z-index: 8;
+}
+
 .start-row:hover .start-scene,
 .start-row:focus-visible .start-scene {
   opacity: 1;
