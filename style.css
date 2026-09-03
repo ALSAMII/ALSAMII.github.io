@@ -5807,8 +5807,11 @@ body.gallery-on { overflow: hidden; }
    ============================================================ */
 
 /* The three glyphs beside the nav links are off by default and
-   only ever come on inside the rail. */
+   only ever come on inside the rail. Same for the second line under
+   each label — a phone header has no room for a caption under a
+   caption. */
 .nav-ico { display: none; }
+.nav-sub { display: none; }
 
 @media (min-width: 64rem) {
 
@@ -6089,10 +6092,13 @@ body.gallery-on { overflow: hidden; }
     right: var(--frame-pad);
     height: var(--topnav-h);
     /* Air above the words, so the bar sits on the page rather than
-       against the top of the window. The rail's own top padding is
-       set to the same, so the first link and the imprint mark start
-       level with each other. */
-    padding-top: clamp(1.25rem, 2.6vh, 2rem);
+       against the top of the window. Eased back from 1.25–2rem: each
+       link is two lines now (a label and its caption), and the old
+       air was tuned for one — pushed down by it, the caption line sat
+       close to the row's own lower edge. The lighter padding nudges
+       the whole two-line block up so it centres in --topnav-h with
+       even room above and below it. */
+    padding-top: clamp(0.85rem, 2vh, 1.5rem);
     z-index: 2;
 
     display: flex;
@@ -6218,6 +6224,55 @@ body.gallery-on { overflow: hidden; }
   body:has(#panel-about.is-active):not(:has(#feature.show))
     .masthead nav a[data-stage="about"] .nav-txt {
     border-bottom-color: var(--ember-soft);
+  }
+
+  /* A second, quieter line under each label — the same device as
+     Door/Room/Key below ("How they got out" under "Door"), so the
+     bar reads as the panel's own vocabulary rather than a plain
+     menu. Off everywhere but here (see .nav-sub { display: none }
+     above); the label and its caption stack in their own column so
+     the icon can centre against the pair rather than just the
+     word. */
+  .masthead nav .nav-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  /* The page's body line-height (1.6) was inherited straight down
+     into both lines here, so each one carried a line box a third
+     taller than the letters sitting in it — invisible, but it's
+     what the icon centres against. Against that inflated box the
+     glyph centred low, closer to the caption than to itself. Set
+     tight, the box hugs the letters and the icon lines up with what
+     is actually on screen. */
+  .masthead nav .nav-txt { line-height: 1.1; }
+
+  .masthead nav .nav-sub {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.625rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--faded);
+    white-space: nowrap;
+  }
+
+  /* A hairline between each pair of links — About | All Covers |
+     Author's Notes — now that each is two lines tall and reads as
+     its own small block rather than one word in a row. Set as the
+     leading edge of every link but the first, so it falls in the
+     gap space-between already leaves rather than needing its own
+     margin math. Same faded gold as the rule under the bar. */
+  .masthead nav a:not(:first-child)::before,
+  .masthead nav .linklike:not(:first-child)::before {
+    content: "";
+    align-self: stretch;
+    width: 1px;
+    background: rgba(216, 166, 95, 0.22);
   }
 
   /* --- The room --------------------------------------------
@@ -6390,6 +6445,14 @@ body.gallery-on { overflow: hidden; }
   color: var(--parchment);
   font-size: clamp(1.15rem, 2vw, 1.375rem);
   line-height: 1.75;
+  /* .panel .note is italic by default — right for the About panel,
+     where it sets a confession apart from the description under it.
+     This panel is six paragraphs of confession and nothing else, so
+     the italic had nothing to set apart from and just made the
+     whole thing harder to sit with. Upright now; the signature below
+     stays in its own italic on purpose — that one is written, not
+     set, and unrelated to this. */
+  font-style: normal;
 }
 
 #panel-notes .signature {

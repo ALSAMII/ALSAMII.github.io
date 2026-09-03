@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 373 · last updated 2026-09-02 19:00 PDT -->
+<!-- Version 377 · last updated 2026-09-02 20:00 PDT -->
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -284,11 +284,13 @@
     </a>
 
     <nav aria-label="Site" class="caps">
-      <!-- The little marks beside each link belong to the desktop rail
-           only: in a narrow column a word alone reads as a caption, and
-           the glyph is what makes it read as a place to go. They are
-           display:none everywhere else, so nothing below 64rem changes.
-           Delete the three <svg> blocks to take them off entirely. -->
+      <!-- The little marks beside each link, and the second line under
+           each label (.nav-sub), belong to the desktop rail only: in a
+           narrow column a word alone reads as a caption, and the glyph
+           is what makes it read as a place to go. Both are display:none
+           everywhere else, so nothing below 64rem changes. Delete the
+           three <svg> blocks and .nav-sub spans to take them off
+           entirely. -->
       <div class="nav-links">
         <a href="#" data-stage="about">
           <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -297,7 +299,10 @@
             <circle cx="12" cy="8" r="3.6"/>
             <path d="M4.8 20.2a7.2 7.2 0 0 1 14.4 0"/>
           </svg>
-          <span class="nav-txt">About</span>
+          <span class="nav-label">
+            <span class="nav-txt">About</span>
+            <span class="nav-sub">The series and its world</span>
+          </span>
         </a>
         <button class="linklike" id="galleryOpen" type="button">
           <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -308,7 +313,10 @@
             <rect x="3.6" y="13.4" width="7" height="7" rx="1"/>
             <rect x="13.4" y="13.4" width="7" height="7" rx="1"/>
           </svg>
-          <span class="nav-txt">All Covers</span>
+          <span class="nav-label">
+            <span class="nav-txt">All Covers</span>
+            <span class="nav-sub">Explore every cover</span>
+          </span>
         </button>
         <a href="#" data-stage="notes">
           <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -317,7 +325,10 @@
             <rect x="5" y="3" width="14" height="18" rx="1.6"/>
             <path d="M8.6 8.2h6.8M8.6 12h6.8M8.6 15.8h4"/>
           </svg>
-          <span class="nav-txt">Author's Notes</span>
+          <span class="nav-label">
+            <span class="nav-txt">Author's Notes</span>
+            <span class="nav-sub">The thoughts behind the stories</span>
+          </span>
         </a>
       </div>
     </nav>
@@ -785,8 +796,23 @@
           Everyone keeps one, unsaid, for years&mdash;and unsaid is what
           keeps it alive. Sooner or later it wants a body that isn't
           yours. I give it one.</p>
+        <p class="note">The mind negotiates. Given a minute alone it
+          will reframe anything, delay anything, forgive itself in
+          advance. The body won't. It keeps the actual record,
+          underneath the words, where no conversation reaches&mdash;which
+          is why nothing here gets settled by one. An ordeal is the
+          only interrogation that works on a witness who doesn't
+          talk.</p>
         <p class="note">Nothing here resolves. I'm suspicious of anyone
           whose does.</p>
+        <p class="note">Call it noir, transgressive, plausible&mdash;most
+          of these are all three. Something bad happens to someone
+          who's earned about half of it, and nobody gets saved. I
+          don't cut away from the ugly part. And it's plausible:
+          everything in these books could actually happen. I let
+          myself bend one thing about the world per book&mdash;never
+          two&mdash;and everything else stays exactly as ordinary as it
+          already is.</p>
         <p class="note">Bring your ugliest thought. There's a chair
           for it.</p>
         <p class="signature caps">&mdash; Chew Z</p>
