@@ -6163,8 +6163,12 @@ body.gallery-on { overflow: hidden; }
     padding: 0;
     /* The rail was 130px wide and the type had to fit it. The bar is
        the width of the room, so the links take the size and the
-       tracking the rest of the page's small caps use. */
-    font-size: clamp(0.6875rem, 0.72vw, 0.8125rem);
+       tracking the rest of the page's small caps use.
+
+       Matched to .guide-term now — Door/Room/Key's own size — so the
+       nav reads at the same weight as the panel's own vocabulary
+       instead of sitting a size below it. */
+    font-size: clamp(1rem, 1.7vw, 1.125rem);
     letter-spacing: 0.14em;
     /* The lift on hover pushed a left-ranged link sideways off its
        own column. It grows from the left edge instead. */
