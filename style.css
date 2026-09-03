@@ -6470,6 +6470,15 @@ body.gallery-on { overflow: hidden; }
      stays in its own italic on purpose — that one is written, not
      set, and unrelated to this. */
   font-style: normal;
+  /* Desktop holds every panel's running text to a 37rem measure on
+     purpose (see the note at .stage > .panel > .note) — About's two
+     paragraphs and the guide keep that width deliberately, because a
+     short read stays a short read at any line length. Six paragraphs
+     is a different kind of read: at 37rem it wraps into a tall,
+     narrow column that undersells the width the rest of the panel
+     (the Door/Room/Key row, the recommended cards) actually uses.
+     Widened here, for this panel only — About is untouched. */
+  max-width: 46rem;
 }
 
 #panel-notes .signature {
