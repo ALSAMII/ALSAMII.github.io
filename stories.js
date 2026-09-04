@@ -1,4 +1,4 @@
-/* Version 387 · last updated 2026-09-03 17:04 PDT */
+/* Version 388 · last updated 2026-09-04 10:53 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -133,7 +133,7 @@ const STORIES = [
     room: "No One Narrating \u2014 the voice stops, and something older sits up",
     key: "Sublate \u2014 switches off the voice that talks you through your life",
     notes: [3, 2, 1],
-    synopsis: "Sublate switches off the exhausting inner narrator, and Dr. Kelo's subjects become superb at living without it. Seven hundred feet beneath a dead reservoir, something folklore called a vampire begins to wake \u2014 and Kelo learns what the voice in a human head was always for."
+    synopsis: "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who's actually in charge. That voice was never their own \u2014 it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes."
   },
 
   {
