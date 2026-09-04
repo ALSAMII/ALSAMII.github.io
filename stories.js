@@ -1,4 +1,4 @@
-/* Version 386 · last updated 2026-09-03 11:41 PDT */
+/* Version 387 · last updated 2026-09-03 17:04 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -415,7 +415,7 @@ const STORIES = [
   {
     num: 31,
     title: "The Sway",
-    words: "20,300 words",
+    words: "20,500 words",
     hook: "The fuel curve was the cleanest ever recorded",
     door: "Rite",
     room: "Forty-One Minutes Gone \u2014 the truck held its lane; he wasn't there",
@@ -427,7 +427,7 @@ const STORIES = [
   {
     num: 32,
     title: "The Compassionate Fare",
-    words: "18,300 words",
+    words: "18,600 words",
     hook: "Eleven hundred and forty signatures, in her own hand",
     door: "Withholding",
     room: "Touched At Last \u2014 nobody has laid a hand on you since the death",
@@ -439,7 +439,7 @@ const STORIES = [
   {
     num: 33,
     title: "The Isolated Hand",
-    words: "16,900 words",
+    words: "17,300 words",
     hook: "She read the consent form. Twice",
     door: "Dose",
     room: "Awake, Unable To Say So \u2014 you feel all of it and cannot signal",
@@ -451,7 +451,7 @@ const STORIES = [
   {
     num: 34,
     title: "Four Minutes Past Two",
-    words: "16,100 words",
+    words: "16,300 words",
     hook: "By night one hundred and forty she is losing hours",
     door: "Withholding",
     room: "Someone Else Writing You \u2014 her doctor agrees with him, and then so does she",
@@ -463,7 +463,7 @@ const STORIES = [
   {
     num: 35,
     title: "The Weight of Her",
-    words: "25,400 words",
+    words: "26,600 words",
     hook: "The first year has visitors and casseroles",
     door: "Withholding",
     room: "The Sixth Year \u2014 the visitors stopped, and nobody noticed they had",
@@ -475,7 +475,7 @@ const STORIES = [
   {
     num: 36,
     title: "What the Hand Kept",
-    words: "17,800 words",
+    words: "18,400 words",
     hook: "His left hand writes what he left out",
     door: "Rite",
     room: "The Second Page \u2014 the hand sets down what the dying avoided",
@@ -487,7 +487,7 @@ const STORIES = [
   {
     num: 37,
     title: "Nothing to Push Against",
-    words: "21,100 words",
+    words: "21,500 words",
     hook: "The feeling goes. The map stays",
     door: "Dose",
     room: "The Warm Room \u2014 six hours inside the weather everyone else lives in",
@@ -499,7 +499,7 @@ const STORIES = [
   {
     num: 38,
     title: "The Vertical Yes",
-    words: "18,200 words",
+    words: "18,400 words",
     hook: "One blink for yes. Two for no",
     door: "Withholding",
     room: "Agreeing To Everything \u2014 the only answer left is the one they wanted",
@@ -511,7 +511,7 @@ const STORIES = [
   {
     num: 39,
     title: "Blind Spot Blue",
-    words: "18,400 words",
+    words: "18,700 words",
     hook: "She is right about everyone but him",
     door: "Withholding",
     room: "Nothing Flattering Left \u2014 the filter that softens people is switched off",
@@ -523,7 +523,7 @@ const STORIES = [
   {
     num: 40,
     title: "No Alarm",
-    words: "19,000 words",
+    words: "19,400 words",
     hook: "Sold as fearless. Frightened the entire time",
     door: "Withholding",
     room: "No Word For It \u2014 afraid, with nothing to call it and a certificate saying otherwise",
