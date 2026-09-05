@@ -6136,13 +6136,12 @@ body.gallery-on { overflow: hidden; }
     right: var(--frame-pad);
     height: var(--topnav-h);
     /* Air above the words, so the bar sits on the page rather than
-       against the top of the window. Eased back from 1.25–2rem: each
-       link is two lines now (a label and its caption), and the old
-       air was tuned for one — pushed down by it, the caption line sat
-       close to the row's own lower edge. The lighter padding nudges
-       the whole two-line block up so it centres in --topnav-h with
-       even room above and below it. */
-    padding-top: clamp(0.85rem, 2vh, 1.5rem);
+       against the top of the window. Eased back again — the caption
+       line was still sitting right on top of the hairline rule under
+       the bar (.masthead nav::after) at ordinary window heights, the
+       two visually running together. Less top padding nudges the
+       whole two-line block further up, off the rule. */
+    padding-top: clamp(0.5rem, 1.3vh, 1rem);
     z-index: 2;
 
     display: flex;
