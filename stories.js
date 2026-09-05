@@ -1,4 +1,4 @@
-/* Version 388 · last updated 2026-09-04 10:53 PDT */
+/* Version 389 · last updated 2026-09-04 19:26 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -537,7 +537,7 @@ const STORIES = [
   {
     num: 41,
     title: "The Gentled World",
-    words: "14,600 words",
+    words: "14,200 words",
     hook: "Peace worked. Something moved into the empty rooms",
     door: "Dose",
     room: "Someone Else's Appetite \u2014 borrowed memories, and the wanting that arrives with them",
@@ -549,7 +549,7 @@ const STORIES = [
   {
     num: 42,
     title: "The Carrier",
-    words: "14,400 words",
+    words: "13,900 words",
     hook: "A world that never left, still broadcasting",
     door: "Withholding",
     room: "The Other Shore \u2014 a century of terror, playing back like a documentary of a nightmare",
@@ -561,7 +561,7 @@ const STORIES = [
   {
     num: 43,
     title: "The Kept Flame",
-    words: "18,800 words",
+    words: "18,900 words",
     hook: "Two thousand years of fire, and three nights missing",
     door: "Rite",
     room: "The Gap \u2014 three forged nights, centuries deep, and the door they open",
@@ -573,7 +573,7 @@ const STORIES = [
   {
     num: 44,
     title: "The Quiet Ride",
-    words: "15,100 words",
+    words: "14,600 words",
     hook: "They didn\u2019t use dogs. They used medicine",
     door: "Dose",
     room: "The Calm \u2014 a country that cannot say what is being done to it",
@@ -585,7 +585,7 @@ const STORIES = [
   {
     num: 45,
     title: "The Dark Companion",
-    words: "13,700 words",
+    words: "13,300 words",
     hook: "Nobody grieves alone. Something is collecting the difference",
     door: "Withholding",
     room: "The Branches \u2014 every loss undone somewhere, and no comfort in it",
@@ -597,7 +597,7 @@ const STORIES = [
   {
     num: 46,
     title: "The Unburned Library",
-    words: "13,600 words",
+    words: "13,100 words",
     hook: "Nothing written was ever lost. Something was taken anyway",
     door: "Withholding",
     room: "The Compact \u2014 whoever may read, rules",
@@ -609,7 +609,7 @@ const STORIES = [
   {
     num: 47,
     title: "The Fourth Dawn",
-    words: "16,600 words",
+    words: "16,700 words",
     hook: "The same tall stranger, at ground zero, who did not run",
     door: "Ordeal",
     room: "The Registry \u2014 thirty years of counting what was done that morning",
@@ -621,7 +621,7 @@ const STORIES = [
   {
     num: 48,
     title: "Service Life",
-    words: "28,600 words",
+    words: "27,600 words",
     hook: "He certifies the day your things were always going to die",
     door: "Rite",
     room: "Lifecycle Confidence \u2014 a death date certified, signed and filed",
@@ -645,7 +645,7 @@ const STORIES = [
   {
     num: 50,
     title: "The Glow",
-    words: "39,900 words",
+    words: "40,100 words",
     hook: "No partner required. No wanting left",
     door: "Dose",
     room: "The Loop \u2014 continuous ecstasy, and no one on the other side of it",
@@ -657,7 +657,7 @@ const STORIES = [
   {
     num: 51,
     title: "One Came Up",
-    words: "40,100 words",
+    words: "40,600 words",
     hook: "Ninety-four metres of still water, and one hand in it",
     door: "Ordeal",
     room: "The Cut \u2014 a flooded quarry where a man stops arguing with himself",
@@ -669,7 +669,7 @@ const STORIES = [
   {
     num: 52,
     title: "Samba",
-    words: "29,000 words",
+    words: "29,800 words",
     hook: "Four hundred and eleven recoveries, and none of them the point",
     door: "Ordeal",
     room: "Past the Alarm \u2014 the quiet on the far side of panic, and what is standing in it",
@@ -681,7 +681,7 @@ const STORIES = [
   {
     num: 53,
     title: "The Vagabond Watch",
-    words: "16,600 words",
+    words: "19,300 words",
     hook: "A second hand has started writing in his logbook",
     door: "Withholding",
     room: "The Margins \u2014 a companion that is neither comfort nor intruder, and is never wrong",
@@ -693,7 +693,7 @@ const STORIES = [
   {
     num: 54,
     title: "The Donor",
-    words: "20,900 words",
+    words: "21,300 words",
     hook: "He came up alone, and his statement has stood for ten years",
     door: "Ordeal",
     room: "Two Hundred and Forty Metres \u2014 absolute dark under a ceiling of limestone, and no way out but the way in",
@@ -705,7 +705,7 @@ const STORIES = [
   {
     num: 55,
     title: "The Second Swimmer",
-    words: "42,600 words",
+    words: "42,900 words",
     hook: "Something is swimming on the side away from the boat",
     door: "Ordeal",
     room: "The Rules \u2014 no contact, no assistance, and four people forbidden to reach out",
@@ -717,7 +717,7 @@ const STORIES = [
   {
     num: 56,
     title: "The Long Part",
-    words: "10,300 words",
+    words: "10,700 words",
     hook: "Three days awake and moving, and she comes back further away each time",
     door: "Withholding",
     room: "The Long Part \u2014 the hours after the second night, where the trail stops being a trail",
@@ -729,7 +729,7 @@ const STORIES = [
   {
     num: 57,
     title: "Hold Me Up Till The Horn",
-    words: "37,500 words",
+    words: "37,700 words",
     hook: "Eleven hundred hours on the floor, and one rule: keep moving",
     door: "Ordeal",
     room: "The Floor \u2014 forty-five minutes dancing, fifteen on a cot, around the clock, for as long as a body will hold",
@@ -741,7 +741,7 @@ const STORIES = [
   {
     num: 58,
     title: "The Standing Man",
-    words: "21,300 words",
+    words: "21,200 words",
     hook: "Her son is still up there, upright, and the route uses him as a waypoint",
     door: "Ordeal",
     room: "Eight Thousand Six Hundred Metres \u2014 where the dead are left where they stop and the living steer by them",
@@ -753,7 +753,7 @@ const STORIES = [
   {
     num: 59,
     title: "The Bell",
-    words: "50,100 words",
+    words: "49,900 words",
     hook: "Four minutes after the knockdown, his dead wife is in the room",
     door: "Ordeal",
     room: "The Room Under Chicago \u2014 no rounds, no referee, one bell to start and one when a man does not get up",
@@ -765,7 +765,7 @@ const STORIES = [
   {
     num: 60,
     title: "Fifty Metres a Second",
-    words: "28,800 words",
+    words: "28,700 words",
     hook: "Nineteen memorial films, and every one of them ends in mid-air",
     door: "Rite",
     room: "The Edit \u2014 the last minute of a person\u2019s life, watched as many times as it takes",
