@@ -1,4 +1,4 @@
-/* Version 395 · last updated 2026-09-05 11:14 PDT */
+/* Version 396 · last updated 2026-09-05 12:42 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -51,7 +51,7 @@ const STORIES = [
   {
     num: 1,
     title: "Quiet Street to the Long Evening",
-    words: "9,600 words",
+    words: "10,200 words",
     hook: "Seven months of his own life, unaccounted for",
     door: "Dose",
     room: "Someone Else's Hour \u2014 you live an hour that was never yours",
