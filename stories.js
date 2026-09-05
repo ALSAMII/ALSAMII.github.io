@@ -1,4 +1,5 @@
-/* Version 394 · last updated 2026-09-05 09:11 PDT */
+// stories.js · Version 3 · last updated 2026-09-05 09:59 PDT — No. 9 title and synopsis only
+/* Version 391 · last updated 2026-09-04 20:36 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -151,7 +152,7 @@ const STORIES = [
   {
     num: 9,
     title: "Ferdowsi Household Nine",
-    words: "20,600 words",
+    words: "20,500 words",
     hook: "Auditing whether a god's grief is genuine",
     door: "Rite",
     room: "A God's Grief, Piped In \u2014 a whole city mourning on one signal",
