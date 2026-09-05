@@ -4288,11 +4288,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      column shrink to 4.5rem under a tight measure, which the cover
      float can hand it at some widths in the laptop range even though
      the panel itself has plenty of room; the label then runs past its
-     own column and paints over the meter beside it. Raised to match
-     what the word actually needs, so it never has anywhere to shrink
-     to but has to keep fitting instead. */
+     own column and paints over the meter beside it.
+
+     A first attempt (v369) kept the column elastic — minmax(7.75rem,
+     8.5rem) — matching its floor to the word's own measured width
+     with only ~15px to spare. That reappeared: a fixed-width column
+     never has to compute a floor against the word at all, so no
+     browser, font substitution, page zoom or float timing can squeeze
+     it below what the word needs. Fixed at 9.5rem — comfortably past
+     the ~7.6rem the word needs, with real margin this time rather
+     than a floor tuned to the pixel. */
   .feature-substance .notes {
-    grid-template-columns: minmax(7.75rem, 8.5rem) minmax(5rem, 10rem) auto;
+    grid-template-columns: 9.5rem minmax(5rem, 10rem) auto;
   }
 }
 
