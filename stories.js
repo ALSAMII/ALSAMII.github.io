@@ -1,4 +1,4 @@
-/* Version 390 · last updated 2026-09-04 20:23 PDT */
+/* Version 391 · last updated 2026-09-04 20:36 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1103,6 +1103,18 @@ const STORIES = [
     key: "The Accent — the thing that lets four hundred people in a hall in Hässelby catch every word, and that a room of Americans hears before it hears the joke",
     notes: [1, 1, 3],
     synopsis: "She moves to Los Angeles and takes a room in Venice on purpose, forty minutes from the forty thousand Iranians in Westwood, because she has worked out that if she goes there in the first year she will never leave. It is not contempt. It is arithmetic. She has come from four years in a hall where four hundred people understood every word and let her get away with nothing, and she is now starting again in a language that hears her before it hears the joke."
+  },
+
+  {
+    num: 88,
+    title: "Head Office",
+    words: "10,500 words",
+    hook: "Five years, one order, never a single query — until something starts covering up what he actually makes.",
+    door: "Withholding",
+    room: "Head Office — the source of every order he has ever run, which he has never seen, heard from, or recognized as himself",
+    key: "The Glossary — the single page at the end that tells you what every word before it actually meant",
+    notes: [2, 1, 3],
+    synopsis: "He has run this plant for five years, one item, to spec, without ever once sending back a query. When the raw material that used to arrive warm and without fail starts arriving short, then late, then not at all, he keeps the line running anyway — because the docket is the docket, and a decision would be a query, and Head Office has never once been wrong. Then something begins appearing on his finished product that never came from inside his plant, painted over what he actually made, with nothing left to prove which part is whose. He never learns what Head Office actually is — but by the last page, you will."
   }
 
 ];
