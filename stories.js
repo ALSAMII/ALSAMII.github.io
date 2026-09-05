@@ -157,7 +157,7 @@ const STORIES = [
     room: "A God's Grief, Piped In \u2014 a whole city mourning on one signal",
     key: "The Stones \u2014 hold one and a god's suffering comes into you",
     notes: [1, 2, 1],
-    synopsis: "David Cole audits the authenticity of a god's suffering \u2014 grief piped through fist-sized Stones into a faithful city. Then one trace surfaces that the instruments can't call genuine or false, and the trail leads to the forbidden hill itself, where the real question isn't whether the suffering was human."
+    synopsis: "In Millhaven, empathy is measurable, and the measurement decides who counts as a person. David Cole has spent nine years auditing it for the Bureau of Sincerity. Then a Loomborn, one of the androids kept in households to sit with the dying, logs a grief his instruments can't call genuine or false \u2014 and the god at the center of the city's mourning begins to look like it may have no one home either."
   },
 
   {
