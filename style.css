@@ -4284,22 +4284,29 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .feature-substance .note-word { font-size: 1rem; }
 
   /* At this size TRANSGRESSIVE — the longest of the three names —
-     renders about 7.6rem wide. The shared .notes rule lets its first
-     column shrink to 4.5rem under a tight measure, which the cover
-     float can hand it at some widths in the laptop range even though
-     the panel itself has plenty of room; the label then runs past its
-     own column and paints over the meter beside it.
+     renders about 7.6rem wide in this browser's font metrics. The
+     shared .notes rule lets its first column shrink to 4.5rem under a
+     tight measure, which the cover float can hand it at some widths
+     in the laptop range even though the panel itself has plenty of
+     room; the label then runs past its own column and paints over
+     the meter beside it.
 
-     A first attempt (v369) kept the column elastic — minmax(7.75rem,
-     8.5rem) — matching its floor to the word's own measured width
-     with only ~15px to spare. That reappeared: a fixed-width column
-     never has to compute a floor against the word at all, so no
-     browser, font substitution, page zoom or float timing can squeeze
-     it below what the word needs. Fixed at 9.5rem — comfortably past
-     the ~7.6rem the word needs, with real margin this time rather
-     than a floor tuned to the pixel. */
+     Two attempts already sized this column TO the word: v369 kept it
+     elastic (minmax(7.75rem, 8.5rem), ~15px of margin at the floor);
+     v397 made it fixed at 9.5rem instead, closing off the squeeze
+     itself but keeping a margin (~30px in this browser) still sized
+     by measuring the word here. Both reappeared on a browser/zoom
+     combination this build couldn't reproduce (Safari, page zoomed
+     out) — this environment has no WebKit engine to test against, so
+     rather than measure a third time and guess a third margin, this
+     pass stops sizing the column to the word at all. Fixed wide at
+     11rem — roughly 45% past what the word needs even by the most
+     generous measurement so far — plus a wider gap to the meter
+     column, so a browser that renders the word wider still bleeds
+     into dead space before it can reach the bar. */
   .feature-substance .notes {
-    grid-template-columns: 9.5rem minmax(5rem, 10rem) auto;
+    grid-template-columns: 11rem minmax(5rem, 10rem) auto;
+    column-gap: 1.25rem;
   }
 }
 
