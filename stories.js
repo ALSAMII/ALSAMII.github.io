@@ -1,4 +1,4 @@
-/* Version 398 · last updated 2026-09-05 13:36 PDT */
+/* Version 400 · last updated 2026-09-06 09:14 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1233,8 +1233,11 @@ const TRILOGIES = [
   {
     title: "The Ghariban",
     label: "",
-    books: [61, 62],
-    synopsis: "Two novellas about one boy and the ritual he was raised inside. In Tehran he beats himself with a chain every Muharram, and in the state that follows he sees something happening three streets from his uncle\u2019s door. Eleven years later in Los Angeles he has built an entire life alone, and cannot say why he knows where all nine mourning halls are and has never once been in one. Ghariban: the stranger, the one far from home, the one nobody came for."
+    books: [13, 35, 61, 62],
+    /* Not a cycle read in order \u2014 four stories that share the same
+       word, not a shared timeline. See "numbered" below. */
+    numbered: false,
+    synopsis: "Four novellas under one word: the stranger, the one far from home, the one nobody came for. A son who can't answer what song his father loved. A mother whose daughter never spoke and grew heavier every year of her life. And, in Tehran and Los Angeles, one boy and the ritual he was raised inside \u2014 the chain every Muharram, and the eleven years afterward spent not saying why he knows where all nine mourning halls are."
   },
   {
     title: "The Unheard House",
