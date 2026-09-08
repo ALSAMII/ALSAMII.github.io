@@ -1,4 +1,4 @@
-/* Version 403 · last updated 2026-09-06 14:27 PDT */
+/* Version 404 · last updated 2026-09-08 15:48 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -777,7 +777,7 @@ const STORIES = [
   {
     num: 61,
     title: "The Road to Shaam",
-    words: "49,000 words",
+    words: "50,000 words",
     hook: "On the seventh night he leaves his body and sees an alley three streets from his uncle\u2019s door",
     door: "Rite",
     room: "The Yard \u2014 a walled space behind a butcher\u2019s shop in south Tehran, every Muharram since he was nine",
@@ -789,7 +789,7 @@ const STORIES = [
   {
     num: 62,
     title: "The Evening of Strangers",
-    words: "28,600 words",
+    words: "28,800 words",
     hook: "Nine mourning halls in Los Angeles, and he has never once decided not to go",
     door: "Withholding",
     room: "Eleven Years \u2014 a life built alone, entirely, and the strength that took",
@@ -801,7 +801,7 @@ const STORIES = [
   {
     num: 63,
     title: "The House Is Patient",
-    words: "31,300 words",
+    words: "31,900 words",
     hook: "A patch of skin the size of a playing card has stopped reporting to him",
     door: "Withholding",
     room: "The Cold Room \u2014 fifteen degrees, one frame at a time, eight hours at a stretch",
@@ -813,7 +813,7 @@ const STORIES = [
   {
     num: 64,
     title: "The House Is Ours",
-    words: "27,800 words",
+    words: "27,300 words",
     hook: "Between one and three in the afternoon the House sits down, and does not move",
     door: "Rite",
     room: "The Garden \u2014 swept earth, a wall with no gate anywhere in it, one pomegranate that stays the same distance away",
@@ -825,7 +825,7 @@ const STORIES = [
   {
     num: 65,
     title: "The Room Is Quiet",
-    words: "32,500 words",
+    words: "32,300 words",
     hook: "Every evening at seven she sits down in a chair by the window and goes somewhere",
     door: "Rite",
     room: "The Walled Enclosure \u2014 dry, water down the middle, something living at the far end that cannot be reached, and something behind you that you do not turn round on",
@@ -837,7 +837,7 @@ const STORIES = [
   {
     num: 66,
     title: "The Illuminated Face",
-    words: "27,500 words",
+    words: "27,600 words",
     hook: "His wife's face is failing, and the new lines say something better than the old ones ever did",
     door: "Rite",
     room: "The Front Room \u2014 his wife in her own chair, ratified, visited, photographed and transcribed by strangers who have come to read her",
@@ -853,7 +853,7 @@ const STORIES = [
   {
     num: 67,
     title: "Sayyid of Nowhere",
-    words: "32,500 words",
+    words: "32,400 words",
     hook: "He took the clothes because they were on a chair and nobody was watching the chair",
     door: "Dose",
     room: "The Inner Chamber \u2014 four paces by five, one door, no window, and a vent bricked up in 1961",
@@ -868,7 +868,7 @@ const STORIES = [
   {
     num: 68,
     title: "Fill in the Blanks",
-    words: "15,000 words",
+    words: "15,100 words",
     hook: "He supplies the jokes a country repeats, and has not laughed himself in fifteen years",
     door: "Rite",
     room: "The Third Hour \u2014 between three and five in the morning, when the thing arrives with the turn already in position and all he does is hold the paper",
@@ -880,7 +880,7 @@ const STORIES = [
   {
     num: 69,
     title: "The Blind Lamp",
-    words: "15,500 words",
+    words: "16,400 words",
     hook: "He read the same book every night for fifteen years by the one light that cannot show violet",
     door: "Dose",
     room: "The Thirteenth of Farvardin \u2014 one night and the working day after it, hours he was awake for, and talking, and driving a horse, and digging, and was not in",
@@ -904,7 +904,7 @@ const STORIES = [
   {
     num: 71,
     title: "A Steady Hand",
-    words: "23,300 words",
+    words: "23,500 words",
     hook: "He cannot read a drug name, and four hundred people have decided he is their doctor",
     door: "Rite",
     room: "Ab-Bidar \u2014 four hundred people on a dying qanat, and no door that closes on two of them without the village knowing which door and for how long",
@@ -964,7 +964,7 @@ const STORIES = [
   {
     num: 76,
     title: "The Airing",
-    words: "23,200 words",
+    words: "23,300 words",
     hook: "An escaped prisoner is taken for the inspector, and for three days nobody inside says no to him",
     door: "Withholding",
     room: "Havākhori — literally air-eating, the hour a wing is let out into the yard, in a building where an inspector can close a wing and cannot open one door, issue one blanket, or shorten one sentence by an hour",
@@ -988,7 +988,7 @@ const STORIES = [
   {
     num: 78,
     title: "Black Out",
-    words: "15,800 words",
+    words: "16,100 words",
     hook: "She told her son not to go, and he asked her where she thought he got it",
     door: "Withholding",
     room: "The Ward — Fridays, four until half past five, a chair by a window, and a different woman at the desk each week asking what your relation is",
@@ -1000,7 +1000,7 @@ const STORIES = [
   {
     num: 79,
     title: "The Twelfth Minute",
-    words: "11,800 words",
+    words: "11,700 words",
     hook: "Two rooms in one night, and nobody who books her can understand a word of the real one",
     door: "Rite",
     room: "The Second Room — ten o'clock in Hässelby, four hundred Iranians in Persian who heckle in three registers and know precisely when she is lying about home",
