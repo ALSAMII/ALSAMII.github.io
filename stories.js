@@ -1,4 +1,4 @@
-/* Version 405 · last updated 2026-09-08 18:37 PDT */
+/* Version 406 · last updated 2026-09-09 05:32 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1115,6 +1115,18 @@ const STORIES = [
     key: "The Glossary — the single page at the end that tells you what every word before it actually meant",
     notes: [2, 1, 3],
     synopsis: "He has run this plant for five years, one item, to spec, without ever once sending back a query. When the raw material that used to arrive warm and without fail starts arriving short, then late, then not at all, he keeps the line running anyway — because the docket is the docket, and a decision would be a query, and Head Office has never once been wrong. Then something begins appearing on his finished product that never came from inside his plant, painted over what he actually made, with nothing left to prove which part is whose. He never learns what Head Office actually is — but by the last page, you will."
+  },
+
+  {
+    num: 89,
+    title: "Three Wrong, One Right",
+    words: "15,800 words",
+    hook: "His father's whole advice is six words long — if you don't know, leave it — and in six hundred nights he never has.",
+    door: "Rite",
+    room: "The Desk — home, from four in the afternoon until two in the morning, six hundred nights running, a lamp, and four hundred thousand questions behind him",
+    key: "If You Don't Know, Leave It — his father's own six-word rule for the exam, meant for both of them; the father has kept it for twenty-nine years and the son has never once left an answer blank.",
+    notes: [2, 2, 3],
+    synopsis: "Mehdi Amini is eighteen. He has slept three hours a night for six hundred nights and answered four hundred thousand practice questions for an examination that scores a correct answer, docks a wrong one, and charges nothing for a blank. His father marks konkoor papers at night, by the page, for an institute whose course costs more in a month than he earns in four — and his own advice, six words long, is if you don't know, leave it. Mehdi has never once left one blank. Nine hundred and fifty thousand candidates sit down on one morning in Tir; one in ten will be given a place."
   }
 
 ];
@@ -1367,7 +1379,7 @@ const TRILOGIES = [
        whoever signs, files, weighs or looks away. */
     title: "From the Unsaid · ناگفته",
     label: "",
-    books: [78, 80, 83, 86],
+    books: [78, 80, 83, 86, 89],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
@@ -1377,6 +1389,6 @@ const TRILOGIES = [
        panel still shows the whole set, which is the part that is
        true. The ordered groups below keep their numbering. */
     numbered: false,
-    synopsis: "Four books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
+    synopsis: "Five books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. And a candidate two years from a national examination does the same arithmetic his father has done for twenty-nine years marking other students' papers, and answers anyway. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
   }
 ];
