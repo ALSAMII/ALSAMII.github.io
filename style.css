@@ -1952,11 +1952,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    cover takes a small crop from the top and bottom. The figure below
    says which end to keep: the boat's lamps and the sunset sit at the
    horizon and the swimmer below it, so the sea is held low too; the
-   corridor is centred on its doorway. Samba moved to a standard 3:2
-   image and no longer needs this — it takes the shared 50% vertical
-   anchor above like the other full-height scenes. The vertical figure
-   only ever acts on the panel — on a phone the slot is taller than
-   the picture and shows all of it. */
+   corridor is centred on its doorway. Undertow, Black Out and Samba
+   were widened to the same 3:1 treatment in September 2026 (their
+   standard 3:2 images, on a short wide desktop card, were letting
+   "cover" crop away most of the subject's height) — but their
+   subjects sit close enough to centre already that they take the
+   shared 50% vertical anchor above rather than a bespoke offset here. */
 @media (min-width: 60rem) {
   .start-row--swimmer .start-scene { object-position: calc(100% - 4rem) 62%; }
   .start-row--dreams  .start-scene { object-position: calc(100% - 4rem) 48%; }
@@ -2099,7 +2100,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* The number, the separator and the name are one line or nothing. The
    scaling above is what makes that safe: without it, forbidding the
    wrap would push a long title off the side of the card instead. */
-.start-head { white-space: nowrap; }
+/* The number and title stay one unbreakable unit (see the &nbsp;
+   joining them in the markup, and their own white-space: nowrap
+   below) — .start-head itself no longer forces nowrap so that, when a
+   Farsi title is present and doesn't fit beside the English one, the
+   whole Farsi span can drop to a line of its own instead of being
+   forced to break internally. Exactly the .series-head pattern. */
+.start-head { white-space: normal; }
 .start-num,
 .start-title { white-space: nowrap; }
 .start-time { white-space: normal; }
@@ -3335,9 +3342,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-title-fa {
   /* The margin stays: the span's own leading space is a right-to-left
      one, so it lands on the far side of the name, not between it and
-     the English. */
+     the English. Unlike the comment above this class once suggested,
+     white-space stays nowrap (inherited from the shared rule above) —
+     a long Farsi title now drops whole to its own line rather than
+     splitting mid-phrase, since .start-head (above) no longer forbids
+     the break before it. */
   margin-left: 0.6rem;
-  white-space: normal;
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
 }
 
