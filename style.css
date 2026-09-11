@@ -5320,9 +5320,19 @@ body.gallery-on { overflow: hidden; }
 
 /* The cover itself. Capped against both axes so a tall cover on a
    short window and a wide window alike hold it whole; clicking it
-   closes, and the cursor says so. */
+   closes, and the cursor says so.
+
+   32rem was sized for the plain cover alone, always portrait. The
+   zoom view can now also show the front/back pair render, a
+   landscape image half again as wide as it is tall — at the old cap
+   that came in far short of the 76vh it had room for, small and
+   letterboxed under all that empty height. Widened so a landscape
+   image is free to grow until IT hits the height ceiling instead;
+   a portrait cover was never against the old cap in ordinary use
+   (76vh binds first at any normal aspect) so this changes nothing
+   for it. */
 .lightbox-img {
-  max-width: min(88vw, 32rem);
+  max-width: min(90vw, 68rem);
   max-height: 76vh;
   width: auto;
   height: auto;

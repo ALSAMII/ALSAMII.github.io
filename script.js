@@ -99,6 +99,13 @@
 
   function coverFor(n) { return "covers/" + String(n).padStart(2, "0") + ".jpg"; }
 
+  /* The full-size zoom view can show more than the shelf thumbnail
+     does: a second 3D render, front-and-spine beside the back cover,
+     in one landscape image. Same numbering as the covers themselves.
+     Not every book need have one — the zoom view falls back to the
+     ordinary cover if this 404s, see openCover below. */
+  function pairCoverFor(n) { return "covers/pairs/" + String(n).padStart(2, "0") + ".jpg"; }
+
   /* Split a title that carries its Persian into the two scripts, so
      each can be given a line of its own. Everything up to the first
      Arabic letter is the English; everything from there is the
@@ -1064,7 +1071,11 @@
     rowImg.alt = "";
     rowImg.loading = "lazy";
     rowImg.addEventListener("error", function () { rowImg.remove(); });
-    makeCoverOpen(rowImg, num + " \u00b7 " + s.title);
+    /* The zoom view shows the pair render \u2014 front and spine beside
+       the back cover \u2014 with the plain cover kept as the fallback if
+       that image is missing for this book. */
+    var rowPairSrc = pairCoverFor(s.num);
+    makeCoverOpen(rowImg, num + " \u00b7 " + s.title, rowPairSrc);
 
     /* A small, visible cue that the cover enlarges \u2014 the row image
        itself has always been clickable, but nothing showed it. Same
@@ -1082,7 +1093,7 @@
       '<path d="M19.4 19.4l-4.3-4.3"/></svg>';
     rowZoom.addEventListener("click", function (e) {
       e.stopPropagation();
-      openCover(rowImg.getAttribute("src"), num + " \u00b7 " + s.title, rowZoom);
+      openCover(rowPairSrc, num + " \u00b7 " + s.title, rowZoom, rowImg.getAttribute("src"));
     });
 
     mark.append(rowImg, rowZoom);
@@ -1256,9 +1267,21 @@
   var lightboxClose = document.getElementById("lightboxClose");
   var lightboxFrom  = null;
 
-  function openCover(src, caption, opener) {
+  function openCover(src, caption, opener, fallback) {
     if (!lightbox || !src) return;
     lightboxFrom = opener || null;
+    /* fallback is the plain cover, offered only when a fancier image
+       (the front/back pair render) was asked for instead — if that
+       404s, drop back to the cover everyone already has rather than
+       leaving the lightbox empty. Cleared before use so a stale
+       handler from the previous open can't fire on this one. */
+    lightboxImg.onerror = null;
+    if (fallback && fallback !== src) {
+      lightboxImg.onerror = function () {
+        lightboxImg.onerror = null;
+        lightboxImg.src = fallback;
+      };
+    }
     lightboxImg.src = src;
     lightboxImg.alt = caption || "";
     if (lightboxCap) lightboxCap.textContent = caption || "";
@@ -1283,8 +1306,11 @@
     if (lightboxClose) lightboxClose.addEventListener("click", closeCover);
   }
 
-  /* Every cover on the page opens it, wherever it happens to sit. */
-  function makeCoverOpen(img, caption) {
+  /* Every cover on the page opens it, wherever it happens to sit.
+     zoomSrc is optional: pass the pair render and the plain cover
+     stays as the fallback if it 404s; leave it out (the easel does)
+     and the image opens itself, exactly as before. */
+  function makeCoverOpen(img, caption, zoomSrc) {
     if (!img) return;
     img.classList.add("cover-open");
     img.setAttribute("role", "button");
@@ -1293,7 +1319,8 @@
     var go = function (e) {
       e.stopPropagation();
       e.preventDefault();
-      openCover(img.getAttribute("src"), caption, img);
+      var plain = img.getAttribute("src");
+      openCover(zoomSrc || plain, caption, img, zoomSrc ? plain : null);
     };
     img.addEventListener("click", go);
     img.addEventListener("keydown", function (e) {
@@ -1368,7 +1395,7 @@
         '<path d="M19.4 19.4l-4.3-4.3"/></svg>';
       zoom.addEventListener("click", function (e) {
         e.stopPropagation();
-        openCover(coverSrc, n + " \u00b7 " + s.title, zoom);
+        openCover(stamped(pairCoverFor(s.num)), n + " \u00b7 " + s.title, zoom, coverSrc);
       });
 
       card.append(open, zoom);
