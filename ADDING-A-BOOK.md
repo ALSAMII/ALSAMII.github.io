@@ -38,6 +38,19 @@ pdfs/41.pdf        the novella itself
 covers/41.jpg      its cover
 ```
 
+**For books 1–9, the padding is not optional — it's `01.jpg`, not
+`1.jpg`.** The site's own lookup builds the path as
+`"covers/" + String(num).padStart(2, "0") + ".jpg"`, which always asks
+for the zero-padded name for a single-digit book; `padStart` is a no-op
+once the number already has two digits, so
+10 and up look the same padded or not, and it's easy to assume padding
+doesn't matter anywhere. It caused a real outage once: a full cover
+refresh wrote `1.jpg` through `9.jpg`, and those nine books silently
+kept their old covers for a while since the site was never asking for
+those filenames. Worth an `ls covers/` check after touching any
+single-digit book, specifically looking for a stray unpadded `1.jpg`–
+`9.jpg` that shouldn't be there.
+
 **The cover must be `.jpg`.** Not `.png`, not `.jpeg`. The site builds
 the path as `covers/41.jpg` and nothing else will be found. If your
 artwork is a PNG, convert it first.
@@ -162,11 +175,21 @@ suppressed, and that is one line in `style.css` — CUSTOMISING has it.
 
 ### If the book is to be recommended on the About panel
 
-That's a separate edit and not part of adding a book — the panel holds
-a fixed number of cards, so featuring a new one means dropping another.
-It needs a wide scene image at `assets/start-NN.jpg`, which is not the
-cover but a repainting of it: 3:2, subject in the right third, left
-half dark and empty for the words, no type anywhere. See CUSTOMISING.
+That's a separate edit and not part of adding a book — the panel is
+**Pick a Door**: nine cards fixed in three groups of three (Noir,
+Transgressive, Plausible), so featuring a new one means dropping
+another from the same door. It needs a wide scene image at
+`assets/start-NN.jpg`, which is not the cover but a repainting of it:
+3:2, subject in the right third, left half dark and empty for the
+words, no type anywhere.
+
+Two markup details are easy to miss when copying an existing card:
+the number and title spans must be joined with `&nbsp;`, not a plain
+space or line break, or they can split onto two lines at some widths;
+and a book with its own Persian title can carry it as a
+`.start-title-fa` span right after the English title. See CUSTOMISING
+for the full markup, the image-cropping rules, and why a card's
+synopsis length matters for how well the artwork crops on a phone.
 
 ---
 
@@ -249,17 +272,28 @@ the top for the share-preview and preloaded images, three at the foot
 for the stylesheet and the two scripts:
 
 ```html
-<meta property="og:image" content=".../og-roya.png?v=337">
-<meta name="twitter:image" content=".../og-roya.png?v=337">
-<link rel="preload" as="image" href="assets/start-07.webp?v=337" ...>
-<link rel="stylesheet" href="style.css?v=337">
-<script src="stories.js?v=337"></script>
-<script src="script.js?v=337"></script>
+<meta property="og:image" content=".../og-roya.png?v=374">
+<meta name="twitter:image" content=".../og-roya.png?v=374">
+<link rel="preload" as="image" href="assets/start-07.webp?v=374" ...>
+<link rel="stylesheet" href="style.css?v=381">
+<script src="stories.js?v=381"></script>
+<script src="script.js?v=386"></script>
 ```
 
-Add one to all six, keeping them identical. Browsers hold these files
-hard; changing the number makes each one a new address, so a
-returning reader gets the new book instead of yesterday's list.
+These are four **independent** counters, not one shared number — the
+example above shows real, current live numbers, and they don't match
+each other, which is normal. Adding a book always changes `stories.js`
+itself, so **its number always has to move**. The other three only
+need to move if that step also changed them: `script.js?v=` if a new
+`start-NN` scene image was added for a Pick-a-Door card, `style.css?v=`
+if a rule changed, and the share/preload trio only if the Roya promo
+image or the preloaded hero painting itself was replaced — which
+almost never happens when just adding a book. Raising a number that
+didn't need it isn't a mistake, just wasted work; leaving one alone
+that did need it is the one that actually bites, so when in doubt,
+raise `stories.js?v=` at minimum. Browsers hold these files hard;
+changing a number makes that one file a new address, so a returning
+reader gets the new version instead of yesterday's.
 
 **`index.html` itself must never carry a `?v=`.** It is the page the
 browser asks for by name, and there is nothing upstream of it to
@@ -328,8 +362,8 @@ new block against the one above it.
 **A blank cover.** The file is missing, named `.png`, or numbered
 wrong. It must be `covers/NN.jpg`, two digits.
 
-**The old list keeps showing.** The `?v=` number didn't change, or
-only some of the six lines were changed. Check all six match.
+**The old list keeps showing.** `stories.js?v=` didn't get raised — that's
+the one that gates the catalogue itself, so it's the one that matters here.
 
 **The page is blank.** Something put a `?v=` on `index.html` itself.
 Take it off; nothing else will fix it.

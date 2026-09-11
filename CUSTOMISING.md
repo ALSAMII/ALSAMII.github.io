@@ -85,8 +85,8 @@ Banner images want to be **wide** — between 2:1 and 3:1 — around
 `assets/` named for the series. Leave `banner` out and the series shows
 its books' spines instead, which suits a small group.
 
-Two of the nine carry one at the moment — Daughters of Anahita and The
-Borrowed Sun Cycle. The other seven show spines.
+Two of the thirteen carry one at the moment — Daughters of Anahita and
+The Borrowed Sun Cycle. The other eleven show spines.
 
 Which to choose is not really a picture question. A panorama says the
 books share one world; spines say they share a subject. Les Folies, The
@@ -140,6 +140,57 @@ there too, or its name will start appearing twice.
 
 ---
 
+## Bilingual (Persian) titles
+
+Two separate places on the site can carry a title in both scripts, and
+they use two different mechanisms — worth knowing which one applies
+before touching either.
+
+**A series title**, like "From the Delgoshā · از دلگشا", is written as
+one string in `stories.js` and split automatically. `splitScripts()` in
+`script.js` cuts the string at the first Arabic-range codepoint and
+builds `<span class="t-en">`/`<span class="t-fa" dir="rtl" lang="fa">`
+from the two halves, giving each script its own line — the English and
+the Persian used to fight over one line's worth of room and broke
+differently at almost every width, including once through the middle
+of the Persian itself. Nothing needs writing by hand; just include both
+scripts in the title string, separated the same way the existing series
+are.
+
+**A single book's title** on a Pick-a-Door card is different: there's
+no automatic split, because the card's English title is its own
+separate field (`.start-title`), not a combined string. Add the Persian
+by hand as its own span, `.start-title-fa`, right after it — see
+"Pick a Door" above for the exact markup and the `&nbsp;` rule that
+goes with it. Books 78 and 89 do this.
+
+Both conventions share the same instinct — `dir="rtl"` on the Persian
+span controls the order of its own glyphs, not which side of the row it
+sits on, and `width: fit-content` keeps a short Persian run from
+claiming the full row and pushing everything else to one side.
+
+---
+
+## Cover zoom
+
+Every cover on the site — the small thumbnail on each shelf row, and
+the full-size ones in the All Covers grid — carries a small circular
+magnifying-glass button that opens the site's one shared lightbox
+(`openCover()` in `script.js`) without navigating anywhere: `.gcard-zoom`
+in the grid, `.row-zoom` on the shelf. It appears on hover for a mouse,
+and is always visible for touch or keyboard, so the grid still reads as
+covers first for anyone scanning it with a pointer.
+
+Clicking the cover art itself (not the zoom button) still does what it
+always did — opens the book. The two controls are siblings, not nested
+— a `<button>` can't contain another interactive `<button>`, so each
+lives in its own element with `e.stopPropagation()` keeping the zoom
+button from also triggering the card's navigate-to-book handler.
+Nothing to configure per book; a new cover picks this up automatically
+by virtue of using the existing `.gcard`/`.story-mark` structure.
+
+---
+
 ## Filters, doors and the dials
 
 All of it lives in the `GLOSSARY` block at the bottom of `stories.js`.
@@ -180,19 +231,61 @@ written per book as `Name — description`, split at an em dash.
 
 ---
 
-## The recommended books on the About panel
+## Pick a Door — the recommended books on the About panel
 
-Each recommendation is one card: a book number, a short note, and a
-picture behind the words. In `index.html`, search for `data-book`:
+Nine cards, fixed in three groups of three under a door each — Noir,
+Transgressive, Plausible. Each card is a book number, a short note, and
+a picture behind the words. In `index.html`, search for `start-cat` to
+find the three door headings, and `data-book` for the cards themselves:
 
 ```html
-<button class="start-row start-row--samba" type="button" data-book="52">
+<p class="start-cat caps">
+  <span class="start-cat-name" tabindex="0" role="button"
+        aria-label="Noir — How cold it gets, and whether anyone is rescued.">Noir</span>
+  <span class="start-cat-about">How cold it gets, and whether anyone is rescued.</span>
+</p>
+
+<button class="start-row start-row--samba" type="button" data-book="52"
+        data-scene="assets/start-52.jpg">
+  <img class="start-scene" alt="" aria-hidden="true">
+  <span class="start-body">
+    <span class="start-head">
+      <span class="start-num">52</span>&nbsp;<span class="start-title">Samba</span>
+      <span class="start-time caps"></span>
+    </span>
+    <span class="start-note">Surfers call it the samba: ...</span>
+  </span>
+</button>
 ```
 
-Two things are named there. **`data-book`** is which novella the card
+Each `.start-cat` block is a door heading — its wording (used both as
+the visible label and the dial's own `about` text) should match the
+same door's description in `GLOSSARY.notes` in `stories.js`, since it's
+saying the same thing in the same words twice. Three `.start-row` cards
+follow it before the next `.start-cat`; featuring a different book
+under a door means swapping its card for another, not adding a tenth.
+
+Four things are named on a card. **`data-book`** is which novella it
 opens — change the number to feature a different one. **`start-row--x`**
 is that card's own hook for CSS, used only to tune how its picture is
-cropped; pick a short word from the title.
+cropped; pick a short word from the title. **`data-scene`** is optional
+— a card with none falls back to `assets/start-NN.jpg` from the book's
+own number (confirmed straight from `script.js`'s `coverFor`-style
+lookup), which is what books 55 and 52 rely on; give it explicitly only
+when the image needs a different name. **`.start-title-fa`** is
+optional too — a book with its own Persian title can add
+`<span class="start-title-fa" lang="fa" dir="rtl">…</span>` right after
+`.start-title`, as books 78 and 89 do.
+
+**One markup detail that's easy to get wrong when copying a card:** the
+number and title spans must be joined with `&nbsp;`
+(`<span class="start-num">52</span>&nbsp;<span class="start-title">Samba</span>`),
+not a plain space, newline, or nothing at all. `.start-head` wraps
+normally so a Persian title can drop to its own line rather than
+splitting mid-phrase, and that same looseness turns a bare space or
+newline between the number and the title into a legal break point too
+— without the `&nbsp;`, the number can separate from its title onto two
+lines at some widths, which is exactly the bug that taught this rule.
 
 ### The picture
 
@@ -262,11 +355,61 @@ Nothing here needs a light-theme counterpart — the scene already has
 its own rules in the light block at the end of `style.css`, and they
 apply to every card.
 
+### The synopsis length actually controls the crop — read this before lengthening one
+
+This is the trap the panel fell into for several rounds running, so
+it's worth understanding rather than rediscovering. A card's box is
+sized by its content, and `object-fit: cover`'s scale factor is
+`max(boxWidth/imageWidth, boxHeight/imageHeight)` — whichever ratio is
+larger wins, and that's the direction the image gets scaled and
+therefore cropped along the other axis. Synopsis length changes the
+box's height, and **desktop and mobile pull that lever in opposite
+directions:**
+
+- **On desktop**, a short synopsis makes a wide, short box — often
+  close to 3:1 with a standard 3:2 image, which forces scaling by
+  *width* and crops the image's *height*, cutting a tall figure off top
+  and bottom.
+- **On mobile**, columns are narrow, so text wraps onto more lines and
+  the box is already tall relative to its width. A *longer* synopsis
+  makes it taller still, which forces scaling by *height* and crops the
+  image's *width* — the taller the box, the narrower the sliver of the
+  image's width that survives. Lengthening a synopsis to fix the
+  desktop problem directly worsens this one, in direct proportion to
+  how much taller the box got.
+
+Two independent levers exist, and reaching for the wrong one just
+trades one viewport's crop for the other's:
+
+1. **The image itself**, for the desktop problem specifically. Widening
+   a source image from the standard 3:2 (1536×1024) out to 3:1
+   (2400×800) — by extending its own background colour and grain out to
+   the sides, not stretching the picture — lets `object-fit: cover`
+   scale by width even when the desktop box gets very short, so the
+   full height (and the figure in it) survives regardless of synopsis
+   length. This doesn't touch the mobile crop at all, since mobile
+   boxes are never that short to begin with. `--undertow`, `--blackout`,
+   `--samba`, `--glow`, and `--dreams` are all built this way.
+2. **The synopsis length**, for the mobile problem. Since box height is
+   what drives the mobile crop and nothing else does, the safest
+   default for a new or edited card is to keep it close to the
+   shortest card on the panel rather than the longest — in practice,
+   around 60 words reads clean and keeps the mobile crop comfortable
+   (roughly 35–40% of the image's width stays visible, versus 20–25%
+   for a card twice that length). All nine Pick-a-Door synopses were
+   brought down to this length for exactly this reason after a
+   lengthening pass (done to help the desktop crop, before the 3:1
+   image fix existed) had quietly broken every mobile card it touched.
+
+Check both a phone width and a laptop width — not just the one that
+prompted the edit — before shipping any change to a card's image or its
+synopsis. Whichever one you didn't look at is the one that regresses.
+
 ---
 
 ## The recommended series on the About panel
 
-Below the six recommended books sits one series, given a whole block of
+Below the nine Pick-a-Door books sits one series, given a whole block of
 its own: a name, a paragraph, a dedication, and a card for each book.
 It is written out in `index.html` — search for `series-intro` — and the
 cards below it are `series-card`, one per book, each naming the book it

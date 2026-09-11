@@ -9,7 +9,9 @@ in the header.
 
 Each book can be read in the browser — the **Read** button opens it as
 flowing text that sets its own size and remembers where you stopped —
-or downloaded as the typeset PDF.
+or downloaded as the typeset PDF. A small magnifying-glass button on
+every cover — on the shelf and in the All Covers grid — opens that
+cover full-size without leaving the page.
 
 Live at <https://www.chewzfiction.com>.
 
@@ -20,9 +22,11 @@ the field-by-field format for `stories.js` and what to check afterwards.
 Follow it whenever the catalogue grows.
 
 **[CUSTOMISING.md](CUSTOMISING.md)** — everything else: the backdrops
-and their sizes, series and their painted banners, the door filter and
-the three dials, the books featured on the About panel, wiring up a
-newsletter, the two themes, and how publishing works.
+and their sizes, series and their painted banners, bilingual titles,
+the cover zoom button, the door filter and the three dials, Pick a
+Door on the About panel and the crop/synopsis-length trap it taught,
+the recommended series below it, wiring up a newsletter, the two
+themes, and how publishing works.
 
 ## What's in the folder
 
@@ -76,20 +80,22 @@ In `index.html`:
 
 - the opening line on the stage, and the italic question under it
 - the **About** and **Author's Notes** panels
-- the three books recommended on the About panel — the `data-book="12"`
-  attributes; each also wants an `assets/start-NN.jpg` scene image
+- **Pick a Door** on the About panel — nine books recommended, three
+  under each door (Noir, Transgressive, Plausible) — the `data-book="12"`
+  attributes; each also wants an `assets/start-NN.jpg` scene image. See
+  CUSTOMISING.md for the full picture and markup rules
 - the footer
 
 ## Series
 
-Nine of them, declared in the `TRILOGIES` block at the bottom of
+Thirteen of them, declared in the `TRILOGIES` block at the bottom of
 `stories.js`. Each names its books by number; every book in one then
 labels itself on its own row — "LES FOLIES · 2 OF 3" — with nothing
 written per book.
 
 Two of them carry a painted panorama, shown in place of a row of
 spines, with the written heading above it: Daughters of Anahita and The
-Borrowed Sun Cycle. The other seven have no `banner` line and show
+Borrowed Sun Cycle. The other eleven have no `banner` line and show
 their books' spines instead, which is the default — right for a
 thematic group, where the books share a subject rather than a story and
 a single panorama would claim more continuity than there is. See
@@ -125,7 +131,7 @@ isn't set for reading here yet and points at the PDF.
 
 ## The shelf count
 
-The label above the order menu — "All 67 stories · order" — is written
+The label above the order menu — "All 89 stories · order" — is written
 by `script.js` from the length of `STORIES`, so it counts itself and
 never needs editing. The number typed into `index.html` is only what
 shows for the half-second before the script runs; it is worth keeping
@@ -135,8 +141,27 @@ roughly right, but nothing depends on it.
 
 Six lines in `index.html` end in `?v=` and a number — the stylesheet,
 the two scripts, the preloaded first painting and the two share images.
-Raise them all together after any change to `style.css`, `script.js`
-or `stories.js`, or returning readers keep seeing the old version.
+**They are four independent counters, not one shared number:**
+
+```
+og:image / twitter:image / preload image   → its own count
+style.css?v=                                → its own count
+stories.js?v=                               → its own count
+script.js?v=                                → its own count
+```
+
+Each one only needs to move when the bytes it actually points at
+change — raise `style.css?v=` when a rule in `style.css` changes,
+`script.js?v=` when `script.js` changes or new artwork was added, and
+`stories.js?v=` when `stories.js` itself changes (a new book, an edited
+field). A pure comment/version-stamp edit with no other change doesn't
+need its own number raised. The three share/preload numbers only need
+to move when the Roya promo image or the preloaded hero painting
+itself is replaced — which is rare, so don't be surprised to see that
+one lag well behind the others; that's normal, not a sign anything was
+missed. It is always safe to raise a number that didn't strictly need
+it, just wasted work — the only real mistake is forgetting to raise
+one that did.
 
 **`index.html` itself has no `?v=`, and cannot have one** — it is the
 entry point, so nothing can ask for it by version. That is the trap:
