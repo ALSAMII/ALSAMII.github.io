@@ -5342,7 +5342,7 @@ body.gallery-on { overflow: hidden; }
 
 .lightbox-cap {
   margin: 0;
-  font-size: 0.625rem;
+  font-size: 0.8125rem;
   letter-spacing: 0.22em;
   color: var(--faded);
   text-align: center;

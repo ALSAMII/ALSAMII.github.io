@@ -1,3 +1,4 @@
+<!-- Updated 2026-09-11 — new "cover zoom" entry for the pair render -->
 # Customising the site
 
 Everything that isn't adding a book. Adding one is its own document —
@@ -188,6 +189,21 @@ lives in its own element with `e.stopPropagation()` keeping the zoom
 button from also triggering the card's navigate-to-book handler.
 Nothing to configure per book; a new cover picks this up automatically
 by virtue of using the existing `.gcard`/`.story-mark` structure.
+
+**The zoomed image can be a different file than the thumbnail.** If
+`covers/pairs/NN.jpg` exists, the lightbox opens that instead of the
+plain front cover — a wider, landscape render pairing the front and
+back covers side by side, built for the zoom view only. The shelf
+thumbnail and the grid thumbnail keep using the ordinary `covers/NN.jpg`
+either way; only the lightbox reaches for the pair. `pairCoverFor(n)`
+in `script.js` builds the path the same way `coverFor(n)` does —
+zero-padded, two digits, `.jpg` only.
+
+**Not every book needs one.** `openCover()` takes a fallback: if
+`covers/pairs/NN.jpg` 404s, it swaps the lightbox straight to the plain
+cover with no visible flash or broken-image icon. So a book with no
+pair render just zooms to its ordinary cover, the same as before this
+feature existed — nothing to configure, nothing that breaks by omission.
 
 ---
 

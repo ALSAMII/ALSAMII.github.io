@@ -1,3 +1,4 @@
+<!-- Updated 2026-09-11 — documents the cover-zoom pair render feature -->
 # Chew Z — Short Fiction
 
 A single dark screen: the novellas listed on the left, a candlelit stage
@@ -11,7 +12,8 @@ Each book can be read in the browser — the **Read** button opens it as
 flowing text that sets its own size and remembers where you stopped —
 or downloaded as the typeset PDF. A small magnifying-glass button on
 every cover — on the shelf and in the All Covers grid — opens that
-cover full-size without leaving the page.
+cover full-size without leaving the page, showing a paired front-and-back
+render for books that have one.
 
 Live at <https://www.chewzfiction.com>.
 
@@ -43,6 +45,8 @@ read/                 each novella as text, for reading on the site
 .nojekyll             tells GitHub Pages to serve the files as they are
 pdfs/                 the novellas, numbered: 01.pdf, 02.pdf ...
 covers/               a cover per novella, numbered to match: 01.jpg ...
+covers/pairs/         optional: a front-and-back zoom render per novella,
+                      same numbering — falls back to covers/ when absent
 assets/               backdrops, series banners, the Roya mark, icons, audio
 feed.xml              generated — don't edit by hand
 sitemap.xml           generated — don't edit by hand
