@@ -1,3 +1,4 @@
+<!-- Updated 2026-09-11 — added the optional covers/pairs/NN.jpg step -->
 # Adding a book
 
 Everything that has to happen when a new novella joins the site, in
@@ -59,6 +60,15 @@ artwork is a PNG, convert it first.
 a novella past 10 MB, which is a slow download on a phone. Claude has
 a script (`slimpdf.py`) that re-encodes the embedded images and
 usually brings a file down by 80–90% with no visible loss.
+
+**A third file, optional: `covers/pairs/NN.jpg`.** Same zero-padded
+naming, same `.jpg` requirement — a wider render pairing the front and
+back cover side by side, shown only when someone opens the magnifying-
+glass zoom. Skipping it isn't a mistake the way skipping the plain
+cover is: the zoom just falls back to `covers/NN.jpg` with no broken
+image and nothing else to configure. Add it when a 3D pair render was
+made for the book; leave it out otherwise. See "Cover zoom" in
+[CUSTOMISING.md](CUSTOMISING.md) for how the fallback works.
 
 ---
 
@@ -321,6 +331,7 @@ share/              the whole folder, rebuilt in step 4
 read/41.json        the reading text, built in step 5
 pdfs/41.pdf         the new file only
 covers/41.jpg       the new file only
+covers/pairs/41.jpg the new file only, if a pair render exists
 ```
 
 **Never delete `CNAME`.** It's a one-line file at the root holding the
@@ -350,6 +361,8 @@ GitHub Pages republishes within a minute or two of the commit landing.
   book's cover*
 - Opening the shared link lands on the book, already open
 - The Door filter still lists four doors, not five
+- If a pair render was uploaded, the zoom button shows it, not the
+  plain cover — check both the shelf and the All Covers grid
 
 ---
 
