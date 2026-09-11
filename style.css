@@ -6932,8 +6932,22 @@ html[data-theme="light"] .gcard-open:focus-visible img {
    the picture matters. The cover stays visible underneath it, the way
    a caption card sits over a photograph. */
 html[data-theme="light"] .start-scene {
-  filter: saturate(0.98) brightness(1.06) contrast(0.96);
-  opacity: 0.95;
+  filter: saturate(1.05) brightness(1.02) contrast(1.06);
+  opacity: 1;
+  /* The dark theme's mask does three jobs at once: fades the left
+     away for the words, fades top/bottom so neighbouring cards don't
+     show a seam, and a radial vignette that blends the whole picture
+     into a near-black room. That third layer is the one that broke
+     on paper — a photograph faded toward transparent shows the page
+     THROUGH it, and on white that reads as a pale, foggy print rather
+     than a vignette. The comment above always said the picture should
+     be "left whole" here, with .start-row::before doing the fading
+     for the words instead; the mask just never actually dropped the
+     radial layer to make that true. Only the vertical fade survives —
+     it still has a real job, stopping the picture's own overhang from
+     drawing a hard line into the row above or below it. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
 }
 
 html[data-theme="light"] .start-row::before {
