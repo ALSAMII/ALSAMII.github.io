@@ -1127,7 +1127,31 @@ const STORIES = [
     key: "If You Don't Know, Leave It — his father's own six-word rule for the exam, meant for both of them; the father has kept it for twenty-nine years and the son has never once left an answer blank.",
     notes: [2, 2, 3],
     synopsis: "Mehdi Amini is eighteen. He has slept three hours a night for six hundred nights and answered four hundred thousand practice questions for an examination that scores a correct answer, docks a wrong one, and charges nothing for a blank. His father marks konkoor papers at night, by the page, for an institute whose course costs more in a month than he earns in four — and his own advice, six words long, is if you don't know, leave it. Mehdi has never once left one blank. Nine hundred and fifty thousand candidates sit down on one morning in Tir; one in ten will be given a place."
-  }
+  },
+
+  {
+    num: 90,
+    title: "The Only One Who Knows",
+    words: "19,100 words",
+    hook: "Six coats, six exits, and a phone call from the one woman who's always known exactly what he is",
+    door: "Rite",
+    room: "The Corridor — eleven months of them, before an oath, after the decision that mattered was already made at a table",
+    key: "The Oath — the sworn statement his own procedure makes final where the documents run out; he's given it as five other men, and now once as himself",
+    notes: [2, 2, 3],
+    synopsis: "He's spent twenty years becoming other men — a burglar, a doctor, a teacher, an inspector — always wearing someone else's authority, never his own name. None of it ever felt like a crime, because he never hurt anyone who could be hurt by it. Then a phone call asks him to do the one thing he's spent his life avoiding: tell the truth, under oath, as himself, to save someone he loves. The ruling that follows costs him more than the case ever could."
+  },
+
+  {
+    num: 91,
+    title: "Pesar Khaleh",
+    words: "21,800 words",
+    hook: "Forty years of savage material never once aimed at a person — and the tender pieces go in a notebook nobody will ever read",
+    door: "Withholding",
+    room: "The Puppet — a glove puppet bought years ago, sitting empty on his table for four months, waiting for a hand he's decided not to put in it",
+    key: "The Notebook — forty years of the specific, tender material about people he loves too much to ever perform, kept and never published",
+    notes: [1, 2, 3],
+    synopsis: "For forty years his rule has been simple — mock the system, never the person standing in it — and it's made him one of the country's best-loved comedians. Then a funeral hands him a nickname in front of four hundred people, built on exactly the tenderness he's never once let onstage. He starts a private notebook instead: the material about the people he loves too much to ever perform. What follows is a year spent deciding whether some things are worth keeping only for himself."
+  },
 
 ];
 
@@ -1279,14 +1303,17 @@ const TRILOGIES = [
        position in this list, not from its number.
 
        The label is an empty string rather than absent, and stays
-       that way at any length. Seven days is the whole frame, and
-       No. 87 is headed THE SEVENTH DAY, so the group is complete —
-       which is a reason to leave the label alone rather than to
-       start calling it a septet.
+       that way at any length. Seven days was the whole frame, and
+       No. 87 is headed THE SEVENTH DAY — which looked like the
+       close, until No. 91 turned up eleven years later as an eighth
+       notebook the frame never promised. The label stays empty
+       rather than counting anything, for exactly this reason: a
+       septet that gains an eighth was never a septet, it was just
+       seven until it wasn't.
 
        No banner — the covers stand side by side. */
     label: "",
-    books: [68, 70, 75, 77, 79, 82, 87],
+    books: [68, 70, 75, 77, 79, 82, 87, 91],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
@@ -1296,7 +1323,7 @@ const TRILOGIES = [
        panel still shows the whole set, which is the part that is
        true. The ordered groups below keep their numbering. */
     numbered: false,
-    synopsis: "Seven notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. On the seventh she is in Los Angeles, working in a language that hears her before it hears the joke, and a researcher writes to say she knows who Romanu is. In the old story the vow ends on the seventh day and the prince speaks. These are the seven days."
+    synopsis: "Seven notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh. The form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution. A joke is the only sentence in the language that can travel without a sender. The fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. On the seventh she is in Los Angeles, working in a language that hears her before it hears the joke, and a researcher writes to say she knows who Romanu is. In the old story the vow ends on the seventh day and the prince speaks. These were the seven days — until an eighth notebook turned up eleven years later, kept by a man who spent forty years mocking everything except the people in front of him, and who a funeral, in front of four hundred people, handed the one name he never once used on himself."
   },
   {
     /* The only series title here carrying its Persian. The heading is
@@ -1324,7 +1351,7 @@ const TRILOGIES = [
 
        The label stays an empty string rather than being removed. */
     label: "",
-    books: [67, 71, 74, 76, 81],
+    books: [67, 71, 74, 76, 81, 90],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
@@ -1334,7 +1361,7 @@ const TRILOGIES = [
        panel still shows the whole set, which is the part that is
        true. The ordered groups below keep their numbering. */
     numbered: false,
-    synopsis: "Five accounts by a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Then a bag on a luggage rack makes him the doctor a village of four hundred stopped expecting. Then a pass shuts behind him in a gorge and he is the teacher of forty children across six grades, and he cannot read. Then a man in a lanyard takes him for the inspector, and he walks into a prison. Then a woman of seventy-four looks at his hands on a doorstep and gives him a dead man's place at her table, and there is no uniform this time and no institution to check him — a family is not an institution, it is a story a number of people have agreed to. He is qualified for none of it, and at none of it is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done. Each account is written for whoever comes next, and each one is a little more honest than the last about what he is doing there."
+    synopsis: "Six accounts by a burglar who keeps being handed other men's authority and keeps turning out to be good at it. He walks out of a hospital in Mashhad in a dead cleric's clothes, and nine men who have waited eleven nights for a custodian take his bag and walk him up the hill. Then a bag on a luggage rack makes him the doctor a village of four hundred stopped expecting. Then a pass shuts behind him in a gorge and he is the teacher of forty children across six grades, and he cannot read. Then a man in a lanyard takes him for the inspector, and he walks into a prison. Then a woman of seventy-four looks at his hands on a doorstep and gives him a dead man's place at her table, and there is no uniform this time and no institution to check him — a family is not an institution, it is a story a number of people have agreed to. Then, twenty years in, somebody asks him to be the one man he has never once pretended to be: himself, under oath, telling the truth. He is qualified for none of it, and at none of it is he quite a fraud: what he has is the one thing nobody can counterfeit and everybody can recognise, which is the standing to be looked at while something is done. Each account is written for whoever comes next, and each one is a little more honest than the last about what he is doing there."
   },
   {
     /* 72 and 73 tell one story twice, so this was the first group
