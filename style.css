@@ -1774,6 +1774,28 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   mask-composite: intersect;
 }
 
+/* A feature row (currently just book 75, "Vision 1404") sits alone
+   against the page background above and below it, rather than
+   between other rows in a scrolling shelf -- the ordinary vertical
+   fade above is tuned for that shelf, and reaches most of its own
+   strength before it ever reaches the row's real top and bottom edge,
+   which left a faint band rather than a true blend. This carries the
+   same three-layer mask deeper into the picture so both edges reach
+   full transparency exactly at the row's own boundary. Horizontal and
+   radial layers are unchanged. */
+.start-row--blend .start-scene {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, transparent 8%, #000 32%, #000 68%, transparent 92%, transparent 100%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, rgba(0,0,0,0.22) 14%, rgba(0,0,0,0.62) 34%, #000 58%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, transparent 8%, #000 32%, #000 68%, transparent 92%, transparent 100%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,0.6) 66%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
 /* The mask above fades the picture to nothing across the last 4% of
    its OWN box (96%-100%) — but that box is 124% wide and pushed
    right: -5rem, so its right edge sits well past the card, out where
@@ -3012,12 +3034,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 }
 
 /* A recommended series with a plain wide banner instead of a portrait
-   behind the text -- no mask, no absolute positioning, no hole for the
-   words to sit in. The picture sits above the name and the blurb in
-   normal flow, at whatever aspect ratio it was made at (the Delgosha
-   and Unsaid banners are close but not identical -- 16:9 and roughly
-   3:2 -- so this asks for a width and lets height follow, rather than
-   forcing both into one ratio and cropping either). */
+   behind the text -- no hard edge, no hole for the words to sit in.
+   The name now leads (moved above the picture, matching how every
+   other series in the file is announced before its art rather than
+   captioned under it); the banner follows at whatever aspect ratio it
+   was made at (the Delgosha and Unsaid banners are close but not
+   identical -- 16:9 and roughly 3:2 -- so this asks for a width and
+   lets height follow, rather than forcing both into one ratio and
+   cropping either); the blurb comes last. */
 .series-feature {
   margin: 1.6rem 0 0;
 }
@@ -3026,32 +3050,93 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin-top: 3rem;
 }
 
+/* Extra air where the recommended-series heading meets the first
+   series' own name, and where one series' single-book row meets the
+   next series' name below it -- previously nothing but a collapsed
+   margin separated either pair, which read as one continuous run
+   rather than a heading followed by a section, or two distinct
+   series back to back. */
+.series-heading + .series-feature {
+  margin-top: 2.75rem;
+}
+
+.start + .series-feature {
+  margin-top: 2.75rem;
+}
+
+@media (min-width: 46rem) {
+  .series-heading + .series-feature { margin-top: 3.25rem; }
+  .start + .series-feature { margin-top: 3.25rem; }
+}
+
+/* The name, first now rather than last. No margin of its own beyond
+   the shared .series-name rule's bottom spacing -- its top margin
+   collapses harmlessly with .series-feature's (or the rule above's)
+   larger one. */
+.series-feature > .series-name {
+  margin-top: 0;
+}
+
+/* Bled past its own column and feathered on every edge, the way the
+   start-row backgrounds bleed and fade rather than sitting as a
+   bordered photo -- so the banner reads as part of the page rather
+   than a picture dropped onto it. overflow is left visible (not
+   hidden, as a hard-edged inset photo needed) since the fade is what
+   now ends the picture, and .stage/.panel already leave overflow
+   alone for exactly this reason (see .start-scene above); only the
+   document root clips the surplus. */
 .series-banner {
   display: block;
+  position: relative;
   width: 100%;
-  border-radius: 2px;
-  overflow: hidden;
 }
 
 .series-banner img {
   display: block;
-  width: 100%;
+  width: 122%;
+  margin-left: -11%;
   height: auto;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%),
+    radial-gradient(120% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%),
+    radial-gradient(120% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
 /* Same measure as .start-note, not .series-blurb's 48%-of-the-block
    figure -- that number is sized to the gap between .series-portrait's
-   two painted faces, which this layout doesn't have. */
+   two painted faces, which this layout doesn't have. Same type as
+   .start-note too now: same family (both already sat on --serif, so
+   this was really about matching the size, weight and colour, not the
+   face), same fixed size rather than a fluid clamp, same line-height,
+   same faded ink -- .start-note's own text-shadow is left out, since
+   that exists only to hold its letters off a background photo, which
+   this block, sitting on plain ground, doesn't have. */
 .series-feature-blurb {
   max-width: 34rem;
   margin: 0 auto;
   padding: 0 var(--text-edge);
   font-family: var(--serif);
-  font-size: clamp(0.9375rem, 2.6vw, 1.0625rem);
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.48;
   text-align: center;
-  color: var(--parchment);
-  opacity: 0.86;
+  color: var(--faded);
+}
+
+@media (max-width: 34rem) {
+  .series-feature-blurb { font-size: 0.875rem; }
+}
+
+/* Space beneath the synopsis before its single featured book, so the
+   two divide clearly instead of the row reading as one more line of
+   the paragraph above it. */
+.series-feature + .start {
+  margin-top: 1.75rem;
 }
 
 .series-rec {
@@ -3369,6 +3454,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      the break before it. */
   margin-left: 0.6rem;
   text-shadow: 0 1px 14px rgba(5, 4, 3, 0.9);
+}
+
+/* For a card whose Farsi title reads better introducing the English
+   name than following it (book 89) — set on its own line above the
+   number and title, rather than the trailing, same-line placement
+   every other card uses. Its own leading space (see the comment
+   above) is wrong here, since nothing sits to its right on this
+   line. */
+.start-title-fa.start-title-fa--lead {
+  display: block;
+  margin-left: 0;
+  margin-bottom: 0.3rem;
 }
 
 /* Beneath the title line rather than beside it — a line of its own,
