@@ -3147,13 +3147,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   align-items: baseline;
   gap: 1rem;
   margin-top: 2.4rem;
-  /* Negative on purpose. The banner below slides up UNDER the name, so
-     the words sit down ON the art's own faded top edge instead of
-     floating in the gap above it. The banner's top 16% is already
-     masked away to nothing (see .series-banner img), which means the
-     letters land on shadow rather than on detail — no scrim needed,
-     only the text-shadow below to hold them off the sky. */
-  margin-bottom: -2.4rem;
+  /* The name is still carried well DOWN from whatever sits above it —
+     that is what the 2.4rem top margin is for, and it is the part of
+     the original brief that stands. What it no longer does is overlap
+     the picture. This margin was -2.4rem, which pulled the banner up
+     under the words so they sat on the art's faded top edge; that
+     worked while the fade was supplied by .series-banner img's mask
+     alone, but the new paintings carry their own baked-in fade and
+     their composition begins close to the top, so the letters ended up
+     against the picture rather than resting above it. A positive value
+     now, so there is real air between the two. */
+  margin-bottom: 1.1rem;
   text-shadow: 0 2px 16px rgba(5, 4, 3, 0.95), 0 0 44px rgba(5, 4, 3, 0.85);
 }
 
@@ -3170,13 +3174,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   opacity: 1;
 }
 
-/* On a phone the banner is only a couple of inches tall, and the
-   desktop overlap would drop the name past its faded edge onto the
-   picture proper. */
+/* A phone has less room above the banner to begin with, so both the
+   drop and the clearance are scaled back rather than dropped. */
 @media (max-width: 40rem) {
   .series-feature > .series-name {
     margin-top: 1.4rem;
-    margin-bottom: -1.4rem;
+    margin-bottom: 0.8rem;
     gap: 0.7rem;
   }
 }
