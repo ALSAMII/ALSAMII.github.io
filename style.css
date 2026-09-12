@@ -7801,7 +7801,13 @@ html[data-theme="light"] .t-banner img {
    line, with no fixed left edge to return to. A measure this long is
    the single biggest reason the panel reads as hard work. */
 .series-feature .series-feature-blurb {
-  max-width: 34rem;
+  /* Full panel width, matching the banner above it. A narrower measure
+     reads more easily, but it left a band of dead space down the right
+     of a very wide banner and the block stopped looking deliberate.
+     The left edge does most of the work anyway: centred text is hard
+     to read because the eye cannot find where the next line starts,
+     and that is fixed whatever the measure. */
+  max-width: none;
   margin: 1.5rem 0 0;
   text-align: left;
   line-height: 1.62;
@@ -7864,6 +7870,15 @@ html[data-theme="light"] .t-banner img {
 .series-feature + .start .series-cycle-book:hover .series-cycle-num,
 .series-feature + .start .series-cycle-book:focus-visible .series-cycle-num {
   color: var(--ember);
+}
+
+/* The book synopsis on the Start Here card. It carries its own
+   max-width: 32rem from the general .start-note rule, which is right
+   for the narrow Noir / Transgressive / Plausible rows but leaves the
+   series card's text stopping well short of the banner. Released here
+   only, where the card has the full panel to work with. */
+.series-feature + .start .start-note {
+  max-width: none;
 }
 
 /* Reading time, written in by script.js from each book's own words
