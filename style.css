@@ -3787,7 +3787,12 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border-radius: 50%;
   color: var(--parchment);
   cursor: pointer;
-  opacity: 0;
+  /* Visible by default. On a touch screen there is no hover, so a
+     control hidden until hover costs the reader a wasted tap: the
+     first tap only produces the button, the second one uses it. The
+     hide is therefore moved into the hover query below, which is what
+     .row-zoom and .gcard-zoom already do. Fixed 2026-09-12 16:37 PDT. */
+  opacity: 1;
   transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
   padding: 0;
 }
@@ -3800,10 +3805,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border-color: var(--ember-soft);
 }
 
-.series-start-card:hover .series-zoom,
-.series-start-card:focus-within .series-zoom,
-.series-zoom:focus-visible {
-  opacity: 1;
+/* Mouse and trackpad only. A pointing device can reveal the button by
+   moving over the card, so the grid reads as covers first; a finger
+   cannot, so on touch the button above simply stays on. */
+@media (hover: hover) and (pointer: fine) {
+  .series-zoom { opacity: 0; }
+
+  .series-start-card:hover .series-zoom,
+  .series-start-card:focus-within .series-zoom,
+  .series-zoom:focus-visible {
+    opacity: 1;
+  }
 }
 
 .series-start-cover img {
@@ -7785,7 +7797,21 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 1 · last updated 2026-09-12 13:19 PDT
+   Version 2 · last updated 2026-09-12 16:37 PDT
+
+   v2  2026-09-12 16:37 PDT — .series-zoom (the magnifier on the series
+       start cover, ~line 3773 above) was hidden at opacity 0 and
+       revealed only by :hover / :focus-within on the card. On a phone
+       that made it a two-tap control: the first tap raised the
+       emulated hover state and produced the button, the second tap
+       opened the zoom. The hide now sits inside
+       @media (hover: hover) and (pointer: fine), matching .row-zoom
+       and .gcard-zoom, so touch gets the button straight away.
+       Edited in place at the rule rather than overridden from here,
+       because a later override would leave two live opacity rules for
+       the same control and the next reader would have to work out
+       which one won.
+   v1  2026-09-12 13:19 PDT — single-column panel.
 
    Every rule below is scoped with `.series-feature + .start` or
    `.series-feature`, so it reaches the recommended-series panels and
