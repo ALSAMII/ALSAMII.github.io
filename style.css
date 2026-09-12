@@ -3656,6 +3656,42 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   background: radial-gradient(circle at center, transparent 20%, rgba(216, 166, 95, 0.25) 100%);
 }
 
+.series-zoom {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: rgba(11, 9, 7, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(233, 223, 201, 0.35);
+  border-radius: 50%;
+  color: var(--parchment);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  padding: 0;
+}
+
+.series-zoom svg { width: 0.75rem; height: 0.75rem; display: block; }
+
+.series-zoom:hover,
+.series-zoom:focus-visible {
+  background: rgba(11, 9, 7, 0.8);
+  border-color: var(--ember-soft);
+}
+
+.series-start-card:hover .series-zoom,
+.series-start-card:focus-within .series-zoom,
+.series-zoom:focus-visible {
+  opacity: 1;
+}
+
 .series-start-cover img {
   display: block;
   width: 100%;

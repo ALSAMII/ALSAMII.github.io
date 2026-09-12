@@ -1997,6 +1997,46 @@
     }
   });
 
+  /* Make series-start-cover images openable to show the pairs covers.
+     Add a magnifying glass icon to the top right corner. */
+  document.querySelectorAll(".series-start-card").forEach(function (card) {
+    var cover = card.querySelector(".series-start-cover img");
+    if (!cover) return;
+
+    var bookNum = Number(card.dataset.book);
+    var book = bookNum ? byNum[bookNum] : null;
+    if (!book) return;
+
+    var pairSrc = pairCoverFor(bookNum);
+    var plainSrc = cover.getAttribute("src") || coverFor(bookNum);
+    var caption = bookNum + " · " + book.title;
+
+    /* Create magnifying glass icon */
+    var zoomIcon = document.createElement("button");
+    zoomIcon.type = "button";
+    zoomIcon.className = "series-zoom";
+    zoomIcon.setAttribute("aria-label", "View the " + book.title + " cover full size");
+    zoomIcon.title = "View full size";
+    zoomIcon.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+      'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ' +
+      'aria-hidden="true"><circle cx="10.3" cy="10.3" r="6.3"/>' +
+      '<path d="M10.3 7.6v5.4M7.6 10.3h5.4"/>' +
+      '<path d="M19.4 19.4l-4.3-4.3"/></svg>';
+
+    zoomIcon.addEventListener("click", function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      openCover(pairSrc, caption, zoomIcon, plainSrc);
+    });
+
+    /* Insert icon into the cover container */
+    var coverContainer = card.querySelector(".series-start-cover");
+    if (coverContainer) {
+      coverContainer.append(zoomIcon);
+    }
+  });
+
   /* Open straight onto a shared link, and follow the back button.
 
      A reload is the exception. Opening a book writes its name into the
