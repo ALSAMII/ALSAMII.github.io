@@ -7782,3 +7782,107 @@ html[data-theme="light"] .t-banner img {
     color: var(--ember-lit);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
+   Version 1 · last updated 2026-09-12 13:19 PDT
+
+   Every rule below is scoped with `.series-feature + .start` or
+   `.series-feature`, so it reaches the recommended-series panels and
+   nothing else — the Noir / Transgressive / Plausible start rows and
+   the book panel's own cycle list keep exactly the styling they had.
+
+   Appended rather than edited in place: at equal specificity the last
+   rule wins, so the originals above stay readable as the record of
+   what the panel used to be.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* The synopsis. It was centred at 46rem — near ninety characters a
+   line, with no fixed left edge to return to. A measure this long is
+   the single biggest reason the panel reads as hard work. */
+.series-feature .series-feature-blurb {
+  max-width: 34rem;
+  margin: 1.5rem 0 0;
+  text-align: left;
+  line-height: 1.62;
+  color: var(--parchment);
+}
+
+/* The two signs. They were centred caps at the same volume as the
+   series name above them, so nothing said which one led. Dropped to
+   the secondary colour and given a hairline, which now carries the
+   section break the heading used to have to shout. */
+.series-feature + .start .start-heading {
+  margin: 2.4rem 0 1.1rem;
+  padding-top: 1.5rem;
+  padding-inline: var(--text-edge);
+  border-top: 1px solid var(--hairline);
+  text-align: left;
+  color: var(--faded);
+}
+
+/* The eight, from a wrapping sentence to a column. */
+.series-feature + .start .series-cycle-list {
+  display: grid;
+  /* The flex rule above centres its line; on a grid that same
+     declaration centres the single implicit track, which left the
+     column floating in the middle of the panel while everything else
+     sat on the left edge. Both axes are reset explicitly. */
+  justify-content: stretch;
+  justify-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  max-width: none;
+  margin: 0;
+  padding-inline: var(--text-edge);
+}
+
+/* The middots did the work of separating entries in a sentence. A
+   column separates them by being a column. */
+.series-feature + .start .series-cycle-sep { display: none; }
+
+/* Three columns on one baseline: number, title, length. The title is
+   a bare text node between the two spans, which lands as an anonymous
+   grid item in the middle track — no markup change needed. */
+.series-feature + .start .series-cycle-book {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr auto;
+  align-items: baseline;
+  gap: 0 0.9rem;
+  width: 100%;
+  padding: 0.58rem 0;
+  font-size: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(216, 208, 192, 0.07);
+}
+.series-feature + .start .series-cycle-book:last-child { border-bottom: 0; }
+
+.series-feature + .start .series-cycle-num {
+  opacity: 1;
+  color: var(--ember-dim);
+}
+.series-feature + .start .series-cycle-book:hover .series-cycle-num,
+.series-feature + .start .series-cycle-book:focus-visible .series-cycle-num {
+  color: var(--ember);
+}
+
+/* Reading time, written in by script.js from each book's own words
+   field. Tabular figures so the column lines up down the list. */
+.series-cycle-time {
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faded);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 34rem) {
+  .series-feature .series-feature-blurb { font-size: 0.875rem; }
+  .series-feature + .start .series-cycle-book {
+    grid-template-columns: 2.1rem 1fr auto;
+    gap: 0 0.6rem;
+    font-size: 0.9375rem;
+  }
+}

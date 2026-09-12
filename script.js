@@ -1997,6 +1997,31 @@
     }
   });
 
+  /* Reading time on every row of a recommended series' book list.
+     index.html carries the eight buttons but no figure, and it should
+     not: the time is derived from that book's own words field, the
+     same way the Start Here cards get theirs, so it can never
+     disagree with the data-book it sits on. The span is built here
+     rather than typed into the markup because the same list appears
+     under every recommended series, and a hand-typed figure in three
+     places is three chances to be wrong.
+
+     Scoped to ".series-feature + .start" so the book panel's own
+     cycle list, which has no room for a third column, is untouched. */
+  document.querySelectorAll(".series-feature + .start .series-cycle-book")
+    .forEach(function (btn) {
+      if (btn.querySelector(".series-cycle-time")) return;
+      var s = byNum[Number(btn.dataset.book)];
+      var t = s ? readingTime(s.words) : "";
+      /* "58 min read" and "1.5 hours read" are right on a card with
+         room to breathe. In a narrow third column they are not. */
+      t = t.replace(/ read$/, "").replace(/ hours?$/, " h");
+      var slot = document.createElement("span");
+      slot.className = "series-cycle-time";
+      slot.textContent = t || "\u2014";
+      btn.append(slot);
+    });
+
   /* Make series-start-cover images openable to show the pairs covers.
      Add a magnifying glass icon to the top right corner. */
   document.querySelectorAll(".series-start-card").forEach(function (card) {
