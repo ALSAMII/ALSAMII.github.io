@@ -1954,7 +1954,7 @@
      scenes use. A series can be featured the day its books go up and
      collect its paintings afterwards; each one takes over the moment
      its file lands in assets/, with no change to the markup. */
-  document.querySelectorAll(".series-cover img[data-art], .series-portrait img[data-art], .series-banner img[data-art]").forEach(function (im) {
+  document.querySelectorAll(".series-cover img[data-art], .series-portrait img[data-art], .series-banner img[data-art], .series-start-cover img[data-art]").forEach(function (im) {
     im.loading = "lazy";
     im.setAttribute("fetchpriority", "low");
     /* A dedication portrait stands on no card, so it has no book to

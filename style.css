@@ -3069,12 +3069,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start + .series-feature { margin-top: 3.25rem; }
 }
 
-/* The name, first now rather than last. No margin of its own beyond
-   the shared .series-name rule's bottom spacing -- its top margin
-   collapses harmlessly with .series-feature's (or the rule above's)
-   larger one. */
+/* The name, first now rather than last. A small top margin of its
+   own -- not 0 -- so the words sit a little clear of the block's own
+   top edge rather than flush against it; still far short of the
+   shared .series-name rule's 1.1rem base, which was sized for
+   sitting right under the heading device's rule, not for opening a
+   block on its own. */
 .series-feature > .series-name {
-  margin-top: 0;
+  margin-top: 0.5rem;
 }
 
 /* Bled past its own column and feathered on every edge, the way the
@@ -3118,7 +3120,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    that exists only to hold its letters off a background photo, which
    this block, sitting on plain ground, doesn't have. */
 .series-feature-blurb {
-  max-width: 34rem;
+  max-width: 46rem;
   margin: 0 auto;
   padding: 0 var(--text-edge);
   font-family: var(--serif);
@@ -3577,6 +3579,214 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* Written by script.js, so it must not hold a line open before it has
    anything to say. */
 .series-fact:has(.series-time:empty) { visibility: hidden; }
+
+/* ============================================================
+   "Start the Series Here" — the featured book's own 3D cover,
+   used in place of a wide background scene for a series whose
+   promoted book (75, 89, 63) has no painted backdrop of its own.
+   A single card, cover on the left and the number/title/synopsis
+   stacked beside it — the reference layout given for this component
+   — then every book in that series listed underneath, in one
+   wrapping line rather than a second stack of cards.
+   ============================================================ */
+
+.series-start-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.15rem;
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+  /* Fixed, not var(--text-edge): that variable collapses to 0 on a
+     phone so the frame itself can supply the outer gutter and every
+     flush, borderless row can run edge to edge inside it. This card
+     draws its own border, so it needs its own padding regardless of
+     what the frame is doing around it. */
+  padding: 1.15rem 1.25rem;
+  text-align: left;
+  background: none;
+  border: 1px solid var(--ember-soft);
+  border-radius: 10px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.series-start-card:hover,
+.series-start-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--ember);
+}
+
+.series-start-card:focus-visible {
+  outline: 1px solid var(--ember-soft);
+  outline-offset: 6px;
+}
+
+/* The book's own 3D render — front cover and spine, the same asset
+   the shelf and the cover-zoom lightbox use (covers/NN.jpg, never
+   the front-and-back covers/pairs/NN.jpg composite, which belongs
+   to the zoom view alone). Framed plainly, at the size a portrait
+   cover reads best, rather than bled and faded the way a painted
+   scene is above. */
+.series-start-cover {
+  flex: none;
+  display: block;
+  width: 7.5rem;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 16px 34px var(--cast-deep);
+}
+
+.series-start-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.series-start-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+/* "75 · Book Three" — number and where it sits in the run, on one
+   line, the way the reference card gives it. The title is its own
+   line below rather than sharing this one with the number, so a
+   long name never has to fight the label for room. */
+.series-start-kicker {
+  color: var(--ember);
+  opacity: 0.9;
+}
+
+/* English, then the Farsi title on the same line to its right —
+   block, not flex, and each name its own nowrap unit inside it: the
+   same device .start-head uses elsewhere on the panel, so the pair
+   only breaks onto two lines if the card is genuinely too narrow
+   for both, rather than wrapping the moment either name is long.
+   The card is widened above (36rem) precisely so that almost never
+   happens at normal widths. */
+.series-start-title {
+  display: block;
+  white-space: normal;
+}
+
+.series-start-title-en {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.0625rem, 3.4vw, 1.375rem);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--parchment);
+  white-space: nowrap;
+}
+
+/* Trailing the English name, at its own baseline, with the usual
+   leading space before it (.start-title-fa's own margin-left) now
+   that something sits to its LEFT again. white-space: nowrap comes
+   from that same base rule, so the Farsi name itself never breaks
+   mid-word — it drops whole to a second line if it has to. */
+.series-start-body .start-title-fa {
+  display: inline;
+  text-align: left;
+}
+
+.series-start-body .start-note {
+  text-align: left;
+  margin-top: 0.15rem;
+}
+
+.series-start-body .start-time {
+  margin-top: 0.15rem;
+  margin-bottom: 0;
+}
+
+.series-start-card:hover .start-note,
+.series-start-card:focus-visible .start-note { color: var(--parchment); }
+
+/* The card sits right above this heading with the frame's usual
+   1.5rem gap between every pair of children in .start — on top of
+   .start-heading's own 2.1rem margin, that read as a long way from
+   the card it belongs to. Pulled up so it sits close under the
+   card's bottom edge instead. */
+.series-start-card + .start-heading {
+  margin-top: 0.4rem;
+}
+
+/* All the other books in the series, listed under the card — one
+   wrapping line, number then title then a small diamond dividing it
+   from the next, rather than a second stack of cards. Both gaps
+   opened up from their first pass: cramped together, the row read
+   as one long run-on rather than eight separate books. */
+.series-cycle-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 1rem 0.85rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0 var(--text-edge);
+}
+
+.series-cycle-book {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.15rem 0.2rem;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-family: var(--serif);
+  font-size: 0.9375rem;
+  color: var(--faded);
+  cursor: pointer;
+}
+
+.series-cycle-num {
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
+  color: var(--ember);
+  opacity: 0.8;
+}
+
+.series-cycle-sep {
+  color: var(--ember);
+  opacity: 0.4;
+  font-size: 0.9375rem;
+}
+
+.series-cycle-book:hover,
+.series-cycle-book:focus-visible { color: var(--parchment); }
+
+.series-cycle-book:hover .series-cycle-num,
+.series-cycle-book:focus-visible .series-cycle-num { opacity: 1; }
+
+.series-cycle-book:focus-visible { outline: 1px solid var(--ember-soft); outline-offset: 3px; }
+
+/* The book already on the card above, picked out here so the list
+   reads as "you are here" rather than a plain index. */
+.series-cycle-book.is-current {
+  color: var(--ember);
+  text-decoration: underline;
+  text-decoration-color: var(--ember-soft);
+  text-underline-offset: 0.2rem;
+}
+
+.series-cycle-book.is-current .series-cycle-num { opacity: 1; }
+
+@media (max-width: 28rem) {
+  .series-start-card { gap: 0.85rem; padding: 1rem; }
+  .series-start-cover { width: 5.5rem; }
+  .series-cycle-book { font-size: 0.875rem; }
+}
 
 /* ============================================================
    Footer
