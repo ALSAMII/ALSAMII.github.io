@@ -3594,19 +3594,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-start-card {
   position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
   width: 100%;
-  max-width: 10rem;
-  margin: 0 auto;
+  margin: 0;
   /* Fixed, not var(--text-edge): that variable collapses to 0 on a
      phone so the frame itself can supply the outer gutter and every
      flush, borderless row can run edge to edge inside it. This card
      draws its own border, so it needs its own padding regardless of
      what the frame is doing around it. */
   padding: 0;
-  text-align: center;
+  text-align: left;
   background: none;
   border: none;
   border-radius: 0;
@@ -3633,7 +3632,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    cover reads best, rather than bled and faded the way a painted
    scene is above. */
 .series-start-cover {
-  flex: none;
+  flex: 0 0 auto;
   display: block;
   width: 7.5rem;
   aspect-ratio: 2 / 3;
@@ -3675,7 +3674,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   gap: 0.25rem;
   min-width: 0;
   flex: 1 1 auto;
-  width: 100%;
+  text-align: left;
 }
 
 /* "75 · Book Three" — number and where it sits in the run, on one
@@ -3687,6 +3686,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-size: 0.75rem;
   line-height: 1.2;
   white-space: nowrap;
+  text-align: left;
 }
 
 /* English, then the Farsi title on the same line to its right —
@@ -3712,15 +3712,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   font-size: 0.8125rem;
   line-height: 1.2;
-  text-align: center;
+  text-align: left;
   margin-top: 0.1rem;
 }
 
 .series-start-body .start-note {
-  text-align: center;
+  text-align: left;
   margin-top: 0.4rem;
-  font-size: 0.8125rem;
-  line-height: 1.35;
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--faded);
 }
 
