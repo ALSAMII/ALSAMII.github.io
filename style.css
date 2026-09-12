@@ -2634,7 +2634,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      element need mask-composite, and where a browser does not honour
      it they add instead of intersect, which is the bug that used to
      leave the card paintings ending in a hard edge. One mask per
-     element needs no compositing anywhere. */
+     element needs no compositing anywhere.
+
      The fade is finished by 6%, which is where the block's edge falls:
      the box is 112% of the block, so the overhang is 6% of the block
      at each side, which is 5.4% of the box. The ramp is finished by 7%
@@ -2648,7 +2649,8 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      that faces the words instead of stopping against them. A gentler
      outer ramp would put opaque paint over the shelf again, which was
      the bug; a longer inner one would start eating her face, which is
-     on the inward side of both heads. */
+     on the inward side of both heads.
+
      Many stops, not three. A ramp built from two or three stops has a
      kink at each one, and on a field this dark a kink is a visible
      line — which is what made the picture read as a rectangle laid on
@@ -3069,6 +3071,70 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start + .series-feature { margin-top: 3.25rem; }
 }
 
+/* ---- Between one recommended series and the next ----------
+   A hairline that fades out at both ends with a single ember point at
+   its centre: the same vocabulary as the .series-heading device above,
+   spoken quietly. It closes one series' run of books before the next
+   series' name opens, so the three sections stop reading as one long
+   scroll.
+
+   It is an empty aria-hidden div rather than a border or a pseudo
+   on the sections themselves, because the two it divides are different
+   elements (.series-feature and .series-intro) and a reader should be
+   able to move or drop one without touching either neighbour.
+
+   NOTE: this element sits between .start and the section that follows,
+   so it breaks the `.start + .series-feature` adjacency above — which
+   is why the pair below zero the next section's top margin and let the
+   divider's own bottom margin set the whole gap. */
+.series-divider {
+  position: relative;
+  width: min(100%, 42rem);
+  height: 1px;
+  margin: 3.6rem auto 2.8rem;
+  background: linear-gradient(to right,
+    transparent 0,
+    var(--hairline) 20%,
+    var(--ember-soft) 50%,
+    var(--hairline) 80%,
+    transparent 100%);
+}
+
+.series-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--ember);
+  opacity: 0.65;
+}
+
+.series-divider + .series-feature,
+.series-divider + .series-intro {
+  margin-top: 0;
+}
+
+@media (max-width: 40rem) {
+  .series-divider { margin: 2.6rem auto 2rem; }
+}
+
+/* A phone has no spare width either side to bleed into — the panel is
+   already within 10px of both edges — so the widening above is pulled
+   back to almost nothing here. */
+@media (max-width: 34rem) {
+  /* Qualified with .panel so it outranks the single-column widening
+     further down the file — that rule is later in source order, and at
+     equal specificity later wins. */
+  .panel .series-cycle-list {
+    margin-inline: -0.4rem;
+    padding-inline: 0.7rem;
+    gap: 0.75rem 0.9rem;
+  }
+}
+
 /* The name, first now rather than last. A small top margin of its
    own -- not 0 -- so the words sit a little clear of the block's own
    top edge rather than flush against it; still far short of the
@@ -3076,7 +3142,43 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    sitting right under the heading device's rule, not for opening a
    block on its own. */
 .series-feature > .series-name {
-  margin-top: 0.5rem;
+  position: relative;
+  z-index: 2;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 2.4rem;
+  /* Negative on purpose. The banner below slides up UNDER the name, so
+     the words sit down ON the art's own faded top edge instead of
+     floating in the gap above it. The banner's top 16% is already
+     masked away to nothing (see .series-banner img), which means the
+     letters land on shadow rather than on detail — no scrim needed,
+     only the text-shadow below to hold them off the sky. */
+  margin-bottom: -2.4rem;
+  text-shadow: 0 2px 16px rgba(5, 4, 3, 0.95), 0 0 44px rgba(5, 4, 3, 0.85);
+}
+
+/* Set at the size of the English it stands beside, not two steps under
+   it. Three things were making this read as cramped rather than as the
+   other half of the name: it was smaller, a flex gap and its own left
+   margin were stacking into a 1.5rem hole beside the English, and a
+   line-height of 1 was crushing a nastaliq face whose descenders need
+   the room. All three are answered here. */
+.series-name .series-title-fa {
+  margin-left: 0;
+  font-size: 1em;
+  line-height: 1.75;
+  opacity: 1;
+}
+
+/* On a phone the banner is only a couple of inches tall, and the
+   desktop overlap would drop the name past its faded edge onto the
+   picture proper. */
+@media (max-width: 40rem) {
+  .series-feature > .series-name {
+    margin-top: 1.4rem;
+    margin-bottom: -1.4rem;
+    gap: 0.7rem;
+  }
 }
 
 /* Bled past its own column and feathered on every edge, the way the
@@ -3713,43 +3815,65 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   text-align: left;
 }
 
-/* "75 · Book Three" — number and where it sits in the run, on one
-   line, the way the reference card gives it. Now positioned below
-   the cover. */
-.series-start-kicker {
-  color: var(--ember);
-  opacity: 0.9;
-  font-size: 0.75rem;
-  line-height: 1.2;
-  white-space: nowrap;
+/* One line, in reading order: "75. Vision 1404 چشم‌انداز ۱۴۰۴ (Book
+   Three)". The number, the English name and the Persian name are all
+   set at the SAME size — the number is no longer the biggest thing on
+   the card, the title is. Only the volume label is dropped back, in
+   parentheses and in small caps, because it is the one part a reader
+   scanning for a title does not need.
+
+   Nothing here is nowrap except the Persian name and the label: a long
+   English title has to be free to wrap, and the two short pieces
+   either side of it should stay whole when it does. */
+.series-start-headline {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 2.1vw, 1.25rem);
+  line-height: 1.35;
   text-align: left;
 }
 
-/* English, then the Farsi title on the same line to its right —
-   centered and smaller to fit below cover. */
-.series-start-title {
-  display: block;
-  white-space: normal;
+.series-start-num {
+  font-weight: 600;
+  color: var(--ember);
+  margin-right: 0.32rem;
 }
 
 .series-start-title-en {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 0.9375rem;
-  line-height: 1.1;
+  font-size: inherit;
+  line-height: inherit;
   letter-spacing: 0.01em;
   color: var(--parchment);
   white-space: normal;
   word-break: break-word;
 }
 
-/* Trailing the English name, on its own line below. */
+/* Set at the English name's own size, so the pair reads as one title
+   rather than as a name with a gloss under it. The generous
+   line-height is not decoration: Gulzar is a nastaliq face and its
+   descenders drop a long way below the baseline, so at 1.35 they
+   collided with the synopsis on the line beneath. */
 .series-start-body .start-title-fa {
-  display: block;
-  font-size: 0.8125rem;
-  line-height: 1.2;
+  display: inline;
+  margin-left: 0.45rem;
+  font-size: inherit;
+  line-height: 1.9;
   text-align: left;
-  margin-top: 0.1rem;
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+/* "(Book Three)" — the only part of the line held back. */
+.series-start-vol {
+  margin-left: 0.45rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  color: var(--faded);
+  opacity: 0.9;
+  white-space: nowrap;
 }
 
 .series-start-body .start-note {
@@ -3785,27 +3909,38 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    from the next, rather than a second stack of cards. Both gaps
    opened up from their first pass: cramped together, the row read
    as one long run-on rather than eight separate books. */
+/* Given the whole width of the stage rather than a 34rem column down
+   the middle of it. At 34rem the eight Delgoshā books broke over three
+   ragged rows and the run stopped reading as a sequence; with the full
+   measure the same eight fall into one or two, and the reader's eye
+   can follow 68 → 91 straight across. */
 .series-cycle-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: baseline;
-  gap: 1rem 0.85rem;
-  max-width: 34rem;
+  gap: 0.85rem 1.05rem;
+  width: 100%;
+  max-width: 72rem;
   margin: 0 auto;
   padding: 0 var(--text-edge);
 }
 
+/* Tightened along with the width above. The container can only grow to
+   the panel it sits in, and on a narrow window that is not much — so
+   the other half of fitting a series onto fewer rows is making each
+   entry cost less: a slightly smaller face, less air between the
+   number and its title, and less padding around the pair. */
 .series-cycle-book {
   display: inline-flex;
   align-items: baseline;
-  gap: 0.4rem;
-  padding: 0.15rem 0.2rem;
+  gap: 0.32rem;
+  padding: 0.12rem 0.1rem;
   background: none;
   border: 0;
   font: inherit;
   font-family: var(--serif);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: var(--faded);
   cursor: pointer;
 }
@@ -3846,7 +3981,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 @media (max-width: 28rem) {
   .series-start-card { gap: 0.6rem; padding: 0; }
   .series-start-cover { width: 6.5rem; }
-  .series-start-title-en { font-size: 0.875rem; }
+  /* Set on the headline, not on the English name alone — the number,
+     the name and the Persian title all read off this one figure. */
+  .series-start-headline { font-size: 0.9375rem; }
+  .series-start-vol { font-size: 0.5625rem; }
   .series-cycle-book { font-size: 0.875rem; }
 }
 
@@ -4065,6 +4203,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 
   /* Stage first, list second — mirrors reading order on a phone. */
   .stage { order: -1; min-height: auto; overflow: visible; }
+
+  /* Below this breakpoint the shelf stacks above the stage instead of
+     standing beside it, so there is nothing to the left of the panel to
+     run into — which is the one width where the series' book row can
+     leave the panel's measure and take the window. Above it the rule is
+     deliberately NOT applied: the story list is there, and a full-bleed
+     row would run straight under it.
+
+     The bleed is SYMMETRIC — equal negative margins either side —
+     rather than a true 100vw full-bleed. The panel is not centred in
+     the window at these widths (at 820 it sits 81px left of centre), so
+     a viewport-anchored breakout dragged the row that far off the axis
+     everything above it is aligned to. Equal margins keep the row on
+     the page's own centre line and simply make it wider. */
+  .series-cycle-list {
+    width: auto;
+    max-width: none;
+    margin-inline: -3rem;
+    padding-inline: 1.1rem;
+  }
 
   /* The pool of shade behind the stage text is inset by -4.5rem at each
      side. On a wide window that spills harmlessly into the margins; on
