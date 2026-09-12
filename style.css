@@ -3872,8 +3872,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* "(Book Three)" — the only part of the line held back. */
 .series-start-vol {
   margin-left: 0.45rem;
-  font-size: 0.625rem;
-  letter-spacing: 0.16em;
+  /* 0.5rem, down from 0.625rem. It is a label, not part of the title —
+     the number and both titles share one size and this is the only
+     thing on the line deliberately set beneath them. Spaced caps read
+     larger than their point size suggests, which is why 10px looked
+     closer to the title than it measured. */
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
   color: var(--faded);
   opacity: 0.9;
   white-space: nowrap;
@@ -3987,7 +3992,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* Set on the headline, not on the English name alone — the number,
      the name and the Persian title all read off this one figure. */
   .series-start-headline { font-size: 0.9375rem; }
-  .series-start-vol { font-size: 0.5625rem; }
+  /* Floored at the desktop size rather than reduced further: the page
+     opens at initial-scale 0.85 on a phone, so a CSS pixel is already
+     drawn smaller there, and anything under 8px stops being readable. */
+  .series-start-vol { font-size: 0.5rem; }
   .series-cycle-book { font-size: 0.875rem; }
 }
 
