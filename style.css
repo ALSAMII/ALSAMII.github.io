@@ -1629,8 +1629,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-cat {
   position: relative;
   display: flex;
-  align-items: center;
-  gap: 0.9rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.9rem;
   /* Air above each category, very little below it: the gap is what
      groups the pair under its own heading. */
   margin: 1.9rem 0 0.1rem;
@@ -1676,27 +1677,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* No rule beside the name: with the scenes running to the edge of
    every card, one more horizontal line was one too many. */
 
-/* The dotted underline says the word has something to tell you — the
-   same hint the dials carry beneath a synopsis. */
-.start-cat-name {
-  border-bottom: 1px dotted currentColor;
-  padding-bottom: 0.12rem;
-  cursor: help;
-}
-
-/* What the category measures. Held back until asked, and floated above
-   the heading so it never moves the books beneath it. */
+/* What the category measures. Used to be a tooltip, held back until
+   hovered or focused; now a plain line shown ahead of the name on the
+   same row, in the same serif voice it always had — nothing about the
+   text itself changed, only that it no longer hides. `.start-cat`'s
+   own `flex-wrap` lets this drop to its own line first, on a screen
+   too narrow to hold both without crowding the name. */
 .start-cat-about {
-  position: absolute;
-  left: var(--text-edge);
-  bottom: calc(100% + 0.45rem);
-  z-index: 6;
-  width: max-content;
-  max-width: min(20rem, 74vw);
-  padding: 0.55rem 0.75rem;
-  background: var(--raised);
-  border: 1px solid var(--hairline);
-  box-shadow: 0 14px 30px var(--cast);
   font-family: var(--serif);
   font-size: 0.875rem;
   font-weight: 400;
@@ -1704,16 +1691,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   letter-spacing: 0.01em;
   text-transform: none;
   color: var(--faded);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-  pointer-events: none;
-}
-
-.start-cat-name:focus .start-cat-about,
-.start-cat:hover .start-cat-about {
-  opacity: 1;
-  visibility: visible;
 }
 
 .start-row {
@@ -3032,6 +3009,49 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 @media (orientation: landscape) and (max-height: 30rem) {
   .series-blurb { max-width: min(34rem, 40%); }
   .blurb-cut { display: none; }
+}
+
+/* A recommended series with a plain wide banner instead of a portrait
+   behind the text -- no mask, no absolute positioning, no hole for the
+   words to sit in. The picture sits above the name and the blurb in
+   normal flow, at whatever aspect ratio it was made at (the Delgosha
+   and Unsaid banners are close but not identical -- 16:9 and roughly
+   3:2 -- so this asks for a width and lets height follow, rather than
+   forcing both into one ratio and cropping either). */
+.series-feature {
+  margin: 1.6rem 0 0;
+}
+
+.series-feature + .series-feature {
+  margin-top: 3rem;
+}
+
+.series-banner {
+  display: block;
+  width: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.series-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Same measure as .start-note, not .series-blurb's 48%-of-the-block
+   figure -- that number is sized to the gap between .series-portrait's
+   two painted faces, which this layout doesn't have. */
+.series-feature-blurb {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 0 var(--text-edge);
+  font-family: var(--serif);
+  font-size: clamp(0.9375rem, 2.6vw, 1.0625rem);
+  line-height: 1.6;
+  text-align: center;
+  color: var(--parchment);
+  opacity: 0.86;
 }
 
 .series-rec {

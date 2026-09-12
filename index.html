@@ -127,7 +127,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=385">
+<link rel="stylesheet" href="style.css?v=387">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -495,9 +495,8 @@
         <div class="start">
 
           <p class="start-cat caps">
-            <span class="start-cat-name" tabindex="0" role="button"
-                  aria-label="Noir — How cold it gets, and whether anyone is rescued.">Noir</span>
             <span class="start-cat-about">How cold it gets, and whether anyone is rescued.</span>
+            <span class="start-cat-name">Noir</span>
           </p>
 
           <button class="start-row start-row--dreams" type="button" data-book="7">
@@ -537,9 +536,8 @@
           </button>
 
           <p class="start-cat caps">
-            <span class="start-cat-name" tabindex="0" role="button"
-                  aria-label="Transgressive — How far past comfort it goes, and what it asks you to look at.">Transgressive</span>
             <span class="start-cat-about">How far past comfort it goes, and what it asks you to look at.</span>
+            <span class="start-cat-name">Transgressive</span>
           </p>
 
           <button class="start-row start-row--stool" type="button" data-book="8"
@@ -579,9 +577,8 @@
           </button>
 
           <p class="start-cat caps">
-            <span class="start-cat-name" tabindex="0" role="button"
-                  aria-label="Plausible — How much of it could actually happen.">Plausible</span>
             <span class="start-cat-about">How much of it could actually happen.</span>
+            <span class="start-cat-name">Plausible</span>
           </p>
 
           <button class="start-row start-row--swimmer" type="button" data-book="55">
@@ -606,16 +603,15 @@
             </span>
           </button>
 
-          <button class="start-row start-row--exam" type="button" data-book="89"
-                  data-scene="assets/start-89.jpg">
+          <button class="start-row start-row--exam" type="button" data-book="35"
+                  data-scene="assets/start-35.jpg">
             <img class="start-scene" alt="" aria-hidden="true">
             <span class="start-body">
               <span class="start-head">
-                <span class="start-num">89</span>&nbsp;<span class="start-title">Three Wrong, One Right</span>
-                <span class="start-title-fa" lang="fa" dir="rtl">سه غلط، یک درست</span>
+                <span class="start-num">35</span>&nbsp;<span class="start-title">The Weight of Her</span>
                 <span class="start-time caps"></span>
               </span>
-              <span class="start-note">The exam has one rule, printed on its own cover: a wrong answer costs more than a blank ever will. Two years of practice teach a boy that being wrong is more expensive than being silent. Nine hundred thousand sit for it; one in ten gets a place. Is it better to answer and pay for it, or never answer at all?</span>
+              <span class="start-note">Roya never spoke, never reached, never turned her head, and lived ten years and eleven months, growing heavier every one. Her mother's account of the therapy that hurt her daily to save her, and the sixth year, when the visitors had stopped and nobody had noticed. What eased was said out loud; what didn't, never was.</span>
             </span>
           </button>
 
@@ -663,6 +659,97 @@
              The paintings are assets/series-63.png, -64 and -65. Should
              one ever be missing, script.js shows the book's own cover in
              the slot instead, so the cards are never bare. -->
+<!-- Recommended series: From the Delgosha, then From the Unsaid.
+             Each gets a wide banner (assets/series-<name>.jpg, on
+             data-art so script.js's webp-first loader in the
+             ".series-cover img[data-art], .series-portrait
+             img[data-art]" selector below picks it up -- extended to
+             include ".series-banner img[data-art]" for these), its own
+             synopsis ending with a start-anywhere note, and one book
+             from the series shown as a normal start-row -- the exact
+             component used above under Noir/Transgressive/Plausible,
+             just a fresh instance pointed at that book's own scene and
+             given a short note so the row stays a normal height.
+             Reuses the start-row--exam crop (object-position pulled
+             back from the right edge) rather than a new modifier
+             class, since both new scene images share that same
+             right-loaded composition and start-row--exam is already
+             tuned for it at every breakpoint. Swap the two series
+             (title, blurb, data-series, banner image, and the single
+             start-row under each) together when the feature changes.
+
+             The Unheard House block that used to live here is kept,
+             not deleted -- see the <template> just below the second
+             series, and claude/recommended-series-unheard-house.md for
+             how it was built. A <template>'s contents never render and
+             never run; it was used instead of an HTML comment because
+             that block contains comments of its own, and comments do
+             not nest. -->
+
+        <div class="series-feature" data-series="delgosha">
+          <span class="series-banner">
+            <img data-art="assets/series-delgosha.jpg" alt="">
+          </span>
+          <p class="series-name caps"><span>From the Delgosh&#257;</span><span class="series-title-fa" lang="fa" dir="rtl">&#1575;&#1586; &#1583;&#1604;&#1711;&#1588;&#1575;</span></p>
+          <p class="series-feature-blurb">Manuchehr Delgosh&#257; writes jokes that other people say out loud, and in thirty-eight years he has never once been in the room when his own work arrived. He built that at nineteen, on the conviction that a sentence with no sender cannot be prosecuted &mdash; and it hardened the night his younger brother performed eleven of his words in a Tehran basement, under his own name, and was arrested for them. Then Roshanak Azimi, twenty-two and from the south of the city, hires him to write a speech she cannot write herself, delivers it, leaves the country, and in a corridor afterwards says six words that make him laugh for the first time in eighteen years. Together they build Romanu &mdash; a brand named by accident, carrying no author, and eventually famous chiefly for that. She fills arenas in America. A machine gets trained on the work. And Manu, who has spent his life proving that what cannot feel a joke cannot write one, builds his own out of the eleven thousand pieces he refused to write. The series is about the gap between what a thing claims and what a thing is. Everyone in it is loved fluently by people who never say so &mdash; in a language made of acts rather than words, which works perfectly and cannot be quoted, so that when the person goes there is no record. Start anywhere: each book opens with enough of a recap to stand on its own.</p>
+        </div>
+
+        <div class="start">
+
+          <button class="start-row start-row--exam" type="button" data-book="75"
+                  data-scene="assets/start-75.jpg">
+            <img class="start-scene" alt="" aria-hidden="true">
+            <span class="start-body">
+              <span class="start-head">
+                <span class="start-num">75</span>&nbsp;<span class="start-title">Vision 1404</span>
+                <span class="start-title-fa" lang="fa" dir="rtl">&#1670;&#1588;&#1605;&#1548;&#1575;&#1606;&#1583;&#1575;&#1586; &#1633;&#1636;&#1632;&#1636;</span>
+                <span class="start-time caps"></span>
+              </span>
+              <span class="start-note">Roshanak Azimi is ordered to give the valedictory address at Sharif &mdash; a speech she cannot write, in a room where nine minutes of the wrong words ends a life. So she hires the one man who can, and delivers it entire.</span>
+            </span>
+          </button>
+
+        </div>
+
+        <div class="series-feature" data-series="unsaid">
+          <span class="series-banner">
+            <img data-art="assets/series-unsaid.jpg" alt="">
+          </span>
+          <p class="series-name caps"><span>From the Unsaid</span><span class="series-title-fa" lang="fa" dir="rtl">&#1606;&#1575;&#1711;&#1601;&#1578;&#1607;</span></p>
+          <p class="series-feature-blurb">THE UNSAID is named for n&#257;gofteh &mdash; the silence left in a room after the state has gone home. Each book writes whoever stood closest to it, usually the one whose job it was to decide. A teacher watches her son die on a screen and is ruined by an injury no manual has a name for. A woman in a patrol van is offered the work as a courtesy, takes the offer literally, and gives it eleven years. A crane operator lifts every load inside the limit, every time, and loses his sense of weight entirely. A judge finds every ruling correct, timely and fatal, and never hears the mother counting hours on the other side of the city. A boy gives six hundred nights to one morning, in a decade dissolving his parents&rsquo; savings while they save faultlessly, and learns that being wrong costs more than silence. None of them is a monster. Each did the job in front of him and went home at six. Start anywhere: each book opens with enough of a recap to stand on its own.</p>
+        </div>
+
+        <div class="start">
+
+          <button class="start-row start-row--exam" type="button" data-book="89"
+                  data-scene="assets/start-89.jpg">
+            <img class="start-scene" alt="" aria-hidden="true">
+            <span class="start-body">
+              <span class="start-head">
+                <span class="start-num">89</span>&nbsp;<span class="start-title">Three Wrong, One Right</span>
+                <span class="start-title-fa" lang="fa" dir="rtl">&#1587;&#1607; &#1594;&#1604;&#1591;&#1548; &#1740;&#1705; &#1583;&#1585;&#1587;&#1578;</span>
+                <span class="start-time caps"></span>
+              </span>
+              <span class="start-note">For six hundred nights he sleeps three hours and answers four hundred thousand practice questions, while his parents&rsquo; savings shrink beside him. The exam has one rule that matters: a wrong answer costs more than a blank ever will.</span>
+            </span>
+          </button>
+
+        </div>
+
+        <!-- The Unheard House, moved after From the Unsaid at the
+             user's request and simplified to match the single-book-
+             underneath-the-synopsis format the other two series use:
+             the old three-card .series-rec grid (63/64/65) is
+             replaced by one start-row for 63 alone. 64 and 65 stay in
+             the site's data (TRILOGIES, "The Unheard House") and on
+             the shelf; they are just no longer promoted here. No
+             dedicated start-63 background exists yet, so the row
+             carries no data-scene and no start-row--* modifier —
+             loadArt's lastResort falls back to the book's own cover
+             art, same as any other row with nothing more specific
+             named, and the base (unmodified) object-position keeps
+             that centred rather than pulled to an edge tuned for a
+             different picture. -->
         <div class="series-intro">
           <span class="series-portrait" aria-hidden="true">
             <img data-art="assets/forough.jpg" alt="">
@@ -713,83 +800,23 @@
           </p>
         </div>
 
-        <div class="series-rec">
+        <div class="start">
 
-          <button class="series-card" type="button" data-book="63">
-            <span class="series-cover">
-              <img data-art="assets/series-63.png" alt="" aria-hidden="true">
-            </span>
-            <span class="series-body">
-              <span class="series-head">
-                <span class="series-num"></span>
-                <span class="series-title">The House Is Patient</span>
-                <span class="series-title-fa" lang="fa" dir="rtl">خانه صبور است</span>
-                <span class="series-span caps">Book One</span>
+          <button class="start-row" type="button" data-book="63">
+            <img class="start-scene" alt="" aria-hidden="true">
+            <span class="start-body">
+              <span class="start-head">
+                <span class="start-num">63</span>&nbsp;<span class="start-title">The House Is Patient</span>
+                <span class="start-title-fa" lang="fa" dir="rtl">خانه صبور است</span>
+                <span class="start-time caps"></span>
               </span>
-              <span class="series-note">Rotterdam, 1996. Dariush burns his forearm and does not know it for four hours. Upstairs: eleven cans of famous footage shot inside a walled colony in 1962 &mdash; and eleven minutes of a woman speaking to him.</span>
-              <span class="series-foot">
-                <span class="series-fact caps">
-                  <svg class="series-ico" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>
-                  </svg>
-                  <span class="series-time"></span>
-                </span>
-                </span>
-            </span>
-          </button>
-
-          <button class="series-card" type="button" data-book="64">
-            <span class="series-cover">
-              <img data-art="assets/series-64.png" alt="" aria-hidden="true">
-            </span>
-            <span class="series-body">
-              <span class="series-head">
-                <span class="series-num"></span>
-                <span class="series-title">The House Is Ours</span>
-                <span class="series-title-fa" lang="fa" dir="rtl">خانه از آن ماست</span>
-                <span class="series-span caps">Book Two</span>
-              </span>
-              <span class="series-note">Outside Tabriz, 1938. Homa is the only person in the colony who will never fall ill, and she stays twenty-four years. In the worst week of her life she sits down against the wall and finds somewhere to go.</span>
-              <span class="series-foot">
-                <span class="series-fact caps">
-                  <svg class="series-ico" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>
-                  </svg>
-                  <span class="series-time"></span>
-                </span>
-                </span>
-            </span>
-          </button>
-
-          <button class="series-card" type="button" data-book="65">
-            <span class="series-cover">
-              <img data-art="assets/series-65.png" alt="" aria-hidden="true">
-            </span>
-            <span class="series-body">
-              <span class="series-head">
-                <span class="series-num"></span>
-                <span class="series-title">The Room Is Quiet</span>
-                <span class="series-title-fa" lang="fa" dir="rtl">اتاق ساکت است</span>
-                <span class="series-span caps">Book Three</span>
-              </span>
-              <span class="series-note">Rotterdam, now. Every evening at seven, Bahar sits by the window and goes somewhere. A company has tested four hundred thousand people, found the forty-one who can, and worked out how to sell it.</span>
-              <span class="series-foot">
-                <span class="series-fact caps">
-                  <svg class="series-ico" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>
-                  </svg>
-                  <span class="series-time"></span>
-                </span>
-                </span>
+              <span class="start-note">Rotterdam, 1996. Dariush burns his forearm and does not know it for four hours. Upstairs: eleven cans of famous footage shot inside a walled colony in 1962 &mdash; and eleven minutes of a woman speaking to him.</span>
             </span>
           </button>
 
         </div>
 
-        <div class="start-edge-veil" aria-hidden="true"></div>
+                <div class="start-edge-veil" aria-hidden="true"></div>
 
       </div>
 
@@ -949,6 +976,6 @@
 </div>
 
 <script src="stories.js?v=382"></script>
-<script src="script.js?v=387"></script>
+<script src="script.js?v=392"></script>
 </body>
 </html>
