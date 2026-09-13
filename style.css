@@ -7828,9 +7828,9 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 9 · last updated 2026-09-13 07:31 PDT
+   Version 9 · last updated 2026-09-13 07:44 PDT
 
-   v9  2026-09-13 07:31 PDT — the "Where to start" section (the block
+   v9  2026-09-13 07:44 PDT — the "Where to start" section (the block
        that was "Pick a door"). Heading renamed in index.html, a lede
        added under it, and the three category headings rebuilt as
        tinted plates. Rules are in the WHERE TO START block at the
@@ -8126,12 +8126,22 @@ html[data-theme="light"] .t-banner img {
    left-aligned column. */
 .start-lede {
   margin: 0.85rem auto 0;
-  /* min(), not a bare 46ch: on a phone 46ch of Cormorant is wider
-     than the screen, and the sentence ran off the right edge. */
-  max-width: min(46ch, 100%);
+  /* width AND max-width, not max-width alone.
+
+     This first read `max-width: min(46ch, 100%)`. The percentage makes
+     the box depend on a containing block that is itself sized from its
+     content, and a browser resolves that circle by falling back to
+     min-content — so the sentence came out one word per line in a
+     column about 100px wide. An explicit width:100% gives the box a
+     definite size to cap, and the circle is gone.
+
+     52ch, because this is a centred standfirst: past about sixty
+     characters a centred line stops being easy to re-enter. */
+  width: 100%;
+  max-width: 52ch;
   /* Its own inset, floored at 1.1rem. Unlike the plate below, this
      sentence is centred prose and is not required to line up with the
-     book numbers — and on a phone the panel runs flush to the right
+     book numbers — and below 56rem the panel runs flush to the right
      screen edge (--text-edge is 0 there), which left the last word of
      each line touching the glass. */
   padding-inline: max(var(--text-edge), 1.1rem);
@@ -8140,7 +8150,11 @@ html[data-theme="light"] .t-banner img {
   font-size: clamp(1rem, 2.8vw, 1.0625rem);
   line-height: 1.5;
   text-align: center;
-  text-wrap: pretty;
+  /* balance, not pretty: pretty only guards the last line against a
+     widow, which is the right tool for a paragraph. This is a two-line
+     centred standfirst, where the two lines wanting to be near equal
+     length matters more. */
+  text-wrap: balance;
   color: var(--faded);
 }
 
