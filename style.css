@@ -2508,9 +2508,36 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      against the heading's 15px. Everything else about the two already
      agreed: same family, same 500 weight, same caps, same ember. Only
      the scale was out, so copying the heading's own clamps makes them
-     identical at every window width rather than only at one. */
-  font-size: clamp(0.75rem, 2.9vw, 0.9375rem);
-  letter-spacing: clamp(0.16em, 0.8vw, 0.28em);
+     identical at every window width rather than only at one.
+
+     2026-09-13: no longer identical, and deliberately. The series name
+     is now the loudest thing in the panel at 26px where RECOMMENDED
+     SERIES above it stays at 15px, so the device reads as a label and
+     the name reads as the title. .sh-text keeps the original clamp —
+     the two rules share these numbers by history, not by rule, so
+     changing one does not change the other. */
+  /* 2026-09-13: set to match .start-title, the book title on the noir
+     panel ("Meat That Dreams"). Every value below is that rule's, not
+     an approximation of it — same family, same 600, same clamp, same
+     0.02em. The element still carries the `caps` class in the markup,
+     which is where the Jost, the 500 and the uppercase were coming
+     from; all three are overridden here rather than by editing .caps,
+     which a dozen other labels still rely on.
+
+     No text-shadow, and that is the one value deliberately not taken:
+     .start-title carries a halo because it sits over artwork. The
+     series name sits on plain ground, where a halo reads as a smudge.
+
+     Dropping text-transform also fixes the detached macron in
+     DELGOSHĀ. The data was always precomposed ā (U+0101); the fault
+     was that uppercase asked for Ā (U+0100), which Jost has not got.
+     Title case in Cormorant asks for the character the text actually
+     contains, in a face that has it. */
+  font-family: var(--serif);
+  font-weight: 600;
+  text-transform: none;
+  font-size: clamp(1rem, 4.6vw, 1.625rem);
+  letter-spacing: 0.02em;
   color: var(--ember);
 }
 
@@ -3178,7 +3205,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    the room. All three are answered here. */
 .series-name .series-title-fa {
   margin-left: 0;
-  font-size: 1em;
+  /* Was 1em — the same size as the English beside it. Held at a fixed
+     ratio instead: 0.77 of 26px is 20px, and because it is a ratio the
+     pair keeps its proportion at every width rather than needing a
+     second clamp of its own. */
+  font-size: 0.77em;
   line-height: 1.75;
   opacity: 1;
 }
@@ -7797,7 +7828,48 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 6 · last updated 2026-09-12 19:41 PDT
+   Version 8 · last updated 2026-09-13 05:10 PDT
+
+   v8  2026-09-13 05:10 PDT — the three series names (The Delgoshā,
+       The Unsaid, The Unheard House) restyled to match .start-title,
+       the book title on the noir panel: Cormorant Garamond 600 at
+       clamp(1rem, 4.6vw, 1.625rem), 0.02em, title case. They were
+       Jost 500 uppercase at 0.28em, inherited from the `caps` class
+       in the markup — overridden on .series-name rather than by
+       touching .caps, which many other labels still use.
+
+       Side effect worth having: the detached macron in DELGOSHĀ is
+       gone. It was never a data fault — the text is precomposed
+       U+0101 and the whole page is NFC — it was text-transform
+       asking for a capital Ā that Jost does not contain. Title case
+       in Cormorant needs no such substitution.
+
+   v7  2026-09-13 05:01 PDT — two changes.
+
+       (a) Phone sizes for the series panel, chosen by the author from
+       the type-scale panel: synopsis 19px, card synopsis 18px, list
+       titles 19px, small labels 14px. Every one is LARGER than its
+       desktop twin, which looks wrong written down and is right on the
+       screen: index.html carries initial-scale=0.85, so a phone paints
+       each CSS pixel at 85%, and 19px of CSS lands at about 16.2px of
+       letter. v1–v6 treated the phone breakpoint as the place to make
+       text smaller; on this site it is the place text has to get
+       bigger, and that was the whole of the "still too small on
+       mobile" complaint.
+
+       (b) The series heading: English name 15px -> 26px, Persian name
+       15px -> 20px. The Persian was 1em of the English and is now
+       0.77em, so the pair holds its 26:20 proportion at every width.
+       .sh-text carries the identical old clamp by history and is
+       deliberately left at 15px, so RECOMMENDED SERIES now reads as a
+       label above a title rather than as its equal.
+
+       KNOWN FAULT, not introduced here and not fixed here: the "ā" in
+       DELGOSHĀ renders with a detached macron. The text is clean —
+       precomposed U+0101, and all 2,585 text nodes on the page are
+       NFC — so this is font coverage: Jost has no U+0100 and
+       text-transform: uppercase asks for one. Invisible at 15px and
+       plain at 26px.
 
    v6  2026-09-12 19:41 PDT — the site has THREE series panels, not
        two. The Delgoshā and The Unsaid are wrapped in .series-feature;
@@ -7976,15 +8048,17 @@ html[data-theme="light"] .t-banner img {
   /* Was 0.875rem, the same as .start-note. Now 1rem, so the series
      blurb stays one step above the book synopsis at every width and
      the breakpoint is an 18px -> 16px step rather than 18px -> 14px. */
-  .series-feature .series-feature-blurb { font-size: 1.0625rem; line-height: 1.5; }
+  /* Phone sizes set from the type-scale panel. These are LARGER than
+     the desktop values on purpose: the page opens at initial-scale
+     0.85, so a phone paints every CSS pixel at 85%. Read each comment
+     as "CSS -> what the phone actually paints". */
+  .series-feature .series-feature-blurb { font-size: 1.1875rem; line-height: 1.5; }  /* 19 -> 16.2 */
   :is(.series-feature, .series-intro) + .start .series-cycle-book {
     grid-template-columns: 2.1rem 1fr auto;
     gap: 0 0.6rem;
-    /* Held at the desktop size. The row is number, title, time — the
-       title column still has room at 17px on a 390px screen, and the
-       list is the one part of the panel a reader scans rather than
-       reads, so it is the last place to shave a pixel. */
-    font-size: 1.0625rem;
+    /* Above the desktop size, not level with it — see the note on the
+       0.85 paint scale above. */
+    font-size: 1.1875rem;   /* 19 -> 16.2 */
   }
 }
 
@@ -8009,4 +8083,24 @@ html[data-theme="light"] .t-banner img {
    the floor at which that stops being true. */
 .series-start-vol {
   font-size: 0.6875rem;   /* 11px, up from 8px */
+}
+
+/* ── v7 phone sizes, and they must be LAST ──────────────────────────
+   .series-start-body .start-note and .series-start-vol are restated in
+   the v4 block above, after the media query that used to hold these.
+   A media query adds no specificity, so those later rules were winning
+   and the phone kept the desktop size — the card synopsis stayed at
+   17px when it had been set to 18, and "(Book Three)" stayed at 11px
+   when it had been set to 14. Nothing is wrong with either rule; they
+   were simply in the wrong order. These sit at the end of the file so
+   nothing can come after them.
+
+   Larger than the desktop values on purpose: initial-scale=0.85 means
+   a phone paints every CSS pixel at 85%. */
+@media (max-width: 34rem) {
+  .series-start-body .start-note { font-size: 1.125rem; }   /* 18 -> 15.3 */
+
+  .series-cycle-time,
+  .series-start-vol,
+  .series-start-body .start-time { font-size: 0.875rem; }   /* 14 -> 11.9 */
 }
