@@ -7828,9 +7828,9 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 9 · last updated 2026-09-13 07:44 PDT
+   Version 9 · last updated 2026-09-13 08:12 PDT
 
-   v9  2026-09-13 07:44 PDT — the "Where to start" section (the block
+   v9  2026-09-13 08:12 PDT — the "Where to start" section (the block
        that was "Pick a door"). Heading renamed in index.html, a lede
        added under it, and the three category headings rebuilt as
        tinted plates. Rules are in the WHERE TO START block at the
@@ -8125,20 +8125,22 @@ html[data-theme="light"] .t-banner img {
    device above it is centred; the groups below start their own
    left-aligned column. */
 .start-lede {
-  margin: 0.85rem auto 0;
-  /* width AND max-width, not max-width alone.
+  margin: 1.05rem auto 0;
+  /* ONE REM VALUE. Nothing relative to the parent, nothing relative to
+     the font.
 
-     This first read `max-width: min(46ch, 100%)`. The percentage makes
-     the box depend on a containing block that is itself sized from its
-     content, and a browser resolves that circle by falling back to
-     min-content — so the sentence came out one word per line in a
-     column about 100px wide. An explicit width:100% gives the box a
-     definite size to cap, and the circle is gone.
+     This went wrong twice. It first read `max-width: min(46ch, 100%)`;
+     the percentage makes the box depend on a containing block that is
+     itself sized from its content, a browser breaks that circle by
+     falling back to min-content, and the sentence came out one word
+     per line. The second attempt added `width: 100%` to give the box a
+     definite size — but that is a percentage too, so the circle was
+     never broken, only moved.
 
-     52ch, because this is a centred standfirst: past about sixty
-     characters a centred line stops being easy to re-enter. */
-  width: 100%;
-  max-width: 52ch;
+     A block-level <p> already fills its containing block; it needs no
+     width at all. max-width in rem resolves against the root font size
+     and nothing else, so there is no loop left to fall out of. */
+  max-width: 30rem;
   /* Its own inset, floored at 1.1rem. Unlike the plate below, this
      sentence is centred prose and is not required to line up with the
      book numbers — and below 56rem the panel runs flush to the right
@@ -8261,4 +8263,19 @@ html[data-theme="light"] .t-banner img {
   letter-spacing: normal;
   text-transform: none;
   color: var(--faded);
+}
+
+/* ---- Where to start: the heading device ----------------------------
+   The fan is gone from this heading — removed in the markup, not
+   hidden here, so the SVG is not shipped and then thrown away. The
+   .sh-* rules are untouched and the Recommended Series heading keeps
+   its fan; the two sections used to wear the identical device, which
+   meant neither of them read as the place to begin.
+
+   With the ornament gone the label carries the device alone, so it
+   comes up a step and opens out. Scoped to the modifier class so the
+   same .sh-text further down does not move with it. */
+.series-heading--start .sh-text {
+  font-size: clamp(0.8125rem, 3vw, 1rem);
+  letter-spacing: clamp(0.18em, 0.85vw, 0.3em);
 }
