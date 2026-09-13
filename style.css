@@ -7797,7 +7797,21 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 3 · last updated 2026-09-12 17:19 PDT
+   Version 5 · last updated 2026-09-12 18:58 PDT
+
+   v5  2026-09-12 18:58 PDT — series list titles 16px -> 17px, level
+       with the featured book's synopsis; the phone override comes up
+       with it (was 15px) rather than stepping down. The numbers in
+       the left column inherit and rise with the titles.
+
+   v4  2026-09-12 18:47 PDT — sizes set from the author's own reading
+       of the panel in Cormorant Garamond at full size, not from my
+       estimate. Series synopsis 18px -> 19px with the leading pulled
+       back from 1.58 to 1.45; the featured book's synopsis 14px ->
+       17px; reading times and "(Book Three)" to 11px (from 10px and
+       8px). The series list titles stay at 16px — tried larger and
+       kept at 16. Phone synopsis 16px -> 17px to follow the desktop
+       value up.
 
    v3  2026-09-12 17:19 PDT — series synopsis raised from 1rem to
        1.125rem (1rem on phones, was 0.875rem), leading eased from
@@ -7854,8 +7868,8 @@ html[data-theme="light"] .t-banner img {
      computed to 16px. Size rises with the measure; the leading comes
      back a little because the larger body no longer needs 1.62 to
      keep the rows apart. */
-  font-size: 1.125rem;
-  line-height: 1.58;
+  font-size: 1.1875rem;   /* 19px */
+  line-height: 1.45;
   color: var(--parchment);
 }
 
@@ -7902,7 +7916,7 @@ html[data-theme="light"] .t-banner img {
   gap: 0 0.9rem;
   width: 100%;
   padding: 0.58rem 0;
-  font-size: 1rem;
+  font-size: 1.0625rem;   /* 17px, level with the book synopsis above */
   text-align: left;
   border-bottom: 1px solid rgba(216, 208, 192, 0.07);
 }
@@ -7930,7 +7944,7 @@ html[data-theme="light"] .t-banner img {
    field. Tabular figures so the column lines up down the list. */
 .series-cycle-time {
   font-family: var(--sans);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;   /* 11px, up from 10px */
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--faded);
@@ -7942,10 +7956,37 @@ html[data-theme="light"] .t-banner img {
   /* Was 0.875rem, the same as .start-note. Now 1rem, so the series
      blurb stays one step above the book synopsis at every width and
      the breakpoint is an 18px -> 16px step rather than 18px -> 14px. */
-  .series-feature .series-feature-blurb { font-size: 1rem; line-height: 1.55; }
+  .series-feature .series-feature-blurb { font-size: 1.0625rem; line-height: 1.5; }
   .series-feature + .start .series-cycle-book {
     grid-template-columns: 2.1rem 1fr auto;
     gap: 0 0.6rem;
-    font-size: 0.9375rem;
+    /* Held at the desktop size. The row is number, title, time — the
+       title column still has room at 17px on a 390px screen, and the
+       list is the one part of the panel a reader scans rather than
+       reads, so it is the last place to shave a pixel. */
+    font-size: 1.0625rem;
   }
+}
+
+/* ── v4 ─────────────────────────────────────────────────────────────
+   The card's own two small texts, restated here rather than edited at
+   their original rules above, because both of those have a phone
+   override further down the file that would otherwise keep the old
+   size on a phone. Equal specificity, later in the file, no media
+   query — so one rule each covers every width. */
+
+/* The featured book's synopsis. It was 0.875rem — the smallest serif
+   anywhere on the site — sitting directly under a synopsis now set at
+   19px. Brought up to the site's own body size and one step past it. */
+.series-start-body .start-note {
+  font-size: 1.0625rem;   /* 17px, up from 14px */
+  line-height: 1.5;
+}
+
+/* "(Book Three)". At 0.5rem this was the smallest type on the page by
+   some margin. Spaced caps do read larger than they measure, which is
+   the reason given for 0.5rem at the original rule — but 8px is under
+   the floor at which that stops being true. */
+.series-start-vol {
+  font-size: 0.6875rem;   /* 11px, up from 8px */
 }
