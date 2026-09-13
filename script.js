@@ -2006,9 +2006,13 @@
      under every recommended series, and a hand-typed figure in three
      places is three chances to be wrong.
 
-     Scoped to ".series-feature + .start" so the book panel's own
-     cycle list, which has no room for a third column, is untouched. */
-  document.querySelectorAll(".series-feature + .start .series-cycle-book")
+     Scoped to the two series wrappers so the book panel's own cycle
+     list, which has no room for a third column, is untouched. Both
+     wrappers are named: The Delgoshā and The Unsaid are built with
+     .series-feature, The Unheard House with .series-intro, and a
+     selector naming only the first silently skipped that panel —
+     its three books carried no reading time at all. */
+  document.querySelectorAll(":is(.series-feature, .series-intro) + .start .series-cycle-book")
     .forEach(function (btn) {
       if (btn.querySelector(".series-cycle-time")) return;
       var s = byNum[Number(btn.dataset.book)];

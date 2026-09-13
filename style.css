@@ -7797,7 +7797,27 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 5 · last updated 2026-09-12 18:50 PDT
+   Version 6 · last updated 2026-09-12 19:41 PDT
+
+   v6  2026-09-12 19:41 PDT — the site has THREE series panels, not
+       two. The Delgoshā and The Unsaid are wrapped in .series-feature;
+       The Unheard House (63–65) is wrapped in .series-intro, so every
+       rule below stepped over it and that panel kept the original
+       design — 14px titles, the middot-separated wrapping line, no
+       reading times. Each `.series-feature + .start` is now
+       `:is(.series-feature, .series-intro) + .start`, which is the
+       same specificity (:is takes its most specific argument, one
+       class either way) so nothing else in the cascade shifts, and
+       still excludes the Noir / Transgressive / Plausible start rows
+       and the book panel's own cycle list, which have no series
+       wrapper at all.
+
+       NOT widened: the synopsis rule. The Unheard House sets its
+       blurb with `max-width: min(34rem, 48%)` because it is dropped
+       into a clear area of the painting behind it — its own rule says
+       the figure ends at 21% of the canvas and the text must stand on
+       bare page. Running that block to full width would put it across
+       her. It keeps its own measure and its own size.
 
    v5  2026-09-12 18:50 PDT — series list titles 16px -> 17px, level
        with the featured book's synopsis; the phone override comes up
@@ -7835,7 +7855,7 @@ html[data-theme="light"] .t-banner img {
        which one won.
    v1  2026-09-12 13:19 PDT — single-column panel.
 
-   Every rule below is scoped with `.series-feature + .start` or
+   Every rule below is scoped with `:is(.series-feature, .series-intro) + .start` or
    `.series-feature`, so it reaches the recommended-series panels and
    nothing else — the Noir / Transgressive / Plausible start rows and
    the book panel's own cycle list keep exactly the styling they had.
@@ -7877,7 +7897,7 @@ html[data-theme="light"] .t-banner img {
    series name above them, so nothing said which one led. Dropped to
    the secondary colour and given a hairline, which now carries the
    section break the heading used to have to shout. */
-.series-feature + .start .start-heading {
+:is(.series-feature, .series-intro) + .start .start-heading {
   margin: 2.4rem 0 1.1rem;
   padding-top: 1.5rem;
   padding-inline: var(--text-edge);
@@ -7887,7 +7907,7 @@ html[data-theme="light"] .t-banner img {
 }
 
 /* The eight, from a wrapping sentence to a column. */
-.series-feature + .start .series-cycle-list {
+:is(.series-feature, .series-intro) + .start .series-cycle-list {
   display: grid;
   /* The flex rule above centres its line; on a grid that same
      declaration centres the single implicit track, which left the
@@ -7904,12 +7924,12 @@ html[data-theme="light"] .t-banner img {
 
 /* The middots did the work of separating entries in a sentence. A
    column separates them by being a column. */
-.series-feature + .start .series-cycle-sep { display: none; }
+:is(.series-feature, .series-intro) + .start .series-cycle-sep { display: none; }
 
 /* Three columns on one baseline: number, title, length. The title is
    a bare text node between the two spans, which lands as an anonymous
    grid item in the middle track — no markup change needed. */
-.series-feature + .start .series-cycle-book {
+:is(.series-feature, .series-intro) + .start .series-cycle-book {
   display: grid;
   grid-template-columns: 2.6rem 1fr auto;
   align-items: baseline;
@@ -7920,14 +7940,14 @@ html[data-theme="light"] .t-banner img {
   text-align: left;
   border-bottom: 1px solid rgba(216, 208, 192, 0.07);
 }
-.series-feature + .start .series-cycle-book:last-child { border-bottom: 0; }
+:is(.series-feature, .series-intro) + .start .series-cycle-book:last-child { border-bottom: 0; }
 
-.series-feature + .start .series-cycle-num {
+:is(.series-feature, .series-intro) + .start .series-cycle-num {
   opacity: 1;
   color: var(--ember-dim);
 }
-.series-feature + .start .series-cycle-book:hover .series-cycle-num,
-.series-feature + .start .series-cycle-book:focus-visible .series-cycle-num {
+:is(.series-feature, .series-intro) + .start .series-cycle-book:hover .series-cycle-num,
+:is(.series-feature, .series-intro) + .start .series-cycle-book:focus-visible .series-cycle-num {
   color: var(--ember);
 }
 
@@ -7936,7 +7956,7 @@ html[data-theme="light"] .t-banner img {
    for the narrow Noir / Transgressive / Plausible rows but leaves the
    series card's text stopping well short of the banner. Released here
    only, where the card has the full panel to work with. */
-.series-feature + .start .start-note {
+:is(.series-feature, .series-intro) + .start .start-note {
   max-width: none;
 }
 
@@ -7957,7 +7977,7 @@ html[data-theme="light"] .t-banner img {
      blurb stays one step above the book synopsis at every width and
      the breakpoint is an 18px -> 16px step rather than 18px -> 14px. */
   .series-feature .series-feature-blurb { font-size: 1.0625rem; line-height: 1.5; }
-  .series-feature + .start .series-cycle-book {
+  :is(.series-feature, .series-intro) + .start .series-cycle-book {
     grid-template-columns: 2.1rem 1fr auto;
     gap: 0 0.6rem;
     /* Held at the desktop size. The row is number, title, time — the
