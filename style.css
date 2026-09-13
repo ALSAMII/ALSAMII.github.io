@@ -7828,9 +7828,9 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 9 · last updated 2026-09-13 08:34 PDT
+   Version 9 · last updated 2026-09-13 08:47 PDT
 
-   v9  2026-09-13 08:34 PDT — the "Where to start" section (the block
+   v9  2026-09-13 08:47 PDT — the "Where to start" section (the block
        that was "Pick a door"). Heading renamed in index.html, a lede
        added under it, and the three category headings rebuilt as
        tinted plates. Rules are in the WHERE TO START block at the
@@ -8237,7 +8237,12 @@ html[data-theme="light"] .t-banner img {
   left: min(0px, calc(var(--text-edge) - 0.7rem));
 }
 
-.start-cat:first-child { margin-top: 0.6rem; }
+/* The first plate has no book row above it to take the flex gap from,
+   so its own margin is the whole of the space. At 0.6rem it sat 10px
+   under the lede while every later plate sat 48px under the row above
+   it — the first group looked stuck to the heading and the other two
+   did not. 2.5rem brings it into the same rhythm. */
+.start-cat:first-child { margin-top: 2.5rem; }
 
 /* The element carries `caps` in the markup, which is where the Jost,
    the 500 and the uppercase come from. Overridden here rather than by
