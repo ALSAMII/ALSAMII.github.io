@@ -7797,7 +7797,15 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 2 · last updated 2026-09-12 16:37 PDT
+   Version 3 · last updated 2026-09-12 17:19 PDT
+
+   v3  2026-09-12 17:19 PDT — series synopsis raised from 1rem to
+       1.125rem (1rem on phones, was 0.875rem), leading eased from
+       1.62 to 1.58. It was never smaller than the book synopsis —
+       both measured 16px — but at ~92 characters a line against that
+       block's ~55, in a face with a small x-height, it read smaller.
+       Letting the size rise with the measure is the fix; narrowing
+       the measure again is not, since full width was asked for.
 
    v2  2026-09-12 16:37 PDT — .series-zoom (the magnifier on the series
        start cover, ~line 3773 above) was hidden at opacity 0 and
@@ -7836,7 +7844,18 @@ html[data-theme="light"] .t-banner img {
   max-width: none;
   margin: 1.5rem 0 0;
   text-align: left;
-  line-height: 1.62;
+  /* One step up from the 1rem it shared with the book synopsis below.
+     The measure here is ~92 characters against that block's ~55, and
+     Cormorant Garamond has a small x-height — style.css says as much
+     where --serif-read is defined: Literata was picked for the Read
+     view because it "doesn't need to be set as large to read as
+     large". Cormorant does. At 1rem across this measure the block
+     read as smaller type than the book synopsis even though both
+     computed to 16px. Size rises with the measure; the leading comes
+     back a little because the larger body no longer needs 1.62 to
+     keep the rows apart. */
+  font-size: 1.125rem;
+  line-height: 1.58;
   color: var(--parchment);
 }
 
@@ -7920,7 +7939,10 @@ html[data-theme="light"] .t-banner img {
 }
 
 @media (max-width: 34rem) {
-  .series-feature .series-feature-blurb { font-size: 0.875rem; }
+  /* Was 0.875rem, the same as .start-note. Now 1rem, so the series
+     blurb stays one step above the book synopsis at every width and
+     the breakpoint is an 18px -> 16px step rather than 18px -> 14px. */
+  .series-feature .series-feature-blurb { font-size: 1rem; line-height: 1.55; }
   .series-feature + .start .series-cycle-book {
     grid-template-columns: 2.1rem 1fr auto;
     gap: 0 0.6rem;
