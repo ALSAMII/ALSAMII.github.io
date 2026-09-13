@@ -7828,9 +7828,9 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 9 · last updated 2026-09-13 08:47 PDT
+   Version 9 · last updated 2026-09-13 09:06 PDT
 
-   v9  2026-09-13 08:47 PDT — the "Where to start" section (the block
+   v9  2026-09-13 09:06 PDT — the "Where to start" section (the block
        that was "Pick a door"). Heading renamed in index.html, a lede
        added under it, and the three category headings rebuilt as
        tinted plates. Rules are in the WHERE TO START block at the
@@ -8192,9 +8192,14 @@ html[data-theme="light"] .t-banner img {
   z-index: 2;
   display: block;
   margin: 1.5rem 0 -0.45rem;
-  /* Exactly the row's box — no horizontal margin at all, so the plate's
-     two edges sit on the row's two edges at every width. */
-  margin-inline: 0;
+  /* Left edge on the row's left edge. Right edge on the ARTWORK's right
+     edge, not the row's: .start-scene is positioned right:-5rem, so the
+     picture runs 5rem past the row it belongs to and off the side of the
+     panel. The plate now ends on the same line, so the tint and the
+     scenes beneath it share one right limit instead of the tint stopping
+     short of them. The root clips the surplus, exactly as it already
+     does for the artwork. */
+  margin-inline: 0 -5rem;
   /* And exactly the row's inner padding, so the name lands on the same
      vertical line as the book numbers below it. On a phone --text-edge
      is 0 and everything meets the frame's gutter together, which is the
