@@ -7828,9 +7828,9 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 9 · last updated 2026-09-13 08:12 PDT
+   Version 9 · last updated 2026-09-13 08:34 PDT
 
-   v9  2026-09-13 08:12 PDT — the "Where to start" section (the block
+   v9  2026-09-13 08:34 PDT — the "Where to start" section (the block
        that was "Pick a door"). Heading renamed in index.html, a lede
        added under it, and the three category headings rebuilt as
        tinted plates. Rules are in the WHERE TO START block at the
@@ -8278,4 +8278,25 @@ html[data-theme="light"] .t-banner img {
 .series-heading--start .sh-text {
   font-size: clamp(0.8125rem, 3vw, 1rem);
   letter-spacing: clamp(0.18em, 0.85vw, 0.3em);
+}
+
+/* ---- Where to start: the reading time ------------------------------
+   Down from 0.5625rem to 0.5rem — 9px to 8px, which is the floor the
+   rest of the site uses for a spaced-caps label (.rights and
+   .story-series both sit there, and the note by the phone block says
+   anything under 8px stops being readable).
+
+   Scoped to .start-row so the series panels are untouched: their card
+   carries the same .start-time class at its own size, set further up
+   and again in the phone block.
+
+   The ≤56rem rule multiplies this by --read-up (1.18), so the narrow
+   value comes down with it — 10.62px to 9.44px — rather than being
+   left behind as the larger of the two. */
+.start-row .start-time {
+  font-size: 0.5rem;
+}
+
+@media (max-width: 56rem) {
+  .start-row .start-time { font-size: calc(0.5rem * var(--read-up)); }
 }
