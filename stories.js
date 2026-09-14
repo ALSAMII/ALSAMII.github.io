@@ -1,4 +1,4 @@
-/* Version 419 · last updated 2026-09-10 13:50 PDT */
+/* Version 439 · last updated 2026-09-14 11:10 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1153,6 +1153,18 @@ const STORIES = [
     synopsis: "For forty years his rule has been simple — mock the system, never the person standing in it — and it's made him one of the country's best-loved comedians. Then a funeral hands him a nickname in front of four hundred people, built on exactly the tenderness he's never once let onstage. He starts a private notebook instead: the material about the people he loves too much to ever perform. What follows is a year spent deciding whether some things are worth keeping only for himself."
   },
 
+  {
+    num: 92,
+    title: "Equal to the Original",
+    words: "23,600 words",
+    hook: "Every file that leaves the country carries her seal, and she has never once read a name",
+    door: "Withholding",
+    room: "Nine Hundred and Four \u2014 a city still holding the people she quietly slowed, almost every one of them certain they thought it over and chose to stay",
+    key: "The Twenty-Month File \u2014 a delay that is not a refusal, cannot be appealed, and is indistinguishable from weather",
+    notes: [2, 2, 3],
+    synopsis: "\u0628\u0631\u0627\u0628\u0631 \u0627\u0635\u0644 \u2014 bar\u0101bar-e asl, \u201cequal to the original\u201d \u2014 is the formula an Iranian sworn translator stamps on a certified copy to swear it identical to the document it was made from. Mahin has been putting that seal on emigration files for twenty years, and hers is the last Iranian mark on something over thirty thousand of them; she has read perhaps forty, working from the reference number on the docket and never from the name in the box beside it. Because she is the only person who sees the files in order and in clusters, she has worked out that people do not leave because of conditions \u2014 they leave because somebody near them left, and the third departure in a circle reclassifies everyone still standing as people who failed to leave. So she keeps them: a grant, a job found through somebody\u2019s cousin, a flat lent for a season, and a fourth thing she has never described to anybody, which is that some files take twenty months instead of four. Nine hundred and four people are still in that country who would not otherwise be, and almost every one of them will tell you they thought about going and decided against it."
+  },
+
 ];
 
 
@@ -1406,7 +1418,7 @@ const TRILOGIES = [
        whoever signs, files, weighs or looks away. */
     title: "From the Unsaid · ناگفته",
     label: "",
-    books: [78, 80, 83, 86, 89],
+    books: [78, 80, 83, 86, 89, 92],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
