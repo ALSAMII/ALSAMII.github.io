@@ -1067,14 +1067,25 @@
 
     var rowImg = document.createElement("img");
     rowImg.className = "row-cover";
-    rowImg.src = cover;
+    /* stamped(), like every other cover on the page. Without it the
+       shelf was the one place a replaced cover never reached: the
+       gallery and the feature panel both ask for covers/NN.jpg?v=N and
+       pick up new art the moment index.html's ?v= is raised, while this
+       row asked for the bare covers/NN.jpg and a returning reader kept
+       whatever their browser had cached — indefinitely, and on the most
+       visible surface of the three. */
+    rowImg.src = stamped(cover);
     rowImg.alt = "";
     rowImg.loading = "lazy";
     rowImg.addEventListener("error", function () { rowImg.remove(); });
     /* The zoom view shows the pair render \u2014 front and spine beside
        the back cover \u2014 with the plain cover kept as the fallback if
        that image is missing for this book. */
-    var rowPairSrc = pairCoverFor(s.num);
+    /* stamped for the same reason as the row cover above — the
+       gallery's zoom already asks for stamped(pairCoverFor(n)) at the
+       openCover call further down, so without this the same picture
+       was cache-busted from one surface and not the other. */
+    var rowPairSrc = stamped(pairCoverFor(s.num));
     makeCoverOpen(rowImg, num + " \u00b7 " + s.title, rowPairSrc);
 
     /* A small, visible cue that the cover enlarges \u2014 the row image
@@ -1996,35 +2007,6 @@
         : "Books " + nums[0] + "\u2013" + nums[nums.length - 1];
     }
   });
-
-  /* Reading time on every row of a recommended series' book list.
-     index.html carries the eight buttons but no figure, and it should
-     not: the time is derived from that book's own words field, the
-     same way the Start Here cards get theirs, so it can never
-     disagree with the data-book it sits on. The span is built here
-     rather than typed into the markup because the same list appears
-     under every recommended series, and a hand-typed figure in three
-     places is three chances to be wrong.
-
-     Scoped to the two series wrappers so the book panel's own cycle
-     list, which has no room for a third column, is untouched. Both
-     wrappers are named: The Delgoshā and The Unsaid are built with
-     .series-feature, The Unheard House with .series-intro, and a
-     selector naming only the first silently skipped that panel —
-     its three books carried no reading time at all. */
-  document.querySelectorAll(":is(.series-feature, .series-intro) + .start .series-cycle-book")
-    .forEach(function (btn) {
-      if (btn.querySelector(".series-cycle-time")) return;
-      var s = byNum[Number(btn.dataset.book)];
-      var t = s ? readingTime(s.words) : "";
-      /* "58 min read" and "1.5 hours read" are right on a card with
-         room to breathe. In a narrow third column they are not. */
-      t = t.replace(/ read$/, "").replace(/ hours?$/, " h");
-      var slot = document.createElement("span");
-      slot.className = "series-cycle-time";
-      slot.textContent = t || "\u2014";
-      btn.append(slot);
-    });
 
   /* Make series-start-cover images openable to show the pairs covers.
      Add a magnifying glass icon to the top right corner. */
