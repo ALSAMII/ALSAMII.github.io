@@ -1560,9 +1560,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-family: var(--sans);
   font-weight: 500;
   text-transform: uppercase;
-  /* bench, 2026-09-15. The narrow-screen rules further down keep their
-     own smaller values, so this is the desktop figure only. */
-  font-size: 0.9375rem;
+  font-size: clamp(0.625rem, 2.6vw, 0.75rem);
   line-height: 1.5;
   letter-spacing: 0.13em;
   display: block;
@@ -2511,12 +2509,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      agreed: same family, same 500 weight, same caps, same ember. Only
      the scale was out, so copying the heading's own clamps makes them
      identical at every window width rather than only at one. */
-  /* Set from the type bench, 2026-09-15. NOTE: this clamp was
-     deliberately copied from .sh-text so the series name and the
-     RECOMMENDED SERIES device stayed identical at every width. A flat
-     value breaks both halves of that: the name is now larger than the
-     device above it, and it no longer steps down on a narrow screen. */
-  font-size: 1.0938rem;
+  font-size: clamp(0.75rem, 2.9vw, 0.9375rem);
   letter-spacing: clamp(0.16em, 0.8vw, 0.28em);
   color: var(--ember);
 }
@@ -3245,7 +3238,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin: 0 auto;
   padding: 0 var(--text-edge);
   font-family: var(--serif);
-  font-size: 1.0625rem;   /* bench, 2026-09-15 */
+  font-size: 1rem;
   line-height: 1.48;
   text-align: center;
   color: var(--faded);
@@ -3848,7 +3841,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   margin-bottom: 0.15rem;
   font-family: var(--serif);
-  font-size: 1.3125rem;   /* bench, 2026-09-15 */
+  font-size: clamp(1.0625rem, 2.1vw, 1.25rem);
   line-height: 1.35;
   text-align: left;
 }
@@ -3903,7 +3896,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-start-body .start-note {
   text-align: left;
   margin-top: 0.4rem;
-  font-size: 1.0625rem;   /* bench, 2026-09-15 */
+  font-size: 0.875rem;
   line-height: 1.5;
   color: var(--faded);
 }
@@ -3964,7 +3957,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border: 0;
   font: inherit;
   font-family: var(--serif);
-  font-size: 1.0625rem;   /* bench, 2026-09-15 */
+  font-size: 0.875rem;
   color: var(--faded);
   cursor: pointer;
 }
