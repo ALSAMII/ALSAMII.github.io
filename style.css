@@ -2202,11 +2202,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-gloss { white-space: normal; }
 }
 
-/* The category heading takes its width from the column, not from the
-   column's widest row. Without this it inherited the stretch and ran
-   further off the screen than the rows it labels. */
-.start-cat { width: 100%; max-width: 100%; box-sizing: border-box; }
-
 /* The panel is a grid item, so its min-width resolves to auto — the
    min-content width of everything in it. An unbreakable gloss raises
    that floor, and the panel then refuses to shrink to its track and
@@ -7402,6 +7397,25 @@ html[data-theme="light"] .start-heading {
   text-shadow: none;
 }
 
+/* ---- Noir / Transgressive / Plausible, on paper ----
+   The tint behind the three category headings is rgba(22,18,14,.92) —
+   near-opaque ink, drawn to lift the names off the artwork of the row
+   below, which on the dark theme is the only thing they have to stand
+   against. On paper there is no artwork reaching up behind them and
+   nothing to lift them off: the plate just becomes a dark bar laid
+   across a white page, and the two colours inside it are the light
+   theme's — a dark gold and a mid grey, both chosen for paper, both
+   washed out the moment they land on ink.
+
+   So the plate goes, and the names sit on the page the way every other
+   heading here does. The 2px ember rule stays: without the tint it is
+   the only thing left marking where one group of books ends and the
+   next begins, and it is the same device the rest of the light theme
+   already uses. */
+html[data-theme="light"] .start-cat {
+  background: none;
+}
+
 /* The gloss sits a step back from the synopsis on paper, where the
    synopsis has gone to near-black: at the same #16191d the aside
    would compete with the name it is explaining. Same halo removal,
@@ -7946,7 +7960,29 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 11 · last updated 2026-09-14 19:44 PDT
+   Version 12 · last updated 2026-09-14 20:05 PDT
+
+   v12 2026-09-14 20:05 PDT — two changes to the three category
+       plates (Noir, Transgressive, Plausible).
+
+       (a) On the LIGHT theme the tint is removed. It is
+       rgba(22,18,14,.92) — near-opaque ink, drawn so the names lift
+       off the artwork of the row below, which on the dark theme is
+       the only ground they have. On paper nothing reaches up behind
+       them, so the plate was simply a dark bar across a white page,
+       and the two colours inside it are the light theme's own dark
+       gold and mid grey — both chosen for paper, both washed out on
+       ink. The 2px ember rule stays: with the tint gone it is the
+       only thing marking where one group of books ends.
+
+       (b) A fault of v10's, fixed. v10 gave .start-cat width: 100%
+       to stop it inheriting the start column's stretch, which also
+       cancelled the -5rem right margin that runs the tint out to the
+       artwork's edge: the plate came back 80px short on a desktop and
+       stopped in open space instead of on the scenes' own right
+       limit. v11's .panel { min-width: 0 } fixes the stretch at its
+       source, so the cap is gone and the plate is 751px again, as it
+       was in Version 439.
 
    v11 2026-09-14 19:44 PDT — the glosses rewritten: each now names
        the turn of its book rather than paraphrasing its title. "the
