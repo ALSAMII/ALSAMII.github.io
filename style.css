@@ -1720,6 +1720,24 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   transition: transform 0.35s ease;
 }
 
+/* ---- How much height the card gets ----
+   The row's own height is what the scene is sized against — the picture
+   is 118% of it — so the cheapest way to show more artwork is to give
+   the card more height, rather than re-tuning a mask that is cut to
+   this proportion. Measured on a desktop: 223px of row -> 250px, and
+   291px of picture -> 323px, about a tenth more of it, with the words
+   getting air above and below at the same time.
+
+   Written as min-width and placed HERE rather than raised on the base
+   rule, which is the mistake this replaces: .start-row's base rule sits
+   further down the file than the narrow-phone overrides at 28rem, so a
+   larger figure there quietly beat them and every phone gained 13px a
+   row — nearly 400px of extra scrolling down the section. Phones take
+   their own smaller step in the 34rem block instead. */
+@media (min-width: 34rem) {
+  .start-row { padding-block: 1.4rem; }
+}
+
 .start-row:hover,
 .start-row:focus-visible { transform: translateY(-2px); }
 
@@ -2038,10 +2056,15 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      behind it: the picture is absolutely positioned and overhangs the
      card on both sides, so there is no narrower figure here to match.
      The head line needs it — number, English name, Persian name and
-     the gloss only hold one row at the full measure. The paragraph
-     below does not follow it out: .start-note keeps its own 32rem, so
-     the prose still stops before the bright half of the picture and
-     only the title line runs the whole way across. */
+     the gloss only hold one row at the full measure.
+
+     The PARAGRAPH does not follow it out. Left to take this width it
+     ran to 80% of the way across the card instead of 63%, straight
+     into the lit half of the picture, and because wider lines are
+     fewer lines every row lost about 24px of height and the artwork
+     lost 56px with it. Its own 64% is restated on .start-note below,
+     so the prose measures exactly what it always did and only the
+     title line runs the whole way across. */
   max-width: 100%;
 }
 
@@ -2164,7 +2187,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      widths where it cannot fit, which reads as a deliberate second
      line rather than a broken first one. */
   white-space: nowrap;
-  text-shadow: 0 1px 14px rgba(5, 4, 3, 0.95);
+  /* A deeper halo than the title or the paragraph carries, because this
+     is the only line on the card allowed the full width: the prose stops
+     at 64% where the mask still has the picture dim, and the gloss can
+     finish past 70%, where on the brighter scenes it is reading against
+     lit artwork rather than against the card. Four stops rather than
+     one — a tight dark edge to hold the letterforms, then three widening
+     washes to sink the ground behind them. */
+  text-shadow: 0 1px 3px rgba(5, 4, 3, 0.98),
+               0 1px 14px rgba(5, 4, 3, 0.95),
+               0 0 26px rgba(5, 4, 3, 0.9),
+               0 0 46px rgba(5, 4, 3, 0.75);
 }
 .start-gloss::before {
   content: "\00b7";
@@ -2222,6 +2255,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   text-shadow: 0 1px 10px rgba(5, 4, 3, 0.9);
 }
 
+/* The measure .start-body used to impose, restated here now that the
+   body itself has been released for the title line's sake. 64% of the
+   card, not 32rem: the figure has to follow the card's width the way
+   the old one did, or the prose runs into the picture on a wide screen
+   and the rows go short. The series cards override this further down
+   with max-width: none, which outranks it on specificity. */
+.start-row .start-note { max-width: 64%; }
+
 .start-note {
   display: block;
   max-width: 32rem;
@@ -2246,6 +2287,11 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   /* Released with the desktop measure above, and for the same
      reason: the title line has four parts on it now. */
   .start-body { max-width: 100%; }
+  /* Half the desktop step. A phone reads this section as one long
+     scroll, so height bought for the artwork is paid for in thumb
+     travel; 0.9rem shows more of each picture without adding the
+     400px a full 1.4rem cost down the section. */
+  .start-row { padding-block: 0.9rem; }
 }
 
 
@@ -7960,7 +8006,35 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 12 · last updated 2026-09-14 20:05 PDT
+   Version 13 · last updated 2026-09-14 20:38 PDT
+
+   v13 2026-09-14 20:38 PDT — the artwork gets its room back, and
+       then some. Three changes, the first two undoing a fault of v10's.
+
+       (a) The paragraph's measure is restored. v10 released
+       .start-body from 64% to the card's full width so the title line
+       could hold four parts, and the SYNOPSIS took that width with it:
+       the prose ran to 80% of the way across the card instead of 63%,
+       straight into the lit half of the picture. Wider lines are also
+       fewer lines, so every row lost about 24px of height and the
+       artwork lost 56px with it — the picture was being squeezed from
+       two directions at once. .start-note now restates 64% on its own,
+       so the body stays wide for the title line only.
+
+       (b) The row is taller: padding-block 0.55rem -> 1.4rem above
+       34rem, 0.9rem below it. The scene is sized at 118% of the row,
+       so height given to the card is height given to the picture —
+       223px of row -> 250px and 291px of picture -> 323px on a desktop,
+       without re-tuning a mask that is cut to this proportion. Written
+       as min-width deliberately: .start-row's base rule sits below the
+       28rem overrides in this file, so raising the figure there beat
+       them silently and cost every phone nearly 400px of scrolling.
+
+       (c) .start-gloss takes a four-stop halo instead of one. It is the
+       only line allowed the card's full width — the prose stops at 64%
+       where the mask still has the picture dim, and the gloss can
+       finish past 70%, which on The Weight of Her puts it against lit
+       wings rather than against the card.
 
    v12 2026-09-14 20:05 PDT — two changes to the three category
        plates (Noir, Transgressive, Plausible).
