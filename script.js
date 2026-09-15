@@ -2018,15 +2018,6 @@
     var book = bookNum ? byNum[bookNum] : null;
     if (!book) return;
 
-    /* The card's blurb IS the book's own synopsis, written in once in
-       stories.js rather than kept as a second copy in index.html. Two
-       hand-maintained copies of the same paragraph drift the moment one
-       is edited and the other is forgotten; read from the data and they
-       cannot. The markup keeps a plain-text fallback for anyone whose
-       script never runs. */
-    var note = card.querySelector(".start-note");
-    if (note && book.synopsis) note.textContent = book.synopsis;
-
     var pairSrc = pairCoverFor(bookNum);
     var plainSrc = cover.getAttribute("src") || coverFor(bookNum);
     var caption = bookNum + " · " + book.title;

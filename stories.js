@@ -1,4 +1,4 @@
-/* Version 440 · last updated 2026-09-15 09:30 PDT */
+/* Version 439 · last updated 2026-09-14 11:10 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -205,7 +205,7 @@ const STORIES = [
     room: "Losing Him Twice \u2014 once to the forgetting, once to the death",
     key: "Alzheimer's \u2014 a mind letting go of when it is, and who",
     notes: [1, 2, 3],
-    synopsis: "At his father’s memorial in Orange County, Ali is asked the three easiest questions there are — what song his father loved, what food, what place — and cannot answer one of them. He watched the burial six days earlier on a telephone propped against a cup, eleven thousand kilometres from the grave. What he has instead is a marriage that ended in silence, and a year of Friday calls into which a voice slowly stopped arriving. Then somebody says he went somewhere too, and he hears his father’s silence arriving late, from the inside."
+    synopsis: "At his father's memorial, Kian can't answer the three simplest questions: what song he loved, what food, what place. A story about losing a man twice \u2014 once to forgetting, once to death \u2014 and the strange, late mercy of understanding a father only after becoming one."
   },
 
   {
@@ -807,7 +807,7 @@ const STORIES = [
     room: "The Cold Room \u2014 fifteen degrees, one frame at a time, eight hours at a stretch",
     key: "Eleven Cans \u2014 film shot in a walled colony in 1962, delivered by two lawyers when he was nineteen",
     notes: [1, 3, 2],
-    synopsis: "The House is the walled colony outside Tabriz, and it is patient in both senses — it waits, and it is full of patients: the illness there takes the nerve, so nobody inside can be trusted to feel what is happening to them. In 1962 a camera was allowed eleven days in. Thirty-four years later a man runs those eleven cans frame by frame. Eleven minutes are a woman speaking into the lens in a dialect none of the crew could follow, subtitled in nine languages as a prayer. She is not praying. She was his mother, and she was speaking to him."
+    synopsis: "In 1962 a camera was allowed eleven days inside a walled colony outside Tabriz, where the illness takes the nerve and nobody can be trusted to feel what is happening to them. Thirty-four years later a man runs those eleven cans frame by frame. Eleven minutes are a woman speaking into the lens in a dialect none of the crew could follow, subtitled in nine languages as a prayer. She is not praying. She was his mother, and she was speaking to him."
   },
 
   {
@@ -958,7 +958,7 @@ const STORIES = [
     room: "The Hall — six hundred seats and more than that in it, chairs down the sides against the fire regulations, and thirty feet of blue vinyl saying the bright future that will be thrown away on Sunday",
     key: "Nine Minutes — a speech built for somebody else's mouth by a man who knows compression the way a locksmith knows a cylinder and has no idea how to build a room",
     notes: [1, 1, 3],
-    synopsis: "Vision 1404 is Iran’s twenty-year national plan — the state’s official picture of what the country would be by the Iranian year 1404. Roshanak Azimi is exactly what it promised: ranked ninth out of six hundred thousand, graduating top of her year at Sharif, and required to give the address. She cannot write it — not because she cannot write, but because there is nothing she is permitted to say, and she has spent four years being the proof of a system she has concluded is a machine for producing people like her and then losing them. So she finds a man who writes for other people’s mouths, and takes him entirely seriously, which nobody has ever done."
+    synopsis: "A young woman ranked ninth in the national entrance examination out of six hundred thousand is graduating top of her year at Sharif and is required to give the address. She cannot write it — not because she cannot write, but because there is nothing she is permitted to say, and she has spent four years being the proof of a system she has concluded is a machine for producing people like her and then losing them. So she finds a man who writes for other people's mouths, and takes him entirely seriously, which nobody has ever done."
   },
 
   {
@@ -1126,7 +1126,7 @@ const STORIES = [
     room: "The Desk — home, from four in the afternoon until two in the morning, six hundred nights running, a lamp, and four hundred thousand questions behind him",
     key: "If You Don't Know, Leave It — his father's own six-word rule for the exam, meant for both of them; the father has kept it for twenty-nine years and the son has never once left an answer blank.",
     notes: [2, 2, 3],
-    synopsis: "The title is the konkoor’s own arithmetic: the examination scores a correct answer, docks a wrong one and charges nothing for a blank, so three wrong cancel one right and a guess is never free. Mehdi Amini is eighteen. He has slept three hours a night for six hundred nights and answered four hundred thousand practice questions. His father marks konkoor papers by the page at night, for an institute whose course costs more in a month than he earns in four, and his own advice is six words long: if you don’t know, leave it. Mehdi has never once left one blank."
+    synopsis: "Mehdi Amini is eighteen. He has slept three hours a night for six hundred nights and answered four hundred thousand practice questions for an examination that scores a correct answer, docks a wrong one, and charges nothing for a blank. His father marks konkoor papers at night, by the page, for an institute whose course costs more in a month than he earns in four — and his own advice, six words long, is if you don't know, leave it. Mehdi has never once left one blank. Nine hundred and fifty thousand candidates sit down on one morning in Tir; one in ten will be given a place."
   },
 
   {
@@ -1162,7 +1162,7 @@ const STORIES = [
     room: "Nine Hundred and Four \u2014 a city still holding the people she quietly slowed, almost every one of them certain they thought it over and chose to stay",
     key: "The Twenty-Month File \u2014 a delay that is not a refusal, cannot be appealed, and is indistinguishable from weather",
     notes: [2, 2, 3],
-    synopsis: "Equal to the original is what an Iranian sworn translator stamps on a certified copy to swear it identical to the document behind it. Mahin has put that seal on thirty thousand emigration files in twenty years, working from the reference number and never once reading the name beside it. She is also the only person who sees the files in order, and she has worked out that people leave because somebody near them left. So she quietly holds some back — twenty months instead of four, which is not a refusal and cannot be appealed. Nine hundred and four people are still in that country because of her, and not one of them knows."
+    synopsis: "\u0628\u0631\u0627\u0628\u0631 \u0627\u0635\u0644 \u2014 bar\u0101bar-e asl, \u201cequal to the original\u201d \u2014 is the formula an Iranian sworn translator stamps on a certified copy to swear it identical to the document it was made from. Mahin has been putting that seal on emigration files for twenty years, and hers is the last Iranian mark on something over thirty thousand of them; she has read perhaps forty, working from the reference number on the docket and never from the name in the box beside it. Because she is the only person who sees the files in order and in clusters, she has worked out that people do not leave because of conditions \u2014 they leave because somebody near them left, and the third departure in a circle reclassifies everyone still standing as people who failed to leave. So she keeps them: a grant, a job found through somebody\u2019s cousin, a flat lent for a season, and a fourth thing she has never described to anybody, which is that some files take twenty months instead of four. Nine hundred and four people are still in that country who would not otherwise be, and almost every one of them will tell you they thought about going and decided against it."
   },
 
 ];
@@ -1428,6 +1428,6 @@ const TRILOGIES = [
        panel still shows the whole set, which is the part that is
        true. The ordered groups below keep their numbering. */
     numbered: false,
-    synopsis: "Six books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. And a candidate two years from a national examination does the same arithmetic his father has done for twenty-nine years marking other students' papers, and answers anyway. And a sworn translator stamps every emigration file that leaves the country, never reads a name, and quietly holds some of them back. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
+    synopsis: "Five books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. And a candidate two years from a national examination does the same arithmetic his father has done for twenty-nine years marking other students' papers, and answers anyway. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
   }
 ];
