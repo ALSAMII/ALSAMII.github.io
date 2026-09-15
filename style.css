@@ -1560,7 +1560,9 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-family: var(--sans);
   font-weight: 500;
   text-transform: uppercase;
-  font-size: clamp(0.625rem, 2.6vw, 0.75rem);
+  /* bench, 2026-09-15. The narrow-screen rules further down keep their
+     own smaller values, so this is the desktop figure only. */
+  font-size: 0.9375rem;
   line-height: 1.5;
   letter-spacing: 0.13em;
   display: block;
@@ -2508,36 +2510,14 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      against the heading's 15px. Everything else about the two already
      agreed: same family, same 500 weight, same caps, same ember. Only
      the scale was out, so copying the heading's own clamps makes them
-     identical at every window width rather than only at one.
-
-     2026-09-13: no longer identical, and deliberately. The series name
-     is now the loudest thing in the panel at 26px where RECOMMENDED
-     SERIES above it stays at 15px, so the device reads as a label and
-     the name reads as the title. .sh-text keeps the original clamp —
-     the two rules share these numbers by history, not by rule, so
-     changing one does not change the other. */
-  /* 2026-09-13: set to match .start-title, the book title on the noir
-     panel ("Meat That Dreams"). Every value below is that rule's, not
-     an approximation of it — same family, same 600, same clamp, same
-     0.02em. The element still carries the `caps` class in the markup,
-     which is where the Jost, the 500 and the uppercase were coming
-     from; all three are overridden here rather than by editing .caps,
-     which a dozen other labels still rely on.
-
-     No text-shadow, and that is the one value deliberately not taken:
-     .start-title carries a halo because it sits over artwork. The
-     series name sits on plain ground, where a halo reads as a smudge.
-
-     Dropping text-transform also fixes the detached macron in
-     DELGOSHĀ. The data was always precomposed ā (U+0101); the fault
-     was that uppercase asked for Ā (U+0100), which Jost has not got.
-     Title case in Cormorant asks for the character the text actually
-     contains, in a face that has it. */
-  font-family: var(--serif);
-  font-weight: 600;
-  text-transform: none;
-  font-size: clamp(1rem, 4.6vw, 1.625rem);
-  letter-spacing: 0.02em;
+     identical at every window width rather than only at one. */
+  /* Set from the type bench, 2026-09-15. NOTE: this clamp was
+     deliberately copied from .sh-text so the series name and the
+     RECOMMENDED SERIES device stayed identical at every width. A flat
+     value breaks both halves of that: the name is now larger than the
+     device above it, and it no longer steps down on a narrow screen. */
+  font-size: 1.0938rem;
+  letter-spacing: clamp(0.16em, 0.8vw, 0.28em);
   color: var(--ember);
 }
 
@@ -3205,11 +3185,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    the room. All three are answered here. */
 .series-name .series-title-fa {
   margin-left: 0;
-  /* Was 1em — the same size as the English beside it. Held at a fixed
-     ratio instead: 0.77 of 26px is 20px, and because it is a ratio the
-     pair keeps its proportion at every width rather than needing a
-     second clamp of its own. */
-  font-size: 0.77em;
+  font-size: 1em;
   line-height: 1.75;
   opacity: 1;
 }
@@ -3269,7 +3245,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   margin: 0 auto;
   padding: 0 var(--text-edge);
   font-family: var(--serif);
-  font-size: 1rem;
+  font-size: 1.0625rem;   /* bench, 2026-09-15 */
   line-height: 1.48;
   text-align: center;
   color: var(--faded);
@@ -3818,12 +3794,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border-radius: 50%;
   color: var(--parchment);
   cursor: pointer;
-  /* Visible by default. On a touch screen there is no hover, so a
-     control hidden until hover costs the reader a wasted tap: the
-     first tap only produces the button, the second one uses it. The
-     hide is therefore moved into the hover query below, which is what
-     .row-zoom and .gcard-zoom already do. Fixed 2026-09-12 16:37 PDT. */
-  opacity: 1;
+  opacity: 0;
   transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
   padding: 0;
 }
@@ -3836,17 +3807,10 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border-color: var(--ember-soft);
 }
 
-/* Mouse and trackpad only. A pointing device can reveal the button by
-   moving over the card, so the grid reads as covers first; a finger
-   cannot, so on touch the button above simply stays on. */
-@media (hover: hover) and (pointer: fine) {
-  .series-zoom { opacity: 0; }
-
-  .series-start-card:hover .series-zoom,
-  .series-start-card:focus-within .series-zoom,
-  .series-zoom:focus-visible {
-    opacity: 1;
-  }
+.series-start-card:hover .series-zoom,
+.series-start-card:focus-within .series-zoom,
+.series-zoom:focus-visible {
+  opacity: 1;
 }
 
 .series-start-cover img {
@@ -3884,7 +3848,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   display: block;
   margin-bottom: 0.15rem;
   font-family: var(--serif);
-  font-size: clamp(1.0625rem, 2.1vw, 1.25rem);
+  font-size: 1.3125rem;   /* bench, 2026-09-15 */
   line-height: 1.35;
   text-align: left;
 }
@@ -3939,7 +3903,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .series-start-body .start-note {
   text-align: left;
   margin-top: 0.4rem;
-  font-size: 0.875rem;
+  font-size: 1.0625rem;   /* bench, 2026-09-15 */
   line-height: 1.5;
   color: var(--faded);
 }
@@ -4000,7 +3964,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   border: 0;
   font: inherit;
   font-family: var(--serif);
-  font-size: 0.875rem;
+  font-size: 1.0625rem;   /* bench, 2026-09-15 */
   color: var(--faded);
   cursor: pointer;
 }
@@ -7824,489 +7788,4 @@ html[data-theme="light"] .t-banner img {
     text-shadow: none;
     color: var(--ember-lit);
   }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 9 · last updated 2026-09-13 09:06 PDT
-
-   v9  2026-09-13 09:06 PDT — the "Where to start" section (the block
-       that was "Pick a door"). Heading renamed in index.html, a lede
-       added under it, and the three category headings rebuilt as
-       tinted plates. Rules are in the WHERE TO START block at the
-       very end of this file; the reasoning sits beside them there.
-
-   v8  2026-09-13 05:10 PDT — the three series names (The Delgoshā,
-       The Unsaid, The Unheard House) restyled to match .start-title,
-       the book title on the noir panel: Cormorant Garamond 600 at
-       clamp(1rem, 4.6vw, 1.625rem), 0.02em, title case. They were
-       Jost 500 uppercase at 0.28em, inherited from the `caps` class
-       in the markup — overridden on .series-name rather than by
-       touching .caps, which many other labels still use.
-
-       Side effect worth having: the detached macron in DELGOSHĀ is
-       gone. It was never a data fault — the text is precomposed
-       U+0101 and the whole page is NFC — it was text-transform
-       asking for a capital Ā that Jost does not contain. Title case
-       in Cormorant needs no such substitution.
-
-   v7  2026-09-13 05:01 PDT — two changes.
-
-       (a) Phone sizes for the series panel, chosen by the author from
-       the type-scale panel: synopsis 19px, card synopsis 18px, list
-       titles 19px, small labels 14px. Every one is LARGER than its
-       desktop twin, which looks wrong written down and is right on the
-       screen: index.html carries initial-scale=0.85, so a phone paints
-       each CSS pixel at 85%, and 19px of CSS lands at about 16.2px of
-       letter. v1–v6 treated the phone breakpoint as the place to make
-       text smaller; on this site it is the place text has to get
-       bigger, and that was the whole of the "still too small on
-       mobile" complaint.
-
-       (b) The series heading: English name 15px -> 26px, Persian name
-       15px -> 20px. The Persian was 1em of the English and is now
-       0.77em, so the pair holds its 26:20 proportion at every width.
-       .sh-text carries the identical old clamp by history and is
-       deliberately left at 15px, so RECOMMENDED SERIES now reads as a
-       label above a title rather than as its equal.
-
-       KNOWN FAULT, not introduced here and not fixed here: the "ā" in
-       DELGOSHĀ renders with a detached macron. The text is clean —
-       precomposed U+0101, and all 2,585 text nodes on the page are
-       NFC — so this is font coverage: Jost has no U+0100 and
-       text-transform: uppercase asks for one. Invisible at 15px and
-       plain at 26px.
-
-   v6  2026-09-12 19:41 PDT — the site has THREE series panels, not
-       two. The Delgoshā and The Unsaid are wrapped in .series-feature;
-       The Unheard House (63–65) is wrapped in .series-intro, so every
-       rule below stepped over it and that panel kept the original
-       design — 14px titles, the middot-separated wrapping line, no
-       reading times. Each `.series-feature + .start` is now
-       `:is(.series-feature, .series-intro) + .start`, which is the
-       same specificity (:is takes its most specific argument, one
-       class either way) so nothing else in the cascade shifts, and
-       still excludes the Noir / Transgressive / Plausible start rows
-       and the book panel's own cycle list, which have no series
-       wrapper at all.
-
-       NOT widened: the synopsis rule. The Unheard House sets its
-       blurb with `max-width: min(34rem, 48%)` because it is dropped
-       into a clear area of the painting behind it — its own rule says
-       the figure ends at 21% of the canvas and the text must stand on
-       bare page. Running that block to full width would put it across
-       her. It keeps its own measure and its own size.
-
-   v5  2026-09-12 18:50 PDT — series list titles 16px -> 17px, level
-       with the featured book's synopsis; the phone override comes up
-       with it (was 15px) rather than stepping down. The numbers in
-       the left column inherit and rise with the titles.
-
-   v4  2026-09-12 18:47 PDT — sizes set from the author's own reading
-       of the panel in Cormorant Garamond at full size, not from my
-       estimate. Series synopsis 18px -> 19px with the leading pulled
-       back from 1.58 to 1.45; the featured book's synopsis 14px ->
-       17px; reading times and "(Book Three)" to 11px (from 10px and
-       8px). The series list titles stay at 16px — tried larger and
-       kept at 16. Phone synopsis 16px -> 17px to follow the desktop
-       value up.
-
-   v3  2026-09-12 17:19 PDT — series synopsis raised from 1rem to
-       1.125rem (1rem on phones, was 0.875rem), leading eased from
-       1.62 to 1.58. It was never smaller than the book synopsis —
-       both measured 16px — but at ~92 characters a line against that
-       block's ~55, in a face with a small x-height, it read smaller.
-       Letting the size rise with the measure is the fix; narrowing
-       the measure again is not, since full width was asked for.
-
-   v2  2026-09-12 16:37 PDT — .series-zoom (the magnifier on the series
-       start cover, ~line 3773 above) was hidden at opacity 0 and
-       revealed only by :hover / :focus-within on the card. On a phone
-       that made it a two-tap control: the first tap raised the
-       emulated hover state and produced the button, the second tap
-       opened the zoom. The hide now sits inside
-       @media (hover: hover) and (pointer: fine), matching .row-zoom
-       and .gcard-zoom, so touch gets the button straight away.
-       Edited in place at the rule rather than overridden from here,
-       because a later override would leave two live opacity rules for
-       the same control and the next reader would have to work out
-       which one won.
-   v1  2026-09-12 13:19 PDT — single-column panel.
-
-   Every rule below is scoped with `:is(.series-feature, .series-intro) + .start` or
-   `.series-feature`, so it reaches the recommended-series panels and
-   nothing else — the Noir / Transgressive / Plausible start rows and
-   the book panel's own cycle list keep exactly the styling they had.
-
-   Appended rather than edited in place: at equal specificity the last
-   rule wins, so the originals above stay readable as the record of
-   what the panel used to be.
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* The synopsis. It was centred at 46rem — near ninety characters a
-   line, with no fixed left edge to return to. A measure this long is
-   the single biggest reason the panel reads as hard work. */
-.series-feature .series-feature-blurb {
-  /* Full panel width, matching the banner above it. A narrower measure
-     reads more easily, but it left a band of dead space down the right
-     of a very wide banner and the block stopped looking deliberate.
-     The left edge does most of the work anyway: centred text is hard
-     to read because the eye cannot find where the next line starts,
-     and that is fixed whatever the measure. */
-  max-width: none;
-  margin: 1.5rem 0 0;
-  text-align: left;
-  /* One step up from the 1rem it shared with the book synopsis below.
-     The measure here is ~92 characters against that block's ~55, and
-     Cormorant Garamond has a small x-height — style.css says as much
-     where --serif-read is defined: Literata was picked for the Read
-     view because it "doesn't need to be set as large to read as
-     large". Cormorant does. At 1rem across this measure the block
-     read as smaller type than the book synopsis even though both
-     computed to 16px. Size rises with the measure; the leading comes
-     back a little because the larger body no longer needs 1.62 to
-     keep the rows apart. */
-  font-size: 1.1875rem;   /* 19px */
-  line-height: 1.45;
-  color: var(--parchment);
-}
-
-/* The two signs. They were centred caps at the same volume as the
-   series name above them, so nothing said which one led. Dropped to
-   the secondary colour and given a hairline, which now carries the
-   section break the heading used to have to shout. */
-:is(.series-feature, .series-intro) + .start .start-heading {
-  margin: 2.4rem 0 1.1rem;
-  padding-top: 1.5rem;
-  padding-inline: var(--text-edge);
-  border-top: 1px solid var(--hairline);
-  text-align: left;
-  color: var(--faded);
-}
-
-/* The eight, from a wrapping sentence to a column. */
-:is(.series-feature, .series-intro) + .start .series-cycle-list {
-  display: grid;
-  /* The flex rule above centres its line; on a grid that same
-     declaration centres the single implicit track, which left the
-     column floating in the middle of the panel while everything else
-     sat on the left edge. Both axes are reset explicitly. */
-  justify-content: stretch;
-  justify-items: stretch;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0;
-  max-width: none;
-  margin: 0;
-  padding-inline: var(--text-edge);
-}
-
-/* The middots did the work of separating entries in a sentence. A
-   column separates them by being a column. */
-:is(.series-feature, .series-intro) + .start .series-cycle-sep { display: none; }
-
-/* Three columns on one baseline: number, title, length. The title is
-   a bare text node between the two spans, which lands as an anonymous
-   grid item in the middle track — no markup change needed. */
-:is(.series-feature, .series-intro) + .start .series-cycle-book {
-  display: grid;
-  grid-template-columns: 2.6rem 1fr auto;
-  align-items: baseline;
-  gap: 0 0.9rem;
-  width: 100%;
-  padding: 0.58rem 0;
-  font-size: 1.0625rem;   /* 17px, level with the book synopsis above */
-  text-align: left;
-  border-bottom: 1px solid rgba(216, 208, 192, 0.07);
-}
-:is(.series-feature, .series-intro) + .start .series-cycle-book:last-child { border-bottom: 0; }
-
-:is(.series-feature, .series-intro) + .start .series-cycle-num {
-  opacity: 1;
-  color: var(--ember-dim);
-}
-:is(.series-feature, .series-intro) + .start .series-cycle-book:hover .series-cycle-num,
-:is(.series-feature, .series-intro) + .start .series-cycle-book:focus-visible .series-cycle-num {
-  color: var(--ember);
-}
-
-/* The book synopsis on the Start Here card. It carries its own
-   max-width: 32rem from the general .start-note rule, which is right
-   for the narrow Noir / Transgressive / Plausible rows but leaves the
-   series card's text stopping well short of the banner. Released here
-   only, where the card has the full panel to work with. */
-:is(.series-feature, .series-intro) + .start .start-note {
-  max-width: none;
-}
-
-/* Reading time, written in by script.js from each book's own words
-   field. Tabular figures so the column lines up down the list. */
-.series-cycle-time {
-  font-family: var(--sans);
-  font-size: 0.6875rem;   /* 11px, up from 10px */
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--faded);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-@media (max-width: 34rem) {
-  /* Was 0.875rem, the same as .start-note. Now 1rem, so the series
-     blurb stays one step above the book synopsis at every width and
-     the breakpoint is an 18px -> 16px step rather than 18px -> 14px. */
-  /* Phone sizes set from the type-scale panel. These are LARGER than
-     the desktop values on purpose: the page opens at initial-scale
-     0.85, so a phone paints every CSS pixel at 85%. Read each comment
-     as "CSS -> what the phone actually paints". */
-  .series-feature .series-feature-blurb { font-size: 1.1875rem; line-height: 1.5; }  /* 19 -> 16.2 */
-  :is(.series-feature, .series-intro) + .start .series-cycle-book {
-    grid-template-columns: 2.1rem 1fr auto;
-    gap: 0 0.6rem;
-    /* Above the desktop size, not level with it — see the note on the
-       0.85 paint scale above. */
-    font-size: 1.1875rem;   /* 19 -> 16.2 */
-  }
-}
-
-/* ── v4 ─────────────────────────────────────────────────────────────
-   The card's own two small texts, restated here rather than edited at
-   their original rules above, because both of those have a phone
-   override further down the file that would otherwise keep the old
-   size on a phone. Equal specificity, later in the file, no media
-   query — so one rule each covers every width. */
-
-/* The featured book's synopsis. It was 0.875rem — the smallest serif
-   anywhere on the site — sitting directly under a synopsis now set at
-   19px. Brought up to the site's own body size and one step past it. */
-.series-start-body .start-note {
-  font-size: 1.0625rem;   /* 17px, up from 14px */
-  line-height: 1.5;
-}
-
-/* "(Book Three)". At 0.5rem this was the smallest type on the page by
-   some margin. Spaced caps do read larger than they measure, which is
-   the reason given for 0.5rem at the original rule — but 8px is under
-   the floor at which that stops being true. */
-.series-start-vol {
-  font-size: 0.6875rem;   /* 11px, up from 8px */
-}
-
-/* ── v7 phone sizes, and they must be LAST ──────────────────────────
-   .series-start-body .start-note and .series-start-vol are restated in
-   the v4 block above, after the media query that used to hold these.
-   A media query adds no specificity, so those later rules were winning
-   and the phone kept the desktop size — the card synopsis stayed at
-   17px when it had been set to 18, and "(Book Three)" stayed at 11px
-   when it had been set to 14. Nothing is wrong with either rule; they
-   were simply in the wrong order. These sit at the end of the file so
-   nothing can come after them.
-
-   Larger than the desktop values on purpose: initial-scale=0.85 means
-   a phone paints every CSS pixel at 85%. */
-@media (max-width: 34rem) {
-  .series-start-body .start-note { font-size: 1.125rem; }   /* 18 -> 15.3 */
-
-  .series-cycle-time,
-  .series-start-vol,
-  .series-start-body .start-time { font-size: 0.875rem; }   /* 14 -> 11.9 */
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   WHERE TO START — the heading's lede, and the three category plates
-   Added in v9 · see the version history at the top of the block above
-
-   Appended, so these win over the originals higher up at equal
-   specificity. .start-cat-about in particular is declared at ~line
-   1686; overriding it from here rather than editing it in place keeps
-   the old rule readable as the record of what the heading used to be.
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* The sentence under the fan-and-rule device. Centred, because the
-   device above it is centred; the groups below start their own
-   left-aligned column. */
-.start-lede {
-  margin: 1.05rem auto 0;
-  /* ONE REM VALUE. Nothing relative to the parent, nothing relative to
-     the font.
-
-     This went wrong twice. It first read `max-width: min(46ch, 100%)`;
-     the percentage makes the box depend on a containing block that is
-     itself sized from its content, a browser breaks that circle by
-     falling back to min-content, and the sentence came out one word
-     per line. The second attempt added `width: 100%` to give the box a
-     definite size — but that is a percentage too, so the circle was
-     never broken, only moved.
-
-     A block-level <p> already fills its containing block; it needs no
-     width at all. max-width in rem resolves against the root font size
-     and nothing else, so there is no loop left to fall out of. */
-  max-width: 30rem;
-  /* Its own inset, floored at 1.1rem. Unlike the plate below, this
-     sentence is centred prose and is not required to line up with the
-     book numbers — and below 56rem the panel runs flush to the right
-     screen edge (--text-edge is 0 there), which left the last word of
-     each line touching the glass. */
-  padding-inline: max(var(--text-edge), 1.1rem);
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(1rem, 2.8vw, 1.0625rem);
-  line-height: 1.5;
-  text-align: center;
-  /* balance, not pretty: pretty only guards the last line against a
-     widow, which is the right tool for a paragraph. This is a two-line
-     centred standfirst, where the two lines wanting to be near equal
-     length matters more. */
-  text-wrap: balance;
-  color: var(--faded);
-}
-
-/* ---- The category plate --------------------------------------------
-   Was a single line of 14px spaced caps with the gloss beside it at the
-   same size — a caption on the first book rather than a title over
-   three. Now a tinted plate carrying the name at book-title weight with
-   the gloss under it.
-
-   TWO THINGS THIS RULE HAS TO GET RIGHT:
-
-   1. Width. The plate has to span exactly what .start-row spans, so its
-      edges line up with the artwork below rather than floating inside
-      it. .start-row is width:100% with padding:0.55rem var(--text-edge),
-      so the plate takes the same box and the same inner padding, and
-      the name lands on the same vertical line as the book titles.
-
-      The catch is that --text-edge is 1.35rem on a desktop and 0 on a
-      phone (.frame zeroes it, so everything meets the frame's gutter).
-      At 0 the text would sit hard against the tint's own edge. So the
-      padding is floored at 0.85rem and the block is pulled back out by
-      whatever the floor added: on a desktop that resolves to padding
-      1.35rem / margin 0, and on a phone to padding 0.85rem / margin
-      -0.85rem. The text stays on the titles' line at both, and the tint
-      keeps its breathing room.
-
-   2. Depth. .start-scene overhangs its row by 9% top and bottom, so the
-      artwork of the book BELOW reaches up behind this plate. The row
-      comes later in the DOM, so without a z-index it paints over the
-      tint. Hence position:relative and z-index:2. */
-.start-cat {
-  position: relative;
-  z-index: 2;
-  display: block;
-  margin: 1.5rem 0 -0.45rem;
-  /* Left edge on the row's left edge. Right edge on the ARTWORK's right
-     edge, not the row's: .start-scene is positioned right:-5rem, so the
-     picture runs 5rem past the row it belongs to and off the side of the
-     panel. The plate now ends on the same line, so the tint and the
-     scenes beneath it share one right limit instead of the tint stopping
-     short of them. The root clips the surplus, exactly as it already
-     does for the artwork. */
-  margin-inline: 0 -5rem;
-  /* And exactly the row's inner padding, so the name lands on the same
-     vertical line as the book numbers below it. On a phone --text-edge
-     is 0 and everything meets the frame's gutter together, which is the
-     site's own convention. */
-  padding: 0.9rem var(--text-edge);
-  background: rgba(22, 18, 14, 0.92);
-  font-size: 1rem;
-  letter-spacing: normal;
-  color: var(--ember);
-}
-
-/* The ember rule, drawn rather than bordered. A real border-left would
-   be part of the box and would push the text 2px off the line the book
-   numbers sit on — which is the one thing this plate must not do. */
-.start-cat::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--ember-dim);
-  /* WHERE THE RULE SITS, and why it is not simply left: 0.
-
-     --text-edge is 1.35rem on a desktop but 0 below 56rem, where the
-     frame's gutter becomes the single line every element starts on.
-     At 0 the plate's padding is 0 too, so a rule drawn at the plate's
-     left edge lands underneath the N of "Noir" — which is what it did.
-
-     Rather than delete the rule on narrow screens, it steps outside
-     the plate by however much the padding fails to provide. min()
-     gives 0 on a desktop, where the 21.6rem padding already holds the
-     text clear, and -0.7rem below 56rem, which puts the rule in the
-     frame's own gutter with 11px of air before the first letter.
-
-     The consequence worth stating: the TINT still spans exactly the
-     row's box at every width, which is the alignment that was asked
-     for. Only the 2px rule sits outside it, in margin that is empty
-     anyway. */
-  left: min(0px, calc(var(--text-edge) - 0.7rem));
-}
-
-/* The first plate has no book row above it to take the flex gap from,
-   so its own margin is the whole of the space. At 0.6rem it sat 10px
-   under the lede while every later plate sat 48px under the row above
-   it — the first group looked stuck to the heading and the other two
-   did not. 2.5rem brings it into the same rhythm. */
-.start-cat:first-child { margin-top: 2.5rem; }
-
-/* The element carries `caps` in the markup, which is where the Jost,
-   the 500 and the uppercase come from. Overridden here rather than by
-   editing .caps, which a dozen other labels still use. */
-.start-cat-name {
-  display: block;
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: clamp(1.25rem, 4vw, 1.5rem);
-  line-height: 1.15;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  color: var(--ember);
-}
-
-.start-cat-about {
-  display: block;
-  margin-top: 0.15rem;
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(0.9375rem, 2.6vw, 1rem);
-  line-height: 1.4;
-  letter-spacing: normal;
-  text-transform: none;
-  color: var(--faded);
-}
-
-/* ---- Where to start: the heading device ----------------------------
-   The fan is gone from this heading — removed in the markup, not
-   hidden here, so the SVG is not shipped and then thrown away. The
-   .sh-* rules are untouched and the Recommended Series heading keeps
-   its fan; the two sections used to wear the identical device, which
-   meant neither of them read as the place to begin.
-
-   With the ornament gone the label carries the device alone, so it
-   comes up a step and opens out. Scoped to the modifier class so the
-   same .sh-text further down does not move with it. */
-.series-heading--start .sh-text {
-  font-size: clamp(0.8125rem, 3vw, 1rem);
-  letter-spacing: clamp(0.18em, 0.85vw, 0.3em);
-}
-
-/* ---- Where to start: the reading time ------------------------------
-   Down from 0.5625rem to 0.5rem — 9px to 8px, which is the floor the
-   rest of the site uses for a spaced-caps label (.rights and
-   .story-series both sit there, and the note by the phone block says
-   anything under 8px stops being readable).
-
-   Scoped to .start-row so the series panels are untouched: their card
-   carries the same .start-time class at its own size, set further up
-   and again in the phone block.
-
-   The ≤56rem rule multiplies this by --read-up (1.18), so the narrow
-   value comes down with it — 10.62px to 9.44px — rather than being
-   left behind as the larger of the two. */
-.start-row .start-time {
-  font-size: 0.5rem;
-}
-
-@media (max-width: 56rem) {
-  .start-row .start-time { font-size: calc(0.5rem * var(--read-up)); }
 }
