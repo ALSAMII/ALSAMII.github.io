@@ -2002,19 +2002,26 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 /* Book 52 off the shared anchor on a narrow screen, for the same reason
    as 35: the swimmer and the rescue ski sit left of centre in the card and
    the summary runs across them, while the water to their right is empty.
-   92% moves the window left in the FILE and so the picture right on the
-   SCREEN, by about 12% of the card — the box is 1.18:1 on a phone against
-   a 3:1 file, so each point of object-position is worth 1.5 points of
-   card. What leaves the card on the right is the file's last 5%, which is
-   open water.
+   97%, and that is a floor. Each point of object-position is worth about
+   1.5 points of card here — the box is 1.18:1 on a phone against a 3:1
+   file — so three points buys a shift of roughly 4.6% of the card, and
+   the fourth costs the picture its rider. Rendered at 100 / 98 / 97 / 96 /
+   95 / 94: the man on the rescue ski is whole at 98 and 97, clipped at
+   the card's edge by 96, and gone by 94. He is the book's driver; the
+   shift stops where he does.
 
-   NOT MEASURED THE WAY THE OTHERS WERE. assets/start-52.jpg is not in this
-   working copy, so this row cannot be rendered here; 92% is arithmetic off
-   the crop geometry plus the subject's position read from a screenshot,
-   not off rendered pixels. Every other figure in this file was taken from
-   a render. Check it against a real one before trusting it. */
+   A 92% value shipped here first, from arithmetic rather than a render —
+   assets/start-52.jpg was not in the working copy at the time, and the
+   file's rightmost content was assumed to be open water. It is not: the
+   ski sits in it. Corrected once the picture was in hand. The lesson is
+   the one this file keeps relearning — the geometry model and the
+   rendered pixels disagree, and the pixels are right.
+
+   Worth having anyway: at 100% the painting stopped 9% short of the
+   card's right edge, leaving a strip of empty card that no other row has.
+   97% closes it — the artwork now reaches 96% of the card. */
 @media (max-width: 56rem) {
-  .start-row--samba .start-scene { object-position: 92% 50%; }
+  .start-row--samba .start-scene { object-position: 97% 50%; }
 }
 
 /* Book 94 steps back off the right anchor on a narrow screen too, and
@@ -8262,19 +8269,29 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 28 · last updated 2026-09-16 15:30 PDT
+   Version 29 · last updated 2026-09-16 19:25 PDT
+
+   v29 2026-09-16 19:25 PDT — book 52's anchor corrected from 92% to 97%,
+       now that assets/start-52.jpg is in the working copy and the row can
+       actually be drawn. 92% was arithmetic, and it was wrong in the way
+       arithmetic is: the file's rightmost content was assumed to be open
+       water, and it is the rescue ski. Rendered at 100 / 98 / 97 / 96 /
+       95 / 94, the man on the ski is whole at 98 and 97, clipped by 96
+       and gone by 94. He is the book's driver. 97% it is — a shift of
+       about 4.6% of the card, which is almost exactly the budget book 35
+       had before its right wing went. Both rows land in the same place:
+       the crop moves four or five points, and the rest comes from the
+       measure.
 
    v28 2026-09-16 15:30 PDT — books 35 and 52 give their pictures room on
        a phone, by two moves at once. The crop goes further right: 35 from
-       90% to 87%, 52 off the shared 100% anchor to 92%. And the summary
-       comes in from 64% to 58% below 34rem, for those two rows only.
-       87% is a floor, not a preference — re-swept at seven values across
-       four widths against the wings' own bright pixels, the right wing's
-       tip holds at 91-92% of the card at 87 and is off the card by 84,
-       where the bright blob collapses to the left wing alone. So the
-       shift alone buys about 4% of card width; the measure buys another
-       6. Book 52's 92% is arithmetic, not a render: assets/start-52.jpg
-       is not in this working copy and that row cannot be drawn here.
+       90% to 87%, 52 off the shared 100% anchor. And the summary comes in
+       from 64% to 58% below 34rem, for those two rows only. 87% is a
+       floor, not a preference — re-swept at seven values across four
+       widths against the wings' own bright pixels, the right wing's tip
+       holds at 91-92% of the card at 87 and is off the card by 84, where
+       the bright blob collapses to the left wing alone. So the shift
+       alone buys about 4% of card width; the measure buys another 6.
        Desktop is untouched for both.
 
    v27 2026-09-16 14:10 PDT — the phone float becomes a staircase. The

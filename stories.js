@@ -1168,7 +1168,7 @@ const STORIES = [
   {
     num: 93,
     title: "Keep Me Company",
-    words: "17,900 words",
+    words: "18,100 words",
     hook: "Through the wall her brother talks all day to the thing that is the reason he is alive",
     door: "Rite",
     room: "The Drained Bath \u2014 four people with their shoes in their hands, and an agreement that nobody will speak",
@@ -1180,7 +1180,7 @@ const STORIES = [
   {
     num: 94,
     title: "Round Trip",
-    words: "18,000 words",
+    words: "20,000 words",
     hook: "He measures how long a signal takes to come home, and then he is asked which roads to close",
     door: "Withholding",
     room: "The Allowlist \u2014 four hundred and sixty entries in his own hand, and nobody above him ever reads it",
