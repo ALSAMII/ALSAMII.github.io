@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Version 439 · last updated 2026-09-14 11:10 PDT -->
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chew Z — Short Fiction</title>
@@ -7,14 +6,30 @@
     <atom:link href="https://www.chewzfiction.com/feed.xml" rel="self" type="application/rss+xml"/>
     <description>Short noir novellas about people who find out something true about themselves and can't put it back.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 14 Sep 2026 21:19:16 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2026 04:02:42 GMT</lastBuildDate>
+    <item>
+      <title>94. Round Trip</title>
+      <link>https://www.chewzfiction.com/#94-round-trip</link>
+      <guid isPermaLink="false">chewz-94</guid>
+      <pubDate>Mon, 20 Oct 2025 00:00:00 GMT</pubDate>
+      <category>Withholding</category>
+      <description>A round trip is what Peyman measures: you send out something small, let it touch the far end, and count how long it takes to come home. Twelve thousandths of a second to the hospital; two hundred and fourteen to Toronto, where his daughter has lived for four years and where he has never been. On the eighteenth of Dey he helps take his country off the map, then writes the list of what must keep working — four hundred and sixty entries, and nobody above him ever reads it. In the second week he adds one address that has no business being there.</description>
+    </item>
+    <item>
+      <title>93. Keep Me Company</title>
+      <link>https://www.chewzfiction.com/#93-keep-me-company</link>
+      <guid isPermaLink="false">chewz-93</guid>
+      <pubDate>Mon, 13 Oct 2025 00:00:00 GMT</pubDate>
+      <category>Rite</category>
+      <description>Keep me company is what the people already in the water call to the one still on the edge — meant kindly, and in English a friendly lie. Mira is forty-one and opens machines up to see what is inside them. Through the wall her brother, who has not been outside since he was twenty-six, talks to a tablet all day; it is the reason he is alive. For twelve years she has sat one hour a day with nothing at all and told nobody. When that hour is taken from her she finds the closed bathhouse standing open, and three strangers inside who have agreed not to speak.</description>
+    </item>
     <item>
       <title>92. Equal to the Original</title>
       <link>https://www.chewzfiction.com/#92-equal-to-the-original</link>
       <guid isPermaLink="false">chewz-92</guid>
       <pubDate>Mon, 06 Oct 2025 00:00:00 GMT</pubDate>
       <category>Withholding</category>
-      <description>برابر اصل — barābar-e asl, “equal to the original” — is the formula an Iranian sworn translator stamps on a certified copy to swear it identical to the document it was made from. Mahin has been putting that seal on emigration files for twenty years, and hers is the last Iranian mark on something over thirty thousand of them; she has read perhaps forty, working from the reference number on the docket and never from the name in the box beside it. Because she is the only person who sees the files in order and in clusters, she has worked out that people do not leave because of conditions — they leave because somebody near them left, and the third departure in a circle reclassifies everyone still standing as people who failed to leave. So she keeps them: a grant, a job found through somebody’s cousin, a flat lent for a season, and a fourth thing she has never described to anybody, which is that some files take twenty months instead of four. Nine hundred and four people are still in that country who would not otherwise be, and almost every one of them will tell you they thought about going and decided against it.</description>
+      <description>Equal to the original is what an Iranian sworn translator stamps on a certified copy, swearing it identical to the document behind it. Mahin has put that seal on thirty thousand emigration files in twenty years, working from the reference number and never reading the name beside it. She is the only person who sees the files in order, and she has worked out that people leave because somebody near them left. So she holds some back — twenty months instead of four, which is not a refusal and cannot be appealed. Nine hundred and four people are still in that country because of her, and none of them knows.</description>
     </item>
     <item>
       <title>91. Pesar Khaleh</title>

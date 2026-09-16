@@ -1,4 +1,4 @@
-/* Version 439 · last updated 2026-09-14 11:10 PDT */
+/* Version 440 · last updated 2026-09-16 04:35 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1162,7 +1162,31 @@ const STORIES = [
     room: "Nine Hundred and Four \u2014 a city still holding the people she quietly slowed, almost every one of them certain they thought it over and chose to stay",
     key: "The Twenty-Month File \u2014 a delay that is not a refusal, cannot be appealed, and is indistinguishable from weather",
     notes: [2, 2, 3],
-    synopsis: "\u0628\u0631\u0627\u0628\u0631 \u0627\u0635\u0644 \u2014 bar\u0101bar-e asl, \u201cequal to the original\u201d \u2014 is the formula an Iranian sworn translator stamps on a certified copy to swear it identical to the document it was made from. Mahin has been putting that seal on emigration files for twenty years, and hers is the last Iranian mark on something over thirty thousand of them; she has read perhaps forty, working from the reference number on the docket and never from the name in the box beside it. Because she is the only person who sees the files in order and in clusters, she has worked out that people do not leave because of conditions \u2014 they leave because somebody near them left, and the third departure in a circle reclassifies everyone still standing as people who failed to leave. So she keeps them: a grant, a job found through somebody\u2019s cousin, a flat lent for a season, and a fourth thing she has never described to anybody, which is that some files take twenty months instead of four. Nine hundred and four people are still in that country who would not otherwise be, and almost every one of them will tell you they thought about going and decided against it."
+    synopsis: "Equal to the original is what an Iranian sworn translator stamps on a certified copy, swearing it identical to the document behind it. Mahin has put that seal on thirty thousand emigration files in twenty years, working from the reference number and never reading the name beside it. She is the only person who sees the files in order, and she has worked out that people leave because somebody near them left. So she holds some back — twenty months instead of four, which is not a refusal and cannot be appealed. Nine hundred and four people are still in that country because of her, and none of them knows."
+  },
+
+  {
+    num: 93,
+    title: "Keep Me Company",
+    words: "17,900 words",
+    hook: "Through the wall her brother talks all day to the thing that is the reason he is alive",
+    door: "Rite",
+    room: "The Drained Bath \u2014 four people with their shoes in their hands, and an agreement that nobody will speak",
+    key: "The Hour \u2014 sixty minutes a day with no screen, no book, no music and no task",
+    notes: [1, 1, 3],
+    synopsis: "Keep me company is what the people already in the water call to the one still on the edge \u2014 meant kindly, and in English a friendly lie. Mira is forty-one and opens machines up to see what is inside them. Through the wall her brother, who has not been outside since he was twenty-six, talks to a tablet all day; it is the reason he is alive. For twelve years she has sat one hour a day with nothing at all and told nobody. When that hour is taken from her she finds the closed bathhouse standing open, and three strangers inside who have agreed not to speak."
+  },
+
+  {
+    num: 94,
+    title: "Round Trip",
+    words: "18,000 words",
+    hook: "He measures how long a signal takes to come home, and then he is asked which roads to close",
+    door: "Withholding",
+    room: "The Allowlist \u2014 four hundred and sixty entries in his own hand, and nobody above him ever reads it",
+    key: "One Address in Toronto \u2014 a house on a list of hospitals, able to answer only that it is still standing",
+    notes: [2, 2, 3],
+    synopsis: "A round trip is what Peyman measures: you send out something small, let it touch the far end, and count how long it takes to come home. Twelve thousandths of a second to the hospital; two hundred and fourteen to Toronto, where his daughter has lived for four years and where he has never been. On the eighteenth of Dey he helps take his country off the map, then writes the list of what must keep working \u2014 four hundred and sixty entries, and nobody above him ever reads it. In the second week he adds one address that has no business being there."
   },
 
 ];
@@ -1402,6 +1426,18 @@ const TRILOGIES = [
     synopsis: "Three novellas out of Ferdowsi. Two of them stand on either side of one hole in the ground, over the same eleven months. Bijan is at the bottom of it, in an iron collar, working out that the voice which feeds him is almost certainly something the dark has made. Manijeh is at the rim, barefoot, begging bread door to door in a town where everyone knows exactly who she used to be, and unable to be sure on any given day that there is still anybody down there. The story is the most famous love story in the Persian language, and Ferdowsi did not have it: he stops the Shāhnāma in the middle of a war to describe a night at his own house, when a woman came into the garden with a candle and told him there was a story in the old book, and that if he would listen he could put it into verse. She had the book. He did not. Nobody wrote her name down. The third is the same shape from the other end: a hermit on a ridge hears crying come up out of a crack in the rock, goes down after it with a rope, and pulls out the king the whole war has been about — and spends the rest of his life being the man nobody believes about how he knew."
   },
   {
+    title: "Come In, the Water Is Lovely",
+    label: "",
+    books: [93],
+    /* No count on the row. The author's note calls this a set of five
+       and only the first has been published, so "1 of 1" would be true
+       of the shelf and wrong about the book; the heading gathers it
+       and the number stays off until there is a number worth saying. */
+    numbered: false,
+    synopsis: "Keep me company is what the people already in the water call to the one still on the edge \u2014 meant kindly, and in English a friendly lie; in Japan it is simply true, because the bath is hot and nobody needs persuading. These books live in that gap. Nobody in them is ever pushed."
+  },
+
+  {
     /* Nāgofteh — the past participle of not saying. A thing that was
        not said: not banned, not censored, which are words about the
        state, but a word about the silence itself.
@@ -1418,7 +1454,7 @@ const TRILOGIES = [
        whoever signs, files, weighs or looks away. */
     title: "From the Unsaid · ناگفته",
     label: "",
-    books: [78, 80, 83, 86, 89, 92],
+    books: [78, 80, 83, 86, 89, 92, 94],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
@@ -1428,6 +1464,6 @@ const TRILOGIES = [
        panel still shows the whole set, which is the part that is
        true. The ordered groups below keep their numbering. */
     numbered: false,
-    synopsis: "Five books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. And a candidate two years from a national examination does the same arithmetic his father has done for twenty-nine years marking other students' papers, and answers anyway. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
+    synopsis: "Seven books about the person holding the thing when the door opens, and usually the person whose job it was to decide. A teacher of Persian literature for thirty-one years stands in her own hallway and tells her son not to go, and he asks her where she thinks he got it. A guidance patrol officer of twelve years' standing works a street with less on it to find every week, and starts to lose the ability to see a face. A crane driver who can feel a load's weight to within twenty kilos takes four jobs in twenty years that he sets up before six and never writes a number for. A judge applies the law exactly, and the law tells him that where it runs out God does not, while a mother in the same city counts the days from her son's arrest. And a candidate two years from a national examination does the same arithmetic his father has done for twenty-nine years marking other students' papers, and answers anyway. Nobody in these books wins an argument with the machine and nobody loses one either, because no argument is ever held: decisions arrive as forms, delays and reassignments, and the state never once explains itself. Everything in them that is cruel is administrative, and everything administrative in them was designed by somebody who went home at six."
   }
 ];
