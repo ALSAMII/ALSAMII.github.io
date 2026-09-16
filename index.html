@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 453 · last updated 2026-09-15 22:31 PDT -->
+<!-- Version 454 · last updated 2026-09-16 03:40 PDT -->
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -127,7 +127,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=411">
+<link rel="stylesheet" href="style.css?v=412">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -586,8 +586,15 @@
             <img class="start-scene" alt="" aria-hidden="true">
             <span class="start-body">
               <span class="start-head">
-                <span class="start-num">35</span>&nbsp;<span class="start-title">The Weight of Her</span><span class="start-gloss">she grew heavier, alone</span>
-                <span class="start-time caps"></span>
+                <span class="start-num">35</span>&nbsp;<span class="start-title">The Weight of Her</span>
+                <!-- Book 35 alone carries its gloss after the reading time
+                     rather than after the name. Its painting reaches further
+                     left than any other on the panel, and on the title's line
+                     the phrase ran into the wings; down here it sits on the
+                     short reading-time line, where the picture is still dim.
+                     The CSS pairs the two on one line -- see .start-row--exam
+                     .start-time in style.css. -->
+                <span class="start-sub"><span class="start-time caps"></span><span class="start-gloss">she grew heavier, alone</span></span>
               </span>
               <span class="start-note">Roya never spoke, never reached, never turned her head, and lived ten years and eleven months, growing heavier every one. Her mother's account of the therapy that hurt her daily to save her, and the sixth year, when the visitors had stopped and nobody had noticed. What eased was said out loud; what didn't, never was.</span>
             </span>

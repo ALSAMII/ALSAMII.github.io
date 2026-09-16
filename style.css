@@ -1992,6 +1992,32 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--exam .start-scene { object-position: 90% 50%; }
 }
 
+/* ---- Book 35's gloss sits on the reading-time line ----
+   Every other row carries its gloss after the name, which is where it
+   reads best. This painting is the exception: it reaches further left
+   than any other on the panel, so on the title's line the phrase ran
+   straight into the wings at every width. Moved after the reading time
+   in the markup, it lands on a line that is short, low and still over
+   the dim half of the picture.
+
+   The two are paired inside a .start-sub wrapper rather than by simply
+   turning .start-time inline. That rule -- display: block !important,
+   further up -- is there to stop the reading time running in beside a
+   long title and pushing it under the artwork, and dropping it put the
+   time back on the TITLE's line, taking the gloss with it and
+   collapsing the whole head to a single row. The wrapper keeps the
+   break where the block used to make it, and the two spans run inline
+   inside it. Only book 35 has the wrapper in its markup, so only book
+   35 is affected; .start-head > .start-sub needs the child selector to
+   outrank `.start-head > * { display: inline }` sitting above it. */
+.start-head > .start-sub {
+  display: block;
+  margin-top: 0.2rem;
+  margin-bottom: 0.35rem;
+}
+.start-sub > .start-time { display: inline !important; margin: 0; }
+.start-row--exam .start-gloss { white-space: normal; }
+
 /* Two of these repainted scenes are 3:1 like The Glow. Their cards
    are short, so on the panel the slot is a little wider than that and
    cover takes a small crop from the top and bottom. The figure below
@@ -8031,7 +8057,27 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 15 · last updated 2026-09-15 22:31 PDT
+   Version 16 · last updated 2026-09-16 03:40 PDT
+
+   v16 2026-09-16 03:40 PDT — book 35's gloss moves off the title's
+       line and onto the reading time's, where the picture is still
+       dim. Its painting reaches further left than any other on the
+       panel, so "she grew heavier, alone" was running into the wings
+       at every width, and no amount of re-aiming the scene fixed that
+       without pushing the wings off the card.
+
+       The two spans are paired inside a .start-sub wrapper rather than
+       by turning .start-time inline. That rule — display: block
+       !important — exists to stop a long title dragging the reading
+       time up beside it; dropping it put the time back on the TITLE's
+       line, took the gloss with it, and collapsed the head to one row.
+       The wrapper keeps the break where the block used to make it and
+       lets the two run inline inside it.
+
+       Only book 35 carries the wrapper in its markup, so only book 35
+       is affected — confirmed at 1440px and 390px: the other eight all
+       still read gloss-on-title-line, and only 35's head grows, 58px
+       -> 70px on a desktop and 52px -> 67px on a phone.
 
    v15 2026-09-15 22:31 PDT — book 35's painting steps back off the
        shared right anchor below 56rem, to 95%.
