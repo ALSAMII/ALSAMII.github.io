@@ -8056,7 +8056,37 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 21 · last updated 2026-09-16 07:44 PDT
+   Version 23 · last updated 2026-09-16 09:05 PDT
+
+   v23 2026-09-16 09:05 PDT — book 94's painting set large at 0.72,
+       reversing v22's alignment. The two could not both be had: the
+       card shows about 94% of the file at desktop width, so a painting
+       filling half the file fills more than half the card, while book
+       50's fills under a fifth. v22 matched book 50's left edge by
+       matching its width, and the tower came out too small for its own
+       lit windows to read. Large wins; it starts about 15% left of the
+       row above and the outer smoke crosses the last line of the
+       summary, where the mask has the picture dim anyway.
+
+       Its master is 2400px wide, not the 3072 the other scenes use.
+       The widest this card ever paints it is about 990 CSS px, so 2400
+       still leaves better than 2x on a retina screen, and the noise
+       ground this painting carries made the extra pixels expensive:
+       665KB at 3072 against 428KB at 2400, for detail nothing displays.
+       Raising the alpha floor was the other way to get the file down
+       and it was the wrong one — it ate the faint smoke, which is the
+       painting. Whole at all ten widths, 320px to 1600px.
+
+   v22 2026-09-16 08:22 PDT — book 94's painting set to 0.332 so its
+       left edge lines up with book 50's, the card above it. Measured
+       off the rendered page rather than guessed: book 50's painting
+       occupies 74.9%-93.5% of its card, and book 94's was sitting at
+       51%-97% — two and a half times as wide, and reaching back under
+       its own summary. Aligning the two therefore meant shrinking it,
+       not sliding it right: the right edges were already level, so all
+       the difference was width. It now sits at 73.6%-93.1%, within
+       about a percent of the row above at both ends, and is still
+       whole at all ten widths from 320px to 1600px.
 
    v21 2026-09-16 07:44 PDT — book 94's painting replaced again. No
        CSS change; noted for the sizing, which this one fought harder
