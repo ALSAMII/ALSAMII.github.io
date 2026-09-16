@@ -1983,12 +1983,38 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    goes past the card's edge is the faint right tail of the bedding, which
    is the overhang this scene was built to spend.
 
-   Not lower: at 88% the right wing's tip reaches the card's edge and the
-   hummingbird sits on it, with no margin left. Not higher: 95% left the
-   wings at 0.53, still behind the second line of the summary, which is the
-   fault this is here to fix. */
+   Not higher: 95% left the wings at 0.53, still behind the second line of
+   the summary, which is the fault this is here to fix.
+
+   87% since September 2026, three points further right, and that is the
+   floor. Re-swept at 90 / 87 / 84 / 81 / 78 / 75 / 72 across 430, 393,
+   360 and 320px, measuring the wings' own bright pixels rather than the
+   picture's faint edge: their right tip sits at 90.6-91.9% of the card at
+   90 and at 91.3-91.9% at 87, and at 84 it is gone — the blob collapses to
+   74-86%, which is the left wing alone with the right one off the card.
+   The earlier note here put that cliff at 88%; measured on the wings it is
+   between 87 and 84, so 87 is the last value that keeps the pair. Below it
+   the shift stops being free and starts costing a wing. */
 @media (max-width: 56rem) {
-  .start-row--exam .start-scene { object-position: 90% 50%; }
+  .start-row--exam .start-scene { object-position: 87% 50%; }
+}
+
+/* Book 52 off the shared anchor on a narrow screen, for the same reason
+   as 35: the swimmer and the rescue ski sit left of centre in the card and
+   the summary runs across them, while the water to their right is empty.
+   92% moves the window left in the FILE and so the picture right on the
+   SCREEN, by about 12% of the card — the box is 1.18:1 on a phone against
+   a 3:1 file, so each point of object-position is worth 1.5 points of
+   card. What leaves the card on the right is the file's last 5%, which is
+   open water.
+
+   NOT MEASURED THE WAY THE OTHERS WERE. assets/start-52.jpg is not in this
+   working copy, so this row cannot be rendered here; 92% is arithmetic off
+   the crop geometry plus the subject's position read from a screenshot,
+   not off rendered pixels. Every other figure in this file was taken from
+   a render. Check it against a real one before trusting it. */
+@media (max-width: 56rem) {
+  .start-row--samba .start-scene { object-position: 92% 50%; }
 }
 
 /* Book 94 steps back off the right anchor on a narrow screen too, and
@@ -2425,6 +2451,34 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    of the smoke), and full width over a dark scrim (six lines, the
    most compact, but the scrim puts a visible band across the
    painting and would need a second version for the light theme). */
+/* ---- Books 35 and 52 give the picture room by pulling the text in ----
+   The opposite move to book 94's below, and for the opposite reason. 94's
+   painting leaves the bottom of its card empty, so its summary was let
+   out into the gap. These two fill their cards edge to edge — the wings
+   and the plain of light on 35, the swimmer and the shafts on 52 — and
+   the summary sits on the picture rather than beside it.
+
+   Moving the crop right helps and is done above, but only so far: on 35
+   the right wing leaves the card below 87%, which buys about 4% of card
+   width and no more. The rest has to come from the text. 58% instead of
+   64% frees another 6%, and the two together take roughly a tenth of the
+   card back off the words.
+
+   58 rather than 56 or 54. All three keep both wings whole at every width
+   — measured, the wings' right tip stays at 90.8-91.9% of the card down to
+   52% — so the choice is scroll, not safety: 64% sets nine lines at 393px
+   and ten at 320px, 58% gives ten and twelve, 56% eleven and twelve, 54%
+   eleven and thirteen. 58 is the most picture per line of thumb travel.
+   Anything narrower is available and costs only height.
+
+   Phones only, at 34rem: on a wide screen these cards are short and the
+   summary already ends well clear of the artwork. Below the 64% rule, not
+   above it — same specificity, so source order decides. */
+@media (max-width: 34rem) {
+  .start-row--exam  .start-note,
+  .start-row--samba .start-note { max-width: 58%; }
+}
+
 @media (max-width: 34rem) {
   .start-row--roundtrip .start-note { max-width: 94%; }
   .start-row--roundtrip .start-note::before {
@@ -8208,7 +8262,20 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 27 · last updated 2026-09-16 14:10 PDT
+   Version 28 · last updated 2026-09-16 15:30 PDT
+
+   v28 2026-09-16 15:30 PDT — books 35 and 52 give their pictures room on
+       a phone, by two moves at once. The crop goes further right: 35 from
+       90% to 87%, 52 off the shared 100% anchor to 92%. And the summary
+       comes in from 64% to 58% below 34rem, for those two rows only.
+       87% is a floor, not a preference — re-swept at seven values across
+       four widths against the wings' own bright pixels, the right wing's
+       tip holds at 91-92% of the card at 87 and is off the card by 84,
+       where the bright blob collapses to the left wing alone. So the
+       shift alone buys about 4% of card width; the measure buys another
+       6. Book 52's 92% is arithmetic, not a render: assets/start-52.jpg
+       is not in this working copy and that row cannot be drawn here.
+       Desktop is untouched for both.
 
    v27 2026-09-16 14:10 PDT — the phone float becomes a staircase. The
        plain rectangle gave six lines at 64% and then two at 94%, and
