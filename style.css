@@ -2409,14 +2409,39 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    so the 64% cap above wins on source order alone. This block has to
    stay below it. Written first above the cap, it measured 64% on the
    rendered page with the float still shortening the top lines — six
-   lines at 43% of the card and nothing gained. */
+   lines at 43% of the card and nothing gained.
+
+   The float is a staircase, not a block. A plain rectangle gave six
+   lines at 64% and then two at 94%, and the jump read as a mistake:
+   a narrow column with one line hanging off the end of it. The
+   picture does not step like that — the smoke lifts off the text
+   gradually — so the float follows it in three treads, 64% then 78%
+   then 87%, and the paragraph opens out instead of snapping open.
+   shape-outside is what makes a float do this; without it a float
+   is a box and a box has one width. Four other shapes were rendered
+   and looked at first: a gentler flat release at 80% (an orphaned
+   two-word last line), one even measure at 74% with no float (a
+   straight right edge, but the top lines sit on the brightest part
+   of the smoke), and full width over a dark scrim (six lines, the
+   most compact, but the scrim puts a visible band across the
+   painting and would need a second version for the light theme). */
 @media (max-width: 34rem) {
   .start-row--roundtrip .start-note { max-width: 94%; }
   .start-row--roundtrip .start-note::before {
     content: "";
     float: right;
     width: 32%;
-    height: 8.6em;
+    height: 10.36em;
+    /* Seven line-heights, cut into three steps. 0-42.9% is the first
+       three lines, blocked across the float's full width, so they end
+       at 64% where the smoke still crosses them. 42.9-71.4% is lines
+       four and five, blocked from 47%, which lets them reach 78%.
+       71.4-100% is lines six and seven, blocked from 77%, which lets
+       them reach 87%. Everything below the float runs the full 94%. */
+    shape-outside: polygon(0 0, 100% 0, 100% 100%,
+                           77% 100%, 77% 71.4%,
+                           47% 71.4%, 47% 42.9%,
+                           0 42.9%);
   }
 }
 
@@ -8183,7 +8208,30 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 26 · last updated 2026-09-16 12:05 PDT
+   Version 27 · last updated 2026-09-16 14:10 PDT
+
+   v27 2026-09-16 14:10 PDT — the phone float becomes a staircase. The
+       plain rectangle gave six lines at 64% and then two at 94%, and
+       the jump read as a mistake: a narrow column with one line hanging
+       off the end. The smoke lifts off the text gradually, so the float
+       now follows it in three treads — 64%, then 78%, then 87%, with
+       anything below it at the full 94% — using shape-outside on a
+       float seven line-heights tall. Four shapes were rendered and
+       looked at before this one: a flat release at 80% (orphaned
+       two-word last line), one even measure at 74% with no float
+       (straight right edge, but the top lines sit on the brightest
+       smoke), and full width over a dark scrim (six lines, most
+       compact, but a visible band across the painting and a second
+       version needed for the light theme).
+
+       Book 94's gloss moves to the title line with this, after the
+       Persian name, the way every row but 35 carries it — which is an
+       index.html change, but it belongs to this entry because it is
+       what the released measure paid for. It needed the gloss cut from
+       "what he closed comes back" to "the calls return": four things on
+       one line, and at 25 characters the head broke in two from 400px
+       to 1300px. 16 holds at every width measured; past about 18 it
+       breaks again.
 
    v26 2026-09-16 12:05 PDT — book 94's summary also runs to 73% of the
        card between 72rem and 93rem, with a 12.3% x 4.4em float holding

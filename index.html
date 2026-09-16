@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 468 · last updated 2026-09-16 12:05 PDT -->
+<!-- Version 469 · last updated 2026-09-16 14:10 PDT -->
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -127,7 +127,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=422">
+<link rel="stylesheet" href="style.css?v=423">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -570,14 +570,25 @@
             <span class="start-body">
               <span class="start-head">
                 <span class="start-num">94</span>&nbsp;<span class="start-title">Round Trip</span>
-                <span class="start-title-fa" lang="fa" dir="rtl">&#1585;&#1601;&#1578; &#1608; &#1576;&#1585;&#1711;&#1588;&#1578;</span>
-                <!-- Book 94 carries its gloss on the reading-time line, the same
-                     way book 35 does and for a harder reason: this row has a
-                     Persian title on the head as well, and number, English name,
-                     Persian name and gloss will not hold one line below 1200px at
-                     any honest gloss length -- three words still broke it. See
-                     .start-head > .start-sub in style.css. -->
-                <span class="start-sub"><span class="start-time caps"></span><span class="start-gloss">what he closed comes back</span></span>
+                <!-- Gloss on the title line, after the Persian name, the way
+                     every other row on this panel carries it (book 35 is the
+                     one exception, and keeps its .start-sub wrapper). It sat on
+                     the reading-time line while the summary was capped at 64%
+                     and the painting sat hard against the card's right edge;
+                     with the staircase measure in style.css the head has room
+                     again. No whitespace between the Persian span and the
+                     gloss -- .start-gloss::before supplies the separating dot
+                     and its own margins, and a space here would double it.
+
+                     "the calls return", not "what he closed comes back":
+                     number, English name, Persian name and gloss are four
+                     things on one line, and at 25 characters the gloss broke
+                     the head in two from 400px all the way up to 1300px. 16
+                     characters holds one line at every width measured -- 376,
+                     400, 423, 441, 462, 505, 1200, 1300, 1440, 1600. Anything
+                     longer than about 18 goes back to two lines. -->
+                <span class="start-title-fa" lang="fa" dir="rtl">&#1585;&#1601;&#1578; &#1608; &#1576;&#1585;&#1711;&#1588;&#1578;</span><span class="start-gloss">the calls return</span>
+                <span class="start-time caps"></span>
               </span>
               <span class="start-note">When a government shuts off the internet, somebody has to do it. He is the engineer who does &mdash; and the job turns out to be not a wall but a list: hospitals, ambulances, banks, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep.</span>
             </span>
