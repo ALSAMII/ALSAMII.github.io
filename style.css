@@ -2356,6 +2356,70 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row { padding-block: 0.9rem; }
 }
 
+/* ---- Book 94's summary runs wide under its own painting, on a phone ----
+   Every row on this panel caps its prose at 64% of the card, which is
+   the measure that keeps text off artwork that reaches in from the
+   right. Book 94's painting does not reach the whole way down: the
+   smoke and the tower occupy the card's upper two thirds and stop, and
+   below them the bottom third of the card is empty. On a phone that is
+   three or four lines of summary set at 64% with a third of the card
+   lying blank beside them, and one more line of scroll for nothing.
+
+   Measured, not guessed. Scene and background were rendered twice each
+   at 430, 414, 390, 375, 360 and 320px — once with the artwork, once
+   without — and the two differenced per pixel, which is the only way
+   to find the painting's true left edge without the ember title type
+   and the cream body text being counted as picture. Across every width
+   the answer is the same: the painting constrains the left edge from
+   about 20% of the row's height down to about 62%, and below roughly
+   64% it imposes nothing at all. In line terms that is the first six
+   lines constrained and everything after them free.
+
+   A float, not a second max-width, because max-width cannot shorten
+   some lines of a paragraph and not others. An empty right-floated
+   ::before at the head of the summary shortens exactly the line boxes
+   it overlaps and leaves the ones below it alone — the old newspaper
+   device, and the only thing in CSS that does this without shape-
+   outside's per-row arithmetic.
+
+   The numbers. 94% is the released measure; 32% of that is the float,
+   which puts the shortened lines back at 0.94 x 0.68 = 64% of the card,
+   the same place they were. 8.6em of height: the painting's foot sits
+   between 4.5 and 5.7 line-heights below the summary's top depending on
+   the width, so 8.6em clears the deepest case with a line in hand.
+   Height in em rather than rem or px because this stylesheet scales its
+   root with the viewport — the summary's own line spacing runs 27.9px
+   at 390 and 24.4px at 375 — and em is the only unit that follows it.
+
+   This is a fixed point, not a one-way calculation: widening the lower
+   lines re-wraps the paragraph, which shortens the row, which re-crops
+   the scene, which moves the painting. The figures above are from the
+   settled state, re-measured after the change, not from the state
+   before it. Ten lines become eight at 390; eleven become nine at 320.
+
+   Light theme carries a faint speckle of ash under the widened lines
+   that the dark theme masks entirely. It is left alone: it is fainter
+   than what the lines above the float already sit on, and the dark
+   serif reads over it without effort. Fixing it would mean giving back
+   nearly all the width, since the light theme's haze reaches to 66% of
+   the card where the dark theme's picture has ended.
+
+   Placement matters and is not cosmetic. .start-row--roundtrip
+   .start-note and .start-row .start-note carry the same specificity,
+   so the 64% cap above wins on source order alone. This block has to
+   stay below it. Written first above the cap, it measured 64% on the
+   rendered page with the float still shortening the top lines — six
+   lines at 43% of the card and nothing gained. */
+@media (max-width: 34rem) {
+  .start-row--roundtrip .start-note { max-width: 94%; }
+  .start-row--roundtrip .start-note::before {
+    content: "";
+    float: right;
+    width: 32%;
+    height: 8.6em;
+  }
+}
+
 
 /* The three-part reader's guide in the About panel. Three columns
    across, term above meaning, so Door, Room and Key are read as one
@@ -8068,7 +8132,23 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 24 · last updated 2026-09-16 09:38 PDT
+   Version 25 · last updated 2026-09-16 11:20 PDT
+
+   v25 2026-09-16 11:20 PDT — book 94's summary runs to 94% of the card
+       below 34rem, with an empty right-floated ::before, 32% wide and
+       8.6em tall, holding the first six lines back at the old 64%. The
+       painting stops around 62% of the row's height; everything below
+       it was blank card beside a narrow column of prose. The left edge
+       was found by differencing the row rendered with the artwork
+       against the row rendered without it, at six phone widths, so the
+       title type and the body text could not be mistaken for picture.
+       A float rather than a second max-width because max-width cannot
+       shorten some lines of a paragraph and not others. Ten lines
+       become eight at 390px, eleven become nine at 320px. Desktop is
+       untouched, and the other eight rows are untouched. Light theme
+       keeps a faint ash speckle under the widened lines that the dark
+       theme masks; it is fainter than what the lines above already sit
+       on, and removing it would cost nearly all the width.
 
    v24 2026-09-16 09:38 PDT — book 94 steps back off the shared right
        anchor below 56rem, to 84%, so its painting reaches the screen
