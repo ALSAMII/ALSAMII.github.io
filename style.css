@@ -1991,6 +1991,18 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--exam .start-scene { object-position: 90% 50%; }
 }
 
+/* Book 94 steps back off the right anchor on a narrow screen too, and
+   for the plainer reason: its painting stops short of its own file's
+   right edge, so hard against 100% it left a visible strip of empty
+   card between the building and the screen edge while every other row's
+   artwork ran right to it. 84% moves the window left in the FILE, which
+   moves the picture right on the SCREEN — measured off the rendered
+   pixels, not the geometry: the building's right edge goes from 95.3%
+   of the card to 99.9%, closing the gap. Desktop is untouched. */
+@media (max-width: 56rem) {
+  .start-row--roundtrip .start-scene { object-position: 84% 50%; }
+}
+
 /* ---- Book 35's gloss sits on the reading-time line ----
    Every other row carries its gloss after the name, which is where it
    reads best. This painting is the exception: it reaches further left
@@ -8056,7 +8068,18 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 23 · last updated 2026-09-16 09:05 PDT
+   Version 24 · last updated 2026-09-16 09:38 PDT
+
+   v24 2026-09-16 09:38 PDT — book 94 steps back off the shared right
+       anchor below 56rem, to 84%, so its painting reaches the screen
+       edge on a phone the way every other row's does. Its artwork stops
+       short of its own file's right edge, so hard against 100% it left
+       a strip of empty card between the building and the screen. 84%
+       moves the window left in the FILE, which moves the picture right
+       on the SCREEN — the building's right edge goes from 95.3% of the
+       card to 99.9%. Measured off rendered pixels, not geometry: the
+       computed model said there was no gap, and the screen disagreed.
+       Desktop is untouched; the rule is inside the 56rem query.
 
    v23 2026-09-16 09:05 PDT — book 94's painting set large at 0.72,
        reversing v22's alignment. The two could not both be had: the
