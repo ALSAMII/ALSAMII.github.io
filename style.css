@@ -1976,14 +1976,20 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    part actually on screen started at the file's 58% — putting the wings at
    44% of the card, directly behind the second line of the summary.
 
-   95% moves the window left in the FILE, which moves the picture right on
-   the SCREEN. Measured across every narrow width, the wings go 0.44 -> 0.53
-   of the card at 390px, 0.35 -> 0.47 at 320px, 0.68 -> 0.71 at 768px, and
-   the bedding still finishes inside the card at all of them. 92% clears the
-   summary better still and costs the right tail of the bedding at four
-   widths out of six, which is why this is 95% and not lower. */
+   90% moves the window left in the FILE, which moves the picture right on
+   the SCREEN. Measured at every narrow width, the wings go from starting at
+   0.44 of the card to 0.62 on a 390px phone, 0.35 -> 0.58 at 320px, 0.54 ->
+   0.67 at 430px and 0.68 -> 0.74 at 768px — clear of the summary, which
+   ends at 0.64, everywhere. Both wings and the hummingbird stay whole; what
+   goes past the card's edge is the faint right tail of the bedding, which
+   is the overhang this scene was built to spend.
+
+   Not lower: at 88% the right wing's tip reaches the card's edge and the
+   hummingbird sits on it, with no margin left. Not higher: 95% left the
+   wings at 0.53, still behind the second line of the summary, which is the
+   fault this is here to fix. */
 @media (max-width: 56rem) {
-  .start-row--exam .start-scene { object-position: 95% 50%; }
+  .start-row--exam .start-scene { object-position: 90% 50%; }
 }
 
 /* Two of these repainted scenes are 3:1 like The Glow. Their cards
@@ -8025,23 +8031,27 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 15 · last updated 2026-09-15 21:58 PDT
+   Version 15 · last updated 2026-09-15 22:31 PDT
 
-   v15 2026-09-15 21:58 PDT — book 35's painting steps back off the
+   v15 2026-09-15 22:31 PDT — book 35's painting steps back off the
        shared right anchor below 56rem, to 95%.
 
        Everything narrow crops this file to a fraction of its width AND
        runs the scene 80px off the card, so right-anchored the part on
        screen began at the file's 58% — putting the wings at 44% of the
        card on a 390px phone, directly behind the second line of the
-       summary. 95% moves the window left in the FILE, which moves the
-       picture right on the SCREEN: wings 0.44 -> 0.53 of the card at
-       390px, 0.35 -> 0.47 at 320px, 0.68 -> 0.71 at 768px, and the
-       bedding still finishes inside the card at every one. It also
-       recovered the 3% of the left edge that a 320px phone had been
-       losing. 92% clears the summary better again and costs the right
-       tail of the bedding at four widths out of six, which is why this
-       is 95%. Desktop is untouched: the rule is inside the 56rem query.
+       summary. 90% moves the window left in the FILE, which moves the
+       picture right on the SCREEN: wings start 0.44 -> 0.62 of the card
+       at 390px, 0.35 -> 0.58 at 320px, 0.54 -> 0.67 at 430px, 0.68 ->
+       0.74 at 768px. The summary ends at 0.64, so the wings now clear it
+       at every width. Both wings and the hummingbird stay whole; the
+       faint right tail of the bedding goes past the card's edge, which
+       is the overhang this scene exists to spend.
+
+       Set by looking, not by arithmetic: 95% was tried first and left
+       the wings at 0.53, still behind the second line; 88% pushes the
+       right wing's tip onto the card's edge with nothing to spare.
+       Desktop is untouched — the rule is inside the 56rem query.
 
    v14 2026-09-15 20:44 PDT — book 35's painting replaced, and
        re-cut for this slot rather than dropped in as supplied.
