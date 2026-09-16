@@ -3690,6 +3690,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .series-feature-blurb { font-size: 0.875rem; }
 }
 
+
 /* Space beneath the synopsis before its single featured book, so the
    two divide clearly instead of the row reading as one more line of
    the paragraph above it. Reduced from 1.75rem to 0.6rem to bring
@@ -5678,6 +5679,13 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   font-size: 1.0625rem;
   line-height: 1.6;
   color: var(--faded);
+  /* The same reason .feature-syn carries it: a series synopsis goes in
+     as plain text through textContent, so a blank line in stories.js
+     would collapse to a space. pre-line keeps the paragraph breaks and
+     wraps normally otherwise. The synopses written as one paragraph --
+     which is all of them but The Unsaid and the Water Is Lovely -- are
+     unaffected, since pre-line only changes what happens to newlines. */
+  white-space: pre-line;
 }
 .trilogy.open .synopsis .minis {
   display: flex;
@@ -8269,7 +8277,28 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 29 · last updated 2026-09-16 19:25 PDT
+   Version 30 · last updated 2026-09-16 21:50 PDT
+
+   v30 2026-09-16 21:50 PDT — series synopses can be written in
+       paragraphs. The Unsaid and Come In, the Water Is Lovely were both
+       rewritten as several beats rather than one block, and the three
+       places a series synopsis appears now keep the breaks:
+       .feature-syn already had white-space: pre-line, .trilogy.open
+       .synopsis gains it, and the recommended panel's blurb is six
+       separate <p class="series-feature-blurb"> with a sibling rule for
+       the space between them. Also .series-feature-note, for the
+       start-anywhere line at the foot of a blurb — smaller, italic,
+       dimmer, so the last line of the piece keeps its drop.
+
+       Both new rules had to go in the appended block at the foot of
+       this file, not beside .series-feature-blurb's own rule. The
+       header of that block says why and it is true: .series-feature
+       .series-feature-blurb sets margin: 1.5rem 0 0 and font-size:
+       1.1875rem, same specificity, later in the file. Written in the
+       obvious place the paragraph gap measured 24px on the rendered
+       page — the banner margin, untouched — and the note came out at
+       body size. The note needed the sibling combinator too, or the
+       paragraph-gap rule outranked it and took its top margin.
 
    v29 2026-09-16 19:25 PDT — book 52's anchor corrected from 92% to 97%,
        now that assets/start-52.jpg is in the working copy and the row can
@@ -8754,6 +8783,45 @@ html[data-theme="light"] .t-banner img {
   font-size: 1.1875rem;   /* 19px */
   line-height: 1.45;
   color: var(--parchment);
+}
+
+/* The Unsaid's blurb is six paragraphs; the Delgosha's is one. Both use
+   the same class, so the space between beats has to sit on the sibling
+   combinator and not on the element -- the rule above gives every one of
+   them margin: 1.5rem 0 0, which is the space that belongs under the
+   banner, and a one-paragraph blurb must not gain a second copy of it
+   further down. 0.9rem between paragraphs: a little over half a line,
+   enough to read as a break in the argument and not enough to let the
+   block come apart.
+
+   Down here, not up at .series-feature-blurb's own rule, and for the
+   reason this section's header already gives: the rule above is
+   .series-feature .series-feature-blurb, and at equal specificity the
+   last one wins. Written up there it measured 24px on the rendered
+   page -- the banner margin, unchanged -- and the paragraphs read as
+   one undifferentiated block. */
+.series-feature .series-feature-blurb + .series-feature-blurb { margin-top: 0.9rem; }
+
+/* The practical aside at the foot of a series blurb: "start anywhere",
+   and anything else that is information about how to read the books
+   rather than part of the piece. A step down and a step back, so the
+   last line of the blurb keeps its weight -- on The Unsaid that line is
+   "Notice how little cruelty it takes", and a note set at the same size
+   directly under it takes the drop out of it. */
+.series-feature .series-feature-blurb + .series-feature-note {
+  /* Selector written through the sibling combinator so it carries the
+     same weight as the paragraph-gap rule directly above, which would
+     otherwise win on specificity and hand the note the 0.9rem meant for
+     a beat inside the piece. The note always follows a blurb, so there
+     is no case this fails to match. */
+  margin-top: 1.6rem;
+  font-size: 0.9375rem;
+  font-style: italic;
+  opacity: 0.68;
+}
+
+@media (max-width: 34rem) {
+  .series-feature .series-feature-blurb + .series-feature-note { font-size: 0.875rem; }
 }
 
 /* The two signs. They were centred caps at the same volume as the

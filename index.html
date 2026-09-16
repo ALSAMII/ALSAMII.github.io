@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 471 · last updated 2026-09-16 19:20 PDT -->
+<!-- Version 472 · last updated 2026-09-16 21:50 PDT -->
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -127,7 +127,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=425">
+<link rel="stylesheet" href="style.css?v=426">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -768,7 +768,20 @@
           <span class="series-banner">
             <img data-art="assets/series-unsaid.jpg" alt="">
           </span>
-          <p class="series-feature-blurb">THE UNSAID is named for n&#257;gofteh &mdash; not a secret, which somebody is keeping, but the thing that was never said at all, and so was never anybody&rsquo;s to keep. It is the silence a state leaves in a room after it has gone home: no order given, no refusal issued, and everyone still standing there certain it came from further up the line. Each book writes whoever stood closest to it: a mother whose dreams of her dead son are recorded each morning and handed back to her in translation, reworded into something she no longer recognizes as grief; a crane operator who loses his sense of weight entirely; a judge who never hears the hours someone is counting on the other side of the city. None of them is a monster. Each one simply trusted that someone further down the line would be the one to feel it. Start anywhere: each book opens with enough of a recap to stand on its own.</p>
+          <!-- Six paragraphs rather than one block, because the piece is written
+               in beats and the last one is a single sentence that has to land on
+               its own. Each is its own .series-feature-blurb; the sibling rule in
+               style.css supplies the space between them. The start-anywhere note
+               keeps its own paragraph at the foot, set smaller and dimmer, so it
+               reads as the practical aside it is and does not compete with
+               "Notice how little cruelty it takes." -->
+          <p class="series-feature-blurb">A country does not need to ban very much, so long as nobody ever has to make a decision.</p>
+          <p class="series-feature-blurb">A mother dreams of her dead son, and the dream is read back to her in someone else&rsquo;s words. Another counts the hours while a court decides about hers. A boy sits the exam that will settle his life. A man who has judged weight by feel for thirty years wakes one morning unable to. Nobody refuses them; nobody is refused. The waiting does the work, and leaves no body, and no one to charge.</p>
+          <p class="series-feature-blurb">N&#257;gofteh is the Persian for the unsaid &mdash; not a secret, which somebody keeps, but what was never spoken at all. It belongs to nobody, so nobody can properly grieve it.</p>
+          <p class="series-feature-blurb">Iran, from 1979 onwards. But the real setting is an office, and offices are the same everywhere.</p>
+          <p class="series-feature-blurb">Split a job between enough people and each share is too small to feel. The harm happens anyway, in full and on time. Everyone worked properly. Everyone was tired. Everyone assumed the guilt would settle on whoever came next. It settles on no one &mdash; but something stays with whoever stood closest when the door shut.</p>
+          <p class="series-feature-blurb">These books put you in that chair, and you will be comfortable there. Which is the point. Notice how little cruelty it takes.</p>
+          <p class="series-feature-blurb series-feature-note">Start anywhere: each book opens with enough of a recap to stand on its own.</p>
         </div>
 
         <div class="start">
@@ -1062,7 +1075,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=389"></script>
+<script src="stories.js?v=390"></script>
 <script src="script.js?v=412"></script>
 </body>
 </html>
