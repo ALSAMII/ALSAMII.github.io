@@ -8006,7 +8006,38 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 13 · last updated 2026-09-14 20:38 PDT
+   Version 14 · last updated 2026-09-15 20:44 PDT
+
+   v14 2026-09-15 20:44 PDT — book 35's painting replaced, and
+       re-cut for this slot rather than dropped in as supplied.
+
+       The new art arrived at 16:9. These scenes are not: the slot runs
+       from 3.7:1 on a 1600px desktop to 1.26:1 on a phone, so "cover"
+       keeps only 48% of a 16:9 picture's height at the wide end, and
+       this composition spans 79% of it — the wingtips and the whole
+       imprint in the bedding would have been cropped away on any wide
+       screen. Re-framed to 3:1, the same master format as start-55 and
+       the three widened in September, with the composition placed
+       between 62% and 90% across. That band is not a guess: .start-row
+       --exam takes the shared right-anchored rule below, so the
+       narrowest crop shows only x 58%-100% of the picture. Checked at
+       thirteen widths, portrait and landscape, 320px to 1600px: whole
+       composition visible at every one except a 320px phone, which
+       loses 3% off the dimmest left edge of the bedding.
+
+       No CSS change was needed for the aim. The rule that looked like
+       book 35's — .start-row--weight — is dead: no element has carried
+       that class for some time, and editing it did nothing.
+
+       The picture also now carries its own alpha, keyed off the art's
+       own light so the black ground is transparent. On the dark theme
+       that is invisible, black dissolving into a black page. On paper
+       it is the whole difference: the plate was a hard-edged black
+       slab across a white page, and it now floats with all four sides
+       going out cleanly, which is what the light theme wanted from it.
+       Colour is boosted before keying, because gold at partial alpha
+       composites silver against white. WebP carries the alpha; the JPG
+       fallback stays opaque, which only an ancient browser will see.
 
    v13 2026-09-14 20:38 PDT — the artwork gets its room back, and
        then some. Three changes, the first two undoing a fault of v10's.
