@@ -1967,6 +1967,25 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--dreams   .start-scene { object-position: 100% 50%; }
 }
 
+/* Book 35 alone steps back off that right anchor on a narrow screen.
+
+   Its painting is not like the others: the subject sits between 65% and
+   90% across a 3:1 file with a wide black margin either side of it. Hard
+   against the right edge that is fine on a desktop, but a phone crops the
+   file to 42% of its width AND the scene runs 80px off the card, so the
+   part actually on screen started at the file's 58% — putting the wings at
+   44% of the card, directly behind the second line of the summary.
+
+   95% moves the window left in the FILE, which moves the picture right on
+   the SCREEN. Measured across every narrow width, the wings go 0.44 -> 0.53
+   of the card at 390px, 0.35 -> 0.47 at 320px, 0.68 -> 0.71 at 768px, and
+   the bedding still finishes inside the card at all of them. 92% clears the
+   summary better still and costs the right tail of the bedding at four
+   widths out of six, which is why this is 95% and not lower. */
+@media (max-width: 56rem) {
+  .start-row--exam .start-scene { object-position: 95% 50%; }
+}
+
 /* Two of these repainted scenes are 3:1 like The Glow. Their cards
    are short, so on the panel the slot is a little wider than that and
    cover takes a small crop from the top and bottom. The figure below
@@ -8006,7 +8025,23 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 14 · last updated 2026-09-15 20:44 PDT
+   Version 15 · last updated 2026-09-15 21:58 PDT
+
+   v15 2026-09-15 21:58 PDT — book 35's painting steps back off the
+       shared right anchor below 56rem, to 95%.
+
+       Everything narrow crops this file to a fraction of its width AND
+       runs the scene 80px off the card, so right-anchored the part on
+       screen began at the file's 58% — putting the wings at 44% of the
+       card on a 390px phone, directly behind the second line of the
+       summary. 95% moves the window left in the FILE, which moves the
+       picture right on the SCREEN: wings 0.44 -> 0.53 of the card at
+       390px, 0.35 -> 0.47 at 320px, 0.68 -> 0.71 at 768px, and the
+       bedding still finishes inside the card at every one. It also
+       recovered the 3% of the left edge that a 320px phone had been
+       losing. 92% clears the summary better again and costs the right
+       tail of the bedding at four widths out of six, which is why this
+       is 95%. Desktop is untouched: the rule is inside the 56rem query.
 
    v14 2026-09-15 20:44 PDT — book 35's painting replaced, and
        re-cut for this slot rather than dropped in as supplied.
