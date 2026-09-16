@@ -2420,6 +2420,57 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   }
 }
 
+/* ---- The same release on a laptop, in the band where it is free ----
+   The phone rule above has a desktop counterpart, and it is narrower
+   in every sense. On a wide screen the card is short and the painting
+   fills it top to bottom: the tower stands on the right for the card's
+   whole height and the smoke crosses the middle diagonally. There is
+   no empty bottom third here. What there is, between the smoke's lower
+   tail and the tower's left wall, is a wedge of blank card beside the
+   last three or four lines, and that wedge is what this rule spends.
+
+   Same method as above — scene and background rendered and differenced
+   per pixel — swept at every 50px from 600 to 1600. The painting's
+   left edge, line by line, as a share of the card:
+
+     1150   42 43 56 | 65 69 70 71
+     1200   44 46 58 | 67 71 71 72
+     1250   46 48 60 | 68 72 74 73
+     1300   54 59 65 | 77 76 77
+     1400   57 62 68 | 54 78 78
+     1600   63 72    | 78 61 82
+
+   The bar marks where the smoke lets go. Below 72rem the picture eats
+   the card — at 1050 the edge runs 43 30 31 42 49 61 60 62, further
+   left than the 64% cap itself, and there is nothing to release.
+   Above 93rem the paragraph falls to five lines and the smoke's tail
+   crosses the fourth of them: the 54 at 1400 and the 61 at 1600 are
+   that tail, and a released line would run straight through it. So
+   the rule lives between 72rem and 93rem and nowhere else. Outside
+   that band this card is exactly as it was.
+
+   73%, three lines held back. 12.3% of 73 puts the first three back at
+   64%, where the smoke still crosses them. 4.4em is three line-heights
+   at 1.48 — deliberately a hair under, because at 4.7em the float's
+   foot landed one pixel inside the fourth line's box and shortened the
+   very line this rule exists to lengthen.
+
+   The fourth line does run its last word onto the smoke's outer haze
+   at the band's lower end. That is the standard this card already
+   keeps, not a lapse: at 1200 the second line ends "…the engineer who"
+   and the third "…not a wall but a" with those words on the same haze,
+   and have since the painting went in. Light theme was checked at 1200
+   and 1400; the released lines stop clear of the tower in both. */
+@media (min-width: 72rem) and (max-width: 93rem) {
+  .start-row--roundtrip .start-note { max-width: 73%; }
+  .start-row--roundtrip .start-note::before {
+    content: "";
+    float: right;
+    width: 12.3%;
+    height: 4.4em;
+  }
+}
+
 
 /* The three-part reader's guide in the About panel. Three columns
    across, term above meaning, so Door, Room and Key are read as one
@@ -8132,7 +8183,21 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 25 · last updated 2026-09-16 11:20 PDT
+   Version 26 · last updated 2026-09-16 12:05 PDT
+
+   v26 2026-09-16 12:05 PDT — book 94's summary also runs to 73% of the
+       card between 72rem and 93rem, with a 12.3% x 4.4em float holding
+       the first three lines back at 64%. On a laptop the painting fills
+       the card top to bottom, so there is no free bottom third as there
+       is on a phone; what is free is the wedge between the smoke's
+       lower tail and the tower's left wall, beside the last three or
+       four lines. The band is where that wedge exists: below 72rem the
+       picture's left edge runs further left than the 64% cap itself (43
+       30 31 42 49 61 60 62 at 1050), and above 93rem the paragraph
+       falls to five lines and the smoke's tail crosses the fourth of
+       them. Outside the band the card is untouched. 4.4em, not 4.7em:
+       at 4.7 the float's foot landed one pixel inside the fourth line's
+       box and shortened the very line the rule exists to lengthen.
 
    v25 2026-09-16 11:20 PDT — book 94's summary runs to 94% of the card
        below 34rem, with an empty right-floated ::before, 32% wide and
