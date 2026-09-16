@@ -1865,7 +1865,6 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    almost nothing off the top and bottom. Anchored far right so the
    heavy horizontal crop on a portrait card keeps the whole column
    rather than slicing the figure off its right edge. */
-.start-row--alarm  .start-scene { object-position: 92% 50%; }
 .start-row--weight .start-scene { object-position: 52% 46%; }
 
 
@@ -1937,7 +1936,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
 .start-row--glow     .start-scene,
 .start-row--undertow .start-scene,
 .start-row--blackout .start-scene,
-.start-row--alarm    .start-scene,
+.start-row--roundtrip .start-scene,
 .start-row--exam     .start-scene,
 .start-row--swimmer  .start-scene,
 .start-row--samba    .start-scene,
@@ -1948,7 +1947,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--glow     .start-scene,
   .start-row--undertow .start-scene,
   .start-row--blackout .start-scene,
-  .start-row--alarm    .start-scene,
+  .start-row--roundtrip .start-scene,
   .start-row--exam     .start-scene,
   .start-row--swimmer  .start-scene,
   .start-row--samba    .start-scene,
@@ -1960,7 +1959,7 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
   .start-row--glow     .start-scene,
   .start-row--undertow .start-scene,
   .start-row--blackout .start-scene,
-  .start-row--alarm    .start-scene,
+  .start-row--roundtrip .start-scene,
   .start-row--exam     .start-scene,
   .start-row--swimmer  .start-scene,
   .start-row--samba    .start-scene,
@@ -8057,7 +8056,70 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 16 · last updated 2026-09-16 03:40 PDT
+   Version 21 · last updated 2026-09-16 07:44 PDT
+
+   v21 2026-09-16 07:44 PDT — book 94's painting replaced again. No
+       CSS change; noted for the sizing, which this one fought harder
+       than the rest. The art is native 3:1 but the painted subject
+       runs about 54% of the frame wide and nearly its whole height —
+       the block of flats reaches both edges — so at full size the
+       widest desktop crop cut the roof and the ground floor off it.
+       0.72, anchored right and centred, is what clears both limits:
+       the narrowest phone's window is about 36% of the file's width
+       and the widest desktop keeps 82% of its height. Whole at all
+       ten widths, 320px to 1600px, portrait and landscape.
+
+       Its alpha floor is 0.058, not the 0.020 the other scenes use.
+       This painting carries a fine noise texture across its entire
+       ground, and at the usual floor that texture survived as
+       half-transparent speckle — it muddied the blend and took the
+       file to 1MB. Lifting the floor drops the texture to nothing,
+       keeps the art, and 81% of the frame is now fully clear.
+
+   v20 2026-09-16 06:28 PDT — book 94's panel painting replaced. No
+       CSS change; the note is here because the sizing is not arbitrary.
+       The new art is native 3:1 and already sat inside every crop, but
+       it filled only 29% of the frame's width and 60% of its height,
+       which read as a small picture floating in a wide card. Scaled up
+       1.08 and anchored right it fills the card properly and is still
+       whole at all ten widths from 320px to 1600px, portrait and
+       landscape. 1.18 was tried first and clipped the left edge on a
+       320px phone: the binding limit is not the height (the widest
+       desktop window keeps 82% and the painting is 65%) but the
+       narrowest phone, whose on-screen slice is about 36% of the file.
+
+   v19 2026-09-16 06:05 PDT — v18's `order: -1` on .series-name's
+       Persian span is taken back out. The heading reads The Unsaid
+       ناگفته again, English first with the Persian at the right-hand
+       end of the line — which is where a Persian line begins in its own
+       direction, and so is "in front" in the sense that matters. The
+       pair stays centred and on one line.
+
+   v18 2026-09-16 05:52 PDT — reverted by v19 above. It put the Persian
+       name ahead of the English (ناگفته before The Unsaid) with
+       `order: -1`, leaving the markup order alone so a screen reader
+       still announced English-then-Persian.
+
+   v17 2026-09-16 05:20 PDT — book 40 leaves the Pick a Door panel and
+       book 94 takes its place under Transgressive, in number order
+       after 50. .start-row--alarm is retired: its three entries in the
+       shared right-anchor lists are now --roundtrip, and its bespoke
+       92% crop is deleted rather than left behind — a rule for a class
+       no element carries is exactly what wasted a pass on book 35.
+
+       94 carries its gloss on the reading-time line, like 35. This row
+       has a Persian title on the head as well, and number, English
+       name, Persian name and gloss will not hold one line below 1200px
+       at any honest length: measured, five words break it at 1200, four
+       at 1024, and even three ("it comes back") breaks at 1024. Book 78
+       manages all four only because "Black Out" and its gloss are both
+       short.
+
+       The painting is set to 0.86 and anchored right. At its supplied
+       size the composition was 44% of the frame — against start-35's
+       26% — and reached back under the summary at every width; at 0.70
+       it floated, too small for the card. Checked at ten widths, 320px
+       to 1600px, portrait and landscape.
 
    v16 2026-09-16 03:40 PDT — book 35's gloss moves off the title's
        line and onto the reading time's, where the picture is still

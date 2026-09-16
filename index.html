@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 455 · last updated 2026-09-16 04:35 PDT -->
+<!-- Version 463 · last updated 2026-09-16 07:44 PDT -->
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -75,7 +75,7 @@
      preload scanner start it while the HTML is still arriving.
      If the .webp is not there this 404s harmlessly and the script
      falls back to the .jpg, as it does for every other picture. -->
-<link rel="preload" as="image" href="assets/start-06.webp?v=406" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/start-06.webp?v=409" type="image/webp" fetchpriority="high">
 
 <!-- Which scene this visit gets. Runs here, in the head, so the
      choice is made before anything paints — picking it later would
@@ -127,7 +127,7 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=412">
+<link rel="stylesheet" href="style.css?v=417">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -552,18 +552,6 @@
             </span>
           </button>
 
-          <button class="start-row start-row--alarm" type="button" data-book="40"
-                  data-scene="assets/start-40.jpg">
-            <img class="start-scene" alt="" aria-hidden="true">
-            <span class="start-body">
-              <span class="start-head">
-                <span class="start-num">40</span>&nbsp;<span class="start-title">No Alarm</span><span class="start-gloss">the alarm was working</span>
-                <span class="start-time caps"></span>
-              </span>
-              <span class="start-note">Two alarms went missing: one at birth, one &mdash; he was told &mdash; to a parasite. He spent years proving both true in public, fights and jumps and a drink company selling his face as fearless. Kids who could still feel fear started copying him, and dying. Then he checks his own blood tests. Every one comes back negative.</span>
-            </span>
-          </button>
-
           <button class="start-row start-row--glow" type="button" data-book="50"
                   data-scene="assets/start-50.png">
             <img class="start-scene" alt="" aria-hidden="true">
@@ -573,6 +561,25 @@
                 <span class="start-time caps"></span>
               </span>
               <span class="start-note">For centuries, practitioners sealed the body with mudras, holding sensation rather than spending it, and never wrote the final instruction down. A laboratory found what that practice had quietly been building in the body, cloned it, and shipped it anyway, missing the last line. Arousal becomes a residence, not an event, and within a generation men aren&rsquo;t persecuted so much as simply no longer recognized.</span>
+            </span>
+          </button>
+
+          <button class="start-row start-row--roundtrip" type="button" data-book="94"
+                  data-scene="assets/start-94.jpg">
+            <img class="start-scene" alt="" aria-hidden="true">
+            <span class="start-body">
+              <span class="start-head">
+                <span class="start-num">94</span>&nbsp;<span class="start-title">Round Trip</span>
+                <span class="start-title-fa" lang="fa" dir="rtl">&#1585;&#1601;&#1578; &#1608; &#1576;&#1585;&#1711;&#1588;&#1578;</span>
+                <!-- Book 94 carries its gloss on the reading-time line, the same
+                     way book 35 does and for a harder reason: this row has a
+                     Persian title on the head as well, and number, English name,
+                     Persian name and gloss will not hold one line below 1200px at
+                     any honest gloss length -- three words still broke it. See
+                     .start-head > .start-sub in style.css. -->
+                <span class="start-sub"><span class="start-time caps"></span><span class="start-gloss">what he closed comes back</span></span>
+              </span>
+              <span class="start-note">When a government shuts off the internet, somebody has to do it. He is the engineer who does &mdash; and the job turns out to be not a wall but a list: hospitals, ambulances, banks, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep.</span>
             </span>
           </button>
 
@@ -773,7 +780,7 @@
             </span>
           </button>
 
-          <p class="start-heading">All 6 Books in the Series</p>
+          <p class="start-heading">All 7 Books in the Series</p>
 
           <div class="series-cycle-list">
             <button class="series-cycle-book" type="button" data-book="78"><span class="series-cycle-num">78</span>Black Out</button>
@@ -787,6 +794,8 @@
             <button class="series-cycle-book is-current" type="button" data-book="89"><span class="series-cycle-num">89</span>Three Wrong, One Right</button>
             <span class="series-cycle-sep" aria-hidden="true">&middot;</span>
             <button class="series-cycle-book" type="button" data-book="92"><span class="series-cycle-num">92</span>Equal to the Original</button>
+            <span class="series-cycle-sep" aria-hidden="true">&middot;</span>
+            <button class="series-cycle-book" type="button" data-book="94"><span class="series-cycle-num">94</span>Round Trip</button>
           </div>
 
         </div>
@@ -1042,7 +1051,7 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=384"></script>
-<script src="script.js?v=406"></script>
+<script src="stories.js?v=388"></script>
+<script src="script.js?v=409"></script>
 </body>
 </html>

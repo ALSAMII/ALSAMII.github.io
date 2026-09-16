@@ -1,4 +1,4 @@
-/* Version 440 · last updated 2026-09-16 04:35 PDT */
+/* Version 444 · last updated 2026-09-16 07:18 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -145,7 +145,7 @@ const STORIES = [
     room: "Their Confession, Your Shame \u2014 you feel it as though you did it",
     key: "Mercy \u2014 a stranger's confession arriving as your own memory",
     notes: [2, 3, 3],
-    synopsis: "Daniel Voss gives a camera to the people audiences flinch from \u2014 dosed on Mercy, a compound that makes a stranger's confession feel like his own. Eight sittings, each hiding a harder truth beneath the first, and a final chair reserved for the one man the chemical was never built to survive: his father."
+    synopsis: "Mercy does not make you sympathise. It files a stranger’s confession in your own memory, so that what they did arrives as something you did, at the weight and the shame it was carried at. Eight people sit down in front of Daniel Voss. Each first truth is hiding a worse one under it. The last chair is his father’s, and by then there is no version of watching that is not also remembering."
   },
 
   {
@@ -651,7 +651,7 @@ const STORIES = [
     room: "The Loop \u2014 continuous ecstasy, and no one on the other side of it",
     key: "The Glow \u2014 a self-replicating implant grown from thirty generations of prayer",
     notes: [3, 2, 1],
-    synopsis: "For centuries practitioners sealed the body with mudras \u2014 tongue, hands, gaze \u2014 and learned to hold sensation rather than spend it. Then a laboratory cloned it and sold it on prescription. Under the Glow, arousal is not an event but a residence: a warmth that never clears, softening thought until the body becomes an instrument that plays itself."
+    synopsis: "The Glow was a practice before it was a product: thirty generations of women who learned to hold sensation rather than spend it, and one laboratory that cloned the result and shipped it without the last instruction. Under it a woman’s climax stops being an event and becomes a climate — continuous, self-supplying, requiring nobody. Within a generation there is no campaign against men and no need for one. They are not driven out or hunted down. They are simply not wanted, not chosen, not conceived, and the last of them grow old in a world that has stopped noticing the difference."
   },
 
   {
@@ -1186,7 +1186,7 @@ const STORIES = [
     room: "The Allowlist \u2014 four hundred and sixty entries in his own hand, and nobody above him ever reads it",
     key: "One Address in Toronto \u2014 a house on a list of hospitals, able to answer only that it is still standing",
     notes: [2, 2, 3],
-    synopsis: "A round trip is what Peyman measures: you send out something small, let it touch the far end, and count how long it takes to come home. Twelve thousandths of a second to the hospital; two hundred and fourteen to Toronto, where his daughter has lived for four years and where he has never been. On the eighteenth of Dey he helps take his country off the map, then writes the list of what must keep working \u2014 four hundred and sixty entries, and nobody above him ever reads it. In the second week he adds one address that has no business being there."
+    synopsis: "When a government shuts off the internet, somebody has to do it. He is the engineer who does. His trade is the round trip — send a signal out, count how long it takes to come back — and the longest one on his screen reaches the country where his daughter now lives. Then he is ordered to take his own country offline, and finds the job is not a wall but a list: hospitals, ambulances, banks, customs, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep, each one travelling a road he closed himself."
   },
 
 ];
