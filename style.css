@@ -5632,11 +5632,25 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
    applies to the small-caps line under a book's reading time, which
    repeats the series name and wraps at exactly the widths where the
    overlap was worst. */
-/* The two scripts get a line each. The English keeps the serif's own
-   tight leading; only the Persian line is led for the nastaliq, which
-   is the one that needs it — so the heading no longer carries the
-   extra space on every line of a title that wraps. */
-.t-title.has-nastaliq { line-height: 1.25; }
+/* The two scripts sit on one line, English first and the Persian to its
+   right, rather than stacked. A flex row rather than two inline spans:
+   inline boxes let a narrow column break BETWEEN the Persian's own
+   words — which is how this heading once read "From the / Delgosha · az
+   / Delgosha", half the Persian stranded on the English's line and half
+   alone below. As flex items each script is one unwrappable box, so a
+   column too narrow to hold both moves the whole Persian down intact.
+
+   align-items: baseline, so the two scripts sit on a shared baseline
+   despite very different font metrics; column-gap only, so a wrap adds
+   no extra space. */
+.t-title.has-nastaliq {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.55em;
+  row-gap: 0;
+  line-height: 1.25;
+}
 
 .t-en { display: block; }
 
@@ -5646,17 +5660,17 @@ body:has(#panel-about.is-active):not(:has(#feature.show))
      where the line sits. Left as a full-width block it took the right
      edge of the heading with it, so on a wide column the English stood
      at one side and its translation at the other with a gap between
-     them. Shrunk to its text, the line starts where the English starts
-     and the two read as one heading stacked. */
+     them. Shrunk to its text, it sits directly beside the English. */
   width: fit-content;
   /* Nastaliq climbs and descends a long way from its baseline, and a
      line box takes its height from the font's metrics, which for this
-     face are modest next to the ink it actually paints. Led from the
-     serif it laid its descenders across the English above it. */
-  line-height: 1.9;
-  /* And it sits low in its own box, so the extra leading has to be
-     shared out rather than all landing above the words. */
-  padding-block: 0.05em 0.25em;
+     face are modest next to the ink it actually paints. Beside the
+     English rather than under it there is no line above to land on, so
+     the leading that used to hold it clear is no longer needed at 1.9
+     — but the descenders still have to clear whatever follows the
+     heading, which is what the padding below is for. */
+  line-height: 1.35;
+  padding-block: 0.04em 0.2em;
   font-size: 0.92em;
 }
 
@@ -8277,7 +8291,22 @@ html[data-theme="light"] .t-banner img {
 
 /* ═══════════════════════════════════════════════════════════════════
    RECOMMENDED SERIES — SINGLE-COLUMN TREATMENT
-   Version 30 · last updated 2026-09-16 21:50 PDT
+   Version 31 · last updated 2026-09-17 09:05 PDT
+
+   v31 2026-09-17 09:05 PDT — the shelf's two-script series headings set on
+       one line, English first and the Persian to its right, where they
+       used to stack. .t-title.has-nastaliq becomes a baseline-aligned
+       flex row; .t-fa keeps width: fit-content and drops from 1.9 to 1.35
+       line-height, since beside the English rather than under it there is
+       no line above for its ascenders to land on. Flex rather than two
+       inline spans on purpose: inline boxes let a narrow column break
+       between the Persian's own words, which is how this heading once
+       read "From the / Delgosha · az / Delgosha". As flex items each
+       script is one unwrappable box, so a column too narrow for both
+       moves the whole Persian down intact — which it still does for
+       Thursday Nights between roughly 1024 and 1200px, where the title
+       column is 252-292px and that pair needs 308. On a phone, and at
+       1440 and up, all three sit on one line.
 
    v30 2026-09-16 21:50 PDT — series synopses can be written in
        paragraphs. The Unsaid and Come In, the Water Is Lovely were both
