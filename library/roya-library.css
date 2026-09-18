@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 35 · last updated 2026-09-17 19:34 PDT
+   Version 36 · last updated 2026-09-17 21:18 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -105,7 +105,9 @@
 :root[data-lt="light"] #royaLibrary .sheet-plate{box-shadow:0 0 28px rgba(150,110,45,.2), 0 14px 26px rgba(70,52,24,.32)}
 :root[data-lt="light"] #royaLibrary .sheet-nav button{border-color:rgba(96,76,42,.45)}
 :root[data-lt="light"] #royaLibrary .mob-foot{border-top-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .dnav{background:#e3d7bc}
+:root[data-lt="light"] #royaLibrary .dnav{background:linear-gradient(to bottom,
+    rgba(227,215,188,.90) 0%, rgba(227,215,188,.82) 46%,
+    rgba(227,215,188,.48) 78%, rgba(227,215,188,0) 100%)}
 :root[data-lt="light"] #royaLibrary .dnav button + button::before, :root[data-lt="light"] #royaLibrary .ab-terms::before, :root[data-lt="light"] #royaLibrary .ab-terms::after, :root[data-lt="light"] #royaLibrary .ab-rule i{background:rgba(96,76,42,.45)}
 :root[data-lt="light"] #royaLibrary .ab-card, :root[data-lt="light"] #royaLibrary .ab-ser{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
 :root[data-lt="light"] #royaLibrary .ab-cov img{border-color:rgba(96,76,42,.4)}
@@ -383,10 +385,21 @@
   padding:2rem .2rem 1.8rem;
   /* No rule of its own. The bar under it already draws one a third of an inch
      lower, and two hairlines that close together read as a printing fault
-     rather than as a division. The band is opaque, which is what a frozen
-     header needs; the line was never doing that work. */
+     rather than as a division. The band needs to keep type legible over
+     whatever scrolls under it; the line was never doing that work. */
   position:sticky; top:var(--labh,0px); z-index:9;
-  background:#100f0d;}
+  /* Was a flat #100f0d fill. Against the boarded ground and the paintings
+     behind it that read as a lighter rectangle with a hard bottom edge — a
+     bar laid over the page rather than part of it. What a frozen header
+     actually needs is for the type to stay legible over whatever scrolls
+     under it, and a blur does that without a colour of its own. The veil
+     carries the ground colour, strongest where the band meets the top of
+     the screen and gone by its foot, so there is no edge anywhere. */
+  background:linear-gradient(to bottom,
+    rgba(16,15,13,.88) 0%, rgba(16,15,13,.80) 46%,
+    rgba(16,15,13,.46) 78%, rgba(16,15,13,0) 100%);
+  backdrop-filter:blur(14px) saturate(.88);
+  -webkit-backdrop-filter:blur(14px) saturate(.88);}
 #royaLibrary .dnav button{display:flex; flex-direction:column; gap:.34rem; padding:0 .2rem; position:relative}
 #royaLibrary .dnav button + button::before{content:""; position:absolute; left:-1.6rem; top:.1rem; bottom:.1rem; width:1px;
   background:rgba(199,148,61,.4);}
@@ -397,12 +410,23 @@
 #royaLibrary .dnav button[aria-current="true"] b{color:var(--gold-lt); box-shadow:inset 0 -2px 0 var(--gold-lt); padding-bottom:.26rem}
 /* ── About and Author's Notes ── */
 #royaLibrary .abt{position:relative; z-index:2; padding:1.8rem 1.4rem 1rem; min-width:0}
-#royaLibrary .ab-lede{margin:0 auto 1.3rem; max-width:56ch; text-align:center;
+/* Measures widened from 56/62/60ch. On a wide desktop the column runs to
+   about 1,470px and the prose was using barely a third of it, so the panel
+   read as a narrow strip with the page empty either side.
+
+   The ceiling is a COUNT OF CHARACTERS, not a share of the column: past about
+   ninety the eye loses its place coming back to the left margin, and no
+   amount of empty page is worth that. `ch` is the advance of a zero, which in
+   these book faces runs wider than lowercase, so a ch figure buys roughly 1.2
+   characters — 68ch measures out at about 85 on the line, which is where this
+   stops. Filling the rest of the column wants a second column, not a longer
+   line. */
+#royaLibrary .ab-lede{margin:0 auto 1.3rem; max-width:68ch; text-align:center;
   font-family:var(--book); font-weight:400; font-size:1.5rem; line-height:1.48; color:var(--bone);}
 #royaLibrary .ab-note{/* the live page sets this line in --faded, italic, at 1.8 — secondary to the
      statement above it. It had been inheriting the body's warm bone, which on
      a dark ground reads as one more gold paragraph. */
-  margin:0 auto 1.6rem; max-width:62ch; text-align:center;
+  margin:0 auto 1.6rem; max-width:74ch; text-align:center;
   font-family:var(--book); font-weight:400; font-style:italic;
   font-size:1.125rem; line-height:1.7; color:var(--t-tag);}
 #royaLibrary .ab-note--long{font-style:normal}
@@ -447,10 +471,20 @@
   border:1px solid rgba(191,139,54,.45); background:rgba(11,9,6,.5); text-align:left;
   transition:border-color .16s;}
 #royaLibrary .ab-ser:hover{border-color:var(--ochre)}
-#royaLibrary .ab-note--long{max-width:60ch; text-align:left; margin:0 auto 1.1rem; font-size:1.125rem}
+/* The Author's Notes body and the signature beneath it are the one place on
+   this page where two LEFT-ALIGNED left edges are meant to line up, and they
+   are set at 18px and 11px. Measured in ch they resolve to two different
+   pixel widths — both are centred, so the wider one starts further left and
+   "— CHEW Z" floated well inside the paragraphs it signs. One measure in rem,
+   shared, is what keeps those edges together whatever the two sizes do.
+   39rem measures out at 90 characters at 18px — the ceiling noted above,
+   checked by counting the glyphs on the longest rendered line rather than
+   trusting the ch arithmetic. */
+#royaLibrary{--ab-measure:39rem}
+#royaLibrary .ab-note--long{max-width:var(--ab-measure, 39rem); text-align:left; margin:0 auto 1.1rem; font-size:1.125rem}
 #royaLibrary .ab-eyebrow{margin:0 0 1.4rem; text-align:center; font-family:var(--cond); font-weight:600;
   font-size:.6875rem; letter-spacing:.3em; text-transform:uppercase; color:var(--ochre);}
-#royaLibrary .ab-sig{max-width:60ch; margin:1.6rem auto 0; font-family:var(--cond); font-weight:600;
+#royaLibrary .ab-sig{max-width:var(--ab-measure, 39rem); margin:1.6rem auto 0; font-family:var(--cond); font-weight:600;
   font-size:.6875rem; letter-spacing:.24em; text-transform:uppercase; color:var(--bone);}
 @media (max-width:74rem){
   #royaLibrary .ab-recs, #royaLibrary .ab-sers{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -504,8 +538,22 @@
      the left edge so the turn swings the block up into the gutter rather than
      across the column. */
   position:absolute; left:.2rem; top:5.5rem; z-index:0; pointer-events:none;
-  width:11rem; font-family:var(--nastaliq); font-size:1.375rem; line-height:2.3;
-  text-align:right; color:var(--paper-dust); opacity:.15; filter:blur(1px);
+  /* Larger and a shade less faded: at 1.375rem and .15 the three rows were
+     a smudge rather than a hand.
+
+     The width goes to 15rem, which is more than the type grew. The rows
+     carry their own <br> and are not meant to wrap, and at 13rem — the old
+     11rem scaled by the same factor as the type — the longest of them filled
+     93% of the box. Gulzar arrives from Google with display=swap, so the
+     first paint is a fallback whose metrics are not this one's, and 7% of
+     headroom is not enough to promise. nowrap was tried here and is wrong:
+     .abt clips, and this block is rtl at left:.2rem, so an over-long line
+     would be cut off the LEFT edge with nothing on screen to show it. A wrap
+     is a visible failure and a clip is a silent one; the box is simply wide
+     enough instead. */
+  width:15rem;
+  font-family:var(--nastaliq); font-size:1.625rem; line-height:2.3;
+  text-align:right; color:var(--paper-dust); opacity:.24; filter:blur(.75px);
   transform:rotate(-30deg); transform-origin:left center;
   direction:rtl;}
 #royaLibrary .abt > :not(.ab-marg){position:relative; z-index:1}
@@ -553,6 +601,39 @@
     radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,.6) 66%, transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
 #royaLibrary .ab-row:hover .ab-art{opacity:1; transform:scale(1.04)}
+/* ── the scene art, zoomed out on the desktop ──
+   The base box above is 124% of the row wide and 118% tall — about 6:1 on a
+   desktop row. Seven of the nine scenes here are 3:1 (2400x800, plus
+   library/art/start-94 at 1100x367), so `cover` had to scale to the WIDTH and
+   threw away half the painting's height: every row showed a band across the
+   middle of its picture, which is why the faces read as crops rather than as
+   scenes.
+
+   At 56% the box comes down to roughly 2.8:1, just inside 3:1, so cover
+   scales to the height and a 3:1 scene is all but whole in frame — 92% of it,
+   measured, against 49% before. What is still cropped is cropped sideways,
+   which keeps the subject: the art spec puts it in the right third with the
+   left half in shadow, so the crop and the mask both eat the shadow.
+
+   Two rows are NOT 3:1 and are not fixed by this. assets/start-08 is
+   1536x1024 and library/art/start-35 is 1100x733, both 3:2; in a 2.8:1 box
+   they still scale to the width, so they go from about a quarter of the
+   painting to about a half rather than to the whole of it. The answer for
+   those two is a 3:1 re-export of the source, not more CSS — a box narrow
+   enough to fit 3:2 would be a third the width of every other row's and
+   would read as a mistake.
+   right goes from -5rem to 0. .abt clips its overflow, so hanging the box
+   five rem past the row threw that much of the picture's right-hand side —
+   the side the subject is on — off the edge, and took the mask's own 4%
+   right-hand fade with it, ending the painting on a straight vertical cut.
+   That cut is most obvious in the light theme, where the scene is a dark
+   block on cream. Flush with the row, the fade is inside the clip and the
+   picture dissolves on all four sides.
+
+   Scoped to .lib, the desktop page. The phone keeps the full 124%: narrowing
+   it there is the documented regression that reduced every scene to a sliver,
+   because a phone row is nearly as tall as it is wide. */
+#royaLibrary .lib .abt .ab-art{right:0; width:56%; background-position:100% 50%}
 #royaLibrary .ab-rowin{position:relative; z-index:1; display:block; min-width:0; max-width:100%}
 /* the Persian title, on the books that carry one */
 #royaLibrary .ab-fa{margin-left:.55rem; font-family:var(--nast); font-weight:500;
@@ -625,7 +706,7 @@
     linear-gradient(to bottom, transparent 0, #000 2.6rem, #000 calc(100% - 3.1rem), transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
 #royaLibrary .ab-over .ab-feat-t{margin-bottom:1.3rem}
-#royaLibrary .ab-feat-copy.is-centred{text-align:center; max-width:64ch; margin:0 auto 1.4rem}
+#royaLibrary .ab-feat-copy.is-centred{text-align:center; max-width:76ch; margin:0 auto 1.4rem}
 #royaLibrary .ab-feat-copy.is-centred .ab-feat-p{text-wrap:balance}
 /* The dedication, in the hand Persian poetry is written in. Naskh is an
    upright book face and set the line as body text; Gulzar is the nastaliq the
@@ -701,9 +782,9 @@
    faded hand, small enough to sit inside it rather than beside it. */
 #royaLibrary .mob-sec .ab-gh{display:flex; align-items:center; gap:.7rem}
 #royaLibrary .mob-sec .ab-gh-t{flex:1 1 auto; min-width:0}
-#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-family:var(--nastaliq); font-size:.6875rem; line-height:2.1;
+#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-family:var(--nastaliq); font-size:.9375rem; line-height:2.1;
   text-align:right; direction:rtl; color:var(--paper-dust);
-  opacity:.22; filter:blur(.4px); transform:rotate(-8deg); pointer-events:none;}
+  opacity:.34; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
 #royaLibrary .mob-sec .ab-row{padding:1.1rem 0 1.3rem}
@@ -958,28 +1039,44 @@
   box-shadow:0 10px 18px rgba(0,0,0,.34);}
 #royaLibrary .mob-bar{/* the controls sit at the top of the bar, not on its centre line */
   display:flex; align-items:flex-start; gap:.65rem;
-  padding:.5rem .7rem .45rem;
+  /* The lockup is bottom-set against this edge, so this padding is the only
+     thing between the foot of PUBLICATION and the hairline — and the wordmark
+     crop is tight: its ink runs to within a pixel of the bottom of the plate,
+     so at 0 the letters sat straight on the line. .4rem is the clearance. */
+  padding:.5rem .7rem .4rem;
   border-bottom:1px solid rgba(199,148,61,.58);}
 :root[data-mcond="1"] #royaLibrary .mob-h{display:none}
 :root[data-mcond="1"] #royaLibrary .mob-nav{padding:.62rem .7rem .66rem}
-:root[data-mcond="1"] #royaLibrary .mob-nav button{font-size:.625rem}
+:root[data-mcond="1"] #royaLibrary .mob-nav button{font-size:clamp(.625rem, 2.5vw, .8125rem)}
 :root[data-mcond="1"] #royaLibrary .mob-nav button[aria-current="true"] span{margin-top:.2rem}
-:root[data-mcond="1"] #royaLibrary .mob-bar{padding:.36rem .7rem .34rem}
-:root[data-mcond="1"] #royaLibrary .mob-word{height:1.3rem}
-:root[data-mcond="1"] #royaLibrary .mob-ears{height:1.08rem}
+:root[data-mcond="1"] #royaLibrary .mob-bar{padding:.36rem .7rem .28rem}
+:root[data-mcond="1"] #royaLibrary .mob-word{height:1.95rem}
+:root[data-mcond="1"] #royaLibrary .mob-ears{height:1.63rem}
 :root[data-mcond="1"] #royaLibrary .mob-rights{display:none}
 :root[data-mcond="1"] #royaLibrary .mob-name{font-size:.72rem; letter-spacing:.16em}
 :root[data-mcond="1"] #royaLibrary .side-tog span{font-size:.5625rem}
 :root[data-mcond="1"] #royaLibrary .mob-search{margin-bottom:.42rem}
 :root[data-mcond="1"] #royaLibrary .mob-search input{padding-top:.5rem; padding-bottom:.5rem}
-/* the lockup: the wordmark and the ears side by side, with the name beneath
-   them — set the way the masthead sets it, Jost light at .14em */
-#royaLibrary .mob-lock{display:flex; flex-direction:column; align-items:flex-start; gap:.34rem; flex:1 1 auto; min-width:0}
-#royaLibrary .mob-mark{display:flex; align-items:center; gap:.5rem}
-#royaLibrary .mob-name{font-family:var(--cond); font-weight:400; font-size:.8125rem; letter-spacing:.2em;
-  line-height:1; white-space:nowrap; color:var(--t-tag); padding-left:.14rem;}
-#royaLibrary .mob-word{height:1.8rem; width:auto; display:block; filter:saturate(1.2) brightness(1.12)}
-#royaLibrary .mob-ears{height:1.5rem; width:auto; display:block; filter:saturate(1.2) brightness(1.12)}
+/* the lockup: the wordmark, the ears and the name all on one line — set the
+   way the masthead sets it, Jost light at .14em. The name used to sit on a
+   second row under the mark, which is what kept the imprint small: two rows
+   had to share the bar's height. On one row the mark has the whole of it.
+
+   align-self:flex-end sets the foot of the lockup on the bar's bottom edge,
+   so the emblem reaches down towards the hairline whatever the settings
+   column beside it turns out to be, with the bar's .4rem of bottom padding
+   as the only gap — see the note on that padding above. */
+#royaLibrary .mob-lock{display:flex; flex-direction:row; align-items:center;
+  gap:clamp(.45rem, 1.8vw, .8rem); flex:1 1 auto; min-width:0; align-self:flex-end}
+#royaLibrary .mob-mark{display:flex; align-items:center; gap:clamp(.4rem, 1.6vw, .62rem)}
+#royaLibrary .mob-name{font-family:var(--cond); font-weight:400;
+  font-size:clamp(.6875rem, 2.9vw, .8125rem); letter-spacing:.2em;
+  line-height:1; white-space:nowrap; color:var(--t-tag); padding-left:0;}
+/* Up from 1.8rem and 1.5rem. Sized as a height, never a width — see the crop
+   note at the foot of this file; the clamp is what keeps a 320px handset from
+   pushing the name into the settings column. */
+#royaLibrary .mob-word{height:clamp(2.6rem, 10.9vw, 3.15rem); width:auto; display:block; filter:saturate(1.2) brightness(1.12)}
+#royaLibrary .mob-ears{height:clamp(2.2rem, 9.2vw, 2.65rem); width:auto; display:block; filter:saturate(1.2) brightness(1.12)}
 #royaLibrary .mob-id{display:flex; flex-direction:column; gap:.16rem; min-width:0; flex:1 1 auto}
 /* the settings column: two small controls, and the rights line beneath them */
 #royaLibrary .mob-set{display:flex; flex-direction:column; align-items:flex-end; gap:.18rem; flex:0 0 auto}
@@ -1000,7 +1097,20 @@
    freezes the whole header, this row included. */
 #royaLibrary .mob-nav{display:flex; align-items:stretch; padding:.85rem .7rem .9rem;}
 #royaLibrary .mob-nav button{flex:1 1 0; text-align:center; padding:0 .2rem; position:relative;
-  font-family:var(--cond); font-weight:600; font-size:.6875rem; letter-spacing:.15em;
+  /* Up from a flat .6875rem. The three labels are the only way through the
+     section on a phone and were set smaller than the collection line under
+     them. The size follows the width now — the page opens at
+     initial-scale=0.85, so a 393px handset lays out at 462 and reads about
+     13px, a 430px one about 14px, and anything wider takes the 15px cap. The
+     tracking comes in from .15em to .1em to pay for part of it.
+
+     The .75rem floor is for a 320px handset, which lays out at 376: a third
+     of that is 118px, and AUTHOR'S NOTES has taken two line boxes there
+     since before this change — at the old .6875rem too. The floor is the
+     largest size that does not make that wrap any worse, so the narrowest
+     screens gain a point of size rather than nothing. */
+  font-family:var(--cond); font-weight:600;
+  font-size:clamp(.75rem, 2.85vw, .9375rem); letter-spacing:.1em;
   text-transform:uppercase; color:var(--ochre); line-height:1.3;}
 #royaLibrary .mob-nav button + button::before{content:""; position:absolute; left:0; top:.1rem; bottom:.1rem; width:1px;
   background:rgba(199,148,61,.4);}

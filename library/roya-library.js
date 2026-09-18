@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 35 · last updated 2026-09-17 19:34 PDT
+   Version 36 · last updated 2026-09-17 21:18 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -113,6 +113,16 @@ const sName = b => b.series ? b.series.split(" · ")[0].split(" ناگفته")[0
 /* the rail reads in English; a trailing Persian phrase belongs on the page,
    not in a 216px column where it pushes the English name out of view */
 const railName = n => n.replace(/[\u0600-\u06FF\u200C\u200F][\u0600-\u06FF\u200C\u200F\s]*/g, "").trim();
+/* What the column is showing, in words. A search wins, then a chosen series,
+   and only an unfiltered shelf is the complete collection. It said "The
+   complete collection" whatever was picked, so a reader who chose a series in
+   the rail and was brought here had no line on screen confirming where they
+   had landed — just a shorter grid. */
+const shownName = () => railName(filter) === "Standalone" ? "Stand-alone stories" : railName(filter);
+const columnHead = () =>
+  query.trim() ? `Titles containing \u201c${query.trim()}\u201d`
+  : filter !== "all" ? shownName()
+  : "The complete collection";
 
 /* series groups, in catalogue order, standalones last */
 const GROUPS = (()=>{
@@ -391,7 +401,7 @@ function deskLibraryBody(){
   const rows = libraryRows();
   return `
       <div class="main-bar">
-        <span class="t">${query.trim() ? `Titles containing \u201c${esc(query.trim())}\u201d` : "The complete collection"} / ${rows.length}</span>
+        <span class="t">${esc(columnHead())} / ${rows.length}</span>
         <span class="rl-rule"></span>
         <button class="sortbox" type="button" data-sort="1">Sort: ${sortDesc ? "Newest" : "Number"} ${DICON.caret}</button>
         <span class="sep"></span>
@@ -816,7 +826,7 @@ function mobile(){
     </header>
     ${mobNav()}
     ${view!=="library" ? "" : `
-    <h2 class="mob-h">${query.trim() ? `Titles containing \u201c${esc(query.trim())}\u201d` : "The complete collection"} <i>/ ${rows.length} <b>${rows.length===1 ? "story" : "stories"}</b></i></h2>
+    <h2 class="mob-h">${esc(columnHead())} <i>/ ${rows.length} <b>${rows.length===1 ? "story" : "stories"}</b></i></h2>
 
     <div class="mob-search">
       <input id="libSearch" type="search" placeholder="Search titles…" value="${esc(query)}"
@@ -981,7 +991,20 @@ document.addEventListener("click", e=>{
   const md=e.target.closest("[data-mode]"); if(md){ mode=md.dataset.mode; draw(); return; }
   const so=e.target.closest("[data-sort]"); if(so){ sortDesc=!sortDesc; draw(); return; }
   const pk=e.target.closest("[data-pick]");  if(pk){ pickOpen=!pickOpen; draw(); return; }
-  const fl=e.target.closest("[data-filter]");if(fl){ filter=fl.dataset.filter; pickOpen=false; mobY=0; draw(); return; }
+  /* Picking a series is a request to SEE that series. The rail is locked
+     open beside About and Author's Notes, so choosing one there used to set
+     the filter and leave the reader on the page they were already reading,
+     with nothing on screen having changed — the list looked broken. It now
+     carries them into the Library the way a series title in About does, and
+     hands them the top of the new result set rather than their old scroll
+     position in a shelf that no longer has the same rows in it. */
+  const fl=e.target.closest("[data-filter]");if(fl){
+    const jump = view !== "library";
+    filter=fl.dataset.filter; view="library"; pickOpen=false; mobY=0;
+    if(jump) deskY=0;
+    draw();
+    if(jump) scroller().scrollTop=0;
+    return; }
   /* a series title in About opens the Library on that series — the only place
      a series, as opposed to a book, can actually take you */
   const sr=e.target.closest("[data-series]"); if(sr){
@@ -1048,7 +1071,22 @@ document.addEventListener("click", e=>{
 document.addEventListener("input", e=>{
   const f = e.target.closest("#libSearch");
   if(!f) return;
-  query = f.value; caret = f.selectionStart; searchHot = true; mobY = 0; draw();
+  /* Same reasoning as the series list: the search box sits in the rail at
+     every view, and a reader typing into it is asking to be shown titles.
+     Results only exist in the Library, so the first character taken while
+     About or the Notes is up moves them there. The field itself survives the
+     switch, though not by being left alone — see below.
+     Clearing the box does not send them back; they stay in the Library.
+
+     draw() rewrites the whole stage, rail included, so #libSearch is
+     destroyed and rebuilt on every keystroke; searchHot/caret in draw() is
+     the only thing putting the cursor back, and anything that removes that
+     block breaks typing here, view switch or no view switch. */
+  const jump = view !== "library" && f.value.trim() !== "";
+  query = f.value; caret = f.selectionStart; searchHot = true; mobY = 0;
+  if(jump){ view = "library"; deskY = 0; }
+  draw();
+  if(jump) scroller().scrollTop = 0;
 });
 document.addEventListener("keydown", e=>{
   if(e.target.tagName==="INPUT") return;
