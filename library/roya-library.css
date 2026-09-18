@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 44 · last updated 2026-09-18 10:13 PDT
+   Version 45 · last updated 2026-09-18 14:44 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1005,8 +1005,34 @@
    much taller relative to the file that the same anchor leaves a bare strip
    down the right, so the anchor goes back to the edge — and three paintings
    whose subject sits left of that edge step back off it by hand. */
-#royaLibrary .mob-sec .ab-art{background-position:100% 50%}
-#royaLibrary .mob-sec .ab-row[data-rec="35"] .ab-art{background-position:87% 50%}
+/* The vertical fade ends higher than the base rule's 88%/96%. On a phone the
+   rows stack with nothing between them but a hairline, and two scenes that
+   each run to their own edge meet as one continuous picture — book 35's cloud
+   bank ran straight into book 52's water. Taking the picture out by 72% and
+   to nothing by 97% leaves a band of plain ground above the rule, so each
+   scene ends before the next one starts. The other two masks are the base
+   rule's, repeated because mask-image is one property and cannot be amended
+   a layer at a time. */
+#royaLibrary .mob-sec .ab-art{background-position:100% 50%;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, rgba(0,0,0,.22) 14%, rgba(0,0,0,.62) 34%, #000 58%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,.3) 8%, #000 22%, #000 72%, rgba(0,0,0,.22) 88%, transparent 97%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,.6) 66%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, rgba(0,0,0,.22) 14%, rgba(0,0,0,.62) 34%, #000 58%, #000 96%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, rgba(0,0,0,.3) 8%, #000 22%, #000 72%, rgba(0,0,0,.22) 88%, transparent 97%),
+    radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,.6) 66%, transparent 100%);}
+/* 35 is the one scene whose subject is a shape rather than a figure, and a
+   wing cut in half is not a wing. Three things were taking it: the box hangs
+   five rem past the row, which put the right tip off the side of the screen;
+   `cover` filled the box exactly, so the 87% anchor had no slack to work with
+   and did nothing; and the mask's top fade was still climbing where the upper
+   wings sit. The overhang comes back to two rem, the plate is set to 92% of
+   the box height so it has room to be placed, and 68% down carries the pair
+   clear of that fade. The whole span and the hummingbird under it are in
+   frame now. */
+#royaLibrary .mob-sec .ab-row[data-rec="35"] .ab-art{right:-2rem;
+  background-size:auto 92%; background-position:62% 68%;}
 #royaLibrary .mob-sec .ab-row[data-rec="52"] .ab-art{background-position:97% 50%}
 /* 94 stays hard right, where the page steps it back to 84%: the page's file
    stops short of its own right edge and 84% closes the strip that leaves,
