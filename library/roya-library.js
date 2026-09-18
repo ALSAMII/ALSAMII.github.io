@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 40 · last updated 2026-09-18 05:29 PDT
+   Version 41 · last updated 2026-09-18 09:05 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -201,6 +201,20 @@ const DICON = {
 };
 const RANGES = [[1,25],[26,50],[51,75],[76,94]];
 
+/* How many books each rail entry stands for. The figure is counted, never
+   typed — the same rule every other count on the page follows. */
+const countOf = n => (GROUPS.find(g=>g.name===n)||{books:[]}).books.length;
+const soloCount = () => countOf("Standalone");
+/* One row of the rail: the name, and the count beside it. The count sits in
+   its own element rather than in the label so the two can be laid out as a
+   pair — name left, figure right — and so a long series name can shrink
+   without taking the number with it. */
+const railRow = (val, label, n, cls) => `
+      <button type="button"${cls?` class="${cls}"`:""} data-filter="${esc(val)}"
+              aria-pressed="${filter===val}" title="${esc(label)}">
+        <span class="side-nm">${esc(label)}</span><span class="side-ct">${n}</span>
+      </button>`;
+
 function sidebar(){
   const light = document.documentElement.getAttribute('data-lt') === 'light';
   const sound = soundOn;
@@ -213,9 +227,9 @@ function sidebar(){
     <hr>
     <span class="side-lab">Browse by series</span>
     <div class="side-list">
-      <button type="button" data-filter="all" aria-pressed="${filter==='all'}">All stories</button>
-      <button class="solo" type="button" data-filter="Standalone" aria-pressed="${filter==='Standalone'}">Stand alone</button>
-      ${names.map(n=>`<button type="button" data-filter="${esc(n)}" aria-pressed="${filter===n}" title="${esc(n)}">${esc(railName(n))}</button>`).join("")}
+      ${railRow("all", "All stories", BOOKS.length)}
+      ${railRow("Standalone", "Stand alone", soloCount(), "solo")}
+      ${names.map(n=>railRow(n, railName(n), countOf(n))).join("")}
     </div>
     <hr>
     <span class="side-lab">Search titles</span>
@@ -225,27 +239,6 @@ function sidebar(){
       ${query ? `<button class="side-clear" type="button" data-clear="1" aria-label="Clear search">✕</button>` : DICON.search}
     </span>
     <hr class="side-foot-rule">
-    <div class="side-set">
-      <button class="side-tog side-sound" type="button" data-soundswap="1" aria-pressed="${sound}"
-              title="${sound ? 'Silence the ambient sound' : 'Ambient sound'}">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
-          ${sound
-            ? `<path class="rl-bar-em" d="M5.2 9.6v4.8M18.8 9.6v4.8"/>
-               <path class="rl-bar-pa" d="M8.6 6.5v11M15.4 6.5v11"/>
-               <path class="rl-bar-em" d="M12 3v18"/>`
-            : `<path class="rl-bar-pa" d="M8.6 6.5v11M15.4 6.5v11"/>`}
-        </svg>
-        <span>Sound</span>
-      </button>
-      <button class="side-tog" type="button" data-themeswap="1" aria-pressed="${light}"
-              title="${light ? 'Switch to the dark theme' : 'Switch to the light theme'}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="8.6"/>
-          <path d="M12 3.4a8.6 8.6 0 0 ${light ? '1' : '0'} 0 17.2z" fill="currentColor" stroke="none"/>
-        </svg>
-        <span>Theme</span>
-      </button>
-    </div>
     <p class="side-rights">All stories &copy; Chew&#8239;Z.<br>All rights reserved.</p>
   </div></aside>`;
 }
@@ -474,9 +467,39 @@ const SECTIONS = [
   {k:"library", t:"Roya Library",     d:"Explore every cover"},
   {k:"notes",   t:"Author\u2019s Notes", d:"The thoughts behind the stories"}
 ];
+/* Sound and Theme. They stood at the foot of the rail; they belong at the top
+   of the page with everything else a reader can operate, and the rail is for
+   finding things. Written once here because the desktop header and the phone
+   band both draw them and the two used to carry their own copies. */
+function deskTogs(){
+  const light = document.documentElement.getAttribute('data-lt') === 'light';
+  return `
+  <div class="dnav-set">
+    <button class="side-tog side-sound" type="button" data-soundswap="1" aria-pressed="${soundOn}"
+            title="${soundOn ? 'Silence the ambient sound' : 'Ambient sound'}">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+        ${soundOn
+          ? `<path class="rl-bar-em" d="M5.2 9.6v4.8M18.8 9.6v4.8"/>
+             <path class="rl-bar-pa" d="M8.6 6.5v11M15.4 6.5v11"/>
+             <path class="rl-bar-em" d="M12 3v18"/>`
+          : `<path class="rl-bar-pa" d="M8.6 6.5v11M15.4 6.5v11"/>`}
+      </svg>
+      <span>Sound</span>
+    </button>
+    <button class="side-tog" type="button" data-themeswap="1" aria-pressed="${light}"
+            title="${light ? 'Switch to the dark theme' : 'Switch to the light theme'}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.6"/>
+        <path d="M12 3.4a8.6 8.6 0 0 ${light ? '1' : '0'} 0 17.2z" fill="currentColor" stroke="none"/>
+      </svg>
+      <span>Theme</span>
+    </button>
+  </div>`;
+}
 function deskNav(){
   return `
   <nav class="dnav">
+    ${deskTogs()}
     ${SECTIONS.map(x=>`
       <button type="button" data-view="${x.k}" aria-current="${view===x.k}">
         <b>${esc(x.t)}</b><i>${esc(x.d)}</i>
@@ -521,7 +544,7 @@ function mobNav(){
    the statement, the three terms, the recommended books and the series. */
 const ABOUT = {
   lede: "For years I read other people\u2019s stories and lived in worlds someone else had already decided the shape of. Then a drug took the walls off one night and I made my own \u2014 planner, participant, whole production crew \u2014 and I have not been a guest since, so I finish them here.",
-  note: "{n} short noir novellas about people who finally say it out loud. Every book works the same way \u2014 a door out of the mind, a room on the other side, and the key that opened it.",
+  note: "{n} short stories about people who finally say it out loud. Every book works the same way \u2014 a door out of the mind, a room on the other side, and the key that opened it.",
   terms: [
     { term:"Door", def:"How they got out",
       about:"How the person got out of their own head. There are only four ways, and every book uses one: Dose, they took something \u00b7 Rite, they practised something \u00b7 Ordeal, they endured something \u00b7 Withholding, they went without something." },

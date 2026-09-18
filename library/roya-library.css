@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 40 · last updated 2026-09-18 05:29 PDT
+   Version 41 · last updated 2026-09-18 09:05 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -76,7 +76,15 @@
 :root[data-lt="light"] #royaLibrary .zoom-nav{background:rgba(247,241,226,.75); border-color:rgba(96,76,42,.5)}
 :root[data-lt="light"] #royaLibrary .zoom-strip img{border-color:rgba(96,76,42,.35)}
 :root[data-lt="light"] #royaLibrary .zoom-strip{background:linear-gradient(to top, rgba(236,226,202,.95) 0, rgba(236,226,202,.75) 62%, transparent 100%)}
-:root[data-lt="light"] #royaLibrary .side-list button[aria-pressed="true"]{background:rgba(138,101,36,.16)}
+/* On paper the oxblood bar is the one thing dark enough to carry bone type,
+   so it stays — only the resting grey and the pill move to ink values. */
+:root[data-lt="light"] #royaLibrary .side-list button{color:#6d5c3e}
+:root[data-lt="light"] #royaLibrary .side-list button:hover{color:#241c0f}
+:root[data-lt="light"] #royaLibrary .side-list .solo{color:#8a6420}
+:root[data-lt="light"] #royaLibrary .side-ct{color:#8a6420; border-color:rgba(96,76,42,.4)}
+:root[data-lt="light"] #royaLibrary .side-list button[aria-pressed="true"]{background:var(--oxblood); color:#efe6d2}
+:root[data-lt="light"] #royaLibrary .side-list button[aria-pressed="true"] .side-ct{color:#efe6d2;
+  border-color:rgba(239,230,210,.5); background:rgba(0,0,0,.18)}
 /* the light theme on the phone: the same tokens carry the type, and every
    surface that was painted dark by hand gets its paper equivalent */
 :root[data-lt="light"] #royaLibrary .mob{background-color:#e3d7bc; background-image:none}
@@ -192,10 +200,22 @@
   background-image:url("bg-desk.webp");
   background-size:cover; background-position:center center;
   background-repeat:no-repeat; background-attachment:fixed;
-  /* the handled-paperback perimeter: a 9-slice of worn bone paper, so the
-     page has no clean rectangular edge (spec §6) */
-  border:14px solid transparent; border-image:url(edge.png) 30 round;
-  display:grid; grid-template-columns:13.5rem minmax(0,1fr);}
+  /* The handled-paperback perimeter — a 9-slice of worn bone paper — is gone.
+     It read as two cream bars down the sides of the screen rather than as a
+     deckle: an edge only works as an edge when you can see the whole sheet,
+     and on a desktop you never can. The vignette below still closes the page
+     in, without a colour of its own. edge.png is still used by the record
+     panel, so the asset stays.
+
+     The rail goes 13.5rem to 20.5rem. THE UNWITNESSED WARS I-V, THE BORROWED
+     SUN CYCLE and COME IN, THE WATER IS LOVELY were all being cut off with an
+     ellipsis, and a list of series that cannot say its own names is not a
+     list of series. 20.5rem is measured, not picked: the longest name sets
+     252px in this face, and the column has to carry that plus the count, the
+     gap between them and its own padding, with a few pixels over so the last
+     letter is not sitting against the pill. Below 980px the rail stops being
+     a column at all, so the figure only ever applies where there is room. */
+  display:grid; grid-template-columns:21rem minmax(0,1fr);}
 #royaLibrary .lib::before{content:""; position:absolute; inset:0; pointer-events:none; z-index:5;
   box-shadow:inset 0 0 40px 10px rgba(0,0,0,.85), inset 0 0 150px 46px rgba(0,0,0,.6);}
 /* fine press lines — the spec's print-grain layer, without mix-blend-mode
@@ -270,18 +290,46 @@
            overflow-y:auto; scrollbar-width:thin; padding-bottom:.3rem}
 #royaLibrary .side-list[data-more="1"]{-webkit-mask-image:linear-gradient(#000 calc(100% - 1.1rem), transparent);
   mask-image:linear-gradient(#000 calc(100% - 1.1rem), transparent);}
-#royaLibrary .side-list button{flex:0 0 auto; line-height:1.3}
-#royaLibrary .side-list button{/* the same setting as CHEW Z under the mark on the phone: Jost 400, the
-     quiet grey. Same size as before — only the weight, the tracking and the
-     colour move, so the rail stops competing with the covers. */
-  font-family:var(--cond); font-weight:400; font-size:.8125rem; letter-spacing:.08em;
-  color:var(--t-tag); padding:.17rem .4rem; margin-left:-.4rem; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis;}
-#royaLibrary .side-list button:hover{color:var(--ochre)}
-#royaLibrary .side-list button[aria-pressed="true"]{color:var(--bone); font-weight:600; background:rgba(196,148,61,.1);
-  box-shadow:inset 2px 0 0 var(--ochre);}
-#royaLibrary .side-list .solo{font-weight:600; letter-spacing:.15em; color:var(--ochre)}
-#royaLibrary .side-list .solo[aria-pressed="true"]{color:#17130c}
+/* ── the series list ──
+   Set to the reference: the catalogue's own slab, uppercase, with each row
+   carrying the number of books in it and the open one marked by a bar across
+   the whole row. The face is the slab from that reference; the colour is not
+   — the resting rows are the quiet grey, because fourteen rows of cream slab
+   beside the covers is a second headline down the side of the page. Grey at
+   rest, and the one row that matters comes up in bone on oxblood.
+
+   Two tracks, so the name can shrink and the figure cannot: name left,
+   count right, and a long name ellipsises against its own column instead of
+   pushing the number off the rail. */
+#royaLibrary .side-list{gap:.12rem}
+#royaLibrary .side-list button{flex:0 0 auto; display:grid;
+  grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:.6rem;
+  width:100%; text-align:left; line-height:1.25;
+  font-family:var(--slab); font-weight:600; font-size:.9375rem; letter-spacing:.012em;
+  text-transform:uppercase; color:var(--t-quiet);
+  padding:.28rem .55rem; margin-left:-.55rem;
+  transition:color .16s, background-color .16s;}
+#royaLibrary .side-nm{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+/* the figure: tabular, so fourteen rows of numbers line up down the rail */
+#royaLibrary .side-ct{flex:0 0 auto; font-family:var(--cond); font-weight:500; font-size:.625rem;
+  letter-spacing:.06em; font-variant-numeric:tabular-nums; color:var(--ochre-muted);
+  padding:.1rem .42rem; border:1px solid rgba(199,148,61,.34); border-radius:999px;
+  line-height:1.4;}
+#royaLibrary .side-list button:hover{color:var(--bone)}
+#royaLibrary .side-list button:hover .side-ct{color:var(--ochre); border-color:rgba(199,148,61,.6)}
+/* the open row. The bar runs the full width of the rail — margin-left pulls it
+   back past the column's own padding — with the pointer the reference puts at
+   its head drawn rather than typed, so no glyph has to be in the font. */
+#royaLibrary .side-list button[aria-pressed="true"]{color:var(--bone);
+  background:var(--oxblood); position:relative;}
+#royaLibrary .side-list button[aria-pressed="true"]::before{content:""; position:absolute;
+  left:.14rem; top:50%; width:0; height:0; transform:translateY(-50%);
+  border-top:.26rem solid transparent; border-bottom:.26rem solid transparent;
+  border-left:.32rem solid var(--gold-lt);}
+#royaLibrary .side-list button[aria-pressed="true"] .side-nm{padding-left:.44rem}
+#royaLibrary .side-list button[aria-pressed="true"] .side-ct{color:var(--gold-lt);
+  border-color:rgba(227,200,142,.55); background:rgba(0,0,0,.22)}
+#royaLibrary .side-list .solo{color:var(--ochre-muted)}
 #royaLibrary .side-search{position:relative}
 #royaLibrary .side-search input{width:100%; padding:.42rem 1.8rem .42rem .55rem; background:transparent; color:var(--bone);
   border:1px solid rgba(199,148,61,.55); font-family:var(--book); font-weight:400; font-size:.9375rem;}
@@ -406,9 +454,24 @@
     rgba(16,15,13,.46) 78%, rgba(16,15,13,0) 100%);
   backdrop-filter:blur(14px) saturate(.88);
   -webkit-backdrop-filter:blur(14px) saturate(.88);}
+/* The pair sits at the left of the bar, out of the nav's own flow: the three
+   section links are centred on the column and would shift off centre if two
+   more items shared their row. Absolute against the bar, which is already a
+   positioned element for its sticky. */
+/* top:2rem, not top:50% with a translate. The bar's own top padding is 2rem,
+   so this lines the pair up with the section labels without a transform — and
+   a transform here is not free: it makes .dnav-set a containing block inside
+   an already-sticky bar, and the browser's hit testing stopped agreeing with
+   the painted position. The buttons looked right and could not be clicked. */
+#royaLibrary .dnav-set{position:absolute; left:1.5rem; top:2rem;
+  display:flex; align-items:flex-start; gap:1.7rem; z-index:2}
+#royaLibrary .dnav-set .side-tog{padding:0}
 #royaLibrary .dnav button{display:flex; flex-direction:column; gap:.34rem; padding:0 .2rem; position:relative}
-#royaLibrary .dnav button + button::before{content:""; position:absolute; left:-1.6rem; top:.1rem; bottom:.1rem; width:1px;
-  background:rgba(199,148,61,.4);}
+/* :not(.side-tog) — the two controls are buttons too, and without this the
+   hairline meant for the gaps between the three section links also drew down
+   the left of Theme and of About. */
+#royaLibrary .dnav button:not(.side-tog) + button:not(.side-tog)::before{content:""; position:absolute;
+  left:-1.6rem; top:.1rem; bottom:.1rem; width:1px; background:rgba(199,148,61,.4);}
 #royaLibrary .dnav b{font-family:var(--cond); font-weight:600; font-size:1.0625rem; letter-spacing:.2em;
   text-transform:uppercase; color:var(--ochre);}
 #royaLibrary .dnav i{font-style:normal; font-family:var(--book); font-size:1.0625rem; color:var(--dust)}
@@ -427,14 +490,18 @@
    characters — 68ch measures out at about 85 on the line, which is where this
    stops. Filling the rest of the column wants a second column, not a longer
    line. */
-#royaLibrary .ab-lede{margin:0 auto 1.3rem; max-width:68ch; text-align:center;
+#royaLibrary .ab-lede{margin:0 auto 1.3rem; max-width:78ch; text-align:center;
   font-family:var(--book); font-weight:400; font-size:1.5rem; line-height:1.48; color:var(--bone);}
 #royaLibrary .ab-note{/* the live page sets this line in --faded, italic, at 1.8 — secondary to the
      statement above it. It had been inheriting the body's warm bone, which on
      a dark ground reads as one more gold paragraph. */
-  margin:0 auto 1.6rem; max-width:74ch; text-align:center;
+  /* Wider and larger, both at the user's asking — the character ceiling noted
+     above is deliberately set aside here. This is two lines under the
+     statement, not a page of prose; a long line costs a reader nothing when
+     they only make the return sweep once. */
+  margin:0 auto 1.6rem; max-width:86ch; text-align:center;
   font-family:var(--book); font-weight:400; font-style:italic;
-  font-size:1.125rem; line-height:1.7; color:var(--t-tag);}
+  font-size:1.3125rem; line-height:1.66; color:var(--t-tag);}
 #royaLibrary .ab-note--long{font-style:normal}
 /* The dividers used to be a pseudo-element on each cell, positioned against
    the cell. Taking position:relative off the cell — which the hover note needs
@@ -540,11 +607,19 @@
    checked by counting the glyphs on the longest rendered line rather than
    trusting the ch arithmetic. */
 #royaLibrary{--ab-measure:39rem}
-#royaLibrary .ab-note--long{max-width:var(--ab-measure, 39rem); text-align:left; margin:0 auto 1.1rem; font-size:1.125rem}
+#royaLibrary .ab-note--long{max-width:var(--ab-measure, 39rem); text-align:left; margin:0 auto 1.1rem;
+  font-size:1.25rem; line-height:1.72}
 #royaLibrary .ab-eyebrow{margin:0 0 1.4rem; text-align:center; font-family:var(--cond); font-weight:600;
   font-size:.6875rem; letter-spacing:.3em; text-transform:uppercase; color:var(--ochre);}
-#royaLibrary .ab-sig{max-width:var(--ab-measure, 39rem); margin:1.6rem auto 0; font-family:var(--cond); font-weight:600;
-  font-size:.6875rem; letter-spacing:.24em; text-transform:uppercase; color:var(--bone);}
+/* The signature. It was Jost 600, uppercase, tracked at .24em — the same
+   setting as every eyebrow and label on the page, which made the one line the
+   author actually signs read as another piece of furniture. Cormorant
+   Garamond italic instead: already in the page's font link, cut fine and
+   high-contrast, and the only italic here that looks written rather than set.
+   No tracking, no uppercase — neither belongs on a hand. */
+#royaLibrary .ab-sig{max-width:var(--ab-measure, 39rem); margin:1.9rem auto 0;
+  font-family:"Cormorant Garamond","EB Garamond",Georgia,serif; font-weight:500; font-style:italic;
+  font-size:1.6rem; letter-spacing:0; text-transform:none; color:var(--gold-lt);}
 @media (max-width:74rem){
   /* DEAD, both of them — see the note in the light block at the top. */
   #royaLibrary .ab-recs, #royaLibrary .ab-sers{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -616,6 +691,15 @@
   text-align:right; color:var(--paper-dust); opacity:.24; filter:blur(.75px);
   transform:rotate(-30deg); transform-origin:left center;
   direction:rtl;}
+/* The marginalia only exists where there is a margin for it to climb. Widening
+   the statement to 78ch took the gutter from 223px down to 143px at a 1600px
+   window, and the three rows started crossing the first lines of type — a
+   watermark over the words rather than beside them. .lib caps at 1760px, so
+   from 1800px up the gutter stops shrinking and sits at its full 223; below
+   that the rows stand down. Nothing else about them changes.
+   (If they should show at every width, the rail's empty middle is the other
+   place on this page with room for them — a different design, not a value.) */
+@media (max-width:1799px){ #royaLibrary .ab-marg{display:none} }
 #royaLibrary .abt > :not(.ab-marg){position:relative; z-index:1}
 /* Every direct child of .abt carries z-index:1, so each is its own stacking
    context: the hover note's z-index:20 was confined inside the terms row, and
