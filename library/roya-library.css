@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 41 · last updated 2026-09-18 09:05 PDT
+   Version 44 · last updated 2026-09-18 10:13 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -128,6 +128,37 @@
 :root[data-lt="light"] #royaLibrary .ab-t{border-bottom-color:rgba(96,76,42,.6)}
 :root[data-lt="light"] #royaLibrary .rec{background:rgba(231,221,197,.95)}
 :root[data-lt="light"] #royaLibrary .rec-in{background:#e9dfc7}
+/* ── the featured plate on paper ──
+   The veil over this picture was already a cream — --over-ground has been a
+   paper value in this theme all along. What went black was the plate itself:
+   forough.webp is two lit faces at the far edges of a frame that is otherwise
+   near-black, and on a lit ground that field reads as a smear across the
+   words rather than as a ground behind them.
+
+   So the plate stays and the field goes. Two soft lobes, one over each face,
+   replace the base rule's edge feathering — mask-composite adds them rather
+   than intersecting, so what survives is the union of the two and nothing in
+   between. The middle of the block, which is where the copy sits, is clean
+   stock; the tint that remains is on the faces, which is the only place it
+   was ever doing any work.
+
+   The lobes are placed in the pseudo-element's own box, and the plate fills
+   that box horizontally in both layouts — cover on the desktop, 110% on the
+   phone — so 6% and 94% land on the two faces either way. They are narrow
+   horizontally and tall vertically: wide enough and the haze reaches the
+   first words of every line, tight enough and a face stops reading as a
+   face. 20% by 46% is where both hold. brightness lifts the plate off the
+   stock a little, because a photograph exposed for a dark page sits heavy
+   on a light one. */
+:root[data-lt="light"] #royaLibrary .ab-over::before{
+  filter:brightness(1.05) contrast(.97) saturate(1.04);
+  -webkit-mask-image:
+    radial-gradient(20% 46% at 6% 44%, #000 16%, rgba(0,0,0,.45) 42%, transparent 76%),
+    radial-gradient(20% 46% at 94% 44%, #000 16%, rgba(0,0,0,.45) 42%, transparent 76%);
+  mask-image:
+    radial-gradient(20% 46% at 6% 44%, #000 16%, rgba(0,0,0,.45) 42%, transparent 76%),
+    radial-gradient(20% 46% at 94% 44%, #000 16%, rgba(0,0,0,.45) 42%, transparent 76%);
+  -webkit-mask-composite:source-over; mask-composite:add;}
 :root[data-lt="light"] #royaLibrary .rec-x, :root[data-lt="light"] #royaLibrary .rec-nav, :root[data-lt="light"] #royaLibrary .ab-art{opacity:1; filter:saturate(1.05) brightness(1.02) contrast(1.06);
   -webkit-mask-image:linear-gradient(to bottom, transparent 0, transparent 8%, #000 14%, #000 86%, transparent 92%, transparent 100%);
   mask-image:linear-gradient(to bottom, transparent 0, transparent 8%, #000 14%, #000 86%, transparent 92%, transparent 100%);}
@@ -672,7 +703,11 @@
 #royaLibrary .ab-marg{/* three rows climbing the left margin, clear of the statement. The origin is
      the left edge so the turn swings the block up into the gutter rather than
      across the column. */
-  position:absolute; left:.2rem; top:5.5rem; z-index:0; pointer-events:none;
+  /* left is negative now: .abt carries 2.2rem of padding and its own
+     overflow:hidden clips at the border box, so the rows can be pushed out
+     into that padding without being cut. That plus the smaller size is what
+     takes the hand off the statement's first lines. */
+  position:absolute; left:-1.7rem; top:5.5rem; z-index:0; pointer-events:none;
   /* Larger and a shade less faded: at 1.375rem and .15 the three rows were
      a smudge rather than a hand.
 
@@ -686,20 +721,23 @@
      would be cut off the LEFT edge with nothing on screen to show it. A wrap
      is a visible failure and a clip is a silent one; the box is simply wide
      enough instead. */
-  width:15rem;
-  font-family:var(--nastaliq); font-size:1.625rem; line-height:2.3;
+  width:12rem;
+  font-family:var(--nastaliq); font-size:1.25rem; line-height:2.3;
   text-align:right; color:var(--paper-dust); opacity:.24; filter:blur(.75px);
   transform:rotate(-30deg); transform-origin:left center;
   direction:rtl;}
 /* The marginalia only exists where there is a margin for it to climb. Widening
    the statement to 78ch took the gutter from 223px down to 143px at a 1600px
    window, and the three rows started crossing the first lines of type — a
-   watermark over the words rather than beside them. .lib caps at 1760px, so
-   from 1800px up the gutter stops shrinking and sits at its full 223; below
-   that the rows stand down. Nothing else about them changes.
-   (If they should show at every width, the rail's empty middle is the other
-   place on this page with room for them — a different design, not a value.) */
-@media (max-width:1799px){ #royaLibrary .ab-marg{display:none} }
+   watermark over the words rather than beside them.
+
+   Smaller type and a negative left have since pulled the rows back to 174px
+   from the panel's edge, which clears the statement by 50px at full width and
+   by 20 at 1700 — so the gate sits at 1700 rather than the 1800 it needed at
+   the larger size. Below that the rows stand down; there is no gutter left to
+   put them in. (If they should show at every width, the rail's empty middle is
+   the other place on this page with room for them — a different design.) */
+@media (max-width:1699px){ #royaLibrary .ab-marg{display:none} }
 #royaLibrary .abt > :not(.ab-marg){position:relative; z-index:1}
 /* Every direct child of .abt carries z-index:1, so each is its own stacking
    context: the hover note's z-index:20 was confined inside the terms row, and
