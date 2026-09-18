@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 39 · last updated 2026-09-18 05:26 PDT
+   Version 40 · last updated 2026-09-18 05:29 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -572,7 +572,7 @@ const PICKABOUT = {
 };
 const PICKS = [
   { dial:0, name:"Noir",          books:[6,7,78] },
-  { dial:1, name:"Transgressive", books:[8,50,26] },
+  { dial:1, name:"Transgressive", books:[8,26,50] },
   { dial:2, name:"Plausible",     books:[35,52,55] }
 ];
 /* The recommended-series panel, exactly as the live page configures it:
