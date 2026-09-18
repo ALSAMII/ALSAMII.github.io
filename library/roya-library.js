@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 36 · last updated 2026-09-17 21:18 PDT
+   Version 39 · last updated 2026-09-18 05:26 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -124,6 +124,20 @@ const columnHead = () =>
   : filter !== "all" ? shownName()
   : "The complete collection";
 
+/* The line a series row carries. The full first paragraph is the panel's; a
+   row gets one sentence of it, and where that sentence introduces a list with
+   a colon — "Five atrocities the world declined to witness: poison gas…" — the
+   row stops at the colon. A row is a table of contents entry, and every entry
+   has to be the same size for the eye to run down the column. */
+const SERLINE = g => {
+  const first = ((g.syn||"").split("\n\n")[0] || "").trim();
+  if(!first) return "Books that stand together.";
+  const sentence = first.split(/(?<=\.)\s/)[0];
+  const colon = sentence.indexOf(":");
+  if(colon > 0 && sentence.length > 74) return sentence.slice(0, colon) + ".";
+  return sentence;
+};
+
 /* series groups, in catalogue order, standalones last */
 const GROUPS = (()=>{
   const g = SERIES.map(s=>({name:s.title.split(" · ")[0], books:s.books.slice().sort((a,b)=>a-b), syn:s.syn}));
@@ -138,6 +152,9 @@ const shelfOf = n => Math.max(0, GROUPS.findIndex(g=>g.books.includes(n)));
 let dev = PHONE.matches ? "phone" : "desk", view="library", cur=94, shelf=shelfOf(94);
 let filter="all", query="", mode="grid", sortDesc=true, zoomN=null, readN=null;
 let light=false, soundOn=false, searchHot=false, caret=0, sheetN=null, pickOpen=false, recN=null;
+/* the All Series row standing open, by series name, or null. One at a time:
+   the list is a table of contents and two open rows stop it reading as one. */
+let serOpen = null;
 /* the book the shelf was last scrolled to, so a redraw can tell a new
    selection from a re-render of the same one */
 let scrolledTo = null;
@@ -443,7 +460,15 @@ function deskLibraryBody(){
 /* The three sections share the rail and a nav at the top of the main column;
    only the column's content changes. The rail is locked, so a reader never
    loses the series list or the search. */
-const RECOMMENDED = [6,7,78,8,50,94,35,52,55];
+/* 94 (Round Trip) out, 26 (Mang and Mustard) back in at the user's request —
+   26 held this Transgressive slot before and its scene art, assets/start-26,
+   is already the 3:1 repaint every other row here uses, so it frames itself.
+   No PICKNOTE entry: the panel teaser written for 26 is not on file anywhere,
+   so the row falls through to the book's own catalogue synopsis.
+
+   PICKS below is what actually builds the three categories; this list is
+   declared and never read. Kept in step so the two cannot disagree later. */
+const RECOMMENDED = [6,7,78,8,50,26,35,52,55];
 const SECTIONS = [
   {k:"about",   t:"About",            d:"The series and its world"},
   {k:"library", t:"Roya Library",     d:"Explore every cover"},
@@ -526,7 +551,10 @@ const TERMICON = {
 /* The nine recommended books say on the live page what they say here: the
    blurb is a teaser written for this panel, not the book's synopsis, and two
    of them carry a Persian title. Copied from index.html rather than rewritten. */
-const PICKNOTE = {"6": "A new drug lets a therapist walk down into a patient’s mind, to the riverbed where the original wound was carved. Then a patient arrives — someone three other clinics have already turned away — whose own mind has already named him before he speaks. Going that deep was never safe for the guide either; the water takes him too.", "7": "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who’s actually in charge. That voice was never their own — it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes.", "78": "In January 2026, she told him not to go. That evening the country’s phones and internet went dark, and the shooting started with nothing left to prove it happened. What’s left isn’t a death toll — there’s no agreed count, and every number serves whoever repeats it. Six months on, a young man keeps the record the state agreed to lose.", "8": "Every audience has a breaking point — eight to twelve seconds, on average — where it decides it has seen enough of a stranger’s ruin to stop listening. Mercy is built to interrupt exactly that reflex: a compound that makes a confession land in you as though it were your own. Eight strangers finally get a room that refuses to look away.", "50": "For centuries, practitioners sealed the body with mudras, holding sensation rather than spending it, and never wrote the final instruction down. A laboratory found what that practice had quietly been building in the body, cloned it, and shipped it anyway, missing the last line. Arousal becomes a residence, not an event, and within a generation men aren’t persecuted so much as simply no longer recognized.", "94": "When a government shuts off the internet, somebody has to do it. He is the engineer who does — and the job turns out to be not a wall but a list: hospitals, ambulances, banks, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep.", "35": "Roya never spoke, never reached, never turned her head, and lived ten years and eleven months, growing heavier every one. Her mother's account of the therapy that hurt her daily to save her, and the sixth year, when the visitors had stopped and nobody had noticed. What eased was said out loud; what didn't, never was.", "52": "Surfers call it the samba: the shaking a body does after too long underwater. A rescue-ski driver has pulled four hundred and eleven people from the water — and believes speed is the only decent thing about him. He’s wrong. Then a wave bigger than any in the beach’s history arrives, and he finally learns what nine years of sixty-two-second rescues have actually been about.", "55": "The rules are absolute: nobody may touch her, for any reason, for the whole crossing. They were the same rules ten years ago, when her son drowned an arm’s length away and no one was allowed to reach him. Now she’s back for the crossing she has left. Past the twentieth hour, something starts swimming beside her — and starts, gently, correcting her memory of that night."};
+const PICKNOTE = {"6": "A new drug lets a therapist walk down into a patient’s mind, to the riverbed where the original wound was carved. Then a patient arrives — someone three other clinics have already turned away — whose own mind has already named him before he speaks. Going that deep was never safe for the guide either; the water takes him too.", "7": "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who’s actually in charge. That voice was never their own — it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes.", "78": "In January 2026, she told him not to go. That evening the country’s phones and internet went dark, and the shooting started with nothing left to prove it happened. What’s left isn’t a death toll — there’s no agreed count, and every number serves whoever repeats it. Six months on, a young man keeps the record the state agreed to lose.", "8": "Every audience has a breaking point — eight to twelve seconds, on average — where it decides it has seen enough of a stranger’s ruin to stop listening. Mercy is built to interrupt exactly that reflex: a compound that makes a confession land in you as though it were your own. Eight strangers finally get a room that refuses to look away.", "50": "For centuries, practitioners sealed the body with mudras, holding sensation rather than spending it, and never wrote the final instruction down. A laboratory found what that practice had quietly been building in the body, cloned it, and shipped it anyway, missing the last line. Arousal becomes a residence, not an event, and within a generation men aren’t persecuted so much as simply no longer recognized.", "94": "When a government shuts off the internet, somebody has to do it. He is the engineer who does — and the job turns out to be not a wall but a list: hospitals, ambulances, banks, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep.", "35": "Roya never spoke, never reached, never turned her head, and lived ten years and eleven months, growing heavier every one. Her mother's account of the therapy that hurt her daily to save her, and the sixth year, when the visitors had stopped and nobody had noticed. What eased was said out loud; what didn't, never was.", "52": "Surfers call it the samba: the shaking a body does after too long underwater. A rescue-ski driver has pulled four hundred and eleven people from the water — and believes speed is the only decent thing about him. He’s wrong. Then a wave bigger than any in the beach’s history arrives, and he finally learns what nine years of sixty-two-second rescues have actually been about.", "26": "Set on the Majnoon marshes, 1984, during the Iran–Iraq War, the title names two poisons: mustard gas, filling a field hospital with the blind and dying, and mang — Farsi for henbane, ancestor of atropine, the antidote to nerve agents. Sohrab, a nineteen-year-old orderly counting the ward's ampoules, finds soldiers injecting the antidote for its visions — reviving an old rite where a priest drank wine and mang, lay seven days as if dead, and returned from the other side to tell what he saw. His ledger becomes a doorway to the dead. By the 1988 ceasefire, the border is unmoved and a million are gone.", "55": "The rules are absolute: nobody may touch her, for any reason, for the whole crossing. They were the same rules ten years ago, when her son drowned an arm’s length away and no one was allowed to reach him. Now she’s back for the crossing she has left. Past the twentieth hour, something starts swimming beside her — and starts, gently, correcting her memory of that night."};
+/* 94's three lines are kept below though its slot went to 26 — the panel
+   copy written for a book exists nowhere else, and putting 94 back should not
+   mean writing it again. Unused entries cost nothing; a lost paragraph does. */
 const PICKFA = {"78": "خاموشی", "94": "رفت و برگشت"};
 const PICKGLOSS = {"6": "his patient’s mind named him", "7": "the dreamer was not you", "78": "the dark was the method", "8": "pity, measured in seconds", "50": "the last instruction went unwritten", "94": "the calls return", "35": "she grew heavier, alone", "52": "a dance name for drowning", "55": "her son’s old place"};
 /* three paintings are framed off-centre on the live page, so the subject is
@@ -544,7 +572,7 @@ const PICKABOUT = {
 };
 const PICKS = [
   { dial:0, name:"Noir",          books:[6,7,78] },
-  { dial:1, name:"Transgressive", books:[8,50,94] },
+  { dial:1, name:"Transgressive", books:[8,50,26] },
   { dial:2, name:"Plausible",     books:[35,52,55] }
 ];
 /* The recommended-series panel, exactly as the live page configures it:
@@ -681,13 +709,40 @@ function aboutBody(){
   }).join("")}
 
   <p class="ab-rule"><i></i>${mark("All series")}<i></i></p>
-  <div class="ab-sers">
-    ${GROUPS.filter(g=>g.name!=="Standalone").map(g=>`
-      <button class="ab-ser" type="button" data-rec="${g.books[0]}">
-        <span class="ab-n">${g.books.length} book${g.books.length>1?"s":""}</span>
-        <span class="ab-ti">${esc(railName(g.name))}</span>
-        <span class="ab-hk">${esc((g.syn||"").split("\n\n")[0].split(/(?<=\.)\s/)[0] || "Books that stand together.")}</span>
-      </button>`).join("")}
+  <!-- Was a three-across grid of cards. A card grid has no order in it: the
+       eye reads it as a set of equal tiles and the catalogue's own sequence —
+       which is the one thing this list knows — was lost. As numbered rows the
+       order is the content, the names line up in a column the eye can run
+       down, and a row can open in place to show what is in the series without
+       taking the reader off the panel. -->
+  <div class="ab-serlist">
+    ${GROUPS.filter(g=>g.name!=="Standalone").map((g,i)=>{
+      const open = serOpen === g.name;
+      const nm = railName(g.name);
+      return `
+      <div class="ab-srow${open?" is-open":""}">
+        <button class="ab-srow-h" type="button" data-serex="${esc(g.name)}" aria-expanded="${open}">
+          <span class="ab-sx">${pad2(i+1)}</span>
+          <span class="ab-sn">${esc(nm)}</span>
+          <span class="ab-sd">${esc(SERLINE(g))}</span>
+          <span class="ab-sc">${g.books.length} book${g.books.length>1?"s":""}</span>
+          <span class="ab-sv" aria-hidden="true">${DICON.caret}</span>
+        </button>
+        ${open ? `
+        <div class="ab-spanel">
+          <p class="ab-sp-syn">${esc(((g.syn||"").split("\n\n")[0] || "").trim() || SERLINE(g))}</p>
+          <ol class="ab-sp-books">
+            ${g.books.map((n,j)=>byNum[n] ? `
+              <li><button type="button" data-rec="${n}">
+                <span class="ab-sp-x">${pad2(j+1)}</span>${esc(byNum[n].t)}
+              </button></li>` : "").join("")}
+          </ol>
+          <p class="ab-sp-go">
+            <button type="button" data-series="${esc(g.name)}">Read series <span aria-hidden="true">&rarr;</span></button>
+          </p>
+        </div>` : ""}
+      </div>`;
+    }).join("")}
   </div>`;
 }
 
@@ -1007,6 +1062,12 @@ document.addEventListener("click", e=>{
     return; }
   /* a series title in About opens the Library on that series — the only place
      a series, as opposed to a book, can actually take you */
+  /* Opening a row is not navigation — it happens in place, and the row that
+     was open closes. Tested before [data-series] and [data-rec] because the
+     header button sits inside the same list as both. */
+  const sx=e.target.closest("[data-serex]"); if(sx){
+    serOpen = serOpen === sx.dataset.serex ? null : sx.dataset.serex;
+    draw(); return; }
   const sr=e.target.closest("[data-series]"); if(sr){
     filter=sr.dataset.series; view="library"; query=""; mobY=0; deskY=0; pickOpen=false;
     draw(); scroller().scrollTop=0; return; }

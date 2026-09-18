@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 36 · last updated 2026-09-17 21:18 PDT
+   Version 39 · last updated 2026-09-18 05:26 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -109,6 +109,12 @@
     rgba(227,215,188,.90) 0%, rgba(227,215,188,.82) 46%,
     rgba(227,215,188,.48) 78%, rgba(227,215,188,0) 100%)}
 :root[data-lt="light"] #royaLibrary .dnav button + button::before, :root[data-lt="light"] #royaLibrary .ab-terms::before, :root[data-lt="light"] #royaLibrary .ab-terms::after, :root[data-lt="light"] #royaLibrary .ab-rule i{background:rgba(96,76,42,.45)}
+/* DEAD: .ab-card and .ab-ser are no longer emitted — .ab-ser was the All
+   Series card this round replaced with .ab-serlist, .ab-card went earlier.
+   Kept here rather than deleted blind: the rest of the light block is one
+   long list and a wrong cut in it is invisible until someone switches theme.
+   Safe to remove with .ab-cov / .ab-body / .ab-n / .ab-ti / .ab-hk / .ab-recs
+   and the .ab-sers line below, all checked against the markup as unused. */
 :root[data-lt="light"] #royaLibrary .ab-card, :root[data-lt="light"] #royaLibrary .ab-ser{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
 :root[data-lt="light"] #royaLibrary .ab-cov img{border-color:rgba(96,76,42,.4)}
 :root[data-lt="light"] #royaLibrary .ab-t{border-bottom-color:rgba(96,76,42,.6)}
@@ -466,11 +472,64 @@
 #royaLibrary .ab-ti{margin:.3rem 0 .35rem; font-family:var(--slab); font-weight:700; font-size:1.125rem;
   line-height:1; letter-spacing:-.012em; text-transform:uppercase; color:var(--gold-lt);}
 #royaLibrary .ab-hk{font-family:var(--book); font-weight:400; font-size:.9375rem; line-height:1.3; color:var(--t-copy)}
-#royaLibrary .ab-sers{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.9rem}
-#royaLibrary .ab-ser{display:flex; flex-direction:column; padding:.85rem;
-  border:1px solid rgba(191,139,54,.45); background:rgba(11,9,6,.5); text-align:left;
-  transition:border-color .16s;}
-#royaLibrary .ab-ser:hover{border-color:var(--ochre)}
+/* ── All series, as a numbered list ──
+   The card grid this replaces had no order in it: three across, all the same
+   size, the catalogue's own sequence gone. These are rows — the number is the
+   content, the names stack into one column the eye runs down, and the line
+   beside each is one sentence so every row is the same size to read.
+
+   One grid, five tracks, declared on the row and on its header so the open
+   panel can span all of them. minmax(0,…) on the two text tracks: without it
+   a long series line refuses to shrink and pushes the count off the end. */
+#royaLibrary .ab-serlist{border-top:1px solid var(--rule-board)}
+#royaLibrary .ab-srow{border-bottom:1px solid var(--rule-board)}
+#royaLibrary .ab-srow-h{display:grid; width:100%; text-align:left;
+  /* 19rem, not 15: THE UNWITNESSED WARS I-V and THE BORROWED SUN CYCLE are
+     the two longest names and both broke over two lines at 15, which puts
+     their row out of step with every other row in the column. */
+  grid-template-columns:2.6rem minmax(7rem,19rem) minmax(0,1fr) auto 1.4rem;
+  align-items:center; column-gap:1.1rem; padding:.95rem .4rem; background:none; border:0;
+  transition:background-color .16s;}
+#royaLibrary .ab-srow-h:hover{background:rgba(199,148,61,.07)}
+#royaLibrary .ab-sx{font-family:var(--cond); font-weight:300; font-size:1.375rem;
+  line-height:1; color:var(--ochre-muted); font-variant-numeric:tabular-nums;}
+#royaLibrary .ab-sn{font-family:var(--slab); font-weight:700; font-size:1.0625rem;
+  line-height:1.1; letter-spacing:-.008em; text-transform:uppercase; color:var(--gold-lt);}
+#royaLibrary .ab-sd{font-family:var(--book); font-weight:400; font-size:.9375rem;
+  line-height:1.35; color:var(--t-copy); min-width:0;}
+#royaLibrary .ab-sc{font-family:var(--cond); font-weight:600; font-size:.625rem;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--t-pub); white-space:nowrap;}
+#royaLibrary .ab-sv{display:grid; place-items:center; color:var(--ochre)}
+#royaLibrary .ab-sv svg{width:1.05rem; height:1.05rem; fill:none; stroke:currentColor;
+  stroke-width:1.6; transform:rotate(-90deg); transition:transform .18s ease;}
+#royaLibrary .ab-srow.is-open .ab-sv svg{transform:rotate(0deg)}
+#royaLibrary .ab-srow.is-open .ab-sn{color:var(--ochre)}
+
+/* the panel, in the row's own three tracks: what the series is, what is in
+   it, and the way into it */
+#royaLibrary .ab-spanel{display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) auto;
+  column-gap:2rem; align-items:start;
+  margin:0 .4rem 1.1rem; padding:1.1rem 1.3rem;
+  border:1px solid var(--rule-board); background:rgba(11,9,6,.4);}
+#royaLibrary .ab-spanel > * + *{border-left:1px solid var(--rule-board); padding-left:2rem}
+#royaLibrary .ab-sp-syn{margin:0; font-family:var(--book); font-size:.9375rem;
+  line-height:1.55; color:var(--t-copy)}
+#royaLibrary .ab-sp-books{margin:0; padding:0; list-style:none}
+#royaLibrary .ab-sp-books li + li{margin-top:.42rem}
+#royaLibrary .ab-sp-books button{display:flex; gap:.9rem; width:100%; text-align:left;
+  background:none; border:0; padding:0; font-family:var(--book); font-size:.9375rem;
+  line-height:1.3; color:var(--bone); transition:color .16s;}
+#royaLibrary .ab-sp-books button:hover{color:var(--gold-lt)}
+#royaLibrary .ab-sp-x{flex:0 0 auto; font-family:var(--cond); font-weight:600; font-size:.6875rem;
+  letter-spacing:.14em; color:var(--ochre-muted); font-variant-numeric:tabular-nums;
+  padding-top:.18rem;}
+#royaLibrary .ab-sp-go{margin:0; align-self:center}
+#royaLibrary .ab-sp-go button{background:none; border:0; padding:0; white-space:nowrap;
+  font-family:var(--cond); font-weight:600; font-size:.6875rem; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--ochre); transition:color .16s;}
+#royaLibrary .ab-sp-go button:hover{color:var(--gold-lt)}
+#royaLibrary .ab-sp-go span{margin-left:.5rem}
 /* The Author's Notes body and the signature beneath it are the one place on
    this page where two LEFT-ALIGNED left edges are meant to line up, and they
    are set at 18px and 11px. Measured in ch they resolve to two different
@@ -487,6 +546,7 @@
 #royaLibrary .ab-sig{max-width:var(--ab-measure, 39rem); margin:1.6rem auto 0; font-family:var(--cond); font-weight:600;
   font-size:.6875rem; letter-spacing:.24em; text-transform:uppercase; color:var(--bone);}
 @media (max-width:74rem){
+  /* DEAD, both of them — see the note in the light block at the top. */
   #royaLibrary .ab-recs, #royaLibrary .ab-sers{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 /* a note that belongs to the page rather than the operating system: the
@@ -755,28 +815,49 @@
 #royaLibrary .ab-feat-books button:hover{color:var(--gold-lt); border-color:var(--ochre)}
 /* phone */
 #royaLibrary .mob-sec .ab-marg{display:none}
+/* ── the featured series on a phone ──
+   It used to hold the scene at the top of the block and start the words
+   underneath it: 8.5rem of top padding, the veil opaque by 72%, and the title
+   beginning below the two faces. That read as a picture with a caption, and
+   it made the tallest block on the panel — a screen of portrait at the top
+   and a screen of flat ground under it — where the desktop reads as one
+   thing: the words standing in the dark between the two of them.
+
+   Three changes bring it back in line. The padding comes down so the title
+   starts inside the picture rather than after it. The scene is set at 132% so
+   the band is tall enough to carry the title and most of the copy. 110% is
+   as far as that can go: the two faces sit at the very edges of a 3:2 plate,
+   so every per cent past it takes a slice off one of them, and a face that
+   is half a face stops being the thing the block is built around. What the
+   band does not reach, the veil does.
+   And the veil is the desktop's, a radial that stays clear over the middle —
+   where the plate is already shadow, and where the type goes — and closes in
+   toward the edges, with a linear under it to carry the dedication down onto
+   solid ground. Nothing ends up outside the tint. */
 #royaLibrary .mob-sec .ab-over{background-image:none;
-  padding:8.5rem 1rem 1.6rem; margin:0 -.4rem 1.2rem;
+  padding:3.1rem 1rem 1.8rem; margin:0 -.4rem 1.2rem;
   -webkit-mask-image:none; mask-image:none;}
-/* same layer, the phone's own framing: the scene sits at the top rather than
-   filling the block, and the veil runs top to bottom instead of out from the
-   middle. The four edges are feathered the same way. */
 #royaLibrary .mob-sec .ab-over::before{inset:-1.2rem -1.4rem -2.2rem;
   background-image:
+    radial-gradient(76% 54% at 50% 33%,
+      rgba(var(--over-ground),0) 16%, rgba(var(--over-ground),.40) 56%,
+      rgba(var(--over-ground),.78) 86%),
     linear-gradient(to bottom,
-      rgba(var(--over-ground),.1) 0, rgba(var(--over-ground),.22) 26%,
-      rgba(var(--over-ground),.62) 46%, rgba(var(--over-ground),.94) 62%,
-      rgb(var(--over-ground)) 72%),
+      rgba(var(--over-ground),0) 44%, rgba(var(--over-ground),.70) 64%,
+      rgb(var(--over-ground)) 80%),
     var(--ab-art);
-  background-size:100% 100%, 100% auto;
-  background-position:center top, center top;
+  background-size:100% 100%, 100% 100%, 110% auto;
+  background-position:center top, center top, center top;
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 1.7rem, #000 calc(100% - 2.6rem), transparent 100%);
   mask-image:
     linear-gradient(to right, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 1.7rem, #000 calc(100% - 2.6rem), transparent 100%);}
-#royaLibrary .mob-sec .ab-over .ab-feat-t{margin-bottom:1rem}
+#royaLibrary .mob-sec .ab-over .ab-feat-t{margin-bottom:.85rem}
+/* held in from both sides so the two faces are beside the words rather than
+   behind them — the desktop's own arrangement, at the width a phone has */
+#royaLibrary .mob-sec .ab-over .ab-feat-copy.is-centred{max-width:92%; margin-inline:auto}
 /* The phone has no left gutter to climb, so the marginalia takes the empty
    half of the first category's header instead — the same three rows, the same
    faded hand, small enough to sit inside it rather than beside it. */
@@ -1224,7 +1305,32 @@
 #royaLibrary .mob-sec .ab-d{font-size:.875rem; margin-top:.35rem}
 #royaLibrary .mob-sec .ab-rule{margin:1.6rem 0 .9rem; gap:.7rem}
 #royaLibrary .mob-sec .ab-rule span{font-size:.625rem; letter-spacing:.24em}
-#royaLibrary .mob-sec .ab-recs, #royaLibrary .mob-sec .ab-sers{grid-template-columns:minmax(0,1fr); gap:.55rem}
+#royaLibrary .mob-sec .ab-recs{grid-template-columns:minmax(0,1fr); gap:.55rem}
+/* ── All series on a phone ──
+   The same rows, folded. Five tracks will not fit a handset, so the number,
+   the name and the count take the first line and the sentence drops under
+   them, spanning from the name's own left edge so the column still reads as
+   a column. The panel loses its three-across split for the same reason. */
+/* Every cell is placed by hand. Left to flow, the sentence spanning columns
+   2 to the end pushed the count and the chevron onto a third line of their
+   own, where they read as a separate control rather than as part of the row.
+   Line one is the row — number, name, count, chevron; line two is the
+   sentence, indented to the name's own left edge so the column still reads
+   as a column. */
+#royaLibrary .mob-sec .ab-srow-h{grid-template-columns:2.1rem minmax(0,1fr) auto 1.1rem;
+  column-gap:.7rem; row-gap:.28rem; padding:.8rem .2rem; align-items:baseline;}
+#royaLibrary .mob-sec .ab-sx{grid-area:1/1; font-size:1.125rem}
+#royaLibrary .mob-sec .ab-sn{grid-area:1/2; font-size:1rem}
+#royaLibrary .mob-sec .ab-sc{grid-area:1/3}
+#royaLibrary .mob-sec .ab-sv{grid-area:1/4; align-self:center}
+#royaLibrary .mob-sec .ab-sd{grid-area:2/2/3/5; font-size:.875rem}
+#royaLibrary .mob-sec .ab-sc{font-size:.5625rem}
+#royaLibrary .mob-sec .ab-sv svg{width:.95rem; height:.95rem}
+#royaLibrary .mob-sec .ab-spanel{grid-template-columns:minmax(0,1fr); row-gap:.9rem;
+  margin:0 .2rem 1rem; padding:.9rem 1rem;}
+#royaLibrary .mob-sec .ab-spanel > * + *{border-left:0; padding-left:0;
+  border-top:1px solid var(--rule-board); padding-top:.9rem}
+#royaLibrary .mob-sec .ab-sp-go{align-self:start}
 #royaLibrary .mob-sec .ab-card{grid-template-columns:4.4rem minmax(0,1fr)}
 #royaLibrary .mob-sec .ab-ti{font-size:1.0625rem}
 #royaLibrary .mob-sec .ab-hk{font-size:.875rem}
