@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 32 · last updated 2026-09-17 17:09 PDT
+   Version 35 · last updated 2026-09-17 19:34 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -84,7 +84,6 @@
 :root[data-lt="light"] #royaLibrary .mob-head{background:#efe7d3; border-bottom-color:rgba(96,76,42,.5);
   box-shadow:0 10px 18px rgba(70,52,24,.14);}
 :root[data-lt="light"] #royaLibrary .mob-bar{border-bottom-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .mob-nav{border-bottom-color:rgba(96,76,42,.3)}
 :root[data-lt="light"] #royaLibrary .mob-nav button + button::before{background:rgba(96,76,42,.35)}
 :root[data-lt="light"] #royaLibrary .mob-search input, :root[data-lt="light"] #royaLibrary .pick-btn, :root[data-lt="light"] #royaLibrary .mob-ctrl .sortbox{border-color:rgba(96,76,42,.55)}
 :root[data-lt="light"] #royaLibrary .mob-search input{color:#1d1710}
@@ -106,7 +105,7 @@
 :root[data-lt="light"] #royaLibrary .sheet-plate{box-shadow:0 0 28px rgba(150,110,45,.2), 0 14px 26px rgba(70,52,24,.32)}
 :root[data-lt="light"] #royaLibrary .sheet-nav button{border-color:rgba(96,76,42,.45)}
 :root[data-lt="light"] #royaLibrary .mob-foot{border-top-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .dnav{background:#e3d7bc; border-bottom-color:rgba(96,76,42,.5)}
+:root[data-lt="light"] #royaLibrary .dnav{background:#e3d7bc}
 :root[data-lt="light"] #royaLibrary .dnav button + button::before, :root[data-lt="light"] #royaLibrary .ab-terms::before, :root[data-lt="light"] #royaLibrary .ab-terms::after, :root[data-lt="light"] #royaLibrary .ab-rule i{background:rgba(96,76,42,.45)}
 :root[data-lt="light"] #royaLibrary .ab-card, :root[data-lt="light"] #royaLibrary .ab-ser{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
 :root[data-lt="light"] #royaLibrary .ab-cov img{border-color:rgba(96,76,42,.4)}
@@ -380,19 +379,22 @@
 #royaLibrary .main-foot .r{margin-left:auto; color:var(--bone); font:inherit; letter-spacing:inherit; text-transform:inherit}
 #royaLibrary button.main-foot .r:hover, #royaLibrary .main-foot button.r:hover{color:var(--ochre)}
 /* ── the section nav, at the head of the main column ── */
-#royaLibrary .dnav{display:flex; align-items:flex-start; justify-content:center; gap:2.4rem;
-  padding:1.2rem .2rem 1rem;
-  border-bottom:1px solid rgba(199,148,61,.58);
+#royaLibrary .dnav{display:flex; align-items:flex-start; justify-content:center; gap:3.2rem;
+  padding:2rem .2rem 1.8rem;
+  /* No rule of its own. The bar under it already draws one a third of an inch
+     lower, and two hairlines that close together read as a printing fault
+     rather than as a division. The band is opaque, which is what a frozen
+     header needs; the line was never doing that work. */
   position:sticky; top:var(--labh,0px); z-index:9;
   background:#100f0d;}
-#royaLibrary .dnav button{display:flex; flex-direction:column; gap:.25rem; padding:0 .2rem; position:relative}
-#royaLibrary .dnav button + button::before{content:""; position:absolute; left:-1.2rem; top:.1rem; bottom:.1rem; width:1px;
+#royaLibrary .dnav button{display:flex; flex-direction:column; gap:.34rem; padding:0 .2rem; position:relative}
+#royaLibrary .dnav button + button::before{content:""; position:absolute; left:-1.6rem; top:.1rem; bottom:.1rem; width:1px;
   background:rgba(199,148,61,.4);}
-#royaLibrary .dnav b{font-family:var(--cond); font-weight:600; font-size:.8125rem; letter-spacing:.2em;
+#royaLibrary .dnav b{font-family:var(--cond); font-weight:600; font-size:1.0625rem; letter-spacing:.2em;
   text-transform:uppercase; color:var(--ochre);}
-#royaLibrary .dnav i{font-style:normal; font-family:var(--book); font-size:.9375rem; color:var(--dust)}
+#royaLibrary .dnav i{font-style:normal; font-family:var(--book); font-size:1.0625rem; color:var(--dust)}
 #royaLibrary .dnav button:hover b{color:var(--gold-lt)}
-#royaLibrary .dnav button[aria-current="true"] b{color:var(--gold-lt); box-shadow:inset 0 -2px 0 var(--gold-lt); padding-bottom:.2rem}
+#royaLibrary .dnav button[aria-current="true"] b{color:var(--gold-lt); box-shadow:inset 0 -2px 0 var(--gold-lt); padding-bottom:.26rem}
 /* ── About and Author's Notes ── */
 #royaLibrary .abt{position:relative; z-index:2; padding:1.8rem 1.4rem 1rem; min-width:0}
 #royaLibrary .ab-lede{margin:0 auto 1.3rem; max-width:56ch; text-align:center;
@@ -593,13 +595,35 @@
 #royaLibrary .ab-feat-copy{margin:0 0 1.4rem; max-width:none; text-align:left}
 #royaLibrary .ab-feat-p{margin:0 0 1.1rem; font-family:var(--book); font-weight:400; font-size:1.25rem; line-height:1.6; color:var(--t-copy)}
 #royaLibrary .ab-feat-note{margin-top:1.3rem; font-style:italic; opacity:.72}
+/* The scene behind a featured series is a PICTURE, and a picture painted onto
+   the element itself stops at the element's edge — a rectangle of night with
+   four hard sides sitting on a page whose own ground is lighter and textured.
+   Under The Unheard House that edge fell a few lines below the dedication, so
+   the foot of the text read as printed on a separate black card.
+   The scene moves to a layer of its own that reaches past the block on every
+   side and is masked at those four edges, so it has no edge to see: the
+   painting and the veil that dims it fade out together into whatever the page
+   is carrying there. The words sit above it, unchanged. */
 #royaLibrary .ab-over{position:relative; padding:2.4rem 2rem 2rem; margin:0 -.8rem 1.2rem;
+  background-image:none;}
+#royaLibrary .ab-over > *{position:relative; z-index:1}
+#royaLibrary .ab-over::before{content:""; position:absolute; z-index:0; pointer-events:none;
+  inset:-2.2rem -2.4rem -2.7rem;
   background-image:
     radial-gradient(86% 96% at 50% 44%, rgba(var(--over-ground),0) 26%, rgba(var(--over-ground),.5) 62%, rgb(var(--over-ground)) 88%),
     var(--ab-art);
   background-size:100% 100%, cover;
   background-position:center, center;
-  background-repeat:no-repeat, no-repeat;}
+  background-repeat:no-repeat, no-repeat;
+  /* absolute lengths, not per cents: the fade band has to stay clear of the
+     type whatever the block's height turns out to be */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 2.8rem, #000 calc(100% - 2.8rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 2.6rem, #000 calc(100% - 3.1rem), transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 2.8rem, #000 calc(100% - 2.8rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 2.6rem, #000 calc(100% - 3.1rem), transparent 100%);
+  -webkit-mask-composite:source-in; mask-composite:intersect;}
 #royaLibrary .ab-over .ab-feat-t{margin-bottom:1.3rem}
 #royaLibrary .ab-feat-copy.is-centred{text-align:center; max-width:64ch; margin:0 auto 1.4rem}
 #royaLibrary .ab-feat-copy.is-centred .ab-feat-p{text-wrap:balance}
@@ -650,7 +674,14 @@
 #royaLibrary .ab-feat-books button:hover{color:var(--gold-lt); border-color:var(--ochre)}
 /* phone */
 #royaLibrary .mob-sec .ab-marg{display:none}
-#royaLibrary .mob-sec .ab-over{background-image:
+#royaLibrary .mob-sec .ab-over{background-image:none;
+  padding:8.5rem 1rem 1.6rem; margin:0 -.4rem 1.2rem;
+  -webkit-mask-image:none; mask-image:none;}
+/* same layer, the phone's own framing: the scene sits at the top rather than
+   filling the block, and the veil runs top to bottom instead of out from the
+   middle. The four edges are feathered the same way. */
+#royaLibrary .mob-sec .ab-over::before{inset:-1.2rem -1.4rem -2.2rem;
+  background-image:
     linear-gradient(to bottom,
       rgba(var(--over-ground),.1) 0, rgba(var(--over-ground),.22) 26%,
       rgba(var(--over-ground),.62) 46%, rgba(var(--over-ground),.94) 62%,
@@ -658,9 +689,12 @@
     var(--ab-art);
   background-size:100% 100%, 100% auto;
   background-position:center top, center top;
-  background-repeat:no-repeat, no-repeat;
-  padding:8.5rem 1rem 1.6rem; margin:0 -.4rem 1.2rem;
-  -webkit-mask-image:none; mask-image:none;}
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 1.7rem, #000 calc(100% - 2.6rem), transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 1.7rem, #000 calc(100% - 2.6rem), transparent 100%);}
 #royaLibrary .mob-sec .ab-over .ab-feat-t{margin-bottom:1rem}
 /* The phone has no left gutter to climb, so the marginalia takes the empty
    half of the first category's header instead — the same three rows, the same
@@ -927,8 +961,8 @@
   padding:.5rem .7rem .45rem;
   border-bottom:1px solid rgba(199,148,61,.58);}
 :root[data-mcond="1"] #royaLibrary .mob-h{display:none}
-:root[data-mcond="1"] #royaLibrary .mob-nav{padding:.34rem .7rem .36rem}
-:root[data-mcond="1"] #royaLibrary .mob-nav button{font-size:.5625rem}
+:root[data-mcond="1"] #royaLibrary .mob-nav{padding:.62rem .7rem .66rem}
+:root[data-mcond="1"] #royaLibrary .mob-nav button{font-size:.625rem}
 :root[data-mcond="1"] #royaLibrary .mob-nav button[aria-current="true"] span{margin-top:.2rem}
 :root[data-mcond="1"] #royaLibrary .mob-bar{padding:.36rem .7rem .34rem}
 :root[data-mcond="1"] #royaLibrary .mob-word{height:1.3rem}
@@ -960,10 +994,13 @@
   letter-spacing:.1em; line-height:1.4; text-transform:uppercase; color:var(--paper-dust);}
 #royaLibrary .mob-set{display:flex; gap:.85rem; flex:0 0 auto; margin-left:auto}
 /* ── 2 · section navigation ── */
-#royaLibrary .mob-nav{display:flex; align-items:stretch; padding:.5rem .7rem .55rem;
-  border-bottom:1px solid rgba(199,148,61,.34);}
+/* No rule of its own: the collection line a few millimetres under it already
+   draws one, and two hairlines that close together read as a printing fault.
+   The band does not need to be sticky itself — .mob-head above it already
+   freezes the whole header, this row included. */
+#royaLibrary .mob-nav{display:flex; align-items:stretch; padding:.85rem .7rem .9rem;}
 #royaLibrary .mob-nav button{flex:1 1 0; text-align:center; padding:0 .2rem; position:relative;
-  font-family:var(--cond); font-weight:600; font-size:.5625rem; letter-spacing:.15em;
+  font-family:var(--cond); font-weight:600; font-size:.6875rem; letter-spacing:.15em;
   text-transform:uppercase; color:var(--ochre); line-height:1.3;}
 #royaLibrary .mob-nav button + button::before{content:""; position:absolute; left:0; top:.1rem; bottom:.1rem; width:1px;
   background:rgba(199,148,61,.4);}
@@ -1183,9 +1220,29 @@ body.rl-on{overflow:hidden}
   #royaLibrary .phone{
     height:auto; min-height:100vh; min-height:100dvh; border:0; border-radius:0;
     max-width:none; box-shadow:none; flex:1 1 auto;
+    /* In the sandbox this box IS the scroller — a handset of a fixed height
+       with the shelf running inside it — so the nav's `position:sticky`
+       resolved against it. Here the box grows to the whole shelf and the
+       SECTION scrolls, but `overflow-y:auto` still made this the nearest
+       scroll container: a scroll container that never scrolls, so the sticky
+       nav had nothing to stick to and simply left with the page. Handing the
+       scrolling back to the section is what makes the header freeze.
+       overflow-x stays `clip`, which clips without becoming a container. */
+    overflow-y:visible; overflow-x:clip;
   }
-  #royaLibrary .phone-over{inset:0; border-radius:0}
+  /* Fixed, not absolute. The sandbox hangs this off a mock handset of a known
+     height; here .phone-shell grows to the whole shelf, so an absolute overlay
+     inset:0 came out twenty-two THOUSAND pixels tall — the sheet and the
+     enlarged cover were a screen of black with the content somewhere off the
+     top, which is what a reader on a phone actually met. Fixed makes it the
+     screen, which is what it was always meant to be. */
+  #royaLibrary .phone-over{position:fixed; inset:0; border-radius:0}
 }
+
+/* Nothing behind an open record, sheet, cover or reader may scroll. On the
+   page the section is the scroller — .phone is full height and does not
+   scroll — so the section's own `.phone.is-locked` lock never applied here. */
+#royaLibrary.rl-busy{overflow:hidden}
 
 /* the imprint, cut from the one plate the repo already carries, so the section
    ships no copy of it. assets/roya.png is 520x910: the wordmark is its top
@@ -1233,5 +1290,10 @@ body.rl-on #toTop{z-index:71}
    section's stands down rather than floating a second one over it — the
    same rule the back-to-the-top arrow follows. */
 #royaLibrary.rl-busy .rl-close{display:none}
+
+/* Stage 4: the section is the site's front door. There is nothing behind it to
+   go back to, so it carries no way out — the close button is the one piece of
+   chrome that only makes sense while the old page is still the page. */
+#royaLibrary.rl-home .rl-close{display:none}
 
 #royaLibrary .rl-stage{display:block; min-height:100%}

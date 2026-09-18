@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 32 · last updated 2026-09-17 17:09 PDT
+   Version 35 · last updated 2026-09-17 19:34 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -126,8 +126,11 @@ const GROUPS = (()=>{
 const shelfOf = n => Math.max(0, GROUPS.findIndex(g=>g.books.includes(n)));
 
 let dev = PHONE.matches ? "phone" : "desk", view="library", cur=94, shelf=shelfOf(94);
-let filter="all", query="", mode="grid", sortDesc=false, zoomN=null, readN=null;
+let filter="all", query="", mode="grid", sortDesc=true, zoomN=null, readN=null;
 let light=false, soundOn=false, searchHot=false, caret=0, sheetN=null, pickOpen=false, recN=null;
+/* the book the shelf was last scrolled to, so a redraw can tell a new
+   selection from a re-render of the same one */
+let scrolledTo = null;
 /* where the page was before a record opened, so closing it returns there
    rather than to the top of whichever section is behind */
 let deskY = 0;
@@ -945,11 +948,18 @@ function draw(){
   }
   const strip = document.querySelector('.zoom-strip [aria-current="true"]');
   if (strip && strip.scrollIntoView) strip.scrollIntoView({block:"nearest", inline:"center"});
-  const on = query.trim() ? null
+  /* Bringing the selected card into view is right when the SELECTION moved —
+     stepping to the next book, jumping in from About. It is wrong on every
+     other redraw: changing the sort redrew the grid and then scrolled to
+     wherever the selected book had landed in the new order, which for a
+     shelf sorted newest-first means the far bottom. Only a real change of
+     book scrolls now. */
+  const on = (query.trim() || cur === scrolledTo) ? null
            : STAGE.querySelector('.bcard[aria-current="true"]');
   if (on && on.scrollIntoView && dev !== "phone") {
     on.scrollIntoView({block:"nearest", inline:"center"});
   }
+  scrolledTo = cur;
   if (dev === "phone"){
     const ph = phoneScroller();
     if (ph) ph.scrollTop = mobY;
@@ -964,7 +974,7 @@ function step(d){
 }
 document.addEventListener("click", e=>{
   const lt=e.target.closest("[data-themeswap]"); if(lt){ light=!light; draw(); return; }
-  const sd=e.target.closest("[data-soundswap]"); if(sd){ soundOn=!soundOn; draw(); return; }
+  const sd=e.target.closest("[data-soundswap]"); if(sd){ if(!syncSound()){ soundOn=!soundOn; draw(); } return; }
   const cl=e.target.closest("[data-clear]");if(cl){ query=""; searchHot=true; caret=0; mobY=0; draw(); return; }
   const v=e.target.closest("[data-view]");  if(v){ view=v.dataset.view; mobY=0; pickOpen=false; draw(); return; }
   const dk=e.target.closest("[data-desk]"); if(dk){ view=dk.dataset.desk==="series"?"about":dk.dataset.desk; draw(); return; }
@@ -1069,6 +1079,18 @@ try{
      over a page that is still there underneath. `deskY` and the two
      window.scrollTo calls in the body above therefore read and write THIS
      element rather than the window. */
+  /* ── stage 4 ──
+     When the section is the site's front door it opens on load, it has no way
+     out, and the page behind it is scenery no reader should ever be dropped
+     onto. index.html sets this before this file runs. */
+  const HOME = !!window.ROYA_LIBRARY_HOME;
+
+  /* the page's own reader is an overlay at z-index 70, above this section at
+     60 — so it opens OVER the Library rather than instead of it, and when it
+     closes the Library is still there. */
+  const pageReader = document.getElementById("reader");
+  const readerUp = function () { return !!pageReader && !pageReader.hidden; };
+
   function scroller() {
     /* phoneScroller() picks the element that actually scrolls rather than the
        one named after the device — on the page the phone frame is full height
@@ -1090,7 +1112,12 @@ try{
     syncTop();
   }
 
-  function closeLibrary() {
+  function closeLibrary(force) {
+    /* Nothing behind it to go back to. Escape and the close button both end
+       up here, and in this mode both are meant to do nothing; READ STORY
+       passes `force` on the one path that genuinely needs the section out of
+       the way. */
+    if (HOME && !force) return;
     if (!libOpen) return;
     libOpen = false;
     recN = null; sheetN = null; zoomN = null; readN = null; pickOpen = false;
@@ -1124,8 +1151,11 @@ try{
   function syncTop() {
     topTicking = false;
     if (!toTop || !libOpen) return;
-    /* nothing floats over an open record, cover or reader */
-    const busy = (recN != null || sheetN != null || zoomN != null || readN != null);
+    /* nothing floats over an open record, cover or reader — including the
+       page's own reader, which at the front door opens on top of the section
+       rather than in place of it. The site's arrow is lifted to z-index 71
+       while the section is open, which is above the reader's 70. */
+    const busy = (recN != null || sheetN != null || zoomN != null || readN != null || readerUp());
     /* the way out of the section goes with it: an open record has a CLOSE of
        its own, and two close buttons on one screen is one too many */
     ROOT.classList.toggle("rl-busy", busy);
@@ -1185,13 +1215,57 @@ try{
   }, true);
 
   /* ── the reader ──
-     One call: the section hands the book to the reader the site already has. */
+     script.js keeps openReader() private inside its own closure — there is no
+     window.royaOpenReader and there never was, so every READ STORY in the
+     section quietly fell through to the PDF. What IS reachable is the button
+     the shelf builds for each book, which calls openReader itself: one per
+     book, labelled "<Title> — read here". The section presses that.
+
+     Matched on the label rather than a data attribute because the shelf's read
+     button carries no number of its own, and the label is script.js's own
+     construction. If the shelf is ever rebuilt without it, the PDF remains the
+     fallback rather than nothing happening. */
+  function readButtonFor(s) {
+    const want = s.title + " \u2014 read here";
+    const all = document.querySelectorAll("button.icon-btn.read[aria-label]");
+    for (const b of all) if (b.getAttribute("aria-label") === want) return b;
+    return null;
+  }
+
   function openRead(n) {
     const s = STORIES.filter(function (x) { return x.num === n; })[0];
     if (!s) return;
-    if (typeof window.royaOpenReader === "function") { window.royaOpenReader(s); return; }
-    /* no reader on the page: fall back to the PDF rather than doing nothing */
+    const btn = readButtonFor(s);
+    if (btn) {
+      if (HOME) {
+        /* the reader opens above, so the section stays exactly where it is —
+           same scroll position, same filter — and is simply there again when
+           the book is closed. */
+        btn.click();
+        syncTop();
+        watchReader();
+        return;
+      }
+      /* the section stands down first: the reader is the site's own overlay
+         and should not open behind this one */
+      closeLibrary(true);
+      btn.click();
+      return;
+    }
     window.open(pdfHref({ n: n }), "_blank", "noopener");
+  }
+
+  /* The reader is the page's, so it is not going to tell this section when it
+     shuts. Watched by the one attribute the page actually toggles. */
+  let readerWatch = null;
+  function watchReader() {
+    if (!pageReader || readerWatch) return;
+    readerWatch = new MutationObserver(function () {
+      if (readerUp()) return;
+      readerWatch.disconnect(); readerWatch = null;
+      syncTop();
+    });
+    readerWatch.observe(pageReader, { attributes: true, attributeFilter: ["hidden"] });
   }
 
   /* ── the way in ──
@@ -1200,6 +1274,7 @@ try{
      old All Covers overlay is left unreachable for one publish. */
   const FLAG = /[?&]library=1\b/.test(location.search);
   const navBtn = document.getElementById("galleryOpen");
+  if (HOME) ROOT.classList.add("rl-home");
 
   if (navBtn && (FLAG || window.ROYA_LIBRARY_LIVE)) {
     navBtn.addEventListener("click", function (e) {
@@ -1226,6 +1301,39 @@ try{
     if (e.target.closest("[data-rlclose]")) closeLibrary();
   });
 
+  /* ── the ambient track ──
+     The page owns it. #soundToggle holds the state, drives #ambient, sets the
+     level, paints its own icon and waits for a gesture; the section's speaker
+     is the same switch seen from inside, not a second one.
+
+     So the section does not keep its own answer. Pressing its speaker presses
+     the page's button and stops there; the observer below reads the page back
+     and redraws. Flipping soundOn here as well left the two exactly one press
+     out of phase, because the section's own click handler sits on the document
+     and runs on the other side of this one. */
+  const pageSound = document.getElementById("soundToggle");
+  const soundIsOn = function () {
+    return !!pageSound && pageSound.getAttribute("aria-pressed") === "true";
+  };
+
+  /* called from the section's own handler, in the reader's gesture, which is
+     what lets the browser start playback at all */
+  function syncSound() {
+    if (!pageSound || pageSound.hidden) return false;
+    pageSound.click();
+    return true;
+  }
+
+  if (pageSound) {
+    new MutationObserver(function () {
+      const on = soundIsOn();
+      if (on === soundOn) return;
+      soundOn = on;
+      if (libOpen) draw();
+    }).observe(pageSound, { attributes: true, attributeFilter: ["aria-pressed"] });
+    soundOn = soundIsOn();
+  }
+
   window.royaLibrary = { open: openLibrary, close: closeLibrary };
-  if (FLAG) openLibrary();
+  if (FLAG || HOME) openLibrary();
 })();
