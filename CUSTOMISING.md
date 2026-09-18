@@ -175,7 +175,7 @@ claiming the full row and pushing everything else to one side.
 ## Cover zoom
 
 Every cover on the site — the small thumbnail on each shelf row, and
-the full-size ones in the All Covers grid — carries a small circular
+the full-size ones in the Roya Library — carries a small circular
 magnifying-glass button that opens the site's one shared lightbox
 (`openCover()` in `script.js`) without navigating anywhere: `.gcard-zoom`
 in the grid, `.row-zoom` on the shelf. It appears on hover for a mouse,
@@ -560,6 +560,87 @@ in the header is pressed, then held at a low fixed level set in
 
 Anything hosted here needs a licence that permits it. A track lifted
 from YouTube does not.
+
+---
+
+## The Roya Library
+
+The section behind the middle nav item, where **All Covers** used to be.
+It is the whole catalogue as a shelf: every cover, a search, the series
+filter, a record for each book with its synopsis, its dials and Door /
+Room / Key, an enlarged view of the 3D pair, and the About and Author's
+Notes panels alongside. It reads `STORIES`, `TRILOGIES` and `GLOSSARY`
+and carries no copy of them, so a book added to `stories.js` is in the
+Library the moment the file is uploaded.
+
+### The two built files
+
+```
+library/roya-library.css
+library/roya-library.js
+```
+
+**Do not hand-edit either.** They are cut from one source page by a
+build, and the next build overwrites whatever was typed into them. Each
+carries its version and the date it was cut in a comment at the top; if
+something needs changing, change it in the source and re-cut. Ask
+Claude — it holds the source page and the build.
+
+Every rule in the stylesheet is scoped under `#royaLibrary`, so it
+cannot reach the page around it, and four class names the section and
+`style.css` both wanted are renamed on the way in.
+
+### What it shows, and where each picture comes from
+
+Almost everything is a file the repository already has:
+
+| What the section shows | Where it comes from |
+|---|---|
+| the flat cover in the grid | `library/covers/NN.webp` |
+| the 3D pair, in the record and the enlarged view | `covers/pairs/NN.jpg` |
+| the nine About scene paintings | `assets/start-NN.webp` — seven of them |
+| the two series banners | `assets/series-delgosha.webp`, `assets/series-unsaid.webp` |
+| the Forough portraits | `assets/forough.webp` |
+| the imprint, top of the rail and the phone bar | `assets/roya.png`, cropped in CSS — no second copy ships |
+| PDF, Read and Share | `pdfs/NN.pdf`, `read/NN.json`, `share/<slug>.html` |
+| back to the top | the page's own `#toTop`, raised above the section while it is open |
+
+Its own pictures are the ground plates (`library/bg-desk.webp`,
+`library/bg-mob.webp`), the two 9-slice frames (`library/frame.png` for
+each cover, `library/edge.png` for the panel), the 94 flat covers, and
+exactly two scene paintings:
+
+- `library/art/start-35.webp` — `assets/start-35.webp` is a later, much
+  wider rendering of the same scene, and at the row's proportions the
+  wings all but vanish into black.
+- `library/art/start-94.webp` — `assets/start-94.webp` is still the
+  unshifted painting.
+
+Each has a fallback: a cover or scene the section cannot find drops back
+to the repository's own file rather than showing a hole.
+
+### The fonts it needs
+
+The section is set in **Bebas Neue**, **Rokkitt**, **EB Garamond**,
+**Noto Naskh Arabic** and **Gulzar**, and Jost at 600. All are in the
+Google Fonts link in `index.html`. If that link is ever rewritten, keep
+them: without them the section silently falls back to Georgia and Arial
+and looks wrong everywhere at once.
+
+### Changing what it features
+
+The three categories under **Pick a Door** and the three recommended
+series are configured in the source page, not in these files, and are
+kept in step with the same rows on the About panel — see "Pick a Door"
+and "The recommended series" above. Change them there and ask for a
+re-cut.
+
+### The count
+
+Nothing in the section states the size of the catalogue from a literal.
+The rail, the collection heading, the footer, the "showing N of N" line
+and the About sentence all count `STORIES`, and the script warns in the
+console if a figure is ever typed into the copy instead.
 
 ---
 

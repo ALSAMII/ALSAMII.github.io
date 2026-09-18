@@ -1,4 +1,5 @@
-<!-- Updated 2026-09-11 — added the optional covers/pairs/NN.jpg step -->
+<!-- Updated 2026-09-17 — the Roya Library: library/covers/NN.webp, and
+     what the section checks. The count needs no editing anywhere. -->
 # Adding a book
 
 Everything that has to happen when a new novella joins the site, in
@@ -16,27 +17,33 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
 
 ## The short version
 
-1. Add `pdfs/NN.pdf` and `covers/NN.jpg`
+1. Add `pdfs/NN.pdf`, `covers/NN.jpg` and `library/covers/NN.webp`
 2. Add the book's block to `stories.js`
 3. Run `node build-feeds.js` → updates `feed.xml` + `sitemap.xml`
 4. Run `node build-share-pages.js` → updates the `share/` folder
 5. Run `python3 build-reader.py NN` → writes `read/NN.json`
 6. Raise the `?v=` number in `index.html`
 7. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
-   the `share/` folder, `read/NN.json`, the new PDF, the new cover
+   the `share/` folder, `read/NN.json`, the new PDF, both covers
+
+**The count looks after itself.** Nowhere on the site do you type how
+many stories there are — step 3 rewrites the six places a crawler
+reads, and everything else counts `STORIES` as the page runs. See "The
+shelf count" in [README.md](README.md).
 
 Everything after this is the same seven steps, explained.
 
 ---
 
-## 1. The two files
+## 1. The files
 
-Both are named by the book's number, padded to two digits. The site
-finds them on its own — nothing points at them by name.
+All named by the book's number, padded to two digits. The site finds
+them on its own — nothing points at them by name.
 
 ```
-pdfs/41.pdf        the novella itself
-covers/41.jpg      its cover
+pdfs/41.pdf              the novella itself
+covers/41.jpg            its cover, as the shelf shows it
+library/covers/41.webp   the flat front, as the Roya Library shows it
 ```
 
 **For books 1–9, the padding is not optional — it's `01.jpg`, not
@@ -60,6 +67,15 @@ artwork is a PNG, convert it first.
 a novella past 10 MB, which is a slow download on a phone. Claude has
 a script (`slimpdf.py`) that re-encodes the embedded images and
 usually brings a file down by 80–90% with no visible loss.
+
+**`library/covers/41.webp` — the flat front.** The Roya Library lays
+the covers out as book faces inside a printed board frame, so it wants
+the artwork flat and on its own: 560 × 840, webp, about 70 KB. It is
+the same picture as `covers/41.jpg`, without the shelf render around
+it. If it is missing the section falls back to `covers/41.jpg` rather
+than showing a hole, so a forgotten file is a book that looks slightly
+out of place rather than a broken page — but the flat art is what the
+frame was drawn for, and it is worth having.
 
 **A third file, optional: `covers/pairs/NN.jpg`.** Same zero-padded
 naming, same `.jpg` requirement — a wider render pairing the front and
@@ -332,6 +348,7 @@ read/41.json        the reading text, built in step 5
 pdfs/41.pdf         the new file only
 covers/41.jpg       the new file only
 covers/pairs/41.jpg the new file only, if a pair render exists
+library/covers/41.webp   the flat front, the new file only
 ```
 
 **Never delete `CNAME`.** It's a one-line file at the root holding the
@@ -350,6 +367,11 @@ GitHub Pages republishes within a minute or two of the commit landing.
 
 ## Check it worked
 
+- **In the Roya Library** (the nav item that replaced All Covers): the
+  book is in the grid with its flat cover, the rail says one more
+  story than it did, the heading says "the complete collection / N
+  stories", and opening the card shows the record with its synopsis,
+  its three dials and Door / Room / Key
 - The book appears at the bottom of the list, with its reading time
 - If it joined a series, its row names the series and its place in it,
   and the count is right for every other book in that series too
@@ -362,7 +384,7 @@ GitHub Pages republishes within a minute or two of the commit landing.
 - Opening the shared link lands on the book, already open
 - The Door filter still lists four doors, not five
 - If a pair render was uploaded, the zoom button shows it, not the
-  plain cover — check both the shelf and the All Covers grid
+  plain cover — check both the shelf and the Roya Library
 
 ---
 

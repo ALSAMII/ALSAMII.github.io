@@ -11,7 +11,7 @@ in the header.
 Each book can be read in the browser — the **Read** button opens it as
 flowing text that sets its own size and remembers where you stopped —
 or downloaded as the typeset PDF. A small magnifying-glass button on
-every cover — on the shelf and in the All Covers grid — opens that
+every cover — on the shelf and in the Roya Library — opens that
 cover full-size without leaving the page, showing a paired front-and-back
 render for books that have one.
 
@@ -48,6 +48,9 @@ covers/               a cover per novella, numbered to match: 01.jpg ...
 covers/pairs/         optional: a front-and-back zoom render per novella,
                       same numbering — falls back to covers/ when absent
 assets/               backdrops, series banners, the Roya mark, icons, audio
+library/              the Roya Library — the section that replaced All Covers.
+                      Two built files and its own pictures; see CUSTOMISING.md
+library/covers/       the flat front art, 560x840 webp, numbered to match
 feed.xml              generated — don't edit by hand
 sitemap.xml           generated — don't edit by hand
 CNAME                 the custom domain. NEVER DELETE THIS FILE
@@ -135,11 +138,27 @@ isn't set for reading here yet and points at the PDF.
 
 ## The shelf count
 
-The label above the order menu — "All 89 stories · order" — is written
-by `script.js` from the length of `STORIES`, so it counts itself and
-never needs editing. The number typed into `index.html` is only what
-shows for the half-second before the script runs; it is worth keeping
-roughly right, but nothing depends on it.
+**Nothing on the site needs the count typed in.** Add a book and every
+figure follows, in one of two ways:
+
+*Counted as the page runs* — from the length of `STORIES`, so they can
+never disagree with the catalogue: the label above the order menu ("All
+94 stories · order"), the hero's "94 Short Novellas", the shelf's
+"showing N of N", the order menu's own gloss, and in the Roya Library
+the rail's `94 STORIES`, the collection heading, the footer and the
+About line.
+
+*Rewritten by `node build-feeds.js`* — the six places a crawler has to
+be able to read without running JavaScript: the `<title>` and the five
+`description` / `og:` / `twitter:` tags in `index.html`. The script
+spells the number out ("Ninety-five") and matches on the phrase around
+it rather than on the previous number, so it keeps working whatever the
+count was last time, including when it goes down. It prints how many
+places it changed; if that ever says 0, the phrases were reworded and
+`PATTERNS` at the foot of `build-feeds.js` needs adjusting.
+
+So the whole of it is: add the book, run the three build commands, and
+every count on the site is right.
 
 ## Cache-busting
 
