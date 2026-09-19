@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 63 · last updated 2026-09-18 21:14 PDT
+   Version 64 · last updated 2026-09-18 21:24 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1077,11 +1077,11 @@
 /* 1700, not 1500: the field beside the crowd is only about half the plate's
    width, so below this the banded arrangement above sets the synopsis larger
    than the plate ever could. */
-@media (min-width:1800px){
+@media (min-width:1900px){
   #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
     background:var(--plate) center center/cover no-repeat;}
   #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
-    left:43.5%; right:2.5%; top:32.5%; bottom:1.5%;
+    left:43.5%; right:2.5%; top:30.6%; bottom:4%;
     padding:0; gap:1.02cqw; justify-content:flex-start}
   #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem; line-height:1.5}
   #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
@@ -1097,7 +1097,7 @@
    above 1440. So between the two the right-hand page is taken on its own and
    the panel is built the way The Unsaid's is, with the page setting the title
    the left-hand page would otherwise have carried. */
-@media (min-width:1150px) and (max-width:1799.98px){
+@media (min-width:1150px) and (max-width:1899.98px){
   #royaLibrary .ab-feat--spread .pl{display:grid; grid-template-columns:46% 1fr;
     grid-template-areas:"art words" "art foot"; align-items:start;
     background:linear-gradient(105deg, rgba(9,8,6,.62), rgba(14,11,8,.5))}
@@ -1130,13 +1130,13 @@
    is far larger — the same number of pixels then looks bigger and fills more
    of the page. Sizes tuned against that fallback come out too small on the
    live site. Always render with the real face before trusting a measurement. */
-/* ══ 1800px and up: the words go onto the page ══
+/* ══ 1900px and up: the words go onto the page ══
    The threshold is the body type, not the picture. Every size in here is a
    share of the book's own width, and the book is about 400px narrower than the
    window: at 1440 that puts the synopsis at 15px, where the banded
    arrangement above sets the same words at 20. The book page only earns its
    place once the window is wide enough to set it properly. */
-@media (min-width:1800px){
+@media (min-width:1900px){
   #royaLibrary .ab-feat--spread .pl{
     container-type:inline-size; border:0; background:none;
     aspect-ratio:var(--ratio); position:relative;}
@@ -1222,7 +1222,7 @@
 
 /* the Delgoshā beside its theatre: the column beside the picture takes paper
    too, and its title with it */
-@media (min-width:1150px) and (max-width:1799.98px){
+@media (min-width:1150px) and (max-width:1899.98px){
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{
     background-image:linear-gradient(105deg, rgba(255,252,243,.55), rgba(255,252,243,.3))}
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t{color:#8a6420}
@@ -1230,7 +1230,7 @@
 }
 
 /* ── and where the words stand on the picture, the night values hold ── */
-@media (min-width:1800px){
+@media (min-width:1900px){
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:none; border:0}
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#e0d6c3}
@@ -1240,7 +1240,7 @@
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.6);
     color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 }
-@media (min-width:1800px){
+@media (min-width:1900px){
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl{background-color:transparent}
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q{color:#ecdfc7}
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p,
