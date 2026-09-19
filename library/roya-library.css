@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 66 · last updated 2026-09-18 21:42 PDT
+   Version 67 · last updated 2026-09-18 22:12 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1078,11 +1078,40 @@
      field exactly, and at these widths it does not. The pull is measured from
      the picture's foot — the plate sets at 40% of the panel's width, and the
      words begin about three tenths of the way down it. */
-  #royaLibrary .ab-feat--split .pl-words{margin:-28.2% 3.5% 0 47.5%;
-    padding:0; gap:1.1rem}
-  #royaLibrary .ab-feat--split .pl-way{padding:1.4rem 2rem 2.2rem 47.5%; gap:1rem}
+  /* Everything — the line, the synopsis, the label and the way in — stands
+     inside the picture here, which means the type cannot be a fixed size: the
+     field is 40% of the panel's width and about two thirds of that in usable
+     height, so what fits is a share of the width, not a number of pixels.
+     1.26cqw is the size at which the whole block lands just inside the foot of
+     the picture; the clamp stops it going over the 20px the rest of the page
+     uses on a very wide screen, or under 13px on a narrow one. */
+  /* 1150 to 1440: the picture's field cannot hold the whole block at a size
+     anyone would read — it would have to fall under thirteen pixels — so here
+     the words still sit under the picture, at the page's own size. */
+  #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem .8rem; gap:1.15rem}
+  #royaLibrary .ab-feat--split .pl-way{padding:0 2rem 2.2rem; gap:1rem}
   #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem}
   #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
+}
+
+/* ══ 1440 to 1900: the whole block stands inside the picture ══
+   Everything — the line, the synopsis, the label and the way in — is in the
+   plate's own dark field, so the type cannot be a fixed size: the field is 40%
+   of the panel's width and about two thirds of that in usable height, so what
+   fits is a share of the width, not a number of pixels. 1.26cqw is the size at
+   which the block lands just inside the foot of the picture; the clamp stops
+   it going over the 20px the rest of the page uses on a wide screen. */
+@media (min-width:1440px){
+  #royaLibrary .ab-feat--split .pl-words{margin:-28.2% 3.5% 0 47.5%;
+    padding:0; gap:.9cqw}
+  #royaLibrary .ab-feat--split .pl-way{margin:.9cqw 3.5% 0 47.5%;
+    padding:0 0 2rem; gap:.8cqw}
+  #royaLibrary .ab-feat--split .pl-q{font-size:clamp(.9375rem, 1.36cqw, 1.35rem);
+    line-height:1.45}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:clamp(.875rem, 1.26cqw, 1.25rem);
+    line-height:1.55}
+  #royaLibrary .ab-feat--split .pl-body{padding-top:.9cqw}
+  #royaLibrary .ab-feat--split .ft-eyebrow{padding-top:.9cqw}
 }
 
 /* ══ 1500 and up: the words stand in the plate's own field ══
