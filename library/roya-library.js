@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 56 · last updated 2026-09-18 19:10 PDT
+   Version 59 · last updated 2026-09-18 19:46 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -625,7 +625,7 @@ const SERIESFEAT = [
          "Together they build Romanu: a name arrived at by accident, attached to nobody, given away free. Within a decade it is the most widely read unsigned work in the language, and a man in Toronto has been claiming to be it for five years. She fills arenas in America. Manu is still in the chair, and the caster is still broken, and he has repaired it four times."]
       ] } },
   { key:"From the Unsaid", en:"The Unsaid", fa:"\u0646\u0627\u06af\u0641\u062a\u0647",
-    art:"assets/series-unsaid-wide-2.webp", artTall:"assets/series-unsaid-tall-2.webp", start:89,
+    art:"assets/series-unsaid-wide-3.webp", artTall:"assets/series-unsaid-tall-3.webp", start:89,
     startFa:"\u0633\u0647 \u063a\u0644\u0637\u060c \u06cc\u06a9 \u062f\u0631\u0633\u062a", vol:"Book Five",
     books:[78,80,83,86,89,92,94],
     /* the picture stands on the left and the words on the right, the way the

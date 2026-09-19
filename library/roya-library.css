@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 56 · last updated 2026-09-18 19:10 PDT
+   Version 59 · last updated 2026-09-18 19:46 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1126,11 +1126,11 @@
     background-position:center; border:1px solid rgba(199,148,61,.35)}
   #royaLibrary .ab-feat--spread .pl-words,
   #royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.34cqw; line-height:1.36}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.6cqw; line-height:1.4}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.31cqw; line-height:1.48}
-  #royaLibrary .ab-feat--spread .pl-cap{font-size:1.14cqw}
-  #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.85cqw; gap:1cqw}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.38cqw; line-height:1.36}
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.62cqw; line-height:1.38}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.35cqw; line-height:1.46}
+  #royaLibrary .ab-feat--spread .pl-cap{font-size:1.3cqw}
+  #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.98cqw; gap:1cqw}
   #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
 
   /* the left page, then the line and the way in under the theatre */
@@ -1140,6 +1140,10 @@
   #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:1.6cqw; flex:1 1 auto;
     min-height:0}
   #royaLibrary .ab-feat--spread .pl-col{flex:1 1 0; min-width:0; gap:1cqw}
+  /* the first column runs short and the second runs long, so the line the
+     series is built on is set to the foot of the page rather than left
+     hanging under the paragraph with the page empty beneath it */
+  #royaLibrary .ab-feat--spread .pl-col:first-child .pl-q{margin-top:auto}
   #royaLibrary .ab-feat--spread .pl-col + .pl-col{padding-left:1.6cqw;
     border-left:1px solid rgba(199,148,61,.32)}
   #royaLibrary .ab-feat--spread .pl-q{padding:1.1cqw 0;
@@ -1157,35 +1161,82 @@
   #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
 }
 
-/* ── on paper ── */
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:rgba(255,252,243,.4);
-  border-color:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl{border-color:rgba(96,76,42,.5)}
+/* ── on paper ──
+   Where the words stand decides the ink, and that changes with the width.
+
+   Wherever the words sit BESIDE or BELOW the picture — every handset, and the
+   banded arrangements — the ground under them is paper and the ink is ink. The
+   picture keeps its own dark ground and its own gold title; the paper starts
+   where the picture stops.
+
+   Wherever the words stand ON the picture — The Unsaid's field from 1700 up,
+   the Delgoshā's page from 1440 up — they keep the dark theme's values,
+   because ink on a night plate cannot be read at all.
+
+   One rule throughout: the plate is carried in a custom property on the same
+   element, so this theme only ever touches `background-color`, never the
+   `background` shorthand, which would wipe the picture. */
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl,
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{
+  background-color:#efe4ca; border-color:rgba(96,76,42,.5)}
 :root[data-lt="light"] #royaLibrary .pl-art{border-color:rgba(96,76,42,.4)}
+
+/* the title is set into the picture, so it stays gold there */
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t{color:#e6cd95}
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t .ft-fa{color:#dcc28c}
+/* and everything under the picture takes the page */
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q,
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-q{color:#4a3a1d}
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p,
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-p,
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#2e2618}
+:root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow,
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-eyebrow{color:#8a6420}
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-cap,
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-cap,
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-folio{color:#6d5c3e}
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body,
+:root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{
+  border-top-color:rgba(140,42,34,.45)}
 :root[data-lt="light"] #royaLibrary .ft-cta{background:rgba(99,29,25,.1); color:#631d19}
 :root[data-lt="light"] #royaLibrary .ft-cta:hover{background:var(--oxblood); color:#f2e7cd}
-/* Both plates are dark pictures with gold type of their own. Where the words
-   stand ON one — the Unsaid's right-hand field, the Delgosh\u0101's left-hand page —
-   they keep the dark theme's colours, because the ink values would vanish.
-   Only the boxes outside a picture take paper. */
-@media (min-width:1150px){
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t{color:#e3c88e}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t .ft-fa{color:#d8bd85}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q{color:#ece1cc}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p{color:#ddd2bf}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{color:#c8ae78}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-cta{background:rgba(99,29,25,.55);
-    color:#e3c88e; border-color:rgba(199,148,61,.6)}
+
+/* the Delgoshā beside its theatre: the column beside the picture takes paper
+   too, and its title with it */
+@media (min-width:1150px) and (max-width:89.99rem){
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{
+    background-image:linear-gradient(105deg, rgba(255,252,243,.55), rgba(255,252,243,.3))}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t{color:#8a6420}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t .ft-fa{color:#9b7430}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-q{
+    border-top-color:rgba(96,76,42,.45); border-bottom-color:rgba(96,76,42,.45)}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-cap{
+    border-top-color:rgba(96,76,42,.4)}
 }
+
+/* ── and where the words stand on the picture, the night values hold ── */
 @media (min-width:1440px){
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:none; border:0}
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#ddd2bf}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-q{color:#e3c88e}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#e0d6c3}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-q{color:#ecdfc7}
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-cap,
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-folio{color:#c3b699}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.55);
-    color:#e3c88e; border-color:rgba(199,148,61,.6)}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-folio{color:#c8bb9e}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.6);
+    color:#e9d3a2; border-color:rgba(199,148,61,.62)}
+}
+@media (min-width:1700px){
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl{background-color:transparent}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q{color:#ecdfc7}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p,
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-p{color:#e0d6c3}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{color:#cdb37d}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body,
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{
+    border-top-color:rgba(199,148,61,.3)}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-cta{background:rgba(99,29,25,.6);
+    color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 }
 
 #royaLibrary .ab-over{position:relative; padding:2.4rem 2rem 2rem; margin:0 -.8rem 1.2rem;
