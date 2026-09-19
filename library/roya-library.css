@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 50 · last updated 2026-09-18 17:55 PDT
+   Version 54 · last updated 2026-09-18 18:38 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -247,7 +247,13 @@
      letter is not sitting against the pill. Below 980px the rail stops being
      a column at all, so the figure only ever applies where there is room. */
   display:grid; grid-template-columns:21rem minmax(0,1fr);}
-#royaLibrary .lib::before{content:""; position:absolute; inset:0; pointer-events:none; z-index:5;
+/* The vignette belongs to the archive, not to the rail: run over both, its
+   left edge darkened the series list from behind and the names read through a
+   wash. It now begins where the rail ends, and the rail's own rule is the line
+   between the two. --vig-l is 0 wherever the rail is not a column. */
+#royaLibrary .lib{--vig-l:21rem}
+#royaLibrary .lib::before{content:""; position:absolute; inset:0 0 0 var(--vig-l);
+  pointer-events:none; z-index:5;
   box-shadow:inset 0 0 40px 10px rgba(0,0,0,.85), inset 0 0 150px 46px rgba(0,0,0,.6);}
 /* fine press lines — the spec's print-grain layer, without mix-blend-mode
    (a blended overlay here painted whole subtrees black in Chromium) */
@@ -315,8 +321,8 @@
   width:1.3rem; height:1.3rem; display:grid; place-items:center;
   font-size:.75rem; color:var(--paper-dust);}
 #royaLibrary .side-clear:hover{color:var(--bone)}
-#royaLibrary .side-lab{font-family:var(--cond); font-weight:600; font-size:.625rem; letter-spacing:.24em;
-  text-transform:uppercase; color:var(--t-quiet);}
+#royaLibrary .side-lab{font-family:var(--book); font-weight:500; font-size:.8125rem;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--t-quiet);}
 #royaLibrary .side-list{display:flex; flex-direction:column; gap:.06rem; max-height:21rem;
            overflow-y:auto; scrollbar-width:thin; padding-bottom:.3rem}
 #royaLibrary .side-list[data-more="1"]{-webkit-mask-image:linear-gradient(#000 calc(100% - 1.1rem), transparent);
@@ -335,15 +341,21 @@
 #royaLibrary .side-list{gap:.12rem}
 #royaLibrary .side-list button{flex:0 0 auto; display:grid;
   grid-template-columns:minmax(0,1fr) auto; align-items:center; column-gap:.6rem;
-  width:100%; text-align:left; line-height:1.25;
-  font-family:var(--slab); font-weight:600; font-size:.9375rem; letter-spacing:.012em;
-  text-transform:uppercase; color:var(--t-quiet);
-  padding:.28rem .55rem; margin-left:-.55rem;
+  width:100%; text-align:left; line-height:1.3;
+  /* the book face, set in small capitals rather than driven to uppercase: the
+     names are title case in the data, so the capital each one already has
+     stands full height and the rest come up small, which is what gives the
+     reference its evenness. Light, open, and quiet at rest. */
+  font-family:var(--book); font-weight:400; font-size:1.06rem; letter-spacing:.075em;
+  text-transform:none; font-variant-caps:small-caps;
+  font-feature-settings:"smcp" 1, "kern" 1, "liga" 1;
+  color:var(--t-quiet);
+  padding:.3rem .55rem; margin-left:-.55rem;
   transition:color .16s, background-color .16s;}
 #royaLibrary .side-nm{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 /* the figure: tabular, so fourteen rows of numbers line up down the rail */
-#royaLibrary .side-ct{flex:0 0 auto; font-family:var(--cond); font-weight:500; font-size:.625rem;
-  letter-spacing:.06em; font-variant-numeric:tabular-nums; color:var(--ochre-muted);
+#royaLibrary .side-ct{flex:0 0 auto; font-family:var(--book); font-weight:500; font-size:.72rem;
+  letter-spacing:.04em; font-variant-numeric:tabular-nums; color:var(--ochre-muted);
   padding:.1rem .42rem; border:1px solid rgba(199,148,61,.34); border-radius:999px;
   line-height:1.4;}
 #royaLibrary .side-list button:hover{color:var(--bone)}
@@ -899,14 +911,14 @@
 #royaLibrary .pl-t .ft-fa{font-family:var(--nast); font-weight:500; font-size:1rem;
   letter-spacing:0; color:var(--gold-word)}
 #royaLibrary .pl-q{margin:0; font-family:var(--book); font-weight:400; font-style:italic;
-  font-size:1.2rem; line-height:1.4; color:var(--bone); text-wrap:balance}
-#royaLibrary .pl-lede{margin:0; font-family:var(--book); font-size:1.05rem; line-height:1.45;
+  font-size:1.34rem; line-height:1.4; color:var(--bone); text-wrap:balance}
+#royaLibrary .pl-lede{margin:0; font-family:var(--book); font-size:1.18rem; line-height:1.45;
   color:var(--t-copy)}
 #royaLibrary .pl-body, #royaLibrary .pl-cols{display:flex; flex-direction:column; gap:.7rem}
 #royaLibrary .pl-body p, #royaLibrary .pl-p{margin:0; font-family:var(--book); font-weight:400;
-  font-size:.9375rem; line-height:1.55; color:var(--t-copy)}
+  font-size:1.0625rem; line-height:1.58; color:var(--t-copy)}
 #royaLibrary .pl-cols .pl-col{display:flex; flex-direction:column; gap:.7rem}
-#royaLibrary .pl-cap{margin:0; font-family:var(--book); font-style:italic; font-size:.875rem;
+#royaLibrary .pl-cap{margin:0; font-family:var(--book); font-style:italic; font-size:.9375rem;
   color:var(--t-tag)}
 #royaLibrary .ft-eyebrow{margin:0; font-family:var(--cond); font-weight:600; font-size:.625rem;
   letter-spacing:.3em; text-transform:uppercase; color:var(--t-pub);}
@@ -940,12 +952,25 @@
    Both are faded off at all four edges so the picture sits on the page rather
    than being pasted onto it. */
 #royaLibrary .ab-feat--split .pl{position:relative; overflow:hidden;
-  container-type:inline-size; border:0;
-  /* the colour the upright plate ends in, so the field below it continues */
-  background:#0d0b09 var(--plate-tall, var(--plate)) top center/100% auto no-repeat;
-  /* down to just under the title the plate carries: the picture sets at
-     1.777x its width, and the title's foot is at 71% of that */
-  padding-top:130%;}
+  container-type:inline-size; border:0; background:#0d0b09;}
+/* On a handset the title stands at the top, over the picture's own ground, the
+   way the Delgoshā's does — the upright plate is cut above the title it used
+   to carry, so the page sets it here and the picture follows underneath. */
+/* The title stands ON the picture's top rather than above it, set far enough
+   down to clear the edge, with a dark wash behind it that fades out into the
+   sky so the gold has something to sit on and the picture is not cut by a
+   hard band. */
+#royaLibrary .ab-feat--split .pl-t{display:flex; position:absolute; z-index:2;
+  left:0; right:0; top:0; align-items:center; text-align:center;
+  padding:1.9rem 1.4rem 2.6rem; gap:.3rem;
+  background:linear-gradient(to bottom,
+    rgba(7,6,5,.94) 0%, rgba(7,6,5,.9) 46%, rgba(7,6,5,.62) 76%,
+    rgba(7,6,5,.22) 92%, rgba(7,6,5,0) 100%);}
+#royaLibrary .ab-feat--split .pl-t::after{display:none}
+#royaLibrary .ab-feat--split .pl-t .ft-en{font-size:2rem; letter-spacing:.05em}
+#royaLibrary .ab-feat--split .pl-t .ft-fa{font-size:1.05rem}
+#royaLibrary .ab-feat--split .pl-art{display:block; aspect-ratio:941/1056;
+  background:var(--plate-tall, var(--plate)) top center/cover no-repeat; border:0}
 #royaLibrary .ab-feat--split .pl,
 #royaLibrary .ab-feat--spread .pl-art{
   -webkit-mask-image:
@@ -955,9 +980,6 @@
     linear-gradient(to right, transparent 0, #000 2.6rem, #000 calc(100% - 2.6rem), transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
-#royaLibrary .ab-feat--split .pl-art{display:none}
-/* the plate sets its own title in both shapes */
-#royaLibrary .ab-feat--split .pl-t{display:none}
 #royaLibrary .ab-feat--split .pl-words{padding:1.6rem 1.5rem 2rem; gap:1rem}
 
 /* the book is never cropped: its title is on the page the words would take.
@@ -1020,9 +1042,12 @@
 @media (min-width:1150px){
   #royaLibrary .ab-feat--split .pl{padding-top:40%;
     background:#0d0b09 var(--plate) top center/100% auto no-repeat;}
+  /* the wide plate carries the title itself */
+  #royaLibrary .ab-feat--split .pl-t{display:none}
+  #royaLibrary .ab-feat--split .pl-art{display:none}
   #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem 2.2rem; gap:1.15rem}
-  #royaLibrary .ab-feat--split .pl-q{font-size:1.32rem}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:1rem; line-height:1.55}
+  #royaLibrary .ab-feat--split .pl-q{font-size:1.46rem}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:1.125rem; line-height:1.58}
 }
 
 /* ══ 1500 and up: the words stand in the plate's own field ══
@@ -1034,11 +1059,11 @@
   #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
     background:var(--plate) center center/cover no-repeat;}
   #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
-    left:55%; right:4.5%; top:33%; bottom:6%;
-    padding:0; gap:1.3cqw; justify-content:flex-start}
-  #royaLibrary .ab-feat--split .pl-q{font-size:max(1rem, 1.55cqw); line-height:1.38}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:max(.8125rem, 1.15cqw);
-    line-height:1.55}
+    left:49%; right:3.5%; top:29.5%; bottom:3%;
+    padding:0; gap:1.02cqw; justify-content:flex-start}
+  #royaLibrary .ab-feat--split .pl-q{font-size:max(1rem, 1.52cqw); line-height:1.34}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:max(.875rem, 1.18cqw);
+    line-height:1.54}
   #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
   #royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
     font-size:max(.625rem, .75cqw); gap:1cqw}
@@ -1070,9 +1095,9 @@
     padding-bottom:.9rem; overflow:visible; clip-path:none; white-space:normal}
   #royaLibrary .ab-feat--spread .pl-t .ft-en{font-size:2.35rem}
   #royaLibrary .ab-feat--spread .pl-t .ft-fa{font-size:1.1rem}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.15rem; color:var(--bone)}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1rem; line-height:1.55}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.28rem; width:100%;
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.28rem; color:var(--bone)}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.125rem; line-height:1.58}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.4rem; width:100%;
     padding:1.05rem 0; border-top:1px solid rgba(199,148,61,.45);
     border-bottom:1px solid rgba(199,148,61,.45); color:var(--gold-lt)}
   #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-top:1.1rem;
@@ -1092,15 +1117,15 @@
     background-position:center; border:1px solid rgba(199,148,61,.35)}
   #royaLibrary .ab-feat--spread .pl-words,
   #royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.22cqw; line-height:1.4}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.45cqw; line-height:1.45}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.13cqw; line-height:1.5}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.28cqw; line-height:1.4}
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.5cqw; line-height:1.45}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.22cqw; line-height:1.5}
   #royaLibrary .ab-feat--spread .pl-cap{font-size:1cqw}
   #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.85cqw; gap:1cqw}
   #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
 
   /* the left page, then the line and the way in under the theatre */
-  #royaLibrary .ab-feat--spread .pl-words{left:7%; width:37%; top:18.5%; bottom:11%;
+  #royaLibrary .ab-feat--spread .pl-words{left:5.5%; width:41%; top:17.5%; bottom:10%;
     display:flex; gap:1.4cqw}
   #royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
   #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:1.6cqw; flex:1 1 auto;
@@ -1119,7 +1144,7 @@
   #royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:5.2%;
     font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
     border-top:1px solid rgba(199,148,61,.26)}
-  #royaLibrary .ab-feat--spread .pl-folio--l{left:7%; width:37%}
+  #royaLibrary .ab-feat--spread .pl-folio--l{left:5.5%; width:41%}
   #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
 }
 
@@ -1533,7 +1558,7 @@
   #royaLibrary .abt-rec{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:980px){
-  #royaLibrary .lib{grid-template-columns:minmax(0,1fr)}
+  #royaLibrary .lib{grid-template-columns:minmax(0,1fr); --vig-l:0px}
   #royaLibrary .side{min-height:0; border-right:0; border-bottom:1px solid rgba(233,223,201,.28)}
   #royaLibrary .side-strap{display:none}
   #royaLibrary .grid{grid-template-columns:minmax(0,1fr)}

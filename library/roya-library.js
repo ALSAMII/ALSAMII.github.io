@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 50 · last updated 2026-09-18 17:55 PDT
+   Version 54 · last updated 2026-09-18 18:38 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -706,8 +706,8 @@ function featPanel(f, sb){
   if (fe.kind === "split") return `
     <section class="ab-feat ab-feat--split" style="${style}">
       <div class="pl">
-        <div class="pl-art" role="img" aria-label="${esc(f.en)}"></div>
         ${title}
+        <div class="pl-art" role="img" aria-label="${esc(f.en)}"></div>
         <div class="pl-words">
           <p class="pl-q">${esc(fe.quote)}</p>
           <div class="pl-body">${paras(fe.body)}</div>
