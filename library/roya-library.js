@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 69 · last updated 2026-09-19 06:02 PDT
+   Version 76 · last updated 2026-09-19 14:06 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -608,21 +608,21 @@ const SERIESFEAT = [
      prose set to the design ChewZ drew for each series. Nothing here is
      written — every line is the series' own. */
   { key:"From the Delgosh\u0101", en:"The Delgosh\u0101", fa:"\u062f\u0644\u06af\u0634\u0627",
-    art:"assets/series-delgosha-plate.webp", artTall:"assets/series-delgosha-tall.webp", start:75,
+    art:"assets/series-delgosha-cover.webp", artTall:"assets/series-delgosha-haze.webp", start:75,
     startFa:"\u0686\u0634\u0645\u200c\u0627\u0646\u062f\u0627\u0632 \u06f1\u06f4\u06f0\u06f4", vol:"Book Three",
     books:[68,70,75,77,79,82,87,91],
-    /* an open book: the words set on the left-hand page, the theatre keeps the
-       right, and the way in sits under it. The plate carries its own title. */
-    feat:{ kind:"spread", cta:"Start the series here", ratio:"1536/1024", folio:["68","69"],
-      lede:"Seven notebooks kept by the most widely read unpublished writer in the Persian language.",
-      caption:"A theatre for seven days. A thousand afterwards.",
-      quote:"In this country a form takes nine months. A baby also takes nine months. One of them arrives. Somewhere in Tehran a man writes four hundred thousand of these, sells them for almost nothing, and has never once been in the room when one landed.",
-      /* two columns; the line the series is built on falls between the first
-         column's paragraphs, set between its two rules */
-      cols:[
-        ["His name is Manuchehr Delgosh\u0101 \u2014 Manu \u2014 and he supplies forty basements across the city with paper. No byline, no fee, no face. Three men on television are wealthy off sentences he built in a chair at three in the morning, and one of them is genuinely bad at it. He will tell you the arrangement is generosity. It is not. It is that a sentence with no sender cannot be dragged into a room and asked who sent it."],
-        ["Then Roshanak Azimi turns up \u2014 twenty-two, from Javadiyeh, ninth out of six hundred thousand in the national examination, and running a parts operation that keeps four university departments working, which she does not mention on her CV. Ordered to give the valedictory address at Sharif and unable to write it, she hires the only man in Iran who can \u2014 and is on a plane by Tuesday.",
-         "Together they build Romanu: a name arrived at by accident, attached to nobody, given away free. Within a decade it is the most widely read unsigned work in the language, and a man in Toronto has been claiming to be it for five years. She fills arenas in America. Manu is still in the chair, and the caster is still broken, and he has repaired it four times."]
+    /* the theatre, with the words standing in the dark half of the plate.
+       The synopsis here is a short cut of the series' own prose: the field is
+       the picture's, not the page's, and only about four lines of it can be
+       read at the size the rest of the section uses. */
+    feat:{ kind:"stage", cta:"Start the series here", ratio:"920/1380",
+      strap:"Stories live longer underground",
+      railL:"A theatre for seven days", railR:"Stories live longer under\u00ADground",
+      eyebrow:"A theatre for seven days. A thousand afterwards.",
+      quote:"One of them cannot be seen. The other fills arenas. They are writing the same words.",
+      body:[
+        "Manuchehr Delgosh\u0101 \u2014 Manu \u2014 is the most famous underground comedian in the country, and nobody has seen his face. Forty basements a week, no byline, no fee: an empire built from a chair at three in the morning.",
+        "Then Roshanak Azimi turns up \u2014 street-smart, twenty-two, single digits out of six hundred thousand in the national examination. Together they build Romanu: attached to nobody, given away free, and within a decade the most widely read unsigned work in the language."
       ] } },
   { key:"From the Unsaid", en:"The Unsaid", fa:"\u0646\u0627\u06af\u0641\u062a\u0647",
     art:"assets/series-unsaid-wide-3.webp", artTall:"assets/series-unsaid-tall-3.webp", start:89,
@@ -701,6 +701,53 @@ function featPanel(f, sb){
   const style = `--plate:url('${basePath()}${f.art}'); --ratio:${fe.ratio}`
     + (f.artTall ? `; --plate-tall:url('${basePath()}${f.artTall}')` : "");
   const paras = a => a.map(x=>`<p class="pl-p">${esc(x)}</p>`).join("");
+
+  /* ── the picture beside the words ──
+     Two series are built this way now. The Unsaid takes the "split": a 2.5:1
+     plate whose dark field sits to the right of the crowd. The Delgosh\u0101 takes
+     the "stage": a 3:1 plate of the theatre with the whole right half given
+     over to the words, and an upright plate for the handset that keeps its
+     dark third at the top. Same markup, same four parts, different geometry —
+     so they share this branch and part company in the stylesheet. */
+  /* ── the Delgosh\u0101: the book itself, and the words beside it ──
+     The series is shown as the object a reader would pick up — the theatre
+     printed on a worn board cover, its title set into the dark band at the
+     head of the picture where the painter left room for it. The panel's ground
+     is the same painting thrown far out of focus, so the cover stands in its
+     own light rather than on a flat black, and the two rails carry the series'
+     line up the sides of it.
+
+     On a page the cover keeps the left and the words take the right; on a
+     handset the cover leads and the words fall underneath. Same parts, same
+     order, turned through ninety degrees. */
+  if (fe.kind === "stage") return `
+    <section class="ab-feat ab-feat--stage" style="${style}">
+      <div class="pl">
+        <div class="pl-haze" aria-hidden="true"></div>
+        <div class="pl-stack">
+          <div class="pl-shelf">
+            ${fe.railL ? `<p class="pl-rail pl-rail--l" aria-hidden="true">${esc(fe.railL)}</p>` : ""}
+            <div class="pl-cover" role="img" aria-label="${esc(f.en)} \u2014 cover">
+              <span class="cv-t" aria-hidden="true"><span class="cv-the">The</span><span class="cv-en">${esc(f.en.replace(/^The\s+/,""))}</span>${f.fa ? `<span class="cv-fa" lang="fa" dir="rtl">${esc(f.fa)}</span>` : ""}</span>
+              ${fe.strap ? `<span class="cv-foot cv-foot--strap" aria-hidden="true">${esc(fe.strap)}</span>` : ""}
+              ${fe.eyebrow ? `<span class="cv-foot cv-foot--line" aria-hidden="true">${esc(fe.eyebrow)}</span>` : ""}
+            </div>
+            ${fe.railR ? `<p class="pl-rail pl-rail--r" aria-hidden="true">${esc(fe.railR)}</p>` : ""}
+          </div>
+          <div class="pl-side">
+            ${title}
+            <div class="pl-words">
+              <p class="pl-q">${esc(fe.quote)}</p>
+              <div class="pl-body">${paras(fe.body)}</div>
+            </div>
+            <div class="pl-way">
+              ${fe.eyebrow ? `<p class="ft-eyebrow">${esc(fe.eyebrow)}</p>` : ""}
+              ${cta}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>`;
 
   /* ── the picture beside the words ── */
   if (fe.kind === "split") return `
