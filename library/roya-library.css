@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 45 · last updated 2026-09-18 14:44 PDT
+   Version 50 · last updated 2026-09-18 17:55 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -867,6 +867,293 @@
    side and is masked at those four edges, so it has no edge to see: the
    painting and the veil that dims it fade out together into whatever the page
    is carrying there. The words sit above it, unchanged. */
+/* ══════════════ the two series plates ══════════════
+   Each series was drawn as a finished plate and each is set a different way,
+   because the pictures are different objects.
+
+   "split"  — The Unsaid. A tall crop of the wide plate stands on the left,
+              holding the face and the crowd; the words keep the right. The
+              plate's own title sits out past two-thirds of the picture and is
+              cropped away, so the page sets the title here.
+   "spread" — The Delgosh\u0101. A photograph of an open book. The words are laid
+              into the left-hand page and the theatre keeps the right, so the
+              plate is never cropped and its own title serves.
+
+   Below the widths each needs, both fold: the picture becomes a banner and the
+   words fall underneath it at real sizes. A spread at phone width would set
+   its body at about six pixels. */
+#royaLibrary .ab-feat--split, #royaLibrary .ab-feat--spread{margin:0 -.8rem 1.6rem;
+  text-align:left}
+#royaLibrary .ab-feat--split *, #royaLibrary .ab-feat--spread *{text-align:inherit}
+#royaLibrary .pl{position:relative}
+#royaLibrary .pl-art{background-image:var(--plate); background-size:cover;
+  background-repeat:no-repeat; border:1px solid rgba(199,148,61,.4)}
+
+/* ── the type, at the sizes the folded arrangement uses ── */
+#royaLibrary .pl-t{margin:0; font-family:var(--book); font-weight:400; line-height:1.05;
+  color:var(--gold-lt); display:flex; flex-direction:column; gap:.2rem;
+  padding-bottom:.9rem; position:relative}
+#royaLibrary .pl-t::after{content:""; position:absolute; left:0; bottom:0;
+  width:38%; max-width:11rem; height:1px; background:rgba(199,148,61,.5)}
+#royaLibrary .pl-t .ft-en{font-size:1.9rem; letter-spacing:.02em; text-transform:uppercase}
+#royaLibrary .pl-t .ft-fa{font-family:var(--nast); font-weight:500; font-size:1rem;
+  letter-spacing:0; color:var(--gold-word)}
+#royaLibrary .pl-q{margin:0; font-family:var(--book); font-weight:400; font-style:italic;
+  font-size:1.2rem; line-height:1.4; color:var(--bone); text-wrap:balance}
+#royaLibrary .pl-lede{margin:0; font-family:var(--book); font-size:1.05rem; line-height:1.45;
+  color:var(--t-copy)}
+#royaLibrary .pl-body, #royaLibrary .pl-cols{display:flex; flex-direction:column; gap:.7rem}
+#royaLibrary .pl-body p, #royaLibrary .pl-p{margin:0; font-family:var(--book); font-weight:400;
+  font-size:.9375rem; line-height:1.55; color:var(--t-copy)}
+#royaLibrary .pl-cols .pl-col{display:flex; flex-direction:column; gap:.7rem}
+#royaLibrary .pl-cap{margin:0; font-family:var(--book); font-style:italic; font-size:.875rem;
+  color:var(--t-tag)}
+#royaLibrary .ft-eyebrow{margin:0; font-family:var(--cond); font-weight:600; font-size:.625rem;
+  letter-spacing:.3em; text-transform:uppercase; color:var(--t-pub);}
+/* the folios belong to the book, so they show only when the book is shown */
+#royaLibrary .pl-folio{display:none; margin:0; font-family:var(--book); color:var(--t-tag)}
+#royaLibrary .ft-cta{display:inline-flex; align-items:center; gap:.85rem;
+  padding:.7rem 1.4rem; background:rgba(99,29,25,.45);
+  border:1px solid rgba(199,148,61,.55); color:var(--gold-lt);
+  font-family:var(--cond); font-weight:600; font-size:.6875rem; letter-spacing:.24em;
+  text-transform:uppercase; transition:background-color .18s, border-color .18s, color .18s;}
+#royaLibrary .ft-cta:hover{background:var(--oxblood); border-color:var(--gold-lt); color:#f2e7cd}
+#royaLibrary .ft-arrow{font-size:1rem; line-height:1}
+
+/* ── folded: banner, then the words ── */
+#royaLibrary .pl-words, #royaLibrary .pl-foot{display:flex; flex-direction:column;
+  align-items:flex-start; gap:1rem; padding:1.4rem 1.3rem 0}
+#royaLibrary .pl-foot{padding-top:1.2rem; padding-bottom:1.4rem}
+#royaLibrary .ab-feat--split .pl, #royaLibrary .ab-feat--spread .pl{
+  border:1px solid rgba(199,148,61,.4); background:rgba(9,8,6,.5)}
+#royaLibrary .pl-art{border:0; border-bottom:1px solid rgba(199,148,61,.35)}
+
+/* ── The Unsaid: the plate is the panel ──
+   Two plates ship for this series, because one picture cannot be both shapes.
+   The handset gets the upright one: it is laid along the top at full width,
+   its own title set into it, and the words begin under that title on the flat
+   field the picture ends in — the panel's ground is that same near-black, so
+   there is no seam where the picture stops. The page gets the wide one whole,
+   with the words standing in the dark field to the right of the crowd, under
+   the red line. Neither is cropped; each is simply shown at its own shape.
+
+   Both are faded off at all four edges so the picture sits on the page rather
+   than being pasted onto it. */
+#royaLibrary .ab-feat--split .pl{position:relative; overflow:hidden;
+  container-type:inline-size; border:0;
+  /* the colour the upright plate ends in, so the field below it continues */
+  background:#0d0b09 var(--plate-tall, var(--plate)) top center/100% auto no-repeat;
+  /* down to just under the title the plate carries: the picture sets at
+     1.777x its width, and the title's foot is at 71% of that */
+  padding-top:130%;}
+#royaLibrary .ab-feat--split .pl,
+#royaLibrary .ab-feat--spread .pl-art{
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 2.6rem, #000 calc(100% - 2.6rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 2.6rem, #000 calc(100% - 2.6rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%);
+  -webkit-mask-composite:source-in; mask-composite:intersect;}
+#royaLibrary .ab-feat--split .pl-art{display:none}
+/* the plate sets its own title in both shapes */
+#royaLibrary .ab-feat--split .pl-t{display:none}
+#royaLibrary .ab-feat--split .pl-words{padding:1.6rem 1.5rem 2rem; gap:1rem}
+
+/* the book is never cropped: its title is on the page the words would take.
+   It is faded off at the edges so it sits on the page rather than on a slab. */
+#royaLibrary .ab-feat--spread .pl-art{aspect-ratio:var(--ratio);
+  background-position:center; background-size:cover; border:0}
+
+/* ── the Delgoshā on a handset ──
+   The spread cannot be set into at this width — its title is on the same page
+   the words want, and the whole book at 445px would put the body at about five
+   pixels. So the handset gets the upright plate instead: the theatre stands
+   under its own title and the words fall on the flat field the picture ends
+   in. The panel's ground is that same field colour, so nothing seams where the
+   picture stops, and the whole thing is faded off at its four edges. */
+@media (max-width:1149.98px){
+  #royaLibrary .ab-feat--spread .pl{position:relative; overflow:hidden; border:0;
+    /* the plate is trimmed to end in its own flat field, and the panel's
+       ground is that field's colour, so the words carry on with no seam */
+    background:#131109 var(--plate-tall) top center/100% auto no-repeat;
+    padding-top:143%;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%);
+    -webkit-mask-composite:source-in; mask-composite:intersect;}
+  #royaLibrary .ab-feat--spread .pl-art{display:none}
+  /* the plate sets the title */
+  #royaLibrary .ab-feat--spread .pl-words{padding:0 1.9rem; gap:1rem}
+  #royaLibrary .ab-feat--spread .pl-foot{padding:1.2rem 1.9rem 2.2rem; gap:1rem;
+    align-items:flex-start}
+  #royaLibrary .ab-feat--spread .pl-foot .pl-folio{display:block; width:100%;
+    text-align:center; font-size:.8125rem; opacity:.8}
+}
+/* the page numbers travel with the words when the book is folded */
+#royaLibrary .ab-feat--spread .pl-foot .pl-folio{display:block}
+#royaLibrary .ab-feat--spread .pl-folio--l{display:none}
+#royaLibrary .ab-feat--spread .pl-t{position:absolute; width:1px; height:1px; margin:-1px;
+  padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0}
+/* folded, the body reads as one column and the rules do the separating */
+#royaLibrary .ab-feat--split .pl-body, #royaLibrary .ab-feat--split .ft-eyebrow{
+  width:100%; padding-top:1rem; border-top:1px solid rgba(199,148,61,.28)}
+/* the rule under the quote takes the thread's colour, as the design has it */
+#royaLibrary .ab-feat--split .pl-body{border-top-color:rgba(140,42,34,.55)}
+#royaLibrary .ab-feat--split .pl-q{width:100%}
+#royaLibrary .ab-feat--spread .pl-q{width:100%; padding:1.05rem 0; color:var(--gold-lt);
+  border-top:1px solid rgba(199,148,61,.4); border-bottom:1px solid rgba(199,148,61,.4)}
+
+/* ══ 1150px and up: the picture beside the words ══
+   The panel runs about 400px narrower than the window, so this is where the
+   two columns stop being too narrow to set. */
+/* 1300, not 1150: below it the panel is under 900px and type measured in
+   shares of that width falls under twelve pixels. There the portrait card
+   above serves instead, at real reading sizes. */
+/* ══ 1150 and up: the wide plate, as a band over the words ══
+   The upright plate is a handset's shape; a page that wide would make it
+   enormous. Here the wide plate runs the full width at its own 2.5:1 and the
+   words set underneath it at real reading sizes, its own title in the band. */
+@media (min-width:1150px){
+  #royaLibrary .ab-feat--split .pl{padding-top:40%;
+    background:#0d0b09 var(--plate) top center/100% auto no-repeat;}
+  #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem 2.2rem; gap:1.15rem}
+  #royaLibrary .ab-feat--split .pl-q{font-size:1.32rem}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:1rem; line-height:1.55}
+}
+
+/* ══ 1500 and up: the words stand in the plate's own field ══
+   The red line crosses the plate at about a quarter of its height and the
+   title sits above it at the right, so the words start at a third of the way
+   down and keep the dark field beside the crowd. Below 1500 that field is
+   under 1100px and the body would fall under twelve pixels. */
+@media (min-width:1500px){
+  #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
+    background:var(--plate) center center/cover no-repeat;}
+  #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
+    left:55%; right:4.5%; top:33%; bottom:6%;
+    padding:0; gap:1.3cqw; justify-content:flex-start}
+  #royaLibrary .ab-feat--split .pl-q{font-size:max(1rem, 1.55cqw); line-height:1.38}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:max(.8125rem, 1.15cqw);
+    line-height:1.55}
+  #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
+  #royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
+    font-size:max(.625rem, .75cqw); gap:1cqw}
+  #royaLibrary .ab-feat--split .ft-arrow{font-size:max(.8rem, 1.1cqw)}
+}
+
+/* ══ 1150 to 1440: the theatre beside the words ══
+   The book is too wide to set into at these widths and too empty to show
+   whole — the left-hand page is bare, waiting for the type that only fits
+   above 1440. So between the two the right-hand page is taken on its own and
+   the panel is built the way The Unsaid's is, with the page setting the title
+   the left-hand page would otherwise have carried. */
+@media (min-width:1150px) and (max-width:89.99rem){
+  #royaLibrary .ab-feat--spread .pl{display:grid; grid-template-columns:46% 1fr;
+    grid-template-areas:"art words" "art foot"; align-items:start;
+    background:linear-gradient(105deg, rgba(9,8,6,.62), rgba(14,11,8,.5))}
+  #royaLibrary .ab-feat--spread .pl-art{grid-area:art; align-self:stretch;
+    /* the words set this column's height, so the window into the plate can be
+       anything from square to tall; 88% keeps the stage near its middle at
+       either end rather than sliding off the right-hand edge */
+    aspect-ratio:auto; min-height:26rem; background-position:88% center;
+    border:0; border-right:1px solid rgba(199,148,61,.35)}
+  #royaLibrary .ab-feat--spread .pl-words{grid-area:words; padding:2.3rem 2.4rem 1.1rem;
+    gap:1.15rem}
+  #royaLibrary .ab-feat--spread .pl-foot{grid-area:foot; align-items:flex-start;
+    padding:0 2.4rem 2.4rem; gap:1.1rem}
+  /* the title the left-hand page is carrying out of frame */
+  #royaLibrary .ab-feat--spread .pl-t{position:static; width:auto; height:auto; margin:0;
+    padding-bottom:.9rem; overflow:visible; clip-path:none; white-space:normal}
+  #royaLibrary .ab-feat--spread .pl-t .ft-en{font-size:2.35rem}
+  #royaLibrary .ab-feat--spread .pl-t .ft-fa{font-size:1.1rem}
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.15rem; color:var(--bone)}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1rem; line-height:1.55}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.28rem; width:100%;
+    padding:1.05rem 0; border-top:1px solid rgba(199,148,61,.45);
+    border-bottom:1px solid rgba(199,148,61,.45); color:var(--gold-lt)}
+  #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-top:1.1rem;
+    border-top:1px solid rgba(199,148,61,.28)}
+}
+
+/* ══ 1440px and up: the words go onto the page ══
+   The threshold is the body type, not the picture. Every size in here is a
+   share of the plate's own width, so below 1440 the body falls under twelve
+   pixels and the page stops being something anyone can read. */
+@media (min-width:1440px){
+  #royaLibrary .ab-feat--spread .pl{
+    container-type:inline-size; border:0; background:none;
+    aspect-ratio:var(--ratio); position:relative;}
+  /* the insets, not the folded rules, give this box its shape here */
+  #royaLibrary .ab-feat--spread .pl-art{position:absolute; inset:0; aspect-ratio:auto;
+    background-position:center; border:1px solid rgba(199,148,61,.35)}
+  #royaLibrary .ab-feat--spread .pl-words,
+  #royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.22cqw; line-height:1.4}
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.45cqw; line-height:1.45}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.13cqw; line-height:1.5}
+  #royaLibrary .ab-feat--spread .pl-cap{font-size:1cqw}
+  #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.85cqw; gap:1cqw}
+  #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
+
+  /* the left page, then the line and the way in under the theatre */
+  #royaLibrary .ab-feat--spread .pl-words{left:7%; width:37%; top:18.5%; bottom:11%;
+    display:flex; gap:1.4cqw}
+  #royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
+  #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:1.6cqw; flex:1 1 auto;
+    min-height:0}
+  #royaLibrary .ab-feat--spread .pl-col{flex:1 1 0; min-width:0; gap:1cqw}
+  #royaLibrary .ab-feat--spread .pl-col + .pl-col{padding-left:1.6cqw;
+    border-left:1px solid rgba(199,148,61,.32)}
+  #royaLibrary .ab-feat--spread .pl-q{padding:1.1cqw 0;
+    border-top:1px solid rgba(199,148,61,.32); border-bottom:1px solid rgba(199,148,61,.32);
+    color:var(--gold-lt)}
+  #royaLibrary .ab-feat--spread .pl-foot{left:53%; right:5%; bottom:11.5%;
+    align-items:center; gap:1.1cqw; text-align:center}
+  #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-bottom:1.1cqw;
+    border-bottom:1px solid rgba(199,148,61,.3)}
+  /* the page numbers, and the rule each one sits under */
+  #royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:5.2%;
+    font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
+    border-top:1px solid rgba(199,148,61,.26)}
+  #royaLibrary .ab-feat--spread .pl-folio--l{left:7%; width:37%}
+  #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
+}
+
+/* ── on paper ── */
+:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:rgba(255,252,243,.4);
+  border-color:rgba(96,76,42,.45)}
+:root[data-lt="light"] #royaLibrary .ab-feat--split .pl{border-color:rgba(96,76,42,.5)}
+:root[data-lt="light"] #royaLibrary .pl-art{border-color:rgba(96,76,42,.4)}
+:root[data-lt="light"] #royaLibrary .ft-cta{background:rgba(99,29,25,.1); color:#631d19}
+:root[data-lt="light"] #royaLibrary .ft-cta:hover{background:var(--oxblood); color:#f2e7cd}
+/* Both plates are dark pictures with gold type of their own. Where the words
+   stand ON one — the Unsaid's right-hand field, the Delgosh\u0101's left-hand page —
+   they keep the dark theme's colours, because the ink values would vanish.
+   Only the boxes outside a picture take paper. */
+@media (min-width:1150px){
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t{color:#e3c88e}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t .ft-fa{color:#d8bd85}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q{color:#ece1cc}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p{color:#ddd2bf}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{color:#c8ae78}
+  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-cta{background:rgba(99,29,25,.55);
+    color:#e3c88e; border-color:rgba(199,148,61,.6)}
+}
+@media (min-width:1440px){
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:none; border:0}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#ddd2bf}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-q{color:#e3c88e}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-cap,
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-folio{color:#c3b699}
+  :root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.55);
+    color:#e3c88e; border-color:rgba(199,148,61,.6)}
+}
+
 #royaLibrary .ab-over{position:relative; padding:2.4rem 2rem 2rem; margin:0 -.8rem 1.2rem;
   background-image:none;}
 #royaLibrary .ab-over > *{position:relative; z-index:1}
@@ -956,6 +1243,17 @@
    where the plate is already shadow, and where the type goes — and closes in
    toward the edges, with a linear under it to carry the dedication down onto
    solid ground. Nothing ends up outside the tint. */
+/* ── the two plate features on a phone ──
+   The plate cannot carry type at this width, so the banner rule above already
+   folds them; these are the margins and the sizes that suit a handset. */
+#royaLibrary .mob-sec .ab-feat--split, #royaLibrary .mob-sec .ab-feat--spread{margin:0 -.4rem 1.3rem}
+#royaLibrary .mob-sec .pl-words, #royaLibrary .mob-sec .pl-foot{padding:1.2rem 1.1rem 0; gap:.9rem}
+#royaLibrary .mob-sec .pl-foot{padding-top:1rem; padding-bottom:1.2rem}
+#royaLibrary .mob-sec .pl-t .ft-en{font-size:1.5rem}
+#royaLibrary .mob-sec .pl-q{font-size:1.1rem}
+#royaLibrary .mob-sec .pl-lede{font-size:1rem}
+#royaLibrary .mob-sec .ft-cta{width:100%; justify-content:center}
+
 #royaLibrary .mob-sec .ab-over{background-image:none;
   padding:3.1rem 1rem 1.8rem; margin:0 -.4rem 1.2rem;
   -webkit-mask-image:none; mask-image:none;}

@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 45 · last updated 2026-09-18 14:44 PDT
+   Version 50 · last updated 2026-09-18 17:55 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -602,14 +602,43 @@ const PICKS = [
    an English name and a Persian one, the banner, every paragraph of the
    synopsis, a start-here book with its volume number, and the whole cycle. */
 const SERIESFEAT = [
+  /* `feat` is the panel's own cut of the synopsis, the way PICKNOTE is the
+     panel's own cut of a book's. The full text stays in stories.js and is
+     what the Library, the share page and the feed carry; this is the same
+     prose set to the design ChewZ drew for each series. Nothing here is
+     written — every line is the series' own. */
   { key:"From the Delgosh\u0101", en:"The Delgosh\u0101", fa:"\u062f\u0644\u06af\u0634\u0627",
-    art:"assets/series-delgosha.webp", start:75,
+    art:"assets/series-delgosha-plate.webp", artTall:"assets/series-delgosha-tall.webp", start:75,
     startFa:"\u0686\u0634\u0645\u200c\u0627\u0646\u062f\u0627\u0632 \u06f1\u06f4\u06f0\u06f4", vol:"Book Three",
-    books:[68,70,75,77,79,82,87,91] },
+    books:[68,70,75,77,79,82,87,91],
+    /* an open book: the words set on the left-hand page, the theatre keeps the
+       right, and the way in sits under it. The plate carries its own title. */
+    feat:{ kind:"spread", cta:"Start the series here", ratio:"1536/1024", folio:["68","69"],
+      lede:"Seven notebooks kept by the most widely read unpublished writer in the Persian language.",
+      caption:"A theatre for seven days. A thousand afterwards.",
+      quote:"In this country a form takes nine months. A baby also takes nine months. One of them arrives. Somewhere in Tehran a man writes four hundred thousand of these, sells them for almost nothing, and has never once been in the room when one landed.",
+      /* two columns; the line the series is built on falls between the first
+         column's paragraphs, set between its two rules */
+      cols:[
+        ["His name is Manuchehr Delgosh\u0101 \u2014 Manu \u2014 and he supplies forty basements across the city with paper. No byline, no fee, no face. Three men on television are wealthy off sentences he built in a chair at three in the morning, and one of them is genuinely bad at it. He will tell you the arrangement is generosity. It is not. It is that a sentence with no sender cannot be dragged into a room and asked who sent it."],
+        ["Then Roshanak Azimi turns up \u2014 twenty-two, from Javadiyeh, ninth out of six hundred thousand in the national examination, and running a parts operation that keeps four university departments working, which she does not mention on her CV. Ordered to give the valedictory address at Sharif and unable to write it, she hires the only man in Iran who can \u2014 and is on a plane by Tuesday.",
+         "Together they build Romanu: a name arrived at by accident, attached to nobody, given away free. Within a decade it is the most widely read unsigned work in the language, and a man in Toronto has been claiming to be it for five years. She fills arenas in America. Manu is still in the chair, and the caster is still broken, and he has repaired it four times."]
+      ] } },
   { key:"From the Unsaid", en:"The Unsaid", fa:"\u0646\u0627\u06af\u0641\u062a\u0647",
-    art:"assets/series-unsaid.webp", start:89,
+    art:"assets/series-unsaid-wide.webp", artTall:"assets/series-unsaid-tall.webp", start:89,
     startFa:"\u0633\u0647 \u063a\u0644\u0637\u060c \u06cc\u06a9 \u062f\u0631\u0633\u062a", vol:"Book Five",
-    books:[78,80,83,86,89,92,94] },
+    books:[78,80,83,86,89,92,94],
+    /* the picture stands on the left and the words on the right, the way the
+       design has it: a tall crop of the plate holding the face and the crowd,
+       and beside it the title, the line, the synopsis and the way in. */
+    feat:{ kind:"split", cta:"Start the series", ratio:"1568/627",
+      quote:"Something was taken from each of them. Nobody can say what, or by whom.",
+      eyebrow:"Notice how little cruelty it takes",
+      body:[
+        "A mother dreams about her dead son, and the dream comes back to her in another person\u2019s words. A woman waits outside a courtroom. A boy sits an exam that will decide his life. A man wakes one morning unable to feel a weight he could always judge.",
+        "No order. No refusal. No one to be angry with.",
+        "N\u0101gofteh means the unsaid: not a secret somebody is keeping, but what was never spoken at all. Iran, 1979 onwards."
+      ] } },
   { key:"The Unheard House", en:"The Unheard House", fa:"",
     art:"assets/forough.webp", start:63,
     startFa:"\u062e\u0627\u0646\u0647 \u0635\u0628\u0648\u0631 \u0627\u0633\u062a", vol:"Book One",
@@ -644,6 +673,77 @@ const mark = t => `<span class="ab-mark">${ORN2}<b>${t}</b>${ORN2}</span>`;
   const typed = [ABOUT.note, ABOUT.lede].join(" ").match(/\b\d{2,}\s+(?:short\s+)?(?:noir\s+)?(?:stor|novella|book)/i);
   if (typed) console.warn("Roya Library: a catalogue count is typed into the copy —", typed[0]);
 })();
+
+/* ── the two plate features ──
+   Both series now ship as a finished plate with their own title set into it,
+   so the page supplies only what is below that title. Two shapes:
+
+   "plate"  — one wide picture that dissolves into a flat dark field on the
+              right; the words stand in that field.
+   "spread" — an open book; the words set on the left page, and the line and
+              the way in sit under the picture on the right.
+
+   Above 1150px the words are laid INTO the plate: the block is pinned to the
+   plate's own proportion, every text box is placed in per cents of it, and the
+   type is sized in cqw, so the whole thing scales as one object and the words
+   stay on the page at every width. Below that the plate cannot carry legible
+   type — a spread at phone width puts the body at about six pixels — so the
+   picture becomes a banner and the words fall underneath it at real sizes,
+   with the page setting the title the plate would otherwise have given. */
+function featPanel(f, sb){
+  const fe = f.feat;
+  const title = `<h3 class="pl-t"><span class="ft-en">${esc(f.en)}</span>${f.fa ? `<span class="ft-fa" lang="fa" dir="rtl">${esc(f.fa)}</span>` : ""}</h3>`;
+  /* the way in. It opens the series' start book through the same control every
+     other book on this panel uses — 75 for the Delgosh\u0101, 89 for The Unsaid. */
+  const cta = sb
+    ? `<button class="ft-cta" type="button" data-rec="${sb.n}">${esc(fe.cta)}<span class="ft-arrow" aria-hidden="true">&rarr;</span></button>`
+    : "";
+  const style = `--plate:url('${basePath()}${f.art}'); --ratio:${fe.ratio}`
+    + (f.artTall ? `; --plate-tall:url('${basePath()}${f.artTall}')` : "");
+  const paras = a => a.map(x=>`<p class="pl-p">${esc(x)}</p>`).join("");
+
+  /* ── the picture beside the words ── */
+  if (fe.kind === "split") return `
+    <section class="ab-feat ab-feat--split" style="${style}">
+      <div class="pl">
+        <div class="pl-art" role="img" aria-label="${esc(f.en)}"></div>
+        ${title}
+        <div class="pl-words">
+          <p class="pl-q">${esc(fe.quote)}</p>
+          <div class="pl-body">${paras(fe.body)}</div>
+          ${fe.eyebrow ? `<p class="ft-eyebrow">${esc(fe.eyebrow)}</p>` : ""}
+          ${cta}
+        </div>
+      </div>
+    </section>`;
+
+  /* ── the open book ── */
+  const fo = fe.folio || ["",""];
+  return `
+    <section class="ab-feat ab-feat--spread" style="${style}">
+      <div class="pl">
+        <div class="pl-art" role="img" aria-label="${esc(f.en)}"></div>
+        <div class="pl-words">
+          ${title}
+          <p class="pl-lede">${esc(fe.lede)}</p>
+          <div class="pl-cols">
+            <div class="pl-col">
+              <p class="pl-p">${esc(fe.cols[0][0])}</p>
+              <p class="pl-q">${esc(fe.quote)}</p>
+              ${paras(fe.cols[0].slice(1))}
+            </div>
+            <div class="pl-col">${paras(fe.cols[1])}</div>
+          </div>
+        </div>
+        <div class="pl-foot">
+          ${fe.caption ? `<p class="pl-cap">${esc(fe.caption)}</p>` : ""}
+          ${cta}
+        </div>
+        <p class="pl-folio pl-folio--l" aria-hidden="true">${esc(fo[0])}</p>
+        <p class="pl-folio pl-folio--r" aria-hidden="true">${esc(fo[1])}</p>
+      </div>
+    </section>`;
+}
 
 function aboutBody(){
   return `
@@ -696,6 +796,11 @@ function aboutBody(){
     const t = SERIES.find(x=>x.title.split(" \u00b7 ")[0] === f.key);
     const paras = (t && t.syn ? t.syn.split("\n\n") : []);
     const sb = byNum[f.start];
+    /* Two of the three features carry their own layout. Both end on the same
+       control — the series' start book, opened the way every other book on
+       this panel opens — so the label is a real way in rather than a caption.
+       The third (over:true) keeps the original arrangement below. */
+    if (f.feat) return featPanel(f, sb);
     return `
     <section class="ab-feat">
       <div class="${f.over ? "ab-over" : ""}" ${f.over && f.art ? `style="--ab-art:url('${basePath()+f.art}')"` : ""}>
