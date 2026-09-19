@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 54 · last updated 2026-09-18 18:38 PDT
+   Version 55 · last updated 2026-09-18 18:56 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -911,14 +911,14 @@
 #royaLibrary .pl-t .ft-fa{font-family:var(--nast); font-weight:500; font-size:1rem;
   letter-spacing:0; color:var(--gold-word)}
 #royaLibrary .pl-q{margin:0; font-family:var(--book); font-weight:400; font-style:italic;
-  font-size:1.34rem; line-height:1.4; color:var(--bone); text-wrap:balance}
-#royaLibrary .pl-lede{margin:0; font-family:var(--book); font-size:1.18rem; line-height:1.45;
+  font-size:1.5rem; line-height:1.4; color:var(--bone); text-wrap:balance}
+#royaLibrary .pl-lede{margin:0; font-family:var(--book); font-size:1.32rem; line-height:1.45;
   color:var(--t-copy)}
 #royaLibrary .pl-body, #royaLibrary .pl-cols{display:flex; flex-direction:column; gap:.7rem}
 #royaLibrary .pl-body p, #royaLibrary .pl-p{margin:0; font-family:var(--book); font-weight:400;
-  font-size:1.0625rem; line-height:1.58; color:var(--t-copy)}
+  font-size:1.1875rem; line-height:1.6; color:var(--t-copy)}
 #royaLibrary .pl-cols .pl-col{display:flex; flex-direction:column; gap:.7rem}
-#royaLibrary .pl-cap{margin:0; font-family:var(--book); font-style:italic; font-size:.9375rem;
+#royaLibrary .pl-cap{margin:0; font-family:var(--book); font-style:italic; font-size:1.0625rem;
   color:var(--t-tag)}
 #royaLibrary .ft-eyebrow{margin:0; font-family:var(--cond); font-weight:600; font-size:.625rem;
   letter-spacing:.3em; text-transform:uppercase; color:var(--t-pub);}
@@ -1046,8 +1046,8 @@
   #royaLibrary .ab-feat--split .pl-t{display:none}
   #royaLibrary .ab-feat--split .pl-art{display:none}
   #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem 2.2rem; gap:1.15rem}
-  #royaLibrary .ab-feat--split .pl-q{font-size:1.46rem}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:1.125rem; line-height:1.58}
+  #royaLibrary .ab-feat--split .pl-q{font-size:1.62rem}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
 }
 
 /* ══ 1500 and up: the words stand in the plate's own field ══
@@ -1059,10 +1059,10 @@
   #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
     background:var(--plate) center center/cover no-repeat;}
   #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
-    left:49%; right:3.5%; top:29.5%; bottom:3%;
+    left:43.5%; right:2.5%; top:29.5%; bottom:1.5%;
     padding:0; gap:1.02cqw; justify-content:flex-start}
-  #royaLibrary .ab-feat--split .pl-q{font-size:max(1rem, 1.52cqw); line-height:1.34}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:max(.875rem, 1.18cqw);
+  #royaLibrary .ab-feat--split .pl-q{font-size:max(1.05rem, 1.56cqw); line-height:1.32}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:max(.9375rem, 1.3cqw);
     line-height:1.54}
   #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
   #royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
@@ -1095,9 +1095,9 @@
     padding-bottom:.9rem; overflow:visible; clip-path:none; white-space:normal}
   #royaLibrary .ab-feat--spread .pl-t .ft-en{font-size:2.35rem}
   #royaLibrary .ab-feat--spread .pl-t .ft-fa{font-size:1.1rem}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.28rem; color:var(--bone)}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.125rem; line-height:1.58}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.4rem; width:100%;
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.4rem; color:var(--bone)}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.25rem; line-height:1.6}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.52rem; width:100%;
     padding:1.05rem 0; border-top:1px solid rgba(199,148,61,.45);
     border-bottom:1px solid rgba(199,148,61,.45); color:var(--gold-lt)}
   #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-top:1.1rem;
@@ -1117,15 +1117,15 @@
     background-position:center; border:1px solid rgba(199,148,61,.35)}
   #royaLibrary .ab-feat--spread .pl-words,
   #royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.28cqw; line-height:1.4}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.5cqw; line-height:1.45}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.22cqw; line-height:1.5}
-  #royaLibrary .ab-feat--spread .pl-cap{font-size:1cqw}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.34cqw; line-height:1.36}
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.6cqw; line-height:1.4}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.31cqw; line-height:1.48}
+  #royaLibrary .ab-feat--spread .pl-cap{font-size:1.14cqw}
   #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.85cqw; gap:1cqw}
   #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
 
   /* the left page, then the line and the way in under the theatre */
-  #royaLibrary .ab-feat--spread .pl-words{left:5.5%; width:41%; top:17.5%; bottom:10%;
+  #royaLibrary .ab-feat--spread .pl-words{left:4%; width:44.5%; top:15.5%; bottom:8%;
     display:flex; gap:1.4cqw}
   #royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
   #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:1.6cqw; flex:1 1 auto;
@@ -1144,7 +1144,7 @@
   #royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:5.2%;
     font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
     border-top:1px solid rgba(199,148,61,.26)}
-  #royaLibrary .ab-feat--spread .pl-folio--l{left:5.5%; width:41%}
+  #royaLibrary .ab-feat--spread .pl-folio--l{left:4%; width:44.5%}
   #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
 }
 
