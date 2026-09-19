@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 55 · last updated 2026-09-18 18:56 PDT
+   Version 56 · last updated 2026-09-18 19:10 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -222,6 +222,11 @@
 /* nothing behind an open sheet may move */
 #royaLibrary .phone.is-locked{overflow:hidden}
 /* ══════════ DESKTOP · Roya Library (the archive grid) ══════════ */
+/* The cap was holding the whole section at 1760px. On a large display that
+   left the book about a third of the window wide, and since every size on its
+   page is a share of the book's own width, the type could not grow however
+   much it was raised. Above 1900px the cap lifts and the page scales with the
+   screen. */
 #royaLibrary .lib{position:relative; max-width:1760px; margin:0 auto;
   /* the plate, and nothing over it. A press-paper tile used to sit on top at
      soft-light, from before this artwork existed; the plate has its own grain
@@ -247,6 +252,7 @@
      letter is not sitting against the pill. Below 980px the rail stops being
      a column at all, so the figure only ever applies where there is room. */
   display:grid; grid-template-columns:21rem minmax(0,1fr);}
+@media (min-width:1900px){ #royaLibrary .lib{max-width:2160px} }
 /* The vignette belongs to the archive, not to the rail: run over both, its
    left edge darkened the series list from behind and the names read through a
    wash. It now begins where the rail ends, and the rail's own rule is the line
@@ -1055,14 +1061,17 @@
    title sits above it at the right, so the words start at a third of the way
    down and keep the dark field beside the crowd. Below 1500 that field is
    under 1100px and the body would fall under twelve pixels. */
-@media (min-width:1500px){
+/* 1700, not 1500: the field beside the crowd is only about half the plate's
+   width, so below this the banded arrangement above sets the synopsis larger
+   than the plate ever could. */
+@media (min-width:1700px){
   #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
     background:var(--plate) center center/cover no-repeat;}
   #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
-    left:43.5%; right:2.5%; top:29.5%; bottom:1.5%;
+    left:43.5%; right:2.5%; top:32.5%; bottom:1.5%;
     padding:0; gap:1.02cqw; justify-content:flex-start}
-  #royaLibrary .ab-feat--split .pl-q{font-size:max(1.05rem, 1.56cqw); line-height:1.32}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:max(.9375rem, 1.3cqw);
+  #royaLibrary .ab-feat--split .pl-q{font-size:max(1.25rem, 1.62cqw); line-height:1.32}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:max(1.0625rem, 1.36cqw);
     line-height:1.54}
   #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
   #royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
@@ -1125,7 +1134,7 @@
   #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
 
   /* the left page, then the line and the way in under the theatre */
-  #royaLibrary .ab-feat--spread .pl-words{left:4%; width:44.5%; top:15.5%; bottom:8%;
+  #royaLibrary .ab-feat--spread .pl-words{left:3.5%; width:45.5%; top:19.2%; bottom:6.5%;
     display:flex; gap:1.4cqw}
   #royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
   #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:1.6cqw; flex:1 1 auto;
@@ -1144,7 +1153,7 @@
   #royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:5.2%;
     font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
     border-top:1px solid rgba(199,148,61,.26)}
-  #royaLibrary .ab-feat--spread .pl-folio--l{left:4%; width:44.5%}
+  #royaLibrary .ab-feat--spread .pl-folio--l{left:3.5%; width:45.5%}
   #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
 }
 

@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 55 · last updated 2026-09-18 18:56 PDT
+   Version 56 · last updated 2026-09-18 19:10 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
