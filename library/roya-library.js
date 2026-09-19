@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 76 · last updated 2026-09-19 14:06 PDT
+   Version 77 · last updated 2026-09-19 15:22 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -617,8 +617,6 @@ const SERIESFEAT = [
        read at the size the rest of the section uses. */
     feat:{ kind:"stage", cta:"Start the series here", ratio:"920/1380",
       strap:"Stories live longer underground",
-      railL:"A theatre for seven days", railR:"Stories live longer under\u00ADground",
-      eyebrow:"A theatre for seven days. A thousand afterwards.",
       quote:"One of them cannot be seen. The other fills arenas. They are writing the same words.",
       body:[
         "Manuchehr Delgosh\u0101 \u2014 Manu \u2014 is the most famous underground comedian in the country, and nobody has seen his face. Forty basements a week, no byline, no fee: an empire built from a chair at three in the morning.",
@@ -726,13 +724,9 @@ function featPanel(f, sb){
         <div class="pl-haze" aria-hidden="true"></div>
         <div class="pl-stack">
           <div class="pl-shelf">
-            ${fe.railL ? `<p class="pl-rail pl-rail--l" aria-hidden="true">${esc(fe.railL)}</p>` : ""}
             <div class="pl-cover" role="img" aria-label="${esc(f.en)} \u2014 cover">
-              <span class="cv-t" aria-hidden="true"><span class="cv-the">The</span><span class="cv-en">${esc(f.en.replace(/^The\s+/,""))}</span>${f.fa ? `<span class="cv-fa" lang="fa" dir="rtl">${esc(f.fa)}</span>` : ""}</span>
               ${fe.strap ? `<span class="cv-foot cv-foot--strap" aria-hidden="true">${esc(fe.strap)}</span>` : ""}
-              ${fe.eyebrow ? `<span class="cv-foot cv-foot--line" aria-hidden="true">${esc(fe.eyebrow)}</span>` : ""}
             </div>
-            ${fe.railR ? `<p class="pl-rail pl-rail--r" aria-hidden="true">${esc(fe.railR)}</p>` : ""}
           </div>
           <div class="pl-side">
             ${title}
@@ -740,10 +734,7 @@ function featPanel(f, sb){
               <p class="pl-q">${esc(fe.quote)}</p>
               <div class="pl-body">${paras(fe.body)}</div>
             </div>
-            <div class="pl-way">
-              ${fe.eyebrow ? `<p class="ft-eyebrow">${esc(fe.eyebrow)}</p>` : ""}
-              ${cta}
-            </div>
+            <div class="pl-way">${cta}</div>
           </div>
         </div>
       </div>

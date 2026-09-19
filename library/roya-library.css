@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 76 · last updated 2026-09-19 14:06 PDT
+   Version 77 · last updated 2026-09-19 15:22 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -1294,60 +1294,22 @@
     inset -2px 0 0 rgba(233,211,162,.14),
     0 18px 40px -16px rgba(0,0,0,.78),
     0 3px 10px -4px rgba(0,0,0,.6);}
-/* The board is printed, not overlaid: the head and the foot of the picture
-   carry a wash in the picture's own black, the way a jacket darkens where the
-   type has to go. Without it the title has only the painter's dark band to
-   stand in — about a sixth of the board — and the lockup would have to come
-   down to half the size the design asks for to fit there. */
-#royaLibrary .ab-feat--stage .pl-cover::before,
+/* The foot of the picture carries a wash in its own black, so the strapline
+   printed there has something to sit on. The head used to carry one too, for a
+   title set into the board — but the panel already sets that title beside the
+   picture, and printing it twice was the one thing the design did not need. It
+   went, and the wash that existed only to hold it went with it: what is left at
+   the head of the board is the painter's own dark, unretouched. */
 #royaLibrary .ab-feat--stage .pl-cover::after{content:""; position:absolute;
-  left:0; right:0; z-index:0; pointer-events:none;}
-#royaLibrary .ab-feat--stage .pl-cover::before{top:0; height:27%;
-  background:linear-gradient(to bottom, rgba(8,6,5,.93) 0%, rgba(8,6,5,.89) 42%,
-    rgba(8,6,5,.66) 68%, rgba(8,6,5,.26) 87%, rgba(8,6,5,0) 100%);}
-#royaLibrary .ab-feat--stage .pl-cover::after{bottom:0; height:16%;
+  left:0; right:0; bottom:0; height:16%; z-index:0; pointer-events:none;
   background:linear-gradient(to top, rgba(8,6,5,.88) 0%, rgba(8,6,5,.7) 45%,
     rgba(8,6,5,.28) 76%, rgba(8,6,5,0) 100%);}
-
-/* the title, set into the band the painter left dark at the head of the
-   picture. Every size here is a share of the COVER's width, not the panel's,
-   so the lockup lands on the same part of the board at any size it is shown. */
-#royaLibrary .ab-feat--stage .cv-t{position:absolute; left:7%; right:7%; top:4%;
-  display:flex; flex-direction:column; align-items:center; text-align:center;
-  gap:.8cqw; z-index:1;}
-#royaLibrary .ab-feat--stage .cv-the{font-family:var(--book); font-weight:400;
-  font-size:4.4cqw; letter-spacing:.34em; text-indent:.34em; text-transform:uppercase;
-  color:var(--gold-word); line-height:1;}
-#royaLibrary .ab-feat--stage .cv-en{font-family:var(--book); font-weight:500;
-  font-size:10.6cqw; letter-spacing:.05em; text-indent:.05em; text-transform:uppercase;
-  color:#f0dcae; line-height:1; white-space:nowrap;
-  text-shadow:0 1px 0 rgba(0,0,0,.55), 0 0 22px rgba(0,0,0,.5);}
-#royaLibrary .ab-feat--stage .cv-fa{font-family:var(--nast); font-weight:500;
-  font-size:5.6cqw; line-height:1.34; color:#e2c48d; margin-top:-.5cqw;
-  text-shadow:0 1px 0 rgba(0,0,0,.5);}
-/* text-indent, not just letter-spacing: the space a letter-spaced run adds
-   falls AFTER its last character, so centred type sits half that space left of
-   true centre. The indent puts it back. */
-#royaLibrary .ab-feat--stage .cv-foot--line{display:none}
 #royaLibrary .ab-feat--stage .cv-foot{position:absolute; left:6%; right:6%;
   bottom:3.8%; z-index:1; text-align:center;
   font-family:var(--cond); font-weight:600; font-size:2.2cqw;
   letter-spacing:.2em; text-indent:.2em; text-transform:uppercase;
   color:rgba(233,211,162,.82); line-height:1.5;
   text-shadow:0 1px 3px rgba(0,0,0,.8);}
-
-/* ── the rails ──
-   The series' line, split in two and stood up the sides of the board. Upright
-   type is a caption device, so it is set small, wide and quiet: it should be
-   read after the cover, not with it. */
-#royaLibrary .ab-feat--stage .pl-rail{margin:0; flex:0 0 auto;
-  writing-mode:vertical-rl; font-family:var(--cond); font-weight:500;
-  font-size:.625rem; letter-spacing:.42em; text-transform:uppercase;
-  color:rgba(198,184,150,.5); white-space:nowrap;
-  display:flex; align-items:center; gap:.9rem;}
-#royaLibrary .ab-feat--stage .pl-rail--l{transform:rotate(180deg)}
-#royaLibrary .ab-feat--stage .pl-rail::after{content:""; width:1px; height:2.2rem;
-  background:linear-gradient(to bottom, rgba(199,148,61,.5), transparent);}
 
 /* ── the words ── */
 #royaLibrary .ab-feat--stage .pl-side{display:flex; flex-direction:column;
@@ -1387,9 +1349,6 @@
     gap:clamp(2.2rem, 5cqw, 5.6rem);
     align-items:center; justify-content:flex-start;}
   #royaLibrary .ab-feat--stage .pl-shelf{flex:0 0 auto; display:flex; align-items:stretch}
-  /* the rails belong to the handset, where the cover is centred and has room
-     on both sides; beside a column of text they only crowd it */
-  #royaLibrary .ab-feat--stage .pl-rail{display:none}
   /* 30% of the panel, floored so the board never falls under a size at which
      its own title stops being type and starts being texture */
   #royaLibrary .ab-feat--stage .pl-cover{width:clamp(15.5rem, 33cqw, 26.5rem)}
@@ -1398,17 +1357,21 @@
   #royaLibrary .ab-feat--stage .ft-eyebrow{display:none}
   #royaLibrary .ab-feat--stage .pl-side{flex:1 1 auto; gap:1.15rem;
     align-items:flex-start; text-align:left;}
-  #royaLibrary .ab-feat--stage .pl-t .ft-en{font-size:clamp(1.6rem, 2.5cqw, 2.6rem);
+  #royaLibrary .ab-feat--stage .pl-t .ft-en{font-size:clamp(1.85rem, 3.1cqw, 3.15rem);
     letter-spacing:.055em; line-height:1.05}
-  #royaLibrary .ab-feat--stage .pl-t .ft-fa{font-size:clamp(1rem, 1.28cqw, 1.3rem)}
-  #royaLibrary .ab-feat--stage .pl-words{gap:1.15rem}
-  #royaLibrary .ab-feat--stage .pl-q{font-size:clamp(1.08rem, 1.42cqw, 1.45rem);
-    padding:1.05rem 0; max-width:66ch;}
+  #royaLibrary .ab-feat--stage .pl-t .ft-fa{font-size:clamp(1.15rem, 1.6cqw, 1.62rem)}
+  #royaLibrary .ab-feat--stage .pl-words{gap:1.3rem}
+  /* Up from 1.42cqw. The old sizes were set when the cqw floor did most of the
+     work, and at a 1600 window the synopsis was landing at 15.7px — correct
+     arithmetic, too small to read at arm's length. The growth now comes from
+     the cqw term, so a wider window gives bigger type instead of more air. */
+  #royaLibrary .ab-feat--stage .pl-q{font-size:clamp(1.18rem, 1.95cqw, 1.72rem);
+    padding:1.15rem 0; max-width:60ch;}
   #royaLibrary .ab-feat--stage .pl-q::before,
   #royaLibrary .ab-feat--stage .pl-q::after{
     background:linear-gradient(to right, rgba(199,148,61,.5) 0%, rgba(199,148,61,.24) 46%, transparent 100%);}
-  #royaLibrary .ab-feat--stage .pl-body p{font-size:clamp(.98rem, 1.16cqw, 1.19rem);
-    line-height:1.62; max-width:66ch;}
+  #royaLibrary .ab-feat--stage .pl-body p{font-size:clamp(1.06rem, 1.62cqw, 1.45rem);
+    line-height:1.62; max-width:64ch;}
   #royaLibrary .ab-feat--stage .pl-way{margin-top:.45rem}
 }
 
@@ -1435,31 +1398,13 @@
     background:linear-gradient(to bottom, rgba(12,10,8,.38) 0%, rgba(12,10,8,.14) 34%,
       rgba(12,10,8,.3) 74%, rgba(12,10,8,.62) 100%);}
   #royaLibrary .ab-feat--stage .pl-shelf{display:flex; align-items:center;
-    justify-content:space-between; gap:2%;}
-  #royaLibrary .ab-feat--stage .pl-cover{flex:0 0 auto; width:54%}
-  #royaLibrary .ab-feat--stage .cv-foot--strap{display:none}
-  #royaLibrary .ab-feat--stage .cv-foot--line{display:block; font-size:2.6cqw;
-    letter-spacing:.14em; text-indent:.14em; left:5%; right:5%; bottom:4.2%;
-    line-height:1.75; text-wrap:balance;}
-
-  /* min-width:0 is what actually makes the column narrow. A flex item's
-     default min-width is its content, so without this the rail simply grows to
-     fit UNDERGROUND and pushes itself off the panel — the basis is ignored. */
-  /* The column is sized by the longest word it has to hold, not by a share of
-     the panel. THEATRE and STORIES are seven characters, and at this tracking a
-     capital runs about .82em, so 5.9em clears them both at any panel width —
-     where a percentage clears them at 420px and shatters them at 380. Only
-     UNDERGROUND is longer, and it carries a soft hyphen so it breaks where the
-     design breaks it. */
-  #royaLibrary .ab-feat--stage .pl-rail{flex:0 0 auto; width:6.5em; min-width:0;
-    writing-mode:horizontal-tb; display:block;
-    font-size:.53rem; letter-spacing:.2em; line-height:2.1;
-    color:rgba(206,192,158,.46); white-space:normal;
-    overflow-wrap:break-word; hyphens:auto; -webkit-hyphens:auto;}
-  #royaLibrary .ab-feat--stage .pl-rail--l{transform:none; text-align:left}
-  #royaLibrary .ab-feat--stage .pl-rail--r{text-align:right}
-  #royaLibrary .ab-feat--stage .pl-rail::after{display:none}
-
+    justify-content:center;}
+  #royaLibrary .ab-feat--stage .pl-cover{flex:0 0 auto; width:62%}
+  /* nothing is printed on the board here, so the wash that would have held it
+     goes too — an unlit band across the foot of a picture with no type on it
+     is just a smudge */
+  #royaLibrary .ab-feat--stage .pl-cover::after{display:none}
+  #royaLibrary .ab-feat--stage .cv-foot{display:none}
   #royaLibrary .ab-feat--stage .pl-side{gap:1.2rem; align-items:center;
     text-align:center;}
   #royaLibrary .ab-feat--stage .pl-t{align-items:center; gap:.15rem}
@@ -1484,24 +1429,24 @@
     line-height:1.62; text-align:left;}
   #royaLibrary .ab-feat--stage .pl-way{margin-top:.5rem; align-items:center;
     gap:1.15rem; width:100%;}
-  #royaLibrary .ab-feat--stage .ft-eyebrow{display:block;
-    font-size:.6875rem; letter-spacing:.2em;
-    line-height:1.95; text-align:center; color:rgba(226,207,164,.78);
-    margin-inline:auto; text-wrap:balance;}
   /* the way in takes the measure of the board, so the block closes on a
      straight edge rather than on a button floating in the middle of it */
   #royaLibrary .ab-feat--stage .ft-cta{width:100%; justify-content:center;
     padding-block:.95rem;}
-}
-/* Below about 21rem of layout width the two rails and the board together want
-   more than the panel has, so the rails stand down and the board takes the
-   room. (Layout width, not device width: this section renders at 0.85 scale,
-   so a 320px phone lays out at 376.) */
-@media (max-width:21rem){
-  #royaLibrary .ab-feat--stage .pl-rail{display:none}
-  #royaLibrary .ab-feat--stage .pl-cover{width:66%}
-}
 
+  /* ── three rules that have to out-rank the handset's own ──
+     The phone's shared styles set .mob-sec .pl-t .ft-en, .mob-sec .pl-q and
+     .mob-sec .pl-words near the foot of this file. They carry exactly the same
+     specificity as the stage rules above — one id and two classes — and they
+     come later, so they were quietly winning: the title was setting at a flat
+     1.5rem and the line at 1.1rem whatever the clamps above say, and .pl-words
+     was taking a second helping of side padding on top of the stack's.
+     Qualifying by element adds a type selector, which is all it takes. */
+  #royaLibrary .ab-feat--stage .pl-t span.ft-en{font-size:clamp(1.7rem, 8.2cqw, 2.5rem)}
+  #royaLibrary .ab-feat--stage .pl-t span.ft-fa{font-size:clamp(1.1rem, 5cqw, 1.55rem)}
+  #royaLibrary .ab-feat--stage p.pl-q{font-size:clamp(1.05rem, 4.5cqw, 1.3rem)}
+  #royaLibrary .ab-feat--stage div.pl-words{padding:0}
+}
 /* ── on paper ──
    Where the words stand decides the ink, and that changes with the width.
 
@@ -1559,7 +1504,6 @@
 :root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-t .ft-fa{color:#dcc28c}
 :root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q{color:#efdcb4}
 :root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-body p{color:#d8ccb4}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-rail{color:rgba(198,184,150,.5)}
 :root[data-lt="light"] #royaLibrary .ab-feat--stage .ft-cta{background:rgba(99,29,25,.6);
   color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 :root[data-lt="light"] #royaLibrary .ab-feat--stage .ft-cta:hover{background:var(--oxblood);
