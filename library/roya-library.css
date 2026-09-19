@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 60 · last updated 2026-09-18 19:56 PDT
+   Version 62 · last updated 2026-09-18 20:22 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1111,6 +1111,12 @@
   #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-top:1.1rem}
 }
 
+/* NOTE for anyone tuning the sizes below, including future me: this page is
+   set in EB Garamond, which is loaded from Google Fonts by index.html. A
+   sandbox that cannot reach Google Fonts falls back to Georgia, whose x-height
+   is far larger — the same number of pixels then looks bigger and fills more
+   of the page. Sizes tuned against that fallback come out too small on the
+   live site. Always render with the real face before trusting a measurement. */
 /* ══ 1440px and up: the words go onto the page ══
    The threshold is the body type, not the picture. Every size in here is a
    share of the plate's own width, so below 1440 the body falls under twelve
@@ -1124,21 +1130,21 @@
     background-position:center; border:1px solid rgba(199,148,61,.35)}
   #royaLibrary .ab-feat--spread .pl-words,
   #royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.47cqw; line-height:1.34}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.71cqw; line-height:1.32}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.43cqw; line-height:1.37}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.43cqw; line-height:1.34}
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.66cqw; line-height:1.32}
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.39cqw; line-height:1.4}
   #royaLibrary .ab-feat--spread .pl-cap{font-size:1.3cqw}
   #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.98cqw; gap:1cqw}
   #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
 
   /* the left page, then the line and the way in under the theatre */
-  #royaLibrary .ab-feat--spread .pl-words{left:3.2%; width:46%; top:18.2%; bottom:5.8%;
+  #royaLibrary .ab-feat--spread .pl-words{left:4.6%; width:41.4%; top:18.2%; bottom:5.8%;
     display:flex; gap:1.4cqw}
   #royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
-  #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:1.6cqw; flex:1 1 auto;
+  #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:2.2cqw; flex:1 1 auto;
     min-height:0}
   #royaLibrary .ab-feat--spread .pl-col{flex:1 1 0; min-width:0; gap:1cqw}
-  #royaLibrary .ab-feat--spread .pl-col + .pl-col{padding-left:1.6cqw}
+  #royaLibrary .ab-feat--spread .pl-col + .pl-col{padding-left:0}
   /* no rules around it: the line the series is built on simply follows the
      paragraph it belongs to, in the colour that marks it */
   #royaLibrary .ab-feat--spread .pl-q{padding:.25cqw 0 0; border:0; color:var(--gold-lt)}
@@ -1149,7 +1155,7 @@
   #royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:5.2%;
     font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
     border-top:1px solid rgba(199,148,61,.26)}
-  #royaLibrary .ab-feat--spread .pl-folio--l{left:3.2%; width:46%}
+  #royaLibrary .ab-feat--spread .pl-folio--l{left:4.6%; width:41.4%}
   #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
 }
 
