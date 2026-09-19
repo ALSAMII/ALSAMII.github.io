@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 62 · last updated 2026-09-18 20:22 PDT
+   Version 63 · last updated 2026-09-18 21:14 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -514,6 +514,20 @@
    the painted position. The buttons looked right and could not be clicked. */
 #royaLibrary .dnav-set{position:absolute; left:1.5rem; top:2rem;
   display:flex; align-items:flex-start; gap:1.7rem; z-index:2}
+/* The pair is out of the nav's flow, so a narrowing window walks the centred
+   links straight into it — the labels were landing on top of each other. The
+   bar now keeps a lane clear on the left the width of the pair, and closes the
+   gap between the links first; only when both have given what they can does
+   the pair stand down to its icons alone. */
+#royaLibrary .dnav{padding-left:11rem}
+@media (max-width:1180px){
+  #royaLibrary .dnav{gap:2rem}
+}
+@media (max-width:1040px){
+  #royaLibrary .dnav{gap:1.4rem; padding-left:7.5rem}
+  #royaLibrary .dnav-set{gap:1.1rem}
+  #royaLibrary .dnav-set .side-tog span{display:none}
+}
 #royaLibrary .dnav-set .side-tog{padding:0}
 #royaLibrary .dnav button{display:flex; flex-direction:column; gap:.34rem; padding:0 .2rem; position:relative}
 /* :not(.side-tog) — the two controls are buttons too, and without this the
@@ -1051,7 +1065,7 @@
   #royaLibrary .ab-feat--split .pl-t{display:none}
   #royaLibrary .ab-feat--split .pl-art{display:none}
   #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem 2.2rem; gap:1.15rem}
-  #royaLibrary .ab-feat--split .pl-q{font-size:1.62rem}
+  #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem}
   #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
 }
 
@@ -1063,15 +1077,14 @@
 /* 1700, not 1500: the field beside the crowd is only about half the plate's
    width, so below this the banded arrangement above sets the synopsis larger
    than the plate ever could. */
-@media (min-width:1700px){
+@media (min-width:1800px){
   #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
     background:var(--plate) center center/cover no-repeat;}
   #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
     left:43.5%; right:2.5%; top:32.5%; bottom:1.5%;
     padding:0; gap:1.02cqw; justify-content:flex-start}
-  #royaLibrary .ab-feat--split .pl-q{font-size:max(1.25rem, 1.62cqw); line-height:1.32}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:max(1.0625rem, 1.36cqw);
-    line-height:1.54}
+  #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem; line-height:1.5}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
   #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
   #royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
     font-size:max(.625rem, .75cqw); gap:1cqw}
@@ -1084,7 +1097,7 @@
    above 1440. So between the two the right-hand page is taken on its own and
    the panel is built the way The Unsaid's is, with the page setting the title
    the left-hand page would otherwise have carried. */
-@media (min-width:1150px) and (max-width:89.99rem){
+@media (min-width:1150px) and (max-width:1799.98px){
   #royaLibrary .ab-feat--spread .pl{display:grid; grid-template-columns:46% 1fr;
     grid-template-areas:"art words" "art foot"; align-items:start;
     background:linear-gradient(105deg, rgba(9,8,6,.62), rgba(14,11,8,.5))}
@@ -1105,7 +1118,7 @@
   #royaLibrary .ab-feat--spread .pl-t .ft-fa{font-size:1.1rem}
   #royaLibrary .ab-feat--spread .pl-lede{font-size:1.4rem; color:var(--bone)}
   #royaLibrary .ab-feat--spread .pl-p{font-size:1.25rem; line-height:1.6}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.52rem; width:100%;
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.35rem; width:100%;
     padding:1.05rem 0; border-top:1px solid rgba(199,148,61,.45);
     border-bottom:1px solid rgba(199,148,61,.45); color:var(--gold-lt)}
   #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-top:1.1rem}
@@ -1117,11 +1130,13 @@
    is far larger — the same number of pixels then looks bigger and fills more
    of the page. Sizes tuned against that fallback come out too small on the
    live site. Always render with the real face before trusting a measurement. */
-/* ══ 1440px and up: the words go onto the page ══
+/* ══ 1800px and up: the words go onto the page ══
    The threshold is the body type, not the picture. Every size in here is a
-   share of the plate's own width, so below 1440 the body falls under twelve
-   pixels and the page stops being something anyone can read. */
-@media (min-width:1440px){
+   share of the book's own width, and the book is about 400px narrower than the
+   window: at 1440 that puts the synopsis at 15px, where the banded
+   arrangement above sets the same words at 20. The book page only earns its
+   place once the window is wide enough to set it properly. */
+@media (min-width:1800px){
   #royaLibrary .ab-feat--spread .pl{
     container-type:inline-size; border:0; background:none;
     aspect-ratio:var(--ratio); position:relative;}
@@ -1130,15 +1145,20 @@
     background-position:center; border:1px solid rgba(199,148,61,.35)}
   #royaLibrary .ab-feat--spread .pl-words,
   #royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.43cqw; line-height:1.34}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.66cqw; line-height:1.32}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.39cqw; line-height:1.4}
+  /* The synopsis is set at the size the Unheard House section uses — 1.25rem,
+     the same as .ab-feat-p — so the three series read alike wherever they sit
+     on the page. It does not scale with the book: a reader should not get a
+     different size for the same prose because the window is wider. Only the
+     furniture around it is still measured in shares of the book. */
+  #royaLibrary .ab-feat--spread .pl-p{font-size:1.25rem; line-height:1.6}
+  #royaLibrary .ab-feat--spread .pl-q{font-size:1.35rem; line-height:1.5}
+  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.4rem; line-height:1.45}
   #royaLibrary .ab-feat--spread .pl-cap{font-size:1.3cqw}
   #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.98cqw; gap:1cqw}
   #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
 
   /* the left page, then the line and the way in under the theatre */
-  #royaLibrary .ab-feat--spread .pl-words{left:4.6%; width:41.4%; top:18.2%; bottom:5.8%;
+  #royaLibrary .ab-feat--spread .pl-words{left:4.0%; width:44.0%; top:18.2%; bottom:5.8%;
     display:flex; gap:1.4cqw}
   #royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
   #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:2.2cqw; flex:1 1 auto;
@@ -1155,7 +1175,7 @@
   #royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:5.2%;
     font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
     border-top:1px solid rgba(199,148,61,.26)}
-  #royaLibrary .ab-feat--spread .pl-folio--l{left:4.6%; width:41.4%}
+  #royaLibrary .ab-feat--spread .pl-folio--l{left:4.0%; width:44.0%}
   #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
 }
 
@@ -1202,7 +1222,7 @@
 
 /* the Delgoshā beside its theatre: the column beside the picture takes paper
    too, and its title with it */
-@media (min-width:1150px) and (max-width:89.99rem){
+@media (min-width:1150px) and (max-width:1799.98px){
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{
     background-image:linear-gradient(105deg, rgba(255,252,243,.55), rgba(255,252,243,.3))}
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t{color:#8a6420}
@@ -1210,7 +1230,7 @@
 }
 
 /* ── and where the words stand on the picture, the night values hold ── */
-@media (min-width:1440px){
+@media (min-width:1800px){
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:none; border:0}
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#e0d6c3}
@@ -1220,7 +1240,7 @@
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.6);
     color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 }
-@media (min-width:1700px){
+@media (min-width:1800px){
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl{background-color:transparent}
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q{color:#ecdfc7}
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p,
