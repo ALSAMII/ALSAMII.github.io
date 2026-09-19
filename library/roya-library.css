@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 64 · last updated 2026-09-18 21:24 PDT
+   Version 66 · last updated 2026-09-18 21:42 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1000,7 +1000,9 @@
     linear-gradient(to right, transparent 0, #000 2.6rem, #000 calc(100% - 2.6rem), transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
-#royaLibrary .ab-feat--split .pl-words{padding:1.6rem 1.5rem 2rem; gap:1rem}
+#royaLibrary .ab-feat--split .pl-words{padding:1.6rem 1.5rem 1rem; gap:1rem}
+#royaLibrary .pl-way{display:flex; flex-direction:column; align-items:flex-start;
+  gap:1rem; padding:0 1.5rem 2rem}
 
 /* the book is never cropped: its title is on the page the words would take.
    It is faded off at the edges so it sits on the page rather than on a slab. */
@@ -1059,12 +1061,26 @@
    enormous. Here the wide plate runs the full width at its own 2.5:1 and the
    words set underneath it at real reading sizes, its own title in the band. */
 @media (min-width:1150px){
-  #royaLibrary .ab-feat--split .pl{padding-top:40%;
+  /* The wide plate runs the full width and its right half is a flat dark field
+     with nothing in it. The synopsis stands there, inside the picture, which is
+     what that field is for — and the label and the way in fall underneath,
+     where there is room. The field cannot hold all four at twenty pixels;
+     taking those two out is exactly what makes the rest fit. */
+  #royaLibrary .ab-feat--split .pl{padding-top:40%; position:relative;
     background:#0d0b09 var(--plate) top center/100% auto no-repeat;}
   /* the wide plate carries the title itself */
   #royaLibrary .ab-feat--split .pl-t{display:none}
   #royaLibrary .ab-feat--split .pl-art{display:none}
-  #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem 2.2rem; gap:1.15rem}
+  /* The words are pulled up into the picture rather than pinned inside it: the
+     plate's right half and the panel's own ground are the same near-black, so
+     a block that begins in the field and runs past the picture's foot reads as
+     one continuous dark column. Pinning it would mean the text had to fit the
+     field exactly, and at these widths it does not. The pull is measured from
+     the picture's foot — the plate sets at 40% of the panel's width, and the
+     words begin about three tenths of the way down it. */
+  #royaLibrary .ab-feat--split .pl-words{margin:-28.2% 3.5% 0 47.5%;
+    padding:0; gap:1.1rem}
+  #royaLibrary .ab-feat--split .pl-way{padding:1.4rem 2rem 2.2rem 47.5%; gap:1rem}
   #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem}
   #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
 }
@@ -1080,9 +1096,16 @@
 @media (min-width:1900px){
   #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
     background:var(--plate) center center/cover no-repeat;}
+  /* margin:0 — the banded arrangement above pulls these two up into the
+     picture with a negative margin, and this block shares its media query's
+     lower bound, so the pull has to be undone here or it shifts the pinned
+     boxes as well */
   #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
-    left:43.5%; right:2.5%; top:30.6%; bottom:4%;
+    left:43.5%; right:2.5%; top:30.6%; margin:0;
     padding:0; gap:1.02cqw; justify-content:flex-start}
+  /* on the page the way in keeps the foot of the field */
+  #royaLibrary .ab-feat--split .pl-way{position:absolute; z-index:1;
+    left:43.5%; right:2.5%; bottom:4%; margin:0; padding:0; gap:1.1cqw}
   #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem; line-height:1.5}
   #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
   #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}

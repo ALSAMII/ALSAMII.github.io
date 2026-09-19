@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 64 · last updated 2026-09-18 21:24 PDT
+   Version 66 · last updated 2026-09-18 21:42 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -711,6 +711,8 @@ function featPanel(f, sb){
         <div class="pl-words">
           <p class="pl-q">${esc(fe.quote)}</p>
           <div class="pl-body">${paras(fe.body)}</div>
+        </div>
+        <div class="pl-way">
           ${fe.eyebrow ? `<p class="ft-eyebrow">${esc(fe.eyebrow)}</p>` : ""}
           ${cta}
         </div>
