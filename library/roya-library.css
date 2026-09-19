@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 67 · last updated 2026-09-18 22:12 PDT
+   Version 69 · last updated 2026-09-19 06:02 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -252,7 +252,17 @@
      letter is not sitting against the pill. Below 980px the rail stops being
      a column at all, so the figure only ever applies where there is room. */
   display:grid; grid-template-columns:21rem minmax(0,1fr);}
-@media (min-width:1900px){ #royaLibrary .lib{max-width:2160px} }
+/* ══ the lock ══
+   The section is laid out at a fixed width and scaled to fit the window, so
+   nothing inside it reflows: at 1280 the reader sees the 1800px design at 71%,
+   at 2560 at 142%, and every proportion between the type, the plates and their
+   frames is identical at both. tan(atan2()) is how CSS divides a length by a
+   length to get a plain number; the clamp stops the page shrinking past
+   legibility on a small window or growing without limit on a large one. */
+@media (min-width:981px){
+  #royaLibrary .lib{--u:tan(atan2(100vw, 1800px));
+    zoom:clamp(.58, var(--u), 1.55); width:1800px; max-width:1800px;}
+}
 /* The vignette belongs to the archive, not to the rail: run over both, its
    left edge darkened the series list from behind and the names read through a
    wash. It now begins where the rail ends, and the rail's own rule is the line
@@ -1060,39 +1070,79 @@
    The upright plate is a handset's shape; a page that wide would make it
    enormous. Here the wide plate runs the full width at its own 2.5:1 and the
    words set underneath it at real reading sizes, its own title in the band. */
-@media (min-width:1150px){
-  /* The wide plate runs the full width and its right half is a flat dark field
-     with nothing in it. The synopsis stands there, inside the picture, which is
-     what that field is for — and the label and the way in fall underneath,
-     where there is room. The field cannot hold all four at twenty pixels;
-     taking those two out is exactly what makes the rest fit. */
-  #royaLibrary .ab-feat--split .pl{padding-top:40%; position:relative;
-    background:#0d0b09 var(--plate) top center/100% auto no-repeat;}
-  /* the wide plate carries the title itself */
-  #royaLibrary .ab-feat--split .pl-t{display:none}
-  #royaLibrary .ab-feat--split .pl-art{display:none}
-  /* The words are pulled up into the picture rather than pinned inside it: the
-     plate's right half and the panel's own ground are the same near-black, so
-     a block that begins in the field and runs past the picture's foot reads as
-     one continuous dark column. Pinning it would mean the text had to fit the
-     field exactly, and at these widths it does not. The pull is measured from
-     the picture's foot — the plate sets at 40% of the panel's width, and the
-     words begin about three tenths of the way down it. */
-  /* Everything — the line, the synopsis, the label and the way in — stands
-     inside the picture here, which means the type cannot be a fixed size: the
-     field is 40% of the panel's width and about two thirds of that in usable
-     height, so what fits is a share of the width, not a number of pixels.
-     1.26cqw is the size at which the whole block lands just inside the foot of
-     the picture; the clamp stops it going over the 20px the rest of the page
-     uses on a very wide screen, or under 13px on a narrow one. */
-  /* 1150 to 1440: the picture's field cannot hold the whole block at a size
-     anyone would read — it would have to fall under thirteen pixels — so here
-     the words still sit under the picture, at the page's own size. */
-  #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem .8rem; gap:1.15rem}
-  #royaLibrary .ab-feat--split .pl-way{padding:0 2rem 2.2rem; gap:1rem}
-  #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
-}
+/* ══════════ one desktop arrangement, designed at 1800 ══════════
+   The section is laid out at a fixed 1800px and scaled to the window, so
+   every proportion below is the same at 1280 as at 2560 — the page simply
+   gets bigger or smaller, the way a printed page does. That is why there are
+   no width bands here any more: there is nothing left for them to switch
+   between. The four that used to live at 1150, 1440 and 1900 existed only to
+   cope with the layout reflowing, and it no longer reflows. */
+/* The wide plate is the panel here and it carries its own title, so the
+   handset's upright plate and the page-set heading both stand down. Both of
+   these lived in a width band that no longer exists; without them the phone's
+   picture paints straight over this one. */
+#royaLibrary .ab-feat--split .pl-art{display:none}
+#royaLibrary .ab-feat--split .pl-t{display:none}
+#royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
+  background:var(--plate) center center/cover no-repeat;}
+/* margin:0 — the banded arrangement above pulls these two up into the
+   picture with a negative margin, and this block shares its media query's
+   lower bound, so the pull has to be undone here or it shifts the pinned
+   boxes as well */
+#royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
+  left:43.5%; right:2.5%; top:30.6%; margin:0;
+  padding:0; gap:1.02cqw; justify-content:flex-start}
+/* on the page the way in keeps the foot of the field */
+#royaLibrary .ab-feat--split .pl-way{position:absolute; z-index:1;
+  left:43.5%; right:2.5%; bottom:4%; margin:0; padding:0; gap:1.1cqw}
+#royaLibrary .ab-feat--split .pl-q{font-size:1.35rem; line-height:1.5}
+#royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
+#royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
+#royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
+  font-size:max(.625rem, .75cqw); gap:1cqw}
+#royaLibrary .ab-feat--split .ft-arrow{font-size:max(.8rem, 1.1cqw)}
+
+#royaLibrary .ab-feat--spread .pl{
+  container-type:inline-size; border:0; background:none;
+  aspect-ratio:var(--ratio); position:relative;}
+/* the insets, not the folded rules, give this box its shape here */
+#royaLibrary .ab-feat--spread .pl-art{position:absolute; inset:0; aspect-ratio:auto;
+  background-position:center; border:1px solid rgba(199,148,61,.35)}
+#royaLibrary .ab-feat--spread .pl-words,
+#royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
+/* The synopsis is set at the size the Unheard House section uses — 1.25rem,
+   the same as .ab-feat-p — so the three series read alike wherever they sit
+   on the page. It does not scale with the book: a reader should not get a
+   different size for the same prose because the window is wider. Only the
+   furniture around it is still measured in shares of the book. */
+#royaLibrary .ab-feat--spread .pl-p{font-size:1.25rem; line-height:1.40}
+#royaLibrary .ab-feat--spread .pl-q{font-size:1.35rem; line-height:1.5}
+#royaLibrary .ab-feat--spread .pl-lede{font-size:1.2rem; line-height:1.45}
+#royaLibrary .ab-feat--spread .pl-cap{font-size:1.3cqw}
+#royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.98cqw; gap:1cqw}
+#royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
+
+/* the left page, then the line and the way in under the theatre */
+#royaLibrary .ab-feat--spread .pl-words{left:3.6%; width:45.4%; top:17.6%; bottom:9.6%;
+  display:flex; gap:1.4cqw}
+#royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
+#royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:2.2cqw; flex:1 1 auto;
+  min-height:0}
+#royaLibrary .ab-feat--spread .pl-col{flex:1 1 0; min-width:0; gap:1cqw}
+#royaLibrary .ab-feat--spread .pl-col + .pl-col{padding-left:0}
+/* no rules around it: the line the series is built on simply follows the
+   paragraph it belongs to, in the colour that marks it */
+#royaLibrary .ab-feat--spread .pl-q{padding:.25cqw 0 0; border:0; color:var(--gold-lt)}
+#royaLibrary .ab-feat--spread .pl-foot{left:53%; right:5%; bottom:11.5%;
+  align-items:center; gap:1.1cqw; text-align:center}
+#royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-bottom:1.1cqw}
+/* the page numbers, and the rule each one sits under */
+#royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:3.4%;
+  font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
+  border-top:1px solid rgba(199,148,61,.26)}
+#royaLibrary .ab-feat--spread .pl-folio--l{left:3.6%; width:45.4%}
+#royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
+
 
 /* ══ 1440 to 1900: the whole block stands inside the picture ══
    Everything — the line, the synopsis, the label and the way in — is in the
@@ -1101,18 +1151,6 @@
    fits is a share of the width, not a number of pixels. 1.26cqw is the size at
    which the block lands just inside the foot of the picture; the clamp stops
    it going over the 20px the rest of the page uses on a wide screen. */
-@media (min-width:1440px){
-  #royaLibrary .ab-feat--split .pl-words{margin:-28.2% 3.5% 0 47.5%;
-    padding:0; gap:.9cqw}
-  #royaLibrary .ab-feat--split .pl-way{margin:.9cqw 3.5% 0 47.5%;
-    padding:0 0 2rem; gap:.8cqw}
-  #royaLibrary .ab-feat--split .pl-q{font-size:clamp(.9375rem, 1.36cqw, 1.35rem);
-    line-height:1.45}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:clamp(.875rem, 1.26cqw, 1.25rem);
-    line-height:1.55}
-  #royaLibrary .ab-feat--split .pl-body{padding-top:.9cqw}
-  #royaLibrary .ab-feat--split .ft-eyebrow{padding-top:.9cqw}
-}
 
 /* ══ 1500 and up: the words stand in the plate's own field ══
    The red line crosses the plate at about a quarter of its height and the
@@ -1122,26 +1160,6 @@
 /* 1700, not 1500: the field beside the crowd is only about half the plate's
    width, so below this the banded arrangement above sets the synopsis larger
    than the plate ever could. */
-@media (min-width:1900px){
-  #royaLibrary .ab-feat--split .pl{aspect-ratio:var(--ratio); padding-top:0;
-    background:var(--plate) center center/cover no-repeat;}
-  /* margin:0 — the banded arrangement above pulls these two up into the
-     picture with a negative margin, and this block shares its media query's
-     lower bound, so the pull has to be undone here or it shifts the pinned
-     boxes as well */
-  #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
-    left:43.5%; right:2.5%; top:30.6%; margin:0;
-    padding:0; gap:1.02cqw; justify-content:flex-start}
-  /* on the page the way in keeps the foot of the field */
-  #royaLibrary .ab-feat--split .pl-way{position:absolute; z-index:1;
-    left:43.5%; right:2.5%; bottom:4%; margin:0; padding:0; gap:1.1cqw}
-  #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem; line-height:1.5}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
-  #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
-  #royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
-    font-size:max(.625rem, .75cqw); gap:1cqw}
-  #royaLibrary .ab-feat--split .ft-arrow{font-size:max(.8rem, 1.1cqw)}
-}
 
 /* ══ 1150 to 1440: the theatre beside the words ══
    The book is too wide to set into at these widths and too empty to show
@@ -1149,32 +1167,6 @@
    above 1440. So between the two the right-hand page is taken on its own and
    the panel is built the way The Unsaid's is, with the page setting the title
    the left-hand page would otherwise have carried. */
-@media (min-width:1150px) and (max-width:1899.98px){
-  #royaLibrary .ab-feat--spread .pl{display:grid; grid-template-columns:46% 1fr;
-    grid-template-areas:"art words" "art foot"; align-items:start;
-    background:linear-gradient(105deg, rgba(9,8,6,.62), rgba(14,11,8,.5))}
-  #royaLibrary .ab-feat--spread .pl-art{grid-area:art; align-self:stretch;
-    /* the words set this column's height, so the window into the plate can be
-       anything from square to tall; 88% keeps the stage near its middle at
-       either end rather than sliding off the right-hand edge */
-    aspect-ratio:auto; min-height:26rem; background-position:88% center;
-    border:0; border-right:1px solid rgba(199,148,61,.35)}
-  #royaLibrary .ab-feat--spread .pl-words{grid-area:words; padding:2.3rem 2.4rem 1.1rem;
-    gap:1.15rem}
-  #royaLibrary .ab-feat--spread .pl-foot{grid-area:foot; align-items:flex-start;
-    padding:0 2.4rem 2.4rem; gap:1.1rem}
-  /* the title the left-hand page is carrying out of frame */
-  #royaLibrary .ab-feat--spread .pl-t{position:static; width:auto; height:auto; margin:0;
-    padding-bottom:.9rem; overflow:visible; clip-path:none; white-space:normal}
-  #royaLibrary .ab-feat--spread .pl-t .ft-en{font-size:2.35rem}
-  #royaLibrary .ab-feat--spread .pl-t .ft-fa{font-size:1.1rem}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.4rem; color:var(--bone)}
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.25rem; line-height:1.6}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.35rem; width:100%;
-    padding:1.05rem 0; border-top:1px solid rgba(199,148,61,.45);
-    border-bottom:1px solid rgba(199,148,61,.45); color:var(--gold-lt)}
-  #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-top:1.1rem}
-}
 
 /* NOTE for anyone tuning the sizes below, including future me: this page is
    set in EB Garamond, which is loaded from Google Fonts by index.html. A
@@ -1188,48 +1180,6 @@
    window: at 1440 that puts the synopsis at 15px, where the banded
    arrangement above sets the same words at 20. The book page only earns its
    place once the window is wide enough to set it properly. */
-@media (min-width:1900px){
-  #royaLibrary .ab-feat--spread .pl{
-    container-type:inline-size; border:0; background:none;
-    aspect-ratio:var(--ratio); position:relative;}
-  /* the insets, not the folded rules, give this box its shape here */
-  #royaLibrary .ab-feat--spread .pl-art{position:absolute; inset:0; aspect-ratio:auto;
-    background-position:center; border:1px solid rgba(199,148,61,.35)}
-  #royaLibrary .ab-feat--spread .pl-words,
-  #royaLibrary .ab-feat--spread .pl-foot{position:absolute; padding:0; gap:0}
-  /* The synopsis is set at the size the Unheard House section uses — 1.25rem,
-     the same as .ab-feat-p — so the three series read alike wherever they sit
-     on the page. It does not scale with the book: a reader should not get a
-     different size for the same prose because the window is wider. Only the
-     furniture around it is still measured in shares of the book. */
-  #royaLibrary .ab-feat--spread .pl-p{font-size:1.25rem; line-height:1.6}
-  #royaLibrary .ab-feat--spread .pl-q{font-size:1.35rem; line-height:1.5}
-  #royaLibrary .ab-feat--spread .pl-lede{font-size:1.4rem; line-height:1.45}
-  #royaLibrary .ab-feat--spread .pl-cap{font-size:1.3cqw}
-  #royaLibrary .ab-feat--spread .ft-cta{padding:.9cqw 1.9cqw; font-size:.98cqw; gap:1cqw}
-  #royaLibrary .ab-feat--spread .ft-arrow{font-size:1.2cqw}
-
-  /* the left page, then the line and the way in under the theatre */
-  #royaLibrary .ab-feat--spread .pl-words{left:4.0%; width:44.0%; top:18.2%; bottom:5.8%;
-    display:flex; gap:1.4cqw}
-  #royaLibrary .ab-feat--spread .pl-lede{text-align:center; padding-bottom:.4cqw}
-  #royaLibrary .ab-feat--spread .pl-cols{flex-direction:row; gap:2.2cqw; flex:1 1 auto;
-    min-height:0}
-  #royaLibrary .ab-feat--spread .pl-col{flex:1 1 0; min-width:0; gap:1cqw}
-  #royaLibrary .ab-feat--spread .pl-col + .pl-col{padding-left:0}
-  /* no rules around it: the line the series is built on simply follows the
-     paragraph it belongs to, in the colour that marks it */
-  #royaLibrary .ab-feat--spread .pl-q{padding:.25cqw 0 0; border:0; color:var(--gold-lt)}
-  #royaLibrary .ab-feat--spread .pl-foot{left:53%; right:5%; bottom:11.5%;
-    align-items:center; gap:1.1cqw; text-align:center}
-  #royaLibrary .ab-feat--spread .pl-cap{width:100%; padding-bottom:1.1cqw}
-  /* the page numbers, and the rule each one sits under */
-  #royaLibrary .ab-feat--spread .pl-folio{display:block; position:absolute; bottom:5.2%;
-    font-size:.95cqw; letter-spacing:.06em; text-align:center; padding-top:.9cqw;
-    border-top:1px solid rgba(199,148,61,.26)}
-  #royaLibrary .ab-feat--spread .pl-folio--l{left:4.0%; width:44.0%}
-  #royaLibrary .ab-feat--spread .pl-folio--r{left:53%; right:5%}
-}
 
 /* ── on paper ──
    Where the words stand decides the ink, and that changes with the width.
@@ -1272,17 +1222,9 @@
 :root[data-lt="light"] #royaLibrary .ft-cta{background:rgba(99,29,25,.1); color:#631d19}
 :root[data-lt="light"] #royaLibrary .ft-cta:hover{background:var(--oxblood); color:#f2e7cd}
 
-/* the Delgoshā beside its theatre: the column beside the picture takes paper
-   too, and its title with it */
-@media (min-width:1150px) and (max-width:1899.98px){
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{
-    background-image:linear-gradient(105deg, rgba(255,252,243,.55), rgba(255,252,243,.3))}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t{color:#8a6420}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t .ft-fa{color:#9b7430}
-}
 
 /* ── and where the words stand on the picture, the night values hold ── */
-@media (min-width:1900px){
+@media (min-width:981px){
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:none; border:0}
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#e0d6c3}
@@ -1292,7 +1234,7 @@
   :root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.6);
     color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 }
-@media (min-width:1900px){
+@media (min-width:981px){
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl{background-color:transparent}
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q{color:#ecdfc7}
   :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p,
