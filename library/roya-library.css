@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 81 · last updated 2026-09-19 18:50 PDT
+   Version 85 · last updated 2026-09-20 06:32 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -128,6 +128,14 @@
    Safe to remove with .ab-cov / .ab-body / .ab-n / .ab-ti / .ab-hk / .ab-recs
    and the .ab-sers line below, all checked against the markup as unused. */
 :root[data-lt="light"] #royaLibrary .ab-card, :root[data-lt="light"] #royaLibrary .ab-ser{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
+/* The open series row took the same near-black wash as the cards above but
+   never got their paper rule, so on this theme it came out as a grey slab
+   across the page. It takes the cards' stock now, and its inner dividers the
+   paper rule rather than the board's gold — a gold hairline reads as a lit
+   edge, which is right on a dark ground and wrong on a light one. */
+:root[data-lt="light"] #royaLibrary .ab-spanel{background:rgba(255,252,243,.45);
+  border-color:rgba(96,76,42,.38)}
+:root[data-lt="light"] #royaLibrary .ab-spanel > * + *{border-left-color:rgba(96,76,42,.3)}
 :root[data-lt="light"] #royaLibrary .ab-cov img{border-color:rgba(96,76,42,.4)}
 :root[data-lt="light"] #royaLibrary .ab-t{border-bottom-color:rgba(96,76,42,.6)}
 :root[data-lt="light"] #royaLibrary .rec{background:rgba(231,221,197,.95)}
@@ -1748,8 +1756,7 @@
    no frame, no strip, nothing else competing with it */
 #royaLibrary .zoom.is-full{background:#050403}
 #royaLibrary .zoom.is-full .zoom-plate{border:0; box-shadow:none; background:none; width:100%; max-width:100rem}
-#royaLibrary .zoom.is-full .zoom-plate img{/* fits the frame when it can, and when the window is too narrow or too short
-     for it the scroller takes over rather than the picture being squeezed */
+#royaLibrary .zoom.is-full .zoom-plate img{
   display:block; margin:0 auto; width:auto; height:auto;
   max-width:100%; max-height:calc(100dvh - var(--labh,0px) - 9rem);}
 /* ── the reader ── */
@@ -2326,3 +2333,82 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary.rl-home .rl-close{display:none}
 
 #royaLibrary .rl-stage{display:block; min-height:100%}
+
+/* ══════════ the series synopsis panel ══════════
+   Stands between the bar and the grid on a page, and under the heading on a
+   handset. It has no heading of its own — both of those already set the series
+   name and the count, and a third statement of either inside the box was the
+   one thing the panel did not need.
+
+   The devices are drawn by roya-library.js against these four variables rather
+   than against the dark palette, so the light theme restates the colours here
+   instead of keeping a second copy of fourteen pieces of markup. */
+#royaLibrary .sv{--sv-mark:rgba(199,148,61,.6); --sv-hi:#e9d3a2;
+  --sv-soft:rgba(199,148,61,.45); --sv-faint:rgba(199,148,61,.32);
+  --sv-rule:rgba(199,148,61,.28);
+  display:flex; flex-direction:column; gap:1.1rem; margin:0 0 1.6rem;}
+#royaLibrary .sv-box{display:flex; flex-direction:column; gap:1.1rem;
+  padding:1.85rem 2.35rem; border:1px solid rgba(199,148,61,.26);
+  background:rgba(199,148,61,.04);}
+#royaLibrary .sv-p{margin:0; max-width:74ch; font-family:var(--book);
+  font-size:1.3125rem; line-height:1.54; color:var(--bone);}
+/* the mark and its caption: side by side where there is room for both, and the
+   caption underneath once there is not */
+#royaLibrary .sv-mark{display:flex; align-items:center; gap:1.25rem;}
+#royaLibrary .sv-art{flex:1 1 auto; min-width:0;}
+#royaLibrary .sv-cap{flex:0 0 auto; max-width:26rem; font-family:var(--cond);
+  font-size:.71875rem; letter-spacing:.16em; text-transform:uppercase;
+  line-height:1.5; color:rgba(221,210,191,.5);}
+#royaLibrary .sv-foot{display:flex; justify-content:flex-end; align-items:baseline;
+  gap:.75rem; margin:0; font-family:var(--cond); font-size:.8125rem;
+  letter-spacing:.2em; text-transform:uppercase;}
+#royaLibrary .sv-foot b{font-weight:500; color:var(--ochre)}
+#royaLibrary .sv-foot i{font-style:normal; color:rgba(199,148,61,.5)}
+#royaLibrary .sv-foot span{color:rgba(221,210,191,.58)}
+
+/* ── the marks ──
+   An SVG is stretched to the row (preserveAspectRatio="none"), which is right
+   for a rule or a repeat and wrong for a circle, so anything round is built
+   from boxes in a flex row instead and stays round at any width. */
+#royaLibrary .sv-svg{display:block; width:100%; overflow:hidden;}
+#royaLibrary .sv-row{display:flex; align-items:center; width:100%;}
+#royaLibrary .sv-gap{flex:1 1 0; height:1px; background:var(--sv-rule);}
+#royaLibrary .sv-dot, #royaLibrary .sv-ring{flex:0 0 auto; border-radius:50%;
+  box-sizing:border-box;}
+#royaLibrary .sv-box2{flex:0 0 auto; box-sizing:border-box;}
+#royaLibrary .sv-film{display:flex; flex-direction:column; gap:4px;
+  width:100%; overflow:hidden;}
+#royaLibrary .sv-film .sv-gap{height:0}
+#royaLibrary .sv-perf{flex:0 0 auto; width:11px; height:7px; border-radius:1.5px;
+  box-sizing:border-box; border:1px solid var(--sv-mark);}
+#royaLibrary .sv-filmline{height:1px}
+
+/* ── on a handset ──
+   Scoped to .mob, NOT to .mob-sec. The panel is rendered under the heading, so
+   it lands in .mob-head and every .mob-sec rule written for it was inert: the
+   mark kept the page's row layout, the caption took its full 26rem out of a
+   385px row, and the device was squeezed to nothing at all. */
+#royaLibrary .mob .sv{margin:0 0 1.15rem}
+#royaLibrary .mob .sv-box{padding:1.35rem 1.15rem; gap:1rem}
+#royaLibrary .mob .sv-p{font-size:1.0625rem; line-height:1.52; max-width:none}
+/* the caption cannot sit beside the mark at this width without taking the
+   room the mark needs to be read at all, so it drops underneath it */
+#royaLibrary .mob .sv-mark{flex-direction:column; align-items:stretch; gap:.56rem}
+#royaLibrary .mob .sv-cap{max-width:none; font-size:.65625rem; letter-spacing:.14em}
+#royaLibrary .mob .sv-foot{font-size:.75rem; gap:.6rem}
+/* a belt-and-braces floor: even if this panel is ever moved into a row that
+   is short of width, the mark keeps enough of it to be a mark */
+#royaLibrary .sv-art{min-width:7rem}
+
+/* ── on paper ──
+   The ochre the marks are cut from is a light on a dark ground; on this theme
+   it needs to be an ink on a pale one, or the whole device disappears. */
+:root[data-lt="light"] #royaLibrary .sv{--sv-mark:rgba(120,88,30,.72); --sv-hi:#7c5a1c;
+  --sv-soft:rgba(120,88,30,.5); --sv-faint:rgba(120,88,30,.34);
+  --sv-rule:rgba(96,76,42,.3);}
+:root[data-lt="light"] #royaLibrary .sv-box{background:rgba(255,252,243,.45);
+  border-color:rgba(96,76,42,.34)}
+:root[data-lt="light"] #royaLibrary .sv-p{color:var(--ink)}
+:root[data-lt="light"] #royaLibrary .sv-cap{color:rgba(74,59,33,.72)}
+:root[data-lt="light"] #royaLibrary .sv-foot span{color:rgba(74,59,33,.72)}
+:root[data-lt="light"] #royaLibrary .sv-foot i{color:rgba(96,76,42,.5)}
