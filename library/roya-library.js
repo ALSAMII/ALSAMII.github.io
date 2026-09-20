@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 85 · last updated 2026-09-20 06:32 PDT
+   Version 86 · last updated 2026-09-20 07:02 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1184,7 +1184,6 @@ function mobile(){
     ${mobNav()}
     ${view!=="library" ? "" : `
     <h2 class="mob-h">${esc(columnHead())} <i>/ ${rows.length} <b>${rows.length===1 ? "story" : "stories"}</b></i></h2>
-    ${seriesPanel()}
 
     <div class="mob-search">
       <input id="libSearch" type="search" placeholder="Search titles…" value="${esc(query)}"
@@ -1215,6 +1214,7 @@ function mobile(){
     </div>
 
     ${view!=="library" ? `<div class="mob-sec">${view==="notes" ? notesBody() : aboutBody()}</div>` : `
+    ${seriesPanel()}
     <p class="mob-count">Showing ${rows.length} of ${BOOKS.length}</p>
 
     <div class="mob-grid ${mode==='list'?'is-rows':''}">

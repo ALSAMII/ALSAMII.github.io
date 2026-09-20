@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 85 · last updated 2026-09-20 06:32 PDT
+   Version 87 · last updated 2026-09-20 07:02 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2350,13 +2350,20 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary .sv-box{display:flex; flex-direction:column; gap:1.1rem;
   padding:1.85rem 2.35rem; border:1px solid rgba(199,148,61,.26);
   background:rgba(199,148,61,.04);}
-#royaLibrary .sv-p{margin:0; max-width:74ch; font-family:var(--book);
+/* No measure cap. 74ch froze the paragraph at 772px however wide the panel
+   got, so at a 1920px window 695px of it — very nearly half — stood empty
+   beside text that had stopped. The panel is as wide as the grid under it,
+   and the prose now uses that. */
+#royaLibrary .sv-p{margin:0; max-width:none; font-family:var(--book);
   font-size:1.3125rem; line-height:1.54; color:var(--bone);}
 /* the mark and its caption: side by side where there is room for both, and the
    caption underneath once there is not */
 #royaLibrary .sv-mark{display:flex; align-items:center; gap:1.25rem;}
 #royaLibrary .sv-art{flex:1 1 auto; min-width:0;}
-#royaLibrary .sv-cap{flex:0 0 auto; max-width:26rem; font-family:var(--cond);
+/* The caption was 26rem and would not shrink, so on a narrower page it took
+   its full 416px out of the row and left the mark with whatever remained —
+   389px at a 1280px window, against 1029px at 1920. It now yields. */
+#royaLibrary .sv-cap{flex:0 1 auto; max-width:21rem; font-family:var(--cond);
   font-size:.71875rem; letter-spacing:.16em; text-transform:uppercase;
   line-height:1.5; color:rgba(221,210,191,.5);}
 #royaLibrary .sv-foot{display:flex; justify-content:flex-end; align-items:baseline;
@@ -2384,10 +2391,11 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary .sv-filmline{height:1px}
 
 /* ── on a handset ──
-   Scoped to .mob, NOT to .mob-sec. The panel is rendered under the heading, so
-   it lands in .mob-head and every .mob-sec rule written for it was inert: the
-   mark kept the page's row layout, the caption took its full 26rem out of a
-   385px row, and the device was squeezed to nothing at all. */
+   Scoped to .mob. The panel sits in the scrolling body beside .mob-count and
+   .mob-grid, NOT inside .mob-head — that block is position:sticky, and while
+   the panel was in it the synopsis froze to the top of the screen and held
+   the cards below the fold with no way to scroll to them. .mob-sec is not the
+   hook either: the panel is not inside one. */
 #royaLibrary .mob .sv{margin:0 0 1.15rem}
 #royaLibrary .mob .sv-box{padding:1.35rem 1.15rem; gap:1rem}
 #royaLibrary .mob .sv-p{font-size:1.0625rem; line-height:1.52; max-width:none}
@@ -2398,7 +2406,7 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary .mob .sv-foot{font-size:.75rem; gap:.6rem}
 /* a belt-and-braces floor: even if this panel is ever moved into a row that
    is short of width, the mark keeps enough of it to be a mark */
-#royaLibrary .sv-art{min-width:7rem}
+#royaLibrary .sv-art{min-width:11rem}
 
 /* ── on paper ──
    The ochre the marks are cut from is a light on a dark ground; on this theme
