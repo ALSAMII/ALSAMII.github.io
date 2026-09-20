@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 77 · last updated 2026-09-19 15:22 PDT
+   Version 78 · last updated 2026-09-19 16:20 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -591,6 +591,9 @@
 #royaLibrary .ab-d{display:block; margin-top:.5rem; font-family:var(--book); font-size:1rem; color:var(--t-copy)}
 #royaLibrary .ab-rule{display:flex; align-items:center; gap:1.1rem; margin:2.2rem 0 1.2rem}
 #royaLibrary .ab-rule i{flex:1; height:1px; background:rgba(199,148,61,.5)}
+/* The size of these labels is NOT set here. .ab-mark b carries it, further
+   down this file, and being later it wins — so an edit made on this line does
+   nothing at all to what the reader sees. */
 #royaLibrary .ab-rule span{font-family:var(--cond); font-weight:600; font-size:.6875rem; letter-spacing:.3em;
   text-transform:uppercase; color:var(--ochre);}
 #royaLibrary .ab-recs{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.9rem}
@@ -781,9 +784,17 @@
    which is why the note looked transparent. Raising the ROW is what puts the
    note in front; raising the note cannot. */
 #royaLibrary .abt > .ab-terms{z-index:30}
-#royaLibrary .ab-mark{display:inline-flex; align-items:center; gap:.9rem; color:var(--ochre)}
-#royaLibrary .ab-orn{width:3.4rem; height:1.4rem; flex:0 0 auto}
-#royaLibrary .ab-mark b{font-family:var(--cond); font-weight:600; font-size:.6875rem; letter-spacing:.3em;
+#royaLibrary .ab-mark{display:inline-flex; align-items:center; gap:.7em;
+  font-size:2rem; color:var(--ochre)}
+#royaLibrary .ab-orn{width:2.6em; height:1.05em; flex:0 0 auto}
+/* 2rem, which is what .ab-gh h3 below sets for Noir, Transgressive and the
+   rest — the labels and the headings now read at one size. Two things gave way
+   to let a letter-spaced uppercase line sit there: the tracking comes down
+   from .3em, which is a caption's tracking at eleven pixels and a hoarding's
+   at thirty-two; and the ornaments grow with the type, since a diamond built
+   for an eleven-pixel line looks like a speck beside a thirty-two. */
+#royaLibrary .ab-mark b{font-family:var(--cond); font-weight:600; font-size:2rem;
+  letter-spacing:.1em; text-indent:.1em; line-height:1.15;
   text-transform:uppercase; color:var(--ochre); white-space:nowrap;}
 #royaLibrary .ab-group{margin:0 0 2.4rem}
 #royaLibrary .ab-gh{border-left:2px solid var(--ochre); padding:.35rem 0 .35rem 1.1rem; margin:0 0 1.2rem}
@@ -1741,8 +1752,15 @@
 #royaLibrary .mob-sec .ab-cycle button{font-size:1rem; gap:1rem}
 #royaLibrary .mob-sec .ab-ded-to{font-size:1.1875rem; line-height:2}
 #royaLibrary .mob-sec .ab-ded em{font-size:1rem; line-height:2.1}
-#royaLibrary .mob-sec .ab-mark{gap:.5rem}
-#royaLibrary .mob-sec .ab-orn{width:2.2rem}
+/* 1.5rem, which is what .ab-gh h3 sets on a handset. The tracking comes down
+   again: at 376px of layout width RECOMMENDED SERIES is the longest label the
+   section has, and .1em would leave the rules either side of it with nothing. */
+#royaLibrary .mob-sec .ab-mark{gap:.42em; font-size:1.5rem}
+#royaLibrary .mob-sec .ab-mark b{font-size:1.5rem; letter-spacing:.03em;
+  text-indent:.03em}
+/* and the diamonds come in with them: at 2.1em the pair alone took a hundred
+   of the three hundred and forty-nine pixels a 320px phone has to give */
+#royaLibrary .mob-sec .ab-orn{width:1.55em; height:.66em}
 /* ── cover zoom ──
    The magnifier on a plate opens the front cover large, and the reader can
    walk the whole shelf from in here — the old All Covers overlay could only

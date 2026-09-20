@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 77 · last updated 2026-09-19 15:22 PDT
+   Version 79 · last updated 2026-09-19 16:38 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -617,7 +617,7 @@ const SERIESFEAT = [
        read at the size the rest of the section uses. */
     feat:{ kind:"stage", cta:"Start the series here", ratio:"920/1380",
       strap:"Stories live longer underground",
-      quote:"One of them cannot be seen. The other fills arenas. They are writing the same words.",
+      quote:"Delgosh\u0101 means heart-opening. It is the title of the funniest book in Persian, the surname of the funniest man in Iran, and in both cases the best parts have been left out.",
       body:[
         "Manuchehr Delgosh\u0101 \u2014 Manu \u2014 is the most famous underground comedian in the country, and nobody has seen his face. Forty basements a week, no byline, no fee: an empire built from a chair at three in the morning.",
         "Then Roshanak Azimi turns up \u2014 street-smart, twenty-two, single digits out of six hundred thousand in the national examination. Together they build Romanu: attached to nobody, given away free, and within a decade the most widely read unsigned work in the language."
