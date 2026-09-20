@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 86 · last updated 2026-09-20 07:02 PDT
+   Version 87 · last updated 2026-09-20 16:38 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -138,12 +138,18 @@ const SERLINE = g => {
   return sentence;
 };
 
-/* series groups, in catalogue order, standalones last */
+/* Series groups, newest first, standalones last.
+   Sorted on the HIGHEST book number in each series, not the lowest. A series
+   is as new as its most recent story: The Ghariban opens at 13 but ran to 62,
+   so sorting on the first book would file it last, below series whose whole
+   run finished before it did. One list order, used by the rail, the phone's
+   series picker and the All series block, so the three never disagree. */
 const GROUPS = (()=>{
   const g = SERIES.map(s=>({name:s.title.split(" · ")[0], books:s.books.slice().sort((a,b)=>a-b), syn:s.syn}));
   const held = new Set(g.flatMap(x=>x.books));
   const solo = BOOKS.filter(b=>!held.has(b.n)).map(b=>b.n);
-  g.sort((a,b)=>a.books[0]-b.books[0]);
+  const newest = x => x.books[x.books.length-1];
+  g.sort((a,b)=>newest(b)-newest(a));
   if (solo.length) g.push({name:"Standalone", books:solo, syn:""});
   return g;
 })();
