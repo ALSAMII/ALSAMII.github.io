@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 78 · last updated 2026-09-19 16:20 PDT
+   Version 81 · last updated 2026-09-19 18:50 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -786,16 +786,16 @@
 #royaLibrary .abt > .ab-terms{z-index:30}
 #royaLibrary .ab-mark{display:inline-flex; align-items:center; gap:.7em;
   font-size:2rem; color:var(--ochre)}
-#royaLibrary .ab-orn{width:2.6em; height:1.05em; flex:0 0 auto}
-/* 2rem, which is what .ab-gh h3 below sets for Noir, Transgressive and the
-   rest — the labels and the headings now read at one size. Two things gave way
-   to let a letter-spaced uppercase line sit there: the tracking comes down
-   from .3em, which is a caption's tracking at eleven pixels and a hoarding's
-   at thirty-two; and the ornaments grow with the type, since a diamond built
-   for an eleven-pixel line looks like a speck beside a thirty-two. */
-#royaLibrary .ab-mark b{font-family:var(--cond); font-weight:600; font-size:2rem;
-  letter-spacing:.1em; text-indent:.1em; line-height:1.15;
-  text-transform:uppercase; color:var(--ochre); white-space:nowrap;}
+#royaLibrary .ab-orn{width:1.7em; height:.7em; flex:0 0 auto}
+/* Set exactly as .ab-gh h3 below sets Noir and Transgressive: the book face,
+   weight 500, 2rem, the light gold. Nothing else — no uppercase, no tracking,
+   no condensed face. The previous pass matched only the size and kept the
+   letter-spaced Jost capitals, which at thirty-two pixels reads as a hoarding
+   rather than as a heading; the whole style has to come across, not one
+   measurement of it. */
+#royaLibrary .ab-mark b{font-family:var(--book); font-weight:500; font-size:2rem;
+  letter-spacing:0; text-indent:0; line-height:1.1;
+  text-transform:none; color:var(--gold-lt); white-space:nowrap;}
 #royaLibrary .ab-group{margin:0 0 2.4rem}
 #royaLibrary .ab-gh{border-left:2px solid var(--ochre); padding:.35rem 0 .35rem 1.1rem; margin:0 0 1.2rem}
 #royaLibrary .ab-gh h3{margin:0; font-family:var(--book); font-weight:500; font-size:2rem; line-height:1.1; color:var(--gold-lt)}
@@ -1270,27 +1270,16 @@
    Two arrangements only, and they are the same parts turned through ninety
    degrees: on a page the cover keeps the left and the words take the right; on
    a handset the cover leads and the words fall underneath. */
-#royaLibrary .ab-feat--stage .pl{position:relative; overflow:hidden; border:0;
-  background:#0c0a08; container-type:inline-size;}
-#royaLibrary .ab-feat--stage .pl-haze{position:absolute; inset:0; z-index:0;
-  background:var(--plate-tall) center center/cover no-repeat;
-  /* the haze is a ground, not a picture: it is faded off at every edge so the
-     panel has no border of its own, and a wash over the middle keeps it from
-     ever competing with the type that stands on it */
-  -webkit-mask-image:radial-gradient(118% 108% at 50% 44%, #000 34%, rgba(0,0,0,.55) 72%, transparent 100%);
-  mask-image:radial-gradient(118% 108% at 50% 44%, #000 34%, rgba(0,0,0,.55) 72%, transparent 100%);}
-#royaLibrary .ab-feat--stage .pl-haze::after{content:""; position:absolute; inset:0;
-  background:linear-gradient(to bottom, rgba(12,10,8,.5) 0%, rgba(12,10,8,.26) 38%,
-    rgba(12,10,8,.44) 78%, rgba(12,10,8,.72) 100%);}
+/* No ground of its own. The panel used to lay the painting down behind the
+   board, thrown out of focus and dimmed — and a dimmed rectangle on a page
+   that already has a texture of its own is a rectangle, however softly its
+   edges are faded. The board carries the picture; the page carries the ground;
+   the two do not need a third thing between them. */
+#royaLibrary .ab-feat--stage .pl{position:relative; border:0; background:none;
+  container-type:inline-size;}
+#royaLibrary .ab-feat--stage .pl-haze{display:none}
 #royaLibrary .ab-feat--stage .pl-stack{position:relative; z-index:1;
   display:flex; align-items:center;}
-
-#royaLibrary .ab-feat--stage .pl{
-  -webkit-mask-image:linear-gradient(to right, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%);
-  mask-image:linear-gradient(to right, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%);
-  -webkit-mask-composite:source-in; mask-composite:intersect;}
 
 /* ── the cover ──
    Board, not paper: a hair of radius at the corners, a spine shadow down the
@@ -1305,23 +1294,9 @@
     inset -2px 0 0 rgba(233,211,162,.14),
     0 18px 40px -16px rgba(0,0,0,.78),
     0 3px 10px -4px rgba(0,0,0,.6);}
-/* The foot of the picture carries a wash in its own black, so the strapline
-   printed there has something to sit on. The head used to carry one too, for a
-   title set into the board — but the panel already sets that title beside the
-   picture, and printing it twice was the one thing the design did not need. It
-   went, and the wash that existed only to hold it went with it: what is left at
-   the head of the board is the painter's own dark, unretouched. */
-#royaLibrary .ab-feat--stage .pl-cover::after{content:""; position:absolute;
-  left:0; right:0; bottom:0; height:16%; z-index:0; pointer-events:none;
-  background:linear-gradient(to top, rgba(8,6,5,.88) 0%, rgba(8,6,5,.7) 45%,
-    rgba(8,6,5,.28) 76%, rgba(8,6,5,0) 100%);}
-#royaLibrary .ab-feat--stage .cv-foot{position:absolute; left:6%; right:6%;
-  bottom:3.8%; z-index:1; text-align:center;
-  font-family:var(--cond); font-weight:600; font-size:2.2cqw;
-  letter-spacing:.2em; text-indent:.2em; text-transform:uppercase;
-  color:rgba(233,211,162,.82); line-height:1.5;
-  text-shadow:0 1px 3px rgba(0,0,0,.8);}
-
+/* The board is bare: no title, no strapline, no wash to hold either. Every
+   line that was printed across the picture has moved off it, and the picture
+   is the better for it \u2014 it was painted to be looked at, not written on. */
 /* ── the words ── */
 #royaLibrary .ab-feat--stage .pl-side{display:flex; flex-direction:column;
   min-width:0;}
@@ -1403,19 +1378,9 @@
 @media (max-width:1149.98px){
   #royaLibrary .ab-feat--stage .pl-stack{padding:2.6rem 1.1rem 2.8rem;
     flex-direction:column; gap:1.9rem; align-items:stretch;}
-  /* the ground is meant to be seen here: the theatre stands behind the board
-     rather than under it, so the wash over it is lighter than the page's */
-  #royaLibrary .ab-feat--stage .pl-haze::after{
-    background:linear-gradient(to bottom, rgba(12,10,8,.38) 0%, rgba(12,10,8,.14) 34%,
-      rgba(12,10,8,.3) 74%, rgba(12,10,8,.62) 100%);}
   #royaLibrary .ab-feat--stage .pl-shelf{display:flex; align-items:center;
     justify-content:center;}
   #royaLibrary .ab-feat--stage .pl-cover{flex:0 0 auto; width:62%}
-  /* nothing is printed on the board here, so the wash that would have held it
-     goes too — an unlit band across the foot of a picture with no type on it
-     is just a smudge */
-  #royaLibrary .ab-feat--stage .pl-cover::after{display:none}
-  #royaLibrary .ab-feat--stage .cv-foot{display:none}
   #royaLibrary .ab-feat--stage .pl-side{gap:1.2rem; align-items:center;
     text-align:center;}
   #royaLibrary .ab-feat--stage .pl-t{align-items:center; gap:.15rem}
@@ -1500,23 +1465,21 @@
 :root[data-lt="light"] #royaLibrary .ft-cta:hover{background:var(--oxblood); color:#f2e7cd}
 
 /* ── The Delgoshā on paper ──
-   This panel is an object rather than a page: a board cover standing in its
-   own light. An object does not change colour because the room did, so it
-   keeps the night values on the light theme and the paper simply surrounds it.
-
-   What does change is the edge. On the dark theme the panel dissolves into the
-   ground, which is the same near-black; on paper it cannot — a black fading
-   into cream is a grey halo, not a blend — so there it becomes a plate, with
-   corners and a shadow, and reads as something laid on the page. */
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl{background-color:#0c0a08;
-  border:0; border-radius:3px; box-shadow:0 14px 34px -18px rgba(46,38,24,.55),
-  0 2px 8px -4px rgba(46,38,24,.35); -webkit-mask-image:none; mask-image:none;}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-t{color:#e9d3a2}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-t .ft-fa{color:#dcc28c}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q{color:#efdcb4}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-body p{color:#d8ccb4}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .ft-cta{background:rgba(99,29,25,.6);
-  color:#e9d3a2; border-color:rgba(199,148,61,.62)}
+   The panel has no ground of its own now, so on the light theme the words
+   stand on the page's own paper and take the page's own ink. Only the board
+   keeps its night values, because a printed board is dark whatever room it is
+   held in. */
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl{background:none; border:0;
+  box-shadow:none}
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-t{color:#8a6420}
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-t .ft-fa{color:#9b7430}
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q{color:#4a3a1d}
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-body p{color:#2e2618}
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q::before,
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q::after{
+  background:linear-gradient(to right, transparent, rgba(140,42,34,.5), transparent)}
+:root[data-lt="light"] #royaLibrary .ab-feat--stage .ft-cta{background:rgba(99,29,25,.1);
+  color:#631d19; border-color:rgba(99,29,25,.4)}
 :root[data-lt="light"] #royaLibrary .ab-feat--stage .ft-cta:hover{background:var(--oxblood);
   color:#f2e7cd}
 
@@ -1756,11 +1719,9 @@
    again: at 376px of layout width RECOMMENDED SERIES is the longest label the
    section has, and .1em would leave the rules either side of it with nothing. */
 #royaLibrary .mob-sec .ab-mark{gap:.42em; font-size:1.5rem}
-#royaLibrary .mob-sec .ab-mark b{font-size:1.5rem; letter-spacing:.03em;
-  text-indent:.03em}
-/* and the diamonds come in with them: at 2.1em the pair alone took a hundred
-   of the three hundred and forty-nine pixels a 320px phone has to give */
-#royaLibrary .mob-sec .ab-orn{width:1.55em; height:.66em}
+#royaLibrary .mob-sec .ab-mark b{font-size:1.5rem; letter-spacing:0; text-indent:0}
+/* the diamonds are sized off the label now, so they follow it down */
+#royaLibrary .mob-sec .ab-orn{width:1.5em; height:.62em}
 /* ── cover zoom ──
    The magnifier on a plate opens the front cover large, and the reader can
    walk the whole shelf from in here — the old All Covers overlay could only

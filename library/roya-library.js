@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 79 · last updated 2026-09-19 16:38 PDT
+   Version 83 · last updated 2026-09-19 19:38 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -107,7 +107,7 @@ const pad2 = n => String(n).padStart(2,"0");
 const cov  = n => basePath() + "library/covers/" + pad2(n) + ".webp";
 /* the second render: front-and-spine beside the back cover, one landscape
    image. Same numbering as the covers themselves. */
-const pair = n => basePath() + "covers/pairs/" + pad2(n) + ".jpg";
+const pair = n => basePath() + "covers/pairs/" + pad2(n) + ".webp";
 const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const sName = b => b.series ? b.series.split(" · ")[0].split(" ناگفته")[0] : "Standalone";
 /* the rail reads in English; a trailing Persian phrase belongs on the page,
@@ -608,7 +608,7 @@ const SERIESFEAT = [
      prose set to the design ChewZ drew for each series. Nothing here is
      written — every line is the series' own. */
   { key:"From the Delgosh\u0101", en:"The Delgosh\u0101", fa:"\u062f\u0644\u06af\u0634\u0627",
-    art:"assets/series-delgosha-cover.webp", artTall:"assets/series-delgosha-haze.webp", start:75,
+    art:"assets/series-delgosha-cover.webp", start:75,
     startFa:"\u0686\u0634\u0645\u200c\u0627\u0646\u062f\u0627\u0632 \u06f1\u06f4\u06f0\u06f4", vol:"Book Three",
     books:[68,70,75,77,79,82,87,91],
     /* the theatre, with the words standing in the dark half of the plate.
@@ -616,7 +616,6 @@ const SERIESFEAT = [
        the picture's, not the page's, and only about four lines of it can be
        read at the size the rest of the section uses. */
     feat:{ kind:"stage", cta:"Start the series here", ratio:"920/1380",
-      strap:"Stories live longer underground",
       quote:"Delgosh\u0101 means heart-opening. It is the title of the funniest book in Persian, the surname of the funniest man in Iran, and in both cases the best parts have been left out.",
       body:[
         "Manuchehr Delgosh\u0101 \u2014 Manu \u2014 is the most famous underground comedian in the country, and nobody has seen his face. Forty basements a week, no byline, no fee: an empire built from a chair at three in the morning.",
@@ -724,9 +723,7 @@ function featPanel(f, sb){
         <div class="pl-haze" aria-hidden="true"></div>
         <div class="pl-stack">
           <div class="pl-shelf">
-            <div class="pl-cover" role="img" aria-label="${esc(f.en)} \u2014 cover">
-              ${fe.strap ? `<span class="cv-foot cv-foot--strap" aria-hidden="true">${esc(fe.strap)}</span>` : ""}
-            </div>
+            <div class="pl-cover" role="img" aria-label="${esc(f.en)} \u2014 cover"></div>
           </div>
           <div class="pl-side">
             ${title}
@@ -1458,7 +1455,7 @@ try{
 
   /* ── a cover that is not there yet ──
      The section shows the flat front from library/covers/NN.webp and the 3D
-     pair from covers/pairs/NN.jpg. A book published without one of those would
+     pair from covers/pairs/NN.webp. A book published without one of those would
      show a broken image in the grid, on the card, in the record and in the
      enlarged view — four places, all silent until someone looks. The site's own
      art loader walks a chain of candidates for exactly this reason; this does
@@ -1466,6 +1463,10 @@ try{
      not bubble and the frame is rebuilt on every draw. */
   const COVER_FALLBACK = [
     [/library\/covers\/(\d{2})\.webp/, "covers/$1.jpg"],
+    /* the pair is WebP now; the JPEG stays reachable as the first fallback
+       while the old files are still on the server, and the flat front is the
+       last resort after that */
+    [/covers\/pairs\/(\d{2})\.webp/,   "covers/pairs/$1.jpg"],
     [/covers\/pairs\/(\d{2})\.jpg/,    "library/covers/$1.webp"],
     [/library\/art\/start-(\d{2})\.webp/, "assets/start-$1.webp"]
   ];
