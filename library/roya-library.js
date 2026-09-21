@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 88 · last updated 2026-09-20 17:20 PDT
+   Version 89 · last updated 2026-09-20 17:52 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -765,13 +765,14 @@ const SERIESFEAT = [
         "Then Roshanak Azimi turns up \u2014 street-smart, twenty-two, single digits out of six hundred thousand in the national examination. Together they build Romanu: attached to nobody, given away free, and within a decade the most widely read unsigned work in the language."
       ] } },
   { key:"From the Unsaid", en:"The Unsaid", fa:"\u0646\u0627\u06af\u0641\u062a\u0647",
-    /* -wide-4: the same plate with the painter's red thread taken out of the
+    /* -wide-5: the painted title lifted 34px, and the painter's red thread taken
+       out of the
        flat dark field on the right, where the synopsis stands. It ran directly
        under the words and read as a rule belonging to them. The thread is
        untouched in the artwork itself, and tapers out as it always did.
        A new number rather than the same name: the plate URL carries no ?v=,
        so a browser holding -3 would go on serving the old one. */
-    art:"assets/series-unsaid-wide-4.webp", artTall:"assets/series-unsaid-tall-3.webp", start:89,
+    art:"assets/series-unsaid-wide-5.webp", artTall:"assets/series-unsaid-tall-3.webp", start:89,
     startFa:"\u0633\u0647 \u063a\u0644\u0637\u060c \u06cc\u06a9 \u062f\u0631\u0633\u062a", vol:"Book Five",
     books:[78,80,83,86,89,92,94],
     /* the picture stands on the left and the words on the right, the way the
