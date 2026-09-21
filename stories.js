@@ -1189,6 +1189,18 @@ const STORIES = [
     synopsis: "When a government shuts off the internet, somebody has to do it. He is the engineer who does. His trade is the round trip — send a signal out, count how long it takes to come back — and the longest one on his screen reaches the country where his daughter now lives. Then he is ordered to take his own country offline, and finds the job is not a wall but a list: hospitals, ambulances, banks, customs, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep, each one travelling a road he closed himself."
   },
 
+  {
+    num: 95,
+    title: "The Eye Was the Lie",
+    words: "16,700 words",
+    hook: "She reads the last eight seconds of people\u2019s lives, and the file on Emmett Pike has two people in it",
+    door: "Dose",
+    room: "The Slowest Tenth \u2014 four years spent proving you are worse than you are, because a car that believes it hands back four-tenths of a second",
+    key: "The Thirty Hours \u2014 a root, a dark room, and roughly one person in three hundred who does not come back",
+    notes: [2, 2, 3],
+    synopsis: "Iris Amador reads the last eight seconds of people\u2019s lives for a living: when a car decides it cannot handle what is in front of it, it gives the wheel back, and she watches what the person does with the time. Almost always they do nothing, and she takes that report to the family herself, because somebody should. Then she opens a file on a man named Emmett Pike and finds two people in it \u2014 a profile putting his reactions in the slowest tenth of the population, and a last nine-tenths of a second that says something else entirely. The discrepancy takes her east past Twentynine Palms to nineteen people on failed homesteads who have spent four years deliberately failing the same tests, because a car that believes you are slow gives you more warning, and warning is the last thing a private person can still buy."
+  },
+
 ];
 
 
@@ -1428,7 +1440,7 @@ const TRILOGIES = [
   {
     title: "Come In, the Water Is Lovely",
     label: "",
-    books: [93],
+    books: [93, 95],
     /* No count on the row. The author's note calls this a set of five
        and only the first has been published, so "1 of 1" would be true
        of the shelf and wrong about the book; the heading gathers it
