@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 89 · last updated 2026-09-20 17:52 PDT
+   Version 90 · last updated 2026-09-20 18:40 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -325,9 +325,9 @@ const SERIES_SYN = {
     dev:  "<svg viewBox=\"0 0 600 22\" preserveAspectRatio=\"none\" aria-hidden=\"true\" class=\"sv-svg\" style=\"height:22px\"><defs><pattern id=\"svo\" width=\"30\" height=\"22\" patternUnits=\"userSpaceOnUse\"><path d=\"M15 5 L21 11 L15 17 L9 11 Z\" fill=\"none\" stroke=\"var(--sv-soft)\" stroke-width=\"1\"/><circle cx=\"15\" cy=\"11\" r=\"1.4\" fill=\"var(--sv-mark)\"/></pattern></defs><line x1=\"0\" y1=\"2\" x2=\"600\" y2=\"2\" stroke=\"var(--sv-mark)\" stroke-width=\"1.2\"/><line x1=\"0\" y1=\"20\" x2=\"600\" y2=\"20\" stroke=\"var(--sv-mark)\" stroke-width=\"1.2\"/><rect width=\"600\" height=\"22\" fill=\"url(#svo)\"/></svg>"
   },
   "Come In, the Water Is Lovely": {
-    lede: "The title is what somebody says from the water to a person standing on the tiles with their arms folded. A small warm dare, and a lie about the temperature. Everyone has stood on both sides of that sentence, which is the entire reason it is the title. One novella carries it, and it is exactly that — an invitation into a room you could leave at any second and do not:",
-    cap:  "four people with their shoes in their hands, and an empty bath",
-    body: "The way out is a rite the four of them keep. What opens it is the hour: sixty minutes a day with no screen, no book, no music and nothing whatever to do. The room is the drained bath they sit in to do it. Ninety minutes long, and the shortest way into everything the other ninety-three books are about. One story, four people, and a rule none of them can explain to anybody outside the room. It is the lightest book on the shelf and the one most likely to make you try the hour yourself.",
+    lede: "The title is what somebody says from the water to a person standing on the tiles with their arms folded. A small warm dare, and a lie about the temperature. Everyone has stood on both sides of that sentence, which is the entire reason it is the title. The books carry it plainly — an invitation into a room you could leave at any second and do not:",
+    cap:  "nobody is ever pushed, and nobody refuses",
+    body: "The way out is a practice somebody keeps on purpose — an hour a day with no screen and nothing to do, or four years of deliberately failing a test. What opens it is small and deliberate every time: the hour, a bucket and a card, a root and thirty hours in the dark. The room is what is left once the thing that was never counted has quietly gone. The author calls it one question asked five times, in five places, about five different things a person can lose while their life is measurably improving; two of the five are here. Nothing in them raises its voice, and nobody is ever pushed.",
     dev:  "<svg viewBox=\"0 0 600 22\" preserveAspectRatio=\"none\" aria-hidden=\"true\" class=\"sv-svg\" style=\"height:22px\"><circle cx=\"300\" cy=\"11\" r=\"2.4\" fill=\"var(--sv-hi)\"/><ellipse cx=\"300\" cy=\"11\" rx=\"34\" ry=\"1.3\" fill=\"none\" stroke=\"var(--sv-mark)\" stroke-width=\"1.2\"/><ellipse cx=\"300\" cy=\"11\" rx=\"88\" ry=\"3.4\" fill=\"none\" stroke=\"var(--sv-mark)\" stroke-width=\"1.2\"/><ellipse cx=\"300\" cy=\"11\" rx=\"150\" ry=\"5.8\" fill=\"none\" stroke=\"var(--sv-soft)\" stroke-width=\"1.2\"/><ellipse cx=\"300\" cy=\"11\" rx=\"220\" ry=\"8.5\" fill=\"none\" stroke=\"var(--sv-faint)\" stroke-width=\"1.2\"/></svg>"
   },
   "Thursday Nights": {
