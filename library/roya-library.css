@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 87 · last updated 2026-09-20 07:02 PDT
+   Version 88 · last updated 2026-09-20 17:20 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -640,7 +640,9 @@
   line-height:1; color:var(--ochre-muted); font-variant-numeric:tabular-nums;}
 #royaLibrary .ab-sn{font-family:var(--slab); font-weight:700; font-size:1.0625rem;
   line-height:1.1; letter-spacing:-.008em; text-transform:uppercase; color:var(--gold-lt);}
-#royaLibrary .ab-sd{font-family:var(--book); font-weight:400; font-size:.9375rem;
+/* Up from 1.0625rem: this line is the only description of a series anyone
+   reads on that table, and it was set smaller than the page around it. */
+#royaLibrary .ab-sd{font-family:var(--book); font-weight:400; font-size:1.25rem;
   line-height:1.35; color:var(--t-copy); min-width:0;}
 #royaLibrary .ab-sc{font-family:var(--cond); font-weight:600; font-size:.625rem;
   letter-spacing:.2em; text-transform:uppercase; color:var(--t-pub); white-space:nowrap;}
@@ -1003,9 +1005,15 @@
    down to clear the edge, with a dark wash behind it that fades out into the
    sky so the gold has something to sit on and the picture is not cut by a
    hard band. */
+/* Handset only — .pl-t is display:none from 1150 up, where the plate carries
+   its own title. Up from the picture: less above the words, more below them,
+   so the Persian is not sitting on the artwork. */
 #royaLibrary .ab-feat--split .pl-t{display:flex; position:absolute; z-index:2;
   left:0; right:0; top:0; align-items:center; text-align:center;
-  padding:1.9rem 1.4rem 2.6rem; gap:.3rem;
+  /* Was 1.15rem over and 3.4rem under. The title sat down on the picture; it
+     now starts higher and the wash below it runs further, so the Persian has
+     air between it and the artwork instead of resting on it. */
+  padding:.6rem 1.4rem 4.1rem; gap:.3rem;
   background:linear-gradient(to bottom,
     rgba(7,6,5,.94) 0%, rgba(7,6,5,.9) 46%, rgba(7,6,5,.62) 76%,
     rgba(7,6,5,.22) 92%, rgba(7,6,5,0) 100%);}
@@ -1113,8 +1121,10 @@
      the words still sit under the picture, at the page's own size. */
   #royaLibrary .ab-feat--split .pl-words{padding:1.8rem 2rem .8rem; gap:1.15rem}
   #royaLibrary .ab-feat--split .pl-way{padding:0 2rem 2.2rem; gap:1rem}
-  #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
+  #royaLibrary .ab-feat--split .pl-q{font-size:1.5rem}
+  /* Up from 1.4rem. Below 1440 the words stand under the picture rather than
+     inside it, so nothing here has to be kept clear of the plate's foot. */
+  #royaLibrary .ab-feat--split .pl-body p{font-size:1.62rem; line-height:1.58}
 }
 
 /* ══ 1440 to 1900: the whole block stands inside the picture ══
@@ -1125,14 +1135,25 @@
    which the block lands just inside the foot of the picture; the clamp stops
    it going over the 20px the rest of the page uses on a wide screen. */
 @media (min-width:1440px){
-  #royaLibrary .ab-feat--split .pl-words{margin:-28.2% 3.5% 0 47.5%;
-    padding:0; gap:.9cqw}
-  #royaLibrary .ab-feat--split .pl-way{margin:.9cqw 3.5% 0 47.5%;
-    padding:0 0 2rem; gap:.8cqw}
-  #royaLibrary .ab-feat--split .pl-q{font-size:clamp(.9375rem, 1.36cqw, 1.35rem);
-    line-height:1.45}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:clamp(.875rem, 1.26cqw, 1.25rem);
-    line-height:1.55}
+  /* pulled up further than before: the type below is larger, and the room for
+     it has to come from somewhere inside the picture's own dark field */
+  /* Pulled up again, from 31.5% to 34%. With the larger type the block was
+     finishing 15px below the plate's foot at 1440 and 9px below at 1500 — the
+     bottom of this band is where the field is shortest, and it is the width
+     that decides how far the pull has to go. */
+  #royaLibrary .ab-feat--split .pl-words{margin:-34% 3.5% 0 47.5%;
+    padding:0; gap:.8cqw}
+  #royaLibrary .ab-feat--split .pl-way{margin:.85cqw 3.5% 0 47.5%;
+    padding:0 0 2rem; gap:.75cqw}
+  #royaLibrary .ab-feat--split .pl-q{font-size:clamp(1rem, 1.62cqw, 1.6rem);
+    line-height:1.42}
+  /* Up from 1.5cqw / 1.5rem. The room came from the quote line above, which is
+     gone: at a 1600 window the block was already finishing 5px BELOW the foot
+     of the picture, so there was nothing spare to grow into until it went.
+     Every width from 1440 up is measured — the block has to end inside the
+     plate, which is painted at 40% of the panel's width. */
+  #royaLibrary .ab-feat--split .pl-body p{font-size:clamp(1.05rem, 1.78cqw, 1.8rem);
+    line-height:1.5}
   #royaLibrary .ab-feat--split .pl-body{padding-top:.9cqw}
   #royaLibrary .ab-feat--split .ft-eyebrow{padding-top:.9cqw}
 }
@@ -1153,13 +1174,17 @@
      lower bound, so the pull has to be undone here or it shifts the pinned
      boxes as well */
   #royaLibrary .ab-feat--split .pl-words{position:absolute; z-index:1;
-    left:43.5%; right:2.5%; top:30.6%; margin:0;
-    padding:0; gap:1.02cqw; justify-content:flex-start}
+    left:43.5%; right:2.5%; top:24%; margin:0;
+    padding:0; gap:.94cqw; justify-content:flex-start}
   /* on the page the way in keeps the foot of the field */
   #royaLibrary .ab-feat--split .pl-way{position:absolute; z-index:1;
     left:43.5%; right:2.5%; bottom:4%; margin:0; padding:0; gap:1.1cqw}
-  #royaLibrary .ab-feat--split .pl-q{font-size:1.35rem; line-height:1.5}
-  #royaLibrary .ab-feat--split .pl-body p{font-size:1.25rem; line-height:1.6}
+  /* This band, not the clamp above, is what a wide screen actually gets: it
+     comes later and carries a flat size, so raising the clamp alone changed
+     nothing over 1900. The ceiling here is the button, pinned at 4% from the
+     foot — the words have to stop above it inside the picture's dark field. */
+  #royaLibrary .ab-feat--split .pl-q{font-size:1.55rem; line-height:1.45}
+  #royaLibrary .ab-feat--split .pl-body p{font-size:1.4375rem; line-height:1.56}
   #royaLibrary .ab-feat--split .ft-eyebrow{font-size:max(.625rem, .82cqw)}
   #royaLibrary .ab-feat--split .ft-cta{padding:.8cqw 1.7cqw;
     font-size:max(.625rem, .75cqw); gap:1cqw}
@@ -1359,13 +1384,21 @@
      work, and at a 1600 window the synopsis was landing at 15.7px — correct
      arithmetic, too small to read at arm's length. The growth now comes from
      the cqw term, so a wider window gives bigger type instead of more air. */
-  #royaLibrary .ab-feat--stage .pl-q{font-size:clamp(1.18rem, 1.95cqw, 1.72rem);
-    padding:1.15rem 0; max-width:60ch;}
+  /* max-width gone, both here and on the body below. 60ch and 64ch froze the
+     column at 712px while the side it sits in runs to 879px at a 1920 window
+     and 1088px at 2200 — the empty third of the panel was the cap, not the
+     layout. Sizes up with it: the board beside this is 26.5rem of cover, and
+     the words were being set smaller than the page they stand on. */
+  /* Up again, and the ceiling with it. The cqw term was already past 2rem at
+     a 1738px panel, so the CAP was what held the type down, not the arithmetic:
+     the column runs 1088px at that width and was being set at 32px. */
+  #royaLibrary .ab-feat--stage .pl-q{font-size:clamp(1.4rem, 2.5cqw, 2.4rem);
+    padding:1.25rem 0; max-width:none;}
   #royaLibrary .ab-feat--stage .pl-q::before,
   #royaLibrary .ab-feat--stage .pl-q::after{
     background:linear-gradient(to right, rgba(199,148,61,.5) 0%, rgba(199,148,61,.24) 46%, transparent 100%);}
-  #royaLibrary .ab-feat--stage .pl-body p{font-size:clamp(1.06rem, 1.62cqw, 1.45rem);
-    line-height:1.62; max-width:64ch;}
+  #royaLibrary .ab-feat--stage .pl-body p{font-size:clamp(1.25rem, 2.1cqw, 2.05rem);
+    line-height:1.58; max-width:none;}
   #royaLibrary .ab-feat--stage .pl-way{margin-top:.45rem}
 }
 
