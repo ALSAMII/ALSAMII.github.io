@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 90 · last updated 2026-09-20 18:40 PDT
+   Version 92 · last updated 2026-09-21 19:42 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1157,11 +1157,27 @@ function mobSheet(){
   </div>`;
 }
 
+/* One option in the phone's series picker.
+
+   The name is set in the reading face, not the control face the list used to
+   borrow: a series name is a title, and every other title on the site is
+   Garamond. The count goes in its own element so the two lay out as a pair —
+   name left, figure right, tabular so the column is straight — which is the
+   same arrangement railRow() already uses in the desktop sidebar.
+
+   Order is GROUPS' order, newest series first; All series heads the list and
+   the stand-alones close it, so the fourteen runs sit together between them. */
+function pickRow(key, label, n){
+  return `<button type="button" role="option" data-filter="${esc(key)}"
+            aria-selected="${filter===key}"><span>${esc(label)}</span><i>${n}</i></button>`;
+}
+
 function mobile(){
   const rows = libraryRows();
   const names = GROUPS.filter(g=>g.name!=="Standalone").map(g=>g.name);
   return `
-  <div class="mob">
+  <div class="mob${pickOpen ? ' is-picking' : ''}">
+    ${pickOpen ? `<div class="pick-scrim" aria-hidden="true"></div>` : ``}
     <div class="mob-head">
     <header class="mob-bar">
       <span class="mob-lock">
@@ -1213,9 +1229,9 @@ function mobile(){
           ${DICON.caret}
         </button>
         ${pickOpen ? `<div class="pick-list" role="listbox" aria-label="Browse by series">
-          <button type="button" role="option" data-filter="all" aria-selected="${filter==='all'}">All series</button>
-          <button type="button" role="option" data-filter="Standalone" aria-selected="${filter==='Standalone'}">Stand alone</button>
-          ${names.map(n=>`<button type="button" role="option" data-filter="${esc(n)}" aria-selected="${filter===n}">${esc(railName(n))}</button>`).join("")}
+          ${pickRow("all", "All series", BOOKS.length)}
+          ${names.map(n=>pickRow(n, railName(n), countOf(n))).join("")}
+          ${pickRow("Standalone", "Stand alone", soloCount())}
         </div>` : ``}
       </span>
       <button class="sortbox" type="button" data-sort="1">Sort: ${sortDesc ? "Newest" : "Number"} ${DICON.caret}</button>
