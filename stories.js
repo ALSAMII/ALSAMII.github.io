@@ -1,4 +1,4 @@
-/* Version 444 · last updated 2026-09-16 07:18 PDT */
+/* Version 446 · last updated 2026-09-21 17:24 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1192,7 +1192,7 @@ const STORIES = [
   {
     num: 95,
     title: "The Eye Was the Lie",
-    words: "16,700 words",
+    words: "18,100 words",
     hook: "She reads the last eight seconds of people\u2019s lives, and the file on Emmett Pike has two people in it",
     door: "Dose",
     room: "The Slowest Tenth \u2014 four years spent proving you are worse than you are, because a car that believes it hands back four-tenths of a second",
