@@ -1,4 +1,4 @@
-/* Version 446 · last updated 2026-09-21 17:24 PDT */
+/* Version 447 · last updated 2026-09-21 19:58 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1200,6 +1200,17 @@ const STORIES = [
     notes: [2, 2, 3],
     synopsis: "Iris Amador reads the last eight seconds of people\u2019s lives for a living: when a car decides it cannot handle what is in front of it, it gives the wheel back, and she watches what the person does with the time. Almost always they do nothing, and she takes that report to the family herself, because somebody should. Then she opens a file on a man named Emmett Pike and finds two people in it \u2014 a profile putting his reactions in the slowest tenth of the population, and a last nine-tenths of a second that says something else entirely. The discrepancy takes her east past Twentynine Palms to nineteen people on failed homesteads who have spent four years deliberately failing the same tests, because a car that believes you are slow gives you more warning, and warning is the last thing a private person can still buy."
   },
+  {
+    num: 96,
+    title: "Charles Bonnet",
+    words: "25,000 words",
+    hook: "Forty years of syrup have taken his eyes, and the dark it left behind has started putting his brother in the chair",
+    door: "Dose",
+    room: "The Full Room — the audience he never had, assembled in the dark out of forty years of his own looking, every one of them with its back to him",
+    key: "The Syrup — a codeine linctus poured at ten to eleven every night for forty years, reformulated twice by people he cannot ask, which bought him the third hour and then took the middle of his sight",
+    notes: [2, 2, 3],
+    synopsis: "He is sixty-seven, he has written four hundred thousand jokes, and he has never said one out loud. The syrup did it — a codeine linctus poured at ten to eleven every night for forty years, which bought him the third hour and has now taken the middle of his sight. He cannot read his own handwriting, so the notebooks stop and he records instead, numbered by a machine that keeps the pauses. Then the dark fills, the way it does for as many as one in three people who lose a large part of their sight and almost never say so. His arrive in the evening: brickwork, then tile, then pages of beautiful writing he cannot read. Then, at three in the morning, in the chair where something has been setting jokes in front of him since he was twenty-seven, it sets down his brother — gone twenty years, arrested for eleven words Manu wrote and could not claim, sitting on the arm of the sofa with notes, wrong about the third beats, and not there."
+  },
 
 ];
 
@@ -1357,11 +1368,12 @@ const TRILOGIES = [
        notebook the frame never promised. The label stays empty
        rather than counting anything, for exactly this reason: a
        septet that gains an eighth was never a septet, it was just
-       seven until it wasn't.
+       seven until it wasn't — and No. 96 has now made the same point
+       about eight.
 
        No banner — the covers stand side by side. */
     label: "",
-    books: [68, 70, 75, 77, 79, 82, 87, 91],
+    books: [68, 70, 75, 77, 79, 82, 87, 91, 96],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
@@ -1371,7 +1383,7 @@ const TRILOGIES = [
        panel still shows the whole set, which is the part that is
        true. The ordered groups below keep their numbering. */
     numbered: false,
-    synopsis: "Seven notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh.\n\nThe form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution.\n\nA joke is the only sentence in the language that can travel without a sender.\n\nThe fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. On the seventh she is in Los Angeles, working in a language that hears her before it hears the joke, and a researcher writes to say she knows who Romanu is.\n\nIn the old story the vow ends on the seventh day and the prince speaks. These were the seven days — until an eighth notebook turned up eleven years later, kept by a man who spent forty years mocking everything except the people in front of him, and who a funeral, in front of four hundred people, handed the one name he never once used on himself."
+    synopsis: "Nine notebooks kept by the most widely read unpublished writer in the Persian language. Manuchehr Delgoshā supplies the jokes a country repeats and has never put his name on one — until his younger brother says eleven of his words out loud, in a basement, under his own name, and does not come home. Then those words come loose and stop belonging to anybody. Then a woman who was ninth out of six hundred thousand asks him for nine minutes she is not permitted to say herself. Then, at fifty-four, he begins to laugh.\n\nThe form is Obeid Zakani's fourteenth-century Resāleh-ye Delgoshā, bowdlerised in every edition printed since and its omissions marked with rows of dots; the frame is the old story of seven ministers telling tales one day at a time to hold off an execution.\n\nA joke is the only sentence in the language that can travel without a sender.\n\nThe fifth is not his. It is kept by the woman he wrote nine minutes for, who left, and who is now working two rooms a night four thousand kilometres away. The sixth is the one he does not want an answer to: five months spent asking a machine for the joke he has just written, to find out whether the difference is a gift or a habit. On the seventh she is in Los Angeles, working in a language that hears her before it hears the joke, and a researcher writes to say she knows who Romanu is.\n\nIn the old story the vow ends on the seventh day and the prince speaks. These were the seven days — until an eighth notebook turned up eleven years later, kept by a man who spent forty years mocking everything except the people in front of him, and who a funeral, in front of four hundred people, handed the one name he never once used on himself. The ninth is not written at all. At sixty-seven the syrup takes his eyes, the notebooks stop, and what follows is spoken into a machine that numbers it and keeps the pauses — a hundred and fourteen entries and one letter, made in the dark by a man who spent forty years putting pictures in other people’s heads and has been left alone with his own."
   },
   {
     /* The only series title here carrying its Persian. The heading is
