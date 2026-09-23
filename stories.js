@@ -1,4 +1,4 @@
-/* Version 453 · last updated 2026-09-22 22:32 PDT */
+/* Version 454 · last updated 2026-09-23 05:36 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -140,15 +140,7 @@ const STORIES = [
     key: "Sublate \u2014 switches off the voice that talks you through your life",
     notes: [3, 2, 1],
     synopsis: "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who's actually in charge. That voice was never their own \u2014 it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes.",
-    audio: "assets/audio/07.mp3",
-    /* The recording plays and downloads, but it has no read/07.sync.json, so
-       nothing lights up as it goes. The alignment for this one would not hold
-       still: four runs at different settings disagreed by up to two and a half
-       minutes, where No. 6 agreed to a twentieth of a second. Its narration
-       also runs 18% slower per word than No. 6's, which points at the file
-       holding something the text does not. Drop this line and the sync file
-       in together if that is ever sorted out. */
-    synced: false
+    audio: "assets/audio/07.mp3"
   },
 
   {
