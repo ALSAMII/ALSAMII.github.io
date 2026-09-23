@@ -84,6 +84,8 @@ TAG_RE = re.compile(r"<[^>]+>")
 # book will eventually carry one.
 ABBREV = r"(?<!\bNo\.)(?<!\bMr\.)(?<!\bMrs\.)(?<!\bMs\.)(?<!\bDr\.)(?<!\bSt\.)(?<!\bvs\.)"
 SENT_SPLIT = re.compile(ABBREV + r"(?<=[.!?])\s+(?=[A-Z0-9“‘])")
+# A section label standing alone: "41.", "IV.", "3)". Not a sentence.
+LABEL_ONLY = re.compile(r"^\s*(?:[0-9]{1,4}|[IVXLCDM]{1,7})[.)]\s*$")
 
 # The only inline tag build-reader.py ever emits into read/NN.json. If a
 # new one is ever added, extend this rather than the regex below.
@@ -207,6 +209,24 @@ def build_fragments(blocks):
                 pos = m.end()
             spans.append((pos, len(stripped)))
             spans = [(s, e) for s, e in spans if stripped[s:e].strip()]
+            # A paragraph that opens with its own number — "41. The Long
+            # Dark was Sonny's idea" — splits after the number, because a
+            # digit and a full stop are exactly what the end of a sentence
+            # looks like. What that leaves is a fragment with no words in
+            # it, and the aligner still has to find a moment of audio for
+            # it: a narrator either says "forty-one" in a quarter of a
+            # second or says nothing at all, and either way the timing of
+            # every sentence after it is worked out from that. The books
+            # that number their sections are full of them — 121 in No. 96,
+            # 67 in No. 97, none at all in Nos. 6 and 7, which do not
+            # number. Fold the label into the sentence it labels.
+            merged = []
+            for a, z in spans:
+                if merged and LABEL_ONLY.match(stripped[merged[-1][0]:merged[-1][1]]):
+                    merged[-1] = (merged[-1][0], z)
+                else:
+                    merged.append((a, z))
+            spans = merged
 
         for si, (s, e) in enumerate(spans):
             orig_start = offsets[s] if s < len(offsets) else len(raw)

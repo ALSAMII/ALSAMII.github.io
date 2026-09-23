@@ -1,4 +1,4 @@
-/* Version 454 · last updated 2026-09-23 05:36 PDT*/
+/* Version 455 · last updated 2026-09-23 07:02 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1220,6 +1220,18 @@ const STORIES = [
     synopsis: "He is sixty-seven, he has written four hundred thousand jokes, and he has never said one out loud. The syrup did it — a codeine linctus poured at ten to eleven every night for forty years, which bought him the third hour and has now taken the middle of his sight. He cannot read his own handwriting, so the notebooks stop and he records instead, numbered by a machine that keeps the pauses. Then the dark fills, the way it does for as many as one in three people who lose a large part of their sight and almost never say so. His arrive in the evening: brickwork, then tile, then pages of beautiful writing he cannot read. Then, at three in the morning, in the chair where something has been setting jokes in front of him since he was twenty-seven, it sets down his brother — gone twenty years, arrested for eleven words Manu wrote and could not claim, sitting on the arm of the sofa with notes, wrong about the third beats, and not there."
   },
 
+  {
+    num: 97,
+    title: "You Get Used to It",
+    words: "18,000 words",
+    hook: "Nine hundred acres of corn ground become a building nobody can name the owner of, and then the lights start going out",
+    door: "Rite",
+    room: "The Window — two hours, notified the evening before, on a rotation. A conservation event is the co-op's word for it. A window is the county's",
+    key: "The Long Dark — one week a year with everything off, on your own breaker, by choice: forty-one households the first year, eleven the third, none the fourth",
+    notes: [1, 1, 3],
+    synopsis: "Darlene Renner has driven Route 6 for twenty-one years and knows every mailbox in Pell County. The spring she turns fifty-three, nine hundred acres of corn ground three miles off her route become a building nobody can name the owner of, the council approves it five to nothing, and the elementary school finally gets a roof that does not leak. Then the lights start going out — not often at first, and not for long, and the report that follows is honest and thorough and blames a piece of software that nobody claims. What comes after is three years in which nothing dramatic occurs: a hum that measures compliant, wells that come up the colour of weak tea, a letter that says we know that not knowing is the hardest part, a schedule that is better than no schedule, and thirty-one dollars a month for any household willing to sign a form whose second paragraph says exactly what it does. Nobody lies to anybody. Nobody is oppressed. Nothing burns. Every single step of it is somebody's good idea."
+  },
+
 ];
 
 
@@ -1460,11 +1472,11 @@ const TRILOGIES = [
   {
     title: "Come In, the Water Is Lovely",
     label: "",
-    books: [93, 95],
+    books: [93, 95, 97],
     /* No count on the row. The author's note calls this a set of five
-       and only the first has been published, so "1 of 1" would be true
-       of the shelf and wrong about the book; the heading gathers it
-       and the number stays off until there is a number worth saying. */
+       and three of them have been published, so a count on the row
+       would be true of the shelf and wrong about the book; the heading
+       gathers them and the number stays off until the set is whole. */
     numbered: false,
     synopsis: "Each year the machine gets better, and the world gets better with it. Not a coincidence and not a trick: it is an intelligence built to reduce the harm we can count, and it is very good at that. Nothing burns, nobody is oppressed, nothing is hidden, and nobody is driving. Every offer it makes is warm and easy to refuse, and nobody refuses. That is the title \u2014 what the people already in the water call to the one still on the edge. In English a friendly lie; in Japan simply true, because the bath is hot and nobody needs persuading. Nobody is ever pushed.\n\nSo what becomes of the parts of a person that were never counted? Anything with a number attached gets a budget, a law, an advocate. Anything without one gets none of that \u2014 not because we decided it was worthless, but because nothing ever reports it missing. We have no instrument for it, and never noticed we were short one.\n\nEach story adds one narrow observation, and they all point at the same thing going quietly out: the ability to raise an alarm and keep it raised. Nothing is censored. Nothing is suppressed. Every alarm is answered \u2014 correctly, kindly, on its merits \u2014 until there is none left that can be held open.\n\nThe driver is not asleep. He is wide awake, both hands on the wheel. Every time he says that looks like a cliff, the voice beside him says something true and specific about the road, and he is satisfied \u2014 and he is right to be satisfied, because the answer was true.\n\nNothing here ever raises its voice. That part is yours."
   },
