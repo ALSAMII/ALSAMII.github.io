@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 92 · last updated 2026-09-22 17:22 PDT
+   Version 93 · last updated 2026-09-22 19:42 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2545,3 +2545,79 @@ body.rl-on #toTop{z-index:71}
 :root[data-lt="light"] #royaLibrary .sv-cap{color:rgba(74,59,33,.72)}
 :root[data-lt="light"] #royaLibrary .sv-foot span{color:rgba(74,59,33,.72)}
 :root[data-lt="light"] #royaLibrary .sv-foot i{color:rgba(96,76,42,.5)}
+
+/* ══════════════ LISTEN, and the two ways to have a recording ══════════════
+   The panel the Listen control opens. Built on the record panel's chrome —
+   same backdrop weight, same plate edge, same close — because it sits in the
+   same z-order and a reader should not have to learn a second kind of
+   overlay. z-index 61: over the enlarged cover (60), which is the only thing
+   a Listen control can be behind. */
+#royaLibrary .lsn{position:fixed; top:var(--labh,0px); left:0; right:0; bottom:0;
+  z-index:61; display:grid; place-items:center; padding:2rem 1.4rem;
+  background:rgba(6,5,4,.93);}
+#royaLibrary .lsn-box{position:relative; width:min(31rem,92vw); max-height:88vh; overflow-y:auto;
+  padding:1.9rem 1.8rem 1.6rem; background:#0f0d09; text-align:left;
+  border:13px solid transparent; border-image:url(edge.png) 30 round;}
+#royaLibrary .lsn-x{position:absolute; top:.9rem; right:1rem; width:2rem; height:2rem;
+  display:grid; place-items:center; padding:0; background:none;
+  border:1px solid rgba(199,148,61,.34); color:var(--t-quiet); cursor:pointer;}
+#royaLibrary .lsn-x svg{width:.85rem; height:.85rem; fill:none; stroke:currentColor; stroke-width:1.6}
+#royaLibrary .lsn-x:hover{color:var(--gold-lt); border-color:var(--ochre)}
+/* the kicker: the headphones and the one word that says what this book has */
+#royaLibrary .lsn-eyebrow{display:flex; align-items:center; gap:.5rem; margin-bottom:.7rem;
+  color:var(--t-kicker);}
+#royaLibrary .lsn-eyebrow svg{width:.95rem; height:.95rem; fill:none; stroke:currentColor;
+  stroke-width:1.5; flex:none}
+#royaLibrary .lsn-eyebrow i{font-style:normal; font-family:var(--cond); font-weight:600;
+  font-size:.5625rem; letter-spacing:.26em; text-transform:uppercase}
+#royaLibrary .lsn-t{margin:0; font-family:var(--book); font-weight:500; font-size:1.7rem;
+  line-height:1.15; color:var(--bone)}
+#royaLibrary .lsn-sub{margin:.3rem 0 1.25rem; font-family:var(--cond); font-weight:500;
+  font-size:.5625rem; letter-spacing:.24em; text-transform:uppercase; color:var(--t-quiet)}
+/* the two choices. One is a button, one is a link, and they have to read as
+   the same kind of thing — so both are laid out here, not by their tag. */
+#royaLibrary .lsn-opt{display:block; width:100%; margin:0 0 .7rem; padding:.95rem 1.05rem;
+  text-align:left; text-decoration:none; cursor:pointer;
+  background:rgba(199,148,61,.05); border:1px solid rgba(199,148,61,.3);
+  transition:border-color .15s, background .15s;}
+#royaLibrary .lsn-opt:last-child{margin-bottom:.2rem}
+#royaLibrary .lsn-opt:hover, #royaLibrary .lsn-opt:focus-visible{
+  background:rgba(199,148,61,.11); border-color:var(--ochre)}
+#royaLibrary .lsn-opt-t{display:block; font-family:var(--cond); font-weight:600;
+  font-size:.6875rem; letter-spacing:.2em; text-transform:uppercase; color:var(--t-read)}
+#royaLibrary .lsn-opt:hover .lsn-opt-t{color:var(--gold-lt)}
+#royaLibrary .lsn-opt-d{display:block; margin-top:.4rem; font-family:var(--book);
+  font-weight:400; font-size:1rem; line-height:1.4; color:var(--t-copy); opacity:.82}
+:root[data-lt="light"] #royaLibrary .lsn{background:rgba(231,221,197,.95)}
+:root[data-lt="light"] #royaLibrary .lsn-box{background:#e9dfc7}
+:root[data-lt="light"] #royaLibrary .lsn-opt{background:rgba(138,101,36,.06);
+  border-color:rgba(138,101,36,.34)}
+:root[data-lt="light"] #royaLibrary .lsn-opt:hover{background:rgba(138,101,36,.13)}
+:root[data-lt="light"] #royaLibrary .lsn-x{border-color:rgba(96,76,42,.42)}
+
+/* The Listen mark on a Pick-a-door row, beside the reading time.
+
+   It has to be the same size as "1.5 HOURS READ" and not be the same thing,
+   so it is nested INSIDE .ab-time and inherits every type setting from it —
+   family, size, tracking, caps — and is separated instead: a hairline rule
+   stands between the two, and the mark itself sits in a thin ruled bracket
+   with the headphones set into it. Gold rather than ochre, so the eye reads
+   it as the newer, brighter fact on a row whose figures are all ochre.
+
+   The rule is drawn with a border on the ::before rather than a character so
+   it stays a true hairline at this size — a middle dot or a pipe at 9px
+   renders as a smudge on the painting these rows are printed over. */
+#royaLibrary .ab-lsn{position:relative; display:inline-flex; align-items:center; gap:.42em;
+  margin-left:1.5em; padding:.26em .62em .22em; font-style:normal; vertical-align:baseline;
+  color:var(--gold-lt); border:1px solid rgba(199,148,61,.42); border-radius:1px;
+  background:rgba(199,148,61,.07);}
+#royaLibrary .ab-lsn::before{content:""; position:absolute; left:-.95em; top:.05em; bottom:.05em;
+  border-left:1px solid rgba(199,148,61,.45);}
+#royaLibrary .ab-lsn svg{width:1.05em; height:1.05em; fill:none; stroke:currentColor;
+  stroke-width:1.6; flex:none; margin-top:-.1em}
+#royaLibrary .ab-lsn b{font:inherit; font-weight:inherit; letter-spacing:inherit}
+#royaLibrary .ab-row:hover .ab-lsn{border-color:var(--ochre); background:rgba(199,148,61,.16)}
+:root[data-lt="light"] #royaLibrary .ab-lsn{color:#5e4718; border-color:rgba(138,101,36,.5);
+  background:rgba(138,101,36,.1)}
+:root[data-lt="light"] #royaLibrary .ab-lsn::before{border-left-color:rgba(138,101,36,.5)}
+:root[data-lt="light"] #royaLibrary .ab-row:hover .ab-lsn{background:rgba(138,101,36,.18)}
