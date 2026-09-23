@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 98 · last updated 2026-09-23 05:52 PDT
+   Version 99 · last updated 2026-09-23 06:06 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -244,7 +244,7 @@
   overflow-y:auto; overflow-x:clip; overscroll-behavior:contain;
   scrollbar-width:none;
   box-shadow:0 30px 70px rgba(0,0,0,.6);
-  background-color:#0b0906; background-image:url("bg-mob.webp?v=502");
+  background-color:#0b0906; background-image:url("bg-mob.webp?v=503");
   background-size:cover; background-position:center center; background-repeat:no-repeat;}
 #royaLibrary .phone::-webkit-scrollbar{display:none}
 /* ── where the phone's backdrop belongs ──
@@ -262,7 +262,7 @@
    but its colour, and must not keep that either — an opaque colour on the
    tall element would paint straight over the plate behind it. */
 @media (max-width: 46rem){
-  #royaLibrary, #royaLibrary .lib{background-image:url("bg-mob.webp?v=502")}
+  #royaLibrary, #royaLibrary .lib{background-image:url("bg-mob.webp?v=503")}
   #royaLibrary .phone{background-image:none; background-color:transparent}
 }
 }
@@ -2666,31 +2666,63 @@ body.rl-on #toTop{z-index:71}
    tests [data-listen] before [data-rec] so the row does not open underneath
    it. The row itself remains the keyboard route to the record, and the
    Listen choice is one step inside that. */
-#royaLibrary .ab-lsn{cursor:pointer; position:relative; display:inline-flex; align-items:center; gap:.42em;
-  margin-left:1.5em; padding:.26em .62em .22em; font-style:normal; vertical-align:baseline;
-  color:var(--gold-lt); border:1px solid rgba(199,148,61,.42); border-radius:1px;
-  background:rgba(199,148,61,.07);}
-#royaLibrary .ab-lsn::before{content:""; position:absolute; left:-.95em; top:.05em; bottom:.05em;
+/* The mark is a ribbon now — a printer's pennant, straight on three sides
+   with a swallowtail cut into the right end, a hairline gold rim following
+   the whole silhouette and a dark red field inside it. It is the one red
+   thing on a page of gold and bone, which is the point: it is the only row
+   element that does something other than open the record.
+
+   Built from two clipped layers rather than a border, because clip-path
+   clips a border away along the diagonals of the notch and leaves the tail
+   unlined. The element itself is the RIM — a solid gold box clipped to the
+   pennant — and ::before is the FIELD, the same pennant inset by a pixel on
+   top of it. What is left showing of the box is a one-pixel rim that follows
+   the notch exactly. The inner notch is pulled out by the same pixel the
+   inset took in, so the rim stays even width all the way to the point.
+
+   ::before was the hairline rule between this and the reading time; that rule
+   is its own element now (.ab-lsn-rule, emitted next to the mark), because a
+   clip-path on the parent also clips its pseudo-elements and the rule sits
+   outside the pennant.
+
+   Size is unchanged from the plain mark it replaces: it still inherits every
+   type setting from .ab-time, and the padding carries the pixel the border
+   used to occupy so the box measures the same. */
+#royaLibrary .ab-lsn-rule{display:inline-block; width:0; height:1.3em;
+  margin:0 .9em 0 .6em; vertical-align:-.32em;
   border-left:1px solid rgba(199,148,61,.45);}
-#royaLibrary .ab-lsn svg{width:1.05em; height:1.05em; fill:none; stroke:currentColor;
-  stroke-width:1.6; flex:none; margin-top:-.1em}
-#royaLibrary .ab-lsn b{font:inherit; font-weight:inherit; letter-spacing:inherit}
-#royaLibrary .ab-row:hover .ab-lsn{border-color:var(--ochre); background:rgba(199,148,61,.16)}
-/* its own state, brighter than the row's, so it reads as the thing under the
-   pointer rather than part of the row lighting up */
-#royaLibrary .ab-lsn:hover{border-color:var(--gold-lt); background:rgba(199,148,61,.24)}
-#royaLibrary .ab-lsn:active{background:rgba(199,148,61,.34)}
-/* a finger needs more than a 9px line: the padding grows on the phone until
-   the mark is a comfortable target, without moving the reading time it sits
-   beside */
+#royaLibrary .ab-lsn{--notch:.5em;
+  cursor:pointer; position:relative; display:inline-flex; align-items:center;
+  gap:.45em; font-style:normal; vertical-align:baseline; border:0;
+  padding:.3em calc(.68em + var(--notch)) .26em .68em;
+  color:var(--bone); background:rgba(199,148,61,.78);
+  clip-path:polygon(0 0, 100% 0, calc(100% - var(--notch)) 50%, 100% 100%, 0 100%);}
+#royaLibrary .ab-lsn::before{content:""; position:absolute; inset:1px; z-index:0;
+  clip-path:polygon(0 0, 100% 0, calc(100% - var(--notch) + 1px) 50%, 100% 100%, 0 100%);
+  background:linear-gradient(90deg, #23100e, #3c1411);}
+#royaLibrary .ab-lsn svg{position:relative; z-index:1; width:1.05em; height:1.05em;
+  fill:none; stroke:var(--gold-lab); stroke-width:1.6; flex:none; margin-top:-.1em}
+#royaLibrary .ab-lsn b{position:relative; z-index:1; font:inherit;
+  font-weight:inherit; letter-spacing:inherit}
+/* the row lighting up brightens the rim; the mark under the pointer goes
+   further, so it still reads as the thing being pointed at */
+#royaLibrary .ab-row:hover .ab-lsn{background:var(--gold)}
+#royaLibrary .ab-row:hover .ab-lsn::before{background:linear-gradient(90deg,#2b1310,#4a1915)}
+#royaLibrary .ab-lsn:hover{background:var(--gold-lt)}
+#royaLibrary .ab-lsn:hover::before{background:linear-gradient(90deg,#341613,#5a1e19)}
+#royaLibrary .ab-lsn:active::before{background:linear-gradient(90deg,#3c1915,#68231c)}
+/* a finger needs more than a 9px line: the pennant grows on the phone until
+   it is a comfortable target, the notch grows with it so the tail keeps its
+   angle, and the rule beside it grows to match the taller tag */
 @media (max-width:820px){
-  #royaLibrary .ab-lsn{padding:.6em .75em .55em}
-  #royaLibrary .ab-lsn::before{top:-.1em; bottom:-.1em}
+  #royaLibrary .ab-lsn{--notch:.6em; padding:.62em calc(.82em + var(--notch)) .58em .82em}
+  #royaLibrary .ab-lsn-rule{height:2.35em; vertical-align:-.85em; margin:0 .8em 0 .55em}
 }
-:root[data-lt="light"] #royaLibrary .ab-lsn{color:#5e4718; border-color:rgba(138,101,36,.5);
-  background:rgba(138,101,36,.1)}
-:root[data-lt="light"] #royaLibrary .ab-lsn::before{border-left-color:rgba(138,101,36,.5)}
-:root[data-lt="light"] #royaLibrary .ab-row:hover .ab-lsn{background:rgba(138,101,36,.18)}
+:root[data-lt="light"] #royaLibrary .ab-lsn{color:#f2e8d4; background:rgba(138,101,36,.9)}
+:root[data-lt="light"] #royaLibrary .ab-lsn::before{background:linear-gradient(90deg,#461813,#65221b)}
+:root[data-lt="light"] #royaLibrary .ab-lsn svg{stroke:#dcb87a}
+:root[data-lt="light"] #royaLibrary .ab-lsn-rule{border-left-color:rgba(138,101,36,.5)}
+:root[data-lt="light"] #royaLibrary .ab-row:hover .ab-lsn{background:#8a6524}
 
 /* A span with role="button" is a button to everything except the pointer:
    the browser gives a real <button> or <a> a hand and gives a span an arrow,

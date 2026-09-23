@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 100 · last updated 2026-09-23 05:14 PDT
+   Version 101 · last updated 2026-09-23 06:05 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1022,7 +1022,7 @@ function aboutBody(){
             <span class="ab-head">
               <b>${b.n}</b><span class="ab-dot">·</span><span class="ab-name">${esc(b.t)}</span>${PICKFA[b.n] ? `<span class="ab-fa" lang="fa" dir="rtl">${esc(PICKFA[b.n])}</span>` : ""}${gl ? `<i class="ab-gl">· ${esc(gl)}</i>` : ""}
             </span>
-            <span class="ab-time">${esc(b.rt)}${b.audio ? `<i class="ab-lsn" data-listen="${b.n}" aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></i>` : ""}</span>
+            <span class="ab-time">${esc(b.rt)}${b.audio ? `<i class="ab-lsn-rule" aria-hidden="true"></i><i class="ab-lsn" data-listen="${b.n}" aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></i>` : ""}</span>
             <p class="ab-syn">${esc(PICKNOTE[b.n] || b.syn || b.hook + ".")}</p>
           </span>
         </button>`;
