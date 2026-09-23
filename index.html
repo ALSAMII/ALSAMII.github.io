@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 541 · last updated 2026-09-22 22:32 PDT -->
+<!-- Version 542 · last updated 2026-09-23 04:48 PDT -->
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -75,7 +75,7 @@
      preload scanner start it while the HTML is still arriving.
      If the .webp is not there this 404s harmlessly and the script
      falls back to the .jpg, as it does for every other picture. -->
-<link rel="preload" as="image" href="assets/start-06.webp?v=497" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/start-06.webp?v=498" type="image/webp" fetchpriority="high">
 
 <!-- Which scene this visit gets. Runs here, in the head, so the
      choice is made before anything paints — picking it later would
@@ -135,10 +135,10 @@
      files hard; changing the number makes each one a new address, so a
      returning reader always gets the current version. Raise it by one
      whenever style.css, stories.js, or script.js changes. -->
-<link rel="stylesheet" href="style.css?v=497">
+<link rel="stylesheet" href="style.css?v=498">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=497">
+<link rel="stylesheet" href="library/roya-library.css?v=498">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -1113,8 +1113,8 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=497"></script>
-<script src="script.js?v=497"></script>
+<script src="stories.js?v=498"></script>
+<script src="script.js?v=498"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1130,6 +1130,6 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=497"></script>
+<script src="library/roya-library.js?v=498"></script>
 </body>
 </html>
