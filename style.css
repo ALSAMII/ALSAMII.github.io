@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 2 · last updated 2026-09-23 04:48 PDT
+   Version 3 · last updated 2026-09-23 05:14 PDT
       (first stamp on this file — it has never carried one)
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
@@ -92,6 +92,13 @@ body {
 /* ============================================================
    The atmosphere — three fixed layers behind everything:
    1. the fixed backdrop scene (assets/bg/bg-path.webp, jpg fallback)
+
+   The ?v= on those two is not decoration. assets/bg/ was deleted from the
+   repo in September and the addresses returned 404 for days; a browser
+   caches a 404 like anything else, and because an image carries no version
+   of its own there was nothing to tell it to look again once the files came
+   back. The stamp is a new address, so every browser fetches it for real.
+   Raise it if the picture is ever replaced.
    2. moonlight + candlelight gradients that darken it
    3. a faint film grain
    ============================================================ */
@@ -122,10 +129,10 @@ body {
 
   /* Default scene — also the floor if the head script never runs. */
   background-image: var(--edge-fade), var(--scrim),
-    url("assets/bg/bg-path.jpg");
+    url("assets/bg/bg-path.jpg?v=500");
   background-image: var(--edge-fade), var(--scrim), image-set(
-    url("assets/bg/bg-path.webp") type("image/webp"),
-    url("assets/bg/bg-path.jpg")  type("image/jpeg")
+    url("assets/bg/bg-path.webp?v=500") type("image/webp"),
+    url("assets/bg/bg-path.jpg?v=500")  type("image/jpeg")
   );
 
   /* fade and scrim fill the viewport; the photo covers it. This one is
@@ -143,10 +150,10 @@ body {
 
 html[data-scene="0"] .atmosphere {
   background-image: var(--edge-fade), var(--scrim),
-    url("assets/bg/bg-path.jpg");
+    url("assets/bg/bg-path.jpg?v=500");
   background-image: var(--edge-fade), var(--scrim), image-set(
-    url("assets/bg/bg-path.webp") type("image/webp"),
-    url("assets/bg/bg-path.jpg")  type("image/jpeg")
+    url("assets/bg/bg-path.webp?v=500") type("image/webp"),
+    url("assets/bg/bg-path.jpg?v=500")  type("image/jpeg")
   );
   background-size: 100% 100%, 100% 100%, cover;
   background-position: center center, center center, center 42%;
