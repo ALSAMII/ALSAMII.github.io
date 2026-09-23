@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 99 · last updated 2026-09-22 22:32 PDT
+   Version 100 · last updated 2026-09-23 05:14 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1915,9 +1915,26 @@ try{
     return true;
   }
 
+  /* A reload is not an arrival. The hash stays in the address bar after a
+     book has been opened from a shared link, and script.js only strips it
+     when it can tell the visit was a reload — which it decides from
+     document.referrer, and a reload KEEPS the referrer of the visit before
+     it. So a reader who opened a book and then pulled to refresh got that
+     book's record again, every single time, with no way back to the Library
+     but the close button. The navigation entry says plainly which kind of
+     visit this is; a reload opens the Library and leaves the record shut. */
+  function arrivedByReload() {
+    try {
+      const nav = performance.getEntriesByType &&
+                  performance.getEntriesByType("navigation")[0];
+      if (nav && nav.type) return nav.type === "reload";
+      return !!(performance.navigation && performance.navigation.type === 1);
+    } catch (e) { return false; }
+  }
+
   window.royaLibrary = { open: openLibrary, close: closeLibrary };
   if (FLAG || HOME) openLibrary();
-  if (libOpen) openShared();
+  if (libOpen && !arrivedByReload()) openShared();
   window.addEventListener("hashchange", function () {
     if (!libOpen) return;
     if (!openShared() && (recN != null || sheetN != null)) {
