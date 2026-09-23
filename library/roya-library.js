@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 96 · last updated 2026-09-22 20:08 PDT
+   Version 98 · last updated 2026-09-22 20:52 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -523,7 +523,14 @@ function zoomOverlay(){
 function listenPanel(){
   if (listenN == null) return "";
   const b = byNum[listenN]; if (!b) return "";
-  const file = basePath() + String(b.audio || "").replace(/^\/+/, "");
+  /* audio: is normally a path inside the site ("assets/audio/35.mp3") and is
+     resolved against it. It may also be a whole address, for a recording
+     hosted somewhere other than the repo — which is the way out if these
+     files ever outgrow GitHub Pages — and that is left exactly as written.
+     Prefixing it would have built "/https://…/35.mp3". */
+  const src = String(b.audio || "");
+  const file = /^(https?:)?\/\//i.test(src) ? src
+             : basePath() + src.replace(/^\/+/, "");
   return `
   <div class="lsn" data-listenback="1">
     <div class="lsn-box" role="dialog" aria-modal="true" aria-label="Listen to ${esc(b.t)}">
@@ -1012,7 +1019,7 @@ function aboutBody(){
             <span class="ab-head">
               <b>${b.n}</b><span class="ab-dot">·</span><span class="ab-name">${esc(b.t)}</span>${PICKFA[b.n] ? `<span class="ab-fa" lang="fa" dir="rtl">${esc(PICKFA[b.n])}</span>` : ""}${gl ? `<i class="ab-gl">· ${esc(gl)}</i>` : ""}
             </span>
-            <span class="ab-time">${esc(b.rt)}${b.audio ? `<i class="ab-lsn">${DICON.listen}<b>Listen</b></i>` : ""}</span>
+            <span class="ab-time">${esc(b.rt)}${b.audio ? `<i class="ab-lsn" data-listen="${b.n}" aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></i>` : ""}</span>
             <p class="ab-syn">${esc(PICKNOTE[b.n] || b.syn || b.hook + ".")}</p>
           </span>
         </button>`;
