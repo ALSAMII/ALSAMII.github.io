@@ -1,4 +1,4 @@
-/* Version 449 · last updated 2026-09-22 19:12 PDT */
+/* Version 450 · last updated 2026-09-22 20:00 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -475,7 +475,11 @@ const STORIES = [
     key: "Let me know if you need anything \u2014 the offer that hands the asking back",
     notes: [1, 2, 3],
     synopsis: "Roya never spoke, never reached, never turned her head. She lived ten years and eleven months and got heavier every one of them.\n\nHer mother's account of the therapy that hurt her daily to save her, the sister who asked for nothing, and the phrase people used so they wouldn't have to visit.\n\nAnd of what came after \u2014 when life got easier, and the grief did not, and only one of those could ever be said out loud.",
-    audio: "assets/audio/35.mp3"
+    // Switched off until assets/audio/35.mp3 is hosted somewhere the site can
+    // reach. While this line is commented out No. 35 looks exactly like the
+    // other 95 books: no Listen mark on its Pick-a-door row, no Listen half on
+    // Read story, no download. Put it back and all three return.
+    // audio: "assets/audio/35.mp3"
   },
 
   {
