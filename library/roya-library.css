@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 94 · last updated 2026-09-22 20:52 PDT
+   Version 95 · last updated 2026-09-23 04:48 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2639,3 +2639,11 @@ body.rl-on #toTop{z-index:71}
   background:rgba(138,101,36,.1)}
 :root[data-lt="light"] #royaLibrary .ab-lsn::before{border-left-color:rgba(138,101,36,.5)}
 :root[data-lt="light"] #royaLibrary .ab-row:hover .ab-lsn{background:rgba(138,101,36,.18)}
+
+/* A span with role="button" is a button to everything except the pointer:
+   the browser gives a real <button> or <a> a hand and gives a span an arrow,
+   so on a record panel the PDF link looked clickable and READ STORY, LISTEN,
+   SHARE and the enlarge control did not. Every control in this section that
+   is built on a span carries role="button", so one rule covers all of them,
+   now and whenever the next one is added. */
+#royaLibrary [role="button"]{cursor:pointer}
