@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 94 · last updated 2026-09-22 17:22 PDT
+   Version 96 · last updated 2026-09-22 20:08 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -159,6 +159,9 @@ const shelfOf = n => Math.max(0, GROUPS.findIndex(g=>g.books.includes(n)));
 let dev = PHONE.matches ? "phone" : "desk", view="library", cur=94, shelf=shelfOf(94);
 let filter="all", query="", mode="grid", sortDesc=true, zoomN=null, readN=null;
 let light=false, soundOn=false, searchHot=false, caret=0, sheetN=null, pickOpen=false, recN=null;
+/* the book whose Listen control was pressed — the two-way choice panel is
+   open for it, and nothing has been played or downloaded yet */
+let listenN=null;
 /* the All Series row standing open, by series name, or null. One at a time:
    the list is a table of contents and two open rows stop it reading as one. */
 let serOpen = null;
@@ -507,6 +510,41 @@ function zoomOverlay(){
   </div>`;
 }
 
+/* LISTEN, pressed. A recording can be had two ways and the control cannot
+   guess which is wanted: read along with it here, where the page lights the
+   sentence being spoken, or keep the file. So the control asks.
+
+   It is drawn as an overlay rather than a menu hanging off the control
+   because four different cards draw that control, in places as narrow as a
+   159px column, and a panel that has to fit beside all four would be built
+   to the worst of them. Overlay also matches what the section already does
+   for the enlarged cover and the reader — same backdrop, same close, same
+   Escape. */
+function listenPanel(){
+  if (listenN == null) return "";
+  const b = byNum[listenN]; if (!b) return "";
+  const file = basePath() + String(b.audio || "").replace(/^\/+/, "");
+  return `
+  <div class="lsn" data-listenback="1">
+    <div class="lsn-box" role="dialog" aria-modal="true" aria-label="Listen to ${esc(b.t)}">
+      <button class="lsn-x" type="button" data-listenclose="1" aria-label="Close">${DICON.close}</button>
+      <span class="lsn-eyebrow">${DICON.listen}<i>Narrated</i></span>
+      <h3 class="lsn-t">${esc(b.t)}</h3>
+      <p class="lsn-sub">No. ${pad(b.n)} \u00b7 ${esc(sName(b))}</p>
+      <button class="lsn-opt" type="button" data-listenplay="${b.n}">
+        <span class="lsn-opt-t">Listen here</span>
+        <span class="lsn-opt-d">The book opens and reads along \u2014 the sentence
+          being spoken lights up as it goes.</span>
+      </button>
+      <a class="lsn-opt is-dl" href="${file}" download data-listendl="${b.n}">
+        <span class="lsn-opt-t">Download the recording</span>
+        <span class="lsn-opt-d">Keep the audio file \u2014 yours to play anywhere,
+          offline, in whatever you listen with.</span>
+      </a>
+    </div>
+  </div>`;
+}
+
 /* The record panel — the desktop half of what a card opens. Two columns,
    the way the live feature panel reads: the line, the synopsis and the
    dials on the left, the cover on the right, Door / Room / Key beneath. */
@@ -654,6 +692,7 @@ function deskNav(){
 function deskPage(){
   return `
   <div class="lib">
+    ${listenPanel()}
     ${zoomOverlay()}
     ${readerPanel()}
     ${recordPanel()}
@@ -973,7 +1012,7 @@ function aboutBody(){
             <span class="ab-head">
               <b>${b.n}</b><span class="ab-dot">·</span><span class="ab-name">${esc(b.t)}</span>${PICKFA[b.n] ? `<span class="ab-fa" lang="fa" dir="rtl">${esc(PICKFA[b.n])}</span>` : ""}${gl ? `<i class="ab-gl">· ${esc(gl)}</i>` : ""}
             </span>
-            <span class="ab-time">${esc(b.rt)}</span>
+            <span class="ab-time">${esc(b.rt)}${b.audio ? `<i class="ab-lsn">${DICON.listen}<b>Listen</b></i>` : ""}</span>
             <p class="ab-syn">${esc(PICKNOTE[b.n] || b.syn || b.hook + ".")}</p>
           </span>
         </button>`;
@@ -1347,11 +1386,11 @@ window.addEventListener("resize", mobScroll, {passive:true});
 
 function draw(){
   document.documentElement.setAttribute("data-lt", light ? "light" : "dark");
-  const mover = (sheetN != null || zoomN != null);
+  const mover = (sheetN != null || zoomN != null || listenN != null);
   const html = dev==="phone"
     ? `<div class="phone-shell">
          <div class="phone${mover ? " is-locked" : ""}">${mobile()}</div>
-         <div class="phone-over">${zoomOverlay()}${readerPanel()}${mobSheet()}</div>
+         <div class="phone-over">${listenPanel()}${zoomOverlay()}${readerPanel()}${mobSheet()}</div>
        </div>`
     : deskPage();
   STAGE.innerHTML = html;
@@ -1429,7 +1468,17 @@ document.addEventListener("click", e=>{
   /* the control lives inside a card that carries data-rec or data-sheet, so it
      has to be read before them — the same trap the enlarge control had */
   const rd=e.target.closest("[data-read]"); if(rd){ openRead(+rd.dataset.read); return; }
-  const ls=e.target.closest("[data-listen]"); if(ls){ openRead(+ls.dataset.listen, true); return; }
+  /* Listen asks first — see listenPanel(). The download is a real link and is
+     read before data-stop so the browser keeps it; the panel closes a beat
+     later, once the file has been handed over. */
+  const ldl=e.target.closest("[data-listendl]"); if(ldl){
+    setTimeout(()=>{ if(listenN!=null){ listenN=null; draw(); } }, 600); return; }
+  const lpl=e.target.closest("[data-listenplay]"); if(lpl){
+    const n=+lpl.dataset.listenplay; listenN=null; draw(); openRead(n, true); return; }
+  const lcx=e.target.closest("[data-listenclose]"); if(lcx){ listenN=null; draw(); return; }
+  const lbk=e.target.closest("[data-listenback]");
+  if(lbk && !e.target.closest(".lsn-box")){ listenN=null; draw(); return; }
+  const ls=e.target.closest("[data-listen]"); if(ls){ listenN=+ls.dataset.listen; draw(); return; }
   /* the PDF is a real link: let the browser have it, but stop the card under
      it from opening the record at the same time */
   const pd=e.target.closest("[data-stop]"); if(pd){ e.stopPropagation(); return; }
@@ -1513,6 +1562,7 @@ document.addEventListener("keydown", e=>{
     }
     return;
   }
+  if(listenN!=null && e.key==="Escape"){ listenN=null; draw(); return; }
   if(pickOpen && e.key==="Escape"){ pickOpen=false; draw(); return; }
   if(readN!=null && e.key==="Escape"){ readN=null; draw(); return; }
   if(recN!=null && e.key==="Escape"){ recN=null; draw();
@@ -1573,7 +1623,7 @@ try{
     if (HOME && !force) return;
     if (!libOpen) return;
     libOpen = false;
-    recN = null; sheetN = null; zoomN = null; readN = null; pickOpen = false;
+    recN = null; sheetN = null; zoomN = null; readN = null; listenN = null; pickOpen = false;
     ROOT.classList.remove("rl-show");
     document.body.classList.remove("rl-on");
     setTimeout(function () { if (!libOpen) ROOT.hidden = true; }, 260);
@@ -1608,7 +1658,7 @@ try{
        page's own reader, which at the front door opens on top of the section
        rather than in place of it. The site's arrow is lifted to z-index 71
        while the section is open, which is above the reader's 70. */
-    const busy = (recN != null || sheetN != null || zoomN != null || readN != null || readerUp());
+    const busy = (recN != null || sheetN != null || zoomN != null || readN != null || listenN != null || readerUp());
     /* the way out of the section goes with it: an open record has a CLOSE of
        its own, and two close buttons on one screen is one too many */
     ROOT.classList.toggle("rl-busy", busy);
@@ -1772,7 +1822,7 @@ try{
      when Escape had nothing else to close. */
   document.addEventListener("keydown", function (e) {
     if (!libOpen || e.key !== "Escape") return;
-    if (recN != null || sheetN != null || zoomN != null || readN != null || pickOpen) return;
+    if (recN != null || sheetN != null || zoomN != null || readN != null || listenN != null || pickOpen) return;
     closeLibrary();
   }, true);
 
@@ -1813,6 +1863,55 @@ try{
     soundOn = soundIsOn();
   }
 
+  /* ── arriving from a shared link ──
+     Every share/NN-slug.html redirects to the site with #NN-slug on the end,
+     and script.js answers that hash by unfolding the book's entry on the
+     shelf. That was right when the shelf was the page. Since stage 4 this
+     section is the front door and stands over the shelf, so the reader
+     following a shared link landed at the top of the Library with nothing to
+     say which book had been shared — the link "just takes them to the
+     website", which is exactly what it looked like.
+
+     The record is the card the link is a link to, so the record is what
+     opens. The slug is matched with slugFor(), the same function that builds
+     the address the SHARE control hands out, so the two cannot drift apart;
+     the number in front of it is a fallback for a hand-typed or truncated
+     hash.
+
+     Nothing here writes to the hash. script.js owns it, and it already drops
+     it on a reload that did not come from a share page, so a reader who
+     closes the card and reloads gets the Library rather than the card again. */
+  function bookFromHash() {
+    const slug = decodeURIComponent(String(location.hash).replace(/^#/, ""));
+    if (!slug) return null;
+    let b = BOOKS.filter(function (x) { return slugFor(x) === slug; })[0];
+    if (!b) {
+      const m = /^0*(\d+)(?:-|$)/.exec(slug);
+      if (m) b = byNum[+m[1]];
+    }
+    return b || null;
+  }
+
+  function openShared() {
+    const b = bookFromHash();
+    if (!b) return false;
+    /* the section remembers the view a reader left it on; a shared book is a
+       book, so it opens in the Library rather than over About or the Notes */
+    view = "library";
+    zoomN = null; readN = null; listenN = null; pickOpen = false;
+    if (dev === "phone") { sheetN = b.n; recN = null; }
+    else { recN = b.n; sheetN = null; deskY = 0; }
+    select(b.n);
+    return true;
+  }
+
   window.royaLibrary = { open: openLibrary, close: closeLibrary };
   if (FLAG || HOME) openLibrary();
+  if (libOpen) openShared();
+  window.addEventListener("hashchange", function () {
+    if (!libOpen) return;
+    if (!openShared() && (recN != null || sheetN != null)) {
+      recN = null; sheetN = null; draw(); restoreY();
+    }
+  });
 })();
