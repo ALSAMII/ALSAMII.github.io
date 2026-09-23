@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 build-audio-sync.py — turn a book's narration into synced reading data.
+Version 2 · last updated 2026-09-22 19:42 PDT
 
     python3 build-audio-sync.py 01 /path/to/source-audio.mp3
 
@@ -22,12 +23,19 @@ step, and it doesn't care whether the reading deviates a little from the
 page. Requires: aeneas, espeak-ng, ffmpeg (all already set up on this
 machine — see ADDING-AUDIO.md if starting fresh elsewhere).
 
+A recording that opens with music or silence before the first word is
+handled with --intro: the front is trimmed off before aligning and the same
+number of seconds is added back to every timestamp, so the sync file matches
+the file that ships, intro and all.
+
 Usage:
     python3 build-audio-sync.py NN /path/to/recording.mp3 [--bitrate 48k]
+    python3 build-audio-sync.py 35 35.mp3 --intro 11
 """
 import argparse
 import html
 import json
+import math
 import os
 import re
 import shutil
@@ -68,7 +76,14 @@ def _patch_aeneas_numpy2():
 
 
 TAG_RE = re.compile(r"<[^>]+>")
-SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9“‘])")
+# An abbreviation's full stop is not the end of a sentence. Only one of these
+# actually occurs in the catalogue — every reader file now opens "Roya
+# Publication No. NN", and without the guard the number is split off as a
+# fragment of its own, so the highlight sits alone on "35" for a second and a
+# half before the byline. The rest are here because they cost nothing and a
+# book will eventually carry one.
+ABBREV = r"(?<!\bNo\.)(?<!\bMr\.)(?<!\bMrs\.)(?<!\bMs\.)(?<!\bDr\.)(?<!\bSt\.)(?<!\bvs\.)"
+SENT_SPLIT = re.compile(ABBREV + r"(?<=[.!?])\s+(?=[A-Z0-9“‘])")
 
 # The only inline tag build-reader.py ever emits into read/NN.json. If a
 # new one is ever added, extend this rather than the regex below.
@@ -187,7 +202,7 @@ def build_fragments(blocks):
     return frag_ids, clean_texts, orig_texts, block_idx
 
 
-def run_aeneas(wav_path, frag_ids, clean_texts, workdir):
+def run_aeneas(wav_path, frag_ids, clean_texts, workdir, mfcc_shift=None):
     frag_txt = os.path.join(workdir, "fragments.txt")
     with open(frag_txt, "w", encoding="utf-8") as f:
         f.write("\n".join("%s|%s" % (i, t) for i, t in zip(frag_ids, clean_texts)))
@@ -201,17 +216,62 @@ def run_aeneas(wav_path, frag_ids, clean_texts, workdir):
     task.text_file_path_absolute = frag_txt
     task.sync_map_file_path_absolute = os.path.join(workdir, "sync.json")
 
-    ExecuteTask(task).execute()
+    rconf = None
+    if mfcc_shift:
+        from aeneas.runtimeconfiguration import RuntimeConfiguration
+        rconf = RuntimeConfiguration()
+        rconf[RuntimeConfiguration.MFCC_WINDOW_SHIFT] = mfcc_shift
+        rconf[RuntimeConfiguration.MFCC_WINDOW_LENGTH] = max(0.100, mfcc_shift * 2)
+
+    ExecuteTask(task, rconf=rconf).execute()
     task.output_sync_map_file()
 
     with open(task.sync_map_file_path_absolute, encoding="utf-8") as f:
         return json.load(f)["fragments"]
 
 
-def to_wav(src, workdir):
+def audio_duration(path):
+    """Seconds, via ffprobe. Used to pick the aligner's frame size and to
+    stamp the sync file with the delivered recording's real length."""
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=nw=1:nk=1", path],
+        capture_output=True, text=True, check=True)
+    return float(out.stdout.strip())
+
+
+def mfcc_shift_for(duration, margin=60.0, budget_bytes=2.2e9):
+    """aeneas aligns with a striped DTW: it holds a cost matrix of
+    (audio frames) x (2 x margin in frames), float64. At the default 40ms
+    frame that is 16 * duration * margin / shift**2 bytes — which for a
+    one-hour book is 2.2 GB and fine, and for No. 35 (2h50m) is 6.1 GB,
+    which is exactly where it was killed on an 8 GB machine.
+
+    Memory falls with the SQUARE of the frame shift, so a coarser frame
+    is the cheap fix: 65ms instead of 40ms brings the same book under
+    2.2 GB. What that costs is time resolution — boundaries land on a
+    65ms grid instead of a 40ms one — and this file syncs whole
+    sentences, which are seconds long. Nothing else changes: the margin
+    stays the full 60 seconds, and the alignment is still one pass over
+    the whole recording rather than a chain of windows, each of which
+    would pin its last sentence to its own cut.
+
+    Returns None for anything short enough to leave alone."""
+    need = math.sqrt(16.0 * duration * margin / budget_bytes)
+    if need <= 0.040:
+        return None
+    return math.ceil(need * 1000.0) / 1000.0
+
+
+def to_wav(src, workdir, skip=0.0):
+    """16k mono PCM for the aligner. `skip` drops that many seconds off the
+    front in the same pass — an intro is cut here rather than by copying the
+    mp3 first, because a stream copy can only cut on a frame boundary and
+    this decode is sample-accurate."""
     wav_path = os.path.join(workdir, "audio.wav")
+    cut = ["-ss", "%.3f" % skip] if skip > 0 else []
     subprocess.run(
-        ["ffmpeg", "-y", "-i", src, "-ac", "1", "-ar", "16000",
+        ["ffmpeg", "-y"] + cut + ["-i", src, "-ac", "1", "-ar", "16000",
          "-sample_fmt", "s16", wav_path, "-hide_banner", "-loglevel", "error"],
         check=True,
     )
@@ -234,6 +294,23 @@ def main():
     ap.add_argument("--bitrate", default="48k",
                      help="delivered mp3 bitrate (default 48k — clean for speech, mono, "
                           "and keeps the per-book size down as more recordings are added)")
+    ap.add_argument("--intro", type=float, default=0.0,
+                     help="seconds of music/silence before the text begins in the "
+                          "delivered recording. Trimmed before aligning and added "
+                          "back to every timestamp afterwards.")
+    ap.add_argument("--align-audio", default=None,
+                     help="optional pre-trimmed copy to align against (skips the "
+                          "internal trim; --intro is still added to the results)")
+    ap.add_argument("--no-compress", action="store_true",
+                     help="skip writing assets/audio/NN.mp3 (the delivered file "
+                          "already exists)")
+    ap.add_argument("--duration", type=float, default=None,
+                     help="override the delivered recording's length in seconds "
+                          "(when --align-audio points at a trimmed copy and the "
+                          "full file isn't on this machine)")
+    ap.add_argument("--mfcc-shift", type=float, default=None,
+                     help="force the aligner's frame shift in seconds (default: "
+                          "chosen from the recording's length, see mfcc_shift_for)")
     ap.add_argument("--keep-workdir", action="store_true")
     args = ap.parse_args()
 
@@ -253,10 +330,21 @@ def main():
     workdir = tempfile.mkdtemp(prefix="audiosync-")
     try:
         print("Converting source audio for alignment...")
-        wav_path = to_wav(args.audio, workdir)
+        # --align-audio is a copy that has ALREADY had the intro cut off it;
+        # without one the intro comes off here, in the same pass.
+        skip = 0.0 if args.align_audio else args.intro
+        if skip:
+            print("Dropping %.1fs of intro before aligning." % skip)
+        wav_path = to_wav(args.align_audio or args.audio, workdir, skip)
 
-        print("Aligning (aeneas)...")
-        fragments = run_aeneas(wav_path, frag_ids, clean_texts, workdir)
+        align_dur = audio_duration(wav_path)
+        shift = args.mfcc_shift or mfcc_shift_for(align_dur)
+        if shift:
+            print("Aligning (aeneas) — %.0f min of audio, %dms frame to stay "
+                  "inside memory..." % (align_dur / 60.0, round(shift * 1000)))
+        else:
+            print("Aligning (aeneas)...")
+        fragments = run_aeneas(wav_path, frag_ids, clean_texts, workdir, shift)
 
         by_id = {}
         for f in fragments:
@@ -271,7 +359,11 @@ def main():
 
         blocks_out = {}
         for fid, orig, bi in zip(frag_ids, orig_texts, block_idx):
+            if fid not in by_id:
+                continue
             start, end = by_id[fid]
+            start += args.intro
+            end += args.intro
             blocks_out.setdefault(bi, []).append(
                 {"html": orig, "start": round(start, 2), "end": round(end, 2)}
             )
@@ -287,7 +379,17 @@ def main():
                   "italics would leak into everything rendered after them. "
                   "First one: %r" % (len(unbalanced), unbalanced[0][:80]))
 
-        duration = max((e for _, e in by_id.values()), default=0)
+        missing = [f for f in frag_ids if f not in by_id]
+        if missing:
+            print("WARNING: %d of %d fragments were not placed by the aligner "
+                  "and are left out of the sync file." % (len(missing), len(frag_ids)))
+
+        # The delivered recording's own length, intro included — not the
+        # last sentence's end time, which stops short of any outro.
+        try:
+            duration = args.duration or audio_duration(args.audio)
+        except Exception:
+            duration = max((e for _, e in by_id.values()), default=0) + args.intro
         out = {
             "duration": round(duration, 2),
             "blocks": [{"i": bi, "sentences": blocks_out[bi]}
@@ -300,6 +402,9 @@ def main():
         print("Wrote", sync_path)
 
         mp3_dest = os.path.join(ROOT, "assets", "audio", nn + ".mp3")
+        if args.no_compress:
+            print("Skipping compression (--no-compress).")
+            return
         print("Compressing delivered audio at %s..." % args.bitrate)
         compress_for_web(args.audio, mp3_dest, args.bitrate)
         before = os.path.getsize(args.audio)
