@@ -1,4 +1,4 @@
-/* Version 447 · last updated 2026-09-21 19:58 PDT */
+/* Version 448 · last updated 2026-09-22 17:48 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -57,11 +57,16 @@ const STORIES = [
     room: "Someone Else's Hour \u2014 you live an hour that was never yours",
     key: "Verity \u2014 the sacrament auditors take to read a stranger's memory",
     notes: [2, 1, 1],
-    synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him."
-    // audio: "assets/audio/01.mp3"  \u2014 held back for changes before publishing.
-    // The download icon, the narration bar, and the sentence highlighting
-    // in the Read view all key off this one field being present \u2014 put it
-    // back and both come back exactly as they were. Nothing else to touch.
+    synopsis: "Memory is a public record in Ctesiphon, and Cale Rook audits it for a living \u2014 deciding whose version of an hour survives. Then an envelope arrives holding his own photograph, and seven months of his own life he cannot account for. This time, the record is him.",
+    // Held back for changes before publishing. The download icon, the
+    // narration bar, and the sentence highlighting in the Read view all key
+    // off this one field being present \u2014 put it back and all three come
+    // back exactly as they were. Nothing else to touch.
+    //
+    // The note used to sit on the end of the line below, and the line above
+    // it carried no comma, so uncommenting the field the way ADDING-AUDIO.md
+    // says to broke the file twice over. The switch is a clean line now.
+    // audio: "assets/audio/01.mp3",
   },
 
   {

@@ -1,4 +1,4 @@
-# Version 352 · last updated 2026-08-31 13:45 PDT
+# Version 353 · last updated 2026-09-22 16:58 PDT
 """
 BUILDS THE READING TEXT FROM THE PDFs, INTO /read
 
@@ -456,11 +456,95 @@ def drop_listed_headings(blocks):
     return [b for i, b in enumerate(blocks) if i not in drop]
 
 
-def tidy(blocks):
-    """Open at the author\'s note, drop the contents list, and put back
-       paragraphs that a page break cut in half. The title page,
-       copyright and synopsis are the book\'s front matter — the site
-       says all of that already."""
+# ── the narration opening ───────────────────────────────────────────────
+# tidy() opens the book at the author's note, because the page around the
+# reader already carries the title, the imprint and the synopsis. A
+# recording has no page around it: a listener who presses play gets no
+# title, no publication number and no idea what the book is.
+#
+# So those pages go back in front. read/NN.json then becomes the one text
+# the reader and the narrator both work from, which is the whole reason
+# the highlight can run from the first word — build-audio-sync.py aligns
+# the recording against this file and nothing else.
+
+RTL = re.compile(r"[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]")
+
+# The last thing the narrator says. The glossary itself stays in the file
+# for readers on the site; it is a reference list, and reading two hundred
+# headwords aloud serves nobody.
+GLOSSARY_NOTE = "For the glossary, see the PDF edition of this book."
+
+
+def book_titles(path="stories.js"):
+    """Titles by number, read off stories.js so the spoken opening can
+       never disagree with the shelf."""
+    try:
+        src = open(path, encoding="utf-8").read()
+    except OSError:
+        return {}
+    out = {}
+    for m in re.finditer(r"num:\s*(\d+)\s*,.*?title:\s*\"((?:[^\"\\\\]|\\\\.)*)\"",
+                         src, re.S):
+        n = int(m.group(1))
+        if n not in out:
+            out[n] = m.group(2).encode().decode("unicode_escape")
+    return out
+
+
+def narration_front(blocks, stop, num, titles):
+    """What stands between the copyright page and the author's note.
+
+       Every book in the catalogue sets the same three things at the front
+       — title, byline, ISBN — and then whatever front matter it actually
+       has: a dedication, an epigraph, the synopsis. The ISBN is therefore
+       the seam, and taking everything after the LAST boilerplate line
+       before the author's note gets the real front matter on all of them
+       without having to know which pages any one book happens to use."""
+    last_boiler = -1
+    for i, b in enumerate(blocks[:stop]):
+        plain = re.sub("<[^>]+>", "", b["h"]).strip()
+        if BOILERPLATE.match(plain):
+            last_boiler = i
+    kept = []
+    for b in blocks[last_boiler + 1:stop]:
+        plain = re.sub("<[^>]+>", "", b["h"]).strip()
+        if not plain or BOILERPLATE.match(plain):
+            continue
+        # Persian on these pages — a bilingual title, an epigraph — comes
+        # out of the PDF as reversed presentation forms. The reader never
+        # showed it, because it never got this far, and a narrator cannot
+        # read it. Letting it through now would only put mojibake into
+        # both. Nos. 78 and 96 are the ones this affects.
+        if RTL.search(plain) and len(RTL.findall(plain)) * 4 > len(plain):
+            continue
+        kept.append(b)
+    title = titles.get(num, "")
+    spoken = []
+    if title:
+        spoken.append({"t": "h", "h": title.upper()})
+    spoken.append({"t": "p", "h": "Roya Publication No. %d" % num})
+    spoken.append({"t": "p", "h": "by Chew Z"})
+    return spoken + kept
+
+
+def glossary_note(blocks):
+    """Put the pointer in front of the glossary heading, so the last thing
+       spoken is where to find what is not being read."""
+    for i, b in enumerate(blocks):
+        plain = re.sub("<[^>]+>", "", b["h"]).strip()
+        if b["t"] == "h" and re.match(r"^\s*GLOSSARY\b", plain, re.I):
+            return blocks[:i] + [{"t": "p", "h": GLOSSARY_NOTE}] + blocks[i:]
+    return blocks
+
+
+def tidy(blocks, num=None, titles=None):
+    """Find where the book proper begins, drop the contents list, and put
+       back paragraphs that a page break cut in half.
+
+       The title page, the imprint and the synopsis used to be dropped
+       here — the site says all of that already. They are kept now, and
+       spoken, because the recording has no site around it. Pass num to
+       get them; without it the old behaviour is unchanged."""
     # Find the first thing that is the book rather than its front
     # matter. Most announce it with a heading; some set the same words
     # at body size, at the head of a paragraph, so both are checked.
@@ -482,6 +566,8 @@ def tidy(blocks):
                     blocks.insert(i + 1, {"t": "p", "h": m.group(2)})
             break
 
+    front = (narration_front(blocks, start, num, titles or {})
+             if num is not None else [])
     blocks = drop_listed_headings(drop_contents(blocks[start:]))
     start = 0
 
@@ -527,12 +613,12 @@ def tidy(blocks):
         out.append(b)
     # Last, so that a run of emphasis broken across a page break has
     # already been joined back together before its markers are read.
-    return unstar(join_heads(out))
+    return glossary_note(front + unstar(join_heads(out)))
 
 
-def build(num):
+def build(num, titles=None):
     src = os.path.join(PDF_DIR, f"{num}.pdf")
-    blocks = tidy(extract(src))
+    blocks = tidy(extract(src), int(num), titles if titles is not None else book_titles())
     words = sum(len(re.sub("<[^>]+>", "", b["h"]).split())
                 for b in blocks if b["t"] in ("p", "v"))
     os.makedirs(OUT_DIR, exist_ok=True)
