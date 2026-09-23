@@ -1,4 +1,6 @@
 /* ============================================================
+   Version 1 · last updated 2026-09-22 21:24 PDT
+      (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
    add books in stories.js instead.
@@ -2178,6 +2180,7 @@
      only for the ones that have both a recording and sentence timing. */
   var readerAudioBar  = document.getElementById("readerAudioBar");
   var readerPlay      = document.getElementById("readerPlay");
+  var readerRestart   = document.getElementById("readerRestart");
   var readerPlayIcon  = document.getElementById("readerPlayIcon");
   var readerPauseIcon = document.getElementById("readerPauseIcon");
   var readerAudioTrack = document.getElementById("readerAudioTrack");
@@ -2512,6 +2515,22 @@
       if (readerAudioEl.paused) readerAudioEl.play().catch(function () { /* blocked or no src */ });
       else readerAudioEl.pause();
     });
+
+    /* Start from the beginning. Three things, in this order: forget the
+       saved place first, so a failure anywhere after it still leaves the
+       book starting at zero next time rather than at a spot the listener
+       has just asked to leave; wind the recording back; and start it, since
+       someone who asks for the beginning means to hear it. The highlight is
+       moved by hand because a seek on a paused element fires timeupdate
+       only on some browsers. */
+    if (readerRestart) {
+      readerRestart.addEventListener("click", function () {
+        if (readerBook) readerSave("audioPlace:" + readerBook, "0");
+        try { readerAudioEl.currentTime = 0; } catch (e) { /* not seekable yet */ }
+        updateHighlight(0);
+        readerAudioEl.play().catch(function () { /* blocked or no src */ });
+      });
+    }
 
     readerAudioEl.addEventListener("play", function () {
       readerPlayIcon.style.display = "none";

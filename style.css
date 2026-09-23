@@ -1,5 +1,7 @@
 /* ============================================================
    CHEW Z — Short Fiction
+   Version 1 · last updated 2026-09-22 21:24 PDT
+      (first stamp on this file — it has never carried one)
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -6048,9 +6050,23 @@ body.gallery-on .to-top { display: none; }
    ============================================================ */
 .reader {
   position: fixed;
+  /* All four edges, and no height of its own.
+
+     It used to be height:100lvh with bottom:auto. lvh is the LARGE
+     viewport — the height the page gets once the browser's toolbar has
+     retracted — so on iOS with the toolbar showing, the reader was taller
+     than the area actually visible, and its top edge did not stay put
+     against the top of that area. What showed in the gap was whatever was
+     behind: a band of the Library, a cover, a line of a card, sometimes at
+     the scroll position of the screen before.
+
+     inset:0 asks no question about which viewport is meant. The four edges
+     are the visible edges, whatever they currently are, and the flex column
+     inside fills them: the bar takes its own height and .reader-scroll
+     takes the rest. The overlay resizes as the toolbar shows and hides,
+     which is correct and costs nothing here — the column width never
+     changes, so not a line of the book re-wraps. */
   inset: 0;
-  height: 100lvh;
-  bottom: auto;
   z-index: 70;
   display: flex;
   flex-direction: column;
@@ -6147,6 +6163,18 @@ body.gallery-on .to-top { display: none; }
   padding: 0.3rem;
 }
 .reader-play svg { width: 1.3rem; height: 1.3rem; }
+
+/* Back to the first word. A shade smaller than play and set in the quiet
+   grey rather than the gold, because it is the second thing you would
+   reach for, not the first — it should be findable without competing with
+   the control that actually starts the book. */
+.reader-restart {
+  flex: 0 0 auto;
+  padding: 0.3rem;
+  color: var(--t-quiet, #a2988a);
+}
+.reader-restart svg { width: 1.05rem; height: 1.05rem; }
+.reader-restart:hover, .reader-restart:focus-visible { color: var(--gold-lt, #e3c88e); }
 
 .reader-audio-track {
   flex: 1 1 auto;
