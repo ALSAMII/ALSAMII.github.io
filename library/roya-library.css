@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 97 · last updated 2026-09-23 05:26 PDT
+   Version 98 · last updated 2026-09-23 05:52 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -244,9 +244,27 @@
   overflow-y:auto; overflow-x:clip; overscroll-behavior:contain;
   scrollbar-width:none;
   box-shadow:0 30px 70px rgba(0,0,0,.6);
-  background-color:#0b0906; background-image:url("bg-mob.webp?v=501");
+  background-color:#0b0906; background-image:url("bg-mob.webp?v=502");
   background-size:cover; background-position:center center; background-repeat:no-repeat;}
 #royaLibrary .phone::-webkit-scrollbar{display:none}
+/* ── where the phone's backdrop belongs ──
+   On a handset .phone is not a frame around a page — it IS the page, and in
+   the About tab that page is 8,402px tall. `cover` on an element that tall
+   does not crop the picture, it stretches it to fill all of it: the old
+   900x1600 backdrop was blown up 5.25x in CSS pixels, close to sixteen times
+   in device pixels. That is the softness. It is also why one bright part of
+   the scene turned into a glow several screens deep — the "too bright in
+   some sections". The desktop never had it, because #royaLibrary carries its
+   plate "pinned to the viewport so it neither tiles nor stretches as the
+   shelf runs on", and that element is exactly one screen.
+
+   So the phone plate goes there too, on the same terms. .phone keeps nothing
+   but its colour, and must not keep that either — an opaque colour on the
+   tall element would paint straight over the plate behind it. */
+@media (max-width: 46rem){
+  #royaLibrary, #royaLibrary .lib{background-image:url("bg-mob.webp?v=502")}
+  #royaLibrary .phone{background-image:none; background-color:transparent}
+}
 }
 /* On a phone the SECTION is the scroller, not .phone — and unlike .phone it
    was still drawing a scrollbar. On iOS that bar is an overlay that fades out
