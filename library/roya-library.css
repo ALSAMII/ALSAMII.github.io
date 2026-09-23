@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 96 · last updated 2026-09-23 05:02 PDT
+   Version 97 · last updated 2026-09-23 05:26 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -229,15 +229,25 @@
    centring it put its left edge at x = -750 and the whole frame sat off-screen
    with every computed style looking perfectly correct. Block viewport, flex
    stage, width:100%: the frame can no longer be wider than the column. */
+/* .phone renders only below 46rem — it IS the phone layout, not a frame a
+   desktop ever sees — so bg-mob.webp is a phone-only asset and can be sized
+   for one. It used to be 900x1600 at a fifth of a bit per pixel, which fell
+   apart stretched across a real screen at three times the density: that
+   softness was the "degraded background". It is the forest scene now, at
+   960x2064 and three times the bit density.
+
+   The ?v= matters as much as the picture. The file keeps its name, so
+   without a stamp every browser holding the old one would go on holding it. */
 #royaLibrary .phone{position:relative; flex:0 1 420px; min-width:0; max-width:100%;
   height:min(860px, calc(100vh - var(--labh,0px) - 5rem));
   border:10px solid #17140f; border-radius:34px;
   overflow-y:auto; overflow-x:clip; overscroll-behavior:contain;
   scrollbar-width:none;
   box-shadow:0 30px 70px rgba(0,0,0,.6);
-  background-color:#0b0906; background-image:url("bg-mob.webp");
+  background-color:#0b0906; background-image:url("bg-mob.webp?v=501");
   background-size:cover; background-position:center center; background-repeat:no-repeat;}
 #royaLibrary .phone::-webkit-scrollbar{display:none}
+}
 /* On a phone the SECTION is the scroller, not .phone — and unlike .phone it
    was still drawing a scrollbar. On iOS that bar is an overlay that fades out
    rather than disappearing, so opening a record right after a scroll left the
