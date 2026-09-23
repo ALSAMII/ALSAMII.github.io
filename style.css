@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 1 · last updated 2026-09-22 21:24 PDT
+   Version 2 · last updated 2026-09-23 04:48 PDT
       (first stamp on this file — it has never carried one)
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
@@ -6104,7 +6104,9 @@ body.gallery-on .to-top { display: none; }
   min-width: 0;
   max-width: 100%;
   text-align: center;
-  font-size: 0.5625rem;
+  /* Was 0.5625rem. At that size the book's own name was the smallest type
+     on a screen it is the subject of, and the time left smaller still. */
+  font-size: 0.75rem;
   letter-spacing: 0.22em;
   color: var(--faded);
   white-space: nowrap;
@@ -6119,7 +6121,7 @@ body.gallery-on .to-top { display: none; }
    for a book too short to bother estimating. */
 .reader-time-left {
   margin: 0;
-  font-size: 0.5rem;
+  font-size: 0.625rem;
   letter-spacing: 0.16em;
   color: var(--ember-dim);
 }
@@ -6160,9 +6162,9 @@ body.gallery-on .to-top { display: none; }
 
 .reader-play {
   flex: 0 0 auto;
-  padding: 0.3rem;
+  padding: 0.4rem;
 }
-.reader-play svg { width: 1.3rem; height: 1.3rem; }
+.reader-play svg { width: 1.6rem; height: 1.6rem; }
 
 /* Back to the first word. A shade smaller than play and set in the quiet
    grey rather than the gold, because it is the second thing you would
@@ -6170,20 +6172,27 @@ body.gallery-on .to-top { display: none; }
    the control that actually starts the book. */
 .reader-restart {
   flex: 0 0 auto;
-  padding: 0.3rem;
+  padding: 0.4rem;
   color: var(--t-quiet, #a2988a);
 }
-.reader-restart svg { width: 1.05rem; height: 1.05rem; }
+.reader-restart svg { width: 1.3rem; height: 1.3rem; }
 .reader-restart:hover, .reader-restart:focus-visible { color: var(--gold-lt, #e3c88e); }
 
 .reader-audio-track {
   flex: 1 1 auto;
   position: relative;
-  height: 3px;
-  border-radius: 2px;
+  height: 5px;
+  border-radius: 3px;
   background: var(--hairline);
   cursor: pointer;
   touch-action: none;
+}
+/* The thread is 5px; a finger is not. This gives the control a target the
+   full height of the bar without drawing anything taller. */
+.reader-audio-track::before {
+  content: "";
+  position: absolute;
+  inset: -0.7rem 0;
 }
 .reader-audio-track:focus-visible {
   outline: 1px solid var(--ember);
@@ -6204,8 +6213,8 @@ body.gallery-on .to-top { display: none; }
   position: absolute;
   top: 50%;
   left: var(--pos, 0%);
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.75rem;
+  height: 0.75rem;
   border-radius: 50%;
   background: var(--ember);
   transform: translate(-50%, -50%) scale(0);
@@ -6218,11 +6227,26 @@ body.gallery-on .to-top { display: none; }
 
 .reader-audio-time {
   flex: 0 0 auto;
-  font-size: 0.5625rem;
+  font-size: 0.6875rem;
   letter-spacing: 0.1em;
   color: var(--faded);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+/* The narration bar on a phone. Everything in it is a touch target or a
+   number read at arm's length, and the section it sits in is the narrowest
+   the site has, so the controls grow rather than shrink here. */
+@media (max-width: 820px) {
+  .reader-audio { gap: 0.55rem; padding: 0.55rem clamp(0.9rem, 3vw, 1.75rem); }
+  .reader-play svg { width: 1.85rem; height: 1.85rem; }
+  .reader-restart svg { width: 1.5rem; height: 1.5rem; }
+  .reader-play, .reader-restart { padding: 0.45rem; }
+  .reader-audio-track { height: 6px; border-radius: 3px; }
+  .reader-audio-track::after { width: 0.9rem; height: 0.9rem; transform: translate(-50%, -50%) scale(1); }
+  .reader-audio-time { font-size: 0.75rem; letter-spacing: 0.06em; }
+  .reader-title { font-size: 0.8125rem; }
+  .reader-time-left { font-size: 0.6875rem; }
 }
 
 .reader-scroll {
