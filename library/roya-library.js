@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 93 · last updated 2026-09-21 20:02 PDT
+   Version 94 · last updated 2026-09-22 17:22 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -86,7 +86,8 @@
         room: room[0], roomG: room[1],
         key: key[0],  keyG: key[1],
         gloss: "", series: seriesOf[s.num] || "",
-        syn: s.synopsis || "", notes: s.notes || []
+        syn: s.synopsis || "", notes: s.notes || [],
+        audio: s.audio || ""
       };
     }).sort((a, b) => a.n - b.n);
     return {
@@ -203,6 +204,7 @@ const DICON = {
      already knows for "open this bigger", and quieter on a cover than a
      magnifying glass, which reads as "search" everywhere else on the page */
   expand:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13.6 5.6h4.8v4.8"/><path d="M10.4 18.4H5.6v-4.8"/><path d="M18.4 5.6l-6 6"/><path d="M5.6 18.4l6-6"/></svg>',
+  listen:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2.2a8 8 0 0 1 16 0V14"/><rect x="2.4" y="13.4" width="4.6" height="7.2" rx="1.7"/><rect x="17" y="13.4" width="4.6" height="7.2" rx="1.7"/></svg>',
   close:'<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg>'
 };
 const RANGES = [[1,25],[26,50],[51,75],[76,94]];
@@ -533,7 +535,7 @@ function recordPanel(){
           </span>
           <span class="rec-series">${esc(sName(b))}</span>
           <span class="bcard-acts">
-            <span class="bcard-read" role="button" tabindex="0" data-read="${b.n}">Read story ${DICON.arrow}</span>
+            ${readRow(b, "bcard-read")}
             <span class="bcard-side">
               <a class="bcard-act" href="${pdfHref(b)}" target="_blank" rel="noopener" data-stop="1">${DICON.pdf} PDF</a>
               <span class="bcard-act" role="button" tabindex="0" data-share="${b.n}">${DICON.share} Share</span>
@@ -574,7 +576,7 @@ ${seriesPanel()}
                       title="Enlarge cover" aria-label="Enlarge cover">${DICON.expand}</span>
               </span>
               <span class="bcard-acts">
-                <span class="bcard-read" role="button" tabindex="0" data-read="${b.n}">Read story ${DICON.arrow}</span>
+                ${readRow(b, "bcard-read")}
                 <span class="bcard-side">
                   <a class="bcard-act" href="${pdfHref(b)}" target="_blank" rel="noopener" data-stop="1">${DICON.pdf} PDF</a>
                   <span class="bcard-act" role="button" tabindex="0" data-share="${b.n}">${DICON.share} Share</span>
@@ -1143,7 +1145,7 @@ function mobSheet(){
     ${dials(b)}
     ${keyed(b)}
     <div class="sheet-acts">
-      <span class="bcard-read" role="button" tabindex="0" data-read="${b.n}">Read story ${DICON.arrow}</span>
+      ${readRow(b, "bcard-read")}
       <span class="bcard-side">
         <a class="bcard-act" href="${pdfHref(b)}" target="_blank" rel="noopener" data-stop="1">${DICON.pdf} PDF</a>
         <span class="bcard-act" role="button" tabindex="0" data-share="${b.n}">${DICON.share} Share</span>
@@ -1155,6 +1157,23 @@ function mobSheet(){
     </div>
     </div>
   </div>`;
+}
+
+/* The read control, in one place because four cards draw it — the record
+   panel, the grid card, the sheet and the phone card — and they must not
+   drift apart.
+
+   A book with a recording gets the row split in two: Read story on the
+   left, Listen on the right. A book without one keeps the full-width Read
+   story it has always had, so nothing changes for the other eighty-eight
+   until their audio arrives. The field is the same audio: on stories.js
+   that ADDING-AUDIO.md already defines; nothing new has to be set. */
+function readRow(b, cls){
+  const read = `<span class="${cls}" role="button" tabindex="0" data-read="${b.n}">Read story ${DICON.arrow}</span>`;
+  if (!b.audio) return read;
+  return `<span class="${cls}s is-split">${read}` +
+         `<span class="${cls} is-listen" role="button" tabindex="0" data-listen="${b.n}"` +
+         ` aria-label="Listen to ${esc(b.t)}">${DICON.listen} Listen</span></span>`;
 }
 
 /* One option in the phone's series picker.
@@ -1262,7 +1281,7 @@ function mobile(){
             <hr>
             <p class="mcard-hook">${esc(b.hook)}.</p>
             <p class="mcard-meta"><span>${esc(b.rt)}</span><span>·</span><span>${esc(sName(b))}</span></p>
-            <span class="mcard-read" role="button" tabindex="0" data-read="${b.n}">Read story ${DICON.arrow}</span>
+            ${readRow(b, "mcard-read")}
           </span>
         </button>`).join("")}
     </div>`}
@@ -1410,6 +1429,7 @@ document.addEventListener("click", e=>{
   /* the control lives inside a card that carries data-rec or data-sheet, so it
      has to be read before them — the same trap the enlarge control had */
   const rd=e.target.closest("[data-read]"); if(rd){ openRead(+rd.dataset.read); return; }
+  const ls=e.target.closest("[data-listen]"); if(ls){ openRead(+ls.dataset.listen, true); return; }
   /* the PDF is a real link: let the browser have it, but stop the card under
      it from opening the record at the same time */
   const pd=e.target.closest("[data-stop]"); if(pd){ e.stopPropagation(); return; }
@@ -1669,11 +1689,33 @@ try{
     return null;
   }
 
-  function openRead(n) {
+  /* Listen opens the reader and then presses its own play control.
+
+     Same reasoning as readButtonFor above: script.js keeps the reader
+     private, so the way in is the control it built. The play control only
+     exists once setupAudio() has found a sync file and shown the bar, and
+     that happens after read/NN.json and read/NN.sync.json have both come
+     back — so this waits for the bar rather than assuming it is there.
+
+     A book with audio: but no sync file is the canon's plain-download case
+     (see ADDING-AUDIO.md). The bar never appears, the wait times out, and
+     the reader is simply open at the text, which is the right outcome. */
+  function startPlayback() {
+    const began = Date.now();
+    (function wait() {
+      const bar = document.getElementById("readerAudioBar");
+      const play = document.getElementById("readerPlay");
+      if (bar && play && !bar.hidden) { play.click(); return; }
+      if (Date.now() - began < 6000) setTimeout(wait, 120);
+    })();
+  }
+
+  function openRead(n, play) {
     const s = STORIES.filter(function (x) { return x.num === n; })[0];
     if (!s) return;
     const btn = readButtonFor(s);
     if (btn) {
+      if (play) startPlayback();
       if (HOME) {
         /* the reader opens above, so the section stays exactly where it is —
            same scroll position, same filter — and is simply there again when

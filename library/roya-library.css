@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 91 · last updated 2026-09-21 19:42 PDT
+   Version 92 · last updated 2026-09-22 17:22 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -71,6 +71,7 @@
 :root[data-lt="light"] #royaLibrary .main-foot{border-top-color:rgba(96,76,42,.45)}
 :root[data-lt="light"] #royaLibrary .side{border-right-color:rgba(96,76,42,.4)}
 :root[data-lt="light"] #royaLibrary .bcard-read, :root[data-lt="light"] #royaLibrary .sortbox, :root[data-lt="light"] #royaLibrary .side-search input{border-color:rgba(96,76,42,.55)}
+:root[data-lt="light"] #royaLibrary .bcard-read.is-listen, :root[data-lt="light"] #royaLibrary .mcard-read.is-listen{color:#5c4a28}
 :root[data-lt="light"] #royaLibrary .bcard-side .bcard-act, #royaLibrary .bcard-side span{border-color:rgba(96,76,42,.32)}
 :root[data-lt="light"] #royaLibrary .bcard-plate{box-shadow:0 0 26px rgba(150,110,45,.18), 0 10px 20px rgba(70,52,24,.3)}
 :root[data-lt="light"] #royaLibrary .bcard-plate img{filter:saturate(.95) contrast(1.02) brightness(1)}
@@ -476,6 +477,30 @@
   text-transform:uppercase; color:var(--t-read);}
 #royaLibrary .bcard-read svg{width:1.05rem; height:.8rem; stroke:currentColor; fill:none; stroke-width:1.6; flex:0 0 auto}
 #royaLibrary .bcard:hover .bcard-read{color:var(--ochre); border-color:var(--ochre)}
+/* A book with a recording splits this row in two. Both halves keep the
+   Read story box exactly as it was — same border, same height — so the
+   card looks like itself with a second door in it, not like a new card.
+   The tracking comes in a little because "Read story" and "Listen" have
+   to sit side by side in the width one of them used to have. */
+/* Side by side where there is room for it — the record panel and the sheet
+   are wide — and stacked where there is not. The grid card's action column
+   is about 160px, which cannot hold "Read story" and "Listen" on one line
+   at any tracking this design system would accept, so it wraps instead of
+   clipping. min-width is what decides: a half narrower than 5.6rem takes
+   the whole row instead. */
+#royaLibrary .bcard-reads.is-split, #royaLibrary .mcard-reads.is-split{display:flex; flex-wrap:wrap; gap:.4rem}
+#royaLibrary .bcard-reads.is-split > *, #royaLibrary .mcard-reads.is-split > *{min-width:5.6rem}
+#royaLibrary .bcard-reads.is-split .bcard-read{flex:1 1 5.6rem;
+  justify-content:center; gap:.36rem; white-space:nowrap;
+  /* "Read story" has to fit on one line in half the width it used to have,
+     so the tracking comes in and the size down a step. Any looser and it
+     wraps to two lines beside a one-line Listen, which reads as a mistake. */
+  font-size:.625rem; letter-spacing:.1em; padding-inline:.4rem;}
+#royaLibrary .bcard-reads.is-split .bcard-read svg{width:.95rem}
+#royaLibrary .bcard-read.is-listen{color:var(--t-ctrl)}
+#royaLibrary .bcard-read.is-listen svg{width:.9rem; height:.9rem; stroke-width:1.5}
+#royaLibrary .bcard:hover .bcard-read.is-listen{color:var(--gold-lt); border-color:var(--ochre)}
+#royaLibrary .bcard-read.is-listen:hover{color:var(--gold-lt); border-color:var(--ochre)}
 #royaLibrary .bcard-side{display:flex; gap:.4rem}
 #royaLibrary .bcard-side .bcard-act, #royaLibrary .bcard-side span{flex:1 1 0; min-width:0;
   display:inline-flex; align-items:center; justify-content:center; gap:.28rem;
@@ -2186,6 +2211,11 @@
   font-family:var(--cond); font-weight:600; font-size:.5625rem; letter-spacing:.2em;
   text-transform:uppercase; color:var(--t-read);}
 #royaLibrary .mcard-read svg{width:.95rem; height:.7rem; stroke:currentColor; fill:none; stroke-width:1.6}
+#royaLibrary .mcard-reads.is-split{margin-top:auto}
+#royaLibrary .mcard-reads.is-split .mcard-read{margin-top:0; flex:1 1 5.6rem;
+  justify-content:center; gap:.35rem; letter-spacing:.1em;}
+#royaLibrary .mcard-read.is-listen{color:var(--t-ctrl)}
+#royaLibrary .mcard-read.is-listen svg{width:.85rem; height:.85rem; stroke-width:1.5}
 /* the row view — same markup, laid on its side. A full-width measure gives
    the long titles room the two-up cards cannot, and the reading time and
    series come out of hiding because there is space for them. */
