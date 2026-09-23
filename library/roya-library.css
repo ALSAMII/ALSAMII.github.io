@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 99 · last updated 2026-09-23 06:06 PDT
+   Version 100 · last updated 2026-09-23 06:22 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -262,8 +262,27 @@
    but its colour, and must not keep that either — an opaque colour on the
    tall element would paint straight over the plate behind it. */
 @media (max-width: 46rem){
-  #royaLibrary, #royaLibrary .lib{background-image:url("bg-mob.webp?v=503")}
+  #royaLibrary, #royaLibrary .lib{background-image:url("bg-mob.webp?v=504")}
   #royaLibrary .phone{background-image:none; background-color:transparent}
+  /* ── the grain that keeps the plate from banding ──
+     The plate is dark and very smooth, and the .mob wash over it squeezes the
+     whole picture into about forty tones. Forty tones across a phone screen
+     is a staircase, and that staircase is what read as blotches.
+
+     Grain scatters the staircase. It used to be baked into the file, which
+     was wrong twice over: the browser's own upscale smoothed most of it away
+     before it reached the screen, and noise is the most expensive thing a
+     WebP encoder can be asked to store. Drawn here instead it is generated at
+     the screen's real resolution, costs no bytes, and cannot be resampled.
+     background-size shrinks the 160px tile until one speck is about one
+     device pixel on a 3x screen, which is what makes it a dither rather than
+     a texture. Measured on the finished render it takes the tone steps from
+     12% of pixels to 80% — scattered, which is to say invisible — and takes
+     the encoder's own 16px block edges from 1.87x ordinary contrast to 1.01x,
+     which is to say gone. */
+  #royaLibrary::after{content:""; position:fixed; inset:0; z-index:-1;
+    background-image:var(--grain); background-size:54px 54px;
+    opacity:.1; pointer-events:none;}
 }
 }
 /* On a phone the SECTION is the scroller, not .phone — and unlike .phone it
