@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 98 · last updated 2026-09-22 20:52 PDT
+   Version 99 · last updated 2026-09-22 22:32 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -87,7 +87,7 @@
         key: key[0],  keyG: key[1],
         gloss: "", series: seriesOf[s.num] || "",
         syn: s.synopsis || "", notes: s.notes || [],
-        audio: s.audio || ""
+        audio: s.audio || "", synced: s.synced
       };
     }).sort((a, b) => a.n - b.n);
     return {
@@ -540,8 +540,11 @@ function listenPanel(){
       <p class="lsn-sub">No. ${pad(b.n)} \u00b7 ${esc(sName(b))}</p>
       <button class="lsn-opt" type="button" data-listenplay="${b.n}">
         <span class="lsn-opt-t">Listen here</span>
-        <span class="lsn-opt-d">The book opens and reads along \u2014 the sentence
-          being spoken lights up as it goes.</span>
+        <span class="lsn-opt-d">${b.synced === false
+          ? `The book opens with the recording playing, and you can read along
+             at your own pace.`
+          : `The book opens and reads along \u2014 the sentence being spoken
+             lights up as it goes.`}</span>
       </button>
       <a class="lsn-opt is-dl" href="${file}" download data-listendl="${b.n}">
         <span class="lsn-opt-t">Download the recording</span>
