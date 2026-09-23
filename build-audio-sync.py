@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 build-audio-sync.py — turn a book's narration into synced reading data.
-Version 2 · last updated 2026-09-22 19:42 PDT
+Version 3 · last updated 2026-09-22 22:18 PDT
 
     python3 build-audio-sync.py 01 /path/to/source-audio.mp3
 
@@ -156,6 +156,26 @@ def _slice_with_tags(raw, start, end):
     return body.strip()
 
 
+# build-reader.py puts this line in front of a book's glossary, and
+# make_narration_pdf.py stops there: the glossary is NOT read aloud. So it must
+# not be aligned either. Left in, its words have no audio to match and the
+# aligner pays for them by stretching everything else — on No. 7 that is 2,492
+# words, an eighth of the book, and it made the whole alignment unstable:
+# four runs at different settings disagreed by up to two and a half minutes.
+# Cut here and the same four runs agree. Only trailing blocks are dropped, so
+# every block index the sync file quotes still means what it meant.
+GLOSSARY_NOTE = "For the glossary, see the PDF edition of this book."
+
+
+def spoken_blocks(blocks):
+    """The part of the reader file the recording actually contains."""
+    for i, b in enumerate(blocks):
+        plain = re.sub("<[^>]+>", "", b["h"]).strip()
+        if plain == GLOSSARY_NOTE or plain.upper() == "GLOSSARY":
+            return blocks[:i], len(blocks) - i
+    return blocks, 0
+
+
 def build_fragments(blocks):
     """Returns (fragment_ids, clean_texts, orig_html_per_fragment,
     block_index_per_fragment). One fragment per sentence (or per whole
@@ -202,7 +222,7 @@ def build_fragments(blocks):
     return frag_ids, clean_texts, orig_texts, block_idx
 
 
-def run_aeneas(wav_path, frag_ids, clean_texts, workdir, mfcc_shift=None):
+def run_aeneas(wav_path, frag_ids, clean_texts, workdir, mfcc_shift=None, dtw_margin=None):
     frag_txt = os.path.join(workdir, "fragments.txt")
     with open(frag_txt, "w", encoding="utf-8") as f:
         f.write("\n".join("%s|%s" % (i, t) for i, t in zip(frag_ids, clean_texts)))
@@ -217,11 +237,14 @@ def run_aeneas(wav_path, frag_ids, clean_texts, workdir, mfcc_shift=None):
     task.sync_map_file_path_absolute = os.path.join(workdir, "sync.json")
 
     rconf = None
-    if mfcc_shift:
+    if mfcc_shift or dtw_margin:
         from aeneas.runtimeconfiguration import RuntimeConfiguration
         rconf = RuntimeConfiguration()
-        rconf[RuntimeConfiguration.MFCC_WINDOW_SHIFT] = mfcc_shift
-        rconf[RuntimeConfiguration.MFCC_WINDOW_LENGTH] = max(0.100, mfcc_shift * 2)
+        if mfcc_shift:
+            rconf[RuntimeConfiguration.MFCC_WINDOW_SHIFT] = mfcc_shift
+            rconf[RuntimeConfiguration.MFCC_WINDOW_LENGTH] = max(0.100, mfcc_shift * 2)
+        if dtw_margin:
+            rconf[RuntimeConfiguration.DTW_MARGIN] = dtw_margin
 
     ExecuteTask(task, rconf=rconf).execute()
     task.output_sync_map_file()
@@ -308,6 +331,11 @@ def main():
                      help="override the delivered recording's length in seconds "
                           "(when --align-audio points at a trimmed copy and the "
                           "full file isn't on this machine)")
+    ap.add_argument("--dtw-margin", type=float, default=None,
+                     help="how far, in seconds, the aligner may wander from a straight "
+                          "reading pace (aeneas default 60). A recording whose pace "
+                          "drifts further than this gets clipped to the band and the "
+                          "result stops being trustworthy.")
     ap.add_argument("--mfcc-shift", type=float, default=None,
                      help="force the aligner's frame shift in seconds (default: "
                           "chosen from the recording's length, see mfcc_shift_for)")
@@ -324,6 +352,10 @@ def main():
 
     _patch_aeneas_numpy2()
 
+    blocks, dropped = spoken_blocks(blocks)
+    if dropped:
+        print("Stopping at the glossary: %d block(s) at the end are not narrated "
+              "and are left out of the alignment." % dropped)
     frag_ids, clean_texts, orig_texts, block_idx = build_fragments(blocks)
     print("%d sentence-level fragments across %d blocks" % (len(frag_ids), len(blocks)))
 
@@ -344,7 +376,7 @@ def main():
                   "inside memory..." % (align_dur / 60.0, round(shift * 1000)))
         else:
             print("Aligning (aeneas)...")
-        fragments = run_aeneas(wav_path, frag_ids, clean_texts, workdir, shift)
+        fragments = run_aeneas(wav_path, frag_ids, clean_texts, workdir, shift, args.dtw_margin)
 
         by_id = {}
         for f in fragments:

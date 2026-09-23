@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 1 · last updated 2026-09-22 21:24 PDT
+   Version 2 · last updated 2026-09-22 22:32 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2332,15 +2332,25 @@
 
     readerAudioEl.pause();
 
-    if (!currentSync) {
+    /* No recording at all: no bar, nothing to play. */
+    if (!s.audio) {
       readerAudioBar.hidden = true;
       readerAudioEl.removeAttribute("src");
       return;
     }
 
-    document.querySelectorAll("#readerPage .r-sent").forEach(function (el) {
-      syncTimeline.push({ start: parseFloat(el.dataset.t), el: el });
-    });
+    /* A recording but no sync file. The book still gets a player — it simply
+       does not light up the sentences. This used to hide the bar outright,
+       which left Listen promising a read-along and then opening a reader with
+       no way to play anything; a plain player is both honest and useful, and
+       it is what ADDING-AUDIO.md always described this case as. */
+    if (!currentSync) {
+      syncTimeline = [];
+    } else {
+      document.querySelectorAll("#readerPage .r-sent").forEach(function (el) {
+        syncTimeline.push({ start: parseFloat(el.dataset.t), el: el });
+      });
+    }
 
     readerAudioBar.hidden = false;
     readerPlayIcon.style.display = "";
@@ -2348,7 +2358,15 @@
     readerAudioFill.style.width = "0%";
     readerAudioTrack.style.setProperty("--pos", "0%");
     readerAudioTrack.setAttribute("aria-valuenow", "0");
-    readerAudioTime.textContent = "0:00 / " + fmtTime(currentSync.duration);
+    readerAudioTime.textContent = "0:00 / " + fmtTime(currentSync ? currentSync.duration : 0);
+    if (!currentSync) {
+      readerAudioEl.addEventListener("loadedmetadata", function once() {
+        readerAudioEl.removeEventListener("loadedmetadata", once);
+        if (readerAudioEl.duration) {
+          readerAudioTime.textContent = "0:00 / " + fmtTime(readerAudioEl.duration);
+        }
+      });
+    }
 
     /* A new src always resets playback to the start; the saved spot is
        reapplied as soon as the browser knows how long the file is. */

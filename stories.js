@@ -1,4 +1,4 @@
-/* Version 451 · last updated 2026-09-22 20:32 PDT */
+/* Version 453 · last updated 2026-09-22 22:32 PDT */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -126,7 +126,8 @@ const STORIES = [
     room: "The Riverbed \u2014 the floor of you, where the first wound was cut",
     key: "Le-The \u2014 a drug that lets a doctor walk down inside you",
     notes: [2, 3, 1],
-    synopsis: "Through a drug called Le-The, Dr. Halcyon walks his patients down through the layers of the self, to the riverbed where the original wound was carved. Then the Institute admits a man three clinics refused \u2014 a patient whose own mind, from the intake scan alone, has named him Undertow."
+    synopsis: "Through a drug called Le-The, Dr. Halcyon walks his patients down through the layers of the self, to the riverbed where the original wound was carved. Then the Institute admits a man three clinics refused \u2014 a patient whose own mind, from the intake scan alone, has named him Undertow.",
+    audio: "assets/audio/06.mp3"
   },
 
   {
@@ -138,7 +139,16 @@ const STORIES = [
     room: "No One Narrating \u2014 the voice stops, and something older sits up",
     key: "Sublate \u2014 switches off the voice that talks you through your life",
     notes: [3, 2, 1],
-    synopsis: "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who's actually in charge. That voice was never their own \u2014 it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes."
+    synopsis: "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who's actually in charge. That voice was never their own \u2014 it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes.",
+    audio: "assets/audio/07.mp3",
+    /* The recording plays and downloads, but it has no read/07.sync.json, so
+       nothing lights up as it goes. The alignment for this one would not hold
+       still: four runs at different settings disagreed by up to two and a half
+       minutes, where No. 6 agreed to a twentieth of a second. Its narration
+       also runs 18% slower per word than No. 6's, which points at the file
+       holding something the text does not. Drop this line and the sync file
+       in together if that is ever sorted out. */
+    synced: false
   },
 
   {
