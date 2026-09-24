@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 101 · last updated 2026-09-23 07:22 PDT
+   Version 102 · last updated 2026-09-23 18:02 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -851,7 +851,7 @@
      overflow:hidden clips at the border box, so the rows can be pushed out
      into that padding without being cut. That plus the smaller size is what
      takes the hand off the statement's first lines. */
-  position:absolute; left:-1.7rem; top:5.5rem; z-index:0; pointer-events:none;
+  position:absolute; left:-1.05rem; top:5.5rem; z-index:0; pointer-events:none;
   /* Larger and a shade less faded: at 1.375rem and .15 the three rows were
      a smudge rather than a hand.
 
@@ -865,11 +865,12 @@
      would be cut off the LEFT edge with nothing on screen to show it. A wrap
      is a visible failure and a clip is a silent one; the box is simply wide
      enough instead. */
-  width:12rem;
-  font-family:var(--nastaliq); font-size:1.25rem; line-height:2.3;
-  text-align:right; color:var(--paper-dust); opacity:.24; filter:blur(.75px);
-  transform:rotate(-30deg); transform-origin:left center;
-  direction:rtl;}
+  width:11.32rem; aspect-ratio:244/314; font-size:0;
+  background-color:var(--paper-dust);
+  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
+          mask:url("art/marg.webp") no-repeat center/contain;
+  opacity:.12; filter:blur(.75px);
+  transform:rotate(-30deg); transform-origin:left center;}
 /* The marginalia only exists where there is a margin for it to climb. Widening
    the statement to 78ch took the gutter from 223px down to 143px at a 1600px
    window, and the three rows started crossing the first lines of type — a
@@ -1786,9 +1787,12 @@
    faded hand, small enough to sit inside it rather than beside it. */
 #royaLibrary .mob-sec .ab-gh{display:flex; align-items:center; gap:.7rem}
 #royaLibrary .mob-sec .ab-gh-t{flex:1 1 auto; min-width:0}
-#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-family:var(--nastaliq); font-size:.9375rem; line-height:2.1;
-  text-align:right; direction:rtl; color:var(--paper-dust);
-  opacity:.34; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
+#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-size:0;
+  width:118px; aspect-ratio:244/314;
+  background-color:var(--paper-dust);
+  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
+          mask:url("art/marg.webp") no-repeat center/contain;
+  opacity:.19; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
 #royaLibrary .mob-sec .ab-row{padding:1.1rem 0 1.3rem}
