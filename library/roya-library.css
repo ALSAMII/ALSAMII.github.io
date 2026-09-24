@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 103 · last updated 2026-09-23 18:40 PDT
+   Version 105 · last updated 2026-09-23 19:58 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -674,14 +674,32 @@
   font-size:1.3125rem; line-height:1.66; color:var(--t-tag);}
 /* The count. It is the one figure on this page a reader is meant to carry
    away — how many books there are — and set as an italic numeral inside the
-   sentence it was indistinguishable from the words around it. It takes the
-   section's own numeral face, the one the rail counts in, stands upright out
-   of the italic, and is lifted to the gold the headings use. Nothing else in
-   the line changes. */
-#royaLibrary .ab-count{font-family:var(--identity); font-style:normal;
-  font-weight:400; font-size:1.5em; line-height:1; letter-spacing:.02em;
-  color:var(--gold-lt); vertical-align:-.045em; margin-right:.06em;}
-:root[data-lt="light"] #royaLibrary .ab-count{color:var(--gold-num)}
+   sentence it was indistinguishable from the words around it.
+
+   It is a display figure now, to the reference ChewZ supplied: Cormorant
+   Garamond, italic, at the heavy weight — the high-contrast cut already in
+   the section's font link, hairlines against thick strokes, with the
+   old-style 9 carrying its tail below the line.
+
+   Those are the numbers that matter, measured off the real face rather than
+   guessed: Cormorant italic 600 puts 0.418em of ink above the baseline and
+   0.276em below it, and the paragraph at line-height 1.66 leaves 0.953em
+   under its baseline before the next line's capitals begin. So at 1.9em the
+   tail reaches 0.44em down and clears the line below by 0.51em, while the
+   figure still stands 0.17em above the capital line — above the text, and
+   out of it. The first draft was 2.9em pushed down another .30em, which put
+   the tail 0.72em INTO the second line; the size was never the problem, the
+   vertical-align was.
+
+   line-height is pinned to 0 so the numeral hangs out of the line box rather
+   than opening it — the paragraph is exactly as tall as it was. The colour is
+   the cream of the reference, a shade above the sentence it sits in rather
+   than a different hue from it. */
+#royaLibrary .ab-count{font-family:"Cormorant Garamond","EB Garamond",Georgia,serif;
+  font-style:italic; font-weight:600; font-size:1.9em; line-height:0;
+  letter-spacing:.005em; color:#f3e8cf;
+  vertical-align:.08em; margin:0 .14em 0 0;}
+:root[data-lt="light"] #royaLibrary .ab-count{color:#2a2114}
 #royaLibrary .ab-note--long{font-style:normal}
 /* The dividers used to be a pseudo-element on each cell, positioned against
    the cell. Taking position:relative off the cell — which the hover note needs
@@ -861,7 +879,7 @@
      overflow:hidden clips at the border box, so the rows can be pushed out
      into that padding without being cut. That plus the smaller size is what
      takes the hand off the statement's first lines. */
-  position:absolute; left:-1.7rem; top:5.5rem; z-index:0; pointer-events:none;
+  position:absolute; left:-1.05rem; top:5.5rem; z-index:0; pointer-events:none;
   /* Larger and a shade less faded: at 1.375rem and .15 the three rows were
      a smudge rather than a hand.
 
@@ -875,11 +893,12 @@
      would be cut off the LEFT edge with nothing on screen to show it. A wrap
      is a visible failure and a clip is a silent one; the box is simply wide
      enough instead. */
-  width:12rem;
-  font-family:var(--nastaliq); font-size:1.25rem; line-height:2.3;
-  text-align:right; color:var(--paper-dust); opacity:.24; filter:blur(.75px);
-  transform:rotate(-30deg); transform-origin:left center;
-  direction:rtl;}
+  width:11.32rem; aspect-ratio:244/314; font-size:0;
+  background-color:var(--paper-dust);
+  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
+          mask:url("art/marg.webp") no-repeat center/contain;
+  opacity:.12; filter:blur(.75px);
+  transform:rotate(-30deg); transform-origin:left center;}
 /* The marginalia only exists where there is a margin for it to climb. Widening
    the statement to 78ch took the gutter from 223px down to 143px at a 1600px
    window, and the three rows started crossing the first lines of type — a
@@ -1265,9 +1284,10 @@
   /* Up to the Delgoshā's size, at the user's asking: that panel sets its
      synopsis at clamp(1.25rem, 2.1cqw, 2.05rem)/1.58 and this one was two
      thirds of it, which read as a different rank of text rather than the same
-     kind of paragraph. The constraint above still holds — the block has to
-     finish inside the foot of the plate — and it does, measured at 1440,
-     1512, 1700 and 1899. */
+     kind of paragraph. The block now ends at the foot of the plate rather
+     than inside it, and the panel grows about 130px to take it; the painting
+     is set with cover, so it re-crops instead of stretching. Measured at
+     1440, 1512, 1600, 1700 and 1899. */
   #royaLibrary .ab-feat--split .pl-body p{font-size:clamp(1.25rem, 2.1cqw, 2.05rem);
     line-height:1.58}
   #royaLibrary .ab-feat--split .pl-body{padding-top:.9cqw}
@@ -1811,9 +1831,12 @@
    faded hand, small enough to sit inside it rather than beside it. */
 #royaLibrary .mob-sec .ab-gh{display:flex; align-items:center; gap:.7rem}
 #royaLibrary .mob-sec .ab-gh-t{flex:1 1 auto; min-width:0}
-#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-family:var(--nastaliq); font-size:.9375rem; line-height:2.1;
-  text-align:right; direction:rtl; color:var(--paper-dust);
-  opacity:.34; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
+#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-size:0;
+  width:118px; aspect-ratio:244/314;
+  background-color:var(--paper-dust);
+  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
+          mask:url("art/marg.webp") no-repeat center/contain;
+  opacity:.19; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
 #royaLibrary .mob-sec .ab-row{padding:1.1rem 0 1.3rem}
