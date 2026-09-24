@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 105 · last updated 2026-09-23 19:58 PDT
+   Version 107 · last updated 2026-09-23 20:13 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -1071,14 +1071,25 @@
   background-repeat:no-repeat; border:1px solid rgba(199,148,61,.4)}
 
 /* ── the type, at the sizes the folded arrangement uses ── */
+/* The two scripts were stacked, English over Persian. They stand side by
+   side now, at ChewZ's asking, with the Persian to the right of the English
+   and set in the cursive hand rather than the upright one — Gulzar, which is
+   Nastaliq, the hand these titles are written in by anybody writing them out.
+   Baseline alignment rather than centre: Nastaliq hangs a long way below its
+   baseline, and aligning the boxes would push the Latin up off the line.
+   They wrap to two lines only where the pair will not fit. */
 #royaLibrary .pl-t{margin:0; font-family:var(--book); font-weight:400; line-height:1.05;
-  color:var(--gold-lt); display:flex; flex-direction:column; gap:.2rem;
+  color:var(--gold-lt); display:flex; flex-direction:row; flex-wrap:wrap;
+  align-items:baseline; gap:.1rem .72rem;
   padding-bottom:.9rem; position:relative}
 #royaLibrary .pl-t::after{content:""; position:absolute; left:0; bottom:0;
   width:38%; max-width:11rem; height:1px; background:rgba(199,148,61,.5)}
 #royaLibrary .pl-t .ft-en{font-size:1.9rem; letter-spacing:.02em; text-transform:uppercase}
-#royaLibrary .pl-t .ft-fa{font-family:var(--nast); font-weight:500; font-size:1rem;
-  letter-spacing:0; color:var(--gold-word)}
+#royaLibrary .pl-t .ft-fa{font-family:var(--nastaliq); font-weight:500; font-size:1.37rem;
+  line-height:1; letter-spacing:0; color:var(--gold-word);
+  /* Nastaliq's descenders run deep; the box is allowed to overhang rather
+     than open the line, the way the catalogue figure does in the About note. */
+  margin-bottom:-.18em;}
 #royaLibrary .pl-q{margin:0; font-family:var(--book); font-weight:400; font-style:italic;
   font-size:1.5rem; line-height:1.4; color:var(--bone); text-wrap:balance}
 #royaLibrary .pl-lede{margin:0; font-family:var(--book); font-size:1.32rem; line-height:1.45;
@@ -1133,20 +1144,23 @@
    its own title. Up from the picture: less above the words, more below them,
    so the Persian is not sitting on the artwork. */
 #royaLibrary .ab-feat--split .pl-t{display:flex; position:absolute; z-index:2;
-  left:0; right:0; top:0; align-items:center; text-align:center;
+  left:0; right:0; top:0; justify-content:center; align-items:baseline; text-align:center;
   /* Was 1.15rem over and 3.4rem under. The title sat down on the picture; it
      now starts higher and the wash below it runs further, so the Persian has
      air between it and the artwork instead of resting on it. */
   /* Up again, at the user's asking: .6rem over the title became .15rem and
      the gap between the two scripts tightened, which lifts the pair about
-     nine pixels off the plate's top edge without taking the wash with it. */
-  padding:.15rem 1.4rem 4.1rem; gap:.2rem;
+     nine pixels off the plate's top edge without taking the wash with it.
+     The .2rem was a gap between two stacked lines; now that the scripts sit
+     side by side it is the column gap that matters, and the row gap only
+     applies if the pair ever wraps. */
+  padding:.15rem 1.4rem 4.1rem; gap:.1rem .72rem;
   background:linear-gradient(to bottom,
     rgba(7,6,5,.94) 0%, rgba(7,6,5,.9) 46%, rgba(7,6,5,.62) 76%,
     rgba(7,6,5,.22) 92%, rgba(7,6,5,0) 100%);}
 #royaLibrary .ab-feat--split .pl-t::after{display:none}
 #royaLibrary .ab-feat--split .pl-t .ft-en{font-size:2rem; letter-spacing:.05em}
-#royaLibrary .ab-feat--split .pl-t .ft-fa{font-size:1.05rem}
+#royaLibrary .ab-feat--split .pl-t .ft-fa{font-size:1.44rem}
 #royaLibrary .ab-feat--split .pl-art{display:block; aspect-ratio:941/1056;
   background:var(--plate-tall, var(--plate)) top center/cover no-repeat; border:0}
 #royaLibrary .ab-feat--split .pl,
@@ -1361,7 +1375,7 @@
     padding-bottom:.9rem; overflow:visible; clip-path:none; white-space:normal;
     gap:.62rem}
   #royaLibrary .ab-feat--spread .pl-t .ft-en{font-size:2rem}
-  #royaLibrary .ab-feat--spread .pl-t .ft-fa{font-size:1.06rem}
+  #royaLibrary .ab-feat--spread .pl-t .ft-fa{font-size:1.44rem}
   #royaLibrary .ab-feat--spread .pl-lede{font-size:1.4rem; color:var(--bone)}
   #royaLibrary .ab-feat--spread .pl-p{font-size:1.25rem; line-height:1.6}
   #royaLibrary .ab-feat--spread .pl-q{font-size:1.35rem; width:100%;
@@ -1472,8 +1486,9 @@
 /* ── the words ── */
 #royaLibrary .ab-feat--stage .pl-side{display:flex; flex-direction:column;
   min-width:0;}
-#royaLibrary .ab-feat--stage .pl-t{display:flex; flex-direction:column;
-  padding:0; margin:0; gap:.3rem;}
+#royaLibrary .ab-feat--stage .pl-t{display:flex; flex-direction:row;
+  flex-wrap:wrap; align-items:baseline;
+  padding:0; margin:0; gap:.1rem .72rem;}
 #royaLibrary .ab-feat--stage .pl-t::after{display:none}
 #royaLibrary .ab-feat--stage .pl-words{padding:0; margin:0; align-items:inherit;}
 #royaLibrary .ab-feat--stage .pl-way{padding:0; margin:0; align-items:inherit;}
@@ -1517,7 +1532,7 @@
     align-items:flex-start; text-align:left;}
   #royaLibrary .ab-feat--stage .pl-t .ft-en{font-size:clamp(1.85rem, 3.1cqw, 3.15rem);
     letter-spacing:.055em; line-height:1.05}
-  #royaLibrary .ab-feat--stage .pl-t .ft-fa{font-size:clamp(1.15rem, 1.6cqw, 1.62rem)}
+  #royaLibrary .ab-feat--stage .pl-t .ft-fa{font-size:clamp(1.33rem, 2.23cqw, 2.27rem)}
   #royaLibrary .ab-feat--stage .pl-words{gap:1.3rem}
   /* Up from 1.42cqw. The old sizes were set when the cqw floor did most of the
      work, and at a 1600 window the synopsis was landing at 15.7px — correct
@@ -1563,10 +1578,10 @@
   #royaLibrary .ab-feat--stage .pl-cover{flex:0 0 auto; width:62%}
   #royaLibrary .ab-feat--stage .pl-side{gap:1.2rem; align-items:center;
     text-align:center;}
-  #royaLibrary .ab-feat--stage .pl-t{align-items:center; gap:.15rem}
+  #royaLibrary .ab-feat--stage .pl-t{justify-content:center; align-items:baseline; gap:.1rem .66rem}
   #royaLibrary .ab-feat--stage .pl-t .ft-en{font-size:clamp(1.7rem, 8.2cqw, 2.5rem);
     letter-spacing:.055em; line-height:1.08}
-  #royaLibrary .ab-feat--stage .pl-t .ft-fa{font-size:clamp(1.1rem, 5cqw, 1.55rem)}
+  #royaLibrary .ab-feat--stage .pl-t .ft-fa{font-size:clamp(1.22rem, 5.9cqw, 1.8rem)}
   #royaLibrary .ab-feat--stage .pl-words{gap:1.25rem; align-items:center}
   /* one short rule, centred, between the name and the line — the design has no
      second one under it, and the paragraphs below do not need to be fenced */
@@ -1599,7 +1614,7 @@
      was taking a second helping of side padding on top of the stack's.
      Qualifying by element adds a type selector, which is all it takes. */
   #royaLibrary .ab-feat--stage .pl-t span.ft-en{font-size:clamp(1.7rem, 8.2cqw, 2.5rem)}
-  #royaLibrary .ab-feat--stage .pl-t span.ft-fa{font-size:clamp(1.1rem, 5cqw, 1.55rem)}
+  #royaLibrary .ab-feat--stage .pl-t span.ft-fa{font-size:clamp(1.22rem, 5.9cqw, 1.8rem)}
   #royaLibrary .ab-feat--stage p.pl-q{font-size:clamp(1.05rem, 4.5cqw, 1.3rem)}
   #royaLibrary .ab-feat--stage div.pl-words{padding:0}
 }
@@ -1798,6 +1813,11 @@
 #royaLibrary .mob-sec .pl-words, #royaLibrary .mob-sec .pl-foot{padding:1.2rem 1.1rem 0; gap:.9rem}
 #royaLibrary .mob-sec .pl-foot{padding-top:1rem; padding-bottom:1.2rem}
 #royaLibrary .mob-sec .pl-t .ft-en{font-size:1.5rem}
+/* The Persian is set beside the English now, and at 1.5rem of Latin it
+   needs a larger share of the em than it does at the desktop sizes —
+   nastaliq carries less ink per em, so a fixed ratio reads thin as the
+   pair gets smaller. 0.88 here against 0.72 on the wide panels. */
+#royaLibrary .mob-sec .pl-t .ft-fa{font-size:1.32rem}
 #royaLibrary .mob-sec .pl-q{font-size:1.1rem}
 #royaLibrary .mob-sec .pl-lede{font-size:1rem}
 #royaLibrary .mob-sec .ft-cta{width:100%; justify-content:center}

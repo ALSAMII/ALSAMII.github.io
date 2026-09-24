@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 103 · last updated 2026-09-23 18:40 PDT
+   Version 105 · last updated 2026-09-23 20:13 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -333,7 +333,24 @@ const SERIES_SYN = {
     lede: "The title is what somebody says from the water to a person standing on the tiles with their arms folded. A small warm dare, and a lie about the temperature. Everyone has stood on both sides of that sentence, which is the entire reason it is the title. The books carry it plainly — an invitation into a room you could leave at any second and do not:",
     cap:  "nobody is ever pushed, and nobody refuses",
     body: "The way out is a practice somebody keeps on purpose — an hour a day with no screen and nothing to do, four years of deliberately failing a test, one week a year with the power off at your own breaker. What opens it is small and deliberate every time: the hour, a bucket and a card, a root and thirty hours in the dark, a main switch thrown on a Sunday night. The room is what is left once the thing that was never counted has quietly gone. The author calls it one question asked five times, in five places, about five different things a person can lose while their life is measurably improving; three of the five are here. Nothing in them raises its voice, and nobody is ever pushed.",
-    dev:  "<svg viewBox=\"0 0 600 22\" preserveAspectRatio=\"none\" aria-hidden=\"true\" class=\"sv-svg\" style=\"height:22px\"><circle cx=\"300\" cy=\"11\" r=\"2.4\" fill=\"var(--sv-hi)\"/><ellipse cx=\"300\" cy=\"11\" rx=\"34\" ry=\"1.3\" fill=\"none\" stroke=\"var(--sv-mark)\" stroke-width=\"1.2\"/><ellipse cx=\"300\" cy=\"11\" rx=\"88\" ry=\"3.4\" fill=\"none\" stroke=\"var(--sv-mark)\" stroke-width=\"1.2\"/><ellipse cx=\"300\" cy=\"11\" rx=\"150\" ry=\"5.8\" fill=\"none\" stroke=\"var(--sv-soft)\" stroke-width=\"1.2\"/><ellipse cx=\"300\" cy=\"11\" rx=\"220\" ry=\"8.5\" fill=\"none\" stroke=\"var(--sv-faint)\" stroke-width=\"1.2\"/></svg>"
+    /* Was four concentric ellipses — a stone dropped in — drawn with
+       preserveAspectRatio="none", so the rings flattened further the wider
+       the window got; and a splash is the one thing this series never does.
+       Nothing here is dropped in. Somebody is already in the water.
+
+       So the rule does not stop at the centre: it enters the water and comes
+       out the other side. One damped wave train, flat at both margins and
+       highest in the middle, with the crest lit. A second, fainter train
+       beneath it was tried and cut: at the margins it flattened to its own
+       horizontal and read as a stray rule rather than a reflection. Two flex
+       fillers either side with one fixed-width
+       SVG between them, which is how Thursday Nights draws its row, so
+       nothing stretches with the window. */
+    dev:  "<span class=\"sv-row\" style=\"height:22px\"><i class=\"sv-gap\"></i>"
+        + "<svg width=\"176\" height=\"20\" viewBox=\"0 5 176 20\" aria-hidden=\"true\" style=\"flex:0 0 auto;display:block;overflow:visible\">"
+        + "<path d=\"M0 15 L2 14.9 L4 14.9 L6 14.8 L8 14.7 L10 14.7 L12 14.6 L14 14.6 L16 14.6 L18 14.7 L20 14.8 L22 15 L24 15.3 L26 15.5 L28 15.9 L30 16.2 L32 16.4 L34 16.5 L36 16.6 L38 16.4 L40 16.1 L42 15.6 L44 15 L46 14.2 L48 13.4 L50 12.6 L52 11.9 L54 11.4 L56 11.2 L58 11.3 L60 11.8 L62 12.6 L64 13.7 L66 15 L68 16.4 L70 17.9 L72 19.2 L74 20.1 L76 20.7 L78 20.9 L80 20.5 L82 19.6 L84 18.3 L86 16.7 L88 15 L90 13.3 L92 11.7 L94 10.4 L96 9.5 L98 9.1 L100 9.3 L102 9.9 L104 10.8 L106 12.1 L108 13.6 L110 15 L112 16.3 L114 17.4 L116 18.2 L118 18.7 L120 18.8 L122 18.6 L124 18.1 L126 17.4 L128 16.6 L130 15.8 L132 15 L134 14.4 L136 13.9 L138 13.6 L140 13.4 L142 13.5 L144 13.6 L146 13.8 L148 14.1 L150 14.5 L152 14.7 L154 15 L156 15.2 L158 15.3 L160 15.4 L162 15.4 L164 15.4 L166 15.3 L168 15.3 L170 15.2 L172 15.1 L174 15.1 L176 15\" fill=\"none\" stroke=\"var(--sv-mark)\" stroke-width=\"1.3\" stroke-linecap=\"round\"/>"
+        + "<path d=\"M66 15 L68 16.4 L70 17.9 L72 19.2 L74 20.1 L76 20.7 L78 20.9 L80 20.5 L82 19.6 L84 18.3 L86 16.7 L88 15 L90 13.3 L92 11.7 L94 10.4 L96 9.5 L98 9.1 L100 9.3 L102 9.9 L104 10.8 L106 12.1 L108 13.6 L110 15\" fill=\"none\" stroke=\"var(--sv-hi)\" stroke-width=\"1.4\" stroke-linecap=\"round\"/>"
+        + "</svg><i class=\"sv-gap\"></i></span>"
   },
   "Thursday Nights": {
     lede: "Panjshanbeh means, flatly, the fifth day. So the title is really a timetable: it names the one evening of the week when the houses empty out. Thursday night in Iran is when the whole family is at somebody's mother's house — which is why a burglar worked Thursday nights and only Thursday nights, and why a man in Block Three started calling him after it:",
