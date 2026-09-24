@@ -1,4 +1,4 @@
-/* Version 455 · last updated 2026-09-23 07:02 PDT*/
+/* Version 456 · last updated 2026-09-23 20:12 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1365,7 +1365,7 @@ const TRILOGIES = [
        which is right until there is a painting of the place itself.
        When one exists, add banner: "assets/unheard-house.jpg" here. */
     books: [63, 64, 65],
-    synopsis: "Three novellas about a walled village outside Tabriz that appears on no map, and about what the people inside it were protecting. One watches from a cutting room thirty-four years late, frame by frame. One is written from inside the wall, by the only person there who was never ill. The third is set in Rotterdam now, where a company works out that the thing two hundred people gave their hands and their eyes for can be reached by anybody, in ninety minutes, for four hundred euro."
+    synopsis: "Eleven kilometres past the end of a road outside Tabriz, a village of people who felt no pain. Nothing in them reported a stone in a shoe or a burn, so they did it for one another — out in the open at sundown, in pairs, holding each other’s bare feet.\n\nNothing interrupted them. No alarm inside, no noise. Strange to us, and further into the moment than any of us get.\n\nA woman came from Tehran in 1962 with a camera. Three novellas about what she filmed, and what it is worth now."
   },
   {
     /* Renamed from "The Delgoshā Notebooks" when the third day
