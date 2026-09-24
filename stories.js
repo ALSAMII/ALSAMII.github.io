@@ -1,4 +1,4 @@
-/* Version 456 · last updated 2026-09-23 20:12 PDT*/
+/* Version 457 · last updated 2026-09-24 11:00 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -182,13 +182,13 @@ const STORIES = [
   {
     num: 11,
     title: "The Marriage of Stones",
-    words: "13,900 words",
-    hook: "Half seduction, half interrogation \u2014 of her",
+    words: "7,000 words",
+    hook: "Forty minutes face down in the wreckage, and a question eight years late",
     door: "Ordeal",
     room: "Back There Again \u2014 one touch and she is in another year",
-    key: "Two stones, pink and black \u2014 they teach a body to read itself",
+    key: "Two stones, one rose and one black \u2014 not a therapy. A clock",
     notes: [2, 2, 2],
-    synopsis: "Reyhan doesn't live her life in order \u2014 a stranger's grip or a slant of afternoon light can trapdoor her into any year of it. With paired stones, pink and black, she teaches the powerful a total literacy of their own bodies. Her new client has mastered everything but himself, and their sessions are half seduction, half interrogation \u2014 of her."
+    synopsis: "Reyhan does not experience time in order. Cold stone against skin, a stranger's grip, a certain slant of afternoon light \u2014 each is a trapdoor back into some other year of her life. She has built a private discipline around the dislocation, teaching the powerful and the damaged a total literacy in their own bodies with paired stones, one rose and one black, as precise as a stethoscope. What none of her clients know, because she has never once said it out loud, is that the stones are not a therapy. They are a clock. Since the night a building came down on her she cannot reliably tell warm from cold, and her sense of when she is went out with it; she presses a stone to her skin to find out what year it is. Forty minutes of that night are the spine of everything she has built since \u2014 forty minutes lying face down in the wreckage with her arm through a gap in the concrete, holding the hand of an old woman she had never met, who knew exactly what was happening to her and talked about the weather. Eight years later a client asks her a question she has never answered, and her hands go cold before she understands why."
   },
 
   {
@@ -1231,6 +1231,17 @@ const STORIES = [
     notes: [1, 1, 3],
     synopsis: "Darlene Renner has driven Route 6 for twenty-one years and knows every mailbox in Pell County. The spring she turns fifty-three, nine hundred acres of corn ground three miles off her route become a building nobody can name the owner of, the council approves it five to nothing, and the elementary school finally gets a roof that does not leak. Then the lights start going out — not often at first, and not for long, and the report that follows is honest and thorough and blames a piece of software that nobody claims. What comes after is three years in which nothing dramatic occurs: a hum that measures compliant, wells that come up the colour of weak tea, a letter that says we know that not knowing is the hardest part, a schedule that is better than no schedule, and thirty-one dollars a month for any household willing to sign a form whose second paragraph says exactly what it does. Nobody lies to anybody. Nobody is oppressed. Nothing burns. Every single step of it is somebody's good idea."
   },
+  {
+    num: 98,
+    title: "Saudade",
+    words: "19,200 words",
+    hook: "A nose that reads every guest's night off their sheets, and a room that has been shut for three years",
+    door: "Withholding",
+    room: "Nothing At All \u2014 a city with the sound turned off, and everything still where it was",
+    key: "The operation \u2014 the growth out, and with it the two thin nerves that had brought the world in through his nose all his life",
+    notes: [2, 2, 3],
+    synopsis: "For nineteen years Vasco Pell has worked the night laundry in the basement of the Hotel Estrela, a grand old hotel sliding slowly downhill above the Lisbon docks. He is sixty-one, vain, funny at funerals, and cursed with a nose that reads every guest's night off their sheets: who was afraid, who was loved, who lied in their sleep. The river took his son twenty years ago; three years ago it took his wife. He keeps her last pillowcase sealed in a drawer and opens it once a year, on her birthday, to breathe in what is left \u2014 and he keeps other things too, behind the boilers, that nobody knows about. On the night of her birthday a bag of sheets comes down the chute from Room 613, and it smells of the fear he smelled on his wife every day of her last years. The room has been shut for three years. The night porter, an old man who keeps every key in the building, looks at him for a long time and tells him to go home. He does not go home. On the sixth floor the door of 613 is open, and a woman is sitting in the chair by the window, facing the river. She knows his name. She will not laugh at his jokes. And every night, after she tells him a story about Lisbon, she asks him one small question he cannot answer. The questions are getting closer to the river."
+  }
 
 ];
 
