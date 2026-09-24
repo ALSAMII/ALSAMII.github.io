@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 102 · last updated 2026-09-23 06:48 PDT
+   Version 103 · last updated 2026-09-23 18:40 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -989,7 +989,7 @@ function aboutBody(){
   return `
   <div class="ab-marg" aria-hidden="true">\u06cc\u06a9\u06cc \u0628\u0648\u062f<br>\u06cc\u06a9\u06cc \u0646\u0628\u0648\u062f<br>\u0648 \u0647\u06cc\u0686 \u0641\u0631\u0642\u06cc \u0646\u062f\u0627\u0634\u062a</div>
   <p class="ab-lede">${esc(ABOUT.lede)}</p>
-  <p class="ab-note">${esc(ABOUT.note.replace("{n}", BOOKS.length))}</p>
+  <p class="ab-note">${esc(ABOUT.note).replace("{n}", `<b class="ab-count">${BOOKS.length}</b>`)}</p>
   <div class="ab-terms">
     ${ABOUT.terms.map(t=>`
       <div class="ab-term">
@@ -1041,6 +1041,12 @@ function aboutBody(){
        this panel opens — so the label is a real way in rather than a caption.
        The third (over:true) keeps the original arrangement below. */
     if (f.feat) return featPanel(f, sb);
+    /* The third panel used to end on a start-here card and the whole cycle
+       listed under it. It ends the way the other two do now: the synopsis,
+       the one control that opens the series, and the dedication under it.
+       The card and the cycle were the only place on this panel where the
+       reader had to choose a book before anything happened; the series row
+       on the shelf already lists all three, and the rail counts them. */
     return `
     <section class="ab-feat">
       <div class="${f.over ? "ab-over" : ""}" ${f.over && f.art ? `style="--ab-art:url('${basePath()+f.art}')"` : ""}>
@@ -1048,30 +1054,9 @@ function aboutBody(){
       ${!f.over && f.art ? `<span class="ab-feat-art"><img src="${basePath()+f.art}" alt="" loading="lazy"></span>` : ""}
       <div class="ab-feat-copy${f.over ? " is-centred" : ""}">
         ${paras.map((x,i)=>`<p class="${i===paras.length-1 && /^Start anywhere/.test(x) ? "ab-feat-p ab-feat-note" : "ab-feat-p"}">${esc(x)}</p>`).join("")}
-        ${f.ded ? `<p class="ab-ded" lang="fa" dir="rtl"><span class="ab-ded-to">${esc(f.ded[0])}${f.dedYears ? ` <span dir="ltr">${esc(f.dedYears)}</span>` : ""}</span><em>${esc(f.ded[1])}</em></p>` : ""}
       </div>
-      </div>
-      ${sb ? `
-      <p class="ab-sh">Start the series here</p>
-      <button class="ab-start" type="button" data-rec="${sb.n}">
-        <span class="ab-start-cov"><img src="${cov(sb.n)}" alt="" loading="lazy"></span>
-        <span class="ab-start-body">
-          <span class="ab-start-head">
-            <b>${sb.n}.</b>
-            <span class="ab-start-en">${esc(sb.t)}</span>
-            ${f.startFa ? `<span class="ab-start-fa" lang="fa" dir="rtl">${esc(f.startFa)}</span>` : ""}
-            <i class="ab-start-vol">(${esc(f.vol || ("Book " + (VOLWORD[f.books.indexOf(f.start)] || "One")))})</i>
-          </span>
-          <span class="ab-start-note">${esc(sb.hook)}.</span>
-          <span class="ab-start-time">${esc(sb.rt)}</span>
-        </span>
-      </button>` : ""}
-      <p class="ab-sh">All ${f.books.length} books in the series</p>
-      <div class="ab-cycle">
-        ${f.books.map(n=>byNum[n] ? `
-          <button type="button" data-rec="${n}" class="${n===f.start?"rl-is-current":""}">
-            <span>${n}</span>${esc(byNum[n].t)}
-          </button>` : "").join("")}
+      ${sb ? `<p class="ab-over-way"><button class="ft-cta" type="button" data-rec="${sb.n}">Start the series<span class="ft-arrow" aria-hidden="true">&rarr;</span></button></p>` : ""}
+      ${f.ded ? `<p class="ab-ded" lang="fa" dir="rtl"><span class="ab-ded-to">${esc(f.ded[0])}${f.dedYears ? ` <span dir="ltr">${esc(f.dedYears)}</span>` : ""}</span><em>${esc(f.ded[1])}</em></p>` : ""}
       </div>
     </section>`;
   }).join("")}

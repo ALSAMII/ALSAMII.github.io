@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 102 · last updated 2026-09-23 18:02 PDT
+   Version 103 · last updated 2026-09-23 18:40 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -672,6 +672,16 @@
   margin:0 auto 1.6rem; max-width:86ch; text-align:center;
   font-family:var(--book); font-weight:400; font-style:italic;
   font-size:1.3125rem; line-height:1.66; color:var(--t-tag);}
+/* The count. It is the one figure on this page a reader is meant to carry
+   away — how many books there are — and set as an italic numeral inside the
+   sentence it was indistinguishable from the words around it. It takes the
+   section's own numeral face, the one the rail counts in, stands upright out
+   of the italic, and is lifted to the gold the headings use. Nothing else in
+   the line changes. */
+#royaLibrary .ab-count{font-family:var(--identity); font-style:normal;
+  font-weight:400; font-size:1.5em; line-height:1; letter-spacing:.02em;
+  color:var(--gold-lt); vertical-align:-.045em; margin-right:.06em;}
+:root[data-lt="light"] #royaLibrary .ab-count{color:var(--gold-num)}
 #royaLibrary .ab-note--long{font-style:normal}
 /* The dividers used to be a pseudo-element on each cell, positioned against
    the cell. Taking position:relative off the cell — which the hover note needs
@@ -851,7 +861,7 @@
      overflow:hidden clips at the border box, so the rows can be pushed out
      into that padding without being cut. That plus the smaller size is what
      takes the hand off the statement's first lines. */
-  position:absolute; left:-1.05rem; top:5.5rem; z-index:0; pointer-events:none;
+  position:absolute; left:-1.7rem; top:5.5rem; z-index:0; pointer-events:none;
   /* Larger and a shade less faded: at 1.375rem and .15 the three rows were
      a smudge rather than a hand.
 
@@ -865,12 +875,11 @@
      would be cut off the LEFT edge with nothing on screen to show it. A wrap
      is a visible failure and a clip is a silent one; the box is simply wide
      enough instead. */
-  width:11.32rem; aspect-ratio:244/314; font-size:0;
-  background-color:var(--paper-dust);
-  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
-          mask:url("art/marg.webp") no-repeat center/contain;
-  opacity:.12; filter:blur(.75px);
-  transform:rotate(-30deg); transform-origin:left center;}
+  width:12rem;
+  font-family:var(--nastaliq); font-size:1.25rem; line-height:2.3;
+  text-align:right; color:var(--paper-dust); opacity:.24; filter:blur(.75px);
+  transform:rotate(-30deg); transform-origin:left center;
+  direction:rtl;}
 /* The marginalia only exists where there is a margin for it to climb. Widening
    the statement to 78ch took the gutter from 223px down to 143px at a 1600px
    window, and the three rows started crossing the first lines of type — a
@@ -1109,7 +1118,10 @@
   /* Was 1.15rem over and 3.4rem under. The title sat down on the picture; it
      now starts higher and the wash below it runs further, so the Persian has
      air between it and the artwork instead of resting on it. */
-  padding:.6rem 1.4rem 4.1rem; gap:.3rem;
+  /* Up again, at the user's asking: .6rem over the title became .15rem and
+     the gap between the two scripts tightened, which lifts the pair about
+     nine pixels off the plate's top edge without taking the wash with it. */
+  padding:.15rem 1.4rem 4.1rem; gap:.2rem;
   background:linear-gradient(to bottom,
     rgba(7,6,5,.94) 0%, rgba(7,6,5,.9) 46%, rgba(7,6,5,.62) 76%,
     rgba(7,6,5,.22) 92%, rgba(7,6,5,0) 100%);}
@@ -1250,8 +1262,14 @@
      of the picture, so there was nothing spare to grow into until it went.
      Every width from 1440 up is measured — the block has to end inside the
      plate, which is painted at 40% of the panel's width. */
-  #royaLibrary .ab-feat--split .pl-body p{font-size:clamp(1.02rem, 1.66cqw, 1.8rem);
-    line-height:1.46}
+  /* Up to the Delgoshā's size, at the user's asking: that panel sets its
+     synopsis at clamp(1.25rem, 2.1cqw, 2.05rem)/1.58 and this one was two
+     thirds of it, which read as a different rank of text rather than the same
+     kind of paragraph. The constraint above still holds — the block has to
+     finish inside the foot of the plate — and it does, measured at 1440,
+     1512, 1700 and 1899. */
+  #royaLibrary .ab-feat--split .pl-body p{font-size:clamp(1.25rem, 2.1cqw, 2.05rem);
+    line-height:1.58}
   #royaLibrary .ab-feat--split .pl-body{padding-top:.9cqw}
   #royaLibrary .ab-feat--split .ft-eyebrow{padding-top:.9cqw}
 }
@@ -1679,6 +1697,12 @@
     linear-gradient(to bottom, transparent 0, #000 2.6rem, #000 calc(100% - 3.1rem), transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
 #royaLibrary .ab-over .ab-feat-t{margin-bottom:1.3rem}
+/* The third panel's way in. The other two carry .ft-cta inside their plate;
+   here it stands on the panel's own ground, centred under the synopsis, with
+   the dedication below it. .ft-cta itself is unscoped, so nothing about the
+   control changes — only where it sits. */
+#royaLibrary .ab-over-way{margin:1.6rem 0 0; text-align:center}
+#royaLibrary .ab-over .ab-ded{margin-top:1.5rem}
 #royaLibrary .ab-feat-copy.is-centred{text-align:center; max-width:76ch; margin:0 auto 1.4rem}
 #royaLibrary .ab-feat-copy.is-centred .ab-feat-p{text-wrap:balance}
 /* The dedication, in the hand Persian poetry is written in. Naskh is an
@@ -1787,12 +1811,9 @@
    faded hand, small enough to sit inside it rather than beside it. */
 #royaLibrary .mob-sec .ab-gh{display:flex; align-items:center; gap:.7rem}
 #royaLibrary .mob-sec .ab-gh-t{flex:1 1 auto; min-width:0}
-#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-size:0;
-  width:118px; aspect-ratio:244/314;
-  background-color:var(--paper-dust);
-  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
-          mask:url("art/marg.webp") no-repeat center/contain;
-  opacity:.19; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
+#royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-family:var(--nastaliq); font-size:.9375rem; line-height:2.1;
+  text-align:right; direction:rtl; color:var(--paper-dust);
+  opacity:.34; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
 #royaLibrary .mob-sec .ab-row{padding:1.1rem 0 1.3rem}
