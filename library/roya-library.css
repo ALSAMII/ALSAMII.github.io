@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 107 · last updated 2026-09-23 20:13 PDT
+   Version 108 · last updated 2026-09-23 20:57 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -892,11 +892,18 @@
      .abt clips, and this block is rtl at left:.2rem, so an over-long line
      would be cut off the LEFT edge with nothing on screen to show it. A wrap
      is a visible failure and a clip is a silent one; the box is simply wide
-     enough instead. */
-  width:11.32rem; aspect-ratio:244/314; font-size:0;
+     enough instead.
+
+     The canvas grew when the "و" went in before هیچ: 512x659 became 536x659,
+     so the width grows by the same 4.7% to keep the hand the size it was. */
+  width:11.85rem; aspect-ratio:536/659; font-size:0;
   background-color:var(--paper-dust);
-  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
-          mask:url("art/marg.webp") no-repeat center/contain;
+  /* The only versioned URL in this file. Filenames are stable here by
+     house rule, but this picture changed SHAPE when the "و" went in, and
+     a cached 512x659 under a 536x659 aspect-ratio box would sit wrong
+     rather than merely look old. Raise it with index.html's stamp. */
+  -webkit-mask:url("art/marg.webp?v=512") no-repeat center/contain;
+          mask:url("art/marg.webp?v=512") no-repeat center/contain;
   opacity:.12; filter:blur(.75px);
   transform:rotate(-30deg); transform-origin:left center;}
 /* The marginalia only exists where there is a margin for it to climb. Widening
@@ -1711,7 +1718,11 @@
     color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 }
 
-#royaLibrary .ab-over{position:relative; padding:2.4rem 2rem 2rem; margin:0 -.8rem 1.2rem;
+/* Up from 2.4rem at ChewZ's asking: the title was sitting low in a panel
+   that has plenty of dark above it. The gap under the title grows by the
+   same amount (see .ab-feat-t below), so the lift is the title's alone and
+   the synopsis stays where it was. */
+#royaLibrary .ab-over{position:relative; padding:1.7rem 2rem 2rem; margin:0 -.8rem 1.2rem;
   background-image:none;}
 #royaLibrary .ab-over > *{position:relative; z-index:1}
 #royaLibrary .ab-over::before{content:""; position:absolute; z-index:0; pointer-events:none;
@@ -1731,14 +1742,19 @@
     linear-gradient(to right, transparent 0, #000 2.8rem, #000 calc(100% - 2.8rem), transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 2.6rem, #000 calc(100% - 3.1rem), transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
-#royaLibrary .ab-over .ab-feat-t{margin-bottom:1.3rem}
+#royaLibrary .ab-over .ab-feat-t{margin-bottom:2rem}
+/* A step up from the 1.25rem the other two panels carry. This one is set
+   centred between two faces rather than beside a plate, and at 1.25 it read
+   small for the space. The measure comes in to match, so the lines do not
+   grow out towards the painting. */
+#royaLibrary .ab-over .ab-feat-p{font-size:1.35rem; line-height:1.58}
 /* The third panel's way in. The other two carry .ft-cta inside their plate;
    here it stands on the panel's own ground, centred under the synopsis, with
    the dedication below it. .ft-cta itself is unscoped, so nothing about the
    control changes — only where it sits. */
 #royaLibrary .ab-over-way{margin:1.6rem 0 0; text-align:center}
 #royaLibrary .ab-over .ab-ded{margin-top:1.5rem}
-#royaLibrary .ab-feat-copy.is-centred{text-align:center; max-width:76ch; margin:0 auto 1.4rem}
+#royaLibrary .ab-feat-copy.is-centred{text-align:center; max-width:66ch; margin:0 auto 1.4rem}
 #royaLibrary .ab-feat-copy.is-centred .ab-feat-p{text-wrap:balance}
 /* The dedication, in the hand Persian poetry is written in. Naskh is an
    upright book face and set the line as body text; Gulzar is the nastaliq the
@@ -1823,7 +1839,7 @@
 #royaLibrary .mob-sec .ft-cta{width:100%; justify-content:center}
 
 #royaLibrary .mob-sec .ab-over{background-image:none;
-  padding:3.1rem 1rem 1.8rem; margin:0 -.4rem 1.2rem;
+  padding:2.25rem 1rem 1.8rem; margin:0 -.4rem 1.2rem;
   -webkit-mask-image:none; mask-image:none;}
 #royaLibrary .mob-sec .ab-over::before{inset:-1.2rem -1.4rem -2.2rem;
   background-image:
@@ -1834,7 +1850,11 @@
       rgba(var(--over-ground),0) 44%, rgba(var(--over-ground),.70) 64%,
       rgb(var(--over-ground)) 80%),
     var(--ab-art);
-  background-size:100% 100%, 100% 100%, 110% auto;
+  /* 110% put the two faces hard against the words at handset widths. The
+     picture is drawn larger so the faces move outward past the edges of the
+     column instead of standing in it; what is cropped either side is the
+     dark ground they fade into anyway. */
+  background-size:100% 100%, 100% 100%, 124% auto;
   background-position:center top, center top, center top;
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%),
@@ -1842,20 +1862,26 @@
   mask-image:
     linear-gradient(to right, transparent 0, #000 1.8rem, #000 calc(100% - 1.8rem), transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 1.7rem, #000 calc(100% - 2.6rem), transparent 100%);}
-#royaLibrary .mob-sec .ab-over .ab-feat-t{margin-bottom:.85rem}
+#royaLibrary .mob-sec .ab-over .ab-feat-t{margin-bottom:1.15rem}
+#royaLibrary .mob-sec .ab-over .ab-feat-p{font-size:1.08rem; line-height:1.56}
 /* held in from both sides so the two faces are beside the words rather than
    behind them — the desktop's own arrangement, at the width a phone has */
-#royaLibrary .mob-sec .ab-over .ab-feat-copy.is-centred{max-width:92%; margin-inline:auto}
+/* 92% ran the lines into both faces once the type went up a step. 78 holds
+   the column inside the dark centre, and the picture is drawn at 124% so
+   the two of them stand at the edges of the column rather than under it. */
+#royaLibrary .mob-sec .ab-over .ab-feat-copy.is-centred{max-width:78%; margin-inline:auto}
 /* The phone has no left gutter to climb, so the marginalia takes the empty
    half of the first category's header instead — the same three rows, the same
    faded hand, small enough to sit inside it rather than beside it. */
 #royaLibrary .mob-sec .ab-gh{display:flex; align-items:center; gap:.7rem}
 #royaLibrary .mob-sec .ab-gh-t{flex:1 1 auto; min-width:0}
 #royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; font-size:0;
-  width:118px; aspect-ratio:244/314;
+  /* 118px against the old 512-wide canvas; 124 against the 536 it is now,
+     which keeps the rows at the size they were. */
+  width:124px; aspect-ratio:536/659;
   background-color:var(--paper-dust);
-  -webkit-mask:url("art/marg.webp") no-repeat center/contain;
-          mask:url("art/marg.webp") no-repeat center/contain;
+  -webkit-mask:url("art/marg.webp?v=512") no-repeat center/contain;
+          mask:url("art/marg.webp?v=512") no-repeat center/contain;
   opacity:.19; filter:blur(.3px); transform:rotate(-8deg); pointer-events:none;}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
