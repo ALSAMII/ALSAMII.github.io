@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 108 · last updated 2026-09-23 20:57 PDT
+   Version 109 · last updated 2026-09-23 21:40 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -33,6 +33,12 @@
   --dw:700; --dw-big:700; --sx:1;
   --cond:"Jost",Avenir,Futura,Arial,sans-serif;
   --book:"EB Garamond",Georgia,"Times New Roman",serif;
+  /* The essay voice, for the note under the statement. Spectral is already
+     the About panel's face in style.css, picked there for the same reason:
+     drawn for screens, low stroke contrast, a tall lowercase. It is the
+     site's second serif and deliberately not a third — if it ever spreads
+     past these two places that is a decision, not a default. */
+  --essay:"Spectral","EB Garamond",Georgia,serif;
   --nast:"Noto Naskh Arabic",Tahoma,serif;
   /* the cursive hand, for the marginalia — naskh is an upright book face and
      reads as body text at any size */
@@ -669,9 +675,29 @@
      above is deliberately set aside here. This is two lines under the
      statement, not a page of prose; a long line costs a reader nothing when
      they only make the return sweep once. */
+  /* Out of italic and into Spectral, at ChewZ's asking: a whole paragraph
+     set on a slant is slower to read than the emphasis was ever worth, and
+     the line had no reason to be emphasised against the statement above it.
+
+     Spectral rather than EB Garamond roman because the two lines need to be
+     a second voice, not a smaller helping of the first. The numbers say the
+     swap costs nothing and pays twice. Cap height is 0.660em in both faces,
+     so the display figure keeps the exact position it was given — 0.214em
+     above the capital line, unchanged. Spectral's lowercase is 0.460em
+     against EB Garamond's 0.414, eleven per cent taller, so at 1.25rem it
+     reads LARGER than the italic did at 1.3125 while the block gets shorter.
+     And the zero advance is 0.50em against 0.48, so 86ch measures 860px
+     where it measured 867 — the line stays exactly where it sits today.
+
+     line-height 1.7 is the figure this face is set at in style.css. It also
+     widens the drop under the figure to 0.596em from 0.556, so the tail of
+     the 9 clears the second line by more than it does now, not less.
+
+     letter-spacing is pinned to 0 on purpose: Spectral carries its spacing
+     in the drawing and tightens up badly if any is added. */
   margin:0 auto 1.6rem; max-width:86ch; text-align:center;
-  font-family:var(--book); font-weight:400; font-style:italic;
-  font-size:1.3125rem; line-height:1.66; color:var(--t-tag);}
+  font-family:var(--essay); font-weight:400; font-style:normal;
+  font-size:1.25rem; line-height:1.7; letter-spacing:0; color:var(--t-tag);}
 /* The count. It is the one figure on this page a reader is meant to carry
    away — how many books there are — and set as an italic numeral inside the
    sentence it was indistinguishable from the words around it.
@@ -700,7 +726,8 @@
   letter-spacing:.005em; color:#f3e8cf;
   vertical-align:.08em; margin:0 .14em 0 0;}
 :root[data-lt="light"] #royaLibrary .ab-count{color:#2a2114}
-#royaLibrary .ab-note--long{font-style:normal}
+/* .ab-note--long used to un-slant itself here. .ab-note is roman now, so
+   the override said nothing and has gone. */
 /* The dividers used to be a pseudo-element on each cell, positioned against
    the cell. Taking position:relative off the cell — which the hover note needs
    — left all of them stacked at the far left of the row, which is the stray
