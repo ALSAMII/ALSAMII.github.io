@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 109 · last updated 2026-09-23 21:40 PDT
+   Version 110 · last updated 2026-09-24 05:58 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -998,6 +998,39 @@
     radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,.6) 66%, transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
 #royaLibrary .ab-row:hover .ab-art{opacity:1; transform:scale(1.04)}
+/* ── the seam between two scenes ──
+   Each row's painting is 118% of the row tall and hangs 9% past it at both
+   ends, so consecutive rows overlap by about 40px and the two pictures meet
+   inside that band. Where both are dark there it does not show. Where both
+   are lit it does: No. 35's wings dissolve straight into No. 52's water with
+   nothing between them, and the pair reads as one picture.
+
+   The fix is a tint, not a deeper mask. Fading the art harder at top and
+   bottom would separate them too, but it would do it by throwing away more of
+   both paintings; this lays the page's own ground back over the join and
+   leaves the art underneath intact.
+
+   Geometry, measured rather than guessed: between the last line of one row
+   and the .ab-rowin of the next there is a clear corridor of 49px on the
+   desktop and 46px on a phone. The band is 2.55rem deep starting 2.8rem up,
+   which sits inside the smaller of the two and cannot touch type at either
+   end. The peak sits at 56% of it, which is where the row boundary falls.
+
+   rgba(var(--over-ground)) rather than a literal: that triple is already
+   theme-aware — near-black in the dark theme, cream in the light one — so the
+   join is covered by the ground the reader is actually looking at.
+
+   .ab-row + .ab-row, so the first row under each Door heading is skipped:
+   there is no painting above it to separate it from. */
+#royaLibrary .ab-row + .ab-row .ab-rowin::before{content:""; position:absolute;
+  z-index:0; pointer-events:none; left:0; right:0;
+  top:-2.8rem; height:2.55rem;
+  background:linear-gradient(to bottom,
+    rgba(var(--over-ground),0) 0%,
+    rgba(var(--over-ground),.62) 38%,
+    rgba(var(--over-ground),.78) 56%,
+    rgba(var(--over-ground),.62) 74%,
+    rgba(var(--over-ground),0) 100%);}
 /* ── the scene art, zoomed out on the desktop ──
    The base box above is 124% of the row wide and 118% tall — about 6:1 on a
    desktop row. Seven of the nine scenes here are 3:1 (2400x800, plus
