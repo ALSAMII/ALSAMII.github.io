@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 105 · last updated 2026-09-23 20:13 PDT
+   Version 106 · last updated 2026-09-25 13:05 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -852,9 +852,10 @@ const SERIESFEAT = [
     feat:{ kind:"split", cta:"Start the series", ratio:"1568/627",
       eyebrow:"Notice how little cruelty it takes",
       body:[
+        "Iran, from 1979 onwards \u2014 mostly Tehran: its offices, courtrooms and classrooms.",
         "A mother dreams about her dead son, and the dream comes back to her in another person\u2019s words. A woman waits outside a courtroom. A boy sits an exam that will decide his life. A man wakes one morning unable to feel a weight he could always judge.",
         "No order. No refusal. No one to be angry with.",
-        "N\u0101gofteh means the unsaid: not a secret somebody is keeping, but what was never spoken at all. Iran, 1979 onwards."
+        "N\u0101gofteh means the unsaid: not a secret somebody is keeping, but what was never spoken at all."
       ] } },
   { key:"The Unheard House", en:"The Unheard House", fa:"",
     art:"assets/forough.webp", start:63,
