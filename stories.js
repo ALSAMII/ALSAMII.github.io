@@ -1,4 +1,4 @@
-/* Version 457 · last updated 2026-09-24 11:00 PDT*/
+/* Version 458 · last updated 2026-09-25 15:40 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -182,7 +182,7 @@ const STORIES = [
   {
     num: 11,
     title: "The Marriage of Stones",
-    words: "7,000 words",
+    words: "13,600 words",
     hook: "Forty minutes face down in the wreckage, and a question eight years late",
     door: "Ordeal",
     room: "Back There Again \u2014 one touch and she is in another year",
@@ -737,7 +737,7 @@ const STORIES = [
   {
     num: 57,
     title: "Hold Me Up Till The Horn",
-    words: "37,700 words",
+    words: "29,700 words",
     hook: "Eleven hundred hours on the floor, and one rule: keep moving",
     door: "Ordeal",
     room: "The Floor \u2014 forty-five minutes dancing, fifteen on a cot, around the clock, for as long as a body will hold",
