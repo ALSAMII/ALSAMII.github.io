@@ -1,4 +1,4 @@
-<!-- Updated 2026-09-11 — documents the cover-zoom pair render feature -->
+<!-- Updated 2026-09-25 — 98 books; narration; the ?v= line count corrected -->
 # Chew Z — Short Fiction
 
 A single dark screen: the novellas listed on the left, a candlelit stage
@@ -17,11 +17,16 @@ render for books that have one.
 
 Live at <https://www.chewzfiction.com>.
 
-## The two guides
+## The three guides
 
 **[ADDING-A-BOOK.md](ADDING-A-BOOK.md)** — seven steps, in order, with
 the field-by-field format for `stories.js` and what to check afterwards.
 Follow it whenever the catalogue grows.
+
+**[ADDING-AUDIO.md](ADDING-AUDIO.md)** — narration: the download link,
+the synced read-along that highlights the sentence being spoken, and the
+script that builds it. Independent of adding the book itself; a book can
+gain a recording years later.
 
 **[CUSTOMISING.md](CUSTOMISING.md)** — everything else: the backdrops
 and their sizes, series and their painted banners, bilingual titles,
@@ -40,14 +45,19 @@ script.js             behaviour — rarely needs touching
 build-feeds.js        rebuilds feed.xml + sitemap.xml from stories.js
 build-share-pages.js  rebuilds the share/ folder from stories.js
 build-reader.py       pulls the reading text out of the PDFs
+build-audio-sync.py   aligns a recording to that text; see ADDING-AUDIO.md
+optimize-art.py       makes the .webp twin of every picture (needs --write)
 share/                one small page per book, so shared links show covers
-read/                 each novella as text, for reading on the site
+read/                 each novella as text, for reading on the site;
+                      NN.sync.json beside it when the book has narration
 .nojekyll             tells GitHub Pages to serve the files as they are
 pdfs/                 the novellas, numbered: 01.pdf, 02.pdf ...
 covers/               a cover per novella, numbered to match: 01.jpg ...
+                      plus its .webp twin, which the page asks for first
 covers/pairs/         optional: a front-and-back zoom render per novella,
                       same numbering — falls back to covers/ when absent
-assets/               backdrops, series banners, the Roya mark, icons, audio
+assets/               backdrops, series banners, the Roya mark, icons
+assets/audio/         the narrations, numbered: 06.mp3, 07.mp3 ...
 library/              the Roya Library — the section that replaced All Covers.
                       Two built files and its own pictures; see CUSTOMISING.md
 library/covers/       the flat front art, 560x840 webp, numbered to match
@@ -57,18 +67,28 @@ CNAME                 the custom domain. NEVER DELETE THIS FILE
 404.html              shown for an address that doesn't exist
 ```
 
-## The three generated things
+## The generated things
 
 None is written by hand:
 
 ```
-node build-feeds.js         → feed.xml, sitemap.xml   (reads stories.js)
+node build-feeds.js         → feed.xml, sitemap.xml, index.html's counts
 node build-share-pages.js   → share/                      (reads stories.js)
-python3 build-reader.py     → read/                   (reads pdfs/)
+python3 build-reader.py     → read/NN.json             (reads pdfs/)
+python3 optimize-art.py     → the .webp twin of every picture  (--write)
+python3 build-audio-sync.py → read/NN.sync.json + assets/audio/NN.mp3
 ```
 
-Run all three whenever a book is added or changed, and commit what they
-produce.
+Run the first three whenever a book is added or changed, and commit what
+they produce. `optimize-art.py` only when a picture was added or replaced;
+`build-audio-sync.py` only when a recording arrives.
+
+Two of them do more than their names suggest. `build-feeds.js` also
+rewrites the six count phrases inside `index.html` — see *The shelf
+count* below — so `index.html` is a build output as well as a file you
+hand-edit. And `optimize-art.py` **skips any picture whose `.webp`
+already exists**, which makes it safe to re-run but also means a replaced
+`.jpg` keeps serving its old `.webp` until you delete that twin first.
 
 `feed.xml` and `sitemap.xml` are how search engines and feed readers see
 a site whose list is built in JavaScript. The `share/` folder is how a shared
@@ -95,14 +115,16 @@ In `index.html`:
 
 ## Series
 
-Thirteen of them, declared in the `TRILOGIES` block at the bottom of
+Fourteen of them, declared in the `TRILOGIES` block at the bottom of
 `stories.js`. Each names its books by number; every book in one then
-labels itself on its own row — "LES FOLIES · 2 OF 3" — with nothing
-written per book.
+labels itself on its own row — "LES FOLIES · 2 of 3" — with nothing
+written per book. A series that sets `numbered: false` shows its name
+alone, without the position; six of the fourteen do, because their books
+share a world rather than an order.
 
 Two of them carry a painted panorama, shown in place of a row of
 spines, with the written heading above it: Daughters of Anahita and The
-Borrowed Sun Cycle. The other eleven have no `banner` line and show
+Borrowed Sun Cycle. The other twelve have no `banner` line and show
 their books' spines instead, which is the default — right for a
 thematic group, where the books share a subject rather than a story and
 a single panorama would claim more continuity than there is. See
@@ -110,10 +132,19 @@ CUSTOMISING.md for sizes.
 
 ## The backdrop and the ambient sound
 
-Two photographs, one per theme: `assets/bg/bg-path` for the dark room
-and `assets/bg/bg-paper` for the light one, each as jpg and webp. A
-third scene, `bg-tearoom`, is built but switched off — `SCENES = 1` in
-the head of `index.html`; raise it to `2` to alternate.
+One photograph, `assets/bg/bg-path`, as jpg and webp.
+
+⚠ **Two backdrops the CSS still asks for are not in the folder.**
+`style.css` points the light theme at `assets/bg/bg-paper.jpg` / `.webp`,
+and neither exists — the light theme currently loads no backdrop at all.
+The same is true of `bg-tearoom`, the second scene: `style.css` has the
+rule, `index.html` has `SCENES = 1` in its head, and raising it to `2`
+would ask for a file that isn't there. Neither is a new fault and neither
+breaks the page — a missing background image is simply not drawn — but
+both are worth knowing before you go looking for the switch.
+
+Note too that the ambient track is mapped to **scene 0**, not to the
+tearoom it is named after, so a second scene would also play nothing.
 
 `assets/ambient-tearoom.mp3` is off until the speaker in the header is
 pressed, then held at a low fixed level. Any audio hosted here needs a
@@ -136,6 +167,31 @@ it reports.
 A book with no `read/NN.json` is not broken: Read tells the visitor it
 isn't set for reading here yet and points at the PDF.
 
+## Narration
+
+A book can carry a recording, and this is independent of everything
+above — a book published two years ago can gain one tomorrow without any
+other file changing. Set `audio: "assets/audio/NN.mp3"` on its entry in
+`stories.js` and an Audio control appears beside Read and PDF; in the
+Roya Library the same field opens a small panel offering *Listen here*
+or a download.
+
+Build `read/NN.sync.json` as well and the Read view gains a play bar
+that lights up the sentence being spoken as it goes. Without the sync
+file the recording is still a plain download; the reader simply doesn't
+get the in-page player. **[ADDING-AUDIO.md](ADDING-AUDIO.md)** has the
+whole of it.
+
+Three books are narrated: **6**, **7** and **35**.
+
+⚠ **Book 1's narration is orphaned.** `assets/audio/01.mp3` and
+`read/01.sync.json` are both published and both reachable by URL, but
+book 1 carries no `audio` field, so nothing on the site links to either.
+Twenty-five megabytes are being served to no one. Most likely fallout
+from the retitle from *The Memory Liturgy* to *Quiet Street to the Long
+Evening*. Adding `audio: "assets/audio/01.mp3"` to book 1 is the whole
+fix, if the recording is still wanted.
+
 ## The shelf count
 
 **Nothing on the site needs the count typed in.** Add a book and every
@@ -143,15 +199,15 @@ figure follows, in one of two ways:
 
 *Counted as the page runs* — from the length of `STORIES`, so they can
 never disagree with the catalogue: the label above the order menu ("All
-94 stories · order"), the hero's "94 Short Novellas", the shelf's
+98 stories · order"), the hero's "98 Short Novellas", the shelf's
 "showing N of N", the order menu's own gloss, and in the Roya Library
-the rail's `94 STORIES`, the collection heading, the footer and the
+the rail's `98 STORIES`, the collection heading, the footer and the
 About line.
 
 *Rewritten by `node build-feeds.js`* — the six places a crawler has to
 be able to read without running JavaScript: the `<title>` and the five
 `description` / `og:` / `twitter:` tags in `index.html`. The script
-spells the number out ("Ninety-five") and matches on the phrase around
+spells the number out ("Ninety-eight") and matches on the phrase around
 it rather than on the previous number, so it keeps working whatever the
 count was last time, including when it goes down. It prints how many
 places it changed; if that ever says 0, the phrases were reworded and
@@ -162,29 +218,48 @@ every count on the site is right.
 
 ## Cache-busting
 
-Six lines in `index.html` end in `?v=` and a number — the stylesheet,
-the two scripts, the preloaded first painting and the two share images.
-**They are four independent counters, not one shared number:**
+**Nine** lines in `index.html` end in `?v=` and a number — four near
+the top for the share and preloaded images, five at the foot for the two
+stylesheets and the three scripts:
 
 ```
-og:image / twitter:image / preload image   → its own count
-style.css?v=                                → its own count
-stories.js?v=                               → its own count
-script.js?v=                                → its own count
+near the top
+  og:image                    assets/og-roya.png?v=
+  twitter:image               assets/og-roya.png?v=
+  preload                     assets/bg/bg-path.webp?v=
+  preload                     assets/start-06.webp?v=
+at the foot
+  style.css?v=
+  library/roya-library.css?v=
+  stories.js?v=
+  script.js?v=
+  library/roya-library.js?v=
 ```
 
-Each one only needs to move when the bytes it actually points at
-change — raise `style.css?v=` when a rule in `style.css` changes,
-`script.js?v=` when `script.js` changes or new artwork was added, and
-`stories.js?v=` when `stories.js` itself changes (a new book, an edited
-field). A pure comment/version-stamp edit with no other change doesn't
-need its own number raised. The three share/preload numbers only need
-to move when the Roya promo image or the preloaded hero painting
-itself is replaced — which is rare, so don't be surprised to see that
-one lag well behind the others; that's normal, not a sign anything was
-missed. It is always safe to raise a number that didn't strictly need
-it, just wasted work — the only real mistake is forgetting to raise
-one that did.
+**The five at the foot are kept on one shared number.** They were once
+independent counters and in principle still are, but in practice every
+change raises all five together, and doing it that way costs nothing and
+removes a whole class of mistake. Raise it whenever any of those five
+files changes — including a pure version-stamp edit, which is cheaper to
+raise than to think about.
+
+**That shared number also governs every picture on the site.** `script.js`
+reads the version off its own `src` and appends it to every image URL it
+builds — see `ASSET_V` near the top of the file — so a replaced
+`covers/NN.jpg`, a new pair render or a new scene painting all reach the
+reader through that one number and nothing else. This is the part most
+easily forgotten: **replace a cover without raising the stamp and the
+old cover goes on being served**, out of the reader's own cache, with
+nothing to tell either of you.
+
+The four near the top are the exception and do lag, deliberately. They
+only need to move when the Roya promo image or one of the two preloaded
+paintings is itself replaced, which is rare — so don't be surprised to
+see `og:image` sitting a hundred and forty behind the rest. That is
+normal, not a sign anything was missed.
+
+It is always safe to raise a number that didn't strictly need it, just
+wasted work — the only real mistake is forgetting to raise one that did.
 
 **`index.html` itself has no `?v=`, and cannot have one** — it is the
 entry point, so nothing can ask for it by version. That is the trap:

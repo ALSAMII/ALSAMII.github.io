@@ -1,3 +1,4 @@
+<!-- Updated 2026-09-25 -->
 # Adding a narration
 
 Two things a book can have, independently of each other:
@@ -12,11 +13,64 @@ Two things a book can have, independently of each other:
    below. Without it, `audio` still works as a plain download; the reader
    just doesn't get the in-page player.
 
+Neither is tied to publishing the book. A novella that went up two years
+ago can gain a recording tomorrow, and nothing else about it changes.
+
+## Where it shows up
+
+`audio` is read in three places, and adding the one field lights all
+three at once:
+
+- **The shelf row** — an Audio control beside Read and PDF, linking
+  straight at the file.
+- **The Read view** — the play bar, if the sync file is there.
+- **The Roya Library** — a small panel headed *Narrated*, offering
+  **Listen here** (which opens the book and starts playing) or **Download
+  the recording**. Its wording changes on the book's `synced` field: set
+  `synced: false` and it promises only that the recording plays while you
+  read at your own pace, rather than that the sentence lights up. Leave
+  `synced` off and it assumes the highlighted read-along, which is right
+  whenever `read/NN.sync.json` exists.
+
+## Which books are narrated
+
+**6**, **7** and **35** carry `audio` today.
+
+⚠ **Book 1's recording is orphaned.** `assets/audio/01.mp3` (24 MB) and
+`read/01.sync.json` are both published and both fetchable by URL, but
+book 1 has no `audio` field, so nothing on the site links to either.
+Almost certainly fallout from the retitle from *The Memory Liturgy* to
+*Quiet Street to the Long Evening*. One line in `stories.js` fixes it, if
+the recording is still wanted.
+
+## ⚠ Audio is NOT cache-busted
+
+Every other asset on the site goes through `stamped()` in `script.js` and
+picks up the `?v=` number. **The audio does not** — `script.js` sets both
+the download link and the player's `src` to the bare `s.audio` path. So
+**replacing a recording at a path that already shipped will not reach
+anyone who has played it once.** If a narration has to be re-cut, give it
+a new filename rather than overwriting, or accept that returning
+listeners keep the old one.
+
 ## Building the sync file
 
 ```
 python3 build-audio-sync.py NN /path/to/recording.mp3
 ```
+
+The two arguments are the book number and the source file. The options
+worth knowing:
+
+| option | default | what it's for |
+|---|---|---|
+| `--intro N` | `0.0` | seconds of music or announcement before the text starts, so the aligner doesn't try to fit words to it |
+| `--bitrate` | `48k` | the compression target; see hosting below |
+| `--no-compress` | off | keep the source encoding, write the mp3 as-is |
+| `--align-audio` | — | align against a different file than the one shipped, for a recording whose clean take and final mix differ |
+| `--duration` | — | state the length rather than letting ffmpeg probe it |
+| `--dtw-margin`, `--mfcc-shift` | — | aeneas tuning, for a recording the aligner struggles with |
+| `--keep-workdir` | off | leave the intermediate files for inspection when something has gone wrong |
 
 This does three things:
 
@@ -115,9 +169,20 @@ what they're for.
 ## A note on hosting
 
 A recording compressed at 48kbps mono runs roughly a quarter the size of
-the source file — Book 1's 100MB source became about 25MB. That's fine
-for a handful of books. GitHub Pages has a soft 1GB limit on total
-published site size, so it's worth doing the multiplication again once
-several more books have recordings, and deciding then whether all of
-them belong in the repo or whether some should be hosted elsewhere and
-linked.
+the source file — Book 1's 100MB source became about 25MB.
+
+**Do the multiplication now, because it is closer than it looks.** Four
+recordings occupy 159 MB. The repository as a whole is **525 MB** —
+130 MB of PDFs, 195 MB of covers, and the audio — against the 1 GB soft
+limit GitHub Pages puts on a published site. That leaves roughly 500 MB,
+and at the current average of 40 MB a recording, **about twelve more
+narrations would put the site against the limit** — and that is before
+the next dozen books bring their own PDFs and cover art.
+
+That is not a reason to stop, but it is a reason to decide the hosting
+question before the twelfth rather than after it. The two honest
+options are dropping the bitrate (32kbps mono is still clean for a single
+unaccompanied voice, and would buy a third more room) or moving the audio
+off the repository altogether and pointing `audio:` at a full URL, which
+the field already supports — nothing in `script.js` requires it to be a
+relative path.

@@ -1,26 +1,45 @@
-<!-- Updated 2026-09-11 — new "cover zoom" entry for the pair render -->
+<!-- Updated 2026-09-25 — audited against the code. 98 books, 14 series;
+     the Roya Library's own theme and tokens documented; several files
+     this page described as present are recorded as missing. -->
 # Customising the site
 
 Everything that isn't adding a book. Adding one is its own document —
 see [ADDING-A-BOOK.md](ADDING-A-BOOK.md).
 
 Nothing here needs a build step unless it says so. Raise the `?v=`
-number in `index.html` after any change to `style.css`, `script.js` or
-`stories.js`, or returning readers keep seeing the old version.
+number in `index.html` after any change to `style.css`, `script.js`,
+`stories.js`, `library/roya-library.css` or `library/roya-library.js` —
+all five are stamped, and they are kept on one shared number, so raise
+them together. Every picture on the site is stamped with that same
+number too, so **a replaced image also needs it**. Returning readers
+keep seeing the old version otherwise.
+
+**When this page and the code disagree, the code wins.** The stylesheets
+and `library/roya-library.js` carry their own dated changelogs in
+comments, and those are maintained as the work happens; this page is
+written afterwards. Items below marked ⚠ are places where the site as
+built does not match what this page used to promise.
 
 ---
 
 ## The backdrop
 
-Two photographs, one per theme, in `assets/bg/`:
+One photograph, in `assets/bg/`:
 
 ```
 bg-path.jpg  + .webp     the dark theme
-bg-paper.jpg + .webp     the light theme
 ```
 
 Both formats are needed. Browsers take the webp and fall back to the
 jpg; deleting either costs you something.
+
+⚠ **The light theme's backdrop is missing.** `style.css` still points
+`html[data-theme="light"] .atmosphere` at `assets/bg/bg-paper.jpg` and
+`.webp`, and neither file is in the folder — the light theme currently
+draws no backdrop at all. It does not break anything; a background image
+that 404s is simply not painted, and the theme's own colours carry the
+page. But if the light theme looks flatter than you remember, this is
+why. Dropping a `bg-paper` pair into `assets/bg/` is the whole fix.
 
 **To replace one,** keep the filename and drop the new pair in. The CSS
 darkens and vignettes whichever image is there, so a picture that looks
@@ -35,23 +54,37 @@ its resolution:
 | Portrait (phone) | 1290 × 2400 | 150–250 KB webp |
 | One image for both | 2400 × 1600, subject centred | under 400 KB |
 
+**What actually shipped is smaller than any of those rows.** `bg-path`
+is a single **1400 × 2103 portrait** image — 71 KB as webp, 196 KB as
+jpg — serving both orientations. So the table is a specification the one
+real backdrop does not meet, and the site looks fine regardless, which
+is the more useful fact: a backdrop this darkened does not need the
+resolution the table asks for.
+
 Don't go to 4K. The backdrop is heavily darkened by design, so fine
 detail is invisible and you'd be paying for pixels nobody sees. For the
 same reason it compresses hard — try webp quality 65–70.
 
-Both crops take from the middle of the frame: a phone loses the sides,
-a laptop loses the top and bottom.
+The crop is **not** centred, though the phone and laptop crops of the
+other two layers are: `background-position` is
+`center center, center center, center 42%`, so the backdrop itself sits
+a little above centre.
 
-**A second scene.** `bg-tearoom` is fully built but switched off. Near
-the top of `index.html`:
+⚠ **The second scene no longer exists.** `bg-tearoom` was fully built
+once and the switch is still there, near the top of `index.html`:
 
 ```js
-var SCENES = 1;      // raise to 2
+var SCENES = 1;      // raising this to 2 will NOT work
 ```
 
-At `2` the backdrop alternates between the path and the tearoom, never
-the same one twice running. The ambient track is named for the tearoom,
-so the two were designed as a pair.
+`style.css` still carries the `html[data-scene="1"] .atmosphere` rule,
+but `assets/bg/bg-tearoom.jpg` and `.webp` are not in the folder, so
+raising `SCENES` to `2` alternates between the path and a blank. Worse,
+the ambient track is mapped to **scene 0**, not to the tearoom it is
+named after — `TRACK_FOR_SCENE = { "0": "assets/ambient-tearoom.mp3" }`
+in `script.js` — so on a tearoom visit the speaker would go quiet and
+hide itself. Restoring the second scene means restoring the two image
+files *and* adding a `"1"` entry to that map.
 
 ---
 
@@ -70,8 +103,15 @@ Series live in the `TRILOGIES` block at the bottom of `stories.js`:
 ```
 
 **`books`** — the numbers in it, in order. Each book then names its
-series and place on its own row ("THE BORROWED SUN CYCLE · 3 OF 7"),
+series and place on its own row ("The Borrowed Sun Cycle · 3 of 7"),
 built automatically from this list. Nothing to write per book.
+
+**`numbered`** — set `numbered: false` and the row shows the series name
+alone, with no position. Six of the fourteen do: The Ghariban, From the
+Delgoshā, Thursday Nights, From the Old Book, Come In the Water Is
+Lovely, and From the Unsaid. Use it whenever the books share a world
+rather than an order, so a reader doesn't take "3 of 7" as an
+instruction to find the other six first.
 
 **`label`** — the small line above the title. `"A Triptych"` for a
 group of three; an empty string shows nothing. Leave it out entirely
@@ -86,15 +126,18 @@ Banner images want to be **wide** — between 2:1 and 3:1 — around
 `assets/` named for the series. Leave `banner` out and the series shows
 its books' spines instead, which suits a small group.
 
-Two of the thirteen carry one at the moment — Daughters of Anahita and
-The Borrowed Sun Cycle. The other eleven show spines.
+Two of the fourteen carry one at the moment — Daughters of Anahita and
+The Borrowed Sun Cycle. The other twelve show spines.
 
 Which to choose is not really a picture question. A panorama says the
-books share one world; spines say they share a subject. Les Folies, The
-Water Ordeals and The Ghariban all had paintings and gave them up for
-exactly that reason — they are thematic groups, and a single panorama
-was claiming a continuity the books do not have. Their paintings are
-still in `assets/` if that judgement is ever reversed.
+books share one world; spines say they share a subject. Les Folies and
+The Ghariban both had paintings and gave them up for exactly that
+reason — they are thematic groups, and a single panorama was claiming a
+continuity the books do not have. **Those two paintings are still in
+`assets/`** — `les-folies.jpg` and `ghariban.jpg` — if that judgement is
+ever reversed. (An earlier version of this page named The Water Ordeals
+alongside them. There is no Water Ordeals painting in `assets/` under
+any name, and there may never have been one.)
 
 **A `banner` naming a file that is not there loses the picture
 entirely** — it does not fall back to spines. The code takes the banner
@@ -102,6 +145,15 @@ branch on the strength of the line alone, and when the image fails it
 removes the frame with it, leaving the row with nothing but its words.
 So if a row has gone bare, look for a `banner` line pointing at a file
 that was never uploaded, and either upload it or take the line out.
+
+⚠ **Three commented-out `banner` lines in `stories.js` are traps of
+exactly this kind.** The Unwitnessed Wars, The Unguarded Hours and The
+Sovereign Rooms each carry a commented line inviting you to "put the
+banner back" — and all three name files that are **not in `assets/`**:
+`unwitnessed-wars.jpg`, `unguarded-hours.jpg`, `sovereign-rooms.jpg`.
+Uncommenting any one of them does not restore a painting; it silently
+strips that row's spines and leaves it bare. Paint the picture first,
+then uncomment.
 
 ### A banner that already has the name painted on it
 
@@ -162,8 +214,10 @@ are.
 no automatic split, because the card's English title is its own
 separate field (`.start-title`), not a combined string. Add the Persian
 by hand as its own span, `.start-title-fa`, right after it — see
-"Pick a Door" above for the exact markup and the `&nbsp;` rule that
-goes with it. Books 78 and 89 do this.
+"Pick a Door" **below** for the exact markup and the `&nbsp;` rule that
+goes with it. Books **78 and 94** do this. (Book 89 carries Persian too,
+but in a `series-start-card`, beside `.series-start-title-en` rather
+than `.start-title` — a different element with its own rules.)
 
 Both conventions share the same instinct — `dir="rtl"` on the Persian
 span controls the order of its own glyphs, not which side of the row it
@@ -197,7 +251,14 @@ back covers side by side, built for the zoom view only. The shelf
 thumbnail and the grid thumbnail keep using the ordinary `covers/NN.jpg`
 either way; only the lightbox reaches for the pair. `pairCoverFor(n)`
 in `script.js` builds the path the same way `coverFor(n)` does —
-zero-padded, two digits, `.jpg` only.
+zero-padded, two digits, `.jpg`.
+
+**The Roya Library asks for the `.webp` instead.** Its own `pair()`
+builds `covers/pairs/NN.webp`, falling back to the `.jpg` and then to
+`library/covers/NN.webp`. So the pair render wants **both** files: the
+shelf's lightbox uses the `.jpg`, the Library uses the `.webp`, and a
+book with only the `.jpg` costs a failed request on every Library view.
+Only nine of the 98 have the webp today.
 
 **Not every book needs one.** `openCover()` takes a fallback: if
 `covers/pairs/NN.jpg` 404s, it swaps the lightbox straight to the plain
@@ -256,17 +317,15 @@ find the three door headings, and `data-book` for the cards themselves:
 
 ```html
 <p class="start-cat caps">
-  <span class="start-cat-name" tabindex="0" role="button"
-        aria-label="Noir — How cold it gets, and whether anyone is rescued.">Noir</span>
-  <span class="start-cat-about">How cold it gets, and whether anyone is rescued.</span>
+  <span class="start-cat-name">Noir</span>
+  <span class="start-cat-about">How cold it gets.</span>
 </p>
 
-<button class="start-row start-row--samba" type="button" data-book="52"
-        data-scene="assets/start-52.jpg">
+<button class="start-row start-row--samba" type="button" data-book="52">
   <img class="start-scene" alt="" aria-hidden="true">
   <span class="start-body">
     <span class="start-head">
-      <span class="start-num">52</span>&nbsp;<span class="start-title">Samba</span>
+      <span class="start-num">52</span>&nbsp;<span class="start-title">Samba</span><span class="start-gloss">a dance name for drowning</span>
       <span class="start-time caps"></span>
     </span>
     <span class="start-note">Surfers call it the samba: ...</span>
@@ -274,24 +333,33 @@ find the three door headings, and `data-book` for the cards themselves:
 </button>
 ```
 
-Each `.start-cat` block is a door heading — its wording (used both as
-the visible label and the dial's own `about` text) should match the
-same door's description in `GLOSSARY.notes` in `stories.js`, since it's
-saying the same thing in the same words twice. Three `.start-row` cards
-follow it before the next `.start-cat`; featuring a different book
+That block is copied from the live page. ⚠ An earlier version of this
+document showed a `tabindex` / `role` / `aria-label` trio on
+`.start-cat-name` and a `data-scene` on the book-52 card. **Neither is
+there**, and nothing in `script.js` adds them.
+
+Each `.start-cat` block is a door heading. ⚠ **Its wording deliberately
+differs from the dial glossary** — the heading reads "How cold it gets."
+where `GLOSSARY.notes` in `stories.js` says "How cold it gets, and
+whether anyone is rescued." The card wants the shorter line, and a
+comment in `library/roya-library.js` records that the difference is
+intended, so don't "fix" one to match the other. Three `.start-row`
+cards follow each heading before the next; featuring a different book
 under a door means swapping its card for another, not adding a tenth.
 
-Four things are named on a card. **`data-book`** is which novella it
+**Five things are named on a card.** **`data-book`** is which novella it
 opens — change the number to feature a different one. **`start-row--x`**
 is that card's own hook for CSS, used only to tune how its picture is
-cropped; pick a short word from the title. **`data-scene`** is optional
-— a card with none falls back to `assets/start-NN.jpg` from the book's
-own number (confirmed straight from `script.js`'s `coverFor`-style
-lookup), which is what books 55 and 52 rely on; give it explicitly only
-when the image needs a different name. **`.start-title-fa`** is
-optional too — a book with its own Persian title can add
+cropped; pick a short word from the title. **`.start-gloss`** is the
+four-or-five-word phrase after the title, which every one of the nine
+now carries; the separating dot before it is drawn by CSS, so don't type
+one. **`data-scene`** is optional — a card with none falls back to
+`assets/start-NN.jpg` from the book's own number, and then to the book's
+own cover if that is missing too, so a card never loses its background
+entirely. **`.start-title-fa`** is optional too — a book with its own
+Persian title can add
 `<span class="start-title-fa" lang="fa" dir="rtl">…</span>` right after
-`.start-title`, as books 78 and 89 do.
+`.start-title`, as books **78 and 94** do.
 
 **One markup detail that's easy to get wrong when copying a card:** the
 number and title spans must be joined with `&nbsp;`
@@ -338,9 +406,24 @@ its sides and a tall subject in a wide card loses its head. Each card
 therefore gets an `object-position` in `style.css`:
 
 ```css
-.start-row--whirl  .start-scene { object-position: 50% 44%; }
-.start-row--alarm  .start-scene { object-position: 50% 56%; }
+.start-row--exam      .start-scene { object-position: 87% 50%; }
+.start-row--roundtrip .start-scene { object-position: 84% 50%; }
+.start-row--samba     .start-scene { object-position: 97% 50%; }
 ```
+
+(⚠ This page used to illustrate the rule with `--whirl` and `--alarm`.
+Both are dead: `--alarm` was retired and its bespoke crop deleted, and
+no element in `index.html` carries `--whirl` — though `style.css` still
+holds a rule for it, which is why it looks alive. The nine classes
+actually in use are `--blackout`, `--dreams`, `--exam`, `--glow`,
+`--roundtrip`, `--samba`, `--stool`, `--swimmer` and `--undertow`; the
+stylesheet also carries orphan rules for `--alarm`, `--blend`,
+`--weight` and `--whirl`. Check `index.html` before tuning a class.)
+
+Most of these rules live inside a media query rather than at the top
+level, because the crop that is right on a wide card is wrong on a
+narrow one. Some use `calc(100% - 4rem)` horizontally to hold a subject
+a fixed distance in from the right edge rather than at a percentage.
 
 The first number is horizontal, the second vertical; both are which
 part of the *picture* to keep, not where to move it. Raise the second
@@ -404,8 +487,12 @@ trades one viewport's crop for the other's:
    scale by width even when the desktop box gets very short, so the
    full height (and the figure in it) survives regardless of synopsis
    length. This doesn't touch the mobile crop at all, since mobile
-   boxes are never that short to begin with. `--undertow`, `--blackout`,
-   `--samba`, `--glow`, and `--dreams` are all built this way.
+   boxes are never that short to begin with. **Most of the set is now
+   built this way** — `--undertow`, `--blackout`, `--samba`, `--glow`,
+   `--dreams`, `--exam`, `--swimmer` and `--roundtrip`, at 2400 × 800
+   or 3072 × 1024. Only books 8 and 89 are still on the old 3:2
+   1536 × 1024, so treat 3:1 as the house shape and 3:2 as the
+   exception.
 2. **The synopsis length**, for the mobile problem. Since box height is
    what drives the mobile crop and nothing else does, the safest
    default for a new or edited card is to keep it close to the
@@ -425,15 +512,30 @@ synopsis. Whichever one you didn't look at is the one that regresses.
 
 ## The recommended series on the About panel
 
-Below the nine Pick-a-Door books sits one series, given a whole block of
-its own: a name, a paragraph, a dedication, and a card for each book.
-It is written out in `index.html` — search for `series-intro` — and the
-cards below it are `series-card`, one per book, each naming the book it
-opens with `data-book` and its painting with `data-art`.
+Below the nine Pick-a-Door books sit **three** series, each given a
+block of its own. ⚠ This section used to describe one, in a markup
+family that no longer exists — there is no `series-card` anywhere in
+`index.html`. What is actually there:
 
-To feature a different series, change those by hand: the name, the
-paragraph, the dedication, and one card per book. Nothing here is
-generated.
+**Two blocks in the newer shape** — From the Delgoshā and From the
+Unsaid. Search `index.html` for `series-feature`; each carries
+`data-series="delgosha"` or `"unsaid"`, a `.series-name-en`, a
+`.series-title-fa`, a `.series-feature-blurb` and a
+`.series-feature-note`. The Unsaid's blurb is written as six sibling
+paragraphs rather than one.
+
+**One block in the older shape** — The Unheard House. This is the one
+`series-intro` finds, and it is the only one with a portrait and a
+dedication: `.series-portrait`, `.series-blurb`, `.blurb-cut`,
+`.series-dedication`.
+
+Under each sits a promoted book as a `series-start-card` — naming the
+book with `data-book` and its 3D cover render with `data-art` — followed
+by a `series-cycle-list` of `series-cycle-book` buttons for the rest.
+
+To feature a different series, change all of that by hand. Nothing here
+is generated, and the three blocks do not share a template, so copying
+one means copying the right one.
 
 ### The dedication
 
@@ -492,9 +594,20 @@ the rest through again. The figures are written into the comments in
 **Do not delete these.** They are the shape of the picture, not
 content: floated left and right, they hold the paragraph's opening
 lines inside the gap between the two faces, and the lines below them —
-past her chin — run the full measure. Without them the paragraph is
-either a narrow column all the way down or it runs straight across her
-face.
+past her chin — run the full measure.
+
+⚠ **They are switched off by default**, which is the opposite of what
+this page used to say. `.blurb-cut { display: none; }` is the base
+rule — on the wide panel the paragraph is only seven lines and the
+faces stand beside all of them, so there is nothing to cut around. The
+floats are turned on only inside the narrow-block media queries, and
+switched off again below them. Their heights there are
+`calc(29cqw - 4rem)` and `calc(31cqw - 2.5rem)` — the container-width
+figure less the heading above it, which is why both carry a subtraction
+rather than a plain value.
+
+So: deleting them breaks the narrow layout, not the wide one, and
+testing the change at desktop width will show you nothing.
 
 They must stay at the very start of the paragraph. A float only pushes
 the lines that come after it, so one moved to the end does nothing.
@@ -531,24 +644,52 @@ way to hear about the next.
 
 ## Colours and the two themes
 
-The palette is a set of CSS variables at the very top of `style.css`
-— gold, parchment, the page base, the hairlines. Change a value there
-and it changes everywhere it's used.
+The palette is a set of CSS variables at the top of `style.css` — the
+page base, the hairlines, and a warm gold that runs through everything.
+Change a value there and it changes everywhere it's used.
 
-**The light theme is one isolated block at the very end of the file**,
-every rule scoped to `html[data-theme="light"]`. That block redefines
-the same variables in paper terms, which is why most of the site needs
-no light-specific rules at all.
+**The gold is called `--ember`, not `--gold`.** There is no `--gold` in
+`style.css` at all; searching for one is a common few minutes wasted.
+The family is:
+
+```
+--ember:      #d8a65f     the gold itself
+--ember-lit:  #f0c47e     the lit edge
+--ember-dim:  #b8964f     the receded state
+--ember-soft:             the wash
+--parchment:  #e4dcc9     the warm off-white type colour
+--night:      #0b0907     the page base
+--raised:     #14100c     a surface lifted off the page
+--hairline:   rgba(216, 208, 192, 0.13)
+```
+
+(`--gold` *does* exist, but it belongs to the Roya Library's own
+separate token block and is a different colour, `#c7943d`. See that
+section below.)
+
+**The light theme is scoped to `html[data-theme="light"]`,** and there
+are 93 such rules. ⚠ **They are no longer at the end of the file.** They
+run from about line 7675 to 8345, and roughly **900 lines of dark-theme
+rules follow them** — a single-column treatment for the recommended
+series, and the whole Where-To-Start block, which runs to the end. So
+the old rule of thumb, *light comes last*, no longer holds and should
+not be relied on when adding a rule.
 
 Two things to hold to when editing:
 
-- **Never put a `data-theme` rule above that block.** The whole design
-  depends on the light rules coming last.
+- **A `data-theme` rule must come after the dark rule it overrides** —
+  which is what the old "put it at the end" advice was really for. With
+  dark rules now living past the light block, check the line numbers
+  rather than assuming.
 - **Anything that means "darker" needs its opposite written by hand** —
   shadows, scrims, text halos, the treatment of artwork. Fading a dark
   image into a dark page hides its edge; doing the same on white leaves
   a grey halo, so the covers and banners take a different approach on
   paper: no fade, a clean edge and a soft shadow.
+
+**The Roya Library does not follow this theme at all.** It has its own
+switch, its own token block and its own light palette, and it does not
+read `data-theme`. See *The Roya Library* below — this catches people.
 
 ---
 
@@ -580,15 +721,41 @@ library/roya-library.css
 library/roya-library.js
 ```
 
-**Do not hand-edit either.** They are cut from one source page by a
-build, and the next build overwrites whatever was typed into them. Each
-carries its version and the date it was cut in a comment at the top; if
-something needs changing, change it in the source and re-cut. Ask
-Claude — it holds the source page and the build.
+Both carry a header comment saying they are cut from a source page by
+`build-integration.py` and must not be hand-edited. ⚠ **That build
+script is not in the repository**, and both files have in practice been
+edited in place for some time — their version stamps (css v111,
+js v106) are raised by hand as the work happens. Treat the header as
+history: **edit them directly, raise the version line at the top, and
+raise the `?v=` in `index.html`.**
 
-Every rule in the stylesheet is scoped under `#royaLibrary`, so it
-cannot reach the page around it, and four class names the section and
-`style.css` both wanted are renamed on the way in.
+Every rule in the stylesheet is scoped under `#royaLibrary` — with two
+deliberate exceptions, `body.rl-on` and `body.rl-on #toTop`, which are
+how the section takes over the page's own back-to-top button while it
+is open.
+
+**The section has its own theme, its own tokens, and its own gold.**
+This is the thing most likely to surprise you:
+
+- The switch is a `data-themeswap` button drawn in both the desktop
+  header and the phone band. It sets `data-lt="light"` or `"dark"` on
+  the document, and the CSS reads `:root[data-lt="light"] #royaLibrary`.
+- **It does not read the site's `data-theme`, does not write it, and
+  starts dark whatever the rest of the page is doing.** Put the site in
+  light, open the Library, and the Library is still dark until you press
+  its own moon.
+- Its palette lives in a `:root #royaLibrary` block at the top of
+  `library/roya-library.css` — `--paper`, `--paper-2`, `--paper-edge`,
+  `--board`, `--ink`, `--cream`, `--blood`, `--gold` (`#c7943d`, a
+  different gold from the page's `--ember`), `--bone`, `--dust`,
+  `--over-ground`, and the type roles `--identity` (Bebas Neue),
+  `--slab` (Rokkitt), `--cond` (Jost), `--book` (EB Garamond),
+  `--essay` (Spectral), `--nast` (Noto Naskh Arabic) and `--nastaliq`
+  (Gulzar). Recolouring the Library means editing that block, not
+  `style.css`.
+- It also holds **the only `prefers-color-scheme` rule in the project**.
+  Everywhere else the device's own preference is deliberately not
+  consulted — there is a note to that effect in `index.html`'s head.
 
 ### What it shows, and where each picture comes from
 
@@ -597,27 +764,40 @@ Almost everything is a file the repository already has:
 | What the section shows | Where it comes from |
 |---|---|
 | the flat cover in the grid | `library/covers/NN.webp` |
-| the 3D pair, in the record and the enlarged view | `covers/pairs/NN.jpg` |
-| the nine About scene paintings | `assets/start-NN.webp` — seven of them |
-| the two series banners | `assets/series-delgosha.webp`, `assets/series-unsaid.webp` |
-| the Forough portraits | `assets/forough.webp` |
+| the 3D pair, in the record and the enlarged view | `covers/pairs/NN.webp`, falling back to `.jpg` |
+| the nine About scene paintings | `assets/start-NN.webp` — eight of them |
+| the three series features | `assets/series-delgosha-cover.webp`, `assets/series-unsaid-wide-5.webp` (with `series-unsaid-tall-3.webp` for narrow), `assets/forough.webp` |
 | the imprint, top of the rail and the phone bar | `assets/roya.png`, cropped in CSS — no second copy ships |
-| PDF, Read and Share | `pdfs/NN.pdf`, `read/NN.json`, `share/<slug>.html` |
+| PDF, Read and Share | `pdfs/NN.pdf`, `read/NN.json`, `share/NN-slug.html` |
+| the narration, where a book has one | `assets/audio/NN.mp3` — a *Narrated* panel offering Listen here or a download |
 | back to the top | the page's own `#toTop`, raised above the section while it is open |
+
+⚠ **The pair render is asked for as `.webp` first**, and only nine of
+the 98 books have one — so eighty-nine of them spend a failed request on
+every Library view before falling back to the `.jpg`. Making
+`covers/pairs/NN.webp` is a hand step; `optimize-art.py` does not reach
+that folder.
 
 Its own pictures are the ground plates (`library/bg-desk.webp`,
 `library/bg-mob.webp`), the two 9-slice frames (`library/frame.png` for
-each cover, `library/edge.png` for the panel), the 94 flat covers, and
-exactly two scene paintings:
+each cover, `library/edge.png` for the panel), the **98** flat covers,
+and **one** scene painting:
 
 - `library/art/start-35.webp` — `assets/start-35.webp` is a later, much
   wider rendering of the same scene, and at the row's proportions the
   wings all but vanish into black.
-- `library/art/start-94.webp` — `assets/start-94.webp` is still the
-  unshifted painting.
 
-Each has a fallback: a cover or scene the section cannot find drops back
-to the repository's own file rather than showing a hole.
+⚠ An earlier version of this page also listed `library/art/start-94.webp`.
+**It does not exist**, and no longer needs to: book 94 was swapped out
+of the Pick-a-Door trio in favour of book 26, so the Library never asks
+for it. `library/art/` holds `start-35.webp` and `marg.webp`, and the
+latter is referenced by nothing.
+
+Each picture has a fallback — `COVER_FALLBACK` at the foot of
+`library/roya-library.js` catches the error and rewrites the path.
+**It only ever tries once**, guarded by a `data-rlTried` flag, so a book
+with neither `covers/pairs/NN.webp` nor `covers/pairs/NN.jpg` stops
+after a single hop rather than walking the whole chain.
 
 ### The fonts it needs
 
@@ -630,17 +810,31 @@ and looks wrong everywhere at once.
 ### Changing what it features
 
 The three categories under **Pick a Door** and the three recommended
-series are configured in the source page, not in these files, and are
-kept in step with the same rows on the About panel — see "Pick a Door"
-and "The recommended series" above. Change them there and ask for a
-re-cut.
+series are literals near the top of `library/roya-library.js` —
+`PICKS`, `PICKNOTE`, `PICKFA`, `PICKGLOSS`, `PICKABOUT`, `RECOMMENDED`
+and `SERIESFEAT`. Edit them there.
+
+⚠ **They are meant to match the same rows on the About panel in
+`index.html`, and one no longer does.** The Transgressive trio is
+**8 / 50 / 94** on the About panel and **8 / 26 / 50** in the Library —
+book 94 was swapped out for book 26 in the Library at the author's
+request and `index.html` was never brought into line. Change one and
+change the other, or decide deliberately that they differ.
+
+The door headings are a case where they differ **on purpose**: the
+About panel's Noir heading reads "How cold it gets." where the dial
+glossary in `stories.js` says "How cold it gets, and whether anyone is
+rescued." The shorter line is the card's; a comment in
+`library/roya-library.js` records that this is intended.
 
 ### The count
 
 Nothing in the section states the size of the catalogue from a literal.
 The rail, the collection heading, the footer, the "showing N of N" line
-and the About sentence all count `STORIES`, and the script warns in the
-console if a figure is ever typed into the copy instead.
+and the About sentence all count `STORIES`. The script warns in the
+console if a figure is typed into the copy instead — though the check
+only scans the About panel's `note` and `lede`, so it will not catch a
+number hard-coded elsewhere in the section.
 
 ---
 

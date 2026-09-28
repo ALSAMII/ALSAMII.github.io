@@ -1,5 +1,5 @@
-<!-- Updated 2026-09-17 — the Roya Library: library/covers/NN.webp, and
-     what the section checks. The count needs no editing anywhere. -->
+<!-- Updated 2026-09-25 — the webp pass and the narration step added;
+     the ?v= section corrected from six lines to nine; 98 books. -->
 # Adding a book
 
 Everything that has to happen when a new novella joins the site, in
@@ -19,19 +19,25 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
 
 1. Add `pdfs/NN.pdf`, `covers/NN.jpg` and `library/covers/NN.webp`
 2. Add the book's block to `stories.js`
-3. Run `node build-feeds.js` → updates `feed.xml` + `sitemap.xml`
+2b. Run `python3 optimize-art.py --write` → writes `covers/NN.webp`
+3. Run `node build-feeds.js` → `feed.xml`, `sitemap.xml`, the counts
+   in `index.html`
 4. Run `node build-share-pages.js` → updates the `share/` folder
 5. Run `python3 build-reader.py NN` → writes `read/NN.json`
-6. Raise the `?v=` number in `index.html`
+5b. *If it has a narration:* `python3 build-audio-sync.py NN rec.mp3`,
+   then add `audio:` to the book's block
+6. Raise the `?v=` number in `index.html` — all five at the foot
 7. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
-   the `share/` folder, `read/NN.json`, the new PDF, both covers
+   the `share/` folder, `read/NN.json`, the new PDF, all the covers
 
 **The count looks after itself.** Nowhere on the site do you type how
 many stories there are — step 3 rewrites the six places a crawler
 reads, and everything else counts `STORIES` as the page runs. See "The
 shelf count" in [README.md](README.md).
 
-Everything after this is the same seven steps, explained.
+Everything after this is the same steps, explained. There are 98 books
+as this is written; the two lettered steps are the ones most often
+skipped.
 
 ---
 
@@ -59,14 +65,24 @@ those filenames. Worth an `ls covers/` check after touching any
 single-digit book, specifically looking for a stray unpadded `1.jpg`–
 `9.jpg` that shouldn't be there.
 
-**The cover must be `.jpg`.** Not `.png`, not `.jpeg`. The site builds
-the path as `covers/41.jpg` and nothing else will be found. If your
+**Name the cover `.jpg`.** Not `.png`, not `.jpeg` — `covers/41.jpg`
+is the path the site builds. It will in fact ask for `covers/41.webp`
+first and fall back to the `.jpg` if that isn't there, so both work and
+both should exist; but the `.jpg` is the one that must be present, and
+the `.webp` is made from it by `optimize-art.py` (see step 2b). If your
 artwork is a PNG, convert it first.
 
-**Keep the PDF under about 1.5 MB.** Covers embedded at full size push
-a novella past 10 MB, which is a slow download on a phone. Claude has
-a script (`slimpdf.py`) that re-encodes the embedded images and
-usually brings a file down by 80–90% with no visible loss.
+**800 × 1200, JPEG.** All 98 covers are that size, and they run 175–360
+KB with the median at 260 KB. Anything much heavier is worth re-saving.
+
+**Keep the PDF under about 1.5 MB** where you can. Covers embedded at
+full size push a novella past 10 MB, which is a slow download on a
+phone. This is guidance rather than a rule and the catalogue does not
+fully obey it — eighteen of the 98 PDFs are over 1.5 MB, the largest at
+2.4 MB — but the 130 MB the folder now occupies is worth keeping an eye
+on. (An earlier version of this page pointed at a `slimpdf.py` for
+re-encoding embedded images. **There is no such script in the
+repository**; if a PDF needs slimming, ask for it and it gets written.)
 
 **`library/covers/41.webp` — the flat front.** The Roya Library lays
 the covers out as book faces inside a printed board frame, so it wants
@@ -77,13 +93,24 @@ than showing a hole, so a forgotten file is a book that looks slightly
 out of place rather than a broken page — but the flat art is what the
 frame was drawn for, and it is worth having.
 
-**A third file, optional: `covers/pairs/NN.jpg`.** Same zero-padded
-naming, same `.jpg` requirement — a wider render pairing the front and
+**A third file, optional: `covers/pairs/NN.jpg`,** and its `.webp`
+twin. Same zero-padded naming — a wider render pairing the front and
 back cover side by side, shown only when someone opens the magnifying-
-glass zoom. Skipping it isn't a mistake the way skipping the plain
-cover is: the zoom just falls back to `covers/NN.jpg` with no broken
-image and nothing else to configure. Add it when a 3D pair render was
-made for the book; leave it out otherwise. See "Cover zoom" in
+glass zoom. 3:2 landscape; older ones are 2496 × 1664 and newer ones
+1536 × 1024, and either is fine.
+
+**Make the `.webp` for this one by hand.** `optimize-art.py` does not
+reach into `covers/pairs/`, and the Roya Library asks for
+`covers/pairs/NN.webp` *first* — so without it, every Library view of
+that book spends a failed request before falling back to the `.jpg`.
+Only nine of the 98 books have the webp today, which is why the other
+eighty-nine each cost one 404 on that panel.
+
+Skipping the pair render altogether isn't a mistake the way skipping the
+plain cover is: the shelf's zoom falls back to `covers/NN.jpg`, and the
+Library falls back to `library/covers/NN.webp`, with no broken image and
+nothing to configure. Add it when a 3D pair render was made for the
+book; leave it out otherwise. See "Cover zoom" in
 [CUSTOMISING.md](CUSTOMISING.md) for how the fallback works.
 
 ---
@@ -103,9 +130,17 @@ fill it in. Mind the comma between blocks.
   room: "Name — what is on the other side",
   key: "Name — the instrument itself",
   notes: [2, 2, 3],
-  synopsis: "Three or four sentences. This is what stands on the stage."
+  synopsis: "Four sentences or so. This is what stands on the stage.",
+
+  // optional, only when the book has a recording — see step 5b
+  audio: "assets/audio/41.mp3",
+  synced: false
 },
 ```
+
+Ten fields, two of them optional. `audio` and `synced` are covered in
+step 5b and in [ADDING-AUDIO.md](ADDING-AUDIO.md); everything else is
+required.
 
 **`num`** — the next number in the series. It sets the PDF and cover
 filenames, and the order on the shelf.
@@ -150,19 +185,48 @@ synopsis.
 
 **Watch the direction of the third one.** It runs the opposite way
 round from the other two: a `3` means the book could happen tomorrow,
-not that it is the strangest. The Water Ordeals and Les Folies are
-threes; the Gnostic books at the start of the catalogue are ones. An
-earlier version of this page called the dial "Speculative" and had
-the scale backwards, which is how Nos. 66 and 67 — both entirely
-possible — ended up marked "Not possible" on the site.
+not that it is the strangest. Les Folies is a three straight through;
+the Gnostic books at the start of the catalogue are mostly ones. An
+earlier version of this page called the dial "Speculative" and had the
+scale backwards, which is how Nos. 66 and 67 ended up marked "Not
+possible" on the site — a mistake worth remembering, because it is the
+one dial where a slip inverts the meaning rather than softening it.
 
-The wording above is the live one. `stories.js` also carries an older
-`notes` block naming the third dial "Uncanny", further up the same
-`GLOSSARY` object; it is dead — a repeated key, so the later one is
-the one JavaScript keeps — but it is worth knowing it is there before
-editing the glossary and wondering why nothing changed.
+Across the catalogue the third dial runs 1 for 29 books, 2 for 24 and 3
+for 45, so none of the three values is unusual and none should be
+reached for by default.
 
-**`synopsis`** — three or four sentences, no line breaks.
+**`synopsis`** — the stage copy. **House practice has drifted and you
+should know in which direction**: the median is four sentences and 84
+words, but the last ten books run from 85 to 248 words and up to
+thirteen sentences. `stories.js`'s own header comment still says "about
+sixty words", which now describes only the earliest books. Write what
+the book needs; four sentences is a floor rather than a ceiling, and
+anything past about 150 words should be a deliberate choice. No line
+breaks — one book (35) has one, and it is not a model.
+
+**`audio`** — optional, and only when a recording exists:
+`"assets/audio/41.mp3"`. One field, three effects — the Audio control on
+the shelf row, the play bar in the Read view, and the *Narrated* panel
+in the Roya Library. A full `https://` URL works here too, if the audio
+ever moves off the repository. See step 5b.
+
+**`synced`** — optional, and only alongside `audio`. Leave it out and
+the Library promises the highlighted read-along, which is right whenever
+`read/NN.sync.json` exists. Set `synced: false` for a recording that
+plays without a sync file, so the panel promises only that the book
+opens with the recording running.
+
+Everything else you may see in `script.js` — `cover`, `pdf` — is a
+per-book path override that no book currently uses. Ignore them unless
+a book genuinely needs to sit somewhere else.
+
+⚠ **Do not touch `library/stories.js`.** There is a second, older copy
+of this catalogue inside `library/`, along with a `library/index.html`.
+Neither is published and neither is read by anything — `library/` is a
+layout lab, and the live Roya Library section reads the real `STORIES`
+straight from the root `stories.js`. Editing the copy does nothing and
+will waste an afternoon.
 
 ### If the book joins a series
 
@@ -180,18 +244,31 @@ Add the number to the right group's `books` list, in reading order:
 ```
 
 That is the only place a series is written down. The book will label
-itself on its own row — "THE BORROWED SUN CYCLE · 4 OF 7" — from its
+itself on its own row — "The Borrowed Sun Cycle · 4 of 7" — from its
 position in that list, and the count updates on its own as the series
 grows. Nothing goes in the book's own block.
+
+**Unless the series sets `numbered: false`,** in which case the row
+shows the series name alone and no position. Six of the fourteen do:
+The Ghariban, From the Delgoshā, Thursday Nights, From the Old Book,
+Come In the Water Is Lovely, and From the Unsaid. Use it whenever the
+books share a world rather than an order, so that nobody reads "3 of 7"
+as an instruction to find the other six first.
 
 Leave `label` empty for a plain heading; a group of three uses
 `"A Triptych"`. Leave it out altogether and a group of three is
 labelled a triptych automatically, which is wrong for a longer cycle
 that only has three books so far.
 
-A book that stands alone belongs in no group — **The Weight of Her**
-(35) and **Service Life** (48) are deliberately outside every series,
-and must stay that way.
+A book that stands alone belongs in no group, and **31 of the 98 are
+standalones** — the rail lists them together under *Stand alone*. This
+is the ordinary case, not the exception: don't reach for a series
+because a new book rhymes with an old one.
+
+(An earlier version of this page named *The Weight of Her* (35) as a
+permanent standalone that "must stay that way". It has since joined The
+Ghariban. Nothing here is load-bearing enough to freeze — if a book
+later belongs in a group, move it.)
 
 For banners, and for starting a new series from scratch, see
 [CUSTOMISING.md](CUSTOMISING.md). One thing to know before you paint
@@ -206,8 +283,12 @@ That's a separate edit and not part of adding a book — the panel is
 Transgressive, Plausible), so featuring a new one means dropping
 another from the same door. It needs a wide scene image at
 `assets/start-NN.jpg`, which is not the cover but a repainting of it:
-3:2, subject in the right third, left half dark and empty for the
-words, no type anywhere.
+Subject in the right third, left half dark and empty for the words, no
+type anywhere. **Shape: the house has moved to 3:1** — ten of the twelve
+scenes are now 2400 × 800 or 3072 × 1024, and only books 8 and 89 are
+still the old 3:2 1536 × 1024. Paint 3:1 unless you have a reason; the
+card crops the sides away on a narrow screen, and the wider original
+survives that far better.
 
 Two markup details are easy to miss when copying an existing card:
 the number and title spans must be joined with `&nbsp;`, not a plain
@@ -216,6 +297,31 @@ and a book with its own Persian title can carry it as a
 `.start-title-fa` span right after the English title. See CUSTOMISING
 for the full markup, the image-cropping rules, and why a card's
 synopsis length matters for how well the artwork crops on a phone.
+
+---
+
+## 2b. Make the webp twins
+
+```
+python3 optimize-art.py            # dry run — shows what it would do
+python3 optimize-art.py --write
+```
+
+Every picture on the site is asked for as `.webp` first and falls back
+to the file actually named, so a missing twin costs one failed request
+per picture per visit. This script makes them: `covers/`, `assets/` and
+the scene paintings, at the widths and qualities set in its `TARGETS`
+list at the top.
+
+Two things to know. **It skips any picture whose `.webp` already
+exists** — which makes it safe to re-run, but also means that
+*replacing* a cover leaves the old twin in place and still being served.
+Delete `covers/NN.webp` first, then run it. And **it does not reach
+`covers/pairs/` or `library/covers/`** — those two you make by hand.
+
+Skipping this step isn't fatal; it just quietly costs every visitor a
+404 per picture. Books 93 to 97 are missing their twins right now for
+exactly this reason.
 
 ---
 
@@ -228,6 +334,14 @@ node build-feeds.js
 Rewrites `feed.xml` and `sitemap.xml`. Search engines and feed readers
 can't run the site's JavaScript, so without this the new book is
 invisible to them.
+
+**It also rewrites `index.html`** — the six places the book count is
+spelled out for a crawler: the `<title>` and the five
+`description` / `og:` / `twitter:` tags. It prints how many it changed.
+So `index.html` is a build output as well as the file you hand-edit in
+step 6, and the two edits have to survive each other: **run this before
+raising the `?v=` numbers, not after**, or the count rewrite will be
+sitting on top of an `index.html` you then edit again for no reason.
 
 ---
 
@@ -249,6 +363,19 @@ on to the book. The Share button on each row links here.
 
 Skip this step and the new book's Share button leads to a page that
 doesn't exist.
+
+⚠ **It writes, but it never deletes.** The script only ever adds pages,
+so **retitling a book leaves its old share page behind**, live and
+pointing at a `#` address that no longer resolves. `share/` currently
+holds a dead `01-the-memory-liturgy.html` from exactly that — book 1 is
+now *Quiet Street to the Long Evening*. After any retitle, compare the
+folder against the slugs the script just wrote and delete by hand.
+
+A second thing worth an eye: two loose share pages,
+`65-the-room-is-quiet.html` and `66-the-illuminated-face.html`, are
+sitting in the **repository root** rather than in `share/`. They are
+harmless but they are duplicates, and they are the residue of dragging
+a folder's contents rather than the folder.
 
 ---
 
@@ -291,46 +418,93 @@ one broke mid-sentence at the right margin.
 
 ---
 
-## 6. Raise the cache-buster
+## 5b. If the book has a narration — optional
 
-In `index.html`, **six** lines end in `?v=` and a number — three near
-the top for the share-preview and preloaded images, three at the foot
-for the stylesheet and the two scripts:
+Only when a recording exists. A book can gain one years later, and
+nothing else about it changes.
 
-```html
-<meta property="og:image" content=".../og-roya.png?v=374">
-<meta name="twitter:image" content=".../og-roya.png?v=374">
-<link rel="preload" as="image" href="assets/start-07.webp?v=374" ...>
-<link rel="stylesheet" href="style.css?v=381">
-<script src="stories.js?v=381"></script>
-<script src="script.js?v=386"></script>
+```
+python3 build-audio-sync.py NN /path/to/recording.mp3
 ```
 
-These are four **independent** counters, not one shared number — the
-example above shows real, current live numbers, and they don't match
-each other, which is normal. Adding a book always changes `stories.js`
-itself, so **its number always has to move**. The other three only
-need to move if that step also changed them: `script.js?v=` if a new
-`start-NN` scene image was added for a Pick-a-Door card, `style.css?v=`
-if a rule changed, and the share/preload trio only if the Roya promo
-image or the preloaded hero painting itself was replaced — which
-almost never happens when just adding a book. Raising a number that
-didn't need it isn't a mistake, just wasted work; leaving one alone
-that did need it is the one that actually bites, so when in doubt,
-raise `stories.js?v=` at minimum. Browsers hold these files hard;
-changing a number makes that one file a new address, so a returning
-reader gets the new version instead of yesterday's.
+That writes both `assets/audio/NN.mp3` (recompressed for the web) and
+`read/NN.sync.json` (the sentence-by-sentence alignment). Then add one
+field to the book's block in `stories.js`:
+
+```js
+audio: "assets/audio/NN.mp3"
+```
+
+That single field lights three things at once: an Audio control on the
+shelf row, the play bar with sentence highlighting in the Read view, and
+a *Narrated* panel in the Roya Library offering **Listen here** or a
+download.
+
+Run step 5 first — the aligner needs `read/NN.json` to exist.
+**[ADDING-AUDIO.md](ADDING-AUDIO.md)** covers the options, why the
+alignment works in sentences rather than words, and the hosting
+arithmetic, which is closer to the limit than it looks.
+
+## 6. Raise the cache-buster
+
+In `index.html`, **nine** lines end in `?v=` and a number — four near
+the top for the share and preloaded images, five at the foot for the two
+stylesheets and the three scripts:
+
+```html
+<meta property="og:image"   content=".../assets/og-roya.png?v=374">
+<meta name="twitter:image"  content=".../assets/og-roya.png?v=374">
+<link rel="preload" as="image" href="assets/bg/bg-path.webp?v=500" ...>
+<link rel="preload" as="image" href="assets/start-06.webp?v=517" ...>
+<link rel="stylesheet" href="style.css?v=517">
+<link rel="stylesheet" href="library/roya-library.css?v=517">
+<script src="stories.js?v=517"></script>
+<script src="script.js?v=517"></script>
+<script src="library/roya-library.js?v=517"></script>
+```
+
+**The five at the foot move together, on one shared number.** They were
+designed as independent counters and technically still are, but every
+change now raises all five at once — it costs nothing, and it removes a
+whole class of mistake. Adding a book always changes `stories.js`, so
+the number always has to move; raise all five and stop thinking about it.
+
+**That same number is what feeds every picture on the site.**
+`script.js` reads the version off its own `src` — see `ASSET_V` at the
+top of the file — and appends it to every image URL it builds. So the
+shelf covers, the pair renders, the Pick-a-Door scenes and the Roya
+Library's flat art all come through this one number. **The consequence
+worth memorising: replace a cover at a path that already shipped and
+the old cover goes on being served** out of the reader's own cache until
+this number moves. That is the single most common way a cover update
+appears to do nothing.
+
+**The four near the top lag, deliberately.** They only move when the
+Roya promo image or one of the two preloaded paintings is itself
+replaced, which is rare — `og:image` currently sits a hundred and forty
+behind the rest, and that is correct, not an oversight.
+
+Raising a number that didn't need it isn't a mistake, just wasted work;
+leaving one alone that did need it is the one that actually bites.
 
 **`index.html` itself must never carry a `?v=`.** It is the page the
 browser asks for by name, and there is nothing upstream of it to
 rewrite the address — a version on it is a request for a file that
 does not exist, and the site goes blank.
 
-Note that `pdfs/NN.pdf` and `read/NN.json` carry no `?v=` either, and
-are not covered by this number. That is fine for a new book, which
-has no cached version to displace, but a reader who has already
-opened a book may be served the old text for a while after you
-replace it.
+**`read/NN.json` and `read/NN.sync.json` *are* covered** — the reader
+fetches both through the same stamp. That was not always true, and the
+day it mattered was the re-typesetting of No. 85: readers who had opened
+it before went on being served the old text out of their own cache, with
+nothing to tell either side. If you replace a book's text, raise the
+number.
+
+**`pdfs/NN.pdf` and `assets/audio/NN.mp3` are NOT covered.** Both are
+linked at their bare paths. For a new book that is fine — there is no
+cached version to displace — but **replacing a published PDF or
+recording will not reach anyone who has already opened it.** For a PDF
+that is usually tolerable; for a recording, see the warning in
+[ADDING-AUDIO.md](ADDING-AUDIO.md).
 
 ---
 
@@ -357,7 +531,7 @@ custom domain. If it goes, the site silently reverts to
 
 **Dragging a folder:** to upload `share/`, drag **the folder itself** into
 GitHub's upload area — not the files inside it. Dragging the contents
-scatters 55 loose pages across the repository root. If that happens,
+scatters 98 loose pages across the repository root. If that happens,
 press `.` on the repository page to open the browser editor, delete
 the strays, and drag the folder in there instead.
 
