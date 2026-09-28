@@ -1,4 +1,4 @@
-/* Version 458 · last updated 2026-09-25 15:40 PDT*/
+/* Version 459 · last updated 2026-09-28 14:05 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1241,6 +1241,28 @@ const STORIES = [
     key: "The operation \u2014 the growth out, and with it the two thin nerves that had brought the world in through his nose all his life",
     notes: [2, 2, 3],
     synopsis: "For nineteen years Vasco Pell has worked the night laundry in the basement of the Hotel Estrela, a grand old hotel sliding slowly downhill above the Lisbon docks. He is sixty-one, vain, funny at funerals, and cursed with a nose that reads every guest's night off their sheets: who was afraid, who was loved, who lied in their sleep. The river took his son twenty years ago; three years ago it took his wife. He keeps her last pillowcase sealed in a drawer and opens it once a year, on her birthday, to breathe in what is left \u2014 and he keeps other things too, behind the boilers, that nobody knows about. On the night of her birthday a bag of sheets comes down the chute from Room 613, and it smells of the fear he smelled on his wife every day of her last years. The room has been shut for three years. The night porter, an old man who keeps every key in the building, looks at him for a long time and tells him to go home. He does not go home. On the sixth floor the door of 613 is open, and a woman is sitting in the chair by the window, facing the river. She knows his name. She will not laugh at his jokes. And every night, after she tells him a story about Lisbon, she asks him one small question he cannot answer. The questions are getting closer to the river."
+  },
+  {
+    num: 99,
+    title: "Right of Passage",
+    words: "31,000 words",
+    hook: "The news says thirty ships a night are getting through. From the bridge wing he counts twelve",
+    door: "Withholding",
+    room: "The Anchorage \u2014 loaded, two miles off a strait, waiting on two governments and a committee in a city he has never seen",
+    key: "The flag \u2014 change it and the escort becomes legal. Same hull, same cargo, same crew",
+    notes: [2, 2, 3],
+    synopsis: "A tanker lies at anchor outside a strait, loaded, with nowhere to take her cargo. To cross two miles of water her master needs permission from two governments who each claim it and will not say the other\u2019s name, and insurance from a committee in a city he has never seen, which can stop him in seven days without leaving its desk. At the far end of that pipe, a woman loads a fuel truck in the dark and decides which houses get filled this week. The news says thirty ships a night are getting through; from the bridge wing, in the dark, the master counts twelve. Between those two numbers sits everything this book is about: who is told, who is priced, who decides, and who finds out. Nobody in it does anything wrong."
+  },
+  {
+    num: 100,
+    title: "Everyone at the Party Watched Me Leave",
+    words: "22,400 words",
+    hook: "Two years of feeling nothing, and a bag from a smoke shop he makes sure not to read",
+    door: "Dose",
+    room: "The Bedroom Floor \u2014 a fraternity house in April, a promise to stay sober, and a camera\u2019s counter starting at zero",
+    key: "The leaf \u2014 bought over a counter, taken on camera, and not named until the book has earned it",
+    notes: [2, 2, 3],
+    synopsis: "It is a Saturday night in April 2007, and Tom\u00e1s is twenty years old, sitting on the carpet of a fraternity-house bedroom in Los Angeles with his back against the bed, waiting to leave. For two years he has felt nothing \u2014 a doctor gave it a name and a prescription, and the pills made the flatness quieter, but it is still there, like living behind a window. So when his friend Danny holds up a small printed bag from a smoke shop on the boulevard and asks who will try what is inside it, on camera, at the party, Tom\u00e1s says yes. People say it takes the mind to the strangest place it can go; if even that cannot reach him, he will know. He spends the week reading about it in the dark and makes Danny promise to stay sober and hold the camera. He is careful not to learn its name. He wants to be surprised. What he finds on the other side is a dirt floor, a tin roof in the rain, and a barefoot boy of seven, counting leaves in the dark, who has been waiting for him for a very long time. The boy has lost something. He needs help to find it."
   }
 
 ];
@@ -1509,7 +1531,7 @@ const TRILOGIES = [
        whoever signs, files, weighs or looks away. */
     title: "From the Unsaid · ناگفته",
     label: "",
-    books: [78, 80, 83, 86, 89, 92, 94],
+    books: [78, 80, 83, 86, 89, 92, 94, 99],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
@@ -1520,5 +1542,25 @@ const TRILOGIES = [
        true. The ordered groups below keep their numbering. */
     numbered: false,
     synopsis: "A country does not need to ban very much, so long as nobody ever has to make a decision.\n\nA mother dreams of her dead son, and the dream is read back to her in someone else\u2019s words. Another counts the hours while a court decides about hers. A boy sits the exam that will settle his life. A man who has judged weight by feel for thirty years wakes one morning unable to. Nobody refuses them; nobody is refused. The waiting does the work, and leaves no body, and no one to charge.\n\nN\u0101gofteh is the Persian for the unsaid \u2014 not a secret, which somebody keeps, but what was never spoken at all. It belongs to nobody, so nobody can properly grieve it.\n\nIran, from 1979 onwards. But the real setting is an office, and offices are the same everywhere.\n\nSplit a job between enough people and each share is too small to feel. The harm happens anyway, in full and on time. Everyone worked properly. Everyone was tired. Everyone assumed the guilt would settle on whoever came next. It settles on no one \u2014 but something stays with whoever stood closest when the door shut.\n\nThese books put you in that chair, and you will be comfortable there. Which is the point. Notice how little cruelty it takes."
+  },
+  {
+    /* Here Be Delos \u2014 founded by No. 100, which carries the series\u2019
+       own opening page explaining the name. The shape every book in it
+       follows: one person, one substance, and the substance moves
+       through the life unnamed until the story has earned the naming.
+       Then it is named, and the book turns and tells you everything
+       about it \u2014 where it grows, who found it, what it does, what it
+       costs. The factual half is a section of its own at the back, not
+       a footnote, and the map at the front gains one fixed place per
+       book. */
+    title: "Here Be Delos",
+    label: "",
+    books: [100],
+    /* No numbering. Each book is a different person and a different
+       substance in a different part of the world; there is no reading
+       order and a "1 of 1" on the row would promise a sequence that
+       does not exist. The same reasoning as From the Unsaid. */
+    numbered: false,
+    synopsis: "On the oldest maps the edge of the known world carried a warning. Where the mapmakers had been they drew coastlines and rivers and towns; where they had not, they wrote hic sunt leones \u2014 here are lions. On one small copper globe made around 1510 somebody wrote something stranger along the far coast of Asia: hic sunt dracones, here are dragons. These books keep the mapmaker\u2019s warning and change the creature.\n\nDelos is Greek for clear, visible, plain to see \u2014 and it is the second half of a word you already know. In 1956 a psychiatrist needed a name for a family of substances that change the mind and built one out of psyche, the mind, and delos, made visible. Psychedelic. Mind-manifesting. Not a poison and not an escape, he meant, but something that shows the mind to itself.\n\nAnd Delos is an island. The story says Hera forbade every land on earth to give Leto a place to give birth, and every land was afraid, and every land said no \u2014 but one place did not count as land. It had been drifting ever since it fell from the sky, fixed to nothing, too hard to see for anyone to find. Because it was not fixed to the earth the command could not reach it. It took her in, and there, in hiding, she gave birth to the god of light. Then four pillars rose out of the sea floor and held the island still, and the sailors gave it its name: the one that can be seen.\n\nHidden first. Then fixed, and seen. That is what every book here does. Each follows a single person and a single substance from somewhere in the world \u2014 a leaf, a seed, a root, a mushroom, a molecule \u2014 that moves through that person\u2019s life without a name, drifting, doing its work in the dark. When the story has earned it, it is named. It stops drifting.\n\nInside each book is a map of the world. It begins as scribble. Every book fixes one more place on it."
   }
 ];
