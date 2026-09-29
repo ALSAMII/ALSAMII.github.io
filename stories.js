@@ -1,4 +1,4 @@
-/* Version 459 · last updated 2026-09-28 14:05 PDT*/
+/* Version 460 · last updated 2026-09-29 06:50 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1140,7 +1140,7 @@ const STORIES = [
   {
     num: 90,
     title: "The Only One Who Knows",
-    words: "19,100 words",
+    words: "27,300 words",
     hook: "Six coats, six exits, and a phone call from the one woman who's always known exactly what he is",
     door: "Rite",
     room: "The Corridor — eleven months of them, before an oath, after the decision that mattered was already made at a table",
@@ -1263,6 +1263,18 @@ const STORIES = [
     key: "The leaf \u2014 bought over a counter, taken on camera, and not named until the book has earned it",
     notes: [2, 2, 3],
     synopsis: "It is a Saturday night in April 2007, and Tom\u00e1s is twenty years old, sitting on the carpet of a fraternity-house bedroom in Los Angeles with his back against the bed, waiting to leave. For two years he has felt nothing \u2014 a doctor gave it a name and a prescription, and the pills made the flatness quieter, but it is still there, like living behind a window. So when his friend Danny holds up a small printed bag from a smoke shop on the boulevard and asks who will try what is inside it, on camera, at the party, Tom\u00e1s says yes. People say it takes the mind to the strangest place it can go; if even that cannot reach him, he will know. He spends the week reading about it in the dark and makes Danny promise to stay sober and hold the camera. He is careful not to learn its name. He wants to be surprised. What he finds on the other side is a dirt floor, a tin roof in the rain, and a barefoot boy of seven, counting leaves in the dark, who has been waiting for him for a very long time. The boy has lost something. He needs help to find it."
+  },
+
+  {
+    num: 102,
+    title: "Contained, Mostly, the Fire Said",
+    words: "36,800 words",
+    hook: "A fire put out before dawn, ground still warm under the boot, and white summer flowers open on the ridge in January",
+    door: "Withholding",
+    room: "The Six Days \u2014 a burn declared out on New Year\u2019s morning, smouldering down in the roots, and a hillside counting toward 10:29",
+    key: "The datura \u2014 a white trumpet that opens at night in summer, poisonous in every part, which the Chumash drank to see what was coming. It is open on the ridge in January, and nobody in the house can say why",
+    notes: [2, 2, 3],
+    synopsis: "Parviz Kamali came from Tehran in 1976, meant to stay three years, and bought a steep lot nobody wanted in the Palisades Highlands the year his old country closed behind him. He built a glass house on a steel frame, footings sunk into the hillside like the roots of a tooth, and did the arithmetic honestly, because he believed anything could be made to stand up if you did. Forty-five years later his widow \u0100zar still teaches piano at its window, and their son Omid \u2014 who makes fake explosions sound real for a living \u2014 has moved his wife and daughter back in to keep the house in the family. Down the canyon, Captain Ray Maddox has spent twenty-seven years learning that a fire is never really put out, only stopped. It has not rained in eight months. The brush on the ridges has not burned in fifty years. The insurance letters came in the spring, to half the street at once, and a pleasant man with a good watch has been knocking on doors asking who might like to sell. On New Year\u2019s night a small fire breaks out above the Highlands and the crews put it out before dawn \u2014 then roll up their hoses and go home with the ground still warm. Between the chapters, something much older than the houses begins to speak, and it has no reason left to lie."
   }
 
 ];
