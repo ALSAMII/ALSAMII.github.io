@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 109 · last updated 2026-09-29 13:40 PDT
+   Version 110 · last updated 2026-09-29 14:05 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -130,7 +130,17 @@ const columnHead = () =>
    a colon — "Five atrocities the world declined to witness: poison gas…" — the
    row stops at the colon. A row is a table of contents entry, and every entry
    has to be the same size for the eye to run down the column. */
+/* A row line written for the row, where the synopsis's own first sentence is
+   not one. The Anahita synopsis opens "They don't buy men." — the right first
+   line for the panel, and on a row it is nineteen characters that name neither
+   the books nor the method, in a column whose other entries do both. Overridden
+   here rather than by rewriting the synopsis, because that prose is also the
+   panel's, the share page's and the feed's, and it is right where it stands. */
+const SERLINE_OWN = {
+  "Daughters of Anahita": "Three novellas about an order that plants into bloodlines and waits for the season."
+};
 const SERLINE = g => {
+  if (SERLINE_OWN[g.name]) return SERLINE_OWN[g.name];
   const first = ((g.syn||"").split("\n\n")[0] || "").trim();
   if(!first) return "Books that stand together.";
   const sentence = first.split(/(?<=\.)\s/)[0];
@@ -830,7 +840,7 @@ const PICKNOTE = {"6": "A new drug lets a therapist walk down into a patient’s
    copy written for a book exists nowhere else, and putting 94 back should not
    mean writing it again. Unused entries cost nothing; a lost paragraph does. */
 const PICKFA = {"78": "خاموشی", "94": "رفت و برگشت"};
-const PICKGLOSS = {"6": "his patient’s mind named him", "7": "the dreamer was not you", "78": "the dark was the method", "8": "pity, measured in seconds", "50": "the last instruction went unwritten", "94": "the calls return", "35": "she grew heavier, alone", "52": "a dance name for drowning", "55": "her son’s old place", "102": "six days, underground"};
+const PICKGLOSS = {"6": "his patient’s mind named him", "7": "the dreamer was not you", "78": "the dark was the method", "8": "pity, measured in seconds", "50": "the last instruction went unwritten", "94": "the calls return", "35": "she grew heavier, alone", "52": "a dance name for drowning", "55": "her son’s old place", "102": "six days, underground", "26": "the antidote was the door"};
 /* three paintings are framed off-centre on the live page, so the subject is
    not lost when the picture is cropped to the card */
 /* start-94 is 1100x367 with the tower and the colour burst in its right
