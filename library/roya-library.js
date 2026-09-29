@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 110 · last updated 2026-09-29 14:05 PDT
+   Version 112 · last updated 2026-09-29 16:15 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -246,7 +246,7 @@ function sidebar(){
   const names = GROUPS.filter(g=>g.name!=="Standalone").map(g=>g.name);
   return `
   <aside class="side"><div class="side-in">
-    <span class="side-emblem" role="img" aria-label="Roya Publication · Fiction"></span>
+    <button class="side-emblem" type="button" data-home="1" aria-label="Roya Publication · Fiction — back to About"></button>
     <p class="side-who">Chew&#8239;Z</p>
     <p class="side-count"><b>${BOOKS.length}</b>${BOOKS.length===1 ? "Story" : "Stories"}</p>
     <hr>
@@ -795,7 +795,7 @@ function mobNav(){
   return `
   <nav class="mob-nav">
     ${SECTIONS.map(x=>`
-      <button type="button" data-view="${x.k}" aria-current="${view===x.k}">${esc(x.t)}<span></span></button>`).join("")}
+      <button type="button" data-view="${x.k}" aria-current="${view===x.k}">${esc(x.t)}<span></span><i>${esc(x.d)}</i></button>`).join("")}
   </nav>`;
 }
 
@@ -1309,10 +1309,10 @@ function mobile(){
     <div class="mob-head">
     <header class="mob-bar">
       <span class="mob-lock">
-        <span class="mob-mark">
-          <span class="mob-word" role="img" aria-label="Roya Publication"></span>
+        <button class="mob-mark" type="button" data-home="1" aria-label="Roya Publication — back to About">
+          <span class="mob-word" aria-hidden="true"></span>
           <span class="mob-ears" aria-hidden="true"></span>
-        </span>
+        </button>
         <b class="mob-name">CHEW&thinsp;Z</b>
       </span>
       <span class="mob-set">
@@ -1503,6 +1503,7 @@ document.addEventListener("click", e=>{
   const lt=e.target.closest("[data-themeswap]"); if(lt){ light=!light; draw(); return; }
   const sd=e.target.closest("[data-soundswap]"); if(sd){ if(!syncSound()){ soundOn=!soundOn; draw(); } return; }
   const cl=e.target.closest("[data-clear]");if(cl){ query=""; searchHot=true; caret=0; mobY=0; draw(); return; }
+  const hm=e.target.closest("[data-home]"); if(hm){ view="about"; mobY=0; pickOpen=false; sortOpen=false; draw(); return; }
   const v=e.target.closest("[data-view]");  if(v){ view=v.dataset.view; mobY=0; pickOpen=false; draw(); return; }
   const dk=e.target.closest("[data-desk]"); if(dk){ view=dk.dataset.desk==="series"?"about":dk.dataset.desk; draw(); return; }
   const md=e.target.closest("[data-mode]"); if(md){ mode=md.dataset.mode; draw(); return; }

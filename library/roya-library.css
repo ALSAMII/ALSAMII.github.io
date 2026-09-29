@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 112 · last updated 2026-09-28 16:35 PDT
+   Version 114 · last updated 2026-09-29 16:25 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -392,6 +392,27 @@
 #royaLibrary .side-count b{font-family:var(--identity); font-weight:400; font-size:1.65rem; line-height:.82;
   letter-spacing:.02em; color:var(--gold-num);}
 #royaLibrary .side hr{border:0; height:1px; background:rgba(199,148,61,.5); margin:0}
+/* ── the emblem is the way home ──
+   Both lockups are buttons now, so the UA chrome has to be taken off before
+   anything else: a bare <button> arrives with a border, a grey face, its own
+   font and a centred text box, any one of which would move the plate. The
+   emblem carries no text, so there is nothing for font-size to affect, but
+   `appearance:none` and the border are load-bearing. */
+#royaLibrary .side-emblem,
+#royaLibrary .mob-mark{
+  -webkit-appearance:none; appearance:none; border:0; padding:0;
+  background-color:transparent; color:inherit; font:inherit;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:filter .22s ease, opacity .22s ease;}
+/* A logo that does something has to say so without becoming a control: the
+   plate lifts a little rather than growing a hover box. */
+#royaLibrary .side-emblem:hover,
+#royaLibrary .mob-mark:hover{filter:saturate(1.35) brightness(1.3) contrast(1.06)}
+#royaLibrary .side-emblem:focus-visible,
+#royaLibrary .mob-mark:focus-visible{outline:2px solid var(--ochre); outline-offset:5px}
+@media (prefers-reduced-motion:reduce){
+  #royaLibrary .side-emblem, #royaLibrary .mob-mark{transition:none}
+}
 #royaLibrary .side-emblem{width:5.3rem; height:auto; margin:0 auto; display:block;
   /* the plate is printed gold; on screen it wants a little more of it */
   filter:saturate(1.2) brightness(1.12) contrast(1.04);}
@@ -2277,7 +2298,9 @@
   padding:.5rem .7rem .4rem;
   border-bottom:1px solid rgba(199,148,61,.58);}
 :root[data-mcond="1"] #royaLibrary .mob-h{display:none}
-:root[data-mcond="1"] #royaLibrary .mob-nav{padding:.62rem .7rem .66rem}
+:root[data-mcond="1"] #royaLibrary .mob-nav{padding:.62rem .7rem .78rem}
+:root[data-mcond="1"] #royaLibrary .mob-nav i{font-size:clamp(.5625rem, 2.1vw, .75rem); margin-top:.22rem}
+:root[data-mcond="1"] #royaLibrary .mob-nav button:not([aria-current="true"]) i{margin-top:calc(.22rem + 1px + .2rem)}
 :root[data-mcond="1"] #royaLibrary .mob-nav button{font-size:clamp(.625rem, 2.5vw, .8125rem)}
 :root[data-mcond="1"] #royaLibrary .mob-nav button[aria-current="true"] span{margin-top:.2rem}
 :root[data-mcond="1"] #royaLibrary .mob-bar{padding:.36rem .7rem .28rem}
@@ -2326,8 +2349,14 @@
    draws one, and two hairlines that close together read as a printing fault.
    The band does not need to be sticky itself — .mob-head above it already
    freezes the whole header, this row included. */
-#royaLibrary .mob-nav{display:flex; align-items:stretch; padding:.85rem .7rem .9rem;}
+/* The three labels carry their descriptions now, the way the desktop bar has
+   always done. The band grows by a line, and because the gold rule under it is
+   .mob-head's own bottom border it travels down with it — but the old .9rem of
+   foot was clearance for a label, not for a second line of prose, so it opens
+   up to keep the description off the hairline. */
+#royaLibrary .mob-nav{display:flex; align-items:stretch; padding:.85rem .7rem 1.05rem;}
 #royaLibrary .mob-nav button{flex:1 1 0; text-align:center; padding:0 .2rem; position:relative;
+  display:flex; flex-direction:column; justify-content:flex-start;
   /* Up from a flat .6875rem. The three labels are the only way through the
      section on a phone and were set smaller than the collection line under
      them. The size follows the width now — the page opens at
@@ -2347,6 +2376,17 @@
   background:rgba(199,148,61,.4);}
 #royaLibrary .mob-nav button[aria-current="true"]{color:var(--gold-lt)}
 #royaLibrary .mob-nav button[aria-current="true"] span{display:block; height:1px; margin:.28rem auto 0; width:76%; background:var(--gold-lt);}
+/* The description sits UNDER the current-tab rule, not above it, so the rule
+   still belongs to the label the way it does on the desktop bar. Everything
+   the button sets for its label has to be undone here — the condensed face,
+   the .1em tracking and the uppercasing would all land on the prose. */
+#royaLibrary .mob-nav i{display:block; margin:.3rem 0 0;
+  font-style:normal; font-family:var(--book); font-weight:400;
+  font-size:clamp(.5625rem, 2.05vw, .75rem); letter-spacing:0;
+  text-transform:none; color:var(--dust); line-height:1.3;}
+/* A tab with no rule of its own would sit a hairline higher than the open one,
+   so the closed tabs borrow the same gap and leave it empty. */
+#royaLibrary .mob-nav button:not([aria-current="true"]) i{margin-top:calc(.3rem + 1px + .28rem)}
 /* ── 3 · collection heading and finding ── */
 /* The same line the desktop bar carries, set the same way: light, widely
    tracked, in the quiet ochre rather than bone. In the slab at 700 it was the
