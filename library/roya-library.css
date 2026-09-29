@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 111 · last updated 2026-09-24 11:00 PDT
+   Version 112 · last updated 2026-09-28 16:35 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -109,6 +109,14 @@
 :root[data-lt="light"] #royaLibrary .mob-search svg, :root[data-lt="light"] #royaLibrary .pick-btn svg{stroke:#8a6524}
 :root[data-lt="light"] #royaLibrary .mob-ctrl .sep{background:rgba(96,76,42,.45)}
 :root[data-lt="light"] #royaLibrary .pick-list{background:#f3ead4; border-color:rgba(96,76,42,.55); box-shadow:0 18px 34px rgba(70,52,24,.3);}
+:root[data-lt="light"] #royaLibrary .sort-list{background:#f3ead4; border-color:rgba(96,76,42,.55); box-shadow:0 18px 34px rgba(70,52,24,.3);}
+:root[data-lt="light"] #royaLibrary .sort-list button{color:#1d1710}
+:root[data-lt="light"] #royaLibrary .sort-list button > i{color:#8a5a1e}
+:root[data-lt="light"] #royaLibrary .sort-list button + button{border-top-color:rgba(96,76,42,.18)}
+:root[data-lt="light"] #royaLibrary .sort-list button:hover{background:rgba(138,101,36,.12)}
+:root[data-lt="light"] #royaLibrary .sort-list button:hover > span{color:#1d1710}
+:root[data-lt="light"] #royaLibrary .sort-list button[aria-selected="true"]{background:rgba(138,101,36,.18); box-shadow:inset 2px 0 0 #8a6524;}
+:root[data-lt="light"] #royaLibrary .sort-list button[aria-selected="true"] > span{color:#33260f}
 :root[data-lt="light"] #royaLibrary .pick-list button{color:#1d1710}
 :root[data-lt="light"] #royaLibrary .pick-list button > i{color:#8a5a1e}
 :root[data-lt="light"] #royaLibrary .pick-list button + button{border-top-color:rgba(96,76,42,.18)}
@@ -485,6 +493,41 @@
   font-family:var(--cond); font-weight:500; font-size:.6875rem; letter-spacing:.2em;
   text-transform:uppercase; color:var(--t-quiet); white-space:nowrap;}
 #royaLibrary .sortbox svg{width:.8rem; height:.8rem; stroke:currentColor; fill:none; stroke-width:2}
+
+/* ── the sort menu ──
+   The control was a two-state toggle wearing a caret: it promised a menu and
+   delivered a coin flip. With a third order to offer it becomes the menu it
+   was already drawing. The list is styled here rather than borrowed from
+   .pick-list, which lives inside the phone's media query and so is not
+   available to the desk bar at all. */
+#royaLibrary .sortwrap{position:relative; display:inline-flex}
+#royaLibrary .sortwrap.is-open .sortbox{border-color:var(--ochre); color:var(--gold-lt)}
+#royaLibrary .sortwrap.is-open .sortbox svg{transform:rotate(180deg)}
+#royaLibrary .sortbox svg{transition:transform .18s ease}
+#royaLibrary .sort-list{position:absolute; top:calc(100% + .35rem); left:0; z-index:16;
+  min-width:100%; width:max-content; max-width:min(17rem, 80vw);
+  background:#14110c; border:1px solid rgba(199,148,61,.6);
+  box-shadow:0 18px 34px rgba(0,0,0,.72);}
+/* Each row is a name and the shape of the order it puts the shelf in, so the
+   choice can be made without trying all three. The gloss is computed from the
+   catalogue, never typed. */
+#royaLibrary .sort-list button{display:flex; align-items:baseline; gap:.75rem; width:100%;
+  text-align:left; padding:.5rem .8rem;
+  font-family:var(--book); font-weight:500; font-size:1rem; line-height:1.3;
+  letter-spacing:0; color:var(--bone);}
+#royaLibrary .sort-list button > span{flex:1 1 auto; min-width:0; white-space:nowrap}
+#royaLibrary .sort-list button > i{flex:0 0 auto; font-style:normal;
+  font-family:var(--cond); font-weight:400; font-size:.625rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gold-num); font-variant-numeric:tabular-nums;}
+#royaLibrary .sort-list button + button{border-top:1px solid rgba(199,148,61,.18)}
+#royaLibrary .sort-list button:hover{background:rgba(199,148,61,.1)}
+#royaLibrary .sort-list button:hover > span{color:var(--gold-lt)}
+#royaLibrary .sort-list button[aria-selected="true"]{background:rgba(199,148,61,.16);
+  box-shadow:inset 2px 0 0 var(--ochre)}
+#royaLibrary .sort-list button[aria-selected="true"] > span{color:var(--gold-lt)}
+@media (prefers-reduced-motion:reduce){
+  #royaLibrary .sortbox svg{transition:none}
+}
 #royaLibrary .main-bar .sep{width:1px; height:1.4rem; background:rgba(199,148,61,.58)}
 #royaLibrary .viewtog{display:flex; gap:.55rem}
 #royaLibrary .viewtog button{color:var(--dust); padding:.15rem}

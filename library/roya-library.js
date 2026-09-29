@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 107 · last updated 2026-09-28 14:10 PDT
+   Version 108 · last updated 2026-09-28 16:35 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -157,7 +157,11 @@ const GROUPS = (()=>{
 const shelfOf = n => Math.max(0, GROUPS.findIndex(g=>g.books.includes(n)));
 
 let dev = PHONE.matches ? "phone" : "desk", view="library", cur=94, shelf=shelfOf(94);
-let filter="all", query="", mode="grid", sortDesc=true, zoomN=null, readN=null;
+let filter="all", query="", mode="grid", sortBy="newest", zoomN=null, readN=null;
+/* the sort menu standing open. It was a two-state toggle wearing a caret,
+   which promised a menu and gave you a coin flip; with a third order to
+   offer, the caret has to mean what it says. */
+let sortOpen=false;
 let light=false, soundOn=false, searchHot=false, caret=0, sheetN=null, pickOpen=false, recN=null;
 /* the book whose Listen control was pressed — the two-way choice panel is
    open for it, and nothing has been played or downloaded yet */
@@ -385,13 +389,43 @@ const SERIES_SYN = {
 
    Shown only on an unfiltered look at ONE series — a search crosses series, so
    a synopsis standing over those results would be describing the wrong set. */
+/* One book's reading time in whole minutes, from the same words field and by
+   the same arithmetic the card prints — 200 words a minute, a page counted as
+   275 words. Sorting by length and totalling a series both need it, and they
+   used to work it out separately. */
+function bookMinutes(b){
+  const w = String(b.w || "");
+  let n = parseInt(w.replace(/[^0-9]/g, ""), 10) || 0;
+  if (/page/i.test(w)) n = n * 275;
+  return Math.round(n / 200);
+}
 function seriesMinutes(name){
-  return BOOKS.filter(b => sName(b) === name).reduce((a, b) => {
-    const w = String(b.w || "");
-    let n = parseInt(w.replace(/[^0-9]/g, ""), 10) || 0;
-    if (/page/i.test(w)) n = n * 275;
-    return a + Math.round(n / 200);
-  }, 0);
+  return BOOKS.filter(b => sName(b) === name).reduce((a, b) => a + bookMinutes(b), 0);
+}
+
+/* The three orders the shelf can stand in. `gloss` is worked out from the
+   books rather than typed, so it cannot drift when the catalogue grows — the
+   same rule the counts everywhere else in this section follow. */
+const SORTS = [
+  { k:"newest",   label:"Newest",   gloss:() => `${BOOKS.length} down to 1` },
+  { k:"number",   label:"Number",   gloss:() => `1 up to ${BOOKS.length}` },
+  { k:"shortest", label:"Shortest", gloss:() => `${Math.min(...BOOKS.map(bookMinutes))} minutes up` }
+];
+const sortLabel = () => (SORTS.find(s => s.k === sortBy) || SORTS[0]).label;
+/* Ties keep catalogue order, so two books of the same length never swap
+   places between one draw and the next. */
+const sortCmp = (a,b) =>
+  sortBy === "number"   ? a.n - b.n
+: sortBy === "shortest" ? (bookMinutes(a) - bookMinutes(b)) || (a.n - b.n)
+:                         b.n - a.n;
+
+function sortMenu(){
+  return `<span class="sortwrap${sortOpen?' is-open':''}">
+        <button class="sortbox" type="button" data-sort="1" aria-haspopup="listbox" aria-expanded="${sortOpen}">Sort: ${esc(sortLabel())} ${DICON.caret}</button>
+        ${sortOpen ? `<div class="sort-list" role="listbox" aria-label="Sort the shelf">
+          ${SORTS.map(s=>`<button type="button" role="option" data-sortpick="${s.k}" aria-selected="${sortBy===s.k}"><span>${esc(s.label)}</span><i>${esc(s.gloss())}</i></button>`).join("")}
+        </div>` : ``}
+      </span>`;
 }
 function seriesHours(mins){
   const h = Math.round(mins / 60 * 2) / 2;
@@ -424,7 +458,7 @@ function libraryRows(){
     if (q) return (b.t+" "+sName(b)+" "+pad(b.n)+" "+b.n).toLowerCase().includes(q);
     if (filter === "all") return true;
     return sName(b) === filter;
-  }).sort((a,b)=> sortDesc ? b.n-a.n : a.n-b.n);
+  }).sort(sortCmp);
 }
 
 /* Share, as script.js does it: the system sheet where there is one, the
@@ -629,7 +663,7 @@ function deskLibraryBody(){
       <div class="main-bar">
         <span class="t">${esc(columnHead())} / ${rows.length}</span>
         <span class="rl-rule"></span>
-        <button class="sortbox" type="button" data-sort="1">Sort: ${sortDesc ? "Newest" : "Number"} ${DICON.caret}</button>
+        ${sortMenu()}
         <span class="sep"></span>
         <span class="viewtog">
           <button type="button" data-mode="grid" aria-pressed="${mode==='grid'}" aria-label="Grid">${DICON.grid}</button>
@@ -1311,7 +1345,7 @@ function mobile(){
           ${pickRow("Standalone", "Stand alone", soloCount())}
         </div>` : ``}
       </span>
-      <button class="sortbox" type="button" data-sort="1">Sort: ${sortDesc ? "Newest" : "Number"} ${DICON.caret}</button>
+      ${sortMenu()}
       <span class="sep"></span>
       <span class="viewtog">
         <button type="button" data-mode="grid" aria-pressed="${mode==='grid'}" aria-label="Cards">${DICON.grid}</button>
@@ -1455,8 +1489,9 @@ document.addEventListener("click", e=>{
   const v=e.target.closest("[data-view]");  if(v){ view=v.dataset.view; mobY=0; pickOpen=false; draw(); return; }
   const dk=e.target.closest("[data-desk]"); if(dk){ view=dk.dataset.desk==="series"?"about":dk.dataset.desk; draw(); return; }
   const md=e.target.closest("[data-mode]"); if(md){ mode=md.dataset.mode; draw(); return; }
-  const so=e.target.closest("[data-sort]"); if(so){ sortDesc=!sortDesc; draw(); return; }
-  const pk=e.target.closest("[data-pick]");  if(pk){ pickOpen=!pickOpen; draw(); return; }
+  const sp=e.target.closest("[data-sortpick]"); if(sp){ sortBy=sp.dataset.sortpick; sortOpen=false; draw(); return; }
+  const so=e.target.closest("[data-sort]"); if(so){ sortOpen=!sortOpen; pickOpen=false; draw(); return; }
+  const pk=e.target.closest("[data-pick]");  if(pk){ pickOpen=!pickOpen; sortOpen=false; draw(); return; }
   /* Picking a series is a request to SEE that series. The rail is locked
      open beside About and Author's Notes, so choosing one there used to set
      the filter and leave the reader on the page they were already reading,
@@ -1549,7 +1584,7 @@ document.addEventListener("click", e=>{
   const p=e.target.closest("[data-page]");  if(p){ page=Math.max(0,page+ +p.dataset.page); draw(); return; }
   const r=e.target.closest("[data-random]");if(r){ select(BOOKS[Math.floor(Math.random()*BOOKS.length)].n); return; }
   const sh=e.target.closest("[data-shelf]");if(sh){ shelf=Math.min(GROUPS.length-1, Math.max(0, shelf + +sh.dataset.shelf)); draw(); return; }
-  if(pickOpen){ pickOpen=false; draw(); }
+  if(pickOpen || sortOpen){ pickOpen=false; sortOpen=false; draw(); }
 });
 document.addEventListener("input", e=>{
   const f = e.target.closest("#libSearch");
@@ -1582,7 +1617,7 @@ document.addEventListener("keydown", e=>{
     return;
   }
   if(listenN!=null && e.key==="Escape"){ listenN=null; draw(); return; }
-  if(pickOpen && e.key==="Escape"){ pickOpen=false; draw(); return; }
+  if((pickOpen || sortOpen) && e.key==="Escape"){ pickOpen=false; sortOpen=false; draw(); return; }
   if(readN!=null && e.key==="Escape"){ readN=null; draw(); return; }
   if(recN!=null && e.key==="Escape"){ recN=null; draw();
     restoreY(); return; }
