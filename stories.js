@@ -1,4 +1,4 @@
-/* Version 460 · last updated 2026-09-29 06:50 PDT*/
+/* Version 463 · last updated 2026-09-29 07:25 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1269,7 +1269,7 @@ const STORIES = [
     num: 102,
     title: "Contained, Mostly, the Fire Said",
     words: "36,800 words",
-    hook: "A fire put out before dawn, ground still warm under the boot, and white summer flowers open on the ridge in January",
+    hook: "Everybody knew the hill would burn. What nobody did about it is the story \u2014 Pacific Palisades, January 2025",
     door: "Withholding",
     room: "The Six Days \u2014 a burn declared out on New Year\u2019s morning, smouldering down in the roots, and a hillside counting toward 10:29",
     key: "The datura \u2014 a white trumpet that opens at night in summer, poisonous in every part, which the Chumash drank to see what was coming. It is open on the ridge in January, and nobody in the house can say why",
