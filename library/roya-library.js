@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 108 · last updated 2026-09-28 16:35 PDT
+   Version 109 · last updated 2026-09-29 13:40 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -711,7 +711,7 @@ ${seriesPanel()}
 
    PICKS below is what actually builds the three categories; this list is
    declared and never read. Kept in step so the two cannot disagree later. */
-const RECOMMENDED = [6,7,78,8,50,26,35,52,55];
+const RECOMMENDED = [6,7,78,8,50,26,35,52,102];
 const SECTIONS = [
   {k:"about",   t:"About",            d:"The series and its world"},
   {k:"library", t:"Roya Library",     d:"Explore every cover"},
@@ -825,12 +825,12 @@ const TERMICON = {
 /* The nine recommended books say on the live page what they say here: the
    blurb is a teaser written for this panel, not the book's synopsis, and two
    of them carry a Persian title. Copied from index.html rather than rewritten. */
-const PICKNOTE = {"6": "A new drug lets a therapist walk down into a patient’s mind, to the riverbed where the original wound was carved. Then a patient arrives — someone three other clinics have already turned away — whose own mind has already named him before he speaks. Going that deep was never safe for the guide either; the water takes him too.", "7": "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who’s actually in charge. That voice was never their own — it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes.", "78": "In January 2026, she told him not to go. That evening the country’s phones and internet went dark, and the shooting started with nothing left to prove it happened. What’s left isn’t a death toll — there’s no agreed count, and every number serves whoever repeats it. Six months on, a young man keeps the record the state agreed to lose.", "8": "Every audience has a breaking point — eight to twelve seconds, on average — where it decides it has seen enough of a stranger’s ruin to stop listening. Mercy is built to interrupt exactly that reflex: a compound that makes a confession land in you as though it were your own. Eight strangers finally get a room that refuses to look away.", "50": "For centuries, practitioners sealed the body with mudras, holding sensation rather than spending it, and never wrote the final instruction down. A laboratory found what that practice had quietly been building in the body, cloned it, and shipped it anyway, missing the last line. Arousal becomes a residence, not an event, and within a generation men aren’t persecuted so much as simply no longer recognized.", "94": "When a government shuts off the internet, somebody has to do it. He is the engineer who does — and the job turns out to be not a wall but a list: hospitals, ambulances, banks, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep.", "35": "Roya never spoke, never reached, never turned her head, and lived ten years and eleven months, growing heavier every one. Her mother's account of the therapy that hurt her daily to save her, and the sixth year, when the visitors had stopped and nobody had noticed. What eased was said out loud; what didn't, never was.", "52": "Surfers call it the samba: the shaking a body does after too long underwater. A rescue-ski driver has pulled four hundred and eleven people from the water — and believes speed is the only decent thing about him. He’s wrong. Then a wave bigger than any in the beach’s history arrives, and he finally learns what nine years of sixty-two-second rescues have actually been about.", "26": "Set on the Majnoon marshes, 1984, during the Iran–Iraq War, the title names two poisons: mustard gas, filling a field hospital with the blind and dying, and mang — Farsi for henbane, ancestor of atropine, the antidote to nerve agents. Sohrab, a nineteen-year-old orderly counting the ward's ampoules, finds soldiers injecting the antidote for its visions — reviving an old rite where a priest drank wine and mang, lay seven days as if dead, and returned from the other side to tell what he saw. His ledger becomes a doorway to the dead. By the 1988 ceasefire, the border is unmoved and a million are gone.", "55": "The rules are absolute: nobody may touch her, for any reason, for the whole crossing. They were the same rules ten years ago, when her son drowned an arm’s length away and no one was allowed to reach him. Now she’s back for the crossing she has left. Past the twentieth hour, something starts swimming beside her — and starts, gently, correcting her memory of that night."};
+const PICKNOTE = {"6": "A new drug lets a therapist walk down into a patient’s mind, to the riverbed where the original wound was carved. Then a patient arrives — someone three other clinics have already turned away — whose own mind has already named him before he speaks. Going that deep was never safe for the guide either; the water takes him too.", "7": "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who’s actually in charge. That voice was never their own — it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes.", "78": "In January 2026, she told him not to go. That evening the country’s phones and internet went dark, and the shooting started with nothing left to prove it happened. What’s left isn’t a death toll — there’s no agreed count, and every number serves whoever repeats it. Six months on, a young man keeps the record the state agreed to lose.", "8": "Every audience has a breaking point — eight to twelve seconds, on average — where it decides it has seen enough of a stranger’s ruin to stop listening. Mercy is built to interrupt exactly that reflex: a compound that makes a confession land in you as though it were your own. Eight strangers finally get a room that refuses to look away.", "50": "For centuries, practitioners sealed the body with mudras, holding sensation rather than spending it, and never wrote the final instruction down. A laboratory found what that practice had quietly been building in the body, cloned it, and shipped it anyway, missing the last line. Arousal becomes a residence, not an event, and within a generation men aren’t persecuted so much as simply no longer recognized.", "94": "When a government shuts off the internet, somebody has to do it. He is the engineer who does — and the job turns out to be not a wall but a list: hospitals, ambulances, banks, written in his own hand. Everyone left off it simply cannot reach anyone. Afterwards the calls that never connected begin arriving in his sleep.", "35": "Roya never spoke, never reached, never turned her head, and lived ten years and eleven months, growing heavier every one. Her mother's account of the therapy that hurt her daily to save her, and the sixth year, when the visitors had stopped and nobody had noticed. What eased was said out loud; what didn't, never was.", "52": "Surfers call it the samba: the shaking a body does after too long underwater. A rescue-ski driver has pulled four hundred and eleven people from the water — and believes speed is the only decent thing about him. He’s wrong. Then a wave bigger than any in the beach’s history arrives, and he finally learns what nine years of sixty-two-second rescues have actually been about.", "26": "Set on the Majnoon marshes, 1984, during the Iran–Iraq War, the title names two poisons: mustard gas, filling a field hospital with the blind and dying, and mang — Farsi for henbane, ancestor of atropine, the antidote to nerve agents. Sohrab, a nineteen-year-old orderly counting the ward's ampoules, finds soldiers injecting the antidote for its visions — reviving an old rite where a priest drank wine and mang, lay seven days as if dead, and returned from the other side to tell what he saw. His ledger becomes a doorway to the dead. By the 1988 ceasefire, the border is unmoved and a million are gone.", "102": "Set in the hills above Pacific Palisades through the last winter of 2024, where a family out of Tehran built a glass house on a slope that had not burned in fifty years. Contained, mostly is what a fire service says when a fire has been stopped rather than put out. On the ridge, white flowers that open only in summer are open in January \u2014 and between the chapters, something much older than the houses begins to speak.", "55": "The rules are absolute: nobody may touch her, for any reason, for the whole crossing. They were the same rules ten years ago, when her son drowned an arm’s length away and no one was allowed to reach him. Now she’s back for the crossing she has left. Past the twentieth hour, something starts swimming beside her — and starts, gently, correcting her memory of that night."};
 /* 94's three lines are kept below though its slot went to 26 — the panel
    copy written for a book exists nowhere else, and putting 94 back should not
    mean writing it again. Unused entries cost nothing; a lost paragraph does. */
 const PICKFA = {"78": "خاموشی", "94": "رفت و برگشت"};
-const PICKGLOSS = {"6": "his patient’s mind named him", "7": "the dreamer was not you", "78": "the dark was the method", "8": "pity, measured in seconds", "50": "the last instruction went unwritten", "94": "the calls return", "35": "she grew heavier, alone", "52": "a dance name for drowning", "55": "her son’s old place"};
+const PICKGLOSS = {"6": "his patient’s mind named him", "7": "the dreamer was not you", "78": "the dark was the method", "8": "pity, measured in seconds", "50": "the last instruction went unwritten", "94": "the calls return", "35": "she grew heavier, alone", "52": "a dance name for drowning", "55": "her son’s old place", "102": "six days, underground"};
 /* three paintings are framed off-centre on the live page, so the subject is
    not lost when the picture is cropped to the card */
 /* start-94 is 1100x367 with the tower and the colour burst in its right
@@ -847,7 +847,7 @@ const PICKABOUT = {
 const PICKS = [
   { dial:0, name:"Noir",          books:[6,7,78] },
   { dial:1, name:"Transgressive", books:[8,26,50] },
-  { dial:2, name:"Plausible",     books:[35,52,55] }
+  { dial:2, name:"Plausible",     books:[35,52,102] }
 ];
 /* The recommended-series panel, exactly as the live page configures it:
    an English name and a Persian one, the banner, every paragraph of the
@@ -917,7 +917,14 @@ const VOLWORD = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine",
    Those two keep the rendering the section was designed against; the other
    seven scenes are the repo's own files, untouched. */
 const ART_OWN = {35:1, 94:1};
-const art = n => basePath() + (ART_OWN[n] ? "library/art/start-" : "assets/start-") + pad2(n) + ".webp";
+/* Books with a second painting cut for the phone. A phone row is nearly as
+   tall as it is wide, so a 3:1 scene painted for the desktop arrives there
+   as a sliver of its own middle; where a 3:2 recut exists, the phone gets
+   it. Listed rather than guessed, because a missing -m file would 404 on
+   every draw and .ab-art is a CSS background, which no error handler sees. */
+const ART_PHONE = {102:1};
+const art = n => basePath() + (ART_OWN[n] ? "library/art/start-" : "assets/start-")
+  + pad2(n) + (ART_PHONE[n] && dev === "phone" ? "-m" : "") + ".webp";
 const ORN2 = '<svg class="ab-orn" viewBox="0 0 64 26" fill="none" aria-hidden="true">'
   + '<path d="M32 3l3.4 7L43 13l-7.6 3L32 23l-3.4-7L21 13l7.6-3z" fill="currentColor" opacity=".9"/>'
   + '<path d="M13 13h6M45 13h6" stroke="currentColor" stroke-width="1"/>'
@@ -1755,13 +1762,13 @@ try{
      the same for the section, in one captured listener, because `error` does
      not bubble and the frame is rebuilt on every draw. */
   const COVER_FALLBACK = [
-    [/library\/covers\/(\d{2})\.webp/, "covers/$1.jpg"],
+    [/library\/covers\/(\d{2,3})\.webp/, "covers/$1.jpg"],
     /* the pair is WebP now; the JPEG stays reachable as the first fallback
        while the old files are still on the server, and the flat front is the
        last resort after that */
-    [/covers\/pairs\/(\d{2})\.webp/,   "covers/pairs/$1.jpg"],
-    [/covers\/pairs\/(\d{2})\.jpg/,    "library/covers/$1.webp"],
-    [/library\/art\/start-(\d{2})\.webp/, "assets/start-$1.webp"]
+    [/covers\/pairs\/(\d{2,3})\.webp/,   "covers/pairs/$1.jpg"],
+    [/covers\/pairs\/(\d{2,3})\.jpg/,    "library/covers/$1.webp"],
+    [/library\/art\/start-(\d{2,3})\.webp/, "assets/start-$1.webp"]
   ];
   ROOT.addEventListener("error", function (e) {
     const img = e.target;
