@@ -3032,3 +3032,25 @@ body.rl-on #toTop{z-index:71}
   #royaLibrary .ab-feat--splitl .pl-words{left:2.5%; right:43.5%}
   #royaLibrary .ab-feat--splitl .pl-way{left:2.5%; right:43.5%}
 }
+
+/* ══ the handset: the words stand in the plate's own foot ══
+   This variant's upright plate is faded to flat ground from 63% of its height
+   down, so the bottom third of the picture IS the panel's #0d0b09 and there is
+   nothing in it. Left alone, .pl-words sets underneath the art and that third
+   renders as a gap between the chair and the first line, with the folded
+   layout's hairline drawn across it — which is exactly what it looked like.
+
+   The pull puts the words inside that foot. A percentage margin resolves
+   against WIDTH, and the plate is 3:4, so its flat foot is 37% of its height
+   and therefore about 49% of its width; -45% lands the first line at roughly
+   71% of the picture's height, which is where the ground is measurably flat,
+   and leaves the chair clear above it. */
+@media (max-width:1149px){
+  #royaLibrary .ab-feat--splitl .pl-words{margin-top:-45%; position:relative; z-index:1}
+  /* No rule above the words here. They are standing ON the picture, and a
+     hairline in that position reads as the edge of the artwork rather than as
+     a separator between two blocks. Above 1150 the rule stays as the house has
+     it, because there the words are a block of their own. */
+  #royaLibrary .ab-feat--splitl .pl-body,
+  #royaLibrary .ab-feat--splitl .ft-eyebrow{border-top:0; padding-top:0}
+}
