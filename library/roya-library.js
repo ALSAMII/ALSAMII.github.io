@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 112 · last updated 2026-09-29 16:15 PDT
+   Version 113 · last updated 2026-09-30 06:05 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -876,7 +876,11 @@ const SERIESFEAT = [
      .ab-feat--splitl puts .pl-t back at 1150 and up. `key` is the catalogue's
      own string and must stay exactly as stories.js spells it, or [data-series]
      filters to nothing. */
-  { key:"Come In, the Water Is Lovely", en:"The Water\u2019s Lovely", fa:"",
+  /* The panel carries the whole title, set in three lines. `en` stays the
+     running name — it is what the aria-labels and the cover's alt text read —
+     and `enLines` is only how the head is set. */
+  { key:"Come In, the Water Is Lovely", en:"Come In, the Water Is Lovely",
+    enLines:["Come in,","the water","is lovely"], fa:"",
     art:"assets/series-waters-wide-2.webp", artTall:"assets/series-waters-tall-3.webp",
     start:93, startFa:"", vol:"Book One",
     books:[93,95,97],
@@ -990,7 +994,13 @@ const mark = t => `<span class="ab-mark">${ORN2}<b>${t}</b>${ORN2}</span>`;
    with the page setting the title the plate would otherwise have given. */
 function featPanel(f, sb){
   const fe = f.feat;
-  const title = `<h3 class="pl-t"><span class="ft-en">${esc(f.en)}</span>${f.fa ? `<span class="ft-fa" lang="fa" dir="rtl">${esc(f.fa)}</span>` : ""}</h3>`;
+  /* A series may set its head in lines of its own rather than let the measure
+     decide where it breaks. Each line is its own block, so the break holds at
+     every width instead of moving with the column. */
+  const enHtml = Array.isArray(f.enLines)
+    ? f.enLines.map(l=>`<span class="ft-line">${esc(l)}</span>`).join("")
+    : esc(f.en);
+  const title = `<h3 class="pl-t"><span class="ft-en">${enHtml}</span>${f.fa ? `<span class="ft-fa" lang="fa" dir="rtl">${esc(f.fa)}</span>` : ""}</h3>`;
   /* the way in. It opens the series' start book through the same control every
      other book on this panel uses — 75 for the Delgosh\u0101, 89 for The Unsaid. */
   /* The way in opens the SERIES in the Library, not its start book: the

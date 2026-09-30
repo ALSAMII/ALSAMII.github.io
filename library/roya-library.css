@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 114 · last updated 2026-09-29 16:25 PDT
+   Version 115 · last updated 2026-09-30 06:05 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -1294,7 +1294,12 @@
 #royaLibrary .ab-feat--split .pl-t .ft-fa{font-size:1.44rem}
 #royaLibrary .ab-feat--split .pl-art{display:block; aspect-ratio:941/1056;
   background:var(--plate-tall, var(--plate)) top center/cover no-repeat; border:0}
-#royaLibrary .ab-feat--split .pl,
+/* ⚠ This fade used to sit on .pl — the whole panel — and .pl holds the words
+   as well as the picture. Every line of both split synopses was losing its
+   first and last characters into the 2.6rem ramp at either side. The intent
+   was always the picture: feathered edges so the plate sits on the page rather
+   than on a slab. It is on the picture now, and the prose is untouched. */
+#royaLibrary .ab-feat--split .pl-art,
 #royaLibrary .ab-feat--spread .pl-art{
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, #000 2.6rem, #000 calc(100% - 2.6rem), transparent 100%),
@@ -1304,8 +1309,16 @@
     linear-gradient(to bottom, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
 #royaLibrary .ab-feat--split .pl-words{padding:1.6rem 1.5rem 1rem; gap:1rem}
+/* a head set in lines of its own: each one is a block, so the break holds at
+   every width rather than moving with the measure */
+#royaLibrary .ft-en .ft-line{display:block}
 #royaLibrary .pl-way{display:flex; flex-direction:column; align-items:flex-start;
   gap:1rem; padding:0 1.5rem 2rem}
+/* The eyebrow reads as the closing line of the synopsis rather than the label
+   on the button, so it wants the paragraph spacing above it and not the 1rem
+   the foot's own gap gives. .pl-words closes on 1rem of its own; this makes
+   the whole step about two and a quarter. */
+#royaLibrary .ab-feat--split .pl-way{padding-top:1.25rem}
 
 /* the book is never cropped: its title is on the page the words would take.
    It is faded off at the edges so it sits on the page rather than on a slab. */
@@ -1703,12 +1716,24 @@
    could only overflow. */
 @media (max-width:1149.98px){
   #royaLibrary .ab-feat--stage .pl-stack{padding:2.6rem 1.1rem 2.8rem;
-    flex-direction:column; gap:1.9rem; align-items:stretch;}
+    flex-direction:column; gap:1.3rem; align-items:stretch;}
+  /* ── the head comes off the words and goes over the board ──
+     The name belongs to the book, so on a handset it stands above the cover
+     and the synopsis begins directly under it. The title is markup inside
+     .pl-side, and a flex child cannot be ordered past its own parent — so at
+     this width .pl-side stops being a box at all and hands its three parts up
+     to the stack, which orders them around the shelf. Everything .pl-side was
+     giving them (the centring, the measure) is restated on the parts below,
+     because `display:contents` takes the box and its styles with it. */
+  #royaLibrary .ab-feat--stage .pl-side{display:contents}
+  #royaLibrary .ab-feat--stage .pl-t{order:1}
+  #royaLibrary .ab-feat--stage .pl-shelf{order:2; margin-block:.35rem}
+  #royaLibrary .ab-feat--stage .pl-words{order:3}
+  #royaLibrary .ab-feat--stage .pl-way{order:4}
   #royaLibrary .ab-feat--stage .pl-shelf{display:flex; align-items:center;
     justify-content:center;}
   #royaLibrary .ab-feat--stage .pl-cover{flex:0 0 auto; width:62%}
-  #royaLibrary .ab-feat--stage .pl-side{gap:1.2rem; align-items:center;
-    text-align:center;}
+  #royaLibrary .ab-feat--stage .pl-q{text-align:center; margin-inline:auto}
   #royaLibrary .ab-feat--stage .pl-t{justify-content:center; align-items:baseline; gap:.1rem .66rem}
   #royaLibrary .ab-feat--stage .pl-t .ft-en{font-size:clamp(1.7rem, 8.2cqw, 2.5rem);
     letter-spacing:.055em; line-height:1.08}
@@ -2299,9 +2324,9 @@
   border-bottom:1px solid rgba(199,148,61,.58);}
 :root[data-mcond="1"] #royaLibrary .mob-h{display:none}
 :root[data-mcond="1"] #royaLibrary .mob-nav{padding:.62rem .7rem .78rem}
-:root[data-mcond="1"] #royaLibrary .mob-nav i{font-size:clamp(.5625rem, 2.1vw, .75rem); margin-top:.22rem}
+:root[data-mcond="1"] #royaLibrary .mob-nav i{font-size:clamp(.4688rem, 1.8vw, .6875rem); margin-top:.22rem}
 :root[data-mcond="1"] #royaLibrary .mob-nav button:not([aria-current="true"]) i{margin-top:calc(.22rem + 1px + .2rem)}
-:root[data-mcond="1"] #royaLibrary .mob-nav button{font-size:clamp(.625rem, 2.5vw, .8125rem)}
+:root[data-mcond="1"] #royaLibrary .mob-nav button{font-size:clamp(.625rem, 2.35vw, .8125rem)}
 :root[data-mcond="1"] #royaLibrary .mob-nav button[aria-current="true"] span{margin-top:.2rem}
 :root[data-mcond="1"] #royaLibrary .mob-bar{padding:.36rem .7rem .28rem}
 :root[data-mcond="1"] #royaLibrary .mob-word{height:1.95rem}
