@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 118 · last updated 2026-09-30 12:35 PDT
+   Version 120 · last updated 2026-09-30 14:35 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -47,12 +47,24 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) #royaLibrary{--paper:#d9ceb4; --paper-2:#cabc9c; --paper-edge:#a99a78;}
 }
-/* ── the light theme ──
+/* ── the light theme — SWITCHED OFF ──
    The same book, printed on paper instead of into soot. Only the tokens
    move: bone becomes ink, the ground becomes warm stock, and the press
    plate is dropped (it is a dark photograph — on a light ground it reads as a
-   stain rather than a ground). */
-:root[data-lt="light"] #royaLibrary{--bone:#1d1710; --bone-muted:#4a3f2e; --dust:#6d6047; --paper-dust:#8a7a5c;
+   stain rather than a ground).
+
+   It is parked, not deleted. Every one of these rules is guarded by
+   :root[data-lt="light-off"], and nothing ever sets that value, so none
+   of them can fire. Renaming the guard rather than commenting the rules
+   out is deliberate twice over: a CSS comment cannot hold another one,
+   and these rules do not sit in one block — they are spread over seven
+   stretches of this file, each interleaved with dark-theme rules that
+   must keep working.
+
+   TO RESTORE: replace light-off with light throughout this file — 177
+   occurrences, every one of them a light-theme guard — and follow the
+   four other steps listed beside the Theme button in index.html. */
+:root[data-lt="light-off"] #royaLibrary{--bone:#1d1710; --bone-muted:#4a3f2e; --dust:#6d6047; --paper-dust:#8a7a5c;
   --body:#3b3122; --ochre:#8a6524; --ochre-muted:#6f5220;
   --oxblood:#631d19; --oxblood-lit:#8c2a22; --rule:#9c8354;
   --cream:#1d1710; --gold:#8a6524;
@@ -63,111 +75,111 @@
   --t-tag:#4a5054;
   --t-quiet:#55504a;
   --over-ground:227,215,188;}
-:root[data-lt="light"] #royaLibrary body{background-color:#cdbd9c; background-image:none}
-:root[data-lt="light"] #royaLibrary .phone{background-color:#e3d7bc; background-image:none}
+:root[data-lt="light-off"] #royaLibrary body{background-color:#cdbd9c; background-image:none}
+:root[data-lt="light-off"] #royaLibrary .phone{background-color:#e3d7bc; background-image:none}
 /* the imprint is gold foil — on cream stock it all but disappears, so in the
    light theme it is printed in ink instead. A filter, because the mark is an
    image; a second set of plates would be one more thing to keep in step. */
-:root[data-lt="light"] #royaLibrary .mob-word, :root[data-lt="light"] #royaLibrary .mob-ears, :root[data-lt="light"] #royaLibrary .side-emblem{filter:brightness(.4) saturate(1.45) contrast(1.2)}
-:root[data-lt="light"] #royaLibrary .lib{background-color:#e3d7bc; background-image:none; background-blend-mode:normal}
-:root[data-lt="light"] #royaLibrary .lib::before{box-shadow:inset 0 0 40px 10px rgba(78,60,32,.17), inset 0 0 150px 46px rgba(78,60,32,.1);}
-:root[data-lt="light"] #royaLibrary .lib::after{opacity:.5}
-:root[data-lt="light"] #royaLibrary .bcard{background:rgba(255,252,243,.42); border-color:rgba(96,76,42,.38)}
-:root[data-lt="light"] #royaLibrary .bcard hr, :root[data-lt="light"] #royaLibrary .side hr, :root[data-lt="light"] #royaLibrary .main-bar .rl-rule, :root[data-lt="light"] #royaLibrary .main-bar .sep, :root[data-lt="light"] #royaLibrary .abt-lab i{background:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .main-foot{border-top-color:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .side{border-right-color:rgba(96,76,42,.4)}
-:root[data-lt="light"] #royaLibrary .bcard-read, :root[data-lt="light"] #royaLibrary .sortbox, :root[data-lt="light"] #royaLibrary .side-search input{border-color:rgba(96,76,42,.55)}
-:root[data-lt="light"] #royaLibrary .bcard-read.is-listen, :root[data-lt="light"] #royaLibrary .mcard-read.is-listen{color:#5c4a28}
-:root[data-lt="light"] #royaLibrary .bcard-side .bcard-act, #royaLibrary .bcard-side span{border-color:rgba(96,76,42,.32)}
-:root[data-lt="light"] #royaLibrary .bcard-plate{box-shadow:0 0 26px rgba(150,110,45,.18), 0 10px 20px rgba(70,52,24,.3)}
-:root[data-lt="light"] #royaLibrary .bcard-plate img{filter:saturate(.95) contrast(1.02) brightness(1)}
-:root[data-lt="light"] #royaLibrary .bcard-zoom{background:rgba(247,241,226,.8); border-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .zoom{background:rgba(231,221,197,.95)}
-:root[data-lt="light"] #royaLibrary .zoom.is-full{background:#ece2ca}
-:root[data-lt="light"] #royaLibrary .zoom-nav{background:rgba(247,241,226,.75); border-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .zoom-strip img{border-color:rgba(96,76,42,.35)}
-:root[data-lt="light"] #royaLibrary .zoom-strip{background:linear-gradient(to top, rgba(236,226,202,.95) 0, rgba(236,226,202,.75) 62%, transparent 100%)}
+:root[data-lt="light-off"] #royaLibrary .mob-word, :root[data-lt="light-off"] #royaLibrary .mob-ears, :root[data-lt="light-off"] #royaLibrary .side-emblem{filter:brightness(.4) saturate(1.45) contrast(1.2)}
+:root[data-lt="light-off"] #royaLibrary .lib{background-color:#e3d7bc; background-image:none; background-blend-mode:normal}
+:root[data-lt="light-off"] #royaLibrary .lib::before{box-shadow:inset 0 0 40px 10px rgba(78,60,32,.17), inset 0 0 150px 46px rgba(78,60,32,.1);}
+:root[data-lt="light-off"] #royaLibrary .lib::after{opacity:.5}
+:root[data-lt="light-off"] #royaLibrary .bcard{background:rgba(255,252,243,.42); border-color:rgba(96,76,42,.38)}
+:root[data-lt="light-off"] #royaLibrary .bcard hr, :root[data-lt="light-off"] #royaLibrary .side hr, :root[data-lt="light-off"] #royaLibrary .main-bar .rl-rule, :root[data-lt="light-off"] #royaLibrary .main-bar .sep, :root[data-lt="light-off"] #royaLibrary .abt-lab i{background:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .main-foot{border-top-color:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .side{border-right-color:rgba(96,76,42,.4)}
+:root[data-lt="light-off"] #royaLibrary .bcard-read, :root[data-lt="light-off"] #royaLibrary .sortbox, :root[data-lt="light-off"] #royaLibrary .side-search input{border-color:rgba(96,76,42,.55)}
+:root[data-lt="light-off"] #royaLibrary .bcard-read.is-listen, :root[data-lt="light-off"] #royaLibrary .mcard-read.is-listen{color:#5c4a28}
+:root[data-lt="light-off"] #royaLibrary .bcard-side .bcard-act, #royaLibrary .bcard-side span{border-color:rgba(96,76,42,.32)}
+:root[data-lt="light-off"] #royaLibrary .bcard-plate{box-shadow:0 0 26px rgba(150,110,45,.18), 0 10px 20px rgba(70,52,24,.3)}
+:root[data-lt="light-off"] #royaLibrary .bcard-plate img{filter:saturate(.95) contrast(1.02) brightness(1)}
+:root[data-lt="light-off"] #royaLibrary .bcard-zoom{background:rgba(247,241,226,.8); border-color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .zoom{background:rgba(231,221,197,.95)}
+:root[data-lt="light-off"] #royaLibrary .zoom.is-full{background:#ece2ca}
+:root[data-lt="light-off"] #royaLibrary .zoom-nav{background:rgba(247,241,226,.75); border-color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .zoom-strip img{border-color:rgba(96,76,42,.35)}
+:root[data-lt="light-off"] #royaLibrary .zoom-strip{background:linear-gradient(to top, rgba(236,226,202,.95) 0, rgba(236,226,202,.75) 62%, transparent 100%)}
 /* On paper the oxblood bar is the one thing dark enough to carry bone type,
    so it stays — only the resting grey and the pill move to ink values. */
-:root[data-lt="light"] #royaLibrary .side-list button{color:#6d5c3e}
-:root[data-lt="light"] #royaLibrary .side-list button:hover{color:#241c0f}
-:root[data-lt="light"] #royaLibrary .side-list .solo{color:#8a6420}
-:root[data-lt="light"] #royaLibrary .side-ct{color:#8a6420; border-color:rgba(96,76,42,.4)}
-:root[data-lt="light"] #royaLibrary .side-list button[aria-pressed="true"]{background:var(--oxblood); color:#efe6d2}
-:root[data-lt="light"] #royaLibrary .side-list button[aria-pressed="true"] .side-ct{color:#efe6d2;
+:root[data-lt="light-off"] #royaLibrary .side-list button{color:#6d5c3e}
+:root[data-lt="light-off"] #royaLibrary .side-list button:hover{color:#241c0f}
+:root[data-lt="light-off"] #royaLibrary .side-list .solo{color:#8a6420}
+:root[data-lt="light-off"] #royaLibrary .side-ct{color:#8a6420; border-color:rgba(96,76,42,.4)}
+:root[data-lt="light-off"] #royaLibrary .side-list button[aria-pressed="true"]{background:var(--oxblood); color:#efe6d2}
+:root[data-lt="light-off"] #royaLibrary .side-list button[aria-pressed="true"] .side-ct{color:#efe6d2;
   border-color:rgba(239,230,210,.5); background:rgba(0,0,0,.18)}
 /* the light theme on the phone: the same tokens carry the type, and every
    surface that was painted dark by hand gets its paper equivalent */
-:root[data-lt="light"] #royaLibrary .mob{background-color:#e3d7bc; background-image:none}
-:root[data-lt="light"] #royaLibrary .mob::after{opacity:.45}
-:root[data-lt="light"] #royaLibrary .mob-head{background:#efe7d3; border-bottom-color:rgba(96,76,42,.5);
+:root[data-lt="light-off"] #royaLibrary .mob{background-color:#e3d7bc; background-image:none}
+:root[data-lt="light-off"] #royaLibrary .mob::after{opacity:.45}
+:root[data-lt="light-off"] #royaLibrary .mob-head{background:#efe7d3; border-bottom-color:rgba(96,76,42,.5);
   box-shadow:0 10px 18px rgba(70,52,24,.14);}
-:root[data-lt="light"] #royaLibrary .mob-bar{border-bottom-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .mob-nav button + button::before{background:rgba(96,76,42,.35)}
-:root[data-lt="light"] #royaLibrary .mob-search input, :root[data-lt="light"] #royaLibrary .pick-btn, :root[data-lt="light"] #royaLibrary .mob-ctrl .sortbox{border-color:rgba(96,76,42,.55)}
-:root[data-lt="light"] #royaLibrary .mob-search input{color:#1d1710}
-:root[data-lt="light"] #royaLibrary .mob-search svg, :root[data-lt="light"] #royaLibrary .pick-btn svg{stroke:#8a6524}
-:root[data-lt="light"] #royaLibrary .mob-ctrl .sep{background:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .pick-list{background:#f3ead4; border-color:rgba(96,76,42,.55); box-shadow:0 18px 34px rgba(70,52,24,.3);}
-:root[data-lt="light"] #royaLibrary .sort-list{background:#f3ead4; border-color:rgba(96,76,42,.55); box-shadow:0 18px 34px rgba(70,52,24,.3);}
-:root[data-lt="light"] #royaLibrary .sort-list button{color:#1d1710}
-:root[data-lt="light"] #royaLibrary .sort-list button > i{color:#8a5a1e}
-:root[data-lt="light"] #royaLibrary .sort-list button + button{border-top-color:rgba(96,76,42,.18)}
-:root[data-lt="light"] #royaLibrary .sort-list button:hover{background:rgba(138,101,36,.12)}
-:root[data-lt="light"] #royaLibrary .sort-list button:hover > span{color:#1d1710}
-:root[data-lt="light"] #royaLibrary .sort-list button[aria-selected="true"]{background:rgba(138,101,36,.18); box-shadow:inset 2px 0 0 #8a6524;}
-:root[data-lt="light"] #royaLibrary .sort-list button[aria-selected="true"] > span{color:#33260f}
-:root[data-lt="light"] #royaLibrary .pick-list button{color:#1d1710}
-:root[data-lt="light"] #royaLibrary .pick-list button > i{color:#8a5a1e}
-:root[data-lt="light"] #royaLibrary .pick-list button + button{border-top-color:rgba(96,76,42,.18)}
-:root[data-lt="light"] #royaLibrary .pick-list button:first-child{border-bottom-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .pick-list button:last-child{border-top-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .pick-list button:hover{background:rgba(138,101,36,.12)}
-:root[data-lt="light"] #royaLibrary .pick-list button:hover > span{color:#1d1710}
-:root[data-lt="light"] #royaLibrary .pick-list button[aria-selected="true"]{background:rgba(138,101,36,.18); box-shadow:inset 2px 0 0 #8a6524;}
-:root[data-lt="light"] #royaLibrary .pick-list button[aria-selected="true"] > span,
-:root[data-lt="light"] #royaLibrary .pick-list button[aria-selected="true"] > i{color:#33260f}
+:root[data-lt="light-off"] #royaLibrary .mob-bar{border-bottom-color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .mob-nav button + button::before{background:rgba(96,76,42,.35)}
+:root[data-lt="light-off"] #royaLibrary .mob-search input, :root[data-lt="light-off"] #royaLibrary .pick-btn, :root[data-lt="light-off"] #royaLibrary .mob-ctrl .sortbox{border-color:rgba(96,76,42,.55)}
+:root[data-lt="light-off"] #royaLibrary .mob-search input{color:#1d1710}
+:root[data-lt="light-off"] #royaLibrary .mob-search svg, :root[data-lt="light-off"] #royaLibrary .pick-btn svg{stroke:#8a6524}
+:root[data-lt="light-off"] #royaLibrary .mob-ctrl .sep{background:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .pick-list{background:#f3ead4; border-color:rgba(96,76,42,.55); box-shadow:0 18px 34px rgba(70,52,24,.3);}
+:root[data-lt="light-off"] #royaLibrary .sort-list{background:#f3ead4; border-color:rgba(96,76,42,.55); box-shadow:0 18px 34px rgba(70,52,24,.3);}
+:root[data-lt="light-off"] #royaLibrary .sort-list button{color:#1d1710}
+:root[data-lt="light-off"] #royaLibrary .sort-list button > i{color:#8a5a1e}
+:root[data-lt="light-off"] #royaLibrary .sort-list button + button{border-top-color:rgba(96,76,42,.18)}
+:root[data-lt="light-off"] #royaLibrary .sort-list button:hover{background:rgba(138,101,36,.12)}
+:root[data-lt="light-off"] #royaLibrary .sort-list button:hover > span{color:#1d1710}
+:root[data-lt="light-off"] #royaLibrary .sort-list button[aria-selected="true"]{background:rgba(138,101,36,.18); box-shadow:inset 2px 0 0 #8a6524;}
+:root[data-lt="light-off"] #royaLibrary .sort-list button[aria-selected="true"] > span{color:#33260f}
+:root[data-lt="light-off"] #royaLibrary .pick-list button{color:#1d1710}
+:root[data-lt="light-off"] #royaLibrary .pick-list button > i{color:#8a5a1e}
+:root[data-lt="light-off"] #royaLibrary .pick-list button + button{border-top-color:rgba(96,76,42,.18)}
+:root[data-lt="light-off"] #royaLibrary .pick-list button:first-child{border-bottom-color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .pick-list button:last-child{border-top-color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .pick-list button:hover{background:rgba(138,101,36,.12)}
+:root[data-lt="light-off"] #royaLibrary .pick-list button:hover > span{color:#1d1710}
+:root[data-lt="light-off"] #royaLibrary .pick-list button[aria-selected="true"]{background:rgba(138,101,36,.18); box-shadow:inset 2px 0 0 #8a6524;}
+:root[data-lt="light-off"] #royaLibrary .pick-list button[aria-selected="true"] > span,
+:root[data-lt="light-off"] #royaLibrary .pick-list button[aria-selected="true"] > i{color:#33260f}
 /* The tint needs its own value here, not the dark theme's: over paper the
    same wash goes much further, so it drops to .14 and the cards fade a little
    less, toward the light ground rather than away from a dark one. */
-:root[data-lt="light"] #royaLibrary .pick-scrim{background:rgba(38,54,86,.14)}
-:root[data-lt="light"] #royaLibrary .mob.is-picking .mob-grid,
-:root[data-lt="light"] #royaLibrary .mob.is-picking .mob-count,
-:root[data-lt="light"] #royaLibrary .mob.is-picking .sv{opacity:.68}
-:root[data-lt="light"] #royaLibrary .mcard{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
-:root[data-lt="light"] #royaLibrary .mcard hr{background:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .mcard-plate{box-shadow:0 0 22px rgba(150,110,45,.18), 0 8px 16px rgba(70,52,24,.28)}
-:root[data-lt="light"] #royaLibrary .mcard-plate img{filter:saturate(.95) contrast(1.02) brightness(1)}
-:root[data-lt="light"] #royaLibrary .mob-grid.is-rows .mcard{border-bottom-color:rgba(96,76,42,.32)}
-:root[data-lt="light"] #royaLibrary .sheet{background:#e7dcc3}
-:root[data-lt="light"] #royaLibrary .sheet-top{border-bottom-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .sheet-x{border-color:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .sheet-plate{box-shadow:0 0 28px rgba(150,110,45,.2), 0 14px 26px rgba(70,52,24,.32)}
-:root[data-lt="light"] #royaLibrary .sheet-nav button{border-color:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .mob-foot{border-top-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .dnav{background:linear-gradient(to bottom,
+:root[data-lt="light-off"] #royaLibrary .pick-scrim{background:rgba(38,54,86,.14)}
+:root[data-lt="light-off"] #royaLibrary .mob.is-picking .mob-grid,
+:root[data-lt="light-off"] #royaLibrary .mob.is-picking .mob-count,
+:root[data-lt="light-off"] #royaLibrary .mob.is-picking .sv{opacity:.68}
+:root[data-lt="light-off"] #royaLibrary .mcard{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
+:root[data-lt="light-off"] #royaLibrary .mcard hr{background:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .mcard-plate{box-shadow:0 0 22px rgba(150,110,45,.18), 0 8px 16px rgba(70,52,24,.28)}
+:root[data-lt="light-off"] #royaLibrary .mcard-plate img{filter:saturate(.95) contrast(1.02) brightness(1)}
+:root[data-lt="light-off"] #royaLibrary .mob-grid.is-rows .mcard{border-bottom-color:rgba(96,76,42,.32)}
+:root[data-lt="light-off"] #royaLibrary .sheet{background:#e7dcc3}
+:root[data-lt="light-off"] #royaLibrary .sheet-top{border-bottom-color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .sheet-x{border-color:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .sheet-plate{box-shadow:0 0 28px rgba(150,110,45,.2), 0 14px 26px rgba(70,52,24,.32)}
+:root[data-lt="light-off"] #royaLibrary .sheet-nav button{border-color:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .mob-foot{border-top-color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .dnav{background:linear-gradient(to bottom,
     rgba(227,215,188,.90) 0%, rgba(227,215,188,.82) 46%,
     rgba(227,215,188,.48) 78%, rgba(227,215,188,0) 100%)}
-:root[data-lt="light"] #royaLibrary .dnav button + button::before, :root[data-lt="light"] #royaLibrary .ab-terms::before, :root[data-lt="light"] #royaLibrary .ab-terms::after, :root[data-lt="light"] #royaLibrary .ab-rule i{background:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .dnav button + button::before, :root[data-lt="light-off"] #royaLibrary .ab-terms::before, :root[data-lt="light-off"] #royaLibrary .ab-terms::after, :root[data-lt="light-off"] #royaLibrary .ab-rule i{background:rgba(96,76,42,.45)}
 /* DEAD: .ab-card and .ab-ser are no longer emitted — .ab-ser was the All
    Series card this round replaced with .ab-serlist, .ab-card went earlier.
    Kept here rather than deleted blind: the rest of the light block is one
    long list and a wrong cut in it is invisible until someone switches theme.
    Safe to remove with .ab-cov / .ab-body / .ab-n / .ab-ti / .ab-hk / .ab-recs
    and the .ab-sers line below, all checked against the markup as unused. */
-:root[data-lt="light"] #royaLibrary .ab-card, :root[data-lt="light"] #royaLibrary .ab-ser{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
+:root[data-lt="light-off"] #royaLibrary .ab-card, :root[data-lt="light-off"] #royaLibrary .ab-ser{background:rgba(255,252,243,.45); border-color:rgba(96,76,42,.38)}
 /* The open series row took the same near-black wash as the cards above but
    never got their paper rule, so on this theme it came out as a grey slab
    across the page. It takes the cards' stock now, and its inner dividers the
    paper rule rather than the board's gold — a gold hairline reads as a lit
    edge, which is right on a dark ground and wrong on a light one. */
-:root[data-lt="light"] #royaLibrary .ab-spanel{background:rgba(255,252,243,.45);
+:root[data-lt="light-off"] #royaLibrary .ab-spanel{background:rgba(255,252,243,.45);
   border-color:rgba(96,76,42,.38)}
-:root[data-lt="light"] #royaLibrary .ab-spanel > * + *{border-left-color:rgba(96,76,42,.3)}
-:root[data-lt="light"] #royaLibrary .ab-cov img{border-color:rgba(96,76,42,.4)}
-:root[data-lt="light"] #royaLibrary .ab-t{border-bottom-color:rgba(96,76,42,.6)}
-:root[data-lt="light"] #royaLibrary .rec{background:rgba(231,221,197,.95)}
-:root[data-lt="light"] #royaLibrary .rec-in{background:#e9dfc7}
+:root[data-lt="light-off"] #royaLibrary .ab-spanel > * + *{border-left-color:rgba(96,76,42,.3)}
+:root[data-lt="light-off"] #royaLibrary .ab-cov img{border-color:rgba(96,76,42,.4)}
+:root[data-lt="light-off"] #royaLibrary .ab-t{border-bottom-color:rgba(96,76,42,.6)}
+:root[data-lt="light-off"] #royaLibrary .rec{background:rgba(231,221,197,.95)}
+:root[data-lt="light-off"] #royaLibrary .rec-in{background:#e9dfc7}
 /* ── the featured plate on paper ──
    The veil over this picture was already a cream — --over-ground has been a
    paper value in this theme all along. What went black was the plate itself:
@@ -190,7 +202,7 @@
    face. 20% by 46% is where both hold. brightness lifts the plate off the
    stock a little, because a photograph exposed for a dark page sits heavy
    on a light one. */
-:root[data-lt="light"] #royaLibrary .ab-over::before{
+:root[data-lt="light-off"] #royaLibrary .ab-over::before{
   filter:brightness(1.05) contrast(.97) saturate(1.04);
   -webkit-mask-image:
     radial-gradient(20% 46% at 6% 44%, #000 16%, rgba(0,0,0,.45) 42%, transparent 76%),
@@ -199,10 +211,10 @@
     radial-gradient(20% 46% at 6% 44%, #000 16%, rgba(0,0,0,.45) 42%, transparent 76%),
     radial-gradient(20% 46% at 94% 44%, #000 16%, rgba(0,0,0,.45) 42%, transparent 76%);
   -webkit-mask-composite:source-over; mask-composite:add;}
-:root[data-lt="light"] #royaLibrary .rec-x, :root[data-lt="light"] #royaLibrary .rec-nav, :root[data-lt="light"] #royaLibrary .ab-art{opacity:1; filter:saturate(1.05) brightness(1.02) contrast(1.06);
+:root[data-lt="light-off"] #royaLibrary .rec-x, :root[data-lt="light-off"] #royaLibrary .rec-nav, :root[data-lt="light-off"] #royaLibrary .ab-art{opacity:1; filter:saturate(1.05) brightness(1.02) contrast(1.06);
   -webkit-mask-image:linear-gradient(to bottom, transparent 0, transparent 8%, #000 14%, #000 86%, transparent 92%, transparent 100%);
   mask-image:linear-gradient(to bottom, transparent 0, transparent 8%, #000 14%, #000 86%, transparent 92%, transparent 100%);}
-:root[data-lt="light"] #royaLibrary .ab-row::before{content:""; position:absolute; top:-11%; bottom:-11%; left:-3rem; right:0;
+:root[data-lt="light-off"] #royaLibrary .ab-row::before{content:""; position:absolute; top:-11%; bottom:-11%; left:-3rem; right:0;
   z-index:1; pointer-events:none;
   background:linear-gradient(to right,
     rgb(227,215,188) 0, rgb(227,215,188) 58%,
@@ -210,20 +222,33 @@
     rgba(227,215,188,.16) 85%, transparent 94%);
   -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
   mask-image:linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);}
-:root[data-lt="light"] #royaLibrary .ab-rowin{z-index:2}
-:root[data-lt="light"] #royaLibrary .ab-row .ab-head b, :root[data-lt="light"] #royaLibrary .ab-row .ab-name, :root[data-lt="light"] #royaLibrary .ab-row .ab-fa, :root[data-lt="light"] #royaLibrary .ab-row .ab-time, :root[data-lt="light"] #royaLibrary .ab-row .ab-gl, :root[data-lt="light"] #royaLibrary .ab-row .ab-syn{text-shadow:none}
-:root[data-lt="light"] #royaLibrary .rec-nav button{border-color:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .dial-m i{border-color:rgba(96,76,42,.45)}
-:root[data-lt="light"] #royaLibrary .dial-n{border-bottom-color:rgba(96,76,42,.55)}
-:root[data-lt="light"] #royaLibrary .dial-l{border-left-color:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .ab-rowin{z-index:2}
+:root[data-lt="light-off"] #royaLibrary .ab-row .ab-head b, :root[data-lt="light-off"] #royaLibrary .ab-row .ab-name, :root[data-lt="light-off"] #royaLibrary .ab-row .ab-fa, :root[data-lt="light-off"] #royaLibrary .ab-row .ab-time, :root[data-lt="light-off"] #royaLibrary .ab-row .ab-gl, :root[data-lt="light-off"] #royaLibrary .ab-row .ab-syn{text-shadow:none}
+:root[data-lt="light-off"] #royaLibrary .rec-nav button{border-color:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .dial-m i{border-color:rgba(96,76,42,.45)}
+:root[data-lt="light-off"] #royaLibrary .dial-n{border-bottom-color:rgba(96,76,42,.55)}
+:root[data-lt="light-off"] #royaLibrary .dial-l{border-left-color:rgba(96,76,42,.45)}
 #royaLibrary{box-sizing:border-box}
 #royaLibrary, #royaLibrary{margin:0}
-#royaLibrary{/* the ground plate: one warm field behind everything, pinned to the
-     viewport so it neither tiles nor stretches as the shelf runs on */
-  background-color:#0b0906; color:var(--bone);
-  background-image:url("bg-desk.webp");
-  background-size:cover; background-position:center center;
-  background-repeat:no-repeat; background-attachment:fixed;
+#royaLibrary{/* ── the ground: flat black, as the handset already had it ──
+     This carried a painted plate, bg-desk.webp, pinned to the viewport so it
+     neither tiled nor stretched as the shelf ran on. The handset dropped it
+     some time ago for reasons set out below at 46rem; the desktop now follows,
+     so the two agree and the covers are the only pictures on the page.
+
+     background-attachment goes with it. `fixed` was for the plate, and an
+     inherited `fixed` with no image still marks the scroller as one to
+     composite — the same trap the handset rule notes.
+
+     TO RESTORE THE PLATE: put the four commented lines back in place of the
+     two below, and do the same in .lib further down (search bg-desk). The file
+     is still in library/ — nothing was deleted.
+       background-color:#0b0906;
+       background-image:url("bg-desk.webp");
+       background-size:cover; background-position:center center;
+       background-repeat:no-repeat; background-attachment:fixed; */
+  background-color:#000; color:var(--bone);
+  background-image:none; background-attachment:scroll;
   font-family:var(--book); font-weight:500; font-size:17px; line-height:1.48;
   -webkit-font-smoothing:antialiased;}
 #royaLibrary img{max-width:100%; display:block}
@@ -325,20 +350,27 @@
    much it was raised. Above 1900px the cap lifts and the page scales with the
    screen. */
 #royaLibrary .lib{position:relative; max-width:1760px; margin:0 auto;
-  /* the plate, and nothing over it. A press-paper tile used to sit on top at
-     soft-light, from before this artwork existed; the plate has its own grain
-     and the press lines in ::after add the rest, so the tile was one more file
-     for a difference nobody could see. */
-  background-color:transparent;
-  background-image:url("bg-desk.webp");
-  background-size:cover; background-position:center center;
-  background-repeat:no-repeat; background-attachment:fixed;
+  /* the plate is off here too — see the note on #royaLibrary above.
+       background-color:transparent;
+       background-image:url("bg-desk.webp");
+       background-size:cover; background-position:center center;
+       background-repeat:no-repeat; background-attachment:fixed; */
+  background-color:#000;
+  background-image:none; background-attachment:scroll;
   /* The handled-paperback perimeter — a 9-slice of worn bone paper — is gone.
      It read as two cream bars down the sides of the screen rather than as a
      deckle: an edge only works as an edge when you can see the whole sheet,
-     and on a desktop you never can. The vignette below still closes the page
-     in, without a colour of its own. edge.png is still used by the record
+     and on a desktop you never can. edge.png is still used by the record
      panel, so the asset stays.
+
+     ⚠ The vignette below no longer closes the page in. It is an inset BLACK
+     shadow, and the ground is now black, so it has nothing left to darken —
+     measured, the centre-to-edge difference went from 13.8 to 0.04. It is
+     kept because it is what frames the page again the moment the plate goes
+     back, but on black it is doing nothing. Black is the floor: no inset
+     shadow of any strength can vignette it. Closing the page in on a black
+     ground would have to be a light edge instead, which is a different
+     design decision and has not been taken.
 
      The rail goes 13.5rem to 20.5rem. THE UNWITNESSED WARS I-V, THE BORROWED
      SUN CYCLE and COME IN, THE WATER IS LOVELY were all being cut off with an
@@ -789,7 +821,7 @@
   font-style:italic; font-weight:600; font-size:1.9em; line-height:0;
   letter-spacing:.005em; color:#f3e8cf;
   vertical-align:.08em; margin:0 .14em 0 0;}
-:root[data-lt="light"] #royaLibrary .ab-count{color:#2a2114}
+:root[data-lt="light-off"] #royaLibrary .ab-count{color:#2a2114}
 /* .ab-note--long used to un-slant itself here. .ab-note is roman now, so
    the override said nothing and has gone. */
 /* The dividers used to be a pseudo-element on each cell, positioned against
@@ -1813,81 +1845,81 @@
    One rule throughout: the plate is carried in a custom property on the same
    element, so this theme only ever touches `background-color`, never the
    `background` shorthand, which would wipe the picture. */
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl,
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl{
   background-color:#efe4ca; border-color:rgba(96,76,42,.5)}
-:root[data-lt="light"] #royaLibrary .pl-art{border-color:rgba(96,76,42,.4)}
+:root[data-lt="light-off"] #royaLibrary .pl-art{border-color:rgba(96,76,42,.4)}
 
 /* the title is set into the picture, so it stays gold there */
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t{color:#e6cd95}
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-t .ft-fa{color:#dcc28c}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-t{color:#e6cd95}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-t .ft-fa{color:#dcc28c}
 /* and everything under the picture takes the page */
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q,
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-q{color:#4a3a1d}
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p,
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-p,
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#2e2618}
-:root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow,
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-eyebrow{color:#8a6420}
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-cap,
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-cap,
-:root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-folio{color:#6d5c3e}
-:root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body,
-:root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-q,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-q{color:#4a3a1d}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-body p,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-p,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-p,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-lede{color:#2e2618}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .ft-eyebrow,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--spread .ft-eyebrow{color:#8a6420}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-cap,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-cap,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-folio{color:#6d5c3e}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-body,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--split .ft-eyebrow{
   border-top-color:rgba(140,42,34,.45)}
-:root[data-lt="light"] #royaLibrary .ft-cta{background:rgba(99,29,25,.1); color:#631d19}
-:root[data-lt="light"] #royaLibrary .ft-cta:hover{background:var(--oxblood); color:#f2e7cd}
+:root[data-lt="light-off"] #royaLibrary .ft-cta{background:rgba(99,29,25,.1); color:#631d19}
+:root[data-lt="light-off"] #royaLibrary .ft-cta:hover{background:var(--oxblood); color:#f2e7cd}
 
 /* ── The Delgoshā on paper ──
    The panel has no ground of its own now, so on the light theme the words
    stand on the page's own paper and take the page's own ink. Only the board
    keeps its night values, because a printed board is dark whatever room it is
    held in. */
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl{background:none; border:0;
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .pl{background:none; border:0;
   box-shadow:none}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-t{color:#8a6420}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-t .ft-fa{color:#9b7430}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q{color:#4a3a1d}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-body p{color:#2e2618}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q::before,
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .pl-q::after{
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .pl-t{color:#8a6420}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .pl-t .ft-fa{color:#9b7430}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .pl-q{color:#4a3a1d}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .pl-body p{color:#2e2618}
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .pl-q::before,
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .pl-q::after{
   background:linear-gradient(to right, transparent, rgba(140,42,34,.5), transparent)}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .ft-cta{background:rgba(99,29,25,.1);
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .ft-cta{background:rgba(99,29,25,.1);
   color:#631d19; border-color:rgba(99,29,25,.4)}
-:root[data-lt="light"] #royaLibrary .ab-feat--stage .ft-cta:hover{background:var(--oxblood);
+:root[data-lt="light-off"] #royaLibrary .ab-feat--stage .ft-cta:hover{background:var(--oxblood);
   color:#f2e7cd}
 
 /* the Delgoshā beside its theatre: the column beside the picture takes paper
    too, and its title with it */
 @media (min-width:1150px) and (max-width:1899.98px){
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl{
     background-image:linear-gradient(105deg, rgba(255,252,243,.55), rgba(255,252,243,.3))}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t{color:#8a6420}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-t .ft-fa{color:#9b7430}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-t{color:#8a6420}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-t .ft-fa{color:#9b7430}
 }
 
 /* ── and where the words stand on the picture, the night values hold ── */
 @media (min-width:1900px){
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl{background:none; border:0}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-p,
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-lede{color:#e0d6c3}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-q{color:#ecdfc7}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-cap,
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .pl-folio{color:#c8bb9e}
-  :root[data-lt="light"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.6);
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl{background:none; border:0}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-p,
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-lede{color:#e0d6c3}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-q{color:#ecdfc7}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-cap,
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .pl-folio{color:#c8bb9e}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--spread .ft-cta{background:rgba(99,29,25,.6);
     color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 }
 @media (min-width:1900px){
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl{background-color:transparent}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-q{color:#ecdfc7}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body p,
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-p{color:#e0d6c3}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{color:#cdb37d}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .pl-body,
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-eyebrow{
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl{background-color:transparent}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-q{color:#ecdfc7}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-body p,
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-p{color:#e0d6c3}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .ft-eyebrow{color:#cdb37d}
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .pl-body,
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .ft-eyebrow{
     border-top-color:rgba(199,148,61,.3)}
-  :root[data-lt="light"] #royaLibrary .ab-feat--split .ft-cta{background:rgba(99,29,25,.6);
+  :root[data-lt="light-off"] #royaLibrary .ab-feat--split .ft-cta{background:rgba(99,29,25,.6);
     color:#e9d3a2; border-color:rgba(199,148,61,.62)}
 }
 
@@ -2183,7 +2215,7 @@
 #royaLibrary .rdr-note{margin:2.4rem 0 0; padding-top:1.2rem; border-top:1px solid rgba(199,148,61,.28);
   font-family:var(--cond); font-weight:400; font-size:.8125rem; line-height:1.6; color:var(--dust);}
 #royaLibrary .rdr-note code{font-family:ui-monospace,Menlo,monospace; font-size:.9em; color:var(--t-quiet)}
-:root[data-lt="light"] #royaLibrary .rdr{background:#e8dfc6}
+:root[data-lt="light-off"] #royaLibrary .rdr{background:#e8dfc6}
 #royaLibrary .zoom-x, #royaLibrary .zoom-nav{position:absolute; z-index:3}
 #royaLibrary .zoom-x{top:1rem; right:1.1rem}
 #royaLibrary .zoom-nav{top:50%; transform:translateY(-50%)}
@@ -2896,15 +2928,15 @@ body.rl-on #toTop{z-index:71}
 /* ── on paper ──
    The ochre the marks are cut from is a light on a dark ground; on this theme
    it needs to be an ink on a pale one, or the whole device disappears. */
-:root[data-lt="light"] #royaLibrary .sv{--sv-mark:rgba(120,88,30,.72); --sv-hi:#7c5a1c;
+:root[data-lt="light-off"] #royaLibrary .sv{--sv-mark:rgba(120,88,30,.72); --sv-hi:#7c5a1c;
   --sv-soft:rgba(120,88,30,.5); --sv-faint:rgba(120,88,30,.34);
   --sv-rule:rgba(96,76,42,.3);}
-:root[data-lt="light"] #royaLibrary .sv-box{background:rgba(255,252,243,.45);
+:root[data-lt="light-off"] #royaLibrary .sv-box{background:rgba(255,252,243,.45);
   border-color:rgba(96,76,42,.34)}
-:root[data-lt="light"] #royaLibrary .sv-p{color:var(--ink)}
-:root[data-lt="light"] #royaLibrary .sv-cap{color:rgba(74,59,33,.72)}
-:root[data-lt="light"] #royaLibrary .sv-foot span{color:rgba(74,59,33,.72)}
-:root[data-lt="light"] #royaLibrary .sv-foot i{color:rgba(96,76,42,.5)}
+:root[data-lt="light-off"] #royaLibrary .sv-p{color:var(--ink)}
+:root[data-lt="light-off"] #royaLibrary .sv-cap{color:rgba(74,59,33,.72)}
+:root[data-lt="light-off"] #royaLibrary .sv-foot span{color:rgba(74,59,33,.72)}
+:root[data-lt="light-off"] #royaLibrary .sv-foot i{color:rgba(96,76,42,.5)}
 
 /* ══════════════ LISTEN, and the two ways to have a recording ══════════════
    The panel the Listen control opens. Built on the record panel's chrome —
@@ -2948,12 +2980,12 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary .lsn-opt:hover .lsn-opt-t{color:var(--gold-lt)}
 #royaLibrary .lsn-opt-d{display:block; margin-top:.4rem; font-family:var(--book);
   font-weight:400; font-size:1rem; line-height:1.4; color:var(--t-copy); opacity:.82}
-:root[data-lt="light"] #royaLibrary .lsn{background:rgba(231,221,197,.95)}
-:root[data-lt="light"] #royaLibrary .lsn-box{background:#e9dfc7}
-:root[data-lt="light"] #royaLibrary .lsn-opt{background:rgba(138,101,36,.06);
+:root[data-lt="light-off"] #royaLibrary .lsn{background:rgba(231,221,197,.95)}
+:root[data-lt="light-off"] #royaLibrary .lsn-box{background:#e9dfc7}
+:root[data-lt="light-off"] #royaLibrary .lsn-opt{background:rgba(138,101,36,.06);
   border-color:rgba(138,101,36,.34)}
-:root[data-lt="light"] #royaLibrary .lsn-opt:hover{background:rgba(138,101,36,.13)}
-:root[data-lt="light"] #royaLibrary .lsn-x{border-color:rgba(96,76,42,.42)}
+:root[data-lt="light-off"] #royaLibrary .lsn-opt:hover{background:rgba(138,101,36,.13)}
+:root[data-lt="light-off"] #royaLibrary .lsn-x{border-color:rgba(96,76,42,.42)}
 
 /* The Listen mark on a Pick-a-door row, beside the reading time.
 
@@ -3026,11 +3058,11 @@ body.rl-on #toTop{z-index:71}
   #royaLibrary .ab-lsn{--notch:.6em; padding:.62em calc(.82em + var(--notch)) .58em .82em}
   #royaLibrary .ab-lsn-rule{height:2.35em; vertical-align:-.85em; margin:0 .8em 0 .55em}
 }
-:root[data-lt="light"] #royaLibrary .ab-lsn{color:#f2e8d4; background:rgba(138,101,36,.9)}
-:root[data-lt="light"] #royaLibrary .ab-lsn::before{background:linear-gradient(90deg,#461813,#65221b)}
-:root[data-lt="light"] #royaLibrary .ab-lsn svg{stroke:#dcb87a}
-:root[data-lt="light"] #royaLibrary .ab-lsn-rule{border-left-color:rgba(138,101,36,.5)}
-:root[data-lt="light"] #royaLibrary .ab-row:hover .ab-lsn{background:#8a6524}
+:root[data-lt="light-off"] #royaLibrary .ab-lsn{color:#f2e8d4; background:rgba(138,101,36,.9)}
+:root[data-lt="light-off"] #royaLibrary .ab-lsn::before{background:linear-gradient(90deg,#461813,#65221b)}
+:root[data-lt="light-off"] #royaLibrary .ab-lsn svg{stroke:#dcb87a}
+:root[data-lt="light-off"] #royaLibrary .ab-lsn-rule{border-left-color:rgba(138,101,36,.5)}
+:root[data-lt="light-off"] #royaLibrary .ab-row:hover .ab-lsn{background:#8a6524}
 
 /* A span with role="button" is a button to everything except the pointer:
    the browser gives a real <button> or <a> a hand and gives a span an arrow,
