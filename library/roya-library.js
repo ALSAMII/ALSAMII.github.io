@@ -877,10 +877,10 @@ const SERIESFEAT = [
      own string and must stay exactly as stories.js spells it, or [data-series]
      filters to nothing. */
   { key:"Come In, the Water Is Lovely", en:"The Water\u2019s Lovely", fa:"",
-    art:"assets/series-waters-wide-1.webp", artTall:"assets/series-waters-tall-1.webp",
+    art:"assets/series-waters-wide-2.webp", artTall:"assets/series-waters-tall-3.webp",
     start:93, startFa:"", vol:"Book One",
     books:[93,95,97],
-    feat:{ kind:"split", side:"left", cta:"Start the series", ratio:"2880/1152",
+    feat:{ kind:"split", side:"left", cta:"Start the series", ratio:"2304/1440",
       eyebrow:"Everything got better",
       body:[
         "\u201cCome in, the water\u2019s lovely\u201d is what people in the water call to the one on the edge. Usually a kind lie.",

@@ -3001,9 +3001,10 @@ body.rl-on #toTop{z-index:71}
    read, selected, searched and retitled without a re-render — and it is why the
    rules below put .pl-t back rather than leaving it hidden. */
 
-/* the upright plate is 1200x1900: 300px of flat ground at the head, where the
-   title stands, and the painting beneath it */
-#royaLibrary .ab-feat--splitl .pl-art{aspect-ratio:1200/1900}
+/* The upright plate is the painting's own 1200x1600, its foot taken to flat
+   ground from 63% down — the chair kept whole, the floor glow out — so the
+   synopsis has clean ground to begin on inside the picture. */
+#royaLibrary .ab-feat--splitl .pl-art{aspect-ratio:1200/1600}
 
 /* Handset. The ground band means the title needs no wash under it, and it sets
    flush left rather than centred so it lines up with the synopsis below. */
