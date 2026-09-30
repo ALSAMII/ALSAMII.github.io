@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 117 · last updated 2026-09-30 10:45 PDT
+   Version 118 · last updated 2026-09-30 12:35 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -1294,6 +1294,25 @@
 #royaLibrary .ab-feat--split .pl-t .ft-fa{font-size:1.44rem}
 #royaLibrary .ab-feat--split .pl-art{display:block; aspect-ratio:941/1056;
   background:var(--plate-tall, var(--plate)) top center/cover no-repeat; border:0}
+/* ── the panel's own edges ──
+   .pl is a solid slab (#0d0b09) with overflow:hidden, and it is what the
+   picture sits on. Feathering the picture alone did nothing visible, because
+   the slab behind it kept its four hard edges against the page — which is the
+   rectangle you could see. So the slab is feathered too.
+   ⚠ The ramp is DELIBERATELY short. This is the rule that used to fade the
+   synopsis (below), and the reason it did is that its ramp was 2.6rem while
+   the words sit only 1.1rem in. At .75rem the mask is fully opaque 12px from
+   the edge and the nearest text begins at 17.6px, so the prose is untouched —
+   do not widen it without moving the words in first. */
+#royaLibrary .ab-feat--split .pl{
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%);
+  -webkit-mask-composite:source-in; mask-composite:intersect;}
+
 /* ⚠ This fade used to sit on .pl — the whole panel — and .pl holds the words
    as well as the picture. Every line of both split synopses was losing its
    first and last characters into the 2.6rem ramp at either side. The intent
@@ -1312,6 +1331,11 @@
 /* a head set in lines of its own: each one is a block, so the break holds at
    every width rather than moving with the measure */
 #royaLibrary .ft-en .ft-line{display:block}
+/* The Recommended series rule closed on its own 14px and the first panel began
+   straight after it, so the heading read as a caption on the picture rather
+   than as the head of the section. Margins between siblings collapse, so this
+   is the whole gap rather than an addition to the rule's. */
+#royaLibrary .ab-rule + .ab-feat{margin-top:2.6rem}
 #royaLibrary .pl-way{display:flex; flex-direction:column; align-items:flex-start;
   gap:1rem; padding:0 1.5rem 2rem}
 /* The eyebrow reads as the closing line of the synopsis rather than the label
@@ -1975,6 +1999,10 @@
    The plate cannot carry type at this width, so the banner rule above already
    folds them; these are the margins and the sizes that suit a handset. */
 #royaLibrary .mob-sec .ab-feat--split, #royaLibrary .mob-sec .ab-feat--spread{margin:0 -.4rem 1.3rem}
+/* ⚠ The shorthand above sets margin-top to 0, and it carries the same weight
+   as the .ab-rule + .ab-feat rule further up while coming later, so it was
+   quietly winning and the phone kept its 14px. One more class settles it. */
+#royaLibrary .mob-sec .ab-rule + .ab-feat{margin-top:2.6rem}
 #royaLibrary .mob-sec .pl-words, #royaLibrary .mob-sec .pl-foot{padding:1.2rem 1.1rem 0; gap:.9rem}
 #royaLibrary .mob-sec .pl-foot{padding-top:1rem; padding-bottom:1.2rem}
 #royaLibrary .mob-sec .pl-t .ft-en{font-size:1.5rem}
