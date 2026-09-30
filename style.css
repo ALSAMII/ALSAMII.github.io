@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 3 · last updated 2026-09-23 05:14 PDT
+   Version 5 · last updated 2026-09-30 14:35 PDT
       (first stamp on this file — it has never carried one)
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
@@ -9,7 +9,10 @@
 
 :root {
   /* Colours ------------------------------------------------ */
-  --night:      #0b0907;                    /* page base */
+  /* page base. Black, to agree with the Roya Library's ground — the section
+     fades in over this, and a warm field behind it showed as a flash on open.
+     Was #0b0907. */
+  --night:      #000000;
   --parchment:  #e4dcc9;                    /* main text */
   --faded:      #9c9280;                    /* secondary text */
   --ember:      #d8a65f;                    /* candlelight accent */
@@ -7671,8 +7674,21 @@ body.gallery-on { overflow: hidden; }
 /* ████████████████████████████████████████████████████████████
    THE LIGHT THEME
    ────────────────────────────────────────────────────────────
+   ── SWITCHED OFF ──────────────────────────────────────────
+   The light theme is parked, not deleted. Every rule below is
+   guarded by html[data-theme="light-off"], and nothing ever sets
+   that value, so the whole block is inert. It is off here rather
+   than commented out because a CSS comment cannot hold another
+   one, and these rules are full of them: wrapping the block would
+   have ended at the first */ and put two thirds of it back.
+
+   TO RESTORE: replace light-off with light throughout this file —
+   93 occurrences, all of them in this block — and follow the four
+   other steps listed beside the Theme button in index.html.
+   ────────────────────────────────────────────────────────────
    Everything for light mode lives here, at the foot of the file,
-   and every rule is behind html[data-theme="light"]. Nothing above
+   and every rule is behind html[data-theme="light"] once it is
+   switched back on. Nothing above
    this line knows the theme exists, so the dark room cannot be
    changed by anything written below — and this whole block can be
    deleted in one cut without leaving a mark.
@@ -7680,7 +7696,7 @@ body.gallery-on { overflow: hidden; }
    To adjust light mode, work here. To adjust dark mode, work above.
    ████████████████████████████████████████████████████████████ */
 
-html[data-theme="light"] {
+html[data-theme="light-off"] {
   /* ---- Ink and paper ---- */
   --night:      #eceded;                    /* page base */
   --parchment:  #14171a;                    /* main text — near black */
@@ -7728,7 +7744,7 @@ html[data-theme="light"] {
    brightness filter to make it survive on white — which worked, but
    what it produced was a grey ghost. This is a picture that was pale
    to begin with, so it needs almost nothing done to it. */
-html[data-theme="light"] .atmosphere {
+html[data-theme="light-off"] .atmosphere {
   --scrim: linear-gradient(rgba(236, 237, 237, 0.3), rgba(236, 237, 237, 0.3));
   filter: none;
   background-image: var(--edge-fade), var(--scrim),
@@ -7739,7 +7755,7 @@ html[data-theme="light"] .atmosphere {
   );
 }
 
-html[data-theme="light"] .atmosphere::before {
+html[data-theme="light-off"] .atmosphere::before {
   background:
     radial-gradient(38rem 26rem at 62% 18%, rgba(255, 255, 255, 0.28), transparent 70%),
     radial-gradient(26rem 20rem at 82% 72%, rgba(255, 252, 245, 0.24), transparent 70%),
@@ -7752,11 +7768,11 @@ html[data-theme="light"] .atmosphere::before {
 
 /* Text standing on artwork wants a light halo on paper, where the dark
    one written for the candlelit room would only smudge it. */
-html[data-theme="light"] .feature-syn,
-html[data-theme="light"] .guide-def,
-html[data-theme="light"] .panel .lede,
-html[data-theme="light"] .panel .note,
-html[data-theme="light"] .panel .signature {
+html[data-theme="light-off"] .feature-syn,
+html[data-theme="light-off"] .guide-def,
+html[data-theme="light-off"] .panel .lede,
+html[data-theme="light-off"] .panel .note,
+html[data-theme="light-off"] .panel .signature {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75),
                0 0 8px rgba(255, 255, 255, 0.9);
 }
@@ -7767,7 +7783,7 @@ html[data-theme="light"] .panel .signature {
    so the shadows that were holding them off a picture were only
    softening the letters. Plain ink on plain page, one step darker than
    the secondary grey, is what actually reads. */
-html[data-theme="light"] .start-note {
+html[data-theme="light-off"] .start-note {
   /* Darker than the #2c3136 it was — that was a slate grey chosen to
      sit politely on a picture, and the picture is no longer there to
      sit on. On clean paper it read as washed out at this size. */
@@ -7780,10 +7796,10 @@ html[data-theme="light"] .start-note {
   text-shadow: none;
 }
 
-html[data-theme="light"] .start-title,
-html[data-theme="light"] .start-num,
-html[data-theme="light"] .start-time,
-html[data-theme="light"] .start-heading {
+html[data-theme="light-off"] .start-title,
+html[data-theme="light-off"] .start-num,
+html[data-theme="light-off"] .start-time,
+html[data-theme="light-off"] .start-heading {
   text-shadow: none;
 }
 
@@ -7802,7 +7818,7 @@ html[data-theme="light"] .start-heading {
    the only thing left marking where one group of books ends and the
    next begins, and it is the same device the rest of the light theme
    already uses. */
-html[data-theme="light"] .start-cat {
+html[data-theme="light-off"] .start-cat {
   background: none;
 }
 
@@ -7810,7 +7826,7 @@ html[data-theme="light"] .start-cat {
    synopsis has gone to near-black: at the same #16191d the aside
    would compete with the name it is explaining. Same halo removal,
    for the same reason as .start-note above. */
-html[data-theme="light"] .start-gloss {
+html[data-theme="light-off"] .start-gloss {
   color: #4a5158;
   text-shadow: none;
 }
@@ -7822,7 +7838,7 @@ html[data-theme="light"] .start-gloss {
 /* The card has no fill or border any more, so there is nothing to
    restate here — but its picture now sits behind the words, which on
    paper means the same veil the shelf rows use. */
-html[data-theme="light"] .series-card::before {
+html[data-theme="light-off"] .series-card::before {
   content: "";
   position: absolute;
   /* ONE, not nought. This is the whole reason the cards looked grey on
@@ -7892,7 +7908,7 @@ html[data-theme="light"] .series-card::before {
    — so no two paintings are ever both drawing on the same pixel. It
    costs a little of the artwork at top and bottom, all of it outside
    the card in any case. */
-html[data-theme="light"] .series-cover img {
+html[data-theme="light-off"] .series-cover img {
   -webkit-mask-image:
     linear-gradient(to bottom, transparent 0, transparent 12%,
       rgba(0,0,0,0.45) 18%, #000 26%, #000 74%,
@@ -7905,14 +7921,14 @@ html[data-theme="light"] .series-cover img {
 
 /* On paper the picture is already light enough; the dark theme's lift
    would wash it out. */
-html[data-theme="light"] .series-cover {
+html[data-theme="light-off"] .series-cover {
   filter: saturate(0.98) brightness(1.04) contrast(0.96);
   opacity: 0.95;
 }
 
 /* The dedication portrait on a pale page: a dark blue painting behind
    near-black type needs to stand further back still. */
-html[data-theme="light"] .series-portrait {
+html[data-theme="light-off"] .series-portrait {
   /* A near-black painting cannot be laid on paper at any strength
      without greying it: at 0.22 the empty ground of the canvas came
      out around 185 against a page of 234, which is a soft grey box
@@ -7955,44 +7971,44 @@ html[data-theme="light"] .series-portrait {
   filter: saturate(0.8) brightness(1.08) contrast(0.94);
 }
 
-html[data-theme="light"] .series-portrait img {
+html[data-theme="light-off"] .series-portrait img {
   -webkit-mask-image: none;
   mask-image: none;
 }
 
-html[data-theme="light"] .series-dedication em { color: #1c2026; }
+html[data-theme="light-off"] .series-dedication em { color: #1c2026; }
 
-html[data-theme="light"] .series-note,
-html[data-theme="light"] .series-blurb {
+html[data-theme="light-off"] .series-note,
+html[data-theme="light-off"] .series-blurb {
   color: #16191d;
   text-shadow: none;
 }
 
-html[data-theme="light"] .series-title,
-html[data-theme="light"] .series-num,
-html[data-theme="light"] .series-span,
-html[data-theme="light"] .series-fact,
-html[data-theme="light"] .series-name,
-html[data-theme="light"] .sh-text,
-html[data-theme="light"] .series-heading { text-shadow: none; }
+html[data-theme="light-off"] .series-title,
+html[data-theme="light-off"] .series-num,
+html[data-theme="light-off"] .series-span,
+html[data-theme="light-off"] .series-fact,
+html[data-theme="light-off"] .series-name,
+html[data-theme="light-off"] .sh-text,
+html[data-theme="light-off"] .series-heading { text-shadow: none; }
 
 /* The device is drawn in the dark theme's gold at low opacity, which on
    paper is barely there. Deepened and made a little more solid. */
-html[data-theme="light"] .sh-rays { stroke: #7a5a17; opacity: 0.42; }
-html[data-theme="light"] .sh-chev { stroke: #7a5a17; }
-html[data-theme="light"] .sh-chev--in { opacity: 0.5; }
+html[data-theme="light-off"] .sh-rays { stroke: #7a5a17; opacity: 0.42; }
+html[data-theme="light-off"] .sh-chev { stroke: #7a5a17; }
+html[data-theme="light-off"] .sh-chev--in { opacity: 0.5; }
 
-html[data-theme="light"] .sh-rule {
+html[data-theme="light-off"] .sh-rule {
   background: linear-gradient(to right,
     transparent, rgba(122, 90, 23, 0.4) 22%, rgba(122, 90, 23, 0.4));
 }
 
-html[data-theme="light"] .sh-rule:last-child {
+html[data-theme="light-off"] .sh-rule:last-child {
   background: linear-gradient(to left,
     transparent, rgba(122, 90, 23, 0.4) 22%, rgba(122, 90, 23, 0.4));
 }
 
-html[data-theme="light"] .sh-rule::after { background: #7a5a17; }
+html[data-theme="light-off"] .sh-rule::after { background: #7a5a17; }
 
 /* The chevron's ring is drawn in the dark theme's low-contrast gold,
    which vanishes on paper. */
@@ -8000,7 +8016,7 @@ html[data-theme="light"] .sh-rule::after { background: #7a5a17; }
    and a shadow renders outside the mask — it would draw the rectangle
    the fade is there to dissolve. */
 
-html[data-theme="light"] .story-hook {
+html[data-theme="light-off"] .story-hook {
   text-shadow: 0 1px 14px var(--halo), 0 0 24px var(--halo);
 }
 
@@ -8026,12 +8042,12 @@ html[data-theme="light"] .story-hook {
    transparent, and put the page colour behind them. The artwork's
    black then fades into paper instead of stopping against it. */
 
-html[data-theme="light"] .easel,
-html[data-theme="light"] .easel-set img,
-html[data-theme="light"] .gcard img,
-html[data-theme="light"] .story.open .synopsis img,
-html[data-theme="light"] .story.open .synopsis .minis img,
-html[data-theme="light"] .syn-head img {
+html[data-theme="light-off"] .easel,
+html[data-theme="light-off"] .easel-set img,
+html[data-theme="light-off"] .gcard img,
+html[data-theme="light-off"] .story.open .synopsis img,
+html[data-theme="light-off"] .story.open .synopsis .minis img,
+html[data-theme="light-off"] .syn-head img {
   /* The feathered mask is inherited from the dark theme and stays —
      it is the only thing that makes an edge disappear rather than
      stop. These lift the artwork and take the weight out of the
@@ -8046,13 +8062,13 @@ html[data-theme="light"] .syn-head img {
    from the page; the feathered edges do everything else. drop-shadow
    rather than box-shadow, because it follows the mask instead of
    drawing a rectangle around it. */
-html[data-theme="light"] .gcard img {
+html[data-theme="light-off"] .gcard img {
   filter: brightness(1.08) contrast(0.92) saturate(0.88)
           drop-shadow(0 10px 16px rgba(24, 28, 32, 0.16));
 }
 
-html[data-theme="light"] .gcard-open:hover img,
-html[data-theme="light"] .gcard-open:focus-visible img {
+html[data-theme="light-off"] .gcard-open:hover img,
+html[data-theme="light-off"] .gcard-open:focus-visible img {
   filter: brightness(1.12) contrast(0.94) saturate(0.95)
           drop-shadow(0 18px 28px rgba(24, 28, 32, 0.24));
   box-shadow: none;
@@ -8073,7 +8089,7 @@ html[data-theme="light"] .gcard-open:focus-visible img {
    between it and the words — dense where the text is, gone by the time
    the picture matters. The cover stays visible underneath it, the way
    a caption card sits over a photograph. */
-html[data-theme="light"] .start-scene {
+html[data-theme="light-off"] .start-scene {
   filter: saturate(1.05) brightness(1.02) contrast(1.06);
   opacity: 1;
   /* The dark theme's mask does three jobs at once: fades the left
@@ -8112,7 +8128,7 @@ html[data-theme="light"] .start-scene {
   mask-image: linear-gradient(to bottom, transparent 0, transparent 8%, #000 14%, #000 86%, transparent 92%, transparent 100%);
 }
 
-html[data-theme="light"] .start-row::before {
+html[data-theme="light-off"] .start-row::before {
   content: "";
   position: absolute;
   /* Wider than the card and softened top and bottom, so the veil has
@@ -8146,16 +8162,16 @@ html[data-theme="light"] .start-row::before {
 }
 
 /* Above the veil. */
-html[data-theme="light"] .start-body { z-index: 2; }
+html[data-theme="light-off"] .start-body { z-index: 2; }
 
-html[data-theme="light"] .start-row:hover .start-scene,
-html[data-theme="light"] .start-row:focus-visible .start-scene {
+html[data-theme="light-off"] .start-row:hover .start-scene,
+html[data-theme="light-off"] .start-row:focus-visible .start-scene {
   filter: saturate(1.02) brightness(1.03) contrast(0.98);
   opacity: 1;
 }
 
-html[data-theme="light"] .start-row:hover,
-html[data-theme="light"] .start-row:focus-visible { filter: brightness(0.98); }
+html[data-theme="light-off"] .start-row:hover,
+html[data-theme="light-off"] .start-row:focus-visible { filter: brightness(0.98); }
 
 /* ---- Odds and ends -----------------------------------------
    The imprint stamp was held back so it would not out-shout the
@@ -8166,18 +8182,18 @@ html[data-theme="light"] .start-row:focus-visible { filter: brightness(0.98); }
 /* The gallery's blur smears the page beneath it into a grey haze —
    fine over a black room, muddy over paper. On light it drops the
    blur and simply covers the page. */
-html[data-theme="light"] .gallery {
+html[data-theme="light-off"] .gallery {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   background: var(--night);
 }
 
-html[data-theme="light"] .gallery-bar {
+html[data-theme="light-off"] .gallery-bar {
   background: linear-gradient(to bottom,
     var(--night) 0%, var(--night) 90%, transparent);
 }
 
-html[data-theme="light"] .gallery-bar::after {
+html[data-theme="light-off"] .gallery-bar::after {
   background: linear-gradient(to bottom,
     rgba(236, 237, 237, 0.92), transparent);
 }
@@ -8192,7 +8208,7 @@ html[data-theme="light"] .gallery-bar::after {
 
 /* The ornaments sit at 0.7 opacity against a dark room; on paper the
    deeper gold is already quiet enough to be read at full strength. */
-html[data-theme="light"] .ornament { opacity: 0.85; }
+html[data-theme="light-off"] .ornament { opacity: 0.85; }
 
 /* The three readings. An unlit square outlined in --ember-soft nearly
    vanishes on paper, so on light the empty ones carry a faint wash and
@@ -8201,26 +8217,26 @@ html[data-theme="light"] .ornament { opacity: 0.85; }
 /* The bars are drawn in the dark theme's candle gold. On paper they
    need the deeper gold, and a slightly firmer unlit outline — a 30%
    wash that reads on black disappears on white. */
-html[data-theme="light"] .note-box {
+html[data-theme="light-off"] .note-box {
   border-color: rgba(122, 90, 23, 0.38);
 }
-html[data-theme="light"] .note-box.is-lit {
+html[data-theme="light-off"] .note-box.is-lit {
   background: rgba(122, 90, 23, 0.72);
   border-color: rgba(122, 90, 23, 0.72);
 }
-html[data-theme="light"] .note-word { color: var(--parchment); }
+html[data-theme="light-off"] .note-word { color: var(--parchment); }
 
 /* Back to the top. --field is a near-white wash on paper, which on its
    own reads as a smudge over the page — so here it is solid, with a
    real edge and a shadow that lifts it off the sheet. */
-html[data-theme="light"] .to-top {
+html[data-theme="light-off"] .to-top {
   background: #ffffff;
   border-color: rgba(122, 90, 23, 0.45);
   box-shadow: 0 6px 18px rgba(24, 28, 32, 0.18),
               0 1px 3px rgba(24, 28, 32, 0.12);
 }
-html[data-theme="light"] .to-top:hover,
-html[data-theme="light"] .to-top:focus-visible {
+html[data-theme="light-off"] .to-top:hover,
+html[data-theme="light-off"] .to-top:focus-visible {
   border-color: var(--ember);
   box-shadow: 0 10px 24px rgba(24, 28, 32, 0.24),
               0 0 0 3px rgba(122, 90, 23, 0.12);
@@ -8228,37 +8244,37 @@ html[data-theme="light"] .to-top:focus-visible {
 
 /* The marks have a set of their own for paper, drawn against white
    rather than filtered down from the dark set. */
-html[data-theme="light"] .guide-icon--door   { background-image: url("assets/icon-door-light.png"); }
-html[data-theme="light"] .guide-icon--window { background-image: url("assets/icon-window-light.png"); }
-html[data-theme="light"] .guide-icon--key    { background-image: url("assets/icon-key-light.png"); }
+html[data-theme="light-off"] .guide-icon--door   { background-image: url("assets/icon-door-light.png"); }
+html[data-theme="light-off"] .guide-icon--window { background-image: url("assets/icon-window-light.png"); }
+html[data-theme="light-off"] .guide-icon--key    { background-image: url("assets/icon-key-light.png"); }
 
 /* The header's closing rule and the stamp's dividers were tuned to
    glow; here they only need to divide. */
-html[data-theme="light"] .masthead { border-bottom-color: rgba(122, 90, 23, 0.35); }
+html[data-theme="light-off"] .masthead { border-bottom-color: rgba(122, 90, 23, 0.35); }
 /* The mark is a transparent cut-out now, so it needs no rescuing on
    paper — only a touch more presence, since gold on white reads
    lighter than gold on black. */
-html[data-theme="light"] .roya { opacity: 1; }
+html[data-theme="light-off"] .roya { opacity: 1; }
 
-html[data-theme="light"] .icon-btn,
-html[data-theme="light"] .sound,
-html[data-theme="light"] .theme,
-html[data-theme="light"] .lightbox-close,
-html[data-theme="light"] .gallery-close { color: var(--faded); }
-html[data-theme="light"] .icon-btn:hover,
-html[data-theme="light"] .sound:hover,
-html[data-theme="light"] .theme:hover,
-html[data-theme="light"] .lightbox-close:hover,
-html[data-theme="light"] .gallery-close:hover { color: var(--ember); }
-html[data-theme="light"] .icon-label { opacity: 0.75; }
+html[data-theme="light-off"] .icon-btn,
+html[data-theme="light-off"] .sound,
+html[data-theme="light-off"] .theme,
+html[data-theme="light-off"] .lightbox-close,
+html[data-theme="light-off"] .gallery-close { color: var(--faded); }
+html[data-theme="light-off"] .icon-btn:hover,
+html[data-theme="light-off"] .sound:hover,
+html[data-theme="light-off"] .theme:hover,
+html[data-theme="light-off"] .lightbox-close:hover,
+html[data-theme="light-off"] .gallery-close:hover { color: var(--ember); }
+html[data-theme="light-off"] .icon-label { opacity: 0.75; }
 
 /* Share keeps its own colour on paper. The rule above sets every
    .icon-btn grey and outranks the share rule in the main sheet, which
    left the one control meant to stand out looking like the rest. */
-html[data-theme="light"] .icon-btn.share { color: var(--verdigris-dim); }
-html[data-theme="light"] .icon-btn.share:hover,
-html[data-theme="light"] .icon-btn.share:focus-visible { color: var(--verdigris); }
-html[data-theme="light"] .icon-btn.share.shared { color: var(--verdigris-lit); }
+html[data-theme="light-off"] .icon-btn.share { color: var(--verdigris-dim); }
+html[data-theme="light-off"] .icon-btn.share:hover,
+html[data-theme="light-off"] .icon-btn.share:focus-visible { color: var(--verdigris); }
+html[data-theme="light-off"] .icon-btn.share.shared { color: var(--verdigris-lit); }
 
 /* Artwork on paper: printed, not dissolved.
 
@@ -8269,9 +8285,9 @@ html[data-theme="light"] .icon-btn.share.shared { color: var(--verdigris-lit); }
    showing. So on paper the masks come off entirely and the artwork
    gets what a printed plate gets: a clean edge, a soft corner, and a
    shadow to sit it on the sheet. */
-html[data-theme="light"] .row-cover,
-html[data-theme="light"] .t-covers img,
-html[data-theme="light"] .t-banner img {
+html[data-theme="light-off"] .row-cover,
+html[data-theme="light-off"] .t-covers img,
+html[data-theme="light-off"] .t-banner img {
   opacity: 1;
   filter: none;
   -webkit-mask-image: none;
@@ -8302,7 +8318,7 @@ html[data-theme="light"] .t-banner img {
      carries a little more weight — 0.17 of a candle flame and 0.2
      of a drawn line are not the same amount of visible. It keeps
      the fade at both ends. */
-  html[data-theme="light"] .frame::before {
+  html[data-theme="light-off"] .frame::before {
     background: linear-gradient(to bottom,
       transparent 0,
       rgba(122, 90, 23, 0.26) 10%,
@@ -8314,7 +8330,7 @@ html[data-theme="light"] .t-banner img {
      which already flip with the theme; it is restated here only to
      take the point down a shade, because a hard dot that read as an
      ornament on black reads as a full stop on white. */
-  html[data-theme="light"] .masthead .brand-name::before {
+  html[data-theme="light-off"] .masthead .brand-name::before {
     background:
       radial-gradient(circle at 50% 50%,
         rgba(107, 79, 20, 0.75) 0 1.6px, transparent 1.7px) center / 100% 100% no-repeat,
@@ -8326,7 +8342,7 @@ html[data-theme="light"] .t-banner img {
   /* The menu bar's own hairline takes the same ink value the
      vertical rule does — a candle-edge gold has nothing to glow
      against on paper and the bar simply loses its bottom. */
-  html[data-theme="light"] .masthead nav::after {
+  html[data-theme="light-off"] .masthead nav::after {
     background: linear-gradient(to right,
       rgba(122, 90, 23, 0.26) 0,
       rgba(122, 90, 23, 0.26) 88%,
@@ -8336,13 +8352,13 @@ html[data-theme="light"] .t-banner img {
   /* At 16px the glyphs are small enough that the dark theme's 0.85
      leaves them thin on a pale ground. They go to full strength and
      let the gold do the work of holding them back. */
-  html[data-theme="light"] .masthead nav .nav-ico { opacity: 1; }
+  html[data-theme="light-off"] .masthead nav .nav-ico { opacity: 1; }
 
   /* The hover lift is a glow, and a warm glow on a pale sheet is
      invisible at best and a smudge at worst. On paper the link
      simply darkens to the lit gold instead. */
-  html[data-theme="light"] .masthead nav a:hover,
-  html[data-theme="light"] .masthead nav .linklike:hover {
+  html[data-theme="light-off"] .masthead nav a:hover,
+  html[data-theme="light-off"] .masthead nav .linklike:hover {
     text-shadow: none;
     color: var(--ember-lit);
   }

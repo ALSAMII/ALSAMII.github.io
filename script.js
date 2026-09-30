@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 2 · last updated 2026-09-22 22:32 PDT
+   Version 3 · last updated 2026-09-30 13:55 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2733,40 +2733,57 @@
     syncTop();
   }
 
-  /* ---- Light and dark ---------------------------------------
-     The choice is remembered and applied in the head, before the first
-     paint, so a reader who chose light never sees the dark room flash
-     past first. All this does is flip the attribute and the icon.
+  /* ---- Light and dark — SWITCHED OFF ------------------------
+     The light theme is commented out rather than deleted, so it can be
+     brought back. Every line of the old block is kept below, prefixed
+     with // — a block comment could not be used, because those lines
+     already carry comments of their own and comments cannot nest.
 
-     theme-color moves with it: Safari fills its toolbar from that, and
-     a black bar under a grey page is the seam we spent so long on. */
+     This block was inert the moment the Theme button left index.html:
+     it does nothing unless it finds #themeToggle. It is commented out
+     as well, so that nothing here can fire if a stray data-theme ever
+     reaches the page.
 
-  var themeBtn  = document.getElementById("themeToggle");
-  var themeMoon = document.getElementById("themeMoon");
-  var themeSun  = document.getElementById("themeSun");
-  var themeMeta  = document.querySelector('meta[name="theme-color"]');
+     theme-color stays at the dark value set in the head, which is what
+     Safari fills its toolbar from.
 
-  if (themeBtn) {
-    var paintTheme = function () {
-      var light = document.documentElement.getAttribute("data-theme") === "light";
-      if (themeMoon) themeMoon.style.display = light ? "none" : "";
-      if (themeSun)  themeSun.style.display  = light ? "" : "none";
-      themeBtn.setAttribute("aria-pressed", light ? "true" : "false");
-      themeBtn.title = light ? "Switch to the dark theme"
-                             : "Switch to the light theme";
-      if (themeMeta) themeMeta.setAttribute("content", light ? "#eceded" : "#0b0907");
-    };
+     To restore: strip the // from the lines below, and follow the four
+     other steps listed beside the Theme button in index.html. */
 
-    themeBtn.addEventListener("click", function () {
-      var light = document.documentElement.getAttribute("data-theme") !== "light";
-      if (light) document.documentElement.setAttribute("data-theme", "light");
-      else document.documentElement.removeAttribute("data-theme");
-      try { localStorage.setItem("theme", light ? "light" : "dark"); } catch (e) {}
-      paintTheme();
-    });
-
-    paintTheme();
-  }
+  ///* ---- Light and dark ---------------------------------------
+  //   The choice is remembered and applied in the head, before the first
+  //   paint, so a reader who chose light never sees the dark room flash
+  //   past first. All this does is flip the attribute and the icon.
+  //
+  //   theme-color moves with it: Safari fills its toolbar from that, and
+  //   a black bar under a grey page is the seam we spent so long on. */
+  //
+  //var themeBtn  = document.getElementById("themeToggle");
+  //var themeMoon = document.getElementById("themeMoon");
+  //var themeSun  = document.getElementById("themeSun");
+  //var themeMeta  = document.querySelector('meta[name="theme-color"]');
+  //
+  //if (themeBtn) {
+  //  var paintTheme = function () {
+  //    var light = document.documentElement.getAttribute("data-theme") === "light";
+  //    if (themeMoon) themeMoon.style.display = light ? "none" : "";
+  //    if (themeSun)  themeSun.style.display  = light ? "" : "none";
+  //    themeBtn.setAttribute("aria-pressed", light ? "true" : "false");
+  //    themeBtn.title = light ? "Switch to the dark theme"
+  //                           : "Switch to the light theme";
+  //    if (themeMeta) themeMeta.setAttribute("content", light ? "#eceded" : "#0b0907");
+  //  };
+  //
+  //  themeBtn.addEventListener("click", function () {
+  //    var light = document.documentElement.getAttribute("data-theme") !== "light";
+  //    if (light) document.documentElement.setAttribute("data-theme", "light");
+  //    else document.documentElement.removeAttribute("data-theme");
+  //    try { localStorage.setItem("theme", light ? "light" : "dark"); } catch (e) {}
+  //    paintTheme();
+  //  });
+  //
+  //  paintTheme();
+  //}
 
   /* ---- 5. Ambient sound ------------------------------------ */
   /* Each scene has its own track, keyed by the data-scene the head
