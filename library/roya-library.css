@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 120 · last updated 2026-09-30 14:35 PDT
+   Version 121 · last updated 2026-09-30 15:05 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -23,7 +23,10 @@
   --t-quiet:#a2988a;
   /* the page under the Forough portraits, so the scrim over them can land on
      exactly the ground colour rather than an approximation of it */
-  --over-ground:13,11,8;
+  /* the colour the featured plate's veil fades into. Black since the page's
+     ground went black — at 13,11,8 the veil was lighter than what is behind
+     it, so it read as a pale haze round the picture instead of dissolving it. */
+  --over-ground:0,0,0;
   --body:#ddd2bf; --ochre:#c7943d; --ochre-muted:#9d7736;
   --oxblood:#631d19; --oxblood-lit:#d7a14a; --rule:#c7943d; --window-light:#d6ad64;
   --rule-paper:rgba(25,19,9,.28); --rule-board:rgba(199,148,61,.45);
@@ -1280,7 +1283,7 @@
   align-items:flex-start; gap:1rem; padding:1.4rem 1.3rem 0}
 #royaLibrary .pl-foot{padding-top:1.2rem; padding-bottom:1.4rem}
 #royaLibrary .ab-feat--split .pl, #royaLibrary .ab-feat--spread .pl{
-  border:1px solid rgba(199,148,61,.4); background:rgba(9,8,6,.5)}
+  border:1px solid rgba(199,148,61,.4); background:rgba(0,0,0,.5)}
 #royaLibrary .pl-art{border:0; border-bottom:1px solid rgba(199,148,61,.35)}
 
 /* ── The Unsaid: the plate is the panel ──
@@ -1295,7 +1298,13 @@
    Both are faded off at all four edges so the picture sits on the page rather
    than being pasted onto it. */
 #royaLibrary .ab-feat--split .pl{position:relative; overflow:hidden;
-  container-type:inline-size; border:0; background:#0d0b09;}
+  container-type:inline-size; border:0;
+  /* #0d0b09 until the page went black. It was a slab a shade LIGHTER than the
+     ground, so every panel drew itself as a pale rectangle and the picture had
+     something other than black to fade into. Both faults, one value.
+     isolation:isolate is insurance: the plate below sits at z-index:-1, which
+     only stays inside the panel while the panel is a stacking context. */
+  isolation:isolate; background:#000;}
 /* On a handset the title stands at the top, over the picture's own ground, the
    way the Delgoshā's does — the upright plate is cut above the title it used
    to carry, so the page sets it here and the picture follows underneath. */
@@ -1327,23 +1336,13 @@
 #royaLibrary .ab-feat--split .pl-art{display:block; aspect-ratio:941/1056;
   background:var(--plate-tall, var(--plate)) top center/cover no-repeat; border:0}
 /* ── the panel's own edges ──
-   .pl is a solid slab (#0d0b09) with overflow:hidden, and it is what the
-   picture sits on. Feathering the picture alone did nothing visible, because
-   the slab behind it kept its four hard edges against the page — which is the
-   rectangle you could see. So the slab is feathered too.
-   ⚠ The ramp is DELIBERATELY short. This is the rule that used to fade the
-   synopsis (below), and the reason it did is that its ramp was 2.6rem while
-   the words sit only 1.1rem in. At .75rem the mask is fully opaque 12px from
-   the edge and the nearest text begins at 17.6px, so the prose is untouched —
-   do not widen it without moving the words in first. */
-#royaLibrary .ab-feat--split .pl{
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%);
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 .75rem, #000 calc(100% - .75rem), transparent 100%);
-  -webkit-mask-composite:source-in; mask-composite:intersect;}
+   There is no mask on .pl any more, and there must not be one again.
+   It existed to hide the four hard edges of the #0d0b09 slab against a warm
+   ground. The slab is #000 now and so is the ground, so it has no edges to
+   hide — and .pl holds the WORDS as well as the picture, which is why every
+   attempt to widen this rule ended with the synopsis losing its first and
+   last letters to the ramp. The picture is feathered on a layer of its own
+   instead; see .pl::before under the 1150px rule further down. */
 
 /* ⚠ This fade used to sit on .pl — the whole panel — and .pl holds the words
    as well as the picture. Every line of both split synopses was losing its
@@ -1353,11 +1352,11 @@
 #royaLibrary .ab-feat--split .pl-art,
 #royaLibrary .ab-feat--spread .pl-art{
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 2.6rem, #000 calc(100% - 2.6rem), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%);
+    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0, #000 2.6rem, #000 calc(100% - 2.6rem), transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%);
+    linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
   -webkit-mask-composite:source-in; mask-composite:intersect;}
 #royaLibrary .ab-feat--split .pl-words{padding:1.6rem 1.5rem 1rem; gap:1rem}
 /* a head set in lines of its own: each one is a block, so the break holds at
@@ -1392,7 +1391,7 @@
   #royaLibrary .ab-feat--spread .pl{position:relative; overflow:hidden; border:0;
     /* the plate is trimmed to end in its own flat field, and the panel's
        ground is that field's colour, so the words carry on with no seam */
-    background:#131109 var(--plate-tall) top center/100% auto no-repeat;
+    background:#000 var(--plate-tall) top center/100% auto no-repeat;
     padding-top:143%;
     -webkit-mask-image:
       linear-gradient(to right, transparent 0, #000 2.2rem, #000 calc(100% - 2.2rem), transparent 100%),
@@ -1553,7 +1552,7 @@
 @media (min-width:1150px) and (max-width:1899.98px){
   #royaLibrary .ab-feat--spread .pl{display:grid; grid-template-columns:46% 1fr;
     grid-template-areas:"art words" "art foot"; align-items:start;
-    background:linear-gradient(105deg, rgba(9,8,6,.62), rgba(14,11,8,.5))}
+    background:linear-gradient(105deg, rgba(0,0,0,.62), rgba(0,0,0,.5))}
   #royaLibrary .ab-feat--spread .pl-art{grid-area:art; align-self:stretch;
     /* the words set this column's height, so the window into the plate can be
        anything from square to tall; 88% keeps the stage near its middle at
@@ -1666,6 +1665,48 @@
 #royaLibrary .ab-feat--stage .pl-haze{display:none}
 #royaLibrary .ab-feat--stage .pl-stack{position:relative; z-index:1;
   display:flex; align-items:center;}
+
+/* ══ the plate gets a layer of its own ══
+   THE PROBLEM THIS SOLVES. From 1150px up the picture is not an element — it
+   is .pl's own background-image. So the only thing feathering it was the mask
+   on .pl, and that mask could never be widened past .75rem because .pl holds
+   the synopsis too. The result was a picture cut square on all four sides with
+   twelve pixels of ramp, which against a black ground is a visible rectangle.
+   Worse, below 1900 the plate is `100% auto` from the top, so it STOPS partway
+   down the panel and left a hard horizontal line where it ended.
+
+   THE FIX. The plate moves onto ::before, which carries nothing but the
+   picture, so its mask can be as wide as the picture wants and reaches no text
+   at all. The layer is sized by `aspect-ratio: var(--ratio)` — the same custom
+   property the markup already sets, and it matches each plate's real shape
+   exactly (waters 2304/1440, unsaid 1568/627, both verified against the files).
+   So the mask's per cents land on the picture's own edges, including the bottom
+   one, at every width.
+
+   z-index:-1 keeps it under the words without needing a single change to them:
+   the words at 1900+ are absolutely positioned with their own z-index, and
+   forcing position onto them here would have broken that. A negative layer
+   paints above .pl's background and below everything else, and .pl is a
+   stacking context (container-type, plus the isolation:isolate above), so it
+   cannot escape the panel.
+
+   THE RAMPS are per cent, not rem, so they hold their proportion as the panel
+   grows: 8% each side, 7% off the top, 10% off the foot. The foot is widest
+   because that is the edge that used to be a hard line. */
+@media (min-width:1150px){
+  #royaLibrary .ab-feat--split .pl{background-image:none; background-color:#000}
+  #royaLibrary .ab-feat--split .pl::before{
+    content:""; position:absolute; z-index:-1; pointer-events:none;
+    left:0; right:0; top:0; aspect-ratio:var(--ratio);
+    background:var(--plate) top center/100% auto no-repeat;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
+    -webkit-mask-composite:source-in; mask-composite:intersect;}
+}
 
 /* ── the cover ──
    Board, not paper: a hair of radius at the corners, a spine shadow down the
@@ -3132,8 +3173,17 @@ body.rl-on #toTop{z-index:71}
   #royaLibrary .ab-feat--splitl .pl-t .ft-line{display:inline; margin-top:0}
 }
 
-/* 1440 to 1900: the words are pulled up into the picture. Same pull, other side. */
-@media (min-width:1440px){
+/* 1440 to 1900: the words are pulled up into the picture. Same pull, other side.
+   ⚠ The upper bound is load-bearing and was missing. This block said 1440 TO
+   1900 and meant it, but the query had no ceiling, so the pull went on
+   applying at 1900 and up — where .pl-words is no longer in flow but PINNED
+   with left and right. An absolutely positioned box with left, right AND a
+   margin is over-constrained: the 47.5% right margin ate the box, and the
+   synopsis came out 48px wide and 4,412px tall, one word per line, straight
+   down the page and out of the panel. The mirror of this on the other side
+   already guards against it — the 1900 block sets margin:0 — and that undo
+   was simply being overridden by this rule, which comes later in the file. */
+@media (min-width:1440px) and (max-width:1899.98px){
   #royaLibrary .ab-feat--splitl .pl-words{margin:-31.5% 47.5% 0 3.5%}
   #royaLibrary .ab-feat--splitl .pl-way{margin:.85cqw 47.5% 0 3.5%}
 }
