@@ -868,6 +868,29 @@ const SERIESFEAT = [
      what the Library, the share page and the feed carry; this is the same
      prose set to the design ChewZ drew for each series. Nothing here is
      written — every line is the series' own. */
+  /* Come in, the water's lovely. The plate is the mirror of The Unsaid's:
+     the painting sits in the RIGHT half and dissolves into a flat field on
+     the LEFT, so `side:"left"` hands the words that side and the stylesheet
+     flips the two margins. Unlike the other two plates this one carries no
+     painted title \u2014 it is set in HTML at every width, which is why
+     .ab-feat--splitl puts .pl-t back at 1150 and up. `key` is the catalogue's
+     own string and must stay exactly as stories.js spells it, or [data-series]
+     filters to nothing. */
+  { key:"Come In, the Water Is Lovely", en:"The Water\u2019s Lovely", fa:"",
+    art:"assets/series-waters-wide-1.webp", artTall:"assets/series-waters-tall-1.webp",
+    start:93, startFa:"", vol:"Book One",
+    books:[93,95,97],
+    feat:{ kind:"split", side:"left", cta:"Start the series", ratio:"2880/1152",
+      eyebrow:"Everything got better",
+      body:[
+        "\u201cCome in, the water\u2019s lovely\u201d is what people in the water call to the one on the edge. Usually a kind lie.",
+        "Here it\u2019s true.",
+        "A woman is cured of loneliness. Nothing tells loneliness from solitude, so she loses both.",
+        "The roads get safer, and the part of a person that flinches is never called on.",
+        "The power goes off on an agreed schedule, the money is fair, nobody is cold.",
+        "Each was solved by a machine better at it than any person alive, and never once wrong. Nothing was taken, nothing hidden, nobody to be angry with.",
+        "The danger is not being overpowered or deceived. It is being satisfied."
+      ] } },
   { key:"From the Delgosh\u0101", en:"The Delgosh\u0101", fa:"\u062f\u0644\u06af\u0634\u0627",
     art:"assets/series-delgosha-cover.webp", start:75,
     startFa:"\u0686\u0634\u0645\u200c\u0627\u0646\u062f\u0627\u0632 \u06f1\u06f4\u06f0\u06f4", vol:"Book Three",
@@ -970,9 +993,12 @@ function featPanel(f, sb){
   const title = `<h3 class="pl-t"><span class="ft-en">${esc(f.en)}</span>${f.fa ? `<span class="ft-fa" lang="fa" dir="rtl">${esc(f.fa)}</span>` : ""}</h3>`;
   /* the way in. It opens the series' start book through the same control every
      other book on this panel uses — 75 for the Delgosh\u0101, 89 for The Unsaid. */
-  const cta = sb
-    ? `<button class="ft-cta" type="button" data-rec="${sb.n}">${esc(fe.cta)}<span class="ft-arrow" aria-hidden="true">&rarr;</span></button>`
-    : "";
+  /* The way in opens the SERIES in the Library, not its start book: the
+     same [data-series] the series titles in About already use, which is
+     the only control that can take a reader to a series rather than a
+     volume. It no longer depends on `sb`, so a series with no start book
+     still gets its button. */
+  const cta = `<button class="ft-cta" type="button" data-series="${esc(f.key)}">${esc(fe.cta)}<span class="ft-arrow" aria-hidden="true">&rarr;</span></button>`;
   const style = `--plate:url('${basePath()}${f.art}'); --ratio:${fe.ratio}`
     + (f.artTall ? `; --plate-tall:url('${basePath()}${f.artTall}')` : "");
   const paras = a => a.map(x=>`<p class="pl-p">${esc(x)}</p>`).join("");
@@ -1017,7 +1043,7 @@ function featPanel(f, sb){
 
   /* ── the picture beside the words ── */
   if (fe.kind === "split") return `
-    <section class="ab-feat ab-feat--split" style="${style}">
+    <section class="ab-feat ab-feat--split${fe.side === "left" ? " ab-feat--splitl" : ""}" style="${style}">
       <div class="pl">
         ${title}
         <div class="pl-art" role="img" aria-label="${esc(f.en)}"></div>
@@ -1130,7 +1156,7 @@ function aboutBody(){
       <div class="ab-feat-copy${f.over ? " is-centred" : ""}">
         ${paras.map((x,i)=>`<p class="${i===paras.length-1 && /^Start anywhere/.test(x) ? "ab-feat-p ab-feat-note" : "ab-feat-p"}">${esc(x)}</p>`).join("")}
       </div>
-      ${sb ? `<p class="ab-over-way"><button class="ft-cta" type="button" data-rec="${sb.n}">Start the series<span class="ft-arrow" aria-hidden="true">&rarr;</span></button></p>` : ""}
+      <p class="ab-over-way"><button class="ft-cta" type="button" data-series="${esc(f.key)}">Start the series<span class="ft-arrow" aria-hidden="true">&rarr;</span></button></p>
       ${f.ded ? `<p class="ab-ded" lang="fa" dir="rtl"><span class="ab-ded-to">${esc(f.ded[0])}${f.dedYears ? ` <span dir="ltr">${esc(f.dedYears)}</span>` : ""}</span><em>${esc(f.ded[1])}</em></p>` : ""}
       </div>
     </section>`;

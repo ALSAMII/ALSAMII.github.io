@@ -2986,3 +2986,48 @@ body.rl-on #toTop{z-index:71}
    is built on a span carries role="button", so one rule covers all of them,
    now and whenever the next one is added. */
 #royaLibrary [role="button"]{cursor:pointer}
+
+/* ══ COME IN, THE WATER'S LOVELY — the split, turned round ══
+   The same plate arrangement as The Unsaid, mirrored: the painting sits in the
+   RIGHT half of the plate and dissolves into a flat field of the panel's own
+   #0d0b09 on the LEFT, so the words stand on that side. Everything is inherited
+   from .ab-feat--split — only the two margins, the two pinned boxes and the
+   title change hands, which is why this block is short and why any later change
+   to the split reaches this series without being repeated here.
+
+   One real difference: this plate carries NO painted title. The other two were
+   painted with their titles set into the artwork, so .pl-t is display:none from
+   1150 up. Here the page keeps setting it at every width, which means it can be
+   read, selected, searched and retitled without a re-render — and it is why the
+   rules below put .pl-t back rather than leaving it hidden. */
+
+/* the upright plate is 1200x1900: 300px of flat ground at the head, where the
+   title stands, and the painting beneath it */
+#royaLibrary .ab-feat--splitl .pl-art{aspect-ratio:1200/1900}
+
+/* Handset. The ground band means the title needs no wash under it, and it sets
+   flush left rather than centred so it lines up with the synopsis below. */
+#royaLibrary .ab-feat--splitl .pl-t{justify-content:flex-start; text-align:left;
+  padding:1.6rem 1.5rem 1.2rem; background:none}
+
+@media (min-width:1150px){
+  /* the plate has no title of its own, so the page goes on setting it — pinned
+     into the head of the field, above wherever the words happen to start */
+  #royaLibrary .ab-feat--splitl .pl-t{display:flex; position:absolute; z-index:2;
+    left:3.5%; right:52.5%; top:4.5%; justify-content:flex-start; text-align:left;
+    padding:0; background:none}
+  #royaLibrary .ab-feat--splitl .pl-t .ft-en{font-size:clamp(1.75rem, 2.3cqw, 3rem);
+    letter-spacing:.03em}
+}
+
+/* 1440 to 1900: the words are pulled up into the picture. Same pull, other side. */
+@media (min-width:1440px){
+  #royaLibrary .ab-feat--splitl .pl-words{margin:-31.5% 47.5% 0 3.5%}
+  #royaLibrary .ab-feat--splitl .pl-way{margin:.85cqw 47.5% 0 3.5%}
+}
+
+/* 1900 and up: the words are pinned inside the field. Same boxes, other side. */
+@media (min-width:1900px){
+  #royaLibrary .ab-feat--splitl .pl-words{left:2.5%; right:43.5%}
+  #royaLibrary .ab-feat--splitl .pl-way{left:2.5%; right:43.5%}
+}
