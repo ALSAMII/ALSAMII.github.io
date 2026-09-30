@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 115 · last updated 2026-09-30 06:05 PDT
+   Version 116 · last updated 2026-09-30 06:35 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -3035,15 +3035,38 @@ body.rl-on #toTop{z-index:71}
    flush left rather than centred so it lines up with the synopsis below. */
 #royaLibrary .ab-feat--splitl .pl-t{justify-content:flex-start; text-align:left;
   padding:1.6rem 1.5rem 1.2rem; background:none}
+/* Set in em, so the leading opens with the type rather than staying a fixed
+   number of pixels as the head scales. Only the gaps between lines move; the
+   block does not gain space above the first line or below the last. */
+#royaLibrary .ab-feat--splitl .pl-t .ft-line + .ft-line{margin-top:.22em}
 
 @media (min-width:1150px){
   /* the plate has no title of its own, so the page goes on setting it — pinned
      into the head of the field, above wherever the words happen to start */
+  /* `right` was pinned at 52.5% — the edge of the words' column — which was
+     the right measure while the head could wrap to three lines inside it. One
+     long row does not fit that box at the low end of this range: at 1150 the
+     line is 457px against a 331px box, so it either wrapped or hung 126px out
+     over the plate. The box shrink-wraps the row instead, capped so a longer
+     title can never run into the picture, and the head is left-aligned so the
+     extra width is only ever empty space. */
   #royaLibrary .ab-feat--splitl .pl-t{display:flex; position:absolute; z-index:2;
-    left:3.5%; right:52.5%; top:4.5%; justify-content:flex-start; text-align:left;
+    left:3.5%; right:auto; max-width:62%; top:4.5%;
+    justify-content:flex-start; text-align:left;
     padding:0; background:none}
   #royaLibrary .ab-feat--splitl .pl-t .ft-en{font-size:clamp(1.75rem, 2.3cqw, 3rem);
     letter-spacing:.03em}
+  /* On a page the head has the width to run as one row, so the author's line
+     breaks are released: each line goes back to being inline and the spaces
+     the markup already carries do the joining. The handset keeps the three
+     lines. */
+  /* ⚠ nowrap is the point, not a nicety. The head is one row here by
+     instruction, and at exactly 1150 — the first pixel of this breakpoint —
+     the line is a hair wider than the box it is pinned into and was breaking
+     back to two. Without this it reads as three lines badly set rather than
+     one long one. */
+  #royaLibrary .ab-feat--splitl .pl-t .ft-en{white-space:nowrap}
+  #royaLibrary .ab-feat--splitl .pl-t .ft-line{display:inline; margin-top:0}
 }
 
 /* 1440 to 1900: the words are pulled up into the picture. Same pull, other side. */

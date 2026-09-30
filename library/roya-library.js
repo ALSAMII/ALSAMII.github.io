@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 113 · last updated 2026-09-30 06:05 PDT
+   Version 114 · last updated 2026-09-30 06:35 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -998,7 +998,10 @@ function featPanel(f, sb){
      decide where it breaks. Each line is its own block, so the break holds at
      every width instead of moving with the column. */
   const enHtml = Array.isArray(f.enLines)
-    ? f.enLines.map(l=>`<span class="ft-line">${esc(l)}</span>`).join("")
+    /* joined on a real space so the lines can be set inline on a page, where
+       the head runs as one row, and stacked on a handset, where each line is a
+       block and the space between two blocks collapses away. */
+    ? f.enLines.map(l=>`<span class="ft-line">${esc(l)}</span>`).join(" ")
     : esc(f.en);
   const title = `<h3 class="pl-t"><span class="ft-en">${enHtml}</span>${f.fa ? `<span class="ft-fa" lang="fa" dir="rtl">${esc(f.fa)}</span>` : ""}</h3>`;
   /* the way in. It opens the series' start book through the same control every
