@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 114 · last updated 2026-09-30 06:35 PDT
+   Version 115 · last updated 2026-09-30 13:55 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -241,7 +241,8 @@ const railRow = (val, label, n, cls) => `
       </button>`;
 
 function sidebar(){
-  const light = document.documentElement.getAttribute('data-lt') === 'light';
+  /* THEME OFF — the rail drew nothing from this once the Theme button went.
+     const light = document.documentElement.getAttribute('data-lt') === 'light'; */
   const sound = soundOn;
   const names = GROUPS.filter(g=>g.name!=="Standalone").map(g=>g.name);
   return `
@@ -730,9 +731,43 @@ const SECTIONS = [
 /* Sound and Theme. They stood at the foot of the rail; they belong at the top
    of the page with everything else a reader can operate, and the rail is for
    finding things. Written once here because the desktop header and the phone
-   band both draw them and the two used to carry their own copies. */
+   band both draw them and the two used to carry their own copies.
+
+   ── THE THEME BUTTON IS SWITCHED OFF ──
+   Sound is on its own now. The Theme button is parked below rather than
+   deleted, in both the shapes it was drawn in — the desktop bar's and the
+   phone band's, which differ only in their indent. Three more lines are
+   commented out further down and marked THEME OFF: the click handler, the
+   read of the stored flag, and the attribute the stylesheet watches.
+
+   TO RESTORE: put each button back inside its own template literal, bring
+   back the two `const light = …` reads that fed it, un-comment the three
+   marked lines, and follow the four other steps listed beside the Theme
+   button in index.html.
+
+   Desktop shape:
+
+    <button class="side-tog" type="button" data-themeswap="1" aria-pressed="${light}"
+            title="${light ? 'Switch to the dark theme' : 'Switch to the light theme'}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.6"/>
+        <path d="M12 3.4a8.6 8.6 0 0 ${light ? '1' : '0'} 0 17.2z" fill="currentColor" stroke="none"/>
+      </svg>
+      <span>Theme</span>
+    </button>
+
+   Phone shape:
+
+        <button class="side-tog" type="button" data-themeswap="1" aria-pressed="${light}"
+                title="${light ? 'Switch to the dark theme' : 'Switch to the light theme'}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.6"/>
+            <path d="M12 3.4a8.6 8.6 0 0 ${light ? '1' : '0'} 0 17.2z" fill="currentColor" stroke="none"/>
+          </svg>
+          <span>Theme</span>
+        </button>
+*/
 function deskTogs(){
-  const light = document.documentElement.getAttribute('data-lt') === 'light';
   return `
   <div class="dnav-set">
     <button class="side-tog side-sound" type="button" data-soundswap="1" aria-pressed="${soundOn}"
@@ -745,14 +780,6 @@ function deskTogs(){
           : `<path class="rl-bar-pa" d="M8.6 6.5v11M15.4 6.5v11"/>`}
       </svg>
       <span>Sound</span>
-    </button>
-    <button class="side-tog" type="button" data-themeswap="1" aria-pressed="${light}"
-            title="${light ? 'Switch to the dark theme' : 'Switch to the light theme'}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="8.6"/>
-        <path d="M12 3.4a8.6 8.6 0 0 ${light ? '1' : '0'} 0 17.2z" fill="currentColor" stroke="none"/>
-      </svg>
-      <span>Theme</span>
     </button>
   </div>`;
 }
@@ -1367,14 +1394,6 @@ function mobile(){
           </svg>
           <span>Sound</span>
         </button>
-        <button class="side-tog" type="button" data-themeswap="1" aria-pressed="${light}"
-                title="${light ? 'Switch to the dark theme' : 'Switch to the light theme'}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="8.6"/>
-            <path d="M12 3.4a8.6 8.6 0 0 ${light ? '1' : '0'} 0 17.2z" fill="currentColor" stroke="none"/>
-          </svg>
-          <span>Theme</span>
-        </button>
         </span>
         <i class="mob-rights">All rights reserved &copy; Chew&#8239;Z</i>
       </span>
@@ -1494,7 +1513,12 @@ document.addEventListener("scroll", mobScroll, {capture:true, passive:true});
 window.addEventListener("resize", mobScroll, {passive:true});
 
 function draw(){
-  document.documentElement.setAttribute("data-lt", light ? "light" : "dark");
+  /* THEME OFF — pinned to dark. The light rules in roya-library.css are
+     guarded on data-lt="light-off" and nothing writes that, but this is what
+     actually makes the page dark, so it is pinned rather than left to a flag
+     a reader's browser may still be holding at true from before.
+     document.documentElement.setAttribute("data-lt", light ? "light" : "dark"); */
+  document.documentElement.setAttribute("data-lt", "dark");
   const mover = (sheetN != null || zoomN != null || listenN != null);
   const html = dev==="phone"
     ? `<div class="phone-shell">
@@ -1539,7 +1563,8 @@ function step(d){
   select(BOOKS[Math.min(BOOKS.length-1, Math.max(0, i+d))].n);
 }
 document.addEventListener("click", e=>{
-  const lt=e.target.closest("[data-themeswap]"); if(lt){ light=!light; draw(); return; }
+  /* THEME OFF — nothing on the page carries data-themeswap any more.
+     const lt=e.target.closest("[data-themeswap]"); if(lt){ light=!light; draw(); return; } */
   const sd=e.target.closest("[data-soundswap]"); if(sd){ if(!syncSound()){ soundOn=!soundOn; draw(); } return; }
   const cl=e.target.closest("[data-clear]");if(cl){ query=""; searchHot=true; caret=0; mobY=0; draw(); return; }
   const hm=e.target.closest("[data-home]"); if(hm){ view="about"; mobY=0; pickOpen=false; sortOpen=false; draw(); return; }
@@ -1684,7 +1709,15 @@ document.addEventListener("keydown", e=>{
 });
 try{
   const s=JSON.parse(localStorage.getItem("royaLibrary1")||"null");
-  if(s && byNum[s.cur]){ view=s.view||view; cur=s.cur; light=!!s.light; soundOn=!!s.soundOn; shelf=shelfOf(cur); }
+  /* THEME OFF — light is no longer read back. A reader who chose the light
+     theme before this change still has light:true in their localStorage; left
+     alone it would have stranded them on paper with no button to get off it.
+     The flag is still written on every draw, but always as false now, so that
+     old choice is overwritten rather than kept — which is the right way round:
+     whoever brings the theme back should not have a handful of readers landing
+     on paper on their first visit after it.
+     …; light=!!s.light; … */
+  if(s && byNum[s.cur]){ view=s.view||view; cur=s.cur; soundOn=!!s.soundOn; shelf=shelfOf(cur); }
 }catch(e){}
 
   /* ══════════════ mounting, and the way in and out ══════════════ */
