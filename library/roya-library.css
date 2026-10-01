@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 122 · last updated 2026-09-30 18:45 PDT
+   Version 123 · last updated 2026-09-30 19:25 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -3132,6 +3132,16 @@ body.rl-on #toTop{z-index:71}
    synopsis has clean ground to begin on inside the picture. */
 #royaLibrary .ab-feat--splitl .pl-art{aspect-ratio:1200/1600}
 
+/* No rule above the way in. The red thread under the title already separates
+   the head from the synopsis, and a second hairline a few lines further down
+   cut the block in two for no reason anyone could name. The padding stays, so
+   the eyebrow keeps its step off the last line — only the line itself goes.
+   The handset never drew it (see the max-width:1149 block at the foot of this
+   section), so this is the page's copy of that decision.
+   ⚠ Scoped to --splitl on purpose: The Unsaid still carries its rule. If that
+   one should go too, it is the same declaration one selector wider. */
+#royaLibrary .ab-feat--splitl .ft-eyebrow{border-top:0}
+
 /* Handset. The ground band means the title needs no wash under it, and it sets
    flush left rather than centred so it lines up with the synopsis below. */
 #royaLibrary .ab-feat--splitl .pl-t{justify-content:flex-start; text-align:left;
@@ -3152,7 +3162,19 @@ body.rl-on #toTop{z-index:71}
    it a handset a few pixels narrow silently breaks the head in two — which
    reads as a fault rather than as a title. */
 #royaLibrary .ab-feat--splitl .pl-t .ft-en{
-  font-size:clamp(.8125rem, 4.3cqw, 1.15rem); letter-spacing:.045em; white-space:nowrap}
+  /* 4.3cqw and a 1.15rem ceiling at first. Both go up a step at ChewZ's
+     asking — the measured slack was 54px at 320 and 88px at 390, so the line
+     had room it was not using.
+
+     4.65, not 4.9. The ceiling does the work at 390 and above, where the head
+     reaches 20.8px either way; the rate only governs the smallest handsets,
+     and at 4.9 a 320px screen was down to 18px of slack on a 314px measure.
+     That is under six per cent, and the spread between serif faces is wider
+     than that — measured here, one face set the same line 14% wider than
+     another. With nowrap a line that outgrows its measure does not wrap, it
+     runs under the edge of the panel, so the small end keeps a real margin:
+     33px at 320, and the full step everywhere the ceiling applies. */
+  font-size:clamp(.875rem, 4.65cqw, 1.3rem); letter-spacing:.045em; white-space:nowrap}
 
 @media (min-width:1150px){
   /* the plate has no title of its own, so the page goes on setting it — pinned
@@ -3183,6 +3205,44 @@ body.rl-on #toTop{z-index:71}
   #royaLibrary .ab-feat--splitl .pl-t .ft-line{display:inline; margin-top:0}
 }
 
+/* ══ 1150 to 1440: the synopsis comes up, and moves left to do it ══
+   ⚠ The gap this closes was not slack. In this band the words ran the FULL
+   width of the panel and began after all 40% of .pl's padding — which put them
+   below the picture's bright middle. Measured on the new plate, the sunset and
+   the swimmers occupy 41% to 66% of the picture's height; the words started
+   under 75%, where it is dark again. The 271px of empty picture above them was
+   the price of that clearance.
+
+   So moving them up on their own puts seven lines of prose across the sunset.
+   They have to move LEFT at the same time, into the dark quarter the painting
+   keeps on that side — which is exactly the arrangement 1440 and up already
+   uses. This band now mirrors it, at the same measures, so the two run
+   continuously: the column is 511px wide at 1439 and 511px at 1440.
+
+   Scoped to --splitl. The Unsaid shares this band and its own plate is a
+   different composition; nothing here touches it. */
+@media (min-width:1150px) and (max-width:1439.98px){
+  /* padding:0 is part of the mirror, not a detail. The band's own rule gives
+     .pl-words 2rem of side padding, which pushed the red thread 32px further
+     in than the head above it — two left edges where the design has one. */
+  /* calc, not a flat per cent, for the top. The pull has to cancel .pl's own
+     40% padding; a flat -31.5% leaves 8.5% of the WIDTH in its place, which
+     grows across the band while the head stays put — measured, that ran the
+     gap from 1px at 1150 to 25px at 1439, so the thread very nearly touched
+     the title at the low end. Taking the whole 40% back and putting a fixed
+     93px in its place holds the gap at 30px at every width in the band, which
+     is what 1440 and up shows. */
+  #royaLibrary .ab-feat--splitl .pl-words{margin:calc(-40% + 93px) 47.5% 0 3.5%;
+    padding:0; gap:.8cqw; position:relative; z-index:1}
+  #royaLibrary .ab-feat--splitl .pl-way{margin:.85cqw 47.5% 0 3.5%;
+    padding:0 0 2rem; gap:.75cqw}
+  #royaLibrary .ab-feat--splitl .pl-body p{font-size:clamp(1.25rem, 2.1cqw, 2.05rem);
+    line-height:1.58}
+  #royaLibrary .ab-feat--splitl .pl-q{font-size:clamp(1rem, 1.62cqw, 1.6rem); line-height:1.42}
+  #royaLibrary .ab-feat--splitl .pl-body{padding-top:.9cqw}
+  #royaLibrary .ab-feat--splitl .ft-eyebrow{padding-top:.9cqw}
+}
+
 /* 1440 to 1900: the words are pulled up into the picture. Same pull, other side.
    ⚠ The upper bound is load-bearing and was missing. This block said 1440 TO
    1900 and meant it, but the query had no ceiling, so the pull went on
@@ -3200,7 +3260,11 @@ body.rl-on #toTop{z-index:71}
 
 /* 1900 and up: the words are pinned inside the field. Same boxes, other side. */
 @media (min-width:1900px){
-  #royaLibrary .ab-feat--splitl .pl-words{left:2.5%; right:43.5%}
+  /* top:12%, not the 24% the shared rule sets. That 24% is The Unsaid's, whose
+     plate carries its own title and needs the room; this panel sets its head in
+     type at 4.5% and was leaving 155px of empty picture under it. 12% brings
+     the thread up to about 35px below the head, which is what 1440-1900 has. */
+  #royaLibrary .ab-feat--splitl .pl-words{left:2.5%; right:43.5%; top:12%}
   #royaLibrary .ab-feat--splitl .pl-way{left:2.5%; right:43.5%}
 }
 
