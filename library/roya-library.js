@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 115 · last updated 2026-09-30 13:55 PDT
+   Version 116 · last updated 2026-09-30 18:45 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -906,12 +906,18 @@ const SERIESFEAT = [
   /* The panel carries the whole title, set in three lines. `en` stays the
      running name — it is what the aria-labels and the cover's alt text read —
      and `enLines` is only how the head is set. */
+  /* enLines is gone from this entry on purpose: the head is one line at every
+     width now, so there are no author-set breaks to hold. The renderer and the
+     .ft-line rules stay in place for any series that wants them. */
   { key:"Come In, the Water Is Lovely", en:"Come In, the Water Is Lovely",
-    enLines:["Come in,","the water","is lovely"], fa:"",
-    art:"assets/series-waters-wide-2.webp", artTall:"assets/series-waters-tall-3.webp",
+    fa:"",
+    art:"assets/series-waters-wide-3.webp", artTall:"assets/series-waters-tall-4.webp",
     start:93, startFa:"", vol:"Book One",
     books:[93,95,97],
-    feat:{ kind:"split", side:"left", cta:"Start the series", ratio:"2304/1440",
+    /* 1776/1104, the new painting's own shape. Since v578 the plate is drawn on
+       a layer sized by this, so a stale ratio puts the fade off the picture's
+       real edges. */
+    feat:{ kind:"split", side:"left", cta:"Start the series", ratio:"1776/1104",
       eyebrow:"Everything got better",
       body:[
         "\u201cCome in, the water\u2019s lovely\u201d is what people in the water call to the one on the edge. Usually a kind lie.",

@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 121 · last updated 2026-09-30 15:05 PDT
+   Version 122 · last updated 2026-09-30 18:45 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -3136,13 +3136,23 @@ body.rl-on #toTop{z-index:71}
    flush left rather than centred so it lines up with the synopsis below. */
 #royaLibrary .ab-feat--splitl .pl-t{justify-content:flex-start; text-align:left;
   padding:1.6rem 1.5rem 1.2rem; background:none}
-/* Set in em, so the leading opens with the type rather than staying a fixed
-   number of pixels as the head scales. Only the gaps between lines move; the
-   block does not gain space above the first line or below the last.
-   .22em was a hairline. The plate under this head is a near-black field for
-   most of its height before the chair, so the three lines can be given real
-   air without crowding anything: .62em is about two thirds of a line. */
-#royaLibrary .ab-feat--splitl .pl-t .ft-line + .ft-line{margin-top:.62em}
+/* ── the head, one line on a handset too ──
+   It was set in three author-chosen lines here, because the old upright plate
+   gave the title a narrow column and 28 characters could not cross it. The new
+   painting hands the head the full width of the plate, so it runs as one line
+   at every width and `enLines` has come off the entry in the markup.
+
+   The size is what makes that safe, and it is measured rather than picked. The
+   line is 28 characters of tracked caps, which comes to about 18.8 times the
+   type size; .pl is an inline-size container, so 4.3cqw puts a 390px handset at
+   16.8px and the line at about 322px inside 342px of measure. The clamp holds a
+   320px handset above 13px and stops a tablet from running the head oversize.
+
+   nowrap is the instruction, not a nicety: one line means one line, and without
+   it a handset a few pixels narrow silently breaks the head in two — which
+   reads as a fault rather than as a title. */
+#royaLibrary .ab-feat--splitl .pl-t .ft-en{
+  font-size:clamp(.8125rem, 4.3cqw, 1.15rem); letter-spacing:.045em; white-space:nowrap}
 
 @media (min-width:1150px){
   /* the plate has no title of its own, so the page goes on setting it — pinned
