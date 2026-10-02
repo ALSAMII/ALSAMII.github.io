@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 116 · last updated 2026-09-30 18:45 PDT
+   Version 117 · last updated 2026-10-02 05:18 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -221,7 +221,7 @@ const DICON = {
      already knows for "open this bigger", and quieter on a cover than a
      magnifying glass, which reads as "search" everywhere else on the page */
   expand:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13.6 5.6h4.8v4.8"/><path d="M10.4 18.4H5.6v-4.8"/><path d="M18.4 5.6l-6 6"/><path d="M5.6 18.4l6-6"/></svg>',
-  listen:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2.2a8 8 0 0 1 16 0V14"/><rect x="2.4" y="13.4" width="4.6" height="7.2" rx="1.7"/><rect x="17" y="13.4" width="4.6" height="7.2" rx="1.7"/></svg>',
+  listen:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3.1 13.2a8.9 8.9 0 0 1 17.8 0"/><path d="M5.6 13.2a6.4 6.4 0 0 1 12.8 0"/><path d="M6.2 14.2H4.6a2.2 2.2 0 0 0-2.2 2.2v1.9a2.2 2.2 0 0 0 2.2 2.2h1.6"/><rect x="6.2" y="13.3" width="3" height="7.5" rx="1.5"/><path d="M17.8 14.2h1.6a2.2 2.2 0 0 1 2.2 2.2v1.9a2.2 2.2 0 0 1-2.2 2.2h-1.6"/><rect x="14.8" y="13.3" width="3" height="7.5" rx="1.5"/></svg>',
   close:'<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M6.6 6.6l10.8 10.8M17.4 6.6L6.6 17.4"/></svg>'
 };
 const RANGES = [[1,25],[26,50],[51,75],[76,94]];

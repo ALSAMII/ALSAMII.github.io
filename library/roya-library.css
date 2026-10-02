@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 123 · last updated 2026-09-30 19:25 PDT
+   Version 124 · last updated 2026-10-02 06:52 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -3072,36 +3072,41 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary .ab-lsn-rule{display:inline-block; width:0; height:1.3em;
   margin:0 .9em 0 .6em; vertical-align:-.32em;
   border-left:1px solid rgba(199,148,61,.45);}
-#royaLibrary .ab-lsn{--notch:.5em;
+/* The mark is a rounded pill: a gold hairline round a warm dark fill, the
+   word in bone and the headphones in gold. It replaced a notched pennant
+   whose tail and flooded gold background shouted louder than a reading
+   time beside it ought to. The vertical padding is a hair under what the
+   pennant used -- the 1px border makes up the difference -- so the row
+   measures exactly as it did. */
+#royaLibrary .ab-lsn{
   cursor:pointer; position:relative; display:inline-flex; align-items:center;
-  gap:.45em; font-style:normal; vertical-align:baseline; border:0;
-  padding:.3em calc(.68em + var(--notch)) .26em .68em;
-  color:var(--bone); background:rgba(199,148,61,.78);
-  clip-path:polygon(0 0, 100% 0, calc(100% - var(--notch)) 50%, 100% 100%, 0 100%);}
-#royaLibrary .ab-lsn::before{content:""; position:absolute; inset:1px; z-index:0;
-  clip-path:polygon(0 0, 100% 0, calc(100% - var(--notch) + 1px) 50%, 100% 100%, 0 100%);
-  background:linear-gradient(90deg, #23100e, #3c1411);}
+  gap:.5em; font-style:normal; vertical-align:baseline;
+  padding:.19em .95em .15em 1em; border-radius:999px;
+  border:1px solid #c8ae78; color:var(--bone); background:#251c17;
+  transition:background .18s ease, border-color .18s ease;}
+#royaLibrary .ab-lsn::before{content:none}
 #royaLibrary .ab-lsn svg{position:relative; z-index:1; width:1.05em; height:1.05em;
   fill:none; stroke:var(--gold-lab); stroke-width:1.6; flex:none; margin-top:-.1em}
 #royaLibrary .ab-lsn b{position:relative; z-index:1; font:inherit;
   font-weight:inherit; letter-spacing:inherit}
-/* the row lighting up brightens the rim; the mark under the pointer goes
-   further, so it still reads as the thing being pointed at */
-#royaLibrary .ab-row:hover .ab-lsn{background:var(--gold)}
-#royaLibrary .ab-row:hover .ab-lsn::before{background:linear-gradient(90deg,#2b1310,#4a1915)}
-#royaLibrary .ab-lsn:hover{background:var(--gold-lt)}
-#royaLibrary .ab-lsn:hover::before{background:linear-gradient(90deg,#341613,#5a1e19)}
-#royaLibrary .ab-lsn:active::before{background:linear-gradient(90deg,#3c1915,#68231c)}
-/* a finger needs more than a 9px line: the pennant grows on the phone until
-   it is a comfortable target, the notch grows with it so the tail keeps its
-   angle, and the rule beside it grows to match the taller tag */
+/* the row lighting up warms the fill; the mark under the pointer goes
+   further and brightens the rim, so it still reads as the thing being
+   pointed at */
+#royaLibrary .ab-row:hover .ab-lsn{background:#30241c}
+#royaLibrary .ab-lsn:hover{background:#3b2c21; border-color:var(--gold-lt)}
+#royaLibrary .ab-lsn:hover svg{stroke:var(--gold-lt)}
+#royaLibrary .ab-lsn:active{background:#46341f}
+/* a finger needs more than a 9px line: the pill grows on the phone until it
+   is a comfortable target, and the rule beside it grows to match */
 @media (max-width:820px){
-  #royaLibrary .ab-lsn{--notch:.6em; padding:.62em calc(.82em + var(--notch)) .58em .82em}
+  #royaLibrary .ab-lsn{padding:.52em 1.1em .48em 1.15em}
   #royaLibrary .ab-lsn-rule{height:2.35em; vertical-align:-.85em; margin:0 .8em 0 .55em}
 }
-:root[data-lt="light-off"] #royaLibrary .ab-lsn{color:#f2e8d4; background:rgba(138,101,36,.9)}
-:root[data-lt="light-off"] #royaLibrary .ab-lsn::before{background:linear-gradient(90deg,#461813,#65221b)}
-:root[data-lt="light-off"] #royaLibrary .ab-lsn svg{stroke:#dcb87a}
+:root[data-lt="light-off"] #royaLibrary .ab-lsn{color:#3b3122; background:#f3ead6;
+  border-color:#8a6524}
+:root[data-lt="light-off"] #royaLibrary .ab-lsn:hover{background:#ece0c4;
+  border-color:#6f5220}
+:root[data-lt="light-off"] #royaLibrary .ab-lsn svg{stroke:#8a6524}
 :root[data-lt="light-off"] #royaLibrary .ab-lsn-rule{border-left-color:rgba(138,101,36,.5)}
 :root[data-lt="light-off"] #royaLibrary .ab-row:hover .ab-lsn{background:#8a6524}
 
