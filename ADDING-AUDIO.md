@@ -1,4 +1,4 @@
-<!-- Updated 2026-09-25 -->
+<!-- Updated 2026-10-01 -->
 # Adding a narration
 
 Two things a book can have, independently of each other:
@@ -34,7 +34,8 @@ three at once:
 
 ## Which books are narrated
 
-**6**, **7** and **35** carry `audio` today.
+**6**, **7**, **8**, **26**, **35**, **52**, **78** and **102** carry
+`audio` today — eight books, 21.5 hours.
 
 ⚠ **Book 1's recording is orphaned.** `assets/audio/01.mp3` (24 MB) and
 `read/01.sync.json` are both published and both fetchable by URL, but
@@ -42,6 +43,33 @@ book 1 has no `audio` field, so nothing on the site links to either.
 Almost certainly fallout from the retitle from *The Memory Liturgy* to
 *Quiet Street to the Long Evening*. One line in `stories.js` fixes it, if
 the recording is still wanted.
+
+### Every recording so far opens with music
+
+The five added on 2026-10-01 each begin with an intro cue of roughly
+eleven seconds, and **it is not the same length in each book** — the gap
+between the music ending and the first word runs from 10.4s to 14.3s.
+Measure it per book rather than assuming eleven; the value used for each:
+
+| book | `--intro` |
+|---|---|
+| 78 | 11.2 |
+| 8 | 12.8 |
+| 26 | 14.0 |
+| 52 | 12.2 |
+| 102 | 11.3 |
+
+To measure a new one, find where the music stops and the voice starts:
+
+```
+ffmpeg -hide_banner -ss 0 -t 32 -i recording.mp3 \
+       -af "silencedetect=noise=-38dB:d=0.3" -f null -
+```
+
+The first `silence_start` is the music ending, the first `silence_end`
+is the voice beginning. Use the midpoint. Cutting slightly early is
+harmless — the aligner absorbs a little silence — but cutting into the
+first word is not.
 
 ## ⚠ Audio is NOT cache-busted
 
@@ -168,21 +196,46 @@ what they're for.
 
 ## A note on hosting
 
-A recording compressed at 48kbps mono runs roughly a quarter the size of
-the source file — Book 1's 100MB source became about 25MB.
+**Where it stands after the five added on 2026-10-01:** eight recordings
+occupy about **270 MB**, and the repository is roughly **733 MB** against
+the 1 GB soft limit GitHub Pages puts on a published site. That leaves
+about 265 MB — five or six more narrations at the current average, and
+that is before the next dozen books bring their own PDFs and cover art.
 
-**Do the multiplication now, because it is closer than it looks.** Four
-recordings occupy 159 MB. The repository as a whole is **525 MB** —
-130 MB of PDFs, 195 MB of covers, and the audio — against the 1 GB soft
-limit GitHub Pages puts on a published site. That leaves roughly 500 MB,
-and at the current average of 40 MB a recording, **about twelve more
-narrations would put the site against the limit** — and that is before
-the next dozen books bring their own PDFs and cover art.
+**These five were encoded at 32kbps mono, not the 48kbps default**, which
+is why the number is 733 MB and not 837 MB. At 48k the five would have
+run 312 MB rather than 208 MB. 32kbps mono is clean for a single
+unaccompanied voice; it is the sensible setting for anything this long
+from here on, and `--bitrate 32k` is how to ask for it.
 
-That is not a reason to stop, but it is a reason to decide the hosting
-question before the twelfth rather than after it. The two honest
-options are dropping the bitrate (32kbps mono is still clean for a single
-unaccompanied voice, and would buy a third more room) or moving the audio
-off the repository altogether and pointing `audio:` at a full URL, which
-the field already supports — nothing in `script.js` requires it to be a
-relative path.
+**The decision that is now close.** Two honest options remain when the
+room runs out: drop to 24kbps, or move the audio off the repository
+altogether and point `audio:` at a full URL — which the field already
+supports, and `roya-library.js` explicitly handles (it leaves an absolute
+address alone rather than resolving it against the site). Nothing in
+`script.js` requires a relative path either. Moving the existing eight
+off the repo would hand back about 270 MB in one step.
+
+## ⚠ The browser cannot upload these
+
+GitHub's web interface — the "Add file → Upload files" screen — **caps at
+25 MiB per file**. Every narration so far exceeds that, so the audio
+cannot be added through github.com. It has to go up through `git push`
+from a clone (or GitHub Desktop). Git's own limits are a warning at 50
+MiB and a hard block at 100 MiB; the largest recording here, book 102 at
+59 MB, sits between the two, so expect the warning and ignore it.
+
+## ⚠ numpy 2.x breaks the aligner
+
+`build-audio-sync.py` needs **numpy 1.x**. aeneas ships a compiled C
+extension (`aeneas.cmfcc.cmfcc`) built against numpy 1.x; under numpy 2
+it fails to import, and aeneas silently falls back to its pure-Python
+MFCC, which does not crash — it just runs so slowly a two-hour book will
+not finish. If an alignment seems to hang, this is why. Check with:
+
+```
+python3 -c "from aeneas.globalfunctions import can_run_c_extension as c; print(c())"
+```
+
+`False` means the fallback. Fix with `pip install "numpy==1.26.4"`. With
+the C extension working, a four-hour book aligns in about ninety seconds.

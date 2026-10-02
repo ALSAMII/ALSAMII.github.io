@@ -1,4 +1,4 @@
-/* Version 464 · last updated 2026-09-30 19:40 PDT*/
+/* Version 465 · last updated 2026-10-01 17:28 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -152,7 +152,8 @@ const STORIES = [
     room: "Their Confession, Your Shame \u2014 you feel it as though you did it",
     key: "Mercy \u2014 a stranger's confession arriving as your own memory",
     notes: [2, 3, 3],
-    synopsis: "Mercy does not make you sympathise. It files a stranger’s confession in your own memory, so that what they did arrives as something you did, at the weight and the shame it was carried at. Eight people sit down in front of Daniel Voss. Each first truth is hiding a worse one under it. The last chair is his father’s, and by then there is no version of watching that is not also remembering."
+    synopsis: "Mercy does not make you sympathise. It files a stranger’s confession in your own memory, so that what they did arrives as something you did, at the weight and the shame it was carried at. Eight people sit down in front of Daniel Voss. Each first truth is hiding a worse one under it. The last chair is his father’s, and by then there is no version of watching that is not also remembering.",
+    audio: "assets/audio/08.mp3"
   },
 
   {
@@ -368,7 +369,8 @@ const STORIES = [
     room: "The Dead Are Waiting \u2014 on the far side, and they have questions",
     key: "Mang \u2014 the antidote in overdose: three cups, seven days of witnesses",
     notes: [3, 2, 2],
-    synopsis: "Majnoon, 1984. Nineteen-year-old Sohrab keeps the ledger of the antidote \u2014 green-sleeved needles, counted like bread, that pull the gassed back toward life. Then the count stops balancing, and twelve missing needles lead to a secret congregation of survivors who know what the old corpse-washer knows: in overdose, the medicine becomes a door. The dead are waiting on the far side, with questions."
+    synopsis: "Majnoon, 1984. Nineteen-year-old Sohrab keeps the ledger of the antidote \u2014 green-sleeved needles, counted like bread, that pull the gassed back toward life. Then the count stops balancing, and twelve missing needles lead to a secret congregation of survivors who know what the old corpse-washer knows: in overdose, the medicine becomes a door. The dead are waiting on the far side, with questions.",
+    audio: "assets/audio/26.mp3"
   },
 
   {
@@ -683,7 +685,8 @@ const STORIES = [
     room: "Past the Alarm \u2014 the quiet on the far side of panic, and what is standing in it",
     key: "The Ladder \u2014 breath-hold conditioning with rungs that continue past blackout",
     notes: [2, 1, 2],
-    synopsis: "Cass Moura drives a rescue ski at the largest wave in Europe: four hundred and eleven recoveries, sixty-two seconds from impact to hand-on-body, a life built on the belief that his speed is the only decent thing about him. He is wrong about what the speed is for. The tow crews have been training under a retired navy diving medic, and their breath-hold work is a ladder whose rungs go past blackout \u2014 because forty-one subjects have described the same structure, in the same words, in the same absence of fear. Then a swell arrives with no precedent in the recorded history of the beach."
+    synopsis: "Cass Moura drives a rescue ski at the largest wave in Europe: four hundred and eleven recoveries, sixty-two seconds from impact to hand-on-body, a life built on the belief that his speed is the only decent thing about him. He is wrong about what the speed is for. The tow crews have been training under a retired navy diving medic, and their breath-hold work is a ladder whose rungs go past blackout \u2014 because forty-one subjects have described the same structure, in the same words, in the same absence of fear. Then a swell arrives with no precedent in the recorded history of the beach.",
+    audio: "assets/audio/52.mp3"
   },
 
   {
@@ -1002,7 +1005,8 @@ const STORIES = [
     room: "The Ward — Fridays, four until half past five, a chair by a window, and a different woman at the desk each week asking what your relation is",
     key: "The Dream Manual — her mother's book, ordered by the thing dreamed of, with door and demon as neighbouring headings; he reads it to her aloud every Friday and has started making the entries up",
     notes: [3, 3, 3],
-    synopsis: "Farkhondeh Nikkhah has taught Persian literature in the same district of Tehran for thirty-one years. There is a son of twenty who grew up at a table where the government was discussed every night of his life, and a second boy who arrived in the alley when the two of them were six and eight and has eaten at that table ever since — and there is no word in the language for what he is to her. In Dey the street fills, and she stands in her own hallway and tells her son not to go."
+    synopsis: "Farkhondeh Nikkhah has taught Persian literature in the same district of Tehran for thirty-one years. There is a son of twenty who grew up at a table where the government was discussed every night of his life, and a second boy who arrived in the alley when the two of them were six and eight and has eaten at that table ever since — and there is no word in the language for what he is to her. In Dey the street fills, and she stands in her own hallway and tells her son not to go.",
+    audio: "assets/audio/78.mp3"
   },
 
   {
@@ -1274,7 +1278,8 @@ const STORIES = [
     room: "The Six Days \u2014 a burn declared out on New Year\u2019s morning, smouldering down in the roots, and a hillside counting toward 10:29",
     key: "The datura \u2014 a white trumpet that opens at night in summer, poisonous in every part, which the Chumash drank to see what was coming. It is open on the ridge in January, and nobody in the house can say why",
     notes: [2, 2, 3],
-    synopsis: "Parviz Kamali came from Tehran in 1976, meant to stay three years, and bought a steep lot nobody wanted in the Palisades Highlands the year his old country closed behind him. He built a glass house on a steel frame, footings sunk into the hillside like the roots of a tooth, and did the arithmetic honestly, because he believed anything could be made to stand up if you did. Forty-five years later his widow \u0100zar still teaches piano at its window, and their son Omid \u2014 who makes fake explosions sound real for a living \u2014 has moved his wife and daughter back in to keep the house in the family. Down the canyon, Captain Ray Maddox has spent twenty-seven years learning that a fire is never really put out, only stopped. It has not rained in eight months. The brush on the ridges has not burned in fifty years. The insurance letters came in the spring, to half the street at once, and a pleasant man with a good watch has been knocking on doors asking who might like to sell. On New Year\u2019s night a small fire breaks out above the Highlands and the crews put it out before dawn \u2014 then roll up their hoses and go home with the ground still warm. Between the chapters, something much older than the houses begins to speak, and it has no reason left to lie."
+    synopsis: "Parviz Kamali came from Tehran in 1976, meant to stay three years, and bought a steep lot nobody wanted in the Palisades Highlands the year his old country closed behind him. He built a glass house on a steel frame, footings sunk into the hillside like the roots of a tooth, and did the arithmetic honestly, because he believed anything could be made to stand up if you did. Forty-five years later his widow \u0100zar still teaches piano at its window, and their son Omid \u2014 who makes fake explosions sound real for a living \u2014 has moved his wife and daughter back in to keep the house in the family. Down the canyon, Captain Ray Maddox has spent twenty-seven years learning that a fire is never really put out, only stopped. It has not rained in eight months. The brush on the ridges has not burned in fifty years. The insurance letters came in the spring, to half the street at once, and a pleasant man with a good watch has been knocking on doors asking who might like to sell. On New Year\u2019s night a small fire breaks out above the Highlands and the crews put it out before dawn \u2014 then roll up their hoses and go home with the ground still warm. Between the chapters, something much older than the houses begins to speak, and it has no reason left to lie.",
+    audio: "assets/audio/102.mp3"
   }
 
 ];
