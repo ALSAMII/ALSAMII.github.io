@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 119 · last updated 2026-10-02 10:40 PDT
+   Version 120 · last updated 2026-10-02 14:36 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -106,6 +106,9 @@ const byNum = Object.fromEntries(BOOKS.map(b=>[b.n,b]));
 const pad = n => String(n).padStart(3,"0");
 const pad2 = n => String(n).padStart(2,"0");
 const cov  = n => basePath() + "library/covers/" + pad2(n) + ".webp";
+/* the 3D standing render, as the shelf draws it. cov() is the flat front;
+   the Listening Room wants the object, not the artwork. */
+const cov3d = n => basePath() + "covers/" + pad2(n) + ".jpg";
 /* the second render: front-and-spine beside the back cover, one landscape
    image. Same numbering as the covers themselves. */
 const pair = n => basePath() + "covers/pairs/" + pad2(n) + ".webp";
@@ -211,6 +214,9 @@ const ICON = {
    and the series; the ordered list of all 94 lives here now. */
 const DICON = {
   caret:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  /* the magnifier-plus the shelf puts on a cover, so the Listening Room's
+     expand button is the same control a reader already knows. */
+  zoom:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.3" cy="10.3" r="6.3"/><path d="M10.3 7.6v5.4M7.6 10.3h5.4"/><path d="M19.4 19.4l-4.3-4.3"/></svg>',
   search:'<svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
   grid:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>',
   list:'<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
@@ -833,7 +839,7 @@ function mobNav(){
    ordered list of 94 — that is the Library now — and keeps everything else:
    the statement, the three terms, the recommended books and the series. */
 const LISTENING = {
-  lede: "Some of these books are read aloud. The recording plays in the page and the sentence being spoken lights up as it goes, or you can take the file and listen to it anywhere. They are the same stories \u2014 only told rather than set."
+  lede: "The books that have been recorded. Listen here, with the words lit as they are spoken \u2014 or take the file and listen anywhere."
 };
 const ABOUT = {
   lede: "For years I read other people\u2019s stories and lived in worlds someone else had already decided the shape of. Then a drug took the walls off one night and I made my own \u2014 planner, participant, whole production crew \u2014 and I have not been a guest since, so I finish them here.",
@@ -1181,19 +1187,26 @@ function listeningBody(){
     </span>
   </div>
 
-  <section class="ab-group">
+  <div class="lr-list">
     ${list.map(b=>`
-    <button class="ab-row" type="button" data-rec="${b.n}">
-      <span class="ab-art" style="background-image:url('${art(b.n)}')" aria-hidden="true"></span>
-      <span class="ab-rowin">
-        <span class="ab-head">
-          <b>${b.n}</b><span class="ab-dot">\u00b7</span><span class="ab-name">${esc(b.t)}</span>${PICKFA[b.n] ? `<span class="ab-fa" lang="fa" dir="rtl">${esc(PICKFA[b.n])}</span>` : ""}
-        </span>
-        <span class="ab-time">${esc(runLabel(b.runtime))}<i class="ab-lsn-rule" aria-hidden="true"></i><i class="ab-lsn" data-listen="${b.n}" aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></i></span>
-        <p class="ab-syn">${esc(b.syn || b.hook + ".")}</p>
+    <article class="lr-row">
+      <span class="lr-cov">
+        <img src="${cov3d(b.n)}" alt="" loading="lazy">
+        <button class="lr-zoom" type="button" data-zoom="${b.n}"
+          aria-label="View the ${esc(b.t)} cover full size" title="View full size">${DICON.zoom}</button>
       </span>
-    </button>`).join("")}
-  </section>`;
+      <div class="lr-body">
+        <span class="lr-kick">No. ${b.n} \u00b7 ${esc(runLabel(b.runtime))}</span>
+        <h3 class="lr-t"><button type="button" data-rec="${b.n}">${esc(b.t)}</button></h3>
+        <p class="lr-syn">${esc(b.syn || b.hook + ".")}</p>
+        <span class="lr-acts">
+          <button class="ab-lsn lr-listen" type="button" data-listen="${b.n}"
+            aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></button>
+          <button class="lr-read" type="button" data-rec="${b.n}">Read instead</button>
+        </span>
+      </div>
+    </article>`).join("")}
+  </div>`;
 }
 
 function aboutBody(){
@@ -1638,7 +1651,21 @@ document.addEventListener("click", e=>{
   const sd=e.target.closest("[data-soundswap]"); if(sd){ if(!syncSound()){ soundOn=!soundOn; draw(); } return; }
   const cl=e.target.closest("[data-clear]");if(cl){ query=""; searchHot=true; caret=0; mobY=0; draw(); return; }
   const hm=e.target.closest("[data-home]"); if(hm){ view="about"; mobY=0; pickOpen=false; sortOpen=false; draw(); return; }
-  const v=e.target.closest("[data-view]");  if(v){ view=v.dataset.view; mobY=0; pickOpen=false; draw(); return; }
+  /* deskY as well as mobY. Switching section kept the desktop scroll, so
+     leaving a Library scrolled a thousand pixels down and pressing About
+     landed on the middle of About. It was always wrong; the Listening Room
+     only made it easy to see, being long and the place a reader arrives at
+     from a scrolled shelf. A new section starts at its top. */
+  const v=e.target.closest("[data-view]");  if(v){
+    view=v.dataset.view; mobY=0; deskY=0; pickOpen=false; draw();
+    /* and actually move: restoreY() only runs when a record closes, so
+       nothing re-applied deskY on a re-render and the container simply kept
+       its old offset. Leaving a Library scrolled a thousand pixels down and
+       pressing About landed on the middle of About. It was always wrong; the
+       Listening Room only made it easy to see, being long and the place a
+       reader arrives at from a scrolled shelf. */
+    const sc = scroller(); if(sc) sc.scrollTop = 0;
+    return; }
   const dk=e.target.closest("[data-desk]"); if(dk){ view=dk.dataset.desk==="series"?"about":dk.dataset.desk; draw(); return; }
   const md=e.target.closest("[data-mode]"); if(md){ mode=md.dataset.mode; draw(); return; }
   const sp=e.target.closest("[data-sortpick]"); if(sp){ sortBy=sp.dataset.sortpick; sortOpen=false; draw(); return; }
