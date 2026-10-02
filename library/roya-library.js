@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 117 · last updated 2026-10-02 05:18 PDT
+   Version 119 · last updated 2026-10-02 10:40 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -87,7 +87,7 @@
         key: key[0],  keyG: key[1],
         gloss: "", series: seriesOf[s.num] || "",
         syn: s.synopsis || "", notes: s.notes || [],
-        audio: s.audio || "", synced: s.synced
+        audio: s.audio || "", synced: s.synced, runtime: s.runtime
       };
     }).sort((a, b) => a.n - b.n);
     return {
@@ -168,6 +168,7 @@ const shelfOf = n => Math.max(0, GROUPS.findIndex(g=>g.books.includes(n)));
 
 let dev = PHONE.matches ? "phone" : "desk", view="library", cur=94, shelf=shelfOf(94);
 let filter="all", query="", mode="grid", sortBy="newest", zoomN=null, readN=null;
+let lsort="newest";   /* the Listening Room's own order */
 /* the sort menu standing open. It was a two-state toggle wearing a caret,
    which promised a menu and gave you a coin flip; with a third order to
    offer, the caret has to mean what it says. */
@@ -724,9 +725,10 @@ ${seriesPanel()}
    declared and never read. Kept in step so the two cannot disagree later. */
 const RECOMMENDED = [6,7,78,8,50,26,35,52,102];
 const SECTIONS = [
-  {k:"about",   t:"About",            d:"The series and its world"},
-  {k:"library", t:"Roya Library",     d:"Explore every cover"},
-  {k:"notes",   t:"Author\u2019s Notes", d:"The thoughts behind the stories"}
+  {k:"about",     t:"About",              d:"The series and its world"},
+  {k:"library",   t:"Library",            d:"Explore every cover"},
+  {k:"listening", t:"Listening Room",     d:"The stories, read aloud"},
+  {k:"notes",     t:"Notes",               d:"The thoughts behind the stories"}
 ];
 /* Sound and Theme. They stood at the foot of the rail; they belong at the top
    of the page with everything else a reader can operate, and the rail is for
@@ -803,7 +805,7 @@ function deskPage(){
     ${sidebar()}
     <div class="main">
       ${deskNav()}
-      ${view==="library" ? deskLibraryBody() : `<div class="abt">${view==="notes" ? notesBody() : aboutBody()}</div>`}
+      ${view==="library" ? deskLibraryBody() : `<div class="abt">${view==="notes" ? notesBody() : view==="listening" ? listeningBody() : aboutBody()}</div>`}
       <div class="main-foot">
         <span>Roya Publication</span><span class="sep">|</span>
         <span>${BOOKS.length} stories</span><span class="sep">|</span>
@@ -830,6 +832,9 @@ function mobNav(){
    The words are the live page's own, not a paraphrase. About loses the
    ordered list of 94 — that is the Library now — and keeps everything else:
    the statement, the three terms, the recommended books and the series. */
+const LISTENING = {
+  lede: "Some of these books are read aloud. The recording plays in the page and the sentence being spoken lights up as it goes, or you can take the file and listen to it anywhere. They are the same stories \u2014 only told rather than set."
+};
 const ABOUT = {
   lede: "For years I read other people\u2019s stories and lived in worlds someone else had already decided the shape of. Then a drug took the walls off one night and I made my own \u2014 planner, participant, whole production crew \u2014 and I have not been a guest since, so I finish them here.",
   note: "{n} short stories about people who finally say it out loud. Every book works the same way \u2014 a door out of the mind, a room on the other side, and the key that opened it.",
@@ -1130,6 +1135,65 @@ function featPanel(f, sb){
         <p class="pl-folio pl-folio--r" aria-hidden="true">${esc(fo[1])}</p>
       </div>
     </section>`;
+}
+
+/* ── The Listening Room ──
+   Every book that carries a recording, newest first, with the runtime where
+   the Library puts the reading time and the same Listen mark beside it. The
+   rows are the About page's own .ab-row: a recording is still a book, and a
+   reader who has met one of these rows should not have to learn a second
+   kind. What the rows gain is the sort — recordings differ by hours, not by
+   the minutes that separate two novellas, so the length is the thing a
+   listener actually chooses on.
+
+   Runtime comes off stories.js (runtime, in whole minutes). A book with
+   audio and no runtime still lists; it just shows no figure and sorts last
+   by length, which is the quiet failure rather than a thrown error. */
+const LSORTS = [
+  {k:"newest", t:"Newest"},
+  {k:"short",  t:"Shortest"},
+  {k:"long",   t:"Longest"}
+];
+function runLabel(m){
+  if(!m && m!==0) return "";
+  const h = Math.floor(m/60), r = m%60;
+  return h ? `${h} h ${String(r).padStart(2,"0")} m` : `${r} m`;
+}
+function listeningBody(){
+  const rows = BOOKS.filter(b=>b.audio);
+  if(!rows.length) return `<p class="ab-lede">No recordings yet.</p>`;
+  const tot = rows.reduce((a,b)=>a + (b.runtime||0), 0);
+  const list = rows.slice();
+  if(lsort==="short") list.sort((a,b)=>(a.runtime||1e9)-(b.runtime||1e9));
+  else if(lsort==="long") list.sort((a,b)=>(b.runtime||-1)-(a.runtime||-1));
+  else list.sort((a,b)=>b.n-a.n);
+
+  return `
+  <p class="ab-lede">${esc(LISTENING.lede)}</p>
+
+  <div class="lr-bar">
+    <span class="lr-count">${rows.length} recordings \u00b7 ${runLabel(tot)} in all</span>
+    <span class="lr-sorts">
+      <span class="lr-sortlab">Sort</span>
+      ${LSORTS.map(o=>`
+        <button type="button" class="lr-sort${lsort===o.k ? " is-on" : ""}" data-lsort="${o.k}"
+          aria-pressed="${lsort===o.k}">${esc(o.t)}</button>`).join("")}
+    </span>
+  </div>
+
+  <section class="ab-group">
+    ${list.map(b=>`
+    <button class="ab-row" type="button" data-rec="${b.n}">
+      <span class="ab-art" style="background-image:url('${art(b.n)}')" aria-hidden="true"></span>
+      <span class="ab-rowin">
+        <span class="ab-head">
+          <b>${b.n}</b><span class="ab-dot">\u00b7</span><span class="ab-name">${esc(b.t)}</span>${PICKFA[b.n] ? `<span class="ab-fa" lang="fa" dir="rtl">${esc(PICKFA[b.n])}</span>` : ""}
+        </span>
+        <span class="ab-time">${esc(runLabel(b.runtime))}<i class="ab-lsn-rule" aria-hidden="true"></i><i class="ab-lsn" data-listen="${b.n}" aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></i></span>
+        <p class="ab-syn">${esc(b.syn || b.hook + ".")}</p>
+      </span>
+    </button>`).join("")}
+  </section>`;
 }
 
 function aboutBody(){
@@ -1436,7 +1500,7 @@ function mobile(){
     `}
     </div>
 
-    ${view!=="library" ? `<div class="mob-sec">${view==="notes" ? notesBody() : aboutBody()}</div>` : `
+    ${view!=="library" ? `<div class="mob-sec">${view==="notes" ? notesBody() : view==="listening" ? listeningBody() : aboutBody()}</div>` : `
     ${seriesPanel()}
     <p class="mob-count">Showing ${rows.length} of ${BOOKS.length}</p>
 
@@ -1587,6 +1651,11 @@ document.addEventListener("click", e=>{
      carries them into the Library the way a series title in About does, and
      hands them the top of the new result set rather than their old scroll
      position in a shelf that no longer has the same rows in it. */
+  /* The Listening Room's order. Its own state, not the Library's sortBy:
+     one orders books by number or date, the other orders recordings by how
+     long they run, and a reader who set one should not find the other moved. */
+  const lso=e.target.closest("[data-lsort]"); if(lso){ lsort=lso.dataset.lsort; draw(); return; }
+
   const fl=e.target.closest("[data-filter]");if(fl){
     const jump = view !== "library";
     filter=fl.dataset.filter; view="library"; pickOpen=false; mobY=0;
