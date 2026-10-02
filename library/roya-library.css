@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 126 · last updated 2026-10-02 14:36 PDT
+   Version 128 · last updated 2026-10-02 15:14 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -3359,8 +3359,24 @@ body.rl-on #toTop{z-index:71}
   stroke:currentColor; stroke-width:1.5}
 #royaLibrary .lr-zoom:hover{background:rgba(11,9,7,.8); border-color:var(--gold-lt)}
 #royaLibrary .lr-body{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:.55rem}
-#royaLibrary .lr-kick{font-family:var(--cond); font-weight:600; font-size:.5625rem;
+#royaLibrary .lr-kick{display:flex; align-items:baseline; gap:.5em;
+  font-family:var(--cond); font-weight:600; font-size:.5625rem;
   letter-spacing:.26em; text-transform:uppercase; color:var(--ochre)}
+/* The number and the length are two different kinds of fact, and set in one
+   face at one size they read as one string — the eye has to parse "NO. 102 ·
+   4 H 06 M" before it can find the hour. The catalogue number keeps the
+   condensed sans the rest of the furniture uses; the length takes the slab,
+   which is the Library's face for a figure that means something (.ab-sn, the
+   zoom caption, the reader's title). A slab also reads as a measurement the
+   way a timetable does, which is exactly what it is. */
+#royaLibrary .lr-dot{font-style:normal; color:rgba(199,148,61,.5)}
+#royaLibrary .lr-run{font-family:var(--slab); font-weight:700; font-size:1.45em;
+  letter-spacing:.05em; text-transform:none; color:var(--gold-lt);
+  font-variant-numeric:tabular-nums}
+@media (max-width:820px){
+  #royaLibrary .lr-run{font-size:1.35em}
+}
+:root[data-lt="light-off"] #royaLibrary .lr-run{color:#7a5418}
 #royaLibrary .lr-t{margin:0}
 #royaLibrary .lr-t button{font-family:var(--book); font-weight:500; font-size:1.9rem;
   line-height:1.1; color:var(--bone); background:none; border:0; padding:0; cursor:pointer;
@@ -3395,3 +3411,15 @@ body.rl-on #toTop{z-index:71}
 }
 :root[data-lt="light-off"] #royaLibrary .lr-row{border-bottom-color:rgba(96,76,42,.22)}
 :root[data-lt="light-off"] #royaLibrary .lr-t button{color:#1d1710}
+
+/* ── the Library's one line ──
+   The Listening Room opens on a sentence and the Library did not, so the two
+   sections met a reader differently for no reason. Same face, size and
+   centring as .ab-lede; its own rule because the Library body is not inside
+   .abt and so does not inherit that column's padding. */
+#royaLibrary .lib-lede{margin:0 auto 1.6rem; max-width:52ch; text-align:center;
+  font-family:var(--book); font-weight:400; font-size:1.5rem; line-height:1.48;
+  color:var(--bone)}
+@media (max-width:820px){
+  #royaLibrary .lib-lede{margin:0 auto 1.1rem; font-size:1.125rem; max-width:34ch}
+}

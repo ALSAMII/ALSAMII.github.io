@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 120 · last updated 2026-10-02 14:36 PDT
+   Version 124 · last updated 2026-10-02 15:14 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -678,6 +678,7 @@ function recordPanel(){
 function deskLibraryBody(){
   const rows = libraryRows();
   return `
+      <p class="lib-lede">${esc(LIBRARY.lede)}</p>
       <div class="main-bar">
         <span class="t">${esc(columnHead())} / ${rows.length}</span>
         <span class="rl-rule"></span>
@@ -838,8 +839,11 @@ function mobNav(){
    The words are the live page's own, not a paraphrase. About loses the
    ordered list of 94 — that is the Library now — and keeps everything else:
    the statement, the three terms, the recommended books and the series. */
+const LIBRARY = {
+  lede: "One hundred and one ways out of your own head."
+};
 const LISTENING = {
-  lede: "The books that have been recorded. Listen here, with the words lit as they are spoken \u2014 or take the file and listen anywhere."
+  lede: "Some books are better said than read."
 };
 const ABOUT = {
   lede: "For years I read other people\u2019s stories and lived in worlds someone else had already decided the shape of. Then a drug took the walls off one night and I made my own \u2014 planner, participant, whole production crew \u2014 and I have not been a guest since, so I finish them here.",
@@ -1168,7 +1172,6 @@ function runLabel(m){
 function listeningBody(){
   const rows = BOOKS.filter(b=>b.audio);
   if(!rows.length) return `<p class="ab-lede">No recordings yet.</p>`;
-  const tot = rows.reduce((a,b)=>a + (b.runtime||0), 0);
   const list = rows.slice();
   if(lsort==="short") list.sort((a,b)=>(a.runtime||1e9)-(b.runtime||1e9));
   else if(lsort==="long") list.sort((a,b)=>(b.runtime||-1)-(a.runtime||-1));
@@ -1178,7 +1181,7 @@ function listeningBody(){
   <p class="ab-lede">${esc(LISTENING.lede)}</p>
 
   <div class="lr-bar">
-    <span class="lr-count">${rows.length} recordings \u00b7 ${runLabel(tot)} in all</span>
+    <span class="lr-count">${rows.length} recording${rows.length===1 ? "" : "s"}</span>
     <span class="lr-sorts">
       <span class="lr-sortlab">Sort</span>
       ${LSORTS.map(o=>`
@@ -1196,7 +1199,7 @@ function listeningBody(){
           aria-label="View the ${esc(b.t)} cover full size" title="View full size">${DICON.zoom}</button>
       </span>
       <div class="lr-body">
-        <span class="lr-kick">No. ${b.n} \u00b7 ${esc(runLabel(b.runtime))}</span>
+        <span class="lr-kick">No. ${b.n}<i class="lr-dot" aria-hidden="true">\u00b7</i><b class="lr-run">${esc(runLabel(b.runtime))}</b></span>
         <h3 class="lr-t"><button type="button" data-rec="${b.n}">${esc(b.t)}</button></h3>
         <p class="lr-syn">${esc(b.syn || b.hook + ".")}</p>
         <span class="lr-acts">
@@ -1483,6 +1486,8 @@ function mobile(){
     </header>
     ${mobNav()}
     ${view!=="library" ? "" : `
+    <p class="lib-lede">${esc(LIBRARY.lede)}</p>
+
     <h2 class="mob-h">${esc(columnHead())} <i>/ ${rows.length} <b>${rows.length===1 ? "story" : "stories"}</b></i></h2>
 
     <div class="mob-search">
