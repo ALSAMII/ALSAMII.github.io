@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 3 · last updated 2026-09-30 13:55 PDT
+   Version 4 · last updated 2026-10-02 05:18 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -537,9 +537,13 @@
   var AUDIO_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
     ' stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"' +
-    ' aria-hidden="true"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/>' +
-    '<rect x="2" y="14" width="5" height="7" rx="1.5"/>' +
-    '<rect x="17" y="14" width="5" height="7" rx="1.5"/></svg>';
+    ' aria-hidden="true">' +
+    '<path d="M3.1 13.2a8.9 8.9 0 0 1 17.8 0"/>' +
+    '<path d="M5.6 13.2a6.4 6.4 0 0 1 12.8 0"/>' +
+    '<path d="M6.2 14.2H4.6a2.2 2.2 0 0 0-2.2 2.2v1.9a2.2 2.2 0 0 0 2.2 2.2h1.6"/>' +
+    '<rect x="6.2" y="13.3" width="3" height="7.5" rx="1.5"/>' +
+    '<path d="M17.8 14.2h1.6a2.2 2.2 0 0 1 2.2 2.2v1.9a2.2 2.2 0 0 1-2.2 2.2h-1.6"/>' +
+    '<rect x="14.8" y="13.3" width="3" height="7.5" rx="1.5"/></svg>';
 
   /* The two icons are not self-explanatory — one opens the PDF, one
      unfolds the synopsis — so each carries a word underneath. */
