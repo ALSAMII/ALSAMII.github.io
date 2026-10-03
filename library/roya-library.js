@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 130 · last updated 2026-10-03 04:52 PDT
+   Version 131 · last updated 2026-10-03 06:08 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -681,7 +681,7 @@ function recordPanel(){
 function deskLibraryBody(){
   const rows = libraryRows();
   return `
-      <p class="lib-lede">${esc(LIBRARY.lede)}</p>
+      <p class="lib-lede">${esc(LIBRARY.lede).replace("{n}", BOOKS.length)}</p>
       <div class="main-bar">
         <span class="t">${esc(columnHead())} / ${rows.length}</span>
         <span class="rl-rule"></span>
@@ -849,8 +849,13 @@ function mobNav(){
    The words are the live page's own, not a paraphrase. About loses the
    ordered list of 94 — that is the Library now — and keeps everything else:
    the statement, the three terms, the recommended books and the series. */
+/* {n} is the catalogue's own length, the way ABOUT.note already does it.
+   The number was written into this line as 101 when there were 101 books,
+   and publishing No. 103 made it wrong the same hour — the sentence sat
+   directly above a bar reading THE COMPLETE COLLECTION / 102. A count
+   typed into prose is a count that goes stale on the next book. */
 const LIBRARY = {
-  lede: "All 101 stories, in one place."
+  lede: "All {n} stories, in one place."
 };
 const LISTENING = {
   lede: "Some books are better said than read."
@@ -1503,7 +1508,7 @@ function mobile(){
     </header>
     ${mobNav()}
     ${view!=="library" ? "" : `
-    <p class="lib-lede">${esc(LIBRARY.lede)}</p>
+    <p class="lib-lede">${esc(LIBRARY.lede).replace("{n}", BOOKS.length)}</p>
 
     <h2 class="mob-h">${esc(columnHead())} <i>/ ${rows.length} <b>${rows.length===1 ? "story" : "stories"}</b></i></h2>
 
