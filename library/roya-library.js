@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 125 · last updated 2026-10-02 15:52 PDT
+   Version 126 · last updated 2026-10-02 17:46 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -254,7 +254,10 @@ function sidebar(){
   const names = GROUPS.filter(g=>g.name!=="Standalone").map(g=>g.name);
   return `
   <aside class="side"><div class="side-in">
-    <button class="side-emblem" type="button" data-home="1" aria-label="Roya Publication · Fiction — back to About"></button>
+    <span class="side-head">
+      <button class="side-emblem" type="button" data-home="1" aria-label="Roya Publication · Fiction — back to About"></button>
+      ${soundTog()}
+    </span>
     <p class="side-who">Chew&#8239;Z</p>
     <p class="side-count"><b>${BOOKS.length}</b>${BOOKS.length===1 ? "Story" : "Stories"}</p>
     <hr>
@@ -776,9 +779,12 @@ const SECTIONS = [
           <span>Theme</span>
         </button>
 */
-function deskTogs(){
+/* Sound used to sit at the left of the section bar, out of the nav's flow, and
+   the bar kept an 11rem lane clear so the links could not walk into it. It is
+   on the emblem now — top right of the rail, where the plate already draws the
+   eye — which hands the whole width of the bar back to the four links. */
+function soundTog(){
   return `
-  <div class="dnav-set">
     <button class="side-tog side-sound" type="button" data-soundswap="1" aria-pressed="${soundOn}"
             title="${soundOn ? 'Silence the ambient sound' : 'Ambient sound'}">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
@@ -789,13 +795,11 @@ function deskTogs(){
           : `<path class="rl-bar-pa" d="M8.6 6.5v11M15.4 6.5v11"/>`}
       </svg>
       <span>Sound</span>
-    </button>
-  </div>`;
+    </button>`;
 }
 function deskNav(){
   return `
   <nav class="dnav">
-    ${deskTogs()}
     ${SECTIONS.map(x=>`
       <button type="button" data-view="${x.k}" aria-current="${view===x.k}">
         <b>${esc(x.t)}</b><i>${esc(x.d)}</i>
@@ -840,7 +844,7 @@ function mobNav(){
    ordered list of 94 — that is the Library now — and keeps everything else:
    the statement, the three terms, the recommended books and the series. */
 const LIBRARY = {
-  lede: "Every cover here is a door."
+  lede: "All the stories, in one place."
 };
 const LISTENING = {
   lede: "Some books are better said than read."
@@ -1199,12 +1203,15 @@ function listeningBody(){
           aria-label="View the ${esc(b.t)} cover full size" title="View full size">${DICON.zoom}</button>
       </span>
       <div class="lr-body">
-        <span class="lr-kick">No. ${b.n}<i class="lr-dot" aria-hidden="true">\u00b7</i><b class="lr-run">${esc(runLabel(b.runtime))}</b></span>
+        <span class="lr-kick">No. ${b.n}</span>
         <h3 class="lr-t"><button type="button" data-rec="${b.n}">${esc(b.t)}</button></h3>
         <p class="lr-syn">${esc(b.syn || b.hook + ".")}</p>
         <span class="lr-acts">
-          <button class="ab-lsn lr-listen" type="button" data-listen="${b.n}"
-            aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></button>
+          <span class="lr-lsn">
+            <button class="ab-lsn lr-listen" type="button" data-listen="${b.n}"
+              aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></button>
+            <b class="lr-run">${esc(runLabel(b.runtime))}</b>
+          </span>
           <button class="lr-read" type="button" data-rec="${b.n}">Read instead</button>
         </span>
       </div>
