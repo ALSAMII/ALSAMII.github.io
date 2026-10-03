@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 128 · last updated 2026-10-02 20:31 PDT
+   Version 130 · last updated 2026-10-03 04:52 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1177,7 +1177,12 @@ const LSORTS = [
 function runLabel(m){
   if(!m && m!==0) return "";
   const h = Math.floor(m/60), r = m%60;
-  return h ? `${h} h ${String(r).padStart(2,"0")} m` : `${r} m`;
+  /* "4h 06m", not "4 h 06 m": the unit belongs to the number in front of it,
+     and at .24em tracking a space between them opened a gap wide enough that
+     the H and the M read as separate words. */
+  const u = x => `<i class="lr-u">${x}</i>`;
+  return h ? `${h}${u("h")} ${String(r).padStart(2,"0")}${u("m")}`
+           : `${r}${u("m")}`;
 }
 function listeningBody(){
   const rows = BOOKS.filter(b=>b.audio);
@@ -1209,14 +1214,13 @@ function listeningBody(){
           aria-label="View the ${esc(b.t)} cover full size" title="View full size">${DICON.zoom}</button>
       </span>
       <div class="lr-body">
-        <span class="lr-kick">${b.n}</span>
-        <h3 class="lr-t"><button type="button" data-rec="${b.n}">${esc(b.t)}</button></h3>
+        <h3 class="lr-t"><button type="button" data-rec="${b.n}"><b class="lr-n">${b.n}</b><span class="lr-dot" aria-hidden="true">\u00b7</span><span class="lr-name">${esc(b.t)}</span></button></h3>
         <p class="lr-syn">${esc(b.syn || b.hook + ".")}</p>
         <span class="lr-acts">
           <span class="lr-lsn">
             <button class="ab-lsn lr-listen" type="button" data-listen="${b.n}"
               aria-label="Listen to ${esc(b.t)}">${DICON.listen}<b>Listen</b></button>
-            <b class="lr-run">${esc(runLabel(b.runtime))}</b>
+            <b class="lr-run">${runLabel(b.runtime)}</b>
           </span>
           <button class="lr-read" type="button" data-rec="${b.n}">Read instead</button>
         </span>
