@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 136 · last updated 2026-10-03 06:40 PDT
+   Version 137 · last updated 2026-10-03 10:18 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -661,14 +661,33 @@
    clipping. min-width is what decides: a half narrower than 5.6rem takes
    the whole row instead. */
 #royaLibrary .bcard-reads.is-split, #royaLibrary .mcard-reads.is-split{display:flex; flex-wrap:wrap; gap:.4rem}
-#royaLibrary .bcard-reads.is-split > *, #royaLibrary .mcard-reads.is-split > *{min-width:5.6rem}
-#royaLibrary .bcard-reads.is-split .bcard-read{flex:1 1 5.6rem;
-  justify-content:center; gap:.36rem; white-space:nowrap;
+/* 5.6rem → 6.25rem. The acts column shrink-wraps to this row, so this figure
+   IS the column's width wherever the panel is not wide enough to give it
+   more — and at 5.6rem the half came out 89.6px with 80.2px inside it, while
+   "Read story" and its arrow need 82.3px. The label set outside its own
+   border, white-space being nowrap. 6.25rem leaves 6px in hand. */
+#royaLibrary .bcard-reads.is-split > *{min-width:6.25rem}
+/* The phone grid card keeps 5.6rem. Its halves are laid out by the card, not
+   by this row's own intrinsic width, and at 5.6rem the label already had
+   6.4px in hand on a 393px handset — raising it there bought nothing and
+   tipped that card's pair from side by side into stacked. */
+#royaLibrary .mcard-reads.is-split > *{min-width:5.6rem}
+#royaLibrary .bcard-reads.is-split .bcard-read{flex:1 1 6.25rem;
+  justify-content:center; gap:.3rem; white-space:nowrap;
   /* "Read story" has to fit on one line in half the width it used to have,
      so the tracking comes in and the size down a step. Any looser and it
-     wraps to two lines beside a one-line Listen, which reads as a mistake. */
-  font-size:.625rem; letter-spacing:.1em; padding-inline:.4rem;}
-#royaLibrary .bcard-reads.is-split .bcard-read svg{width:.95rem}
+     wraps to two lines beside a one-line Listen, which reads as a mistake.
+
+     2026-10-03: down again, .625rem → .5625rem with the tracking at .06em
+     and the gutters at .3rem. The step before was measured against the wide
+     record, where each half is 141px and the label had 30px to spare. Under
+     60rem the panel lays its side column on its side, the halves fall to
+     100px, and at .625rem the label needed 96px of content in 85px of box —
+     so it set outside its own border rather than wrapping, white-space being
+     nowrap. Only a book with a recording splits this row, so this is the
+     only place the label was ever that tight. */
+  font-size:.5625rem; letter-spacing:.06em; padding-inline:.3rem;}
+#royaLibrary .bcard-reads.is-split .bcard-read svg{width:.85rem}
 #royaLibrary .bcard-read.is-listen{color:var(--t-ctrl)}
 #royaLibrary .bcard-read.is-listen svg{width:.9rem; height:.9rem; stroke-width:1.5}
 #royaLibrary .bcard:hover .bcard-read.is-listen{color:var(--gold-lt); border-color:var(--ochre)}
@@ -2674,7 +2693,7 @@
 #royaLibrary .mcard-read svg{width:.95rem; height:.7rem; stroke:currentColor; fill:none; stroke-width:1.6}
 #royaLibrary .mcard-reads.is-split{margin-top:auto}
 #royaLibrary .mcard-reads.is-split .mcard-read{margin-top:0; flex:1 1 5.6rem;
-  justify-content:center; gap:.35rem; letter-spacing:.1em;}
+  justify-content:center; gap:.3rem; letter-spacing:.06em;}
 #royaLibrary .mcard-read.is-listen{color:var(--t-ctrl)}
 #royaLibrary .mcard-read.is-listen svg{width:.85rem; height:.85rem; stroke-width:1.5}
 /* the row view — same markup, laid on its side. A full-width measure gives
@@ -2782,7 +2801,7 @@
 /* The split Read/Listen pair sets its own smaller size so the two labels fit
    half a card each. On the phone record the pair has a full row, so it takes
    the same size as the two boxes under it rather than staying a step down. */
-#royaLibrary .sheet-acts .bcard-reads.is-split .bcard-read{font-size:.6875rem; letter-spacing:.2em}
+#royaLibrary .sheet-acts .bcard-reads.is-split .bcard-read{font-size:.625rem; letter-spacing:.12em}
 #royaLibrary .sheet-acts .bcard-read svg{width:1.2rem; height:.95rem}
 #royaLibrary .sheet-acts .bcard-read.is-listen svg{width:1.05rem; height:1.05rem}
 #royaLibrary .sheet-acts .bcard-acts{gap:.55rem}
