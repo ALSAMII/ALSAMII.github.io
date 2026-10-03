@@ -1,4 +1,4 @@
-/* Version 467 · last updated 2026-10-02 15:48 PDT*/
+/* Version 468 · last updated 2026-10-03 05:42 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1308,6 +1308,17 @@ const STORIES = [
     synopsis: "Parviz Kamali came from Tehran in 1976, meant to stay three years, and bought a steep lot nobody wanted in the Palisades Highlands the year his old country closed behind him. He built a glass house on a steel frame, footings sunk into the hillside like the roots of a tooth, and did the arithmetic honestly, because he believed anything could be made to stand up if you did. Forty-five years later his widow \u0100zar still teaches piano at its window, and their son Omid \u2014 who makes fake explosions sound real for a living \u2014 has moved his wife and daughter back in to keep the house in the family. Down the canyon, Captain Ray Maddox has spent twenty-seven years learning that a fire is never really put out, only stopped. It has not rained in eight months. The brush on the ridges has not burned in fifty years. The insurance letters came in the spring, to half the street at once, and a pleasant man with a good watch has been knocking on doors asking who might like to sell. On New Year\u2019s night a small fire breaks out above the Highlands and the crews put it out before dawn \u2014 then roll up their hoses and go home with the ground still warm. Between the chapters, something much older than the houses begins to speak, and it has no reason left to lie.",
     audio: "assets/audio/102.mp3",
     runtime: 246
+  },
+  {
+    num: 103,
+    title: "Delgoshā and His Guests",
+    words: "19,700 words",
+    hook: "A man who spent his life in the dark writing other people’s words is asked, at last, to speak",
+    door: "Rite",
+    room: "The Front Room — a flat where the tea is poured for everyone present, and an eye that has stopped sending goes on producing guests: silent, well dressed, standing about in a room they have no business in, and perfectly real to look at",
+    key: "Pesar Khaleh — a machine on a laptop trained on forty years of his own notebooks, which transcribes, numbers the entries, keeps the pauses, and has kept more records than he asked for",
+    notes: [1, 1, 3],
+    synopsis: "Manuchehr Delgoshā is sixty-eight, nearly blind, and has spent forty years writing the jokes a country repeats without once putting his name on one. The syrup took the middle of his sight, and the dark it left behind fills with people — fully formed, silent, courteous — who are not there. Nazanin comes at eight-thirty and leaves at six. Roshanak has called every Wednesday for eleven years. His brother came back, which is not the same as coming home. And on a laptop in the corner a machine trained on his own notebooks transcribes everything, numbers it, and keeps the pauses. A man who spent his life in the dark writing other people’s words is asked to speak. He speaks. This is what came out."
   }
 
 ];
@@ -1471,7 +1482,7 @@ const TRILOGIES = [
 
        No banner — the covers stand side by side. */
     label: "",
-    books: [68, 70, 75, 77, 79, 82, 87, 91, 96],
+    books: [68, 70, 75, 77, 79, 82, 87, 91, 96, 103],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
