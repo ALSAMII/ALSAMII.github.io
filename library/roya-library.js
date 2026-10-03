@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 131 · last updated 2026-10-03 06:08 PDT
+   Version 132 · last updated 2026-10-03 06:40 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -744,7 +744,7 @@ const SECTIONS = [
   {k:"about",     t:"About",   d:"The series and its world"},
   {k:"library",   t:"Library", d:"Explore every cover"},
   {k:"listening", t:"Listen",  d:"The stories, read aloud"},
-  {k:"notes",     t:"Notes",   d:"The thoughts behind the stories"}
+  {k:"notes",     t:"Notes",   d:"Behind the stories"}
 ];
 /* Sound and Theme. They stood at the foot of the rail; they belong at the top
    of the page with everything else a reader can operate, and the rail is for
