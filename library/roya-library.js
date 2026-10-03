@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 127 · last updated 2026-10-02 19:08 PDT
+   Version 128 · last updated 2026-10-02 20:31 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -734,11 +734,17 @@ ${seriesPanel()}
    PICKS below is what actually builds the three categories; this list is
    declared and never read. Kept in step so the two cannot disagree later. */
 const RECOMMENDED = [6,7,78,8,50,26,35,52,102];
+/* The key stays "listening" — it is in the view state, the handlers and a
+   dozen comments below, and renaming it would touch all of them to no effect
+   a reader could see. Only the label changed: "Listening Room" was the one
+   two-word label in the bar and the only one that wrapped, which is what gave
+   the four columns their uneven hairlines and forced a floor on the phone's
+   type size. "Listen" is also the word on every button inside the section. */
 const SECTIONS = [
-  {k:"about",     t:"About",              d:"The series and its world"},
-  {k:"library",   t:"Library",            d:"Explore every cover"},
-  {k:"listening", t:"Listening Room",     d:"The stories, read aloud"},
-  {k:"notes",     t:"Notes",               d:"The thoughts behind the stories"}
+  {k:"about",     t:"About",   d:"The series and its world"},
+  {k:"library",   t:"Library", d:"Explore every cover"},
+  {k:"listening", t:"Listen",  d:"The stories, read aloud"},
+  {k:"notes",     t:"Notes",   d:"The thoughts behind the stories"}
 ];
 /* Sound and Theme. They stood at the foot of the rail; they belong at the top
    of the page with everything else a reader can operate, and the rail is for
@@ -844,7 +850,7 @@ function mobNav(){
    ordered list of 94 — that is the Library now — and keeps everything else:
    the statement, the three terms, the recommended books and the series. */
 const LIBRARY = {
-  lede: "All the stories, in one place."
+  lede: "All 101 stories, in one place."
 };
 const LISTENING = {
   lede: "Some books are better said than read."
