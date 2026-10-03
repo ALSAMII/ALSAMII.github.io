@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 124 · last updated 2026-10-02 15:14 PDT
+   Version 125 · last updated 2026-10-02 15:52 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -840,7 +840,7 @@ function mobNav(){
    ordered list of 94 — that is the Library now — and keeps everything else:
    the statement, the three terms, the recommended books and the series. */
 const LIBRARY = {
-  lede: "One hundred and one ways out of your own head."
+  lede: "Every cover here is a door."
 };
 const LISTENING = {
   lede: "Some books are better said than read."

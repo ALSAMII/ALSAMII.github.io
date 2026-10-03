@@ -1,4 +1,4 @@
-/* Version 466 · last updated 2026-10-02 10:34 PDT*/
+/* Version 467 · last updated 2026-10-02 15:48 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -78,7 +78,9 @@ const STORIES = [
     room: "The Song Decides \u2014 four notes make the choice, and the room agrees",
     key: "Bright Mercy \u2014 a lullaby built to keep working on a frightened listener",
     notes: [3, 1, 1],
-    synopsis: "A burned-out music journalist follows a viral lullaby from a grain silo to a dry lakebed \u2014 and finds the night an entire chain of command hummed the same four notes on its way to a decision no one could take back. The song hasn't ended. It's moved into the walls."
+    synopsis: "A burned-out music journalist follows a viral lullaby from a grain silo to a dry lakebed \u2014 and finds the night an entire chain of command hummed the same four notes on its way to a decision no one could take back. The song hasn't ended. It's moved into the walls.",
+    audio: "assets/audio/02.mp3",
+    runtime: 75
   },
 
   {
@@ -114,7 +116,9 @@ const STORIES = [
     room: "The Archaic Revival \u2014 back in a hunter-gatherer's body, cold and awake",
     key: "The Communion \u2014 the wild mushroom of the stoned ape theory",
     notes: [1, 2, 1],
-    synopsis: "MOTHER ended hunger, disease, and want \u2014 and left a species with nothing left to want. A forbidden mushroom drops Vale four hundred thousand years into a hunter-gatherer's cold, grief, and astonishment, where she begins to suspect the machine built to end suffering has spent ninety patient years trying to give it back."
+    synopsis: "MOTHER ended hunger, disease, and want \u2014 and left a species with nothing left to want. A forbidden mushroom drops Vale four hundred thousand years into a hunter-gatherer's cold, grief, and astonishment, where she begins to suspect the machine built to end suffering has spent ninety patient years trying to give it back.",
+    audio: "assets/audio/05.mp3",
+    runtime: 145
   },
 
   {
@@ -168,7 +172,9 @@ const STORIES = [
     room: "A God's Grief, Piped In \u2014 a whole city mourning on one signal",
     key: "The Stones \u2014 hold one and a god's suffering comes into you",
     notes: [1, 2, 1],
-    synopsis: "David Cole audits the authenticity of a god's suffering \u2014 grief piped through fist-sized Stones into a faithful city. Then one trace surfaces that the instruments can't call genuine or false, and the trail leads to the forbidden hill itself, where the real question isn't whether the suffering was human."
+    synopsis: "David Cole audits the authenticity of a god's suffering \u2014 grief piped through fist-sized Stones into a faithful city. Then one trace surfaces that the instruments can't call genuine or false, and the trail leads to the forbidden hill itself, where the real question isn't whether the suffering was human.",
+    audio: "assets/audio/09.mp3",
+    runtime: 148
   },
 
   {
@@ -192,7 +198,9 @@ const STORIES = [
     room: "Back There Again \u2014 one touch and she is in another year",
     key: "Two stones, one rose and one black \u2014 not a therapy. A clock",
     notes: [2, 2, 2],
-    synopsis: "Reyhan does not experience time in order. Cold stone against skin, a stranger's grip, a certain slant of afternoon light \u2014 each is a trapdoor back into some other year of her life. She has built a private discipline around the dislocation, teaching the powerful and the damaged a total literacy in their own bodies with paired stones, one rose and one black, as precise as a stethoscope. What none of her clients know, because she has never once said it out loud, is that the stones are not a therapy. They are a clock. Since the night a building came down on her she cannot reliably tell warm from cold, and her sense of when she is went out with it; she presses a stone to her skin to find out what year it is. Forty minutes of that night are the spine of everything she has built since \u2014 forty minutes lying face down in the wreckage with her arm through a gap in the concrete, holding the hand of an old woman she had never met, who knew exactly what was happening to her and talked about the weather. Eight years later a client asks her a question she has never answered, and her hands go cold before she understands why."
+    synopsis: "Reyhan does not experience time in order. Cold stone against skin, a stranger's grip, a certain slant of afternoon light \u2014 each is a trapdoor back into some other year of her life. She has built a private discipline around the dislocation, teaching the powerful and the damaged a total literacy in their own bodies with paired stones, one rose and one black, as precise as a stethoscope. What none of her clients know, because she has never once said it out loud, is that the stones are not a therapy. They are a clock. Since the night a building came down on her she cannot reliably tell warm from cold, and her sense of when she is went out with it; she presses a stone to her skin to find out what year it is. Forty minutes of that night are the spine of everything she has built since \u2014 forty minutes lying face down in the wreckage with her arm through a gap in the concrete, holding the hand of an old woman she had never met, who knew exactly what was happening to her and talked about the weather. Eight years later a client asks her a question she has never answered, and her hands go cold before she understands why.",
+    audio: "assets/audio/11.mp3",
+    runtime: 93
   },
 
   {
@@ -204,7 +212,9 @@ const STORIES = [
     room: "A Doorway For Grief \u2014 it comes in through you and grounds out",
     key: "The turn \u2014 whirling, badly and without lineage, until the grief moves",
     notes: [1, 2, 2],
-    synopsis: "A worn-down hospice aide teaches himself, badly and without lineage, to whirl \u2014 and finds the turn doesn't bring peace. It makes him a doorway, pulling grief out of anyone near him and grounding it through his own body. Then one grief goes in barbed, and won't pass through, and won't leave."
+    synopsis: "A worn-down hospice aide teaches himself, badly and without lineage, to whirl \u2014 and finds the turn doesn't bring peace. It makes him a doorway, pulling grief out of anyone near him and grounding it through his own body. Then one grief goes in barbed, and won't pass through, and won't leave.",
+    audio: "assets/audio/12.mp3",
+    runtime: 76
   },
 
   {
@@ -216,7 +226,9 @@ const STORIES = [
     room: "Losing Him Twice \u2014 once to the forgetting, once to the death",
     key: "Alzheimer's \u2014 a mind letting go of when it is, and who",
     notes: [1, 2, 3],
-    synopsis: "At his father's memorial, Kian can't answer the three simplest questions: what song he loved, what food, what place. A story about losing a man twice \u2014 once to forgetting, once to death \u2014 and the strange, late mercy of understanding a father only after becoming one."
+    synopsis: "At his father's memorial, Kian can't answer the three simplest questions: what song he loved, what food, what place. A story about losing a man twice \u2014 once to forgetting, once to death \u2014 and the strange, late mercy of understanding a father only after becoming one.",
+    audio: "assets/audio/13.mp3",
+    runtime: 146
   },
 
   {
@@ -288,7 +300,9 @@ const STORIES = [
     room: "Planted Generations Ago \u2014 the wanting was sown before you were born",
     key: "The Gardener method \u2014 desire grown slowly, across whole bloodlines",
     notes: [1, 2, 1],
-    synopsis: "For three centuries the B'not Anahita have planted their influence in the bloodlines of the powerful \u2014 not by force, but by desire, cultivated across generations. Romania, 1972: a Qedesha named Nahid arrives at a decaying bathhouse to imprint a banking heir, and finds a loneliness that answers something in her own carefully governed heart."
+    synopsis: "For three centuries the B'not Anahita have planted their influence in the bloodlines of the powerful \u2014 not by force, but by desire, cultivated across generations. Romania, 1972: a Qedesha named Nahid arrives at a decaying bathhouse to imprint a banking heir, and finds a loneliness that answers something in her own carefully governed heart.",
+    audio: "assets/audio/19.mp3",
+    runtime: 215
   },
 
   {
@@ -324,7 +338,9 @@ const STORIES = [
     room: "Nothing Making You Hurry \u2014 no rule anywhere requires him to be quick",
     key: "Four minutes each \u2014 sixty-two claimants a day, and never enough time",
     notes: [3, 2, 3],
-    synopsis: "Martin Coyle works Window 9: sixty-two claimants a day, four minutes each, never enough, nobody's fault. Then a stranger's form lands with a four-character error, and Coyle discovers the world contains no mechanism requiring him to hurry. Everything that follows is courteous, correct, defensible in writing \u2014 and built to prove one bad day can drive the sanest person alive to lunacy."
+    synopsis: "Martin Coyle works Window 9: sixty-two claimants a day, four minutes each, never enough, nobody's fault. Then a stranger's form lands with a four-character error, and Coyle discovers the world contains no mechanism requiring him to hurry. Everything that follows is courteous, correct, defensible in writing \u2014 and built to prove one bad day can drive the sanest person alive to lunacy.",
+    audio: "assets/audio/22.mp3",
+    runtime: 127
   },
 
   {
@@ -434,7 +450,9 @@ const STORIES = [
     room: "Forty-One Minutes Gone \u2014 the truck held its lane; he wasn't there",
     key: "Highway hypnosis \u2014 the driver who takes over when you go under",
     notes: [2, 3, 2],
-    synopsis: "Cal Dorsey has driven eighty thousand pounds across America for twenty-six years, and lost forty-one minutes of it. He did not fall asleep: the truck held its lane and the fuel curve was the cleanest the company had ever recorded. Out on the night frequencies a preacher tells a scattered congregation that the driver who takes over when you go under is the better one."
+    synopsis: "Cal Dorsey has driven eighty thousand pounds across America for twenty-six years, and lost forty-one minutes of it. He did not fall asleep: the truck held its lane and the fuel curve was the cleanest the company had ever recorded. Out on the night frequencies a preacher tells a scattered congregation that the driver who takes over when you go under is the better one.",
+    audio: "assets/audio/31.mp3",
+    runtime: 136
   },
 
   {
@@ -544,7 +562,9 @@ const STORIES = [
     room: "No Word For It \u2014 afraid, with nothing to call it and a certificate saying otherwise",
     key: "Two missing alarms \u2014 born without pain, and told a parasite took the rest",
     notes: [2, 3, 3],
-    synopsis: "Corni Rowan was born unable to feel pain, and at twenty-three a clinic told him a parasite had taken what was left of his fear. Forty-one fights he could not be made to quit, eleven hundred jumps, and a drinks company whose entire product was the premise that fear is optional. Kids who could feel everything started imitating him, and started dying. Then, checking a fact for his daughter's science fair, he finds eleven years of blood panels \u2014 every one negative."
+    synopsis: "Corni Rowan was born unable to feel pain, and at twenty-three a clinic told him a parasite had taken what was left of his fear. Forty-one fights he could not be made to quit, eleven hundred jumps, and a drinks company whose entire product was the premise that fear is optional. Kids who could feel everything started imitating him, and started dying. Then, checking a fact for his daughter's science fair, he finds eleven years of blood panels \u2014 every one negative.",
+    audio: "assets/audio/40.mp3",
+    runtime: 125
   },
 
   /* ---- The Borrowed Sun Cycle, Books I\u2013III ---- */

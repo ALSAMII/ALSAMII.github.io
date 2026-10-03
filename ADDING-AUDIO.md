@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-01 -->
+<!-- Updated 2026-10-02 -->
 # Adding a narration
 
 Two things a book can have, independently of each other:
@@ -34,8 +34,9 @@ three at once:
 
 ## Which books are narrated
 
-**6**, **7**, **8**, **26**, **35**, **52**, **78** and **102** carry
-`audio` today — eight books, 21.5 hours.
+**2**, **5**, **6**, **7**, **8**, **9**, **11**, **12**, **13**, **19**,
+**22**, **26**, **31**, **35**, **40**, **52**, **78** and **102** carry
+`audio` today — eighteen books, **42 h 22 m**.
 
 ⚠ **Book 1's recording is orphaned.** `assets/audio/01.mp3` (24 MB) and
 `read/01.sync.json` are both published and both fetchable by URL, but
@@ -46,18 +47,22 @@ the recording is still wanted.
 
 ### Every recording so far opens with music
 
-The five added on 2026-10-01 each begin with an intro cue of roughly
-eleven seconds, and **it is not the same length in each book** — the gap
-between the music ending and the first word runs from 10.4s to 14.3s.
-Measure it per book rather than assuming eleven; the value used for each:
+Every recording begins with an intro cue of roughly eleven seconds, and
+**it is not the same length in any two books** — across the thirteen
+measured so far the gap between the music ending and the first word runs
+from 10.4s to 14.8s, and **not one of them is actually 11.0**. Measure it
+per book rather than assuming eleven; the value used for each:
 
-| book | `--intro` |
-|---|---|
-| 78 | 11.2 |
-| 8 | 12.8 |
-| 26 | 14.0 |
-| 52 | 12.2 |
-| 102 | 11.3 |
+| book | `--intro` | | book | `--intro` |
+|---|---|---|---|---|
+| 2 | 12.9 | | 19 | 11.7 |
+| 5 | 14.2 | | 22 | 13.4 |
+| 8 | 12.8 | | 26 | 14.0 |
+| 9 | 13.7 | | 31 | 12.6 |
+| 11 | 11.9 | | 40 | 11.7 |
+| 12 | 11.5 | | 52 | 12.2 |
+| 13 | 14.8 | | 78 | 11.2 |
+|  |  | | 102 | 11.3 |
 
 To measure a new one, find where the music stops and the voice starts:
 
@@ -196,34 +201,56 @@ what they're for.
 
 ## A note on hosting
 
-**Where it stands after the five added on 2026-10-01:** eight recordings
-occupy about **270 MB**, and the repository is roughly **733 MB** against
-the 1 GB soft limit GitHub Pages puts on a published site. That leaves
-about 265 MB — five or six more narrations at the current average, and
-that is before the next dozen books bring their own PDFs and cover art.
+⚠ **An earlier version of this page said the five added on 2026-10-01
+were encoded at 32kbps. They were not — all nine recordings that existed
+before 2026-10-02 were at the 48kbps default.** Book 78 is 6,201 s and
+was 37.2 MB, which is 48k exactly. The headroom this page quoted off that
+claim did not exist.
 
-**These five were encoded at 32kbps mono, not the 48kbps default**, which
-is why the number is 733 MB and not 837 MB. At 48k the five would have
-run 312 MB rather than 208 MB. 32kbps mono is clean for a single
-unaccompanied voice; it is the sensible setting for anything this long
-from here on, and `--bitrate 32k` is how to ask for it.
+**Where it stands after the ten added on 2026-10-02.** Every one of the
+nineteen recordings is now **32kbps mono, 22.05kHz** — the ten new ones
+encoded that way from the source, the nine older ones re-encoded down
+from 48k. The audio occupies **628 MB** and the repository **1,028 MB
+(980 MiB)** against the 1 GB soft limit GitHub Pages puts on a published
+site.
 
-**The decision that is now close.** Two honest options remain when the
-room runs out: drop to 24kbps, or move the audio off the repository
-altogether and point `audio:` at a full URL — which the field already
-supports, and `roya-library.js` explicitly handles (it leaves an absolute
-address alone rather than resolving it against the site). Nothing in
-`script.js` requires a relative path either. Moving the existing eight
-off the repo would hand back about 270 MB in one step.
+**That is about 96% of the ceiling. There is room for no more audio.**
+Re-encoding the old nine was the last easy 148 MB and it has been spent.
+
+32kbps mono is clean for a single unaccompanied voice and is the setting
+for anything this long; `--bitrate 32k` is how to ask for it. Encoding
+by hand, which is what was done for these, is:
+
+```
+ffmpeg -i source.mp3 -ac 1 -ar 22050 -b:a 32k -map_metadata -1 assets/audio/NN.mp3
+```
+
+**The decision, no longer close.** The twentieth recording does not fit.
+Two honest options:
+
+- **Drop to 24kbps.** Hands back about 157 MB across the nineteen, and
+  buys perhaps four more books. It is the same conversation again in a
+  month, at audibly worse quality.
+- **Move the audio off the repository** and point `audio:` at a full URL
+  — which the field already supports, and `roya-library.js` explicitly
+  handles (it leaves an absolute address alone rather than resolving it
+  against the site). Nothing in `script.js` requires a relative path
+  either. This hands back **628 MB in one step** and removes the ceiling
+  rather than moving it.
+
+⚠ **`assets/audio/01.mp3` is still orphaned** — 16.6 MB published,
+fetchable, and linked from nothing, because book 1 has no `audio` field
+(see above). Either wire it up or delete it; at 96% of the limit it is
+not free to leave sitting there.
 
 ## ⚠ The browser cannot upload these
 
 GitHub's web interface — the "Add file → Upload files" screen — **caps at
-25 MiB per file**. Every narration so far exceeds that, so the audio
-cannot be added through github.com. It has to go up through `git push`
-from a clone (or GitHub Desktop). Git's own limits are a warning at 50
-MiB and a hard block at 100 MiB; the largest recording here, book 102 at
-59 MB, sits between the two, so expect the warning and ignore it.
+25 MiB per file**. Every narration exceeds that, so the audio cannot be
+added through github.com. It has to go up through `git push` from a clone
+(or GitHub Desktop). Git's own limits are a warning at 50 MiB and a hard
+block at 100 MiB; the largest recording, book 102 at 59 MB, sits between
+the two, so expect the warning and ignore it.
 
 ## ⚠ numpy 2.x breaks the aligner
 
