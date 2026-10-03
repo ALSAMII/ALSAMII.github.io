@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 130 · last updated 2026-10-02 17:46 PDT
+   Version 131 · last updated 2026-10-02 19:08 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -3368,9 +3368,18 @@ body.rl-on #toTop{z-index:71}
   stroke:currentColor; stroke-width:1.5}
 #royaLibrary .lr-zoom:hover{background:rgba(11,9,7,.8); border-color:var(--gold-lt)}
 #royaLibrary .lr-body{flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:.55rem}
-#royaLibrary .lr-kick{display:block;
-  font-family:var(--cond); font-weight:600; font-size:.5625rem; letter-spacing:.26em;
-  text-transform:uppercase; color:var(--ochre)}
+/* ── the number, as the recommended rows set it ──
+   The About page already has a house way of printing a catalogue number
+   beside a title — .ab-head b: the book face at 1.5rem in ochre, the numeral
+   plain with no label in front of it. Two sections printing the same fact two
+   different ways is the kind of difference a reader notices without being
+   able to say what it is, so the Listening Room takes that setting exactly.
+   Values copied from .ab-head b rather than referenced: the two live in
+   different parts of the sheet and a shared custom property here would read
+   as a dependency the About rows do not actually have. */
+#royaLibrary .lr-kick{display:block; margin-bottom:.1rem;
+  font-family:var(--book); font-weight:500; font-size:1.5rem; line-height:1.15;
+  letter-spacing:normal; text-transform:none; color:var(--ochre)}
 #royaLibrary .lr-t{margin:0}
 #royaLibrary .lr-t button{font-family:var(--book); font-weight:500; font-size:1.9rem;
   line-height:1.1; color:var(--bone); background:none; border:0; padding:0; cursor:pointer;
@@ -3393,7 +3402,7 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary .lr-lsn{display:inline-flex; flex-direction:column; align-items:center;
   gap:.5rem}
 #royaLibrary .lr-run{font:inherit; letter-spacing:inherit; text-transform:inherit;
-  color:var(--bone); font-variant-numeric:tabular-nums; white-space:nowrap}
+  color:var(--ochre); font-variant-numeric:tabular-nums; white-space:nowrap}
 /* "Read instead" is a single line beside a two-line stack, so the row aligns
    at the top and this drops it onto the Listen mark's own centre line. */
 #royaLibrary .lr-read{margin-top:.42em}
@@ -3415,6 +3424,10 @@ body.rl-on #toTop{z-index:71}
   #royaLibrary .lr-t button{font-size:1.45rem}
   #royaLibrary .lr-syn{font-size:1rem; -webkit-line-clamp:3; margin-bottom:.2rem}
   #royaLibrary .lr-acts{gap:1rem}
+  /* the recommended rows step their number down on a phone (.mob-sec sets
+     1.25rem); the Listening Room follows, or the two stop matching at exactly
+     the width where they are most likely to be compared on one screen */
+  #royaLibrary .lr-kick{font-size:1.25rem}
 }
 :root[data-lt="light-off"] #royaLibrary .lr-row{border-bottom-color:rgba(96,76,42,.22)}
 :root[data-lt="light-off"] #royaLibrary .lr-t button{color:#1d1710}

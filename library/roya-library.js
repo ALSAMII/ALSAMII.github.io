@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 126 · last updated 2026-10-02 17:46 PDT
+   Version 127 · last updated 2026-10-02 19:08 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1203,7 +1203,7 @@ function listeningBody(){
           aria-label="View the ${esc(b.t)} cover full size" title="View full size">${DICON.zoom}</button>
       </span>
       <div class="lr-body">
-        <span class="lr-kick">No. ${b.n}</span>
+        <span class="lr-kick">${b.n}</span>
         <h3 class="lr-t"><button type="button" data-rec="${b.n}">${esc(b.t)}</button></h3>
         <p class="lr-syn">${esc(b.syn || b.hook + ".")}</p>
         <span class="lr-acts">
