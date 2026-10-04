@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 132 · last updated 2026-10-03 06:40 PDT
+   Version 133 · last updated 2026-10-03 14:02 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -1452,9 +1452,15 @@ function mobSheet(){
    until their audio arrives. The field is the same audio: on stories.js
    that ADDING-AUDIO.md already defines; nothing new has to be set. */
 function readRow(b, cls){
-  const read = `<span class="${cls}" role="button" tabindex="0" data-read="${b.n}">Read story ${DICON.arrow}</span>`;
-  if (!b.audio) return read;
-  return `<span class="${cls}s is-split">${read}` +
+  const open = `<span class="${cls}" role="button" tabindex="0" data-read="${b.n}">`;
+  /* The arrow belongs to the full-width control, where it sits at the far end
+     of a long box and means "onward". In the split row it has nothing to
+     point across — the box is half as wide and shares its line with Listen,
+     which carries a mark of its own — so the two read as a pair of marks
+     rather than one label and one arrow. Dropping it also gives the label
+     back about 20px, which is most of what made it tight in the first place. */
+  if (!b.audio) return `${open}Read story ${DICON.arrow}</span>`;
+  return `<span class="${cls}s is-split">${open}Read story</span>` +
          `<span class="${cls} is-listen" role="button" tabindex="0" data-listen="${b.n}"` +
          ` aria-label="Listen to ${esc(b.t)}">${DICON.listen} Listen</span></span>`;
 }
