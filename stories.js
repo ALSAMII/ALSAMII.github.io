@@ -1,4 +1,4 @@
-/* Version 468 · last updated 2026-10-03 05:42 PDT*/
+/* Version 469 · last updated 2026-10-04 11:36 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1165,7 +1165,9 @@ const STORIES = [
     room: "The Desk — home, from four in the afternoon until two in the morning, six hundred nights running, a lamp, and four hundred thousand questions behind him",
     key: "If You Don't Know, Leave It — his father's own six-word rule for the exam, meant for both of them; the father has kept it for twenty-nine years and the son has never once left an answer blank.",
     notes: [2, 2, 3],
-    synopsis: "Mehdi Amini is eighteen. He has slept three hours a night for six hundred nights and answered four hundred thousand practice questions for an examination that scores a correct answer, docks a wrong one, and charges nothing for a blank. His father marks konkoor papers at night, by the page, for an institute whose course costs more in a month than he earns in four — and his own advice, six words long, is if you don't know, leave it. Mehdi has never once left one blank. Nine hundred and fifty thousand candidates sit down on one morning in Tir; one in ten will be given a place."
+    synopsis: "Mehdi Amini is eighteen. He has slept three hours a night for six hundred nights and answered four hundred thousand practice questions for an examination that scores a correct answer, docks a wrong one, and charges nothing for a blank. His father marks konkoor papers at night, by the page, for an institute whose course costs more in a month than he earns in four — and his own advice, six words long, is if you don't know, leave it. Mehdi has never once left one blank. Nine hundred and fifty thousand candidates sit down on one morning in Tir; one in ten will be given a place.",
+    audio: "assets/audio/89.mp3",
+    runtime: 93
   },
 
   {
