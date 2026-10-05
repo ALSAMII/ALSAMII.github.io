@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 138 · last updated 2026-10-05 15:52 PDT
+   Version 140 · last updated 2026-10-05 16:21 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2172,15 +2172,16 @@
 #royaLibrary .mob-sec .ab-gh-t{flex:1 1 auto; min-width:0}
 #royaLibrary .mob-sec .ab-gh-marg{flex:0 0 auto; align-self:center;
   font-size:0; position:relative; pointer-events:none;
-  /* 118px against the old 512-wide canvas; 130 against the 560 two rows need,
-     which keeps the writing at the size it was. */
-  width:130px; height:0;}
+  /* 118px against the old 512-wide canvas; 130 against the 560 two rows need
+     would hold the writing at the size it was. 83 takes it a third below that
+     — the size asked for — and gives the heading back the width it frees. */
+  width:83px; height:0;}
 #royaLibrary .mob-sec .ab-gh-marg::before{content:""; position:absolute;
   left:0; right:0; top:50%; translate:0 -50%;
   aspect-ratio:560/415;
   background-color:var(--paper-dust);
-  -webkit-mask:url("art/marg2.webp?v=566") no-repeat center/contain;
-          mask:url("art/marg2.webp?v=566") no-repeat center/contain;
+  -webkit-mask:url("art/marg2.webp?v=568") no-repeat center/contain;
+          mask:url("art/marg2.webp?v=568") no-repeat center/contain;
   opacity:.19; filter:blur(.3px); transform:rotate(-8deg);}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
