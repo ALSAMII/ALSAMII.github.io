@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 145 · last updated 2026-10-05 21:20 PDT
+   Version 146 · last updated 2026-10-05 21:30 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -872,27 +872,27 @@
      bristle lanes at the right that each run out at their own length into dry
      streaks and flecks.
 
-     The mark hangs off a ::before so nothing about the line changes. This
-     element keeps line-height:0 — the numeral still hangs out of the line box
-     rather than opening it, and the paragraph is exactly as tall as it was.
-     Measured rather than guessed: with line-height:0 the relatively-positioned
-     inline box still reports the glyph box — 42px for a 38px figure — so the
-     mark is placed against that, in em, and sits over the numeral rather than
-     above it. An earlier pass assumed the box collapsed to the baseline and
-     put the stroke a whole brush-height too high.
+     ── why the paint is this element's own background and not a ::before ──
+     It was a positioned ::before, sized in em and placed by eye against a
+     rendered page. That is only ever right for the font it was measured
+     against: the first version was tuned where the webfont had not loaded, and
+     on the live page — which has Cormorant Garamond, a face with a small
+     x-height and tall ascenders — the figure sat low and left of its own mark
+     and fell off the paint entirely.
 
-     isolation:isolate rather than a bare z-index:-1: it keeps the mark inside
-     this element's own stacking context, behind its figure and in front of
-     whatever ground the panel happens to have, instead of sliding behind an
-     ancestor's background on some future change to the panel. */
-  position:relative; isolation:isolate;
-  /* More paint to the right than the left, because that is the end the
-     bristles trail off into; the box also sits near the artwork's own 2:1 so
-     the frayed detail is not stretched out of shape. */
-  padding:0 .72em 0 .34em; color:#16130F;}
-#royaLibrary .ab-count::before{content:""; position:absolute; z-index:-1;
-  left:0; right:0; top:-.15em; height:1.36em;
-  background:url("art/brush.webp?v=574") no-repeat center/100% 100%;}
+     An inline box's background paints its content box, which IS the font's em
+     box, plus whatever padding is set on it. So the paint now follows the
+     glyphs by construction, in whatever face actually loads, rather than being
+     positioned against one. Backgrounds on an inline take part in no layout, so
+     this keeps the property the ::before was there for: line-height stays 0,
+     the numeral still hangs out of the line box rather than opening it, and the
+     paragraph is exactly as tall as it was.
+
+     More paint to the right than the left, because that is the end the bristles
+     trail off into. */
+  padding:.22em .72em .22em .34em;
+  background:url("art/brush.webp?v=575") no-repeat center/100% 100%;
+  color:#16130F;}
 /* Parked with the rest of the light theme. The stroke is painted artwork now
    rather than a mask, so a light page needs its own file — a dark mark with
    the figure knocked out pale — not a colour swap. Recorded here so the
@@ -2214,8 +2214,8 @@
   left:0; right:0; top:50%; translate:0 -50%;
   aspect-ratio:560/415;
   background-color:var(--paper-dust);
-  -webkit-mask:url("art/marg2.webp?v=574") no-repeat center/contain;
-          mask:url("art/marg2.webp?v=574") no-repeat center/contain;
+  -webkit-mask:url("art/marg2.webp?v=575") no-repeat center/contain;
+          mask:url("art/marg2.webp?v=575") no-repeat center/contain;
   opacity:.19; filter:blur(.3px); transform:rotate(-8deg);}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
