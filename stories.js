@@ -1,4 +1,4 @@
-/* Version 469 · last updated 2026-10-04 11:36 PDT*/
+/* Version 470 · last updated 2026-10-05 18:02 PDT*/
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -1299,6 +1299,17 @@ const STORIES = [
   },
 
   {
+    num: 101,
+    title: "What Are You Going Through",
+    words: "16,000 words",
+    hook: "The machine reads the scans better than he does, so the hospital finds him the one part of the job it cannot do",
+    door: "Rite",
+    room: "The Small Room — four a day, then nine, then twelve: a family, a chair, and a man who turns out to be remarkable at the pause and at not filling the gap",
+    key: "The Exception Queue — the cases the system hands back, routed to the one reader whose figures for this have never looked better",
+    notes: [2, 2, 3],
+    synopsis: "Gene Mazur has read scans in a dark room in Erie for twenty-six years. It is work he is good at, it is work nobody watches him do, and he chose the dark room on purpose a long time ago after a conversation in a corridor that went badly. Then the hospital installs something that reads them better than he does — and finds a use for him. There is one part of the job it cannot do, which is sitting in a small room with a family while they are told, and he turns out to be remarkable at it. Four a day becomes nine. Nine becomes twelve. The figures the hospital keeps have never looked better and the families are, by every measure anybody takes, genuinely helped. What nobody can see — including him, for most of a year — is that the hour he gives them is coming out of him, at par, and that it is not coming back. There is no villain in this book and nothing in it is done badly, which is the condition of the problem rather than a softening of it."
+  },
+  {
     num: 102,
     title: "Contained, Mostly, the Fire Said",
     words: "39,100 words",
@@ -1321,6 +1332,17 @@ const STORIES = [
     key: "Pesar Khaleh — a machine on a laptop trained on forty years of his own notebooks, which transcribes, numbers the entries, keeps the pauses, and has kept more records than he asked for",
     notes: [1, 1, 3],
     synopsis: "Manuchehr Delgoshā is sixty-eight, nearly blind, and has spent forty years writing the jokes a country repeats without once putting his name on one. The syrup took the middle of his sight, and the dark it left behind fills with people — fully formed, silent, courteous — who are not there. Nazanin comes at eight-thirty and leaves at six. Roshanak has called every Wednesday for eleven years. His brother came back, which is not the same as coming home. And on a laptop in the corner a machine trained on his own notebooks transcribes everything, numbers it, and keeps the pauses. A man who spent his life in the dark writing other people’s words is asked to speak. He speaks. This is what came out."
+  },
+  {
+    num: 104,
+    title: "A Centimetre a Month",
+    words: "34,000 words",
+    hook: "Inside the shop every woman takes her scarf off; outside, every woman puts it back on — and the difference is a door",
+    door: "Withholding",
+    room: "The Painted Window — a hair salon in southern Tehran with its street glass blocked out because that is the law, and four metres of ground on which the same women are two different things",
+    key: "The Second Column — an old exercise book from her aunt: how long each head was and what was in it down one side, what it had already cost the woman wearing it down the other, in smaller and smaller handwriting",
+    notes: [3, 2, 3],
+    synopsis: "A hair salon in southern Tehran has its street window painted over, because that is the law. Inside, every woman takes her scarf off. Outside, every woman puts it back on. It is the same women and the same four metres of ground, and the difference is a door. A girl of fourteen comes to work at the back, washing hair. Her aunt gives her an old exercise book and tells her to write down what is there — how long it was, what was in it. The girl asks who wants it. Nobody wants it, her aunt says. Write it down anyway. She is told she must cover her own hair so that men are not stirred; she cannot make the reason work, and for five years nobody will help her make it work. And when her hands are in the water she begins to know, without wanting to and without being able to stop, what each head has already cost the woman wearing it. A morning. An afternoon in a van. Four years of six o’clock telephone calls. A room with no window. So the book in the drawer grows a second column, in smaller and smaller handwriting, and by the time she is nineteen it is the only place on earth where any of it has been added up. Then a man comes to the shop with a folder, and he is polite, and he wants to know who started it."
   }
 
 ];
@@ -1563,9 +1585,9 @@ const TRILOGIES = [
   {
     title: "Come In, the Water Is Lovely",
     label: "",
-    books: [93, 95, 97],
+    books: [93, 95, 97, 101],
     /* No count on the row. The author's note calls this a set of five
-       and three of them have been published, so a count on the row
+       and four of them have been published, so a count on the row
        would be true of the shelf and wrong about the book; the heading
        gathers them and the number stays off until the set is whole. */
     numbered: false,
@@ -1589,7 +1611,7 @@ const TRILOGIES = [
        whoever signs, files, weighs or looks away. */
     title: "From the Unsaid · ناگفته",
     label: "",
-    books: [78, 80, 83, 86, 89, 92, 94, 99],
+    books: [78, 80, 83, 86, 89, 92, 94, 99, 104],
     /* No "3 of 7" on the rows. These books are standalones that share
        a narrator, a form or a preoccupation, and they say so
        themselves — No. 81 opens by telling a reader they may be read
