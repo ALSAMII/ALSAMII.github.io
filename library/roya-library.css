@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 146 · last updated 2026-10-05 21:30 PDT
+   Version 147 · last updated 2026-10-05 21:38 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -889,8 +889,17 @@
      paragraph is exactly as tall as it was.
 
      More paint to the right than the left, because that is the end the bristles
-     trail off into. */
-  padding:.22em .72em .22em .34em;
+     trail off into.
+
+     The vertical padding is deliberately uneven. Cormorant Garamond sets its
+     figures low in the em box, so a mark centred on that box sits with the
+     numeral about a ninth of its height below centre. Moving .16em of padding
+     from the top to the bottom slides the paint down by that much without
+     changing its height, which puts the figure on the mark's centre line.
+     This is the one measurement here that is specific to the face: in a
+     fallback the numeral rides slightly high instead, which is the harmless
+     direction to be wrong in. */
+  padding:.06em .72em .38em .34em;
   background:url("art/brush.webp?v=575") no-repeat center/100% 100%;
   color:#16130F;}
 /* Parked with the rest of the light theme. The stroke is painted artwork now
