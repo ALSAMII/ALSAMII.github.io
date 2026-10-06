@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 143 · last updated 2026-10-05 18:05 PDT
+   Version 145 · last updated 2026-10-05 21:20 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -861,9 +861,43 @@
    than a different hue from it. */
 #royaLibrary .ab-count{font-family:"Cormorant Garamond","EB Garamond",Georgia,serif;
   font-style:italic; font-weight:600; font-size:1.9em; line-height:0;
-  letter-spacing:.005em; color:#f3e8cf;
-  vertical-align:.08em; margin:0 .14em 0 0;}
-:root[data-lt="light-off"] #royaLibrary .ab-count{color:#2a2114}
+  letter-spacing:.005em;
+  vertical-align:.08em; margin:0 .2em 0 .04em;
+  /* ── the number sits on a painted stroke ──
+     The figure is knocked out of a brush mark rather than set in cream on the
+     ground. `art/brush.webp` is painted artwork, not a mask: the mark carries
+     its own two tones — #D7C39A base drifting into #BCA57A — with an ink grain
+     multiplied over it at 25%, which a single-colour mask cannot hold. It is
+     generated rather than drawn: a frayed, bitten left edge, and fifty-four
+     bristle lanes at the right that each run out at their own length into dry
+     streaks and flecks.
+
+     The mark hangs off a ::before so nothing about the line changes. This
+     element keeps line-height:0 — the numeral still hangs out of the line box
+     rather than opening it, and the paragraph is exactly as tall as it was.
+     Measured rather than guessed: with line-height:0 the relatively-positioned
+     inline box still reports the glyph box — 42px for a 38px figure — so the
+     mark is placed against that, in em, and sits over the numeral rather than
+     above it. An earlier pass assumed the box collapsed to the baseline and
+     put the stroke a whole brush-height too high.
+
+     isolation:isolate rather than a bare z-index:-1: it keeps the mark inside
+     this element's own stacking context, behind its figure and in front of
+     whatever ground the panel happens to have, instead of sliding behind an
+     ancestor's background on some future change to the panel. */
+  position:relative; isolation:isolate;
+  /* More paint to the right than the left, because that is the end the
+     bristles trail off into; the box also sits near the artwork's own 2:1 so
+     the frayed detail is not stretched out of shape. */
+  padding:0 .72em 0 .34em; color:#16130F;}
+#royaLibrary .ab-count::before{content:""; position:absolute; z-index:-1;
+  left:0; right:0; top:-.15em; height:1.36em;
+  background:url("art/brush.webp?v=574") no-repeat center/100% 100%;}
+/* Parked with the rest of the light theme. The stroke is painted artwork now
+   rather than a mask, so a light page needs its own file — a dark mark with
+   the figure knocked out pale — not a colour swap. Recorded here so the
+   restore procedure in this file's header finds a note instead of a surprise. */
+:root[data-lt="light-off"] #royaLibrary .ab-count{color:#ece1c6}
 /* .ab-note--long used to un-slant itself here. .ab-note is roman now, so
    the override said nothing and has gone. */
 /* The dividers used to be a pseudo-element on each cell, positioned against
@@ -2180,8 +2214,8 @@
   left:0; right:0; top:50%; translate:0 -50%;
   aspect-ratio:560/415;
   background-color:var(--paper-dust);
-  -webkit-mask:url("art/marg2.webp?v=570") no-repeat center/contain;
-          mask:url("art/marg2.webp?v=570") no-repeat center/contain;
+  -webkit-mask:url("art/marg2.webp?v=574") no-repeat center/contain;
+          mask:url("art/marg2.webp?v=574") no-repeat center/contain;
   opacity:.19; filter:blur(.3px); transform:rotate(-8deg);}
 #royaLibrary .mob-sec .ab-gh h3{font-size:1.5rem}
 #royaLibrary .mob-sec .ab-gh p{font-size:.9375rem}
