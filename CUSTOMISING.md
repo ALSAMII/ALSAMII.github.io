@@ -769,7 +769,7 @@ Almost everything is a file the repository already has:
 | the three series features | `assets/series-delgosha-cover.webp`, `assets/series-unsaid-wide-5.webp` (with `series-unsaid-tall-3.webp` for narrow), `assets/forough.webp` |
 | the imprint, top of the rail and the phone bar | `assets/roya.png`, cropped in CSS — no second copy ships |
 | PDF, Read and Share | `pdfs/NN.pdf`, `read/NN.json`, `share/NN-slug.html` |
-| the narration, where a book has one | `assets/audio/NN.mp3` — a *Narrated* panel offering Listen here or a download |
+| the narration, where a book has one | `https://f005.backblazeb2.com/file/roya-audio/NN.mp3` — hosted off the repo; a *Narrated* panel offering Listen here or a download |
 | back to the top | the page's own `#toTop`, raised above the section while it is open |
 
 ⚠ **The pair render is asked for as `.webp` first**, and only nine of

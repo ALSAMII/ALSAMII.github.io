@@ -1,11 +1,17 @@
-<!-- Updated 2026-10-02 -->
+<!-- Updated 2026-10-05 — the audio moved off the repository to Backblaze B2 -->
 # Adding a narration
 
 Two things a book can have, independently of each other:
 
-1. **A download link.** Set `audio: "assets/audio/NN.mp3"` on the book in
-   `stories.js`. That alone puts an Audio icon under Read/PDF in its row,
-   linking to the file. Nothing else changes.
+1. **A download link.** Set `audio: "https://f005.backblazeb2.com/file/roya-audio/NN.mp3"` on the book
+   in `stories.js`. That alone puts an Audio icon under Read/PDF in its
+   row, linking to the file. Nothing else changes.
+
+   **The recordings do not live in this repository.** They are on
+   Backblaze B2, in the public bucket `roya-audio`, and the `audio` field
+   carries a whole address rather than a path. `script.js` uses the field
+   raw, and `roya-library.js` tests for an absolute address by name and
+   leaves it alone, so nothing in the code had to change for this.
 
 2. **The synced, highlighted read-along** inside the Read view — a play
    bar, and the sentence being read lights up as it plays. This needs one
@@ -35,15 +41,14 @@ three at once:
 ## Which books are narrated
 
 **2**, **5**, **6**, **7**, **8**, **9**, **11**, **12**, **13**, **19**,
-**22**, **26**, **31**, **35**, **40**, **52**, **78** and **102** carry
-`audio` today — eighteen books, **42 h 22 m**.
+**22**, **26**, **31**, **35**, **40**, **52**, **78**, **89** and **102**
+carry `audio` today — nineteen books, **43 h 55 m**.
 
-⚠ **Book 1's recording is orphaned.** `assets/audio/01.mp3` (24 MB) and
-`read/01.sync.json` are both published and both fetchable by URL, but
-book 1 has no `audio` field, so nothing on the site links to either.
-Almost certainly fallout from the retitle from *The Memory Liturgy* to
-*Quiet Street to the Long Evening*. One line in `stories.js` fixes it, if
-the recording is still wanted.
+Book 1 is the odd one out: `read/01.sync.json` is still published, but
+its recording was never wired up — the `audio` field went missing in the
+retitle from *The Memory Liturgy* to *Quiet Street to the Long Evening* —
+and the orphaned mp3 was deleted on 2026-10-05. If that narration is
+still wanted, upload it to the bucket and add the one line.
 
 ### Every recording so far opens with music
 
@@ -62,6 +67,7 @@ per book rather than assuming eleven; the value used for each:
 | 11 | 11.9 | | 40 | 11.7 |
 | 12 | 11.5 | | 52 | 12.2 |
 | 13 | 14.8 | | 78 | 11.2 |
+| 19 | 11.7 | | 89 | 13.2 |
 |  |  | | 102 | 11.3 |
 
 To measure a new one, find where the music stops and the voice starts:
@@ -79,11 +85,12 @@ first word is not.
 ## ⚠ Audio is NOT cache-busted
 
 Every other asset on the site goes through `stamped()` in `script.js` and
-picks up the `?v=` number. **The audio does not** — `script.js` sets both
-the download link and the player's `src` to the bare `s.audio` path. So
-**replacing a recording at a path that already shipped will not reach
-anyone who has played it once.** If a narration has to be re-cut, give it
-a new filename rather than overwriting, or accept that returning
+picks up the `?v=` number. **The audio does not** — `stamped()` returns an
+absolute address untouched, by design, and `script.js` sets both the
+download link and the player's `src` to the bare `s.audio` value. So
+**replacing a recording at an address that already shipped will not reach
+anyone who has played it once.** If a narration has to be re-cut, upload
+it under a new filename rather than overwriting, or accept that returning
 listeners keep the old one.
 
 ## Building the sync file
@@ -98,7 +105,7 @@ worth knowing:
 | option | default | what it's for |
 |---|---|---|
 | `--intro N` | `0.0` | seconds of music or announcement before the text starts, so the aligner doesn't try to fit words to it |
-| `--bitrate` | `48k` | the compression target; see hosting below |
+| `--bitrate` | `48k` | the compression target. Every shipped recording is **32k** — pass `--bitrate 32k` to match them, or see *A note on hosting* for why 48k is now affordable |
 | `--no-compress` | off | keep the source encoding, write the mp3 as-is |
 | `--align-audio` | — | align against a different file than the one shipped, for a recording whose clean take and final mix differ |
 | `--duration` | — | state the length rather than letting ffmpeg probe it |
@@ -110,17 +117,25 @@ This does three things:
 - Aligns the recording against `read/NN.json` (the text `build-reader.py`
   already pulled from the PDF) sentence by sentence, and writes
   `read/NN.sync.json`.
-- Recompresses the recording for the web — mono, 48kbps, clean for
-  spoken word — and writes it to `assets/audio/NN.mp3`. That path is
-  what belongs in the `audio:` field.
+- Recompresses the recording for the web — mono, clean for spoken word —
+  and writes it to `assets/audio/NN.mp3`. **That file is a staging copy
+  and must not be committed.** `assets/audio/*.mp3` is in `.gitignore`
+  for exactly this reason. Upload it to the bucket; the address, not the
+  path, is what belongs in the `audio:` field.
 - Prints the size before and after, so you can see what it did.
 
 Run `build-reader.py NN` first if `read/NN.json` doesn't exist yet.
 
-Then in `stories.js`, add to that book's entry:
+Then upload it, with the content type set explicitly:
+
+```
+b2 file upload --content-type audio/mpeg roya-audio assets/audio/NN.mp3 NN.mp3
+```
+
+and add to that book's entry in `stories.js`:
 
 ```js
-audio: "assets/audio/NN.mp3"
+audio: "https://f005.backblazeb2.com/file/roya-audio/NN.mp3"
 ```
 
 That's it — the reader picks up the sync file automatically for any book
@@ -199,58 +214,98 @@ those three packages first; everything else `build-audio-sync.py` does
 is check the pip/apt packages are present and this document explains
 what they're for.
 
-## A note on hosting
+## Where the recordings live
 
-⚠ **An earlier version of this page said the five added on 2026-10-01
-were encoded at 32kbps. They were not — all nine recordings that existed
-before 2026-10-02 were at the 48kbps default.** Book 78 is 6,201 s and
-was 37.2 MB, which is 48k exactly. The headroom this page quoted off that
-claim did not exist.
+**Backblaze B2, public bucket `roya-audio`.** Not this repository.
 
-**Where it stands after the ten added on 2026-10-02.** Every one of the
-nineteen recordings is now **32kbps mono, 22.05kHz** — the ten new ones
-encoded that way from the source, the nine older ones re-encoded down
-from 48k. The audio occupies **628 MB** and the repository **1,028 MB
-(980 MiB)** against the 1 GB soft limit GitHub Pages puts on a published
-site.
+| | |
+|---|---|
+| address | `https://f005.backblazeb2.com/file/roya-audio/NN.mp3` |
+| moved | 2026-10-05, nineteen recordings, 605 MiB |
+| repository after | **390 MiB — 38% of the 1 GB Pages limit** |
+| cost | pennies a month; 10 GB of storage is free |
 
-**That is about 96% of the ceiling. There is room for no more audio.**
-Re-encoding the old nine was the last easy 148 MB and it has been spent.
+### How it got here
 
-32kbps mono is clean for a single unaccompanied voice and is the setting
-for anything this long; `--bitrate 32k` is how to ask for it. Encoding
-by hand, which is what was done for these, is:
+The audio was in `assets/audio/` until the repository reached 995 MiB
+against the 1 GB hard limit GitHub Pages puts on a published site. Two
+options were on the table: re-encode everything smaller, or move the files
+off the repository.
+
+Re-encoding was measured and rejected. Dropping the nineteen from 32k to
+Opus 16k — the most aggressive setting that is still listenable — would
+have taken the repository to 720 MiB, which is roughly ten more books
+before the same conversation. At 104 books all narrated it would be about
+3.5 GB of audio, three and a half times the entire allowance. No encoder
+setting survives that. Moving the files off was the only option that
+scales, and it also takes the audio off the Pages bandwidth meter, which
+has a soft 100 GB/month limit.
+
+### ⚠ GitHub Releases was tried first, and does not work
+
+Release assets look ideal: they do not count toward the published site
+size, GitHub documents no bandwidth cap on them, and the range requests a
+scrub bar needs are honoured. The nineteen files were uploaded to a
+release tagged `narrations` and the site was pointed at them.
+
+**It plays in Chrome and fails in Safari.** GitHub serves every release
+asset as `Content-Type: application/octet-stream` and gives no way to
+change that. Chrome treats the content type as a hint and sniffs the bytes;
+Safari treats it as the answer and refuses. Half the readers of a book site
+are on Safari and every iPhone is.
+
+The release still exists and is worth keeping — it costs nothing, is not
+part of the published site, and is a second copy of all nineteen
+recordings somewhere other than B2.
+
+### ⚠ The rule this leaves behind
+
+**Any host for these files must send `Content-Type: audio/mpeg`, and the
+test for it must be run in Safari.** That is the whole requirement. B2
+sends whatever you set at upload, which is why every upload command on
+this page passes `--content-type audio/mpeg` explicitly rather than
+trusting detection.
+
+Testing in Chrome proves nothing about this. It was tested in Chrome
+first, passed everything including seeking, and was declared sound — and
+was wrong.
+
+The other half of the test is **seeking**: a host that will not answer a
+range request leaves the scrub bar dead and the read-along drifting. Both
+checks live in the *Audio Host Check* page; run it against one uploaded
+file before moving the rest.
+
+### Bitrate
+
+Every shipped recording is **32kbps mono, 22.05kHz**, which is clean for a
+single unaccompanied voice. The script's default is `48k`, so pass
+`--bitrate 32k` to match the existing catalogue. Encoding by hand:
 
 ```
 ffmpeg -i source.mp3 -ac 1 -ar 22050 -b:a 32k -map_metadata -1 assets/audio/NN.mp3
 ```
 
-**The decision, no longer close.** The twentieth recording does not fit.
-Two honest options:
+Worth knowing: the size pressure that forced 32k is gone. B2 charges
+roughly nothing for this much audio, so 48k is affordable again for new
+recordings if the quality is worth it. The only cost of mixing the two is
+that the catalogue stops being uniform.
 
-- **Drop to 24kbps.** Hands back about 157 MB across the nineteen, and
-  buys perhaps four more books. It is the same conversation again in a
-  month, at audibly worse quality.
-- **Move the audio off the repository** and point `audio:` at a full URL
-  — which the field already supports, and `roya-library.js` explicitly
-  handles (it leaves an absolute address alone rather than resolving it
-  against the site). Nothing in `script.js` requires a relative path
-  either. This hands back **628 MB in one step** and removes the ceiling
-  rather than moving it.
+## Uploading to the bucket
 
-⚠ **`assets/audio/01.mp3` is still orphaned** — 16.6 MB published,
-fetchable, and linked from nothing, because book 1 has no `audio` field
-(see above). Either wire it up or delete it; at 96% of the limit it is
-not free to leave sitting there.
+One file, from anywhere:
 
-## ⚠ The browser cannot upload these
+```
+b2 file upload --content-type audio/mpeg roya-audio assets/audio/NN.mp3 NN.mp3
+```
 
-GitHub's web interface — the "Add file → Upload files" screen — **caps at
-25 MiB per file**. Every narration exceeds that, so the audio cannot be
-added through github.com. It has to go up through `git push` from a clone
-(or GitHub Desktop). Git's own limits are a warning at 50 MiB and a hard
-block at 100 MiB; the largest recording, book 102 at 59 MB, sits between
-the two, so expect the warning and ignore it.
+Authorise first with `b2 account authorize` and an application key scoped
+to the bucket (B2 → **Application Keys**). The key is shown once. Delete it
+when you are done — it ends up in shell history.
+
+Older versions of the CLI spell this `b2 upload-file --contentType ...`.
+
+Browser upload through the B2 console works too and sets `audio/mpeg` from
+the extension; it is fine for one file and tedious for nineteen.
 
 ## ⚠ numpy 2.x breaks the aligner
 

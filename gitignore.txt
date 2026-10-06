@@ -1,0 +1,9 @@
+# The narrations live on Backblaze B2, not here — the repository hit the
+# 1 GB GitHub Pages limit carrying them. build-audio-sync.py still writes
+# its recompressed mp3 into assets/audio/ as a staging copy; this keeps
+# that copy from being committed by a stray `git add .`.
+# See ADDING-AUDIO.md.
+assets/audio/*.mp3
+
+__pycache__/
+.DS_Store

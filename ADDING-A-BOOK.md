@@ -1,4 +1,4 @@
-<!-- Updated 2026-09-25 — the webp pass and the narration step added;
+<!-- Updated 2026-10-05 — the narration now lives on Backblaze B2, not in the repo;
      the ?v= section corrected from six lines to nine; 98 books. -->
 # Adding a book
 
@@ -25,7 +25,7 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
 4. Run `node build-share-pages.js` → updates the `share/` folder
 5. Run `python3 build-reader.py NN` → writes `read/NN.json`
 5b. *If it has a narration:* `python3 build-audio-sync.py NN rec.mp3`,
-   then add `audio:` to the book's block
+   upload the mp3 to the B2 bucket, then add `audio:` to the book's block
 6. Raise the `?v=` number in `index.html` — all five at the foot
 7. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
    the `share/` folder, `read/NN.json`, the new PDF, all the covers
@@ -133,7 +133,7 @@ fill it in. Mind the comma between blocks.
   synopsis: "Four sentences or so. This is what stands on the stage.",
 
   // optional, only when the book has a recording — see step 5b
-  audio: "assets/audio/41.mp3",
+  audio: "https://f005.backblazeb2.com/file/roya-audio/41.mp3",
   synced: false
 },
 ```
@@ -205,11 +205,13 @@ the book needs; four sentences is a floor rather than a ceiling, and
 anything past about 150 words should be a deliberate choice. No line
 breaks — one book (35) has one, and it is not a model.
 
-**`audio`** — optional, and only when a recording exists:
-`"assets/audio/41.mp3"`. One field, three effects — the Audio control on
-the shelf row, the play bar in the Read view, and the *Narrated* panel
-in the Roya Library. A full `https://` URL works here too, if the audio
-ever moves off the repository. See step 5b.
+**`audio`** — optional, and only when a recording exists. **A full
+`https://` address, not a path**: the recordings live on Backblaze B2,
+not in this repository, so it reads
+`"https://f005.backblazeb2.com/file/roya-audio/41.mp3"`. One field, three
+effects — the Audio control on the shelf row, the play bar in the Read
+view, and the *Narrated* panel in the Roya Library. A relative path still
+works if a file is ever served from the repo again. See step 5b.
 
 **`synced`** — optional, and only alongside `audio`. Leave it out and
 the Library promises the highlighted read-along, which is right whenever
@@ -428,11 +430,21 @@ python3 build-audio-sync.py NN /path/to/recording.mp3
 ```
 
 That writes both `assets/audio/NN.mp3` (recompressed for the web) and
-`read/NN.sync.json` (the sentence-by-sentence alignment). Then add one
-field to the book's block in `stories.js`:
+`read/NN.sync.json` (the sentence-by-sentence alignment).
+
+The mp3 is a **staging copy — do not commit it.** `assets/audio/*.mp3` is
+gitignored. Upload it to the bucket instead, with the content type set
+explicitly:
+
+```
+b2 file upload --content-type audio/mpeg roya-audio assets/audio/NN.mp3 NN.mp3
+```
+
+The sync file *does* belong in the repo. Then add one field to the book's
+block in `stories.js`:
 
 ```js
-audio: "assets/audio/NN.mp3"
+audio: "https://f005.backblazeb2.com/file/roya-audio/NN.mp3"
 ```
 
 That single field lights three things at once: an Audio control on the
@@ -499,11 +511,12 @@ it before went on being served the old text out of their own cache, with
 nothing to tell either side. If you replace a book's text, raise the
 number.
 
-**`pdfs/NN.pdf` and `assets/audio/NN.mp3` are NOT covered.** Both are
-linked at their bare paths. For a new book that is fine — there is no
-cached version to displace — but **replacing a published PDF or
-recording will not reach anyone who has already opened it.** For a PDF
-that is usually tolerable; for a recording, see the warning in
+**`pdfs/NN.pdf` and the narration are NOT covered.** The PDF is linked at
+its bare path, and `stamped()` returns the narration's absolute address
+untouched by design. For a new book that is fine — there is no cached
+version to displace — but **replacing a published PDF or recording will
+not reach anyone who has already opened it.** For a PDF that is usually
+tolerable; for a recording, upload it under a new filename. See
 [ADDING-AUDIO.md](ADDING-AUDIO.md).
 
 ---

@@ -1,4 +1,4 @@
-<!-- Updated 2026-09-25 — 98 books; narration; the ?v= line count corrected -->
+<!-- Updated 2026-10-05 — 104 books; the narrations moved off the repo to Backblaze B2 -->
 # Chew Z — Short Fiction
 
 A single dark screen: the novellas listed on the left, a candlelit stage
@@ -57,7 +57,9 @@ covers/               a cover per novella, numbered to match: 01.jpg ...
 covers/pairs/         optional: a front-and-back zoom render per novella,
                       same numbering — falls back to covers/ when absent
 assets/               backdrops, series banners, the Roya mark, icons
-assets/audio/         the narrations, numbered: 06.mp3, 07.mp3 ...
+assets/audio/         empty, and gitignored. The narrations are NOT in this
+                      repository — they are on Backblaze B2; see ADDING-AUDIO.md.
+                      build-audio-sync.py stages its output here before upload
 library/              the Roya Library — the section that replaced All Covers.
                       Two built files and its own pictures; see CUSTOMISING.md
 library/covers/       the flat front art, 560x840 webp, numbered to match
@@ -76,12 +78,14 @@ node build-feeds.js         → feed.xml, sitemap.xml, index.html's counts
 node build-share-pages.js   → share/                      (reads stories.js)
 python3 build-reader.py     → read/NN.json             (reads pdfs/)
 python3 optimize-art.py     → the .webp twin of every picture  (--write)
-python3 build-audio-sync.py → read/NN.sync.json + assets/audio/NN.mp3
+python3 build-audio-sync.py → read/NN.sync.json + a staged mp3 to upload
 ```
 
 Run the first three whenever a book is added or changed, and commit what
 they produce. `optimize-art.py` only when a picture was added or replaced;
-`build-audio-sync.py` only when a recording arrives.
+`build-audio-sync.py` only when a recording arrives — and of its two
+outputs, commit the sync file and upload the mp3 rather than committing
+it.
 
 Two of them do more than their names suggest. `build-feeds.js` also
 rewrites the six count phrases inside `index.html` — see *The shelf
@@ -171,10 +175,15 @@ isn't set for reading here yet and points at the PDF.
 
 A book can carry a recording, and this is independent of everything
 above — a book published two years ago can gain one tomorrow without any
-other file changing. Set `audio: "assets/audio/NN.mp3"` on its entry in
-`stories.js` and an Audio control appears beside Read and PDF; in the
-Roya Library the same field opens a small panel offering *Listen here*
-or a download.
+other file changing. Set `audio: "https://f005.backblazeb2.com/file/roya-audio/NN.mp3"`
+on its entry in `stories.js` and an Audio control appears beside Read and
+PDF; in the Roya Library the same field opens a small panel offering
+*Listen here* or a download.
+
+**The recordings are not in this repository.** They live on Backblaze B2
+and the field carries a whole address. Forty-five hours of audio against a
+1 GB limit on the published site is not a fight worth having, and the code
+already supported an absolute address without any change.
 
 Build `read/NN.sync.json` as well and the Read view gains a play bar
 that lights up the sentence being spoken as it goes. Without the sync
@@ -182,15 +191,16 @@ file the recording is still a plain download; the reader simply doesn't
 get the in-page player. **[ADDING-AUDIO.md](ADDING-AUDIO.md)** has the
 whole of it.
 
-Three books are narrated: **6**, **7** and **35**.
+Nineteen books are narrated — **2**, **5**, **6**, **7**, **8**, **9**,
+**11**, **12**, **13**, **19**, **22**, **26**, **31**, **35**, **40**,
+**52**, **78**, **89** and **102** — about forty-five hours.
 
-⚠ **Book 1's narration is orphaned.** `assets/audio/01.mp3` and
-`read/01.sync.json` are both published and both reachable by URL, but
-book 1 carries no `audio` field, so nothing on the site links to either.
-Twenty-five megabytes are being served to no one. Most likely fallout
-from the retitle from *The Memory Liturgy* to *Quiet Street to the Long
-Evening*. Adding `audio: "assets/audio/01.mp3"` to book 1 is the whole
-fix, if the recording is still wanted.
+⚠ **Whatever hosts these files must send `Content-Type: audio/mpeg`, and
+the test for it must be run in Safari.** GitHub Releases was tried and
+fails: it labels every asset `application/octet-stream`, which Chrome
+sniffs past and Safari refuses. `read/01.sync.json` is still published for
+a book 1 narration that was never wired up; its mp3 was deleted on
+2026-10-05.
 
 ## The shelf count
 
