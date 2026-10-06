@@ -1,5 +1,5 @@
-<!-- Updated 2026-10-05 — the narration now lives on Backblaze B2, not in the repo;
-     the ?v= section corrected from six lines to nine; 98 books. -->
+<!-- Updated 2026-10-06 05:48 PDT — the narration lives on Backblaze B2, not in the repo, and
+     its upload must set Content-Disposition; counts refreshed to 104 books. -->
 # Adding a book
 
 Everything that has to happen when a new novella joins the site, in
@@ -35,7 +35,7 @@ many stories there are — step 3 rewrites the six places a crawler
 reads, and everything else counts `STORIES` as the page runs. See "The
 shelf count" in [README.md](README.md).
 
-Everything after this is the same steps, explained. There are 98 books
+Everything after this is the same steps, explained. There are 104 books
 as this is written; the two lettered steps are the ones most often
 skipped.
 
@@ -103,8 +103,8 @@ glass zoom. 3:2 landscape; older ones are 2496 × 1664 and newer ones
 reach into `covers/pairs/`, and the Roya Library asks for
 `covers/pairs/NN.webp` *first* — so without it, every Library view of
 that book spends a failed request before falling back to the `.jpg`.
-Only nine of the 98 books have the webp today, which is why the other
-eighty-nine each cost one 404 on that panel.
+Only 27 of the 104 books have the webp today, which is why the other
+seventy-seven each cost one 404 on that panel.
 
 Skipping the pair render altogether isn't a mistake the way skipping the
 plain cover is: the shelf's zoom falls back to `covers/NN.jpg`, and the
@@ -437,7 +437,9 @@ gitignored. Upload it to the bucket instead, with the content type set
 explicitly:
 
 ```
-b2 file upload --content-type audio/mpeg roya-audio assets/audio/NN.mp3 NN.mp3
+b2 file upload --content-type audio/mpeg \
+  --info b2-content-disposition='attachment; filename="NN.mp3"' \
+  roya-audio assets/audio/NN.mp3 NN.mp3
 ```
 
 The sync file *does* belong in the repo. Then add one field to the book's

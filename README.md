@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-05 — 104 books; the narrations moved off the repo to Backblaze B2 -->
+<!-- Updated 2026-10-06 05:48 PDT — 104 books; narrations on Backblaze B2, served as attachments -->
 # Chew Z — Short Fiction
 
 A single dark screen: the novellas listed on the left, a candlelit stage
@@ -195,10 +195,14 @@ Nineteen books are narrated — **2**, **5**, **6**, **7**, **8**, **9**,
 **11**, **12**, **13**, **19**, **22**, **26**, **31**, **35**, **40**,
 **52**, **78**, **89** and **102** — about forty-five hours.
 
-⚠ **Whatever hosts these files must send `Content-Type: audio/mpeg`, and
-the test for it must be run in Safari.** GitHub Releases was tried and
-fails: it labels every asset `application/octet-stream`, which Chrome
-sniffs past and Safari refuses. `read/01.sync.json` is still published for
+⚠ **Whatever hosts these files must send `Content-Type: audio/mpeg` and
+`Content-Disposition: attachment`, and the test for both must be run in
+Safari.** The content type is what makes it play: GitHub Releases was tried
+and fails, labelling every asset `application/octet-stream`, which Chrome
+sniffs past and Safari refuses. The disposition is what makes *Download the
+recording* save rather than play — the link’s `download` attribute is ignored
+cross-origin, so only the server’s own header can do it. On B2 both are set
+at upload; see **[ADDING-AUDIO.md](ADDING-AUDIO.md)**. `read/01.sync.json` is still published for
 a book 1 narration that was never wired up; its mp3 was deleted on
 2026-10-05.
 

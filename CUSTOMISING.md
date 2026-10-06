@@ -1,4 +1,4 @@
-<!-- Updated 2026-09-25 — audited against the code. 98 books, 14 series;
+<!-- Updated 2026-10-06 05:48 PDT — audited against the code. 104 books, 15 series;
      the Roya Library's own theme and tokens documented; several files
      this page described as present are recorded as missing. -->
 # Customising the site
@@ -772,8 +772,8 @@ Almost everything is a file the repository already has:
 | the narration, where a book has one | `https://f005.backblazeb2.com/file/roya-audio/NN.mp3` — hosted off the repo; a *Narrated* panel offering Listen here or a download |
 | back to the top | the page's own `#toTop`, raised above the section while it is open |
 
-⚠ **The pair render is asked for as `.webp` first**, and only nine of
-the 98 books have one — so eighty-nine of them spend a failed request on
+⚠ **The pair render is asked for as `.webp` first**, and only 27 of
+the 104 books have one — so seventy-seven of them spend a failed request on
 every Library view before falling back to the `.jpg`. Making
 `covers/pairs/NN.webp` is a hand step; `optimize-art.py` does not reach
 that folder.

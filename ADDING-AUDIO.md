@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-05 — the audio moved off the repository to Backblaze B2 -->
+<!-- Updated 2026-10-06 05:48 PDT — audio hosted on Backblaze B2; uploads must set Content-Disposition -->
 # Adding a narration
 
 Two things a book can have, independently of each other:
@@ -129,7 +129,9 @@ Run `build-reader.py NN` first if `read/NN.json` doesn't exist yet.
 Then upload it, with the content type set explicitly:
 
 ```
-b2 file upload --content-type audio/mpeg roya-audio assets/audio/NN.mp3 NN.mp3
+b2 file upload --content-type audio/mpeg \
+  --info b2-content-disposition='attachment; filename="NN.mp3"' \
+  roya-audio assets/audio/NN.mp3 NN.mp3
 ```
 
 and add to that book's entry in `stories.js`:
@@ -260,8 +262,9 @@ recordings somewhere other than B2.
 
 ### ⚠ The rule this leaves behind
 
-**Any host for these files must send `Content-Type: audio/mpeg`, and the
-test for it must be run in Safari.** That is the whole requirement. B2
+**Any host for these files must send `Content-Type: audio/mpeg` and
+`Content-Disposition: attachment`, and the test for both must be run in
+Safari.** That is the whole requirement. B2
 sends whatever you set at upload, which is why every upload command on
 this page passes `--content-type audio/mpeg` explicitly rather than
 trusting detection.
@@ -274,6 +277,44 @@ The other half of the test is **seeking**: a host that will not answer a
 range request leaves the scrub bar dead and the read-along drifting. Both
 checks live in the *Audio Host Check* page; run it against one uploaded
 file before moving the rest.
+
+### ⚠ The download control needs `Content-Disposition`
+
+**Download the recording** is an `<a href download>`, and **the `download`
+attribute is ignored on a cross-origin link** in every browser. Now that
+the files live on another host, that attribute does nothing: the click
+just navigates, and a browser handed `Content-Type: audio/mpeg` plays the
+file in a bare tab instead of saving it.
+
+The only thing that makes it save is the **server** sending
+`Content-Disposition: attachment`. On B2 that is set at upload, as file
+info:
+
+```
+--info b2-content-disposition='attachment; filename="NN.mp3"'
+```
+
+B2 returns that verbatim as the `Content-Disposition` header. **Every
+upload command on this page passes it, and an upload without it ships a
+file whose download button plays instead of downloads.**
+
+Two things not to reach for:
+
+- B2's `b2ContentDisposition` query override **requires an auth token**,
+  so it cannot be used on a public link.
+- Changing the site's JavaScript cannot fix this. No attribute or
+  handler overrides the host's own header; the fix has to be on the file.
+
+`attachment` does **not** break playback — this was checked in Safari on
+book 40 before the other eighteen were re-uploaded, and *Listen here* still
+streams. The player fetches the file rather than navigating to it, so the
+header never reaches it. Seeking was not re-tested afterwards; the
+disposition header has no bearing on range requests, but if a scrub bar ever
+looks dead, rule it out with the *Audio Host Check* page rather than
+assuming.
+
+When a new file goes up, check **both** halves in Safari: that it plays, and
+that the download control saves instead of playing.
 
 ### Bitrate
 
@@ -295,7 +336,9 @@ that the catalogue stops being uniform.
 One file, from anywhere:
 
 ```
-b2 file upload --content-type audio/mpeg roya-audio assets/audio/NN.mp3 NN.mp3
+b2 file upload --content-type audio/mpeg \
+  --info b2-content-disposition='attachment; filename="NN.mp3"' \
+  roya-audio assets/audio/NN.mp3 NN.mp3
 ```
 
 Authorise first with `b2 account authorize` and an application key scoped
@@ -304,8 +347,11 @@ when you are done — it ends up in shell history.
 
 Older versions of the CLI spell this `b2 upload-file --contentType ...`.
 
-Browser upload through the B2 console works too and sets `audio/mpeg` from
-the extension; it is fine for one file and tedious for nineteen.
+Browser upload through the B2 console sets `audio/mpeg` from the extension
+but gives you **no way to set the content disposition**, so a file uploaded
+that way plays instead of downloading. Use it only to get a file up in a
+hurry, and re-upload it with the CLI command above before relying on the
+download control.
 
 ## ⚠ numpy 2.x breaks the aligner
 
