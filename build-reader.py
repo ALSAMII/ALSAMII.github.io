@@ -1,4 +1,4 @@
-# Version 353 · last updated 2026-09-22 16:58 PDT
+# Version 355 · last updated 2026-10-06 15:28 PDT
 """
 BUILDS THE READING TEXT FROM THE PDFs, INTO /read
 
@@ -247,6 +247,34 @@ def extract(path):
                     head_pos = (pageno, line["top"])
                     continue
 
+                # A numbered chapter line set at body size and in
+                # mixed case — "1. Juno — Baker, Under the Thermometer".
+                # The two rules above cannot see it: it is not set
+                # larger, and it is not shouting. Some books mark their
+                # chapters this way and nothing else on the page tells
+                # them apart, so the shape has to be named.
+                #
+                # Deliberately narrow, and measured before it was
+                # added: the number, a dot, one or two capitalised
+                # words, an em dash with spaces round it, and the whole
+                # line under 70 characters. Run against every read/*.json
+                # in the catalogue it matched 115 lines in three books
+                # — Nos. 61, 62 and 105 — and every one of them was a
+                # chapter heading being read as prose. Nothing else in
+                # 104 books matched. Widen it only with the same test:
+                # ordinary prose beginning with a figure is common, and
+                # what keeps this off it is the whole-line anchor.
+                if (len(text) < 70 and CHAPTER_LINE.match(text)):
+                    flush_italic()
+                    flush()
+                    in_verse = is_verse_head(text)
+                    at_chapter_top = True
+                    blocks.append({"t": "h", "h": html,
+                                   "full": line["x1"] >= right * FULL_LINE,
+                                   "near": near})
+                    head_pos = (pageno, line["top"])
+                    continue
+
                 if in_verse:
                     # Each line stands alone: in verse the breaks are
                     # the writing, and joining them would be a rewrite.
@@ -298,12 +326,26 @@ def extract(path):
 BOILERPLATE = re.compile(
     r"^\s*(ISBN\b|Copyright\s*(\u00a9|\(c\))|All rights reserved"
     r"|This is a work of fiction|Typeset in\b|Printed in\b"
-    r"|Roya Publication[s]?\s*(No\.|\u00b7)|A ROYA PUBLICATION\s*$)", re.I)
+    r"|Roya Publication[s]?\s*(No\.|\u00b7)|A ROYA PUBLICATION\s*$"
+    r"|ROYA PUBLICATION[S]?\s*$)", re.I)
+
+# A chapter marked by number and name at body size, in mixed case:
+# "1. Juno — Baker, Under the Thermometer", "2. THE CALL — the woman
+# in the forest". See the note at its use for how narrow this is and
+# why.
+CHAPTER_LINE = re.compile(
+    r"^\s*\d{1,2}\.\s+[A-Z][\w’']*(?:\s+[A-Z][\w’']*)?"
+    r"\s+—\s+\S.{0,50}$")
 
 # Where the reading starts, however the book announces it. Kept tight:
 # a looser pattern matched "Book I of the Borrowed Sun Cycle" on a
 # title page and opened the book on its own half-title.
 OPENER = re.compile(r"^\s*(A NOTE FROM THE AUTHOR|CHAPTER\b|PART\s+(ONE|I)\b)", re.I)
+
+# The author's name set alone on a line — the foot of a title page, and the
+# fallback seam when a book's copyright page did not survive extraction.
+# Anchored both ends so it cannot match the name inside a sentence.
+BYLINE = re.compile(r"^\s*(by\s+)?CHEW\s*Z\s*$", re.I)
 
 # A line of a contents list: a short title with the page it is on.
 # Some books head the list with the word CONTENTS and some simply
@@ -487,7 +529,15 @@ def book_titles(path="stories.js"):
                          src, re.S):
         n = int(m.group(1))
         if n not in out:
-            out[n] = m.group(2).encode().decode("unicode_escape")
+            # encode() then decode("unicode_escape") turns a literal ā into
+            # mojibake — the first call makes UTF-8 bytes and the second
+            # reads them as latin-1. It survived because no title in the
+            # catalogue had a non-ASCII character in it until No. 103.
+            # backslashreplace puts a literal back as its own escape, so
+            # both spellings now arrive as the same character.
+            out[n] = (m.group(2)
+                      .encode("latin-1", "backslashreplace")
+                      .decode("unicode_escape"))
     return out
 
 
@@ -505,6 +555,24 @@ def narration_front(blocks, stop, num, titles):
         plain = re.sub("<[^>]+>", "", b["h"]).strip()
         if BOILERPLATE.match(plain):
             last_boiler = i
+    # The seam above assumes the copyright page survives extraction, and it
+    # does not always. A book that sets that page small enough to read as
+    # page furniture loses it in extract(), BOILERPLATE then matches
+    # nothing, last_boiler stays at -1, and the whole title page — title,
+    # bilingual title, byline — is "front matter" and is spoken twice, once
+    # as the synthetic header below and once as itself. No. 103 is the book
+    # that showed this; No. 102 showed the same duplication from the other
+    # direction and was repaired in its output rather than here, which this
+    # document's own canon records as the wrong fix.
+    #
+    # The byline is the second seam. Every title page in the catalogue ends
+    # on the author's name set alone, so when the ISBN is missing, the last
+    # standalone byline before the book opens is where the title page stops.
+    if last_boiler < 0:
+        for i, b in enumerate(blocks[:stop]):
+            plain = re.sub("<[^>]+>", "", b["h"]).strip()
+            if BYLINE.match(plain):
+                last_boiler = i
     kept = []
     for b in blocks[last_boiler + 1:stop]:
         plain = re.sub("<[^>]+>", "", b["h"]).strip()
