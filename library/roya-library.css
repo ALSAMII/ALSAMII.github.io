@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 148 · last updated 2026-10-06 14:17 PDT
+   Version 149 · last updated 2026-10-06 14:46 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -3430,15 +3430,17 @@ body.rl-on #toTop{z-index:71}
 #royaLibrary .lr-bar{display:flex; align-items:center; justify-content:space-between;
   flex-wrap:wrap; gap:.9rem 1.4rem; margin:0 0 1.6rem; padding-bottom:1rem;
   border-bottom:1px solid rgba(199,148,61,.2)}
-/* the count takes the book number's size — 1.5rem here, 1.25rem on a phone,
-   the same two figures .lr-t button carries — so the tally of recordings and
-   the catalogue numbers below it read as one order of heading. It keeps the
-   condensed face and the .24em tracking of the bar it sits in, which at this
-   size is a wide setting; narrow it here if it reads as gappy rather than
-   deliberate. The bar wraps to two lines on a phone at this size, which is
+/* the count is set as a book line, not as a bar label: the same face, weight,
+   size, tracking and leading .lr-t button carries, in the ochre .lr-n uses for
+   the catalogue number — so "19 Recordings" and "102" below it are the same
+   piece of type. Everything here has to be stated rather than inherited: the
+   bar's own rules would otherwise give it the condensed face, .24em tracking
+   and uppercase that made it a label. Keep the two blocks' figures in step if
+   either changes. The bar wraps to two lines on a phone at this size, which is
    what .lr-bar's flex-wrap and its .9rem row gap are already for. */
-#royaLibrary .lr-count{font-family:var(--cond); font-weight:600; font-size:1.5rem;
-  letter-spacing:.24em; text-transform:uppercase; color:var(--ochre)}
+#royaLibrary .lr-count{font-family:var(--book); font-weight:500; font-size:1.5rem;
+  line-height:1.3; letter-spacing:normal; text-transform:capitalize;
+  color:var(--ochre)}
 #royaLibrary .lr-sorts{display:flex; align-items:center; gap:.5rem; flex-wrap:wrap}
 #royaLibrary .lr-sortlab{font-family:var(--cond); font-weight:600; font-size:.5625rem;
   letter-spacing:.24em; text-transform:uppercase; color:var(--t-quiet); margin-right:.15rem}
@@ -3559,16 +3561,29 @@ body.rl-on #toTop{z-index:71}
    .24em, being the same setting .ab-time and the Listen mark carry. */
 #royaLibrary .lr-u{font-style:normal; margin-left:-.14em}
 /* "Read instead" is a single line beside a two-line stack, so the row aligns
-   at the top and this drops it onto the Listen mark's own centre line. */
-#royaLibrary .lr-read{margin-top:.42em}
+   at the top and this drops it onto the Listen mark's own centre line. The
+   figure is small because it is measured in this element's own em, and the
+   em grew when the face did. */
+#royaLibrary .lr-read{margin-top:.12em}
 /* a <button> does not inherit text-transform or letter-spacing: browsers set
    both on form controls in the UA sheet, and `font:inherit` does not reach
    them. The mark reads "Listen" rather than LISTEN without this. */
 #royaLibrary .lr-listen{vertical-align:baseline;
   text-transform:inherit; letter-spacing:inherit}
-#royaLibrary .lr-read{background:none; border:0; padding:0 0 3px; cursor:pointer;
-  font:inherit; letter-spacing:inherit; color:var(--t-quiet);
-  border-bottom:1px solid rgba(199,148,61,.32)}
+/* The one thing in this row that is not a control-label. It used to take
+   .lr-acts' setting whole — condensed, 600, .24em tracking, sentence case —
+   which beside a filled pill read as a plain underlined string rather than as
+   an alternative worth taking. It is the book face now, italic, at the
+   synopsis' own size, so it belongs to the column of prose above it and the
+   pill keeps the row's only loud voice. font: inherit is gone deliberately:
+   every part of the setting is stated, because inheriting from .lr-acts is
+   exactly what made it plain. */
+#royaLibrary .lr-read{background:none; border:0; padding:0 0 2px; cursor:pointer;
+  font-family:var(--book); font-style:italic; font-weight:500;
+  font-size:1.0625rem; line-height:1.3; letter-spacing:.01em;
+  text-transform:none; color:var(--t-quiet);
+  border-bottom:1px solid rgba(199,148,61,.38);
+  transition:color .18s ease, border-color .18s ease}
 #royaLibrary .lr-read:hover{color:var(--bone); border-bottom-color:var(--gold-lt)}
 /* the phone: the cover keeps its place beside the words, at the size a
    104px column can carry, and the synopsis gives up a line */
@@ -3583,6 +3598,9 @@ body.rl-on #toTop{z-index:71}
   #royaLibrary .lr-t button{font-size:1.25rem}
   #royaLibrary .lr-syn{font-size:1rem; -webkit-line-clamp:3; margin-bottom:.2rem}
   #royaLibrary .lr-acts{gap:1rem; font-size:.8125rem}
+  /* the synopsis steps down here and Read instead follows it, the two being
+     deliberately the same size */
+  #royaLibrary .lr-read{font-size:1rem}
 }
 :root[data-lt="light-off"] #royaLibrary .lr-row{border-bottom-color:rgba(96,76,42,.22)}
 :root[data-lt="light-off"] #royaLibrary .lr-t button{color:#1d1710}
