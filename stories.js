@@ -1,4 +1,13 @@
-/* Version 470 · last updated 2026-10-05 18:02 PDT*/
+/* Version 472 · last updated 2026-10-05 20:14 PDT*/
+/* AUDIO IS HOSTED OFF THE REPO IN THIS COPY.
+   Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
+   address, and both script.js and library/roya-library.js pass a whole address
+   through untouched — roya-library.js line 605 tests for it by name — so no
+   code changes come with this file.
+   GitHub Releases was tried first and rejected: it serves every asset as
+   application/octet-stream and gives no way to change that, which Chrome sniffs
+   past and Safari refuses. The host has to send audio/mpeg.
+   To go back, swap the addresses for "assets/audio/NN.mp3". */
 /* ============================================================
    YOUR BOOKS LIVE HERE — this is the only file you need to
    touch to add, remove, or reorder books.
@@ -79,7 +88,7 @@ const STORIES = [
     key: "Bright Mercy \u2014 a lullaby built to keep working on a frightened listener",
     notes: [3, 1, 1],
     synopsis: "A burned-out music journalist follows a viral lullaby from a grain silo to a dry lakebed \u2014 and finds the night an entire chain of command hummed the same four notes on its way to a decision no one could take back. The song hasn't ended. It's moved into the walls.",
-    audio: "assets/audio/02.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/02.mp3",
     runtime: 75
   },
 
@@ -117,7 +126,7 @@ const STORIES = [
     key: "The Communion \u2014 the wild mushroom of the stoned ape theory",
     notes: [1, 2, 1],
     synopsis: "MOTHER ended hunger, disease, and want \u2014 and left a species with nothing left to want. A forbidden mushroom drops Vale four hundred thousand years into a hunter-gatherer's cold, grief, and astonishment, where she begins to suspect the machine built to end suffering has spent ninety patient years trying to give it back.",
-    audio: "assets/audio/05.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/05.mp3",
     runtime: 145
   },
 
@@ -131,7 +140,7 @@ const STORIES = [
     key: "Le-The \u2014 a drug that lets a doctor walk down inside you",
     notes: [2, 3, 1],
     synopsis: "Through a drug called Le-The, Dr. Halcyon walks his patients down through the layers of the self, to the riverbed where the original wound was carved. Then the Institute admits a man three clinics refused \u2014 a patient whose own mind, from the intake scan alone, has named him Undertow.",
-    audio: "assets/audio/06.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/06.mp3",
     runtime: 94
   },
 
@@ -145,7 +154,7 @@ const STORIES = [
     key: "Sublate \u2014 switches off the voice that talks you through your life",
     notes: [3, 2, 1],
     synopsis: "Consciousness turns out to have a kill switch, and Dr. Kelo finds it: silence the inner voice, and her subjects go calm, capable, and quietly unsure who's actually in charge. That voice was never their own \u2014 it was standing guard for something that has waited seven hundred feet under a dead reservoir for centuries, and just opened its eyes.",
-    audio: "assets/audio/07.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/07.mp3",
     runtime: 128
   },
 
@@ -159,7 +168,7 @@ const STORIES = [
     key: "Mercy \u2014 a stranger's confession arriving as your own memory",
     notes: [2, 3, 3],
     synopsis: "Mercy does not make you sympathise. It files a stranger’s confession in your own memory, so that what they did arrives as something you did, at the weight and the shame it was carried at. Eight people sit down in front of Daniel Voss. Each first truth is hiding a worse one under it. The last chair is his father’s, and by then there is no version of watching that is not also remembering.",
-    audio: "assets/audio/08.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/08.mp3",
     runtime: 161
   },
 
@@ -173,7 +182,7 @@ const STORIES = [
     key: "The Stones \u2014 hold one and a god's suffering comes into you",
     notes: [1, 2, 1],
     synopsis: "David Cole audits the authenticity of a god's suffering \u2014 grief piped through fist-sized Stones into a faithful city. Then one trace surfaces that the instruments can't call genuine or false, and the trail leads to the forbidden hill itself, where the real question isn't whether the suffering was human.",
-    audio: "assets/audio/09.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/09.mp3",
     runtime: 148
   },
 
@@ -199,7 +208,7 @@ const STORIES = [
     key: "Two stones, one rose and one black \u2014 not a therapy. A clock",
     notes: [2, 2, 2],
     synopsis: "Reyhan does not experience time in order. Cold stone against skin, a stranger's grip, a certain slant of afternoon light \u2014 each is a trapdoor back into some other year of her life. She has built a private discipline around the dislocation, teaching the powerful and the damaged a total literacy in their own bodies with paired stones, one rose and one black, as precise as a stethoscope. What none of her clients know, because she has never once said it out loud, is that the stones are not a therapy. They are a clock. Since the night a building came down on her she cannot reliably tell warm from cold, and her sense of when she is went out with it; she presses a stone to her skin to find out what year it is. Forty minutes of that night are the spine of everything she has built since \u2014 forty minutes lying face down in the wreckage with her arm through a gap in the concrete, holding the hand of an old woman she had never met, who knew exactly what was happening to her and talked about the weather. Eight years later a client asks her a question she has never answered, and her hands go cold before she understands why.",
-    audio: "assets/audio/11.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/11.mp3",
     runtime: 93
   },
 
@@ -213,7 +222,7 @@ const STORIES = [
     key: "The turn \u2014 whirling, badly and without lineage, until the grief moves",
     notes: [1, 2, 2],
     synopsis: "A worn-down hospice aide teaches himself, badly and without lineage, to whirl \u2014 and finds the turn doesn't bring peace. It makes him a doorway, pulling grief out of anyone near him and grounding it through his own body. Then one grief goes in barbed, and won't pass through, and won't leave.",
-    audio: "assets/audio/12.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/12.mp3",
     runtime: 76
   },
 
@@ -227,7 +236,7 @@ const STORIES = [
     key: "Alzheimer's \u2014 a mind letting go of when it is, and who",
     notes: [1, 2, 3],
     synopsis: "At his father's memorial, Kian can't answer the three simplest questions: what song he loved, what food, what place. A story about losing a man twice \u2014 once to forgetting, once to death \u2014 and the strange, late mercy of understanding a father only after becoming one.",
-    audio: "assets/audio/13.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/13.mp3",
     runtime: 146
   },
 
@@ -301,7 +310,7 @@ const STORIES = [
     key: "The Gardener method \u2014 desire grown slowly, across whole bloodlines",
     notes: [1, 2, 1],
     synopsis: "For three centuries the B'not Anahita have planted their influence in the bloodlines of the powerful \u2014 not by force, but by desire, cultivated across generations. Romania, 1972: a Qedesha named Nahid arrives at a decaying bathhouse to imprint a banking heir, and finds a loneliness that answers something in her own carefully governed heart.",
-    audio: "assets/audio/19.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/19.mp3",
     runtime: 215
   },
 
@@ -339,7 +348,7 @@ const STORIES = [
     key: "Four minutes each \u2014 sixty-two claimants a day, and never enough time",
     notes: [3, 2, 3],
     synopsis: "Martin Coyle works Window 9: sixty-two claimants a day, four minutes each, never enough, nobody's fault. Then a stranger's form lands with a four-character error, and Coyle discovers the world contains no mechanism requiring him to hurry. Everything that follows is courteous, correct, defensible in writing \u2014 and built to prove one bad day can drive the sanest person alive to lunacy.",
-    audio: "assets/audio/22.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/22.mp3",
     runtime: 127
   },
 
@@ -389,7 +398,7 @@ const STORIES = [
     key: "Mang \u2014 the antidote in overdose: three cups, seven days of witnesses",
     notes: [3, 2, 2],
     synopsis: "Majnoon, 1984. Nineteen-year-old Sohrab keeps the ledger of the antidote \u2014 green-sleeved needles, counted like bread, that pull the gassed back toward life. Then the count stops balancing, and twelve missing needles lead to a secret congregation of survivors who know what the old corpse-washer knows: in overdose, the medicine becomes a door. The dead are waiting on the far side, with questions.",
-    audio: "assets/audio/26.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/26.mp3",
     runtime: 166
   },
 
@@ -451,7 +460,7 @@ const STORIES = [
     key: "Highway hypnosis \u2014 the driver who takes over when you go under",
     notes: [2, 3, 2],
     synopsis: "Cal Dorsey has driven eighty thousand pounds across America for twenty-six years, and lost forty-one minutes of it. He did not fall asleep: the truck held its lane and the fuel curve was the cleanest the company had ever recorded. Out on the night frequencies a preacher tells a scattered congregation that the driver who takes over when you go under is the better one.",
-    audio: "assets/audio/31.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/31.mp3",
     runtime: 136
   },
 
@@ -501,7 +510,7 @@ const STORIES = [
     key: "Let me know if you need anything \u2014 the offer that hands the asking back",
     notes: [1, 2, 3],
     synopsis: "Roya never spoke, never reached, never turned her head. She lived ten years and eleven months and got heavier every one of them.\n\nHer mother's account of the therapy that hurt her daily to save her, the sister who asked for nothing, and the phrase people used so they wouldn't have to visit.\n\nAnd of what came after \u2014 when life got easier, and the grief did not, and only one of those could ever be said out loud.",
-    audio: "assets/audio/35.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/35.mp3",
     runtime: 170
   },
 
@@ -563,7 +572,7 @@ const STORIES = [
     key: "Two missing alarms \u2014 born without pain, and told a parasite took the rest",
     notes: [2, 3, 3],
     synopsis: "Corni Rowan was born unable to feel pain, and at twenty-three a clinic told him a parasite had taken what was left of his fear. Forty-one fights he could not be made to quit, eleven hundred jumps, and a drinks company whose entire product was the premise that fear is optional. Kids who could feel everything started imitating him, and started dying. Then, checking a fact for his daughter's science fair, he finds eleven years of blood panels \u2014 every one negative.",
-    audio: "assets/audio/40.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/40.mp3",
     runtime: 125
   },
 
@@ -711,7 +720,7 @@ const STORIES = [
     key: "The Ladder \u2014 breath-hold conditioning with rungs that continue past blackout",
     notes: [2, 1, 2],
     synopsis: "Cass Moura drives a rescue ski at the largest wave in Europe: four hundred and eleven recoveries, sixty-two seconds from impact to hand-on-body, a life built on the belief that his speed is the only decent thing about him. He is wrong about what the speed is for. The tow crews have been training under a retired navy diving medic, and their breath-hold work is a ladder whose rungs go past blackout \u2014 because forty-one subjects have described the same structure, in the same words, in the same absence of fear. Then a swell arrives with no precedent in the recorded history of the beach.",
-    audio: "assets/audio/52.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/52.mp3",
     runtime: 188
   },
 
@@ -1032,7 +1041,7 @@ const STORIES = [
     key: "The Dream Manual — her mother's book, ordered by the thing dreamed of, with door and demon as neighbouring headings; he reads it to her aloud every Friday and has started making the entries up",
     notes: [3, 3, 3],
     synopsis: "Farkhondeh Nikkhah has taught Persian literature in the same district of Tehran for thirty-one years. There is a son of twenty who grew up at a table where the government was discussed every night of his life, and a second boy who arrived in the alley when the two of them were six and eight and has eaten at that table ever since — and there is no word in the language for what he is to her. In Dey the street fills, and she stands in her own hallway and tells her son not to go.",
-    audio: "assets/audio/78.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/78.mp3",
     runtime: 103
   },
 
@@ -1166,7 +1175,7 @@ const STORIES = [
     key: "If You Don't Know, Leave It — his father's own six-word rule for the exam, meant for both of them; the father has kept it for twenty-nine years and the son has never once left an answer blank.",
     notes: [2, 2, 3],
     synopsis: "Mehdi Amini is eighteen. He has slept three hours a night for six hundred nights and answered four hundred thousand practice questions for an examination that scores a correct answer, docks a wrong one, and charges nothing for a blank. His father marks konkoor papers at night, by the page, for an institute whose course costs more in a month than he earns in four — and his own advice, six words long, is if you don't know, leave it. Mehdi has never once left one blank. Nine hundred and fifty thousand candidates sit down on one morning in Tir; one in ten will be given a place.",
-    audio: "assets/audio/89.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/89.mp3",
     runtime: 93
   },
 
@@ -1319,7 +1328,7 @@ const STORIES = [
     key: "The datura \u2014 a white trumpet that opens at night in summer, poisonous in every part, which the Chumash drank to see what was coming. It is open on the ridge in January, and nobody in the house can say why",
     notes: [2, 2, 3],
     synopsis: "Parviz Kamali came from Tehran in 1976, meant to stay three years, and bought a steep lot nobody wanted in the Palisades Highlands the year his old country closed behind him. He built a glass house on a steel frame, footings sunk into the hillside like the roots of a tooth, and did the arithmetic honestly, because he believed anything could be made to stand up if you did. Forty-five years later his widow \u0100zar still teaches piano at its window, and their son Omid \u2014 who makes fake explosions sound real for a living \u2014 has moved his wife and daughter back in to keep the house in the family. Down the canyon, Captain Ray Maddox has spent twenty-seven years learning that a fire is never really put out, only stopped. It has not rained in eight months. The brush on the ridges has not burned in fifty years. The insurance letters came in the spring, to half the street at once, and a pleasant man with a good watch has been knocking on doors asking who might like to sell. On New Year\u2019s night a small fire breaks out above the Highlands and the crews put it out before dawn \u2014 then roll up their hoses and go home with the ground still warm. Between the chapters, something much older than the houses begins to speak, and it has no reason left to lie.",
-    audio: "assets/audio/102.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/102.mp3",
     runtime: 246
   },
   {
