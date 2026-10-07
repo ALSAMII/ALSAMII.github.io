@@ -1,4 +1,4 @@
-/* Version 473 · last updated 2026-10-07 12:50 PDT*/
+/* Version 474 · last updated 2026-10-07 15:52 PDT*/
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1380,6 +1380,18 @@ const STORIES = [
     key: "The pigeons — let go from a roof at first light, every morning of his life, by a man the sky has been studying from seven and a half thousand miles away",
     notes: [3, 3, 3],
     synopsis: "Every morning at first light, Nasim Nazari climbs to the roof of his house in Maidan Shahr, an hour west of Kabul, and lets his pigeons go. He fixes radios and telephones in the bazaar. He has a wife who sews dresses and invents proverbs, and a daughter of eight who will not take off her pink sandals. High above the town there is a thin, patient buzzing that never stops. Nasim believes it is looking for somebody else. Seven and a half thousand miles away, in a cold metal trailer in the Nevada desert, Kayla Rourke works the night shift. She is a sensor operator: she points the camera of an unmanned Reaper, and when the order comes she holds the laser. She has been watching one house in Wardak for forty-one days. She knows the mulberry tree, the blue door that sticks, and the man who climbs to the roof every dawn and looks straight up at the sky. She writes it down in block capitals so that nobody can misread it — possible awareness of surveillance. The military has a phrase for what she is doing. Pattern of life: you watch a person long enough to learn what is ordinary for them, so that anything strange will stand out. The book follows them both through one morning that cannot be taken back, and the long years after it, from a roof in Afghanistan to a casino floor in Las Vegas where the eye in the sky is a dome of black glass. A man waiting for his bird is the most innocent thing in it. It is also the habit that marked him. From above, the two look exactly the same."
+  },
+
+  {
+    num: 107,
+    title: "Don’t Give Way to Amazement",
+    words: "29,000 words",
+    hook: "An interpreter who has never once been lost for a word, and the first one that leaves her",
+    door: "Dose",
+    room: "The Domed Room — twelve minutes inside a turning flower of red and orange, where a woman who has spent her life half a breath behind other people’s words never once has to look for one",
+    key: "The small brown bottle — nine years at the back of a freezer in Geneva, never named out loud, breathed from a glass pipe on a Saturday afternoon with a sober friend holding a watch",
+    notes: [2, 3, 3],
+    synopsis: "Margit Halmos has spent thirty-one years in a glass booth above a hall of the United Nations in Geneva, carrying other people’s words into English half a breath behind them — delegates, doctors, witnesses at a war-crimes tribunal. If a thing can be said, Margit can say it in another language before the speaker has finished. Then, in March, a delegate says heron and Margit says the animal. A neurologist gives the loss a name. It is rare and it is slow, and it takes the meanings of words one at a time, the rarest first, and it does not stop. In the back of Margit’s notebook her partner in the booth, Inês, begins a list headed Words gone. Switzerland lets a person choose the day she dies, but only while her mind is clear enough to choose, and an illness like hers will not wait; Margit joins the association that helps, writes the letter in her own hand, and is given a paper that says she is able. It is good for six months. Inês has twenty notebooks, every page an attempt to describe twelve minutes in Porto nine years ago — every sentence true, and none of them it — and a small brown bottle at the back of her freezer whose name she will not say. For thirty-one years Margit has carried one sentence across the glass more often than any other: there are no words. She has never once asked where the thing goes, the thing there are no words for. Before her door closes, she means to find out."
   }
 
 ];
@@ -1672,7 +1684,7 @@ const TRILOGIES = [
        book. */
     title: "Here Be Delos",
     label: "",
-    books: [100],
+    books: [100, 107],
     /* No numbering. Each book is a different person and a different
        substance in a different part of the world; there is no reading
        order and a "1 of 1" on the row would promise a sequence that
