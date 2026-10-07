@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 150 · last updated 2026-10-07 06:14 PDT
+   Version 151 · last updated 2026-10-07 14:40 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -899,14 +899,67 @@
      This is the one measurement here that is specific to the face: in a
      fallback the numeral rides slightly high instead, which is the harmless
      direction to be wrong in. */
-  padding:.06em .72em .38em .34em;
-  background:url("art/brush.webp?v=575") no-repeat center/100% 100%;
-  color:#16130F;}
-/* Parked with the rest of the light theme. The stroke is painted artwork now
-   rather than a mask, so a light page needs its own file — a dark mark with
-   the figure knocked out pale — not a colour swap. Recorded here so the
-   restore procedure in this file's header finds a note instead of a surprise. */
-:root[data-lt="light-off"] #royaLibrary .ab-count{color:#ece1c6}
+  /* Measured, not guessed. The ring art is 2.29:1, and background-size
+     100% 100% stretches it to whatever the padding box is, so the padding is
+     what keeps the ellipse the shape it was drawn. At this setting the box
+     renders 127×54, a ratio of 2.35 — within three per cent, which does not
+     read. The earlier, rounder setting measured 1.56 and squashed the mark
+     into a circle, and being taller it also pushed the ring up over the
+     paragraph above it. Small vertical padding, generous horizontal: the
+     digits nearly touch the ellipse top and bottom and sit well clear of it
+     either side, which is how a circled number looks on paper.
+
+     The top and bottom are uneven on purpose, and their total is what holds
+     the ratio: .18 over .14 rather than .16 each. The ::before covers the
+     padding box, so moving padding between top and bottom slides the ring
+     against the glyphs without changing its size.
+
+     That .04em is not a guess. The mark was rendered at 3×, the gold ring and
+     the bone figures separated by hue, and the two bounding boxes compared:
+     the numerals sat 5 device pixels low, so half of that came off the top
+     and went to the bottom. It now measures 40 px of clearance above and 40
+     below, 102 left and 101 right. Re-measure the same way if the face, the
+     size or the digit count changes — reasoning from font metrics is exactly
+     what put the stroke before this one off its own mark. */
+  padding:.18em .92em .14em .92em;
+  position:relative;
+  color:var(--bone);}
+/* ── the ring ──
+   The number is circled now rather than struck through, and the mark is a
+   MASK on a pseudo-element rather than painted artwork behind the text.
+   Three things follow from that, all of them wanted:
+
+   The colour comes from a token, so the light theme is right by
+   construction. The old stroke was two-tone artwork with grain baked in,
+   which a mask cannot carry, so a light page needed a second file that was
+   never drawn. A single-colour ring has nothing to lose.
+
+   The mask is on ::before, not on the element, because masking the element
+   would mask the digits with it.
+
+   And the ::before is positioned `inset:0` against the element's own padding
+   box, not sized in em against a font. That is the whole lesson of the
+   stroke this replaces: it was placed by eye against a rendered page, was
+   therefore right for exactly one face, and fell off its mark when the real
+   webfont loaded. An absolutely positioned child of a relative inline
+   resolves to that inline's padding box, so the ring is drawn round whatever
+   the glyphs actually measure, in any face. z-index:-1 puts it behind them;
+   neither the position nor the pseudo-element takes part in layout, so
+   line-height:0 still holds and the paragraph is exactly as tall as it was. */
+#royaLibrary .ab-count::before{content:""; position:absolute; inset:0;
+  z-index:-1; pointer-events:none;
+  background-color:var(--paper-dust);
+  -webkit-mask:url("art/ring.webp?v=577") no-repeat center/100% 100%;
+          mask:url("art/ring.webp?v=577") no-repeat center/100% 100%;}
+/* The light theme's override is gone and nothing replaces it. The ring takes
+   --paper-dust and the figure --bone, and both tokens are already redefined
+   under :root[data-lt="light-off"], so the mark follows the page by itself —
+   which is the point of a mask over painted artwork.
+   Worth knowing before anyone tests it: THE LIGHT THEME IS DORMANT in this
+   build. roya-library.js writes data-lt="dark" unconditionally and nothing
+   writes "light-off", so none of those rules are reachable today. This is
+   correct by construction rather than verified on screen, and it is the
+   honest state to record. */
 /* .ab-note--long used to un-slant itself here. .ab-note is roman now, so
    the override said nothing and has gone. */
 /* The dividers used to be a pseudo-element on each cell, positioned against
