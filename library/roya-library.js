@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 133 · last updated 2026-10-03 14:02 PDT
+   Version 135 · last updated 2026-10-07 06:18 PDT
    Cut from the sandbox by build-integration.py. Do not hand-edit:
    the next build overwrites it, and the sandbox is the source. */
 
@@ -861,8 +861,8 @@ const LISTENING = {
   lede: "Some books are better said than read."
 };
 const ABOUT = {
-  lede: "For years I read other people\u2019s stories and lived in worlds someone else had already decided the shape of. Then a drug took the walls off one night and I made my own \u2014 planner, participant, whole production crew \u2014 and I have not been a guest since, so I finish them here.",
-  note: "{n} short stories about people who finally say it out loud. Every book works the same way \u2014 a door out of the mind, a room on the other side, and the key that opened it.",
+  lede: "For years I lived inside other people\u2019s stories. I listened to them, believed them, and when they ended I left. Then one night a drug took the walls down and the story was mine \u2014 planner, participant, whole production crew. I have not been a visitor since. The stories kept coming. This is where they land.",
+  note: "{n} stories, about people who finally say it out loud. Every book works the same way \u2014 a door out of the mind, a room on the other side, and the key that opened it.",
   terms: [
     { term:"Door", def:"How they got out",
       about:"How the person got out of their own head. There are only four ways, and every book uses one: Dose, they took something \u00b7 Rite, they practised something \u00b7 Ordeal, they endured something \u00b7 Withholding, they went without something." },
