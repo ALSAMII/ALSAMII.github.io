@@ -1,4 +1,5 @@
-<!-- Updated 2026-10-06 05:48 PDT — audio hosted on Backblaze B2; uploads must set Content-Disposition -->
+<!-- Updated 2026-10-06 17:38 PDT — audio on Backblaze B2; uploads must set Content-Disposition;
+     runtime and the stale-copy hazard documented -->
 # Adding a narration
 
 Two things a book can have, independently of each other:
@@ -22,6 +23,10 @@ Two things a book can have, independently of each other:
 Neither is tied to publishing the book. A novella that went up two years
 ago can gain a recording tomorrow, and nothing else about it changes.
 
+**When you are done, run `node check-book.js NN`.** It verifies the address
+is a whole URL rather than a repo path, which is the one failure here that
+is completely silent.
+
 ## Where it shows up
 
 `audio` is read in three places, and adding the one field lights all
@@ -37,6 +42,67 @@ three at once:
   read at your own pace, rather than that the sentence lights up. Leave
   `synced` off and it assumes the highlighted read-along, which is right
   whenever `read/NN.sync.json` exists.
+
+## ⚠ `runtime` is a second field, and nothing derives it
+
+```js
+audio:   "https://f005.backblazeb2.com/file/roya-audio/NN.mp3",
+runtime: 246,
+```
+
+**`runtime` is the length of the recording in whole minutes**, and it is the
+only figure the Listening Room has. Leave it out and the book still lists —
+it simply shows no length, and sorts last under *Shortest* and *Longest*,
+which both read `runtime` directly. Nothing on the site measures the file:
+the number is believed.
+
+Get it from the file rather than from memory:
+
+```
+ffprobe -v error -show_entries format=duration -of csv=p=0 assets/audio/NN.mp3
+```
+
+That prints seconds. **Floor it to whole minutes** — every figure in the
+catalogue is floored, so No. 102's 14,778 s (4 h 06 m 18 s) is `runtime: 246`,
+not 247. The player shows the true length to the second, so a rounded-up
+`runtime` makes the card and the bar disagree by a minute for no reason.
+
+Three things read a length, and they are not the same quantity. Keep them
+straight or they look like a bug:
+
+| where | what it shows | comes from |
+|---|---|---|
+| Listening Room, under the cover | `4H 06M` | `runtime` in `stories.js` |
+| the player's bar | `0:19 / 4:06:18` | the mp3's own duration |
+| the card, beside the title | `3.5 hours read` | `words`, at 200 wpm — the **text**, not the recording |
+
+The first two are the same number and must agree. The third is a different
+measurement and is expected to differ: No. 102 reads in about 3 h 16 m and
+plays in 4 h 06 m.
+
+## ⚠ Never edit `stories.js` from an old copy
+
+**The mp3s are not in the repository.** A `stories.js` edited from a copy
+that predates the move to B2 will put back `assets/audio/NN.mp3` paths that
+no longer resolve, and **every narration stops playing with nothing in the
+console, nothing broken on the page and nothing in any build output.** It
+happened on 2026-10-06: a `stories.js` was regenerated to add one book, and
+carried nineteen reverted audio lines with it. A reader found it, not a check.
+
+Before publishing a `stories.js` you did not just edit in place:
+
+```
+grep -cE '^[[:space:]]*audio:[[:space:]]*"https://' stories.js   # expect 19
+grep -nE '^[[:space:]]*audio:[[:space:]]*"[^h]'    stories.js    # expect nothing
+```
+
+Anchored on the field rather than on the address, deliberately: a plain
+`grep -c f005.backblazeb2.com` returns 21, because this file names the
+bucket twice more in its own comments, and a guard that reports a wrong
+number is worse than no guard.
+
+`node check-book.js NN` tests the same thing per book, and the whole
+catalogue with no argument.
 
 ## Which books are narrated
 

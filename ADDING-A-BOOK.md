@@ -1,5 +1,6 @@
-<!-- Updated 2026-10-06 17:14 PDT — the narration lives on Backblaze B2, not in the repo, and
-     its upload must set Content-Disposition; counts refreshed to 104 books. -->
+<!-- Updated 2026-10-06 17:38 PDT — narration on Backblaze B2, not in the repo, and its
+     upload must set Content-Disposition; runtime documented; check-book.js is step 0;
+     counts refreshed to 105 books. -->
 # Adding a book
 
 Everything that has to happen when a new novella joins the site, in
@@ -36,7 +37,7 @@ many stories there are — step 3 rewrites the six places a crawler
 reads, and everything else counts `STORIES` as the page runs. See "The
 shelf count" in [README.md](README.md).
 
-Everything after this is the same steps, explained. There are 104 books
+Everything after this is the same steps, explained. There are 105 books
 as this is written; the two lettered steps are the ones most often
 skipped.
 
@@ -145,8 +146,9 @@ glass zoom. 3:2 landscape; older ones are 2496 × 1664 and newer ones
 reach into `covers/pairs/`, and the Roya Library asks for
 `covers/pairs/NN.webp` *first* — so without it, every Library view of
 that book spends a failed request before falling back to the `.jpg`.
-Only 27 of the 104 books have the webp today, which is why the other
-seventy-seven each cost one 404 on that panel.
+Only 28 of the 105 books have the webp today, which is why the other
+seventy-seven each spend one 404 on that panel before the fallback chain
+in roya-library.js serves the .jpg. It costs a request; it breaks nothing.
 
 Skipping the pair render altogether isn't a mistake the way skipping the
 plain cover is: the shelf's zoom falls back to `covers/NN.jpg`, and the
@@ -175,14 +177,15 @@ fill it in. Mind the comma between blocks.
   synopsis: "Four sentences or so. This is what stands on the stage.",
 
   // optional, only when the book has a recording — see step 5b
-  audio: "https://f005.backblazeb2.com/file/roya-audio/41.mp3",
-  synced: false
+  audio:   "https://f005.backblazeb2.com/file/roya-audio/41.mp3",
+  runtime: 162,
+  synced:  false
 },
 ```
 
-Ten fields, two of them optional. `audio` and `synced` are covered in
-step 5b and in [ADDING-AUDIO.md](ADDING-AUDIO.md); everything else is
-required.
+Eleven fields, three of them optional. `audio`, `runtime` and `synced` are
+covered in step 5b and in [ADDING-AUDIO.md](ADDING-AUDIO.md); everything
+else is required.
 
 **`num`** — the next number in the series. It sets the PDF and cover
 filenames, and the order on the shelf.
@@ -254,6 +257,15 @@ not in this repository, so it reads
 effects — the Audio control on the shelf row, the play bar in the Read
 view, and the *Narrated* panel in the Roya Library. A relative path still
 works if a file is ever served from the repo again. See step 5b.
+
+**`runtime`** — optional, and only alongside `audio`. The length of the
+recording in **whole minutes, floored** — `ffprobe` it rather than trusting
+memory, and see [ADDING-AUDIO.md](ADDING-AUDIO.md). It is the only length
+the Listening Room has, and the *Shortest* and *Longest* orders read it
+directly, so a book without it shows no figure and sorts last. Note that it
+is a different quantity from the reading time on the card, which comes from
+`words`: No. 102 reads in about 3 h 16 m and plays in 4 h 06 m, and those
+two disagreeing is correct.
 
 **`synced`** — optional, and only alongside `audio`. Leave it out and
 the Library promises the highlighted read-along, which is right whenever

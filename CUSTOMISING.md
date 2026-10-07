@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-06 05:48 PDT — audited against the code. 104 books, 15 series;
+<!-- Updated 2026-10-06 17:38 PDT — audited against the code. 105 books, 15 series;
      the Roya Library's own theme and tokens documented; several files
      this page described as present are recorded as missing. -->
 # Customising the site
@@ -693,6 +693,44 @@ read `data-theme`. See *The Roya Library* below — this catches people.
 
 ---
 
+## Times: four numbers, three quantities
+
+A narrated book shows four figures, and they have confused a reader more than
+once because two of them are the same number wearing different clothes and a
+third is measuring something else entirely.
+
+| where | example | what it is | computed by |
+|---|---|---|---|
+| the card, beside the title | `3.5 hours read` | how long the **text** takes | `readingTime()` in `script.js`, from `words`, at **200 wpm** |
+| the reader's bar, top | `3h 17m left` | the **text** remaining | `fmtTimeLeft()`, from the words below the scroll, at **200 wpm** |
+| the reader's bar, while playing | `4h 6m left` | the **recording** remaining | `fmtTimeLeft()`, from `duration — currentTime` |
+| the player's counter | `0:19 / 4:06:18` | the recording's true length | `fmtTime()`, from the mp3 |
+| Listening Room, under the cover | `4H 06M` | the recording's length | `runtime` in `stories.js` |
+
+**The two reading figures must agree, and they are kept in step by one
+constant.** `readingTime()` uses 200 words a minute and `fmtTimeLeft()` has
+its own `WPM`. **They have to stay equal.** `WPM` was 235 until 2026-10-06,
+so No. 102's card said *3.5 hours read* while the bar inside that same book
+said *2h 48m left* at the very top of the text — one quantity, two
+answers, half an hour apart, because of two constants. If you change the
+pace, change both.
+
+**The two recording figures must also agree**, and they come from different
+places: `runtime` is typed by hand into `stories.js`, the player reads the
+file. Floor `runtime` to whole minutes and they match. See
+[ADDING-AUDIO.md](ADDING-AUDIO.md).
+
+**The reading figure and the recording figure are expected to differ.** A
+book is not read at the pace it is spoken: No. 102 reads in about 3 h 16 m
+and plays in 4 h 06 m. That is not a fault, and the bar now shows whichever
+one the reader is actually doing — the reading estimate until playback
+starts, the recording once it has.
+
+⚠ **`fmtTime()` rolls into hours.** It did not until 2026-10-06, so a
+four-hour novella ended its bar with `246:18` — a true figure that looks
+nothing like the `4H 06M` on its own card. Every narration in the catalogue
+is over an hour, so anything that formats a duration here needs the hour.
+
 ## The ambient sound
 
 `assets/ambient-tearoom.mp3` — a seamless loop, off until the speaker
@@ -772,8 +810,8 @@ Almost everything is a file the repository already has:
 | the narration, where a book has one | `https://f005.backblazeb2.com/file/roya-audio/NN.mp3` — hosted off the repo; a *Narrated* panel offering Listen here or a download |
 | back to the top | the page's own `#toTop`, raised above the section while it is open |
 
-⚠ **The pair render is asked for as `.webp` first**, and only 27 of
-the 104 books have one — so seventy-seven of them spend a failed request on
+⚠ **The pair render is asked for as `.webp` first**, and only 28 of
+the 105 books have one — so seventy-seven of them spend a failed request on
 every Library view before falling back to the `.jpg`. Making
 `covers/pairs/NN.webp` is a hand step; `optimize-art.py` does not reach
 that folder.
