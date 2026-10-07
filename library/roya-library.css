@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 149 · last updated 2026-10-06 14:46 PDT
+   Version 150 · last updated 2026-10-07 06:14 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2787,7 +2787,11 @@
 #royaLibrary .mob-grid.is-rows .mcard-read{justify-content:flex-start; gap:.55rem}
 /* the two reading sections, at phone scale */
 #royaLibrary .mob-sec{padding:1.1rem .85rem 1.4rem}
-#royaLibrary .mob-sec .ab-lede{font-size:1.125rem; margin-bottom:1.1rem}
+/* the opening paragraph is the first thing a phone reader meets and it was
+   set a step below the head lines around it; 1.25rem is the size .mob-sec
+   already gives a book title here, so the two now agree. Desktop is
+   unchanged at 1.5rem. */
+#royaLibrary .mob-sec .ab-lede{font-size:1.25rem; margin-bottom:1.1rem}
 #royaLibrary .mob-sec .ab-note{font-size:1rem; margin-bottom:1.2rem}
 #royaLibrary .mob-sec .ab-terms{--abgap:.8rem; margin:1.3rem 0 .4rem}
 #royaLibrary .mob-sec .ab-term{padding:0 .2rem}
