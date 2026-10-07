@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 4 · last updated 2026-10-02 05:18 PDT
+   Version 5 · last updated 2026-10-06 17:26 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2207,12 +2207,24 @@
      how fast any one person actually reads — it's a single constant
      used only to turn a word count into a rough estimate, the same
      way an e-reader's "12 min left" is a guess, not a measurement. */
-  var WPM = 235;
+  /* It must stay equal to the 200 in readingTime(), which is what every
+     card, row and record panel shows. It was 235 here, so the card for
+     No. 102 said "3.5 hours read" while the bar inside that same book
+     said "2h 48m left" at the very top of the text — two numbers for
+     one quantity, half an hour apart, because of two constants. */
+  var WPM = 200;
 
+  /* h:mm:ss once a recording passes the hour, m:ss below it. The old
+     form never rolled minutes into hours, so a four-hour novella ended
+     its bar with "246:18" — a true figure nobody can read at a glance,
+     and one that looked like it disagreed with the 4H 06M on the card
+     when it is the same number. Every narration here is over an hour. */
   function fmtTime(t) {
     t = Math.max(0, Math.floor(t || 0));
-    var m = Math.floor(t / 60), sec = t % 60;
-    return m + ":" + (sec < 10 ? "0" : "") + sec;
+    var h = Math.floor(t / 3600), m = Math.floor(t / 60) % 60, sec = t % 60;
+    var ss = (sec < 10 ? "0" : "") + sec;
+    if (!h) return m + ":" + ss;
+    return h + ":" + (m < 10 ? "0" : "") + m + ":" + ss;
   }
 
   /* Plain word count across every block, headings and verse included —
@@ -2236,6 +2248,29 @@
      or before a word count exists at all — the element collapses when
      empty, so the bar just carries the title alone in that case. */
   function fmtTimeLeft(fractionDone) {
+    /* A book being listened to counts down the recording, not the text.
+       The two are different lengths — No. 102 reads in about 3h 16m
+       and plays in 4h 06m — so showing the reading estimate on the bar
+       of a playing recording put a figure there that tracked nothing on
+       screen: it moved with the scroll while the audio moved on its own.
+       Whichever the reader is actually doing, the figure now counts down
+       to the same end as the number on the card. */
+    var d = readerAudioEl && readerAudioEl.duration;
+    /* Once playback has started, and not before. A narrated book shows
+       the bar from the moment it opens, so keying off the bar alone made
+       a reader who never pressed play watch "4h 6m left" sit still while
+       they scrolled. currentTime > 0 covers a recording paused part-way
+       through, which should still count down the audio. */
+    var playing = readerAudioEl &&
+                  (readerAudioEl.currentTime > 0 || !readerAudioEl.paused);
+    if (playing && readerAudioBar && !readerAudioBar.hidden && d && !isNaN(d)) {
+      var secsLeft = Math.max(0, d - (readerAudioEl.currentTime || 0));
+      if (secsLeft < 60) return "";
+      var am = Math.round(secsLeft / 60);
+      if (am < 60) return am + " min left";
+      var ah = Math.floor(am / 60), amm = am % 60;
+      return ah + "h" + (amm ? " " + amm + "m" : "") + " left";
+    }
     if (!readerTotalWords) return "";
     var wordsLeft = readerTotalWords * Math.max(0, 1 - fractionDone);
     var minutes = wordsLeft / WPM;
