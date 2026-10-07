@@ -1,4 +1,4 @@
-/* Version 472 · last updated 2026-10-06 17:08 PDT*/
+/* Version 473 · last updated 2026-10-07 12:50 PDT*/
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1362,13 +1362,24 @@ const STORIES = [
   {
     num: 105,
     title: "A House Below Sea Level, Rent Paid in Salt",
-    words: "24,800 words",
+    words: "23,000 words",
     hook: "The voice that wants her to stop has never once lied to her",
     door: "Ordeal",
     room: "Below Sea Level — the place the mind and body go under great discomfort, where everything sits lower than where you started and nothing drains away",
     key: "Two Go Out — the 1849 route walked at its own distance, two hundred and fifty miles out of the valley and the same back in, on a rule that leaves nobody to be fetched later",
     notes: [2, 2, 3],
-    synopsis: "Juno Marrow repossesses cars in Bakersfield and sleeps in whichever one she towed that week. She is twenty-seven, quick with her fists and quicker with her mouth, and there is a voicemail on her phone she has not played in two years. Abe Coldiron is fifty-one. He fixes air conditioners in Barstow and runs across deserts for no money and no audience, and his heart stopped once, nineteen years ago, in the middle of nowhere. He has never asked anybody for help, and he says it is the only record he still holds. They meet at a gas station in Baker, under the tallest thermometer in the world, when she breaks into his truck and finds him sitting in it. He is about to walk the route of 1849 — the true story of two young men who went two hundred and fifty miles out of Death Valley to fetch help for the families trapped there, and then turned round and walked back in. His rule is simple. Two go out, two come back. His partner has quit. He offers her a deal: walk with him, and nobody she is hiding from will ever find her out there. She says she is hiding from nobody. He says then she will love it. On the first night, lying on the salt, they find that they have both been dead once, briefly, and that each of them saw the same room. And there is somebody waiting out there who wants her to stop — patient, courteous, never once lying, selling a shade that is perfectly real at a price that is only that she sit down. The walk out was never the hard part."
+    synopsis: "Juno Marrow repossesses cars in Bakersfield and sleeps in her own car, or in whichever one she towed that week. She is twenty-seven, quick with her fists and quicker with her mouth, and there is a voicemail on her phone she has not played in two years. Abe Coldiron is fifty-one. He fixes air conditioners in Barstow and runs across deserts for no money and no audience, and his heart stopped once, nineteen years ago, in the middle of nowhere. He has never asked anybody for help, and he says it is the only record he still holds. They meet in a motel parking lot in Baker, under the tallest thermometer in the world, when she comes to repossess his truck. He is about to walk the route of 1849 — the one two young men really took, out of Death Valley and back in again, to fetch help for the families trapped there. His rule is simple. Two go out, two come back. His partner has quit. He offers her a deal: walk with him, and at the end she gets two thousand dollars and the keys, and out there nobody she is hiding from will ever find her. She says she is hiding from nobody. He says then she will love it. On the first night, lying on the salt, they find that they have both been dead once, briefly, and that each of them saw the same room. And there is somebody waiting out there who wants her to stop — patient, courteous, never once lying, selling a shade that is perfectly real at a price that is only that she sit down. The walk out was never the hard part."
+  },
+  {
+    num: 106,
+    title: "Waiting for My Bird",
+    words: "38,400 words",
+    hook: "A man on a roof at dawn, and a camera that has learned what he does every morning",
+    door: "Rite",
+    room: "Pattern of Life — forty-one mornings of being learned by heart, until the ordinary thing you do every day is the thing that marks you",
+    key: "The pigeons — let go from a roof at first light, every morning of his life, by a man the sky has been studying from seven and a half thousand miles away",
+    notes: [3, 3, 3],
+    synopsis: "Every morning at first light, Nasim Nazari climbs to the roof of his house in Maidan Shahr, an hour west of Kabul, and lets his pigeons go. He fixes radios and telephones in the bazaar. He has a wife who sews dresses and invents proverbs, and a daughter of eight who will not take off her pink sandals. High above the town there is a thin, patient buzzing that never stops. Nasim believes it is looking for somebody else. Seven and a half thousand miles away, in a cold metal trailer in the Nevada desert, Kayla Rourke works the night shift. She is a sensor operator: she points the camera of an unmanned Reaper, and when the order comes she holds the laser. She has been watching one house in Wardak for forty-one days. She knows the mulberry tree, the blue door that sticks, and the man who climbs to the roof every dawn and looks straight up at the sky. She writes it down in block capitals so that nobody can misread it — possible awareness of surveillance. The military has a phrase for what she is doing. Pattern of life: you watch a person long enough to learn what is ordinary for them, so that anything strange will stand out. The book follows them both through one morning that cannot be taken back, and the long years after it, from a roof in Afghanistan to a casino floor in Las Vegas where the eye in the sky is a dome of black glass. A man waiting for his bird is the most innocent thing in it. It is also the habit that marked him. From above, the two look exactly the same."
   }
 
 ];

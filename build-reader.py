@@ -1,4 +1,4 @@
-# Version 355 · last updated 2026-10-06 15:28 PDT
+# Version 356 · last updated 2026-10-07 12:46 PDT
 """
 BUILDS THE READING TEXT FROM THE PDFs, INTO /read
 
@@ -264,7 +264,8 @@ def extract(path):
                 # 104 books matched. Widen it only with the same test:
                 # ordinary prose beginning with a figure is common, and
                 # what keeps this off it is the whole-line anchor.
-                if (len(text) < 70 and CHAPTER_LINE.match(text)):
+                if (len(text) < 70 and (CHAPTER_LINE.match(text)
+                                         or CHAPTER_DOT.match(text))):
                     flush_italic()
                     flush()
                     in_verse = is_verse_head(text)
@@ -336,6 +337,18 @@ BOILERPLATE = re.compile(
 CHAPTER_LINE = re.compile(
     r"^\s*\d{1,2}\.\s+[A-Z][\w’']*(?:\s+[A-Z][\w’']*)?"
     r"\s+—\s+\S.{0,50}$")
+
+# The same thing in another dress: a chapter marked by a spelled-out number
+# in capitals and the narrator's name, divided by a middle dot — "ONE · Kayla",
+# "TWENTY-EIGHT · Nasim". Body size again, and not all-caps, so neither of the
+# two rules above can see it. Anchored at BOTH ends and nothing else allowed on
+# the line, which is what keeps it off ordinary prose: a loose version of this
+# pattern matched "twenty-two birds. That if you were nobody, you w\u2026" in the
+# same book. Run against every read/*.json in the catalogue it matched 28 lines
+# in one book, No. 106, and every one was a chapter heading. Nothing else
+# matched anywhere.
+CHAPTER_DOT = re.compile(
+    r"^[A-Z][A-Z–\-]{1,20}\s*·\s*[A-Z][\w’']{1,20}$")
 
 # Where the reading starts, however the book announces it. Kept tight:
 # a looser pattern matched "Book I of the Borrowed Sun Cycle" on a
