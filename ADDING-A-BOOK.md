@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-06 05:48 PDT — the narration lives on Backblaze B2, not in the repo, and
+<!-- Updated 2026-10-06 17:14 PDT — the narration lives on Backblaze B2, not in the repo, and
      its upload must set Content-Disposition; counts refreshed to 104 books. -->
 # Adding a book
 
@@ -24,6 +24,7 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
    in `index.html`
 4. Run `node build-share-pages.js` → updates the `share/` folder
 5. Run `python3 build-reader.py NN` → writes `read/NN.json`
+6. **Run `node check-book.js NN` and fix whatever it reports**
 5b. *If it has a narration:* `python3 build-audio-sync.py NN rec.mp3`,
    upload the mp3 to the B2 bucket, then add `audio:` to the book's block
 6. Raise the `?v=` number in `index.html` — all five at the foot
@@ -38,6 +39,47 @@ shelf count" in [README.md](README.md).
 Everything after this is the same steps, explained. There are 104 books
 as this is written; the two lettered steps are the ones most often
 skipped.
+
+---
+
+## 0. Before you commit: `node check-book.js NN`
+
+**Run this last, every time, and read what it says.** It is the only step
+that fails loudly.
+
+```
+node check-book.js 105      # one book
+node check-book.js          # the whole catalogue
+```
+
+Every other step on this page fails *silently*. A forgotten
+`node build-share-pages.js` does not error — it leaves `share/<slug>.html`
+absent, and nothing on the site links to that file, so the shelf, the
+Library and the reader all look perfect while every Share button for that
+book hands out a 404. That is how No. 105 shipped, and the fault only
+surfaced when somebody pasted the link into a message.
+
+The check knows about every failure that has actually happened here:
+
+| it checks | because |
+|---|---|
+| `share/<slug>.html` exists, and its `og:image` resolves | the 404 above |
+| `feed.xml` and `sitemap.xml` carry the book | same forgotten script |
+| `index.html` says the right number in words | same forgotten script |
+| every `audio:` is a whole B2 address | a `stories.js` edited from a pre-B2 copy silently restored `assets/audio/NN.mp3` paths and killed all nineteen narrations |
+| the displayed reading time matches the book's own text | a card once showed a series' six hours on a two-hour book |
+| `read/NN.json` opens on the title | `build-reader.py` takes the title from `stories.js`, so running it first leaves the reader with no title |
+| door is one of the four, room and key carry their em dash | a typo here shows on the page |
+| the pair render's two files agree | the shelf wants the `.jpg`, the Library wants the `.webp` |
+
+It exits non-zero on a failure, so it can gate a commit:
+
+```
+node check-book.js 105 && git add -A && git commit -m "Book 105"
+```
+
+A **WARN** never fails the run — those are things worth knowing that break
+nothing. A **FAIL** is something a reader would hit.
 
 ---
 
