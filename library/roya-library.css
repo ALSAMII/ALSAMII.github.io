@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 155 · last updated 2026-10-07 19:24 PDT
+   Version 156 · last updated 2026-10-07 19:56 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -325,7 +325,10 @@
     background-attachment:scroll}
   #royaLibrary .phone{background-image:none; background-color:transparent}
 }
-}
+/* A stray closing brace stood here. It shut nothing — the @media above closes
+   on the line before it — so every rule below sat one level under zero and the
+   browser recovered by ignoring it, which is why nothing ever looked wrong. The
+   editor was right to flag it: it was the one hard error in this file. */
 /* On a phone the SECTION is the scroller, not .phone — and unlike .phone it
    was still drawing a scrollbar. On iOS that bar is an overlay that fades out
    rather than disappearing, so opening a record right after a scroll left the
@@ -2851,7 +2854,7 @@
 #royaLibrary .mcard hr{border:0; height:1px; background:rgba(199,148,61,.5); margin:0}
 #royaLibrary .mcard-hook{margin:.5rem 0 .6rem; font-family:var(--book); font-weight:400;
   font-size:.9375rem; line-height:1.3; color:var(--t-copy);
-  display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden;}
+  display:-webkit-box; -webkit-line-clamp:4; line-clamp:4; -webkit-box-orient:vertical; overflow:hidden;}
 #royaLibrary .mcard-read{margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:.4rem;
   font-family:var(--cond); font-weight:600; font-size:.5625rem; letter-spacing:.2em;
   text-transform:uppercase; color:var(--t-read);}
@@ -2881,7 +2884,7 @@
 #royaLibrary .mob-grid.is-rows .mcard-no{font-size:.875rem}
 #royaLibrary .mob-grid.is-rows .mcard-ti, #royaLibrary .mob-grid.is-rows .mcard-ti.is-long{font-size:1.25rem; line-height:1; margin:.3rem 0 .45rem}
 #royaLibrary .mob-grid.is-rows .mcard hr{display:none}
-#royaLibrary .mob-grid.is-rows .mcard-hook{-webkit-line-clamp:2; margin:0 0 .5rem; font-size:.875rem}
+#royaLibrary .mob-grid.is-rows .mcard-hook{-webkit-line-clamp:2; line-clamp:2; margin:0 0 .5rem; font-size:.875rem}
 #royaLibrary .mob-grid.is-rows .mcard-meta{display:flex}
 #royaLibrary .mob-grid.is-rows .mcard-read{justify-content:flex-start; gap:.55rem}
 /* the two reading sections, at phone scale */
@@ -3632,7 +3635,7 @@ body.rl-on #toTop{z-index:71}
    stops well short of printing the whole thing here. */
 #royaLibrary .lr-syn{flex:none; margin:.1rem 0 .35rem; font-family:var(--book); font-size:1.0625rem;
   line-height:1.5; color:var(--t-copy); max-width:60ch;
-  display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden}
+  display:-webkit-box; -webkit-line-clamp:6; line-clamp:6; -webkit-box-orient:vertical; overflow:hidden}
 /* margin-top:auto, and nothing after it may set margin-top again — the rule
    carried a trailing margin-top:.2rem from when this block sat directly under
    the synopsis, and being later in the same declaration list it quietly won.
@@ -3699,7 +3702,7 @@ body.rl-on #toTop{z-index:71}
      the two stop matching at exactly the width where they are most likely to
      be seen one after the other */
   #royaLibrary .lr-t button{font-size:1.25rem}
-  #royaLibrary .lr-syn{font-size:1rem; -webkit-line-clamp:3; margin-bottom:.2rem}
+  #royaLibrary .lr-syn{font-size:1rem; -webkit-line-clamp:3; line-clamp:3; margin-bottom:.2rem}
   #royaLibrary .lr-acts{gap:1rem; font-size:.8125rem}
   /* the synopsis steps down here and Read instead follows it, the two being
      deliberately the same size */
