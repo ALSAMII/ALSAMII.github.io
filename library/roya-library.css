@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 159 · last updated 2026-10-08 05:27 PDT
+   Version 160 · last updated 2026-10-08 07:30 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2399,8 +2399,27 @@
    subjects stop short of it, so nothing of theirs is cut. 52's two lines stay
    though it has come off the panel: they cost nothing unused and they are what
    makes putting it back a one-line change. */
+/* 26 zoomed a notch and brought out toward the edge, to ChewZ's eye. 80% of
+   the box height rather than 70%, and four rem of the overhang cancelled
+   rather than five, which takes the clear ground at its right from 26px to
+   14px. Measured at 320, 360, 390 and 430: the figure, the burning reed line
+   and the reflections stay whole at all four. Three rem was tried and came
+   within a pixel of the edge, which is too close to hold as rows change
+   height. */
 #royaLibrary .mob-sec .ab-row[data-rec="26"] .ab-art{
-  background-position:calc(100% - 5rem) 50%}
+  background-size:auto 80%;
+  background-position:calc(100% - 4rem) 50%}
+
+/* 102 was the last plate still running off the screen: its paint reached the
+   right edge with nothing to spare at every phone width, which cut the datura
+   — the white flowers its own synopsis names two lines away. Four rem brings
+   both of them back whole.
+   ChewZ asked for this one to move RIGHT. It cannot: at 100% the plate's right
+   edge already sits five rem past the row, so right takes more of the flowers
+   off, and two rem further right loses them altogether. Rendered all four ways
+   side by side before choosing. Easy to reverse if the crop was the intent. */
+#royaLibrary .mob-sec .ab-row[data-rec="102"] .ab-art{
+  background-position:calc(100% - 4rem) 50%}
 /* 106 sits one rem further out than 26. Cancelling the whole five-rem overhang
    put its right edge exactly on the row's right edge, which left about 32px of
    empty ground beside it — further in than any other row on the panel. Four rem
