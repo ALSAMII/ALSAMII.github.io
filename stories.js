@@ -1,4 +1,4 @@
-/* Version 474 · last updated 2026-10-07 15:52 PDT*/
+/* Version 475 · last updated 2026-10-08 13:55 PDT*/
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1392,6 +1392,17 @@ const STORIES = [
     key: "The small brown bottle — nine years at the back of a freezer in Geneva, never named out loud, breathed from a glass pipe on a Saturday afternoon with a sober friend holding a watch",
     notes: [2, 3, 3],
     synopsis: "Margit Halmos has spent thirty-one years in a glass booth above a hall of the United Nations in Geneva, carrying other people’s words into English half a breath behind them — delegates, doctors, witnesses at a war-crimes tribunal. If a thing can be said, Margit can say it in another language before the speaker has finished. Then, in March, a delegate says heron and Margit says the animal. A neurologist gives the loss a name. It is rare and it is slow, and it takes the meanings of words one at a time, the rarest first, and it does not stop. In the back of Margit’s notebook her partner in the booth, Inês, begins a list headed Words gone. Switzerland lets a person choose the day she dies, but only while her mind is clear enough to choose, and an illness like hers will not wait; Margit joins the association that helps, writes the letter in her own hand, and is given a paper that says she is able. It is good for six months. Inês has twenty notebooks, every page an attempt to describe twelve minutes in Porto nine years ago — every sentence true, and none of them it — and a small brown bottle at the back of her freezer whose name she will not say. For thirty-one years Margit has carried one sentence across the glass more often than any other: there are no words. She has never once asked where the thing goes, the thing there are no words for. Before her door closes, she means to find out."
+  },
+  {
+    num: 108,
+    title: "Only Diamond Cuts Diamond",
+    words: "47,000 words",
+    hook: "A man who has mastered everything he ever looked at, and the one thing that will not hold still under the loupe",
+    door: "Withholding",
+    room: "Under the Loupe — a man who learns that the engine in him can be aimed at a stone or at a person, and that the second will not hold still, is never finished, and was never meant to be",
+    key: "The stone grown from her — a laboratory diamond made from what was left of his wife, and two years at a wheel in Antwerp so that no other hand would touch it",
+    notes: [3, 3, 3],
+    synopsis: "Kian Sarrāf has an engine in him. It started when he was four, counting tiles in a Tehran basement while the bombs fell: something catches his eye, the world goes quiet around it, and he does not come back until he has mastered it. A Rubik’s cube. Chess. A trading firm worth more than his father ever dreamed of. A 1967 Porsche rebuilt from three thousand bags of bolts. His wife Roxana calls them his seasons — she writes each one on the calendar on the fridge, and when it ends she writes two words: Welcome back. For sixteen years he always comes back, to her, to their daughter Sahar, to their son Kaveh, to a long low house in a Los Angeles canyon that smells of hot clay on firing days. Then, on the night he finishes the car, there is a curve on a mountain road. Grief gives the engine nothing to hold — until, at three in the morning, Kian learns that a laboratory can grow a diamond from what is left of a person, and decides that nobody will cut it but him. He leaves his children with his mother and goes to Antwerp, to the last hand-cutter on a street of armed guards and steel posts: Elias Karam, eighty years old, born in the diamond fields of Sierra Leone, who answers the last of thirty-one letters with four words. Come. Bring nothing. E. Elias teaches him the oldest rule of the trade: every stone carries one tension, and you find it before you cut or it finds you. Kian thinks he knows where his is."
   }
 
 ];
