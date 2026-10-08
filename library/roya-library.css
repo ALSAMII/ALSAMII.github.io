@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 157 · last updated 2026-10-08 04:28 PDT
+   Version 159 · last updated 2026-10-08 05:27 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2365,6 +2365,7 @@
    anchor. That was tuned against library/art/start-35, a 1100x733 cut of the
    painting before this one, and on a 3:1 plate it cut the right wing off. The
    plate now carries its own margin, so the panel's defaults are enough. */
+#royaLibrary .mob-sec .ab-row[data-rec="26"] .ab-art,
 #royaLibrary .mob-sec .ab-row[data-rec="35"] .ab-art,
 #royaLibrary .mob-sec .ab-row[data-rec="52"] .ab-art,
 #royaLibrary .mob-sec .ab-row[data-rec="102"] .ab-art,
@@ -2389,10 +2390,27 @@
    row is tall there, so the plate scales up with it — and the only difference
    now is that the bird is whole.
 
-   The other three plates lose a similar tenth off their right edge for the
-   same reason. Their subjects stop short of it, so nothing of theirs is cut. */
-#royaLibrary .mob-sec .ab-row[data-rec="106"] .ab-art{
+   26 joins it for the same reason and was judged the same way: cover, the
+   step-back alone, the shift alone and the two together, rendered side by side
+   at 390px. Only the pair puts the whole figure, the burning reed line and the
+   water in frame and keeps them clear of the paragraph.
+
+   The remaining plates lose a similar tenth off their right edge. Their
+   subjects stop short of it, so nothing of theirs is cut. 52's two lines stay
+   though it has come off the panel: they cost nothing unused and they are what
+   makes putting it back a one-line change. */
+#royaLibrary .mob-sec .ab-row[data-rec="26"] .ab-art{
   background-position:calc(100% - 5rem) 50%}
+/* 106 sits one rem further out than 26. Cancelling the whole five-rem overhang
+   put its right edge exactly on the row's right edge, which left about 32px of
+   empty ground beside it — further in than any other row on the panel. Four rem
+   halves that to 19px and the bird, the loft and the city all still clear the
+   screen. Measured at 320, 360, 390 and 430: the paint stops 15 to 22px short
+   of the edge at every one, where three rem came within 5px and two rem ran
+   off again. 26 keeps the full five: its figure sits a little further left in
+   its own plate, so it needs the whole overhang cancelled to stay whole. */
+#royaLibrary .mob-sec .ab-row[data-rec="106"] .ab-art{
+  background-position:calc(100% - 4rem) 50%}
 /* 52 keeps the 97% anchor it had under the plate before this one. At this size
    the difference between 97% and 100% measures 2 parts in 255 across the whole
    row and the paint reaches the same pixel either way, so there is nothing to
