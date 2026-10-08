@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 156 · last updated 2026-10-07 19:56 PDT
+   Version 157 · last updated 2026-10-08 04:28 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2369,6 +2369,30 @@
 #royaLibrary .mob-sec .ab-row[data-rec="52"] .ab-art,
 #royaLibrary .mob-sec .ab-row[data-rec="102"] .ab-art,
 #royaLibrary .mob-sec .ab-row[data-rec="106"] .ab-art{background-size:auto 70%}
+/* 106 was losing the end of its own picture. The art box hangs five rem past
+   the row at every phone width, and the base anchor puts the plate's RIGHT
+   edge on the box's right edge — so the last five rem of the plate sat off the
+   side of the screen. At this size that is about a tenth of its width, and
+   106's bird and loft reach to 96% of it, so the far wing and the loft went
+   over the edge. Pulling the anchor back by exactly the overhang lands the
+   plate's right edge on the row's right edge instead: nothing is cropped, and
+   nothing moves on the other three.
+
+   In rem rather than a percentage on purpose. The overhang is a fixed five
+   rem, so this cancels it exactly at 320, 360, 390 and 430 alike, where a
+   percentage would be read against the gap between plate and box and drift
+   with every change of row height. Measured at all four: the paint now stops
+   23 to 36 px short of the screen edge instead of running off it, and the
+   whole bird, the roof, the loft and the city are in frame.
+
+   At 320 the plate crosses the text. It did that before this change too — the
+   row is tall there, so the plate scales up with it — and the only difference
+   now is that the bird is whole.
+
+   The other three plates lose a similar tenth off their right edge for the
+   same reason. Their subjects stop short of it, so nothing of theirs is cut. */
+#royaLibrary .mob-sec .ab-row[data-rec="106"] .ab-art{
+  background-position:calc(100% - 5rem) 50%}
 /* 52 keeps the 97% anchor it had under the plate before this one. At this size
    the difference between 97% and 100% measures 2 parts in 255 across the whole
    row and the paint reaches the same pixel either way, so there is nothing to
