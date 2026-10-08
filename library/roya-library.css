@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 160 · last updated 2026-10-08 07:30 PDT
+   Version 161 · last updated 2026-10-08 07:46 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2399,21 +2399,25 @@
    subjects stop short of it, so nothing of theirs is cut. 52's two lines stay
    though it has come off the panel: they cost nothing unused and they are what
    makes putting it back a one-line change. */
-/* 26 zoomed a notch and brought out toward the edge, to ChewZ's eye. 80% of
-   the box height rather than 70%, and four rem of the overhang cancelled
-   rather than five, which takes the clear ground at its right from 26px to
-   14px. Measured at 320, 360, 390 and 430: the figure, the burning reed line
-   and the reflections stay whole at all four. Three rem was tried and came
-   within a pixel of the edge, which is too close to hold as rows change
-   height. */
+/* 26 and 106 are both zoomed and brought out toward the edge, to ChewZ's eye,
+   over two passes. 26 ends at 90% of the box height and 3.5 rem of the five-rem
+   overhang cancelled; 106 at 80% and three rem.
+
+   The two settings pull against each other, which is why they were measured
+   rather than guessed. Zooming a plate makes its own right-hand margin bigger,
+   since the feather is a share of its width — so a bigger plate can be pushed
+   further right before anything is lost. Both landed at 8 to 14px of clear
+   ground at 320, 360, 390 and 430 alike. 26 at a flat three rem came within
+   1px at 430, which is the width where its row is shortest and its plate
+   therefore smallest; the extra half rem is what buys that back. */
 #royaLibrary .mob-sec .ab-row[data-rec="26"] .ab-art{
-  background-size:auto 80%;
-  background-position:calc(100% - 4rem) 50%}
+  background-size:auto 90%;
+  background-position:calc(100% - 3.5rem) 50%}
 
 /* 102 was the last plate still running off the screen: its paint reached the
    right edge with nothing to spare at every phone width, which cut the datura
    — the white flowers its own synopsis names two lines away. Four rem brings
-   both of them back whole.
+   both of them back whole, with 4 to 5px to spare.
    ChewZ asked for this one to move RIGHT. It cannot: at 100% the plate's right
    edge already sits five rem past the row, so right takes more of the flowers
    off, and two rem further right loses them altogether. Rendered all four ways
@@ -2429,7 +2433,8 @@
    off again. 26 keeps the full five: its figure sits a little further left in
    its own plate, so it needs the whole overhang cancelled to stay whole. */
 #royaLibrary .mob-sec .ab-row[data-rec="106"] .ab-art{
-  background-position:calc(100% - 4rem) 50%}
+  background-size:auto 80%;
+  background-position:calc(100% - 3rem) 50%}
 /* 52 keeps the 97% anchor it had under the plate before this one. At this size
    the difference between 97% and 100% measures 2 parts in 255 across the whole
    row and the paint reaches the same pixel either way, so there is nothing to
