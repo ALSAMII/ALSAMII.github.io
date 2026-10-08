@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 152 · last updated 2026-10-07 16:48 PDT
+   Version 155 · last updated 2026-10-07 19:24 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2337,17 +2337,39 @@
     linear-gradient(to right, transparent 0, rgba(0,0,0,.22) 14%, rgba(0,0,0,.62) 34%, #000 58%, #000 96%, transparent 100%),
     linear-gradient(to bottom, transparent 0, rgba(0,0,0,.3) 8%, #000 22%, #000 72%, rgba(0,0,0,.22) 88%, transparent 97%),
     radial-gradient(104% 96% at 62% 50%, #000 30%, rgba(0,0,0,.6) 66%, transparent 100%);}
-/* 35 is the one scene whose subject is a shape rather than a figure, and a
-   wing cut in half is not a wing. Three things were taking it: the box hangs
-   five rem past the row, which put the right tip off the side of the screen;
-   `cover` filled the box exactly, so the 87% anchor had no slack to work with
-   and did nothing; and the mask's top fade was still climbing where the upper
-   wings sit. The overhang comes back to two rem, the plate is set to 92% of
-   the box height so it has room to be placed, and 68% down carries the pair
-   clear of that fade. The whole span and the hummingbird under it are in
-   frame now. */
-#royaLibrary .mob-sec .ab-row[data-rec="35"] .ab-art{right:-2rem;
-  background-size:auto 92%; background-position:62% 68%;}
+/* ── the four plates that fill their own frame ──
+   35, 52, 102 and 106 are the scenes on this panel whose subject fills the
+   plate rather than sitting small inside it. On a phone the art box falls to
+   somewhere near 1.2:1, so `cover` crops a 3:1 plate to about its right two
+   fifths — which for these four is almost nothing but subject. Each came out
+   larger and brighter than anything else on the page and sat on top of the
+   paragraph. Holding the plate at 70% of the box height gives every one of
+   them its own dark surround back.
+
+   70% was picked by looking, not by arithmetic. For each plate, cover, 80, 70
+   and 60 were rendered side by side at 390px: 80 still crowded the text and 60
+   pushed the scene far enough off that it read as a different picture. At 70,
+   35 keeps the whole wingspan with the hummingbird under it and the ridge
+   below, 52 keeps the shaft of light, the board and the ski, 102 keeps the
+   datura, the burning ridge and the sea, and 106 keeps the roof, the coop and
+   the city.
+
+   All four fade to #000 on every edge, so the part of the box they no longer
+   fill simply shows the page, with no seam where the picture stops. That is
+   what makes one number work for four different paintings.
+
+   This replaces 35's own rule, which set `right:-2rem`, 92% and a 62%/68%
+   anchor. That was tuned against library/art/start-35, a 1100x733 cut of the
+   painting before this one, and on a 3:1 plate it cut the right wing off. The
+   plate now carries its own margin, so the panel's defaults are enough. */
+#royaLibrary .mob-sec .ab-row[data-rec="35"] .ab-art,
+#royaLibrary .mob-sec .ab-row[data-rec="52"] .ab-art,
+#royaLibrary .mob-sec .ab-row[data-rec="102"] .ab-art,
+#royaLibrary .mob-sec .ab-row[data-rec="106"] .ab-art{background-size:auto 70%}
+/* 52 keeps the 97% anchor it had under the plate before this one. At this size
+   the difference between 97% and 100% measures 2 parts in 255 across the whole
+   row and the paint reaches the same pixel either way, so there is nothing to
+   gain by disturbing it. */
 #royaLibrary .mob-sec .ab-row[data-rec="52"] .ab-art{background-position:97% 50%}
 /* 94 stays hard right, where the page steps it back to 84%: the page's file
    stops short of its own right edge and 84% closes the strip that leaves,
