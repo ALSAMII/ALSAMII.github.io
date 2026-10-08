@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 151 · last updated 2026-10-07 14:40 PDT
+   Version 152 · last updated 2026-10-07 16:48 PDT
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -899,29 +899,53 @@
      This is the one measurement here that is specific to the face: in a
      fallback the numeral rides slightly high instead, which is the harmless
      direction to be wrong in. */
-  /* Measured, not guessed. The ring art is 2.29:1, and background-size
-     100% 100% stretches it to whatever the padding box is, so the padding is
-     what keeps the ellipse the shape it was drawn. At this setting the box
-     renders 127×54, a ratio of 2.35 — within three per cent, which does not
-     read. The earlier, rounder setting measured 1.56 and squashed the mark
-     into a circle, and being taller it also pushed the ring up over the
-     paragraph above it. Small vertical padding, generous horizontal: the
-     digits nearly touch the ellipse top and bottom and sit well clear of it
-     either side, which is how a circled number looks on paper.
+  /* Measured, not guessed. The ring art is 2.69:1, and the mask is sized
+     100% 100% to whatever the padding box is, so the padding is what keeps
+     the ellipse the shape it was drawn. Small vertical padding, generous
+     horizontal: the digits nearly touch the ellipse top and bottom and sit
+     well clear of it either side, which is how a circled number looks on
+     paper. The earlier, rounder setting squashed the mark into a circle and,
+     being taller, pushed the ring up over the paragraph above it.
 
-     The top and bottom are uneven on purpose, and their total is what holds
-     the ratio: .18 over .14 rather than .16 each. The ::before covers the
-     padding box, so moving padding between top and bottom slides the ring
-     against the glyphs without changing its size.
+     The ::before covers the padding box, so moving padding between top and
+     bottom slides the ring against the glyphs without changing its size.
 
-     That .04em is not a guess. The mark was rendered at 3×, the gold ring and
-     the bone figures separated by hue, and the two bounding boxes compared:
-     the numerals sat 5 device pixels low, so half of that came off the top
-     and went to the bottom. It now measures 40 px of clearance above and 40
-     below, 102 left and 101 right. Re-measure the same way if the face, the
-     size or the digit count changes — reasoning from font metrics is exactly
-     what put the stroke before this one off its own mark. */
-  padding:.18em .92em .14em .92em;
+     ── why lining figures, and why that is the fix rather than more padding ──
+     Cormorant Garamond's figures are OLD-STYLE by default, and they are not
+     one height. Measured off the real woff2: 1 and 0 run 0.000–0.399em, 6
+     reaches 0.661em, and 3, 5, 7 and 9 all hang to −0.275em. So the ink of
+     "106" is centred at 0.324em above the baseline and the ink of "107" at
+     0.071em — a quarter of an em apart, nearly 10 real pixels at this size.
+     No fixed padding can centre both. 106 looked right and then 107 dropped
+     to the floor of the ring, which is exactly what ChewZ saw.
+
+     font-variant-numeric:lining-nums takes the .lf set instead, where every
+     digit runs about −0.013em to +0.64em and the ink centre is 0.3216em for
+     any string of them. That turns a figure that moves with the catalogue
+     into a constant, so this stays centred at 108, 110 and 200 without being
+     touched again. The face carries lnum; EB Garamond does too; Georgia has
+     no lining set and simply ignores the property, which leaves the fallback
+     exactly where it already was.
+
+     With the figures fixed, the arithmetic is one line. An inline's content
+     area is the face's ascent + descent, 0.924em over the baseline and
+     0.287em under it, so the padding box centres at (0.637 + pt − pb) / 2
+     above the baseline. Setting that equal to 0.3216 gives pt − pb = 0.006em,
+     and keeping pt + pb at the 0.32em that holds the ellipse's ratio gives
+     .163 over .157.
+
+     Then checked rather than trusted, because reasoning from font metrics is
+     what put the stroke before this one off its own mark: rendered at 3× with
+     the real Cormorant woff2 loaded, the gold ring and the bone figures
+     separated by hue and their bounding boxes compared. 107 measures 47 device
+     pixels of clearance above and 47 below; 108 and 110 both measure 49 and 47.
+     Before this change, in the real face, 107 measured 74 above and 16 below.
+
+     NOTE FOR ANYONE RE-MEASURING: the webfont comes from Google Fonts, so a
+     machine that cannot reach fonts.gstatic.com renders this in Georgia and
+     every number below will be wrong. Load the face explicitly first. */
+  font-variant-numeric:lining-nums;
+  padding:.163em .92em .157em .92em;
   position:relative;
   color:var(--bone);}
 /* ── the ring ──
