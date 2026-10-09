@@ -84,7 +84,15 @@ function checkBook(s) {
   check(exists(`pdfs/${p}.pdf`),           `pdfs/${p}.pdf`);
   check(exists(`covers/${p}.jpg`),         `covers/${p}.jpg`);
   warn (exists(`covers/${p}.webp`),        `covers/${p}.webp`);
-  check(exists(`library/covers/${p}.webp`),`library/covers/${p}.webp`);
+  /* The flat front. It is never a file anybody has to go and find: page 1
+     of the book's own PDF IS this artwork, at 1024 x 1536 or better, in
+     every book on the shelf bar one. No. 109 shipped without it and spent
+     a round trip being asked for, so the way to make it is in the message
+     rather than in a document somebody would have to already know to
+     read. */
+  check(exists(`library/covers/${p}.webp`),
+        `library/covers/${p}.webp — 560x840 flat front. Page 1 of pdfs/${p}.pdf ` +
+        `is this picture: extract it and resize.`);
   check(exists(`read/${p}.json`),          `read/${p}.json`);
 
   /* The pair render is optional, but the two files go together: the shelf
