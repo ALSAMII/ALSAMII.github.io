@@ -116,76 +116,56 @@ ${urls}
 );
 
 /* ------------------------------------------------------------
-   THE COUNT IN index.html's METADATA
+   THE SCALE PHRASE IN index.html's METADATA
 
-   The title and the three descriptions open with the number of
-   books, spelled out. That number is the sort of thing that goes
-   stale silently: nobody re-reads their own <title>, and the one
-   place it is wrong is the first thing a stranger sees.
+   This used to write the exact count into the <title> and the three
+   descriptions on every run, from STORIES.length, so the number could
+   never go stale in the file.
 
-   So it is written from STORIES.length here instead, on the same
-   run that rebuilds the feed. Only the number word is touched —
-   the sentences around it stay exactly as they are in the file,
-   so you can reword them freely.
+   It was stale everywhere that mattered anyway. Google recrawls a site
+   this size every few weeks, so every book published left ITS copy of
+   the title wrong until the next crawl — and the title is the first
+   thing a stranger sees. A search result reading "One hundred and two
+   Short Noir Novellas" over a shelf holding a hundred and nine is what
+   finally retired it.
+
+   The metadata now says "Over a hundred", which is true of every
+   catalogue from 100 to 199 and needs no rewriting at all. What is
+   left here is the other half of that job: making sure it stays true,
+   and saying so loudly when it stops.
+
+   Nothing in index.html is written by this script any more. Reword the
+   title and the descriptions freely — only the phrase named in SCALE
+   below is anybody's business but yours.
    ------------------------------------------------------------ */
 
-const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven",
-              "eight", "nine", "ten", "eleven", "twelve", "thirteen",
-              "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
-              "nineteen"];
-const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty",
-              "seventy", "eighty", "ninety"];
+const SCALE = "Over a hundred short noir novellas";
+const html = fs.readFileSync("index.html", "utf8");
+let scaleNote;
 
-function spell(n) {
-  if (n < 20) return ONES[n];
-  if (n < 100) {
-    const t = TENS[Math.floor(n / 10)];
-    return n % 10 ? `${t}-${ONES[n % 10]}` : t;
-  }
-  const h = `${ONES[Math.floor(n / 100)]} hundred`;
-  return n % 100 ? `${h} and ${spell(n % 100)}` : h;
-}
-
-const cap = (w) => w.charAt(0).toUpperCase() + w.slice(1);
-
-/* Whatever sits between the fixed text on each side of the number —
-   matched lazily, so it takes the number and stops at the phrase.
-
-   It has to allow spaces, not just hyphens: past ninety-nine the words
-   run to "One hundred and twenty-one". An earlier version here matched
-   a single hyphenated word, which was fine up to 99 and then silently
-   stopped finding its own output the moment the catalogue passed 100 —
-   the count would have frozen at "One hundred" and never moved again.
-
-   Matching on the surrounding phrase rather than on the previous number
-   also means this keeps working no matter what the count was last run,
-   including when it goes down. */
-const PATTERNS = [
-  [/(Chew Z — ).+?( Short Noir Novellas)/g,
-   () => cap(spell(STORIES.length))],
-  [/(content=").+?( short noir novellas)/g,
-   () => cap(spell(STORIES.length))],
-];
-
-let html = fs.readFileSync("index.html", "utf8");
-let hits = 0;
-for (const [re, word] of PATTERNS) {
-  html = html.replace(re, (m, before, after) => { hits++; return before + word() + after; });
-}
-
-if (hits === 0) {
-  console.warn(
-    "index.html: no count found to update. If you reworded the title or the\n" +
-    "            descriptions, the phrases this looks for are\n" +
-    '            "Chew Z — <number> Short Noir Novellas" and\n' +
-    '            "<number> short noir novellas". Adjust PATTERNS above.'
+if (!html.includes(SCALE)) {
+  scaleNote = `index.html: the phrase "${SCALE}" is not there any more.\n` +
+              "            Nothing was changed — but if you reworded the metadata,\n" +
+              "            update SCALE in build-feeds.js so this keeps watching\n" +
+              "            the right words.";
+  console.warn(scaleNote);
+  scaleNote = "index.html: scale phrase not found (see above)";
+} else if (STORIES.length < 100 || STORIES.length > 199) {
+  console.error(
+    `\nindex.html SAYS "${SCALE}" AND THE SHELF NOW HOLDS ${STORIES.length}.\n` +
+    "That sentence is in the <title>, the meta description, the Open Graph\n" +
+    "description and the Twitter description, and it is the first thing a\n" +
+    "stranger reads. Reword all four by hand, then update SCALE in\n" +
+    "build-feeds.js to match. feed.xml and sitemap.xml were written fine."
   );
+  process.exitCode = 1;
+  scaleNote = `index.html: SCALE PHRASE NOW WRONG at ${STORIES.length} books`;
 } else {
-  fs.writeFileSync("index.html", html);
+  scaleNote = `index.html: untouched — "${SCALE}" still true at ${STORIES.length}`;
 }
 
 console.log(
   `feed.xml: ${STORIES.length} items\n` +
   `sitemap.xml: ${STORIES.length * 2 + TRILOGIES.length + 1} urls\n` +
-  `index.html: count set to "${cap(spell(STORIES.length))}" in ${hits} place${hits === 1 ? "" : "s"}`
+  scaleNote
 );

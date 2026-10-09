@@ -192,10 +192,23 @@ list.forEach(checkBook);
 /* Whole-catalogue facts, checked once. */
 console.log(`\n── the catalogue`);
 const idx = exists("index.html") ? fs.readFileSync("index.html", "utf8") : "";
-const want = spell(STORIES.length);
-const found = (idx.match(/[Oo]ne hundred and [a-z-]+|[Nn]inety[a-z-]*|[Ee]ighty[a-z-]*/g) || [])[0];
-check(idx.toLowerCase().includes(want),
-      `index.html says "${want}" (found "${found || "nothing"}") — rerun build-feeds.js`);
+/* The metadata used to carry the exact count — written into the title and
+   the three descriptions by build-feeds.js — and this checked the script
+   had been run. It carries a scale phrase now. The number was right in the
+   file and wrong in every search result between crawls, which is the only
+   place it was ever read: Google recrawls a site this size every few weeks,
+   so each new book left its copy of the title stale. "Over a hundred" is
+   true of any catalogue from 100 to 199 and needs no script at all.
+
+   What is left to check is narrower, and it is the half that can still go
+   wrong silently: the phrase is there, and it is still true. */
+const SCALE = "over a hundred short noir novellas";
+const low = idx.toLowerCase();
+check(low.includes(SCALE),
+      `index.html carries the scale phrase "${SCALE}"`);
+check(!low.includes(SCALE) || (STORIES.length >= 100 && STORIES.length <= 199),
+      `"${SCALE}" is still true at ${STORIES.length} books — if not, reword the ` +
+      `title and all three descriptions by hand and update SCALE here and in build-feeds.js`);
 const nums = STORIES.map(s => s.num);
 check(new Set(nums).size === nums.length, `no duplicate numbers`);
 check(nums.every((v, i) => i === 0 || v > nums[i-1]), `numbers run in order`);

@@ -87,10 +87,10 @@ they produce. `optimize-art.py` only when a picture was added or replaced;
 outputs, commit the sync file and upload the mp3 rather than committing
 it.
 
-Two of them do more than their names suggest. `build-feeds.js` also
-rewrites the six count phrases inside `index.html` — see *The shelf
-count* below — so `index.html` is a build output as well as a file you
-hand-edit. And `optimize-art.py` **skips any picture whose `.webp`
+One of them does less than it used to: `build-feeds.js` no longer
+writes anything into `index.html` — see *The shelf count* below — it
+only checks that the metadata's scale phrase is still true. And
+`optimize-art.py` **skips any picture whose `.webp`
 already exists**, which makes it safe to re-run but also means a replaced
 `.jpg` keeps serving its old `.webp` until you delete that twin first.
 
@@ -218,17 +218,29 @@ never disagree with the catalogue: the label above the order menu ("All
 the rail's `98 STORIES`, the collection heading, the footer and the
 About line.
 
-*Rewritten by `node build-feeds.js`* — the six places a crawler has to
-be able to read without running JavaScript: the `<title>` and the five
-`description` / `og:` / `twitter:` tags in `index.html`. The script
-spells the number out ("Ninety-eight") and matches on the phrase around
-it rather than on the previous number, so it keeps working whatever the
-count was last time, including when it goes down. It prints how many
-places it changed; if that ever says 0, the phrases were reworded and
-`PATTERNS` at the foot of `build-feeds.js` needs adjusting.
+*Not counted at all, on purpose* — the six places a crawler reads
+without running JavaScript: the `<title>` and the five `description` /
+`og:` / `twitter:` tags in `index.html`. `build-feeds.js` used to write
+the exact number into all six on every run, and the number was right in
+the file and wrong everywhere it was actually read. Google recrawls a
+site this size every few weeks, so each new book left its copy of the
+title stale until the next crawl — a search result saying "One hundred
+and two Short Noir Novellas" over a shelf holding a hundred and nine is
+what retired it.
+
+Those six now say **"Over a hundred"**, which is true of any catalogue
+from 100 to 199 and never needs rewriting. `build-feeds.js` no longer
+touches `index.html` at all — reword the title and the descriptions
+freely. What it does instead is check that the phrase is still there
+and still true, and `check-book.js` checks the same two things. When
+the catalogue passes 199, `build-feeds.js` stops with a non-zero exit
+and tells you to reword all four by hand and update `SCALE` in both
+scripts.
 
 So the whole of it is: add the book, run the three build commands, and
-every count on the site is right.
+every count on the site is right — the ones that count themselves,
+because they count themselves, and the six in the metadata because
+they no longer carry a number that can be wrong.
 
 ## Cache-busting
 

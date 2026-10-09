@@ -33,9 +33,11 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
    the `share/` folder, `read/NN.json`, the new PDF, all the covers
 
 **The count looks after itself.** Nowhere on the site do you type how
-many stories there are — step 3 rewrites the six places a crawler
-reads, and everything else counts `STORIES` as the page runs. See "The
-shelf count" in [README.md](README.md).
+many stories there are: everything on the page counts `STORIES` as it
+runs, and the six places a crawler reads no longer carry a number at
+all — they say "Over a hundred", which stays true to 199. Step 3 checks
+that rather than rewriting it. See "The shelf count" in
+[README.md](README.md).
 
 Everything after this is the same steps, explained. There are 105 books
 as this is written; the two lettered steps are the ones most often
@@ -391,13 +393,15 @@ Rewrites `feed.xml` and `sitemap.xml`. Search engines and feed readers
 can't run the site's JavaScript, so without this the new book is
 invisible to them.
 
-**It also rewrites `index.html`** — the six places the book count is
-spelled out for a crawler: the `<title>` and the five
-`description` / `og:` / `twitter:` tags. It prints how many it changed.
-So `index.html` is a build output as well as the file you hand-edit in
-step 6, and the two edits have to survive each other: **run this before
-raising the `?v=` numbers, not after**, or the count rewrite will be
-sitting on top of an `index.html` you then edit again for no reason.
+**It no longer touches `index.html`.** It used to write the book count
+into the six places a crawler reads — the `<title>` and the five
+`description` / `og:` / `twitter:` tags — which kept the file right and
+the search results wrong, because a crawl is weeks old by the time the
+next book lands. Those six say "Over a hundred" now. All this script
+does is check the phrase is still there and still true, and stop with a
+non-zero exit if the catalogue ever passes 199. `index.html` is yours
+alone again, so the old warning about running this before raising the
+`?v=` numbers no longer applies.
 
 ---
 
