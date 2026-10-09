@@ -156,10 +156,10 @@
 
      The four ?v= further up — the two share images and the two
      preloads — are separate and lag deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=588">
+<link rel="stylesheet" href="style.css?v=589">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=588">
+<link rel="stylesheet" href="library/roya-library.css?v=589">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -226,7 +226,7 @@
          not places to go — they are how the room is set. -->
     <div class="brand-col">
       <div class="brand-name">
-        <p class="name">CHEW&thinsp;Z</p>
+        <h1 class="name">CHEW&thinsp;Z</h1>
         <!-- The count, written in by script.js from STORIES.length. The
              words here are the fallback a reader sees if the script has
              not run yet, so they have to stand on their own — hence the
@@ -432,7 +432,8 @@
 
       <p class="no-match" id="noMatch" hidden>Nothing matches that.</p>
 
-      <ol></ol>
+
+        <ol></ol>
       <p class="more" id="shelfCount"></p>
     </aside>
 
@@ -1155,8 +1156,8 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=588"></script>
-<script src="script.js?v=588"></script>
+<script src="stories.js?v=589"></script>
+<script src="script.js?v=589"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1172,6 +1173,6 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=588"></script>
+<script src="library/roya-library.js?v=589"></script>
 </body>
 </html>
