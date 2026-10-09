@@ -3788,21 +3788,3 @@ body.rl-on #toTop{z-index:71}
 @media (max-width:820px){
   #royaLibrary .lib-lede{margin:0 auto 1.1rem; font-size:1.125rem; max-width:34ch}
 }
-
-/* ── Continue reading ───────────────────────────────────────────────────
-   The first tile in the grid when there is a book to return to. It is a
-   .bcard so it inherits the frame, the plate and the type; only what
-   marks it as different is set here. Built and inserted by script.js —
-   the catalogue's own file, not this one — because this file is
-   generated and the edit would not survive the next build. */
-#royaLibrary .bcard.rl-continue{border-color:var(--bone); background:rgba(18,14,9,.62)}
-#royaLibrary .bcard.rl-continue:hover{border-color:var(--ochre)}
-#royaLibrary .rl-continue .bcard-no b{font-family:var(--cond); font-weight:600;
-  font-size:.625rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ochre)}
-#royaLibrary .rl-continue .bcard-hook{opacity:.85}
-/* The progress rule: a hairline that fills as far as they read. */
-#royaLibrary .rl-continue .cont-bar{display:block; height:2px; margin-top:auto;
-  background:rgba(233,223,201,.18)}
-#royaLibrary .rl-continue .cont-bar i{display:block; height:100%; background:var(--ochre)}
-#royaLibrary .mcard.rl-continue{border-color:var(--bone)}
-#royaLibrary .mcard.rl-continue .mcard-no{color:var(--ochre); letter-spacing:.2em}
