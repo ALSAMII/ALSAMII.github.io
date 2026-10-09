@@ -1,7 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 5 · last updated 2026-09-30 14:35 PDT
-      (first stamp on this file — it has never carried one)
+   Version 7 · last updated 2026-10-09 06:42 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -9266,4 +9265,196 @@ html[data-theme="light-off"] .t-banner img {
 
 @media (max-width: 56rem) {
   .start-row .start-time { font-size: calc(0.5rem * var(--read-up)); }
+}
+
+
+/* ── Where you left off ─────────────────────────────────────────────────
+   A hairline and a line of small caps across the foot of the card the
+   book already has. It replaces the Continue tile that sat first in the
+   grid: that was a hundred and ninth card carrying a cover and a title
+   that were already on the same page, and it pushed every real card
+   along by one. This reads as part of the shelf.
+
+   Two bars at most — the story and the recording — and the Listening
+   Room shows only the second. Ochre for reading, bone for listening, so
+   which is which is legible before the words are.
+
+   Built and inserted by script.js. It lives in THIS file, not
+   library/roya-library.css, because that file is cut from the sandbox by
+   build-integration.py and the next build would take these rules out
+   again. That sheet loads after this one, so every selector carries a
+   leading `html` — one extra element in the count, which is enough to
+   outrank the generated rules it sits beside without having to lean on
+   !important. */
+html #royaLibrary .rl-progs{display:flex; flex-direction:column; gap:.45rem}
+html #royaLibrary .rl-prog{display:block}
+/* Label left, figure right. The desktop card's text column is about
+   110px — narrower than the meta line above it, which already wraps — so
+   the wrapper spans the whole card instead and the phrase has a line to
+   itself. The figure keeps its own box at the right-hand end, so the two
+   bars' percentages line up with each other. */
+html #royaLibrary .rl-prog b{display:flex; align-items:baseline; justify-content:space-between;
+  gap:.6rem; font-family:var(--cond); font-weight:600;
+  font-size:.5rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ochre);}
+html #royaLibrary .rl-prog b em{flex:0 0 auto; font-style:normal; letter-spacing:.08em}
+html #royaLibrary .rl-prog b span{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+/* the track and its fill. <i> and <u> rather than two more spans so the
+   markup stays short inside a card that is already deep; both are reset. */
+html #royaLibrary .rl-prog i{display:block; margin-top:.32rem; height:2px;
+  font-style:normal; background:rgba(233,223,201,.18);}
+html #royaLibrary .rl-prog u{display:block; height:100%; min-width:2px;
+  text-decoration:none; background:var(--ochre);}
+html #royaLibrary .rl-prog.is-listen b{color:var(--bone)}
+html #royaLibrary .rl-prog.is-listen u{background:var(--bone)}
+
+/* ── where the wrapper sits on each of the three cards ──
+   Desktop: the card is a grid, so the bar is given the full row under
+   both columns. order:4 is for the list view, whose children are
+   explicitly ordered 1, 2, 3 — without it the bar would be placed first. */
+html #royaLibrary .bcard > .rl-progs{grid-column:1 / -1; order:4; margin-top:.3rem}
+/* The list view's row runs the full width of the stage — about 1450px on a
+   wide screen — and a bar that long stops being a measure: the label and
+   its figure end up a foot apart and read as two unrelated things. Capped,
+   the three stay one unit, and it lines up under the title above it. */
+html #royaLibrary .grid.is-list .bcard > .rl-progs{margin-top:.55rem; max-width:26rem}
+/* Phone: the card is a flex column with its own .55rem gap, so the bar
+   needs no margin of its own — it lands under the Read story / Listen
+   row, which keeps the margin-top:auto that holds it at the foot. */
+html #royaLibrary .mcard > .rl-progs{margin-top:0}
+/* The phone's list view turns that same card on its side — cover beside
+   text — so without this the bar became a third COLUMN and sat up in the
+   top right corner, squeezing the title. Wrapping puts it on a line of
+   its own under both, which is where it belongs; the plate is a fixed
+   4.9rem and the body already shrinks, so nothing else can ever wrap. */
+html #royaLibrary .mob-grid.is-rows .mcard[data-rl-on]{flex-wrap:wrap}
+/* flex:1 1 0, not the 1 1 auto it has. Wrapping is decided on an item's
+   hypothetical size — its basis — before any shrinking, so with basis auto
+   the text column's own content width sent it to a second line under the
+   cover on every card, marked or not. At basis 0 it can never wrap, and
+   the bar at basis 100% always does. */
+html #royaLibrary .mob-grid.is-rows .mcard[data-rl-on] > .mcard-body{flex:1 1 0}
+html #royaLibrary .mob-grid.is-rows .mcard[data-rl-on] > .rl-progs{flex:0 0 100%; margin-top:.45rem}
+html #royaLibrary .mcard > .rl-progs .rl-prog b{font-size:.4688rem; letter-spacing:.12em; gap:.4rem}
+/* Listening Room: the row is cover beside text, so the bar goes inside
+   the text side, under the Listen control. The row is wide and a
+   full-width bar there reads as a divider rather than a measure. */
+html #royaLibrary .lr-body > .rl-progs{margin-top:.75rem; max-width:22rem}
+html #royaLibrary .lr-body > .rl-progs .rl-prog b{font-size:.5625rem; letter-spacing:.22em}
+
+/* The card says so too, quietly: a border between the one every card has
+   and the bone the open card gets, so a part-read book is findable while
+   scanning without shouting over the record that is actually selected. */
+html #royaLibrary .bcard[data-rl-on]{border-color:rgba(221,210,191,.5)}
+html #royaLibrary .mcard[data-rl-on]{border-color:rgba(221,210,191,.5)}
+html #royaLibrary .bcard[data-rl-on][aria-current="true"]{border-color:var(--bone)}
+html #royaLibrary .mcard[data-rl-on][aria-current="true"]{border-color:var(--gold-lt)}
+
+/* ── The enlarged cover on a phone, turned a quarter turn ───────────────────
+   A pair render is 3:2 landscape. On a portrait handset it can only ever be
+   as wide as the screen, which left it 432 x 288 — 27% of the glass, the rest
+   black. Turned, its long edge runs down the screen instead of across, and
+   the same picture lands at 439 x 658: 64%.
+
+   The plate is given a 2:3 box so the figure reserves the height the turned
+   picture will occupy; the picture is taken out of flow inside it and rotated
+   about its own centre. Everything under it — the title, the number, the
+   reading time, the series, and the strip of every other cover — keeps its
+   place and stays on screen.
+
+   The strip turns with it, so every cover in the view reads the same way up.
+   A thumbnail is 2:3, so turning it leaves the layout box a third wider than
+   the picture now needs; the margin gives back exactly that third (H/6 each
+   side), which keeps the gap between covers at the .5rem it was and keeps the
+   row from overflowing its own scroller.
+
+   Scoped to the phone layout and to 46rem, which is the same breakpoint that
+   builds that layout. Turn the handset and the query releases: the screen is
+   then wider than the picture is long and it shows upright, full size. */
+@media (max-width: 46rem) {
+  html #royaLibrary .phone-over .zoom.is-full .zoom-fig {
+    padding: .45rem .6rem .45rem;
+    gap: .55rem;
+  }
+  html #royaLibrary .phone-over .zoom.is-full .zoom-plate {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 2 / 3;
+  }
+  html #royaLibrary .phone-over .zoom.is-full .zoom-plate img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* natural size, held inside the plate by the two caps below: 150% of the
+       plate's width is its height, and two thirds of its height is its width,
+       so the turned picture is bounded by the box whichever way its own
+       proportions run. Every pair render today is 3:2 or 16:9 and the first
+       cap is the one that bites; a squarer one would meet the second instead
+       of hanging over the edge of the screen. */
+    width: auto;
+    height: auto;
+    max-width: 150%;
+    max-height: 66.6667%;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  /* The title and the line under it turn with the picture, so the whole view
+     reads one way up. writing-mode rather than a rotate(): the box itself
+     becomes tall and narrow, so it takes the room it needs in the column
+     instead of a 267px ribbon hanging out of a 43px box and over the strip.
+     It also wraps for free — A House Below Sea Level, Rent Paid in Salt runs
+     to a second column at the 14rem ceiling rather than off the screen.
+
+     vertical-rl stacks the blocks right to left, which is what puts the title
+     above the number once the handset is turned. */
+  html #royaLibrary .phone-over .zoom.is-full .zoom-cap {
+    writing-mode: vertical-rl;
+    text-align: center;
+    max-height: 14rem;
+  }
+  html #royaLibrary .phone-over .zoom.is-full .zoom-cap b { font-size: 1rem }
+  html #royaLibrary .phone-over .zoom.is-full .zoom-cap i { margin: 0 .4rem 0 0; letter-spacing: .14em }
+  /* height is restated, not inherited, so the margin below cannot drift from it */
+  html #royaLibrary .phone-over .zoom-strip img {
+    height: 3.4rem;
+    width: auto;
+    transform: rotate(90deg);
+    margin-inline: calc(3.4rem / 6);
+  }
+}
+
+/* ── The enlarged cover on a handset held sideways ──────────────────────────
+   Turning the phone releases the rule above — 46rem is the same breakpoint
+   that builds the phone layout, and a turned handset is past it — so the
+   picture goes back to upright, which is right: the screen is now wider than
+   the picture is long. The quarter turn is never applied twice.
+
+   What it went back to was broken, and had been since before any of this.
+   The figure stacks picture over caption, and on a 459px-tall screen that
+   column runs to 489px. The overflow is the caption, and the strip is
+   painted over the top of it at z-index 3: the title, the number, the
+   reading time and the series were all underneath the row of covers, with
+   nothing to say they were there.
+
+   Side by side instead. The picture takes the height, which is the scarce
+   axis here, and the caption takes the width, which is not — so the picture
+   comes out larger than it was (487 x 325 against 471 x 314) AND the words
+   are on screen. Keyed to a short landscape window rather than to a width,
+   because that is the actual condition: tall enough and the column fits. */
+@media (orientation: landscape) and (max-height: 34rem) {
+  html #royaLibrary .zoom.is-full .zoom-fig {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+    padding: .6rem 1.4rem;
+  }
+  html #royaLibrary .zoom.is-full .zoom-plate { width: auto; max-width: none; min-width: 0 }
+  html #royaLibrary .zoom.is-full .zoom-plate img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - 8.4rem);
+  }
+  html #royaLibrary .zoom.is-full .zoom-cap { text-align: left; flex: 0 1 18rem; min-width: 0 }
+  html #royaLibrary .zoom.is-full .zoom-cap i { margin-top: .5rem }
 }
