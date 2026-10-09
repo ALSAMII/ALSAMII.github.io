@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 7 · last updated 2026-10-09 06:42 PDT
+   Version 8 · last updated 2026-10-09 10:40 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -9349,112 +9349,141 @@ html #royaLibrary .mcard[data-rl-on]{border-color:rgba(221,210,191,.5)}
 html #royaLibrary .bcard[data-rl-on][aria-current="true"]{border-color:var(--bone)}
 html #royaLibrary .mcard[data-rl-on][aria-current="true"]{border-color:var(--gold-lt)}
 
-/* ── The enlarged cover on a phone, turned a quarter turn ───────────────────
-   A pair render is 3:2 landscape. On a portrait handset it can only ever be
-   as wide as the screen, which left it 432 x 288 — 27% of the glass, the rest
-   black. Turned, its long edge runs down the screen instead of across, and
-   the same picture lands at 439 x 658: 64%.
+/* ── The enlarged cover on a phone: ONE view, whichever way it is held ──────
+   A pair render is 3:2. On a portrait handset it could only ever be as wide
+   as the screen, which left it 432 x 288 — 27% of the glass, the rest black.
+   And the arrangement changed under the reader when they turned the phone,
+   which is the worst moment to rearrange anything.
 
-   The plate is given a 2:3 box so the figure reserves the height the turned
-   picture will occupy; the picture is taken out of flow inside it and rotated
-   about its own centre. Everything under it — the title, the number, the
-   reading time, the series, and the strip of every other cover — keeps its
-   place and stays on screen.
+   So the view is landscape, always. In portrait the overlay itself is turned
+   a quarter turn and everything inside it follows; held sideways the same
+   arrangement is already the right way up and nothing turns at all. Either
+   way the reader is looking at one thing: a wide picture, its title and line
+   underneath it, and the shelf down the right-hand edge.
 
-   The strip turns with it, so every cover in the view reads the same way up.
-   A thumbnail is 2:3, so turning it leaves the layout box a third wider than
-   the picture now needs; the margin gives back exactly that third (H/6 each
-   side), which keeps the gap between covers at the .5rem it was and keeps the
-   row from overflowing its own scroller.
-
-   Scoped to the phone layout and to 46rem, which is the same breakpoint that
-   builds that layout. Turn the handset and the query releases: the screen is
-   then wider than the picture is long and it shows upright, full size. */
-@media (max-width: 46rem) {
-  html #royaLibrary .phone-over .zoom.is-full .zoom-fig {
-    padding: .45rem .6rem .45rem;
-    gap: .55rem;
-  }
-  html #royaLibrary .phone-over .zoom.is-full .zoom-plate {
-    position: relative;
-    width: 100%;
-    max-width: none;
-    aspect-ratio: 2 / 3;
-  }
-  html #royaLibrary .phone-over .zoom.is-full .zoom-plate img {
-    position: absolute;
+   Nothing below uses a viewport unit. The strip takes a fixed column, the
+   caption takes the height its own words need, and the picture is given
+   everything left over — flex:1 with min-height:0 — so the same rules fit a
+   turned frame and a sideways one without either having to be told which it
+   is. */
+@media (max-width: 46rem) and (orientation: portrait) {
+  /* The turn itself. .phone-over is in the selector because the generated
+     sheet sets `#royaLibrary .phone-over .zoom{position:absolute; inset:0}`
+     at two classes to one — without matching it, position and the insets
+     stayed behind while width and transform went through, and the overlay
+     rotated about a corner into the top-left of the screen. */
+  html #royaLibrary .phone-over .zoom {
     top: 50%;
     left: 50%;
-    /* natural size, held inside the plate by the two caps below: 150% of the
-       plate's width is its height, and two thirds of its height is its width,
-       so the turned picture is bounded by the box whichever way its own
-       proportions run. Every pair render today is 3:2 or 16:9 and the first
-       cap is the one that bites; a squarer one would meet the second instead
-       of hanging over the edge of the screen. */
-    width: auto;
-    height: auto;
-    max-width: 150%;
-    max-height: 66.6667%;
+    right: auto;
+    bottom: auto;
+    width: 100dvh;
+    height: 100dvw;
     transform: translate(-50%, -50%) rotate(90deg);
-  }
-  /* The title and the line under it turn with the picture, so the whole view
-     reads one way up. writing-mode rather than a rotate(): the box itself
-     becomes tall and narrow, so it takes the room it needs in the column
-     instead of a 267px ribbon hanging out of a 43px box and over the strip.
-     It also wraps for free — A House Below Sea Level, Rent Paid in Salt runs
-     to a second column at the 14rem ceiling rather than off the screen.
-
-     vertical-rl stacks the blocks right to left, which is what puts the title
-     above the number once the handset is turned. */
-  html #royaLibrary .phone-over .zoom.is-full .zoom-cap {
-    writing-mode: vertical-rl;
-    text-align: center;
-    max-height: 14rem;
-  }
-  html #royaLibrary .phone-over .zoom.is-full .zoom-cap b { font-size: 1rem }
-  html #royaLibrary .phone-over .zoom.is-full .zoom-cap i { margin: 0 .4rem 0 0; letter-spacing: .14em }
-  /* height is restated, not inherited, so the margin below cannot drift from it */
-  html #royaLibrary .phone-over .zoom-strip img {
-    height: 3.4rem;
-    width: auto;
-    transform: rotate(90deg);
-    margin-inline: calc(3.4rem / 6);
+    transform-origin: 50% 50%;
   }
 }
 
-/* ── The enlarged cover on a handset held sideways ──────────────────────────
-   Turning the phone releases the rule above — 46rem is the same breakpoint
-   that builds the phone layout, and a turned handset is past it — so the
-   picture goes back to upright, which is right: the screen is now wider than
-   the picture is long. The quarter turn is never applied twice.
+@media (max-width: 46rem), (orientation: landscape) and (max-height: 34rem) {
+  /* #royaLibrary#royaLibrary, not #royaLibrary.
+     The generated sheet carries a phone block of its own —
+     `#royaLibrary .phone-over .zoom.is-full .zoom-plate img{max-height:none}`
+     and five more like it — at one id and FOUR classes. A leading `html` is
+     one element, and loses to a fourth class; measured, the picture came out
+     899 x 599 inside a 899 x 319 plate because max-height stayed `none`, and
+     the scroll area kept the 5rem foot it no longer needs.
 
-   What it went back to was broken, and had been since before any of this.
-   The figure stacks picture over caption, and on a 459px-tall screen that
-   column runs to 489px. The overflow is the caption, and the strip is
-   painted over the top of it at z-index 3: the title, the number, the
-   reading time and the series were all underneath the row of covers, with
-   nothing to say they were there.
+     Naming the id twice is worth two ids, which beats any one-id rule however
+     many classes it carries, and it says plainly that this is here to outrank
+     a generated file rather than to describe anything about the page. The
+     alternative was !important on nine declarations. */
+  html #royaLibrary#royaLibrary .zoom.is-full { --rl-strip: 4.6rem }
 
-   Side by side instead. The picture takes the height, which is the scarce
-   axis here, and the caption takes the width, which is not — so the picture
-   comes out larger than it was (487 x 325 against 471 x 314) AND the words
-   are on screen. Keyed to a short landscape window rather than to a width,
-   because that is the actual condition: tall enough and the column fits. */
-@media (orientation: landscape) and (max-height: 34rem) {
-  html #royaLibrary .zoom.is-full .zoom-fig {
-    flex-direction: row;
+  /* ── the shelf, down the right-hand edge ──
+     It was a row along the foot, which in a landscape view is the long axis:
+     it took a band off the height the picture needed and left the width it
+     did not. Standing it up spends 74px of a 992px width instead of 70px of
+     a 458px height, and the covers are portrait, so they sit better in a
+     column than they ever did in a row. */
+  html #royaLibrary#royaLibrary .zoom-strip {
+    top: 0;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    width: var(--rl-strip);
+    flex-direction: column;
+    gap: .4rem;
+    padding: .45rem .4rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: linear-gradient(to left, rgba(5,4,3,.94) 0, rgba(5,4,3,.72) 62%, transparent 100%);
+  }
+  html #royaLibrary#royaLibrary .zoom-strip img {
+    width: 100%;
+    height: auto;
+    transform: none;
+    margin: 0;
+  }
+
+  /* ── the picture and its line ──
+     The figure is the full height of whatever is left beside the strip. The
+     caption takes what its words need; the plate takes the rest, and the
+     picture is fitted inside it — so the cover is as large as the room
+     allows and the title can never be pushed off the bottom. */
+  html #royaLibrary#royaLibrary .zoom-scroll { inset: 0 var(--rl-strip) 0 0 }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-fig {
+    height: 100%;
+    width: 100%;
+    /* 2.9rem either side is the gutter the two arrows sit in, so a larger
+       cover still cannot run underneath them */
+    padding: .5rem 2.9rem .55rem;
+    gap: .45rem;
+    margin: 0;
+  }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-plate {
+    position: static;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: none;
+    aspect-ratio: auto;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.6rem;
-    padding: .6rem 1.4rem;
   }
-  html #royaLibrary .zoom.is-full .zoom-plate { width: auto; max-width: none; min-width: 0 }
-  html #royaLibrary .zoom.is-full .zoom-plate img {
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-plate img {
+    position: static;
+    transform: none;
     width: auto;
     height: auto;
     max-width: 100%;
-    max-height: calc(100dvh - 8.4rem);
+    max-height: 100%;
+    object-fit: contain;
   }
-  html #royaLibrary .zoom.is-full .zoom-cap { text-align: left; flex: 0 1 18rem; min-width: 0 }
-  html #royaLibrary .zoom.is-full .zoom-cap i { margin-top: .5rem }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap {
+    flex: 0 0 auto;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    max-height: none;
+  }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap b { font-size: 1.0625rem; line-height: 1.08 }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap i { margin: .18rem 0 0; letter-spacing: .16em }
+
+  /* ── the controls ──
+     Smaller, and pulled out to the edges: at 2.1rem they stood over the
+     cover's left edge, and the cover is larger now than it was. The forward
+     arrow and the close mark both clear the strip rather than sitting on it. */
+  html #royaLibrary#royaLibrary .zoom-nav,
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav { width: 1.7rem; height: 1.7rem }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav svg { width: .8rem; height: .8rem }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-r { left: .35rem }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-l { right: calc(var(--rl-strip) + .35rem) }
+  html #royaLibrary#royaLibrary .zoom-x,
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-x {
+    width: 1.8rem;
+    height: 1.8rem;
+    top: .45rem;
+    right: calc(var(--rl-strip) + .45rem);
+  }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-x svg { width: .78rem; height: .78rem }
 }
