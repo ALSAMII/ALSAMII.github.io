@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 6 · last updated 2026-10-09 06:42 PDT
+   Version 7 · last updated 2026-10-09 10:18 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2778,13 +2778,49 @@
       clearTimeout(audioSaveTimer);
       var book = readerBook;
       audioSaveTimer = setTimeout(function () {
-        if (book) readerSave("audioPlace:" + book, t.toFixed(1));
+        /* .ended, because the end of a recording is the one moment this timer
+           is guaranteed to settle — timeupdate stops, 400ms passes, and it
+           writes the full duration straight over the "0" the ended handler
+           below has just written. The place was then half a second from the
+           end, so pressing Listen on a book already finished dropped the
+           listener into its last breath instead of its first line. */
+        if (book && !readerAudioEl.ended) readerSave("audioPlace:" + book, t.toFixed(1));
       }, 400);
     });
 
     readerAudioEl.addEventListener("ended", function () {
       if (readerBook) readerSave("audioPlace:" + readerBook, "0");
     });
+
+    /* The debounce above only settles 400ms after the LAST timeupdate, and
+       timeupdate fires about every 250ms while a recording plays — so for as
+       long as playback continues the timer is reset before it can ever fire,
+       and the place is written only once playback stops. Measured on the
+       published build: twenty-four seconds of listening, then away without
+       pressing pause, and nothing had been saved at all; the recording began
+       again at the top.
+
+       That is the ordinary way a recording ends on a phone — listen, lock the
+       screen, come back — so the place is also written straight out, with no
+       timer, at each of the points where the listening is actually over.
+
+       Guarded on .ended, because the handler above deliberately clears the
+       place when a recording finishes and this must not put the last second
+       back; and on t > 0, so Start from the beginning cannot be undone
+       either. */
+    var saveAudioNow = function () {
+      if (!readerBook || readerAudioEl.ended) return;
+      var t = readerAudioEl.currentTime;
+      if (t > 0) readerSave("audioPlace:" + readerBook, t.toFixed(1));
+    };
+    readerAudioEl.addEventListener("pause", saveAudioNow);
+    /* hidden covers the phone: the screen locking, the app going to the
+       background and the tab being switched away from all arrive here, and on
+       a handset pagehide often never comes at all */
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") saveAudioNow();
+    });
+    window.addEventListener("pagehide", saveAudioNow);
 
     /* The seek strip: a click or drag anywhere along it jumps there,
        same gesture as the volume/type-size controls elsewhere in the
