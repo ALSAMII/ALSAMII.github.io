@@ -1403,6 +1403,17 @@ const STORIES = [
     key: "The stone grown from her — a laboratory diamond made from what was left of his wife, and two years at a wheel in Antwerp so that no other hand would touch it",
     notes: [3, 3, 3],
     synopsis: "Kian Sarrāf has an engine in him. It started when he was four, counting tiles in a Tehran basement while the bombs fell: something catches his eye, the world goes quiet around it, and he does not come back until he has mastered it. A Rubik’s cube. Chess. A trading firm worth more than his father ever dreamed of. A 1967 Porsche rebuilt from three thousand bags of bolts. His wife Roxana calls them his seasons — she writes each one on the calendar on the fridge, and when it ends she writes two words: Welcome back. For sixteen years he always comes back, to her, to their daughter Sahar, to their son Kaveh, to a long low house in a Los Angeles canyon that smells of hot clay on firing days. Then, on the night he finishes the car, there is a curve on a mountain road. Grief gives the engine nothing to hold — until, at three in the morning, Kian learns that a laboratory can grow a diamond from what is left of a person, and decides that nobody will cut it but him. He leaves his children with his mother and goes to Antwerp, to the last hand-cutter on a street of armed guards and steel posts: Elias Karam, eighty years old, born in the diamond fields of Sierra Leone, who answers the last of thirty-one letters with four words. Come. Bring nothing. E. Elias teaches him the oldest rule of the trade: every stone carries one tension, and you find it before you cut or it finds you. Kian thinks he knows where his is."
+  },
+  {
+    num: 109,
+    title: "The Worst Memory Plays Slowest",
+    words: "28,000 words",
+    hook: "A woman who has told the same story about one night for nearly seven years, and the root that tells it back to her",
+    door: "Dose",
+    room: "The Driver’s Seat — one night on a county road in December 2019, run back at the speed of a film and then slowed to a crawl, and watched from every seat in the truck, from the ditch, and from the far side of a white cross",
+    key: "The root — bark from a shrub in west-central Africa, eaten in Gabon for longer than anyone has written down, taken here by mouth in a white house above the sea with a heart monitor on and a woman in a grey cardigan writing down everything she says",
+    notes: [2, 3, 3],
+    synopsis: "Dana Whitlock is a respiratory therapist in Albuquerque. She is good at her job: counting other people’s breaths for a living, for people who cannot count their own. She lives alone. She has not slept a whole night in nearly seven years. On the longest night of 2019, coming home from a Christmas party in a friend’s truck, she was the passenger. That is what she told the deputy, and the lawyer, and that is what the man who was driving told them too. He went to prison. A boy of twelve on a bicycle did not come home, and there is a white cross on the side of a county road with his name on it, and a woman in a grey coat who used to kneel beside it on Sundays. Dana takes the long way round to avoid that road, and has done for nearly seven years. Then, at three in the morning, a text from a number she does not know: it helped me sleep. With it, a link to a clinic on the coast of Mexico — a white house above the sea that promises one night with a root from Africa will take everything you ever did wrong off you, like a coat. It is illegal at home. People have died taking it. Dana is a medical professional, she knows exactly what it can do to a heart, and she leaves one small thing off her intake form. She drives twelve hours to the border and walks across, and lies down in a room with a heart monitor and a woman in a grey cardigan who will sit up with her all night and write down everything she says. The people who have been there say the root plays your life back to you like a film. They say the worst memory plays slowest."
   }
 
 ];
@@ -1695,7 +1706,7 @@ const TRILOGIES = [
        book. */
     title: "Here Be Delos",
     label: "",
-    books: [100, 107],
+    books: [100, 107, 109],
     /* No numbering. Each book is a different person and a different
        substance in a different part of the world; there is no reading
        order and a "1 of 1" on the row would promise a sequence that
