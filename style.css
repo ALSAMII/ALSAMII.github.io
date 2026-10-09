@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 8 · last updated 2026-10-09 10:40 PDT
+   Version 9 · last updated 2026-10-09 13:46 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -9486,4 +9486,58 @@ html #royaLibrary .mcard[data-rl-on][aria-current="true"]{border-color:var(--gol
     right: calc(var(--rl-strip) + .45rem);
   }
   html #royaLibrary#royaLibrary .zoom.is-full .zoom-x svg { width: .78rem; height: .78rem }
+}
+
+/* ── Where to go next, under the About note ─────────────────────────────
+   One line naming the two places a first-time reader would want, which
+   the note itself does not: every cover, and the ones read aloud.
+
+   Set as a meta line rather than as prose. The first draft was a
+   sentence in the book face and it read as a third paragraph of the
+   note — it wrapped to two lines on a handset and sat in the page as
+   more to get through. In the condensed caps the site uses for every
+   other figure, with the middle dot it separates them by, it reads as
+   a signpost: one line, scanned rather than read, and of a piece with
+   the DOOR / ROOM / KEY row directly beneath it.
+
+   The two words are buttons, not anchors — the section is a single page
+   with no URLs of its own — so they inherit the line's face and are
+   marked only by the gold and the rule under them.
+
+   Built and inserted by script.js, which reads the narrated count from
+   STORIES as it runs. It lives in THIS file, not library/roya-library.css,
+   because that one is cut from the sandbox by build-integration.py and the
+   next build would take these rules out again. */
+html #royaLibrary .ab-go{
+  margin:.95rem 0 0;
+  font-family:var(--cond);
+  font-weight:600;
+  font-size:.625rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--dust);
+  text-align:center;
+}
+html #royaLibrary .ab-go-link{
+  font:inherit;
+  letter-spacing:inherit;
+  text-transform:inherit;
+  color:var(--t-num);
+  background:none;
+  border:0;
+  border-bottom:1px solid rgba(215,161,74,.5);
+  padding:0 0 .1em;
+  cursor:pointer;
+  transition:color .16s, border-color .16s;
+}
+html #royaLibrary .ab-go-link:hover,
+html #royaLibrary .ab-go-link:focus-visible{
+  color:var(--gold-lt);
+  border-bottom-color:var(--gold-lt);
+}
+/* the dot the site separates every other meta pair with */
+html #royaLibrary .ab-go-sep{
+  font-style:normal;
+  margin:0 .7em 0 .9em;
+  color:var(--ochre-muted);
 }
