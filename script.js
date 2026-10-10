@@ -2058,11 +2058,15 @@
         .observe(rd, { attributes: true, attributeFilter: ["hidden", "class"] });
     })();
 
-    /* ---- Where to go next, under the About note --------------------
-       The note ends on "the key that opened it" and then stops, with
-       the two things a first-time reader would actually want sitting
-       in a nav bar they have not looked at yet. This adds one line
-       naming them.
+    /* ---- The end of the About note ----------------------------------
+       ABOUT.note stops on "the key that opened it". Two things are
+       added to it here: what a book costs to read, and where the two
+       places a first-time reader wants actually are.
+
+       Both used to be laid out differently — the second was a meta
+       line of its own underneath, Jost caps with a middle dot. It is
+       the note's last sentence now, in the note's own face and size,
+       at ChewZ's asking. "and" does the dot's job.
 
        The two words are buttons rather than anchors because the
        section is a single page with no URLs of its own — and they
@@ -2087,32 +2091,9 @@
         /* .ab-note--long is the Notes page, which uses the same class */
         var note = ROOT.querySelector(".ab-note:not(.ab-note--long)");
         if (!note) return;                       /* another view is showing */
-        var next = note.nextElementSibling;
-        if (next && next.classList.contains("ab-go")) return;   /* already there */
-
-        /* Two sentences on to the end of the note itself, at ChewZ's
-           asking. They say the one thing a stranger wants to know and
-           the panel never told them: what a book costs to read.
-
-           True as written, and checked rather than estimated: the
-           figures run from 0.3 to 4.2 hours, the median is 1.6, and 101
-           of the 109 come in under three. "Most" and "an evening" are
-           the honest words for that, and neither goes stale when the
-           next book lands — which a figure would.
-
-           Appended here for the same reason the signpost below is: the
-           string lives in ABOUT.note, in library/roya-library.js, which
-           build-integration.py writes. The span is its own element so a
-           second pass can see it, though in practice the .ab-go guard
-           above has already turned back by then — the two are added in
-           the same pass and the note is redrawn whole or not at all. */
-        if (!note.querySelector(".ab-note-add")) {
-          var add = document.createElement("span");
-          add.className = "ab-note-add";
-          add.textContent =
-            " Most run an hour or two. None of them takes longer than an evening.";
-          note.append(add);
-        }
+        /* The guard. Both additions go on in one pass and the note is
+           drawn whole or not at all, so one marker answers for both. */
+        if (note.querySelector(".ab-note-add")) return;
 
         var narrated = STORIES.filter(function (s) { return s.audio; }).length;
         function go(view, label) {
@@ -2123,17 +2104,35 @@
           b.textContent = label;
           return b;
         }
+
+        /* the middle dot the site separates every other meta pair with.
+           It is ChewZ's own punctuation for this line and it stays; the
+           spacing round it is set in style.css, not here. */
         function dot() {
           var i = document.createElement("i");
           i.className = "ab-go-sep";
           i.textContent = "\u00b7";
           return i;
         }
-        var p = document.createElement("p");
-        p.className = "ab-go";
-        p.append("Every cover in the ", go("library", "Library"), dot(),
-                 narrated + " read aloud in ", go("listening", "Listen"));
-        note.after(p);
+
+        var add = document.createElement("span");
+        add.className = "ab-note-add";
+        /* First, what a book costs to read. Checked rather than
+           estimated: the figures run from 0.3 to 4.2 hours, the median
+           is 1.6, and 101 of the 109 come in under three. "Most" and
+           "an evening" are the honest words for that, and neither goes
+           stale when the next book lands — which a figure would.
+
+           Then the signpost, in ChewZ's own words, unchanged from the
+           line it used to be. It is set in the note's face and size
+           now; nothing here says so, because .ab-go-link and
+           .ab-go-sep both inherit. */
+        add.append(" Most run an hour or two. None of them takes longer " +
+                   "than an evening. Every cover in the ",
+                   go("library", "Library"), dot(),
+                   narrated + " read aloud in ",
+                   go("listening", "Listen"));
+        note.append(add);
       }
 
       var tick = 0;

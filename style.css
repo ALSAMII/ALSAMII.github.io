@@ -9581,9 +9581,10 @@ html #royaLibrary .ab-note:not(.ab-note--long){
    same face, same size, same colour as the three sentences before it,
    with only the two words a reader can press marked out.
 
-   That means .ab-go and .ab-go-sep are gone — there is no paragraph of
-   its own left to set, and a middle dot has no business inside a
-   sentence. The dot's job is done by "and".
+   That means .ab-go is gone — there is no paragraph of its own left to
+   set. .ab-go-sep stays: the middle dot is ChewZ's own punctuation for
+   this line and it came with it into the sentence, only respaced for
+   the larger size.
 
    The two words stay buttons, not anchors — the section is a single
    page with no URLs of its own — so `font:inherit` is what keeps them
@@ -9615,4 +9616,15 @@ html #royaLibrary .ab-go-link:hover,
 html #royaLibrary .ab-go-link:focus-visible{
   color:var(--gold-lt);
   border-bottom-color:var(--gold-lt);
+}
+/* The dot the site separates every other meta pair with. It was spaced
+   .9em/.7em, which is right for tracked caps at .625rem and far too
+   much inside a sentence at 1.375 — the two halves read as separate
+   lines. .36em/.3em is the same optical gap at the larger size.
+   font-style:normal because it is an <i>, which it is only so that the
+   dot is an element the stylesheet can reach. */
+html #royaLibrary .ab-go-sep{
+  font-style:normal;
+  margin:0 .3em 0 .36em;
+  color:var(--ochre-muted);
 }
