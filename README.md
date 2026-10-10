@@ -1,10 +1,36 @@
-# About note + sideways cover zoom
+# Upload notes — About note + sideways cover zoom
 
-Version 3 · last updated 2026-10-10 09:26 PDT
+Version 4 · last updated 2026-10-10 09:37 PDT
 
-    site/script.js      ->  script.js      ← UPLOAD THIS ONE FIRST
-    site/style.css      ->  style.css
-    site/index.html     ->  index.html     (already live — unchanged)
+**This file is NOT part of the site. Do not upload it.** Only the
+contents of `site/` go to the repository. It was called `README.md` in
+versions 1-3 and that was my mistake — uploaded alongside the rest, it
+overwrote the site's own README. It is renamed so that cannot happen
+again, and the real README now sits in `site/` with everything else, so
+uploading the whole `site/` folder is always correct.
+
+---
+
+## What to upload now
+
+    site/README.md   ->  README.md    ← THE ONLY THING OUTSTANDING
+
+The site's own README, byte-for-byte as it stood before this morning
+— 325 lines, the version that already carried the search-metadata
+section. Restored from the commit before the overwrite and checked
+against my own copy of it: identical.
+
+The other three files in `site/` are **already live and already
+correct** — `index.html`, `script.js` and `style.css` on `main` match
+this build exactly, checked file by file. They are kept here only so
+that `site/` stays a true mirror of the repository root. Re-uploading
+them changes nothing.
+
+One thing to know about the restored README: its header line still
+reads *"Updated 2026-10-06 05:48 PDT — 104 books"*. That was already
+stale before any of this — nothing I did caused it. Say the word and
+I'll bring the line up to date; I have left it exactly as it was so
+the restore is a clean revert and nothing else.
 
 ---
 
