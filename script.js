@@ -2100,16 +2100,15 @@
           art: "assets/series-delos-row-1.webp",
           eyebrow: "Stranger than we can suppose",
           start: 100,
-          syn: "Old mapmakers wrote \u201chere be dragons\u201d at the edge of the "
-               + "world \u2014 the part they had never been to. These books keep the "
-               + "warning and change the creature. Delos is Greek for plain to see, "
-               + "and it is the back half of psychedelic: mind, made visible. Each "
-               + "book takes one person and one real substance \u2014 a leaf, a seed, a "
-               + "root \u2014 and follows what it does to a life, drawn mostly from what "
-               + "people who have taken it say happened to them. The substance stays "
-               + "unnamed while it works; when the story has earned it, the book "
-               + "names it and tells you the rest. Come along, and meet the thing "
-               + "that opened the door." },
+          syn: "Old mapmakers wrote \u201chere be dragons\u201d over the parts of the "
+               + "world they had never been to. These books keep the warning and "
+               + "change the creature. Delos was a Greek island that drifted, "
+               + "unfixed and too hard to find, until four pillars rose and held it "
+               + "still \u2014 and the sailors named it the one that can be seen. The "
+               + "same word sits inside psychedelic: mind, made visible. That is "
+               + "what each book does \u2014 one person, one real substance, and the "
+               + "country it opens, told mostly by people who have been there. The "
+               + "map starts as scribble. Every book fixes one more place on it." },
         { key: "Come In, the Water Is Lovely",
           art: "assets/series-waters-row-1.webp",
           eyebrow: "Everything got better",
@@ -2148,6 +2147,22 @@
                + "simply never said, and everyone adjusts around the gap. It asks you "
                + "to notice how little cruelty a system needs when the people inside "
                + "it are willing to leave a sentence unfinished." },
+        /* Before The Unheard House rather than after the dedication, at
+           ChewZ's asking — which keeps the dedication the last thing in
+           the section, where it was put. */
+        { key: "The Water Ordeals",
+          art: "assets/series-ordeals-row-1.webp",
+          eyebrow: "Somebody came up. Somebody did not",
+          start: 51,
+          syn: "Five people go into water that will not let anyone help them "
+               + "\u2014 a flooded quarry, a cave under limestone, the biggest wave "
+               + "in Europe, six hundred days alone at sea, a channel at twelve "
+               + "degrees. Each comes back with a record, and every record is "
+               + "accurate, complete, and wrong about the one thing that matters. "
+               + "Somebody came up. Somebody did not. The one who came up is the "
+               + "only witness, and memory is not a document \u2014 it is rebuilt "
+               + "every time it is opened. You are asked to believe a story told "
+               + "by the only person left to tell it." },
         { key: "The Unheard House",
           art: "assets/series-unheard-row-1.webp",
           eyebrow: "Further in than any of us get",
