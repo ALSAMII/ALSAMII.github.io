@@ -9413,7 +9413,12 @@ html #royaLibrary .mcard[data-rl-on][aria-current="true"]{border-color:var(--gol
     width: var(--rl-strip);
     flex-direction: column;
     gap: .4rem;
-    padding: .45rem .4rem;
+    /* 2.5rem top and bottom, not .45rem: an arrow stands at each end of this
+       column now (1.7rem plus its .45rem inset plus a little air). Padding
+       inside the scroller rather than an inset on the box, so the column's
+       own gradient still runs the whole height and the first and last covers
+       come to rest clear of the arrows instead of under them. */
+    padding: 2.5rem .4rem;
     overflow-x: hidden;
     overflow-y: auto;
     background: linear-gradient(to left, rgba(5,4,3,.94) 0, rgba(5,4,3,.72) 62%, transparent 100%);
@@ -9434,10 +9439,19 @@ html #royaLibrary .mcard[data-rl-on][aria-current="true"]{border-color:var(--gol
   html #royaLibrary#royaLibrary .zoom.is-full .zoom-fig {
     height: 100%;
     width: 100%;
-    /* 2.9rem either side is the gutter the two arrows sit in, so a larger
-       cover still cannot run underneath them */
-    padding: .5rem 2.9rem .55rem;
-    gap: .45rem;
+    /* It was .5rem 2.9rem .55rem: 2.9rem either side was the gutter the two
+       arrows stood in. Both arrows are in the shelf column now, so the
+       gutters go back to the picture — 5.8rem of width returned, which on a
+       390px handset turned sideways is about a sixth of the frame. The .6rem
+       that stays is an edge margin, not a gutter.
+
+       Top and bottom come down with them, and so does the gap. On a
+       sideways handset the picture is HEIGHT-bound, not width-bound — a
+       pair render is 3:2 inside a frame nearer 2.2:1, so it is letterboxed
+       left and right and every pixel it gains has to come off the vertical.
+       .5/.45/.55 was 24px of the 458 available; .28/.3/.32 is 14. */
+    padding: .28rem .6rem .32rem;
+    gap: .3rem;
     margin: 0;
   }
   html #royaLibrary#royaLibrary .zoom.is-full .zoom-plate {
@@ -9466,67 +9480,134 @@ html #royaLibrary .mcard[data-rl-on][aria-current="true"]{border-color:var(--gol
     text-align: center;
     max-height: none;
   }
-  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap b { font-size: 1.0625rem; line-height: 1.08 }
-  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap i { margin: .18rem 0 0; letter-spacing: .16em }
+  /* The caption is the other thing standing between the cover and the
+     frame's short side, so it is set as tight as two lines can be read at. */
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap b { font-size: 1.0625rem; line-height: 1.02 }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap i { margin: .1rem 0 0; letter-spacing: .16em; line-height: 1.1 }
 
   /* ── the controls ──
-     Smaller, and pulled out to the edges: at 2.1rem they stood over the
-     cover's left edge, and the cover is larger now than it was. The forward
-     arrow and the close mark both clear the strip rather than sitting on it. */
+     Both arrows have moved off the picture and into the shelf column, one at
+     each end of it, and they point up and down rather than left and right.
+     Three things come of that, all of them asked for: the cover gets the
+     5.8rem the side gutters were holding, the two controls that step through
+     the books sit beside the thing they step through, and the only mark left
+     over the picture is the close.
+
+     The caret is drawn pointing DOWN at rest — `M6 9l6 6 6-6` — which is why
+     the generated sheet turns it +90deg for the back arrow and -90deg for the
+     forward one. Here the back arrow wants 180deg and the forward one wants
+     nothing at all; rotate(0deg) is written out rather than left off, because
+     the generated rule would otherwise go on applying -90deg. */
   html #royaLibrary#royaLibrary .zoom-nav,
-  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav { width: 1.7rem; height: 1.7rem }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav {
+    width: 1.7rem;
+    height: 1.7rem;
+    /* the generated rule centres these on the height with top:50% and a
+       translate; both have to go before top/bottom mean anything */
+    top: auto;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    right: calc((var(--rl-strip) - 1.7rem) / 2);
+    /* the shelf scrolls UNDER these, so the translucent back the generated
+       sheet gives them would show a cover through the glyph */
+    background: rgba(5,4,3,.95);
+  }
   html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav svg { width: .8rem; height: .8rem }
-  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-r { left: .35rem }
-  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-l { right: calc(var(--rl-strip) + .35rem) }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-r { top: .45rem }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-r svg { transform: rotate(180deg) }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-l { bottom: .45rem }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-nav.rot-l svg { transform: rotate(0deg) }
+
+  /* The close goes to the top LEFT. It was tucked against the shelf on the
+     right, which is now where the arrows live; on the left it is the one
+     thing in that corner and it is where a reader's thumb already is when the
+     frame is held sideways. */
   html #royaLibrary#royaLibrary .zoom-x,
   html #royaLibrary#royaLibrary .zoom.is-full .zoom-x {
     width: 1.8rem;
     height: 1.8rem;
     top: .45rem;
-    right: calc(var(--rl-strip) + .45rem);
+    left: .45rem;
+    right: auto;
   }
   html #royaLibrary#royaLibrary .zoom.is-full .zoom-x svg { width: .78rem; height: .78rem }
 }
 
-/* ── Where to go next, under the About note ─────────────────────────────
-   One line naming the two places a first-time reader would want, which
-   the note itself does not: every cover, and the ones read aloud.
+/* ── The About note, in the same face as the statement above it ───────
+   The generated sheet sets .ab-note in --essay (Spectral) — a second
+   voice, deliberately, so the two lines would not read as more of the
+   paragraph above. ChewZ wants them in one voice. --book, the same
+   EB Garamond the .ab-lede is set in, at ChewZ's asking.
 
-   Set as a meta line rather than as prose. The first draft was a
-   sentence in the book face and it read as a third paragraph of the
-   note — it wrapped to two lines on a handset and sat in the page as
-   more to get through. In the condensed caps the site uses for every
-   other figure, with the middle dot it separates them by, it reads as
-   a signpost: one line, scanned rather than read, and of a piece with
-   the DOOR / ROOM / KEY row directly beneath it.
+   :not(.ab-note--long) because the Author's Notes page sets its
+   paragraphs in the same class and was not part of the request.
 
-   The two words are buttons, not anchors — the section is a single page
-   with no URLs of its own — so they inherit the line's face and are
-   marked only by the gold and the rule under them.
+   Two figures come with the face and are not a second change — both are
+   here to hold what the line looks like now:
+
+   SIZE. Spectral's lowercase is 0.460em against EB Garamond's 0.414,
+   eleven per cent taller, so the same 1.25rem in the new face reads
+   visibly smaller. 1.375 × 0.414 = 0.569em of lowercase, against
+   1.25 × 0.460 = 0.575em now: the line keeps the size it has, and
+   stays clearly under the 1.5rem lede.
+
+   MEASURE. `ch` is the advance of a zero, which differs by face — 0.50em
+   in Spectral, 0.48 in EB Garamond — so 86ch would have quietly got
+   wider along with the size. 54rem is 864px, which is where the line
+   breaks today. A figure in rem rather than ch so the next face change
+   cannot move it either.
+
+   Colour, centring and the oval 109 are untouched. */
+html #royaLibrary .ab-note:not(.ab-note--long){
+  font-family: var(--book);
+  font-size: 1.375rem;
+  line-height: 1.58;
+  max-width: 54rem;
+}
+/* The phone sets .ab-note to 1rem inside .mob-sec; the same eleven per
+   cent applies there. */
+@media (max-width: 46rem){
+  html #royaLibrary .mob-sec .ab-note:not(.ab-note--long){ font-size: 1.1rem }
+}
+
+/* ── Where to go next, inside the About note ───────────────────
+   The two places a first-time reader would want, which the note itself
+   did not name: every cover, and the ones read aloud.
+
+   It was a meta line of its own under the note — Jost, caps, tracked,
+   with a middle dot between the two halves, set to be scanned rather
+   than read. It is now the note's last sentence, at ChewZ's asking:
+   same face, same size, same colour as the three sentences before it,
+   with only the two words a reader can press marked out.
+
+   That means .ab-go and .ab-go-sep are gone — there is no paragraph of
+   its own left to set, and a middle dot has no business inside a
+   sentence. The dot's job is done by "and".
+
+   The two words stay buttons, not anchors — the section is a single
+   page with no URLs of its own — so `font:inherit` is what keeps them
+   from reading as form controls dropped into prose. Inside the note
+   they now inherit EB Garamond at 1.375rem rather than Jost at .625,
+   and nothing in here has to know that.
 
    Built and inserted by script.js, which reads the narrated count from
    STORIES as it runs. It lives in THIS file, not library/roya-library.css,
    because that one is cut from the sandbox by build-integration.py and the
    next build would take these rules out again. */
-html #royaLibrary .ab-go{
-  margin:.95rem 0 0;
-  font-family:var(--cond);
-  font-weight:600;
-  font-size:.625rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--dust);
-  text-align:center;
-}
 html #royaLibrary .ab-go-link{
   font:inherit;
   letter-spacing:inherit;
   text-transform:inherit;
+  /* a button is inline-block by default and would sit off the prose
+     baseline by its own descender; these two put it back on the line */
+  vertical-align:baseline;
+  line-height:inherit;
   color:var(--t-num);
   background:none;
   border:0;
   border-bottom:1px solid rgba(215,161,74,.5);
-  padding:0 0 .1em;
+  padding:0 0 .06em;
   cursor:pointer;
   transition:color .16s, border-color .16s;
 }
@@ -9534,10 +9615,4 @@ html #royaLibrary .ab-go-link:hover,
 html #royaLibrary .ab-go-link:focus-visible{
   color:var(--gold-lt);
   border-bottom-color:var(--gold-lt);
-}
-/* the dot the site separates every other meta pair with */
-html #royaLibrary .ab-go-sep{
-  font-style:normal;
-  margin:0 .7em 0 .9em;
-  color:var(--ochre-muted);
 }

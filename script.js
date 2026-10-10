@@ -2090,6 +2090,30 @@
         var next = note.nextElementSibling;
         if (next && next.classList.contains("ab-go")) return;   /* already there */
 
+        /* Two sentences on to the end of the note itself, at ChewZ's
+           asking. They say the one thing a stranger wants to know and
+           the panel never told them: what a book costs to read.
+
+           True as written, and checked rather than estimated: the
+           figures run from 0.3 to 4.2 hours, the median is 1.6, and 101
+           of the 109 come in under three. "Most" and "an evening" are
+           the honest words for that, and neither goes stale when the
+           next book lands — which a figure would.
+
+           Appended here for the same reason the signpost below is: the
+           string lives in ABOUT.note, in library/roya-library.js, which
+           build-integration.py writes. The span is its own element so a
+           second pass can see it, though in practice the .ab-go guard
+           above has already turned back by then — the two are added in
+           the same pass and the note is redrawn whole or not at all. */
+        if (!note.querySelector(".ab-note-add")) {
+          var add = document.createElement("span");
+          add.className = "ab-note-add";
+          add.textContent =
+            " Most run an hour or two. None of them takes longer than an evening.";
+          note.append(add);
+        }
+
         var narrated = STORIES.filter(function (s) { return s.audio; }).length;
         function go(view, label) {
           var b = document.createElement("button");
