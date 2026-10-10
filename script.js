@@ -2154,15 +2154,13 @@
           art: "assets/series-ordeals-row-1.webp",
           eyebrow: "Somebody came up. Somebody did not",
           start: 51,
-          syn: "Five people go into water that will not let anyone help them "
-               + "\u2014 a flooded quarry, a cave under limestone, the biggest wave "
-               + "in Europe, six hundred days alone at sea, a channel at twelve "
-               + "degrees. Each comes back with a record, and every record is "
-               + "accurate, complete, and wrong about the one thing that matters. "
-               + "Somebody came up. Somebody did not. The one who came up is the "
-               + "only witness, and memory is not a document \u2014 it is rebuilt "
-               + "every time it is opened. You are asked to believe a story told "
-               + "by the only person left to tell it." },
+          syn: "The ordeal is the drug. Cold, pressure and no air for long "
+               + "enough, and the mind leaves the place it normally sits. Big-wave "
+               + "surfers hold their breath under tons of moving water until the "
+               + "shaking starts \u2014 they call it the samba. Divers go down on one "
+               + "breath into dark where no help can reach. Five books about what "
+               + "that costs, and about the catch in it: the only person who can "
+               + "tell you what happened down there is the one who came up." },
         { key: "The Unheard House",
           art: "assets/series-unheard-row-1.webp",
           eyebrow: "Further in than any of us get",
