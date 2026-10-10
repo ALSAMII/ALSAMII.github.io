@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 9 · last updated 2026-10-09 13:46 PDT
+   Version 10 · last updated 2026-10-10 15:43 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -9611,6 +9611,35 @@ html #royaLibrary .ab-note:not(.ab-note--long){
    this did exactly that.
    Against the ROW the rule is simple and holds wherever the panel is
    used: below 72rem it stacks, above it the plate takes the left wall. */
+/* ── The line under "Start here" ──────────────────────────────
+   Set the way the catalogue already sets a heading and its sub-line:
+   .ab-gh pairs a 2rem --book heading with a 1rem --book line in
+   --dust underneath, and .ab-mark b is that same 2rem --book
+   heading. So this is that pair, centred because .ab-rule centres
+   its label between two rules.
+   Not the condensed face and not letter-spaced: a tracked Jost line
+   under a Garamond heading reads as a label for the section rather
+   than a sentence about it, and this is a sentence.
+   The gap above is the .ab-rule's own 1.2rem bottom margin (.9rem on
+   a phone), left alone; the gap below belongs to this rule, because
+   .rs-rows carries no top margin. */
+html #royaLibrary .rs-lede{
+  /* text-wrap:balance evens the rag. Without it this sets as a long first
+     line and "order, and each says which." alone on a second, which under a
+     centred heading reads as a line that ran out rather than a sentence.
+     Unsupported browsers get ordinary wrapping inside the same measure, so
+     the fallback is the line above, not a broken one. */
+  max-width:40rem; margin:0 auto 1.8rem; text-align:center; text-wrap:balance;
+  font-family:var(--book); font-weight:400; font-size:1.0625rem;
+  line-height:1.5; letter-spacing:0; text-transform:none;
+  color:var(--dust);
+}
+@media (max-width: 46rem){
+  html #royaLibrary .mob-sec .rs-lede{
+    font-size:.9375rem; line-height:1.48; margin:0 auto 1.35rem;
+    max-width:30rem;
+  }
+}
 html #royaLibrary .rs-rows{
   display:flex; flex-direction:column; gap:2.25rem; margin:0 0 1.9rem;
   container-type:inline-size; container-name:rs;

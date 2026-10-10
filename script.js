@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 8 · last updated 2026-10-09 13:46 PDT
+   Version 10 · last updated 2026-10-10 15:51 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2154,8 +2154,8 @@
           art: "assets/series-ordeals-row-1.webp",
           eyebrow: "Somebody came up. Somebody did not",
           start: 51,
-          syn: "The ordeal is the drug. Cold, pressure and no air for long "
-               + "enough, and the mind leaves the place it normally sits. Big-wave "
+          syn: "No substance here \u2014 the water does it. Cold and pressure and "
+               + "no air, and the mind goes somewhere it has never been. Big-wave "
                + "surfers hold their breath under tons of moving water until the "
                + "shaking starts \u2014 they call it the samba. Divers go down on one "
                + "breath into dark where no help can reach. Five books about what "
@@ -2276,6 +2276,7 @@
 
       function apply() {
         seriesListGoes();
+        pickMood();
         var rules = ROOT.querySelectorAll(".ab-rule");
         var head = null, tail = null;
         for (var i = 0; i < rules.length; i++) {
@@ -2342,6 +2343,33 @@
         }
 
         head.after(wrap);
+
+        /* ── The heading, and the one line under it ──────────────────
+           "Recommended series" said what the section was FOR without
+           saying what was in it, and "recommended" is a shop's word —
+           it implies something else here was not. "Start here" is the
+           instruction instead, and the line under it carries what the
+           old heading left out: that each of these is several books,
+           and that the running order is not the same from one to the
+           next. At ChewZ's asking.
+
+           Both happen AFTER the rows are committed, and that order is
+           load-bearing twice over. The locator above finds this
+           section by matching the text "Recommended series" — so the
+           retext has to come after it has run, and it does: every view
+           change rebuilds the panel from the generated markup, which
+           restores the original words for the next pass to find.
+           And had a guard above returned, the heading would have been
+           retexted over the four panels it does not describe. */
+        var lede = document.createElement("p");
+        lede.className = "rs-lede";
+        lede.textContent = "Each one is a series rather than a single book \u2014 " +
+          "some are meant to be read in order, some in any order, and each " +
+          "says which.";
+        head.after(lede);
+        var label = head.querySelector(".ab-mark b");
+        if (label) label.textContent = "Start here";
+
         feats.forEach(function (f) { f.remove(); });
       }
 
@@ -2361,6 +2389,41 @@
 
          Runs on every pass, including the ones where the rows above are
          already built, because the list is redrawn with them. */
+      /* ── "Pick a door" becomes "Pick a mood" ──────────────────────
+         The word was already spent. The glossary directly above this
+         rule defines Door as one of four exact things — Dose, they
+         took something · Rite, they practised something · Ordeal,
+         they endured something · Withholding, they went without —
+         and all 109 books are filed under one of them. The three
+         groups under this heading are none of those: they come from
+         a field called dial, and they are Noir, Transgressive and
+         Plausible, glossed "How cold it gets", "How far past comfort
+         it goes", "How much of it could actually happen".
+
+         Those are moods, and the glosses have always read as moods.
+         So the heading says mood, and "door" goes back to meaning the
+         one thing it means everywhere else on the site — including in
+         the glossary six lines above it, which was contradicting this
+         heading in plain sight. At ChewZ's asking.
+
+         A retext rather than a rebuild: the nine books, the three
+         groups and the dial they are keyed on are all untouched, so
+         nothing about what the section DOES changes. Regrouping by
+         the real doors would be a different job — the nine do not
+         split cleanly (four Dose, four Withholding, one Rite, no
+         Ordeal at all), and there are four doors for three columns.
+
+         Runs on every pass, before the early returns below: the panel
+         is rebuilt from the generated markup at every view change, so
+         the original words come back each time and have to be
+         replaced each time. Idempotent — once it reads "Pick a mood"
+         the test below finds nothing to do. */
+      function pickMood() {
+        ROOT.querySelectorAll(".ab-rule .ab-mark b").forEach(function (b) {
+          if (/^\s*Pick a door\s*$/i.test(b.textContent)) b.textContent = "Pick a mood";
+        });
+      }
+
       function seriesListGoes() {
         ROOT.querySelectorAll(".ab-serlist [data-serex]").forEach(function (h) {
           h.dataset.series = h.dataset.serex;

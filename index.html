@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 625 · last updated 2026-10-09 13:55 PDT
+<!-- Version 626 · last updated 2026-10-10 15:51 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -163,10 +163,10 @@
 
      The four ?v= further up — the two share images and the two
      preloads — are separate and lag deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=599">
+<link rel="stylesheet" href="style.css?v=600">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=599">
+<link rel="stylesheet" href="library/roya-library.css?v=600">
 
 <!-- The full-size cover view, inlined. These rules also live in
      style.css; they are repeated here because the overlay is broken
@@ -523,8 +523,8 @@
           </p>
         </div>
 
-        <!-- Pick a door, wearing the same device the Recommended
-             Series heading wears further down: a rule out to each side
+        <!-- Pick a mood, wearing the same device the Start Here
+             heading wears further down: a rule out to each side
              with a dot on its inner end, and the fan above and below.
              Same classes, same drawing, same face, same size, same
              margins — the two headings are now written identically, and
@@ -534,7 +534,19 @@
              will bother you" — has been taken out. It made a threat
              where a signpost was wanted, and once both lines were set in
              the same spaced caps it read as a second heading rather than
-             as a whisper under one. -->
+             as a whisper under one.
+
+             It said "Pick a door" until now, and that was a word this
+             site had already spent. The glossary directly above the
+             Library's copy of this section defines Door as one of four
+             exact things -- Dose, Rite, Ordeal, Withholding, how the
+             person got out -- and every book is filed under one of
+             them. Noir, Transgressive and Plausible are none of those;
+             they are how cold it gets, how far past comfort it goes,
+             how much of it could happen. That is a mood, and the three
+             one-liners under the names have always read as moods. So
+             the heading says mood and "door" goes back to meaning the
+             one thing it means everywhere else. -->
         <p class="series-heading">
           <span class="sh-rule" aria-hidden="true"></span>
           <span class="sh-core">
@@ -543,7 +555,7 @@
               <path class="sh-chev" d="M74 62 L120 36 L166 62"/>
               <path class="sh-chev sh-chev--in" d="M86 62 L120 43 L154 62"/>
             </svg>
-            <span class="sh-text caps">Pick a door</span>
+            <span class="sh-text caps">Pick a mood</span>
             <svg class="sh-fan sh-fan--flip" viewBox="0 0 240 66" fill="none" aria-hidden="true">
               <path class="sh-rays" d="M120 66L84.5 55.8M120 66L82.4 49.1M120 66L81.8 41.7M120 66L82.8 34.1M120 66L85.7 26.7M120 66L90.2 19.9M120 66L96.2 14.1M120 66L103.4 9.7M120 66L111.5 6.9M120 66L120 6M120 66L128.5 6.9M120 66L136.6 9.7M120 66L143.8 14.1M120 66L149.8 19.9M120 66L154.3 26.7M120 66L157.2 34.1M120 66L158.2 41.7M120 66L157.6 49.1M120 66L155.5 55.8"/>
               <path class="sh-chev" d="M74 62 L120 36 L166 62"/>
@@ -1163,8 +1175,8 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=599"></script>
-<script src="script.js?v=599"></script>
+<script src="stories.js?v=600"></script>
+<script src="script.js?v=600"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1180,6 +1192,6 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=599"></script>
+<script src="library/roya-library.js?v=600"></script>
 </body>
 </html>
