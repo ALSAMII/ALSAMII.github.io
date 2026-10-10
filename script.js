@@ -2100,16 +2100,16 @@
           art: "assets/series-delos-row-1.webp",
           eyebrow: "Stranger than we can suppose",
           start: 100,
-          syn: "On the oldest maps, the edge of the known world carried a "
-               + "warning. Delos is Greek for clear, plain to see \u2014 the second "
-               + "half of psychedelic, mind-manifesting. Every book follows one "
-               + "person and one substance that drifts through a life unnamed, "
-               + "until the story has earned the name. The theme is the moment a "
-               + "thing stops being hidden and starts being seen, and what that "
-               + "costs the person it happens to. It asks you to sit in the part "
-               + "before the naming \u2014 something working on someone who has taken "
-               + "care not to learn what it is \u2014 and to decide whether that is a "
-               + "mercy or a theft." },
+          syn: "Old mapmakers wrote \u201chere be dragons\u201d at the edge of the "
+               + "world \u2014 the part they had never been to. These books keep the "
+               + "warning and change the creature. Delos is Greek for plain to see, "
+               + "and it is the back half of psychedelic: mind, made visible. Each "
+               + "book takes one person and one real substance \u2014 a leaf, a seed, a "
+               + "root \u2014 and follows what it does to a life, drawn mostly from what "
+               + "people who have taken it say happened to them. The substance stays "
+               + "unnamed while it works; when the story has earned it, the book "
+               + "names it and tells you the rest. Come along, and meet the thing "
+               + "that opened the door." },
         { key: "Come In, the Water Is Lovely",
           art: "assets/series-waters-row-1.webp",
           eyebrow: "Everything got better",
