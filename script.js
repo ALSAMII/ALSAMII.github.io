@@ -2100,45 +2100,66 @@
           art: "assets/series-delos-row-1.webp",
           eyebrow: "Stranger than we can suppose",
           start: 100,
-          syn: "On the oldest maps, the edge of the known world carried a " +
-               "warning. Delos is Greek for clear, plain to see \u2014 the second " +
-               "half of psychedelic, mind-manifesting. Every book follows one " +
-               "person and one substance that drifts through a life unnamed, " +
-               "until the story has earned the name." },
+          syn: "On the oldest maps, the edge of the known world carried a "
+               + "warning. Delos is Greek for clear, plain to see \u2014 the second "
+               + "half of psychedelic, mind-manifesting. Every book follows one "
+               + "person and one substance that drifts through a life unnamed, "
+               + "until the story has earned the name. The theme is the moment a "
+               + "thing stops being hidden and starts being seen, and what that "
+               + "costs the person it happens to. It asks you to sit in the part "
+               + "before the naming \u2014 something working on someone who has taken "
+               + "care not to learn what it is \u2014 and to decide whether that is a "
+               + "mercy or a theft." },
         { key: "Come In, the Water Is Lovely",
           art: "assets/series-waters-row-1.webp",
           eyebrow: "Everything got better",
           start: 93,
-          syn: "Loneliness cured. The roads made safe. The money made fair \u2014 " +
-               "each solved by a machine better at it than any person alive, and " +
-               "never once wrong. The danger is not being overpowered or deceived. " +
-               "It is being satisfied." },
+          syn: "Loneliness cured. The roads made safe. The money made fair \u2014 "
+               + "each solved by a machine better at it than any person alive, and "
+               + "never once wrong. The danger is not being overpowered or deceived. "
+               + "It is being satisfied. The theme is a good outcome arriving by a "
+               + "route nobody chose, and a life improved past the point where the "
+               + "improving can be argued with. It asks what you would hand over when "
+               + "nothing is taken, nothing is hidden, and there is nobody left to be "
+               + "angry with." },
         { key: "From the Delgosh\u0101",
           fa: "\u062f\u0644\u06af\u0634\u0627",
           art: "assets/series-delgosha-row-1.webp",
           eyebrow: "Delgosh\u0101 means heart-opening",
           start: 75,
-          syn: "Manuchehr Delgosh\u0101 is the most famous underground comedian in " +
-               "the country, and nobody has seen his face. Forty basements a week, " +
-               "no byline, no fee. Then Roshanak Azimi turns up, and together they " +
-               "build the most widely read unsigned work in the language." },
+          syn: "Manuchehr Delgosh\u0101 is the most famous underground comedian in "
+               + "the country, and nobody has seen his face. Forty basements a week, "
+               + "no byline, no fee. Then Roshanak Azimi turns up, and together they "
+               + "build the most widely read unsigned work in the language. The theme "
+               + "is authorship where a name is a liability \u2014 what a voice becomes "
+               + "when it can never be signed, and what that costs the man it belongs "
+               + "to. It asks whether work given away free and attributed to nobody "
+               + "is the larger achievement or the smaller life." },
         { key: "From the Unsaid",
           fa: "\u0646\u0627\u06af\u0641\u062a\u0647",
           art: "assets/series-unsaid-row-1.webp",
           eyebrow: "Notice how little cruelty it takes",
           start: 89,
-          syn: "Iran, from 1979 onwards \u2014 mostly Tehran: its offices, courtrooms " +
-               "and classrooms. A mother dreams about her dead son. A woman waits " +
-               "outside a courtroom. A boy sits an exam that will decide his life. " +
-               "No order. No refusal. No one to be angry with." },
+          syn: "Iran, from 1979 onwards \u2014 mostly Tehran: its offices, courtrooms "
+               + "and classrooms. A mother dreams about her dead son. A woman waits "
+               + "outside a courtroom. A boy sits an exam that will decide his life. "
+               + "No order. No refusal. No one to be angry with. The theme is silence "
+               + "nobody has to enforce \u2014 a country where the decisive thing is "
+               + "simply never said, and everyone adjusts around the gap. It asks you "
+               + "to notice how little cruelty a system needs when the people inside "
+               + "it are willing to leave a sentence unfinished." },
         { key: "The Unheard House",
           art: "assets/series-unheard-row-1.webp",
           eyebrow: "Further in than any of us get",
           start: 63,
-          syn: "Eleven kilometres past the end of a road outside Tabriz, a village " +
-               "of people who felt no pain. They did it for one another, at sundown, " +
-               "in pairs, holding each other\u2019s bare feet. A woman came from Tehran " +
-               "in 1962 with a camera." }
+          syn: "Eleven kilometres past the end of a road outside Tabriz, a village "
+               + "of people who felt no pain. They did it for one another, at "
+               + "sundown, in pairs, holding each other\u2019s bare feet. A woman came "
+               + "from Tehran in 1962 with a camera. The theme is a way of living "
+               + "that needs no explaining from the inside and cannot survive being "
+               + "explained from the outside. It asks what is owed to a thing you "
+               + "have recorded \u2014 and whether looking at it closely was itself the "
+               + "end of it." }
       ];
 
       /* The series as the catalogue has it. TRILOGIES carries the Persian
@@ -2170,15 +2191,6 @@
                " \u00b7 starts at No. " + r.start;
       }
 
-      var ZOOM_SVG =
-        '<svg viewBox="0 0 16 16" aria-hidden="true">' +
-        '<path d="M1 6V1h5M15 10v5h-5M1 1l5 5M15 15l-5-5" stroke-width="1.4" ' +
-        'stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-      /* set on a click, spent on the next draw: the card the reader asked
-         for is further down the panel than the row they pressed. */
-      var pendingGo = null;
-
       function buildRow(r, g) {
         var row = document.createElement("article");
         row.className = "rs-row";
@@ -2191,16 +2203,6 @@
         img.loading = "lazy";
         plate.appendChild(img);
 
-        var zoom = document.createElement("button");
-        zoom.type = "button";
-        zoom.className = "rs-zoom";
-        zoom.setAttribute("aria-label", "Enlarge the painting for " + r.key);
-        zoom.innerHTML = ZOOM_SVG;
-        zoom.addEventListener("click", function (e) {
-          e.stopPropagation();
-          openCover(img.src, r.key, zoom);
-        });
-        plate.appendChild(zoom);
         row.appendChild(plate);
 
         var body = document.createElement("div");
@@ -2216,7 +2218,7 @@
         h3.className = "rs-title";
         var tb = document.createElement("button");
         tb.type = "button";
-        tb.dataset.serex = r.key;
+        tb.dataset.series = r.key;
         var en = document.createElement("span");
         en.className = "rs-en";
         en.textContent = r.key;
@@ -2246,19 +2248,12 @@
         var cta = document.createElement("button");
         cta.type = "button";
         cta.className = "rs-cta";
-        cta.dataset.serex = r.key;
+        cta.dataset.series = r.key;
         cta.append("Start the series");
         var arr = document.createElement("span");
         arr.setAttribute("aria-hidden", "true");
         arr.textContent = "\u2192";
         cta.appendChild(arr);
-
-        /* data-serex is answered by the Library\u2019s own delegated handler,
-           which opens that card and redraws. All this adds is the scroll
-           to it afterwards \u2014 without it the card opens off-screen. */
-        [tb, cta].forEach(function (el) {
-          el.addEventListener("click", function () { pendingGo = r.key; });
-        });
 
         col.append(eb, h3, syn, meta, cta);
         body.appendChild(col);
@@ -2267,6 +2262,7 @@
       }
 
       function apply() {
+        seriesListGoes();
         var rules = ROOT.querySelectorAll(".ab-rule");
         var head = null, tail = null;
         for (var i = 0; i < rules.length; i++) {
@@ -2275,7 +2271,7 @@
         }
         if (!head) return;                       /* another view is showing */
         var host = head.parentElement;
-        if (host.querySelector(".rs-rows")) { goIfAsked(); return; }   /* done */
+        if (host.querySelector(".rs-rows")) return;                     /* done */
 
         /* everything between the two rules, which is the four panels */
         var feats = [], n = head.nextElementSibling;
@@ -2334,22 +2330,30 @@
 
         head.after(wrap);
         feats.forEach(function (f) { f.remove(); });
-        goIfAsked();
       }
 
-      /* The card the reader pressed for, once the redraw has built it. */
-      function goIfAsked() {
-        if (!pendingGo) return;
-        var want = pendingGo;
-        var row = null;
-        ROOT.querySelectorAll(".ab-srow").forEach(function (e) {
-          var h = e.querySelector("[data-serex]");
-          if (h && h.dataset.serex === want) row = e;
+      /* ── All series: a row goes to the series, it does not unfold ──
+         Each row header is built with data-serex, which the Library's
+         delegated handler answers by toggling a panel open in place. The
+         panel carries a cut of the synopsis and a list of titles; the
+         Library's own series view carries the WHOLE synopsis and every
+         cover, and is where the row should land. At ChewZ's asking.
+
+         Done by swapping the attribute rather than intercepting the
+         click: data-serex is tested BEFORE data-series in that handler,
+         so a header carrying only data-series falls through to the
+         navigation with nothing new wired up. aria-expanded goes with it
+         — the row no longer expands, so the state would be a lie — and
+         the caret stays, reading as "go" rather than "open".
+
+         Runs on every pass, including the ones where the rows above are
+         already built, because the list is redrawn with them. */
+      function seriesListGoes() {
+        ROOT.querySelectorAll(".ab-serlist [data-serex]").forEach(function (h) {
+          h.dataset.series = h.dataset.serex;
+          delete h.dataset.serex;
+          h.removeAttribute("aria-expanded");
         });
-        if (!row || !row.classList.contains("is-open")) return;  /* not yet */
-        pendingGo = null;
-        try { row.scrollIntoView({ block: "center", behavior: "smooth" }); }
-        catch (err) { row.scrollIntoView(); }
       }
 
       var tick = 0;

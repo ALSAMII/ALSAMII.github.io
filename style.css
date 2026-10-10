@@ -9640,19 +9640,6 @@ html #royaLibrary .rs-plate img{
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; object-position:50% 50%; display:block;
 }
-/* The same enlarge control the covers carry, in the same corner. It opens
-   the plate in the page's own lightbox rather than the Library's cover
-   viewer, which only knows how to show a book. */
-html #royaLibrary .rs-zoom{
-  position:absolute; top:.625rem; right:.625rem; width:2.25rem; height:2.25rem;
-  display:flex; align-items:center; justify-content:center; padding:0;
-  background:rgba(10,8,6,.78); border:1px solid rgba(199,148,61,.55);
-  border-radius:2px; color:var(--gold-lt); cursor:pointer;
-  transition:border-color .16s, color .16s;
-}
-html #royaLibrary .rs-zoom:hover,
-html #royaLibrary .rs-zoom:focus-visible{ color:var(--bone); border-color:var(--bone) }
-html #royaLibrary .rs-zoom svg{ width:.875rem; height:.875rem; stroke:currentColor; fill:none }
 
 html #royaLibrary .rs-body{
   display:flex; align-items:center; min-width:0;
@@ -9747,17 +9734,26 @@ html #royaLibrary .rs-ded-in{
 html #royaLibrary .rs-ded-in .ab-ded{ margin:0 }
 
 /* ── a wide enough row: the plate takes the left wall ──
-   72rem is 1152px of ROW. Measured headroom (plate height minus the text
-   column's) at 48%: +5px at a 1090px row, +33 to +60 at 1178, +163 at
-   1498. 1152 is the first width with real margin, and those figures were
-   taken without webfonts — EB Garamond is narrower than the fallback, so
-   the live page has a little more room than this, never less.
+   63rem is 1008px of ROW, which the panel reaches at about a 1440px
+   viewport — the rail takes roughly 420px before the row starts.
 
-   align-self:start is what keeps the pin: the plate holds its own 3:2
-   height instead of stretching to the row's. Above this breakpoint the
-   text is shorter than the plate, so the plate sets the row height and
-   fills the wall top to bottom. */
-@container rs (min-width:72rem){
+   This used to be 72rem, chosen so the text column was never taller than
+   the plate. That constraint is GONE, and it went with the card: while
+   the rows were boxes with a ground and a border, a plate that ended
+   higher than the words left a lit rectangle under it, so the layout had
+   to guarantee the text fit. Now the row has no ground, no border, and
+   the plate's own bottom edge is faded to the page black — so a plate
+   that ends higher than the text ends in black, above more black, and
+   there is nothing to see. Measured at 1600: the longest of the five
+   overruns its plate by 73px, and that 73px is invisible.
+
+   What the breakpoint has to protect now is the MEASURE. Below a 1024px
+   row the text column falls under about 450px and the synopsis starts
+   reading as a column of stubs, so that is where it stacks.
+
+   align-self:start is still the pin: the plate holds its own 3:2 height
+   rather than stretching to the row's. */
+@container rs (min-width:63rem){
   html #royaLibrary .rs-row{
     display:grid; grid-template-columns:48% minmax(0,1fr); align-items:stretch;
   }
@@ -9767,8 +9763,7 @@ html #royaLibrary .rs-ded-in .ab-ded{ margin:0 }
   html #royaLibrary .rs-syn{ font-size:1.0625rem }
   html #royaLibrary .rs-ded{ height:25rem }
 }
-/* ── a stacked row with room: the plate is large, the words beneath ── */
-@container rs (min-width:30rem) and (max-width:71.999rem){
+@container rs (min-width:30rem) and (max-width:62.999rem){
   html #royaLibrary .rs-title button{ font-size:1.6875rem }
   html #royaLibrary .rs-syn{ font-size:1.125rem }
   html #royaLibrary .rs-body{ padding:1.75rem 1.875rem 2rem }
@@ -9782,7 +9777,6 @@ html #royaLibrary .rs-ded-in .ab-ded{ margin:0 }
   html #royaLibrary .rs-syn{ font-size:1.0625rem }
   html #royaLibrary .rs-meta{ font-size:.6875rem; letter-spacing:.18em }
   html #royaLibrary .rs-cta{ width:100%; justify-content:center }
-  html #royaLibrary .rs-zoom{ width:2rem; height:2rem; top:.5rem; right:.5rem }
   html #royaLibrary .rs-ded{ height:14.75rem }
   html #royaLibrary .rs-ded-in{ padding:1.375rem }
 }
