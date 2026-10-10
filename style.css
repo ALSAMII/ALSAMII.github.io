@@ -9571,6 +9571,222 @@ html #royaLibrary .ab-note:not(.ab-note--long){
   html #royaLibrary .mob-sec .ab-note:not(.ab-note--long){ font-size: 1.1rem }
 }
 
+/* ── Recommended series, as list rows ────────────────────────
+   Four series were drawn four different ways — a split, a stage, a
+   second split and a full-bleed — with plates running from 0.667 to
+   2.501, a 3.75× spread, and synopses from nothing to a hundred and ten
+   words. The section read as four unrelated things. These rules set all
+   four as one row: a plate, a line, a name, forty-odd words, the figures
+   and the way in, in that order at every width.
+
+   THE PLATE IS PINNED TO 3:2 AND THIS IS THE WHOLE POINT. The obvious
+   build — a fixed-width plate stretched to whatever height the synopsis
+   makes — was measured across twenty widths and came out anywhere from
+   1.97 to 0.32: at 760px the picture is a vertical sliver. Worse, below
+   about 1180 the frame goes TALLER than 3:2, so object-fit:cover starts
+   cutting the sides, which is where the subject of every one of these
+   paintings is. Pinning the ratio and sizing the column by percentage
+   holds it at exactly 1.500 from 320px to 1920px, measured, so the art
+   is never cropped and never has to be composed defensively.
+
+   The row stays full-bleed with that pin: align-self:start keeps the
+   plate at its own height, and at every width from 1260 up the text
+   column is SHORTER than the plate, so the plate sets the row height and
+   fills its left wall top to bottom. Headroom runs +18px at 1260 to
+   +284px at 1920 — tight at the bottom end, which is why the column is
+   48% and the stack breakpoint is 1240 rather than 1100. At 1180 the
+   text overruns the plate by about a line, and 1240 is the first width
+   where all four clear it.
+
+   No gradient on the plate's inner edge. There was one; ChewZ asked for
+   it out. The plate meets the text column at a hard cut now, which is
+   also why the new paintings can carry detail right to that edge. */
+/* THE QUERY IS ON THE ROW, NOT THE VIEWPORT, and that is not a
+   refinement — a viewport breakpoint is simply wrong here. The About
+   panel sits beside a fixed rail, so at a 1440px viewport the row is
+   1018px, not 1440. Measured down the whole range: viewport 1920 gives a
+   1498px row, 1600 gives 1178, 1440 gives 1018, 1280 gives 858. A
+   breakpoint written against the viewport would put the side-by-side
+   layout at widths where the row cannot hold it, and the first build of
+   this did exactly that.
+   Against the ROW the rule is simple and holds wherever the panel is
+   used: below 72rem it stacks, above it the plate takes the left wall. */
+html #royaLibrary .rs-rows{
+  display:flex; flex-direction:column; gap:2.25rem; margin:0 0 1.9rem;
+  container-type:inline-size; container-name:rs;
+}
+/* Stacked is the base, so a browser without container queries gets the
+   arrangement that works at any width rather than the one that needs
+   room. */
+/* No card ground and no border, at ChewZ's asking. The row sits on the
+   page itself: .lib, .rl-home and body are all rgb(0,0,0), measured, and
+   the handset lays rgba(11,9,6,.44) over that, which comes out #050403.
+   So the plates are cut with their own edges faded to black — baked into
+   the files rather than laid over them in CSS, which is what makes the
+   blend exact and, as it happens, what lets the densest of them compress
+   at all. A border round a picture that is dissolving into the page would
+   be arguing with it, so there is none; the rows are told apart by the
+   gap and by the fade itself. */
+html #royaLibrary .rs-row{
+  display:block; text-align:left;
+}
+/* aspect-ratio with align-self:start is the pin: the plate takes its own
+   3:2 height rather than being stretched to the row's. */
+html #royaLibrary .rs-plate{
+  position:relative; aspect-ratio:3/2;
+  overflow:hidden; background:#000;
+}
+html #royaLibrary .rs-plate img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:50% 50%; display:block;
+}
+/* The same enlarge control the covers carry, in the same corner. It opens
+   the plate in the page's own lightbox rather than the Library's cover
+   viewer, which only knows how to show a book. */
+html #royaLibrary .rs-zoom{
+  position:absolute; top:.625rem; right:.625rem; width:2.25rem; height:2.25rem;
+  display:flex; align-items:center; justify-content:center; padding:0;
+  background:rgba(10,8,6,.78); border:1px solid rgba(199,148,61,.55);
+  border-radius:2px; color:var(--gold-lt); cursor:pointer;
+  transition:border-color .16s, color .16s;
+}
+html #royaLibrary .rs-zoom:hover,
+html #royaLibrary .rs-zoom:focus-visible{ color:var(--bone); border-color:var(--bone) }
+html #royaLibrary .rs-zoom svg{ width:.875rem; height:.875rem; stroke:currentColor; fill:none }
+
+html #royaLibrary .rs-body{
+  display:flex; align-items:center; min-width:0;
+  padding:1.75rem 1.875rem 2rem;
+}
+html #royaLibrary .rs-col{ display:flex; flex-direction:column; min-width:0; width:100% }
+
+html #royaLibrary .rs-eyebrow{
+  margin:0 0 .5625rem; font-family:var(--cond); font-weight:600; font-size:.6875rem;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--t-num);
+}
+/* The name is a button for the same reason the CTA is: it opens the
+   series' own card. Styled as a heading, not as a control. */
+html #royaLibrary .rs-title{ margin:0 0 .8125rem }
+/* A flex row on the baseline, which is how the old panels set the two
+   names: the English runs on, the Persian sits to the right of it, and
+   wrap lets the Persian drop to its own line on a narrow card rather
+   than squeezing the English. */
+html #royaLibrary .rs-title button{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:.1rem .62rem;
+  font-family:var(--slab); font-weight:700; font-size:1.5625rem; line-height:1.14;
+  letter-spacing:.015em; text-transform:uppercase; color:var(--gold-lt);
+  background:none; border:0; padding:0; text-align:left; cursor:pointer;
+  transition:color .16s;
+}
+/* Three things connected script needs that the Latin beside it does not,
+   and all three are overrides of the button above: NO letter-spacing,
+   ever, because it breaks the joins; no uppercase, because the script has
+   no case and the property would do nothing but confuse the next person
+   reading this; and a deep box, because nastaliq hangs well below the
+   baseline. 0.72em is the ratio the old panels used — 1.37rem of Persian
+   against 1.9rem of English — and in em it holds through every one of
+   the row's three sizes without being restated. */
+html #royaLibrary .rs-fa{
+  font-family:var(--nastaliq); font-weight:500; font-size:.72em;
+  line-height:1; letter-spacing:0; text-transform:none;
+  color:var(--gold-word); margin-bottom:-.18em;
+}
+html #royaLibrary .rs-title button:hover,
+html #royaLibrary .rs-title button:focus-visible{ color:var(--bone) }
+html #royaLibrary .rs-syn{
+  margin:0 0 1rem; font-family:var(--book); font-size:1.0625rem; line-height:1.6;
+  color:#cfc3ad;
+}
+html #royaLibrary .rs-meta{
+  margin:0 0 1.25rem; font-family:var(--cond); font-weight:500; font-size:.75rem;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--dust);
+}
+html #royaLibrary .rs-cta{
+  align-self:flex-start; display:inline-flex; align-items:center; gap:.55em;
+  min-height:2.75rem; padding:0 1.375rem;
+  font-family:var(--cond); font-weight:600; font-size:.6875rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ochre); background:none; border:1px solid var(--ochre);
+  border-radius:2px; cursor:pointer;
+  transition:color .16s, border-color .16s;
+}
+html #royaLibrary .rs-cta:hover,
+html #royaLibrary .rs-cta:focus-visible{ color:var(--gold-lt); border-color:var(--gold-lt) }
+
+/* ── the dedication, closing the section ──
+   It used to sit inside The Unheard House's panel, which made it read as
+   that series' footnote. It closes the whole section now, at ChewZ's
+   asking: its own band, after the four rows and before All series. Not a
+   series — no eyebrow, no figures, no way in — so it carries none of the
+   row's furniture.
+
+   A fixed height rather than a ratio, because the band is a coda and
+   should not grow with the column. The plate is forgiving of it: the
+   painting is two faces at the far edges with black between them, so a
+   frame WIDER than its 1.518 crops the height and keeps both faces,
+   which is what happens at every width above a handset. */
+html #royaLibrary .rs-ded{
+  position:relative; height:25rem; overflow:hidden; background:#000;
+}
+html #royaLibrary .rs-ded img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:50% 48%; display:block;
+}
+html #royaLibrary .rs-ded-veil{
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 50%,
+    rgba(5,4,3,.82) 0%, rgba(5,4,3,.58) 48%, rgba(5,4,3,.28) 100%);
+}
+html #royaLibrary .rs-ded-in{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  padding:2.5rem;
+}
+/* the lifted .ab-ded keeps every rule the generated sheet gives it — the
+   nastaliq, the two sizes, the colours. Only its margin has to go: it was
+   set to sit under a paragraph, and here it is centred in a band. */
+html #royaLibrary .rs-ded-in .ab-ded{ margin:0 }
+
+/* ── a wide enough row: the plate takes the left wall ──
+   72rem is 1152px of ROW. Measured headroom (plate height minus the text
+   column's) at 48%: +5px at a 1090px row, +33 to +60 at 1178, +163 at
+   1498. 1152 is the first width with real margin, and those figures were
+   taken without webfonts — EB Garamond is narrower than the fallback, so
+   the live page has a little more room than this, never less.
+
+   align-self:start is what keeps the pin: the plate holds its own 3:2
+   height instead of stretching to the row's. Above this breakpoint the
+   text is shorter than the plate, so the plate sets the row height and
+   fills the wall top to bottom. */
+@container rs (min-width:72rem){
+  html #royaLibrary .rs-row{
+    display:grid; grid-template-columns:48% minmax(0,1fr); align-items:stretch;
+  }
+  html #royaLibrary .rs-plate{ align-self:start }
+  html #royaLibrary .rs-body{ padding:2.125rem 2.125rem 2.125rem 2.5rem }
+  html #royaLibrary .rs-title button{ font-size:1.5625rem }
+  html #royaLibrary .rs-syn{ font-size:1.0625rem }
+  html #royaLibrary .rs-ded{ height:25rem }
+}
+/* ── a stacked row with room: the plate is large, the words beneath ── */
+@container rs (min-width:30rem) and (max-width:71.999rem){
+  html #royaLibrary .rs-title button{ font-size:1.6875rem }
+  html #royaLibrary .rs-syn{ font-size:1.125rem }
+  html #royaLibrary .rs-body{ padding:1.75rem 1.875rem 2rem }
+  html #royaLibrary .rs-ded{ height:22.5rem }
+}
+/* ── a handset ── */
+@container rs (max-width:29.999rem){
+  html #royaLibrary .rs-body{ padding:1.375rem 1.25rem 1.5rem }
+  html #royaLibrary .rs-eyebrow{ font-size:.625rem }
+  html #royaLibrary .rs-title button{ font-size:1.5rem }
+  html #royaLibrary .rs-syn{ font-size:1.0625rem }
+  html #royaLibrary .rs-meta{ font-size:.6875rem; letter-spacing:.18em }
+  html #royaLibrary .rs-cta{ width:100%; justify-content:center }
+  html #royaLibrary .rs-zoom{ width:2rem; height:2rem; top:.5rem; right:.5rem }
+  html #royaLibrary .rs-ded{ height:14.75rem }
+  html #royaLibrary .rs-ded-in{ padding:1.375rem }
+}
+
 /* ── Where to go next, inside the About note ───────────────────
    The two places a first-time reader would want, which the note itself
    did not name: every cover, and the ones read aloud.
