@@ -1,4 +1,4 @@
-/* Version 475 · last updated 2026-10-08 13:55 PDT*/
+/* Version 476 · last updated 2026-10-10 16:58 PDT*/
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1414,6 +1414,18 @@ const STORIES = [
     key: "The root — bark from a shrub in west-central Africa, eaten in Gabon for longer than anyone has written down, taken here by mouth in a white house above the sea with a heart monitor on and a woman in a grey cardigan writing down everything she says",
     notes: [2, 3, 3],
     synopsis: "Dana Whitlock is a respiratory therapist in Albuquerque. She is good at her job: counting other people’s breaths for a living, for people who cannot count their own. She lives alone. She has not slept a whole night in nearly seven years. On the longest night of 2019, coming home from a Christmas party in a friend’s truck, she was the passenger. That is what she told the deputy, and the lawyer, and that is what the man who was driving told them too. He went to prison. A boy of twelve on a bicycle did not come home, and there is a white cross on the side of a county road with his name on it, and a woman in a grey coat who used to kneel beside it on Sundays. Dana takes the long way round to avoid that road, and has done for nearly seven years. Then, at three in the morning, a text from a number she does not know: it helped me sleep. With it, a link to a clinic on the coast of Mexico — a white house above the sea that promises one night with a root from Africa will take everything you ever did wrong off you, like a coat. It is illegal at home. People have died taking it. Dana is a medical professional, she knows exactly what it can do to a heart, and she leaves one small thing off her intake form. She drives twelve hours to the border and walks across, and lies down in a room with a heart monitor and a woman in a grey cardigan who will sit up with her all night and write down everything she says. The people who have been there say the root plays your life back to you like a film. They say the worst memory plays slowest."
+  },
+
+  {
+    num: 110,
+    title: "Cruel Sun, the Water Said",
+    words: "40,500 words",
+    hook: "A swim coach who has taught a thousand children to float, and one night in the sea when he can hold only one",
+    door: "Ordeal",
+    room: "The Seawall — nine hours in the water off Front Street, heads under when the embers come, the town burning above and the sea the only place left to stand",
+    key: "Ears Under — the float he teaches every beginner: lie back, give the water your weight, and it gives it back. With your ears in the water you stop hearing the fire, and start hearing what has been talking all night",
+    notes: [2, 3, 3],
+    synopsis: "Lahaina sits on the dry side of Maui, between a green mountain and a blue sea. Long ago it was called Lele, and it was so full of running water that the whalers called it the Venice of the Pacific. Then the sugar planters turned the streams away to their fields. The streams stopped running. The king’s pond was filled in and a ballpark was built on top of it. When the sugar left, the old cane fields above the town filled up with tall dry grass, and nobody cut it. Kanoe cleans hotel rooms at a resort up the coast. She lives in her grandfather’s plantation house above Front Street with her mother, Tūtū, who has never in seventy-nine years gone into the sea past her knees, and her son Keola, eight, who backflips off the harbor wall every afternoon. Wes is a high-school swim coach from Ohio. He has come to Lahaina with his son Theo, nine, and with the ashes of his wife in a bag in his backpack, to give her to the sea where they were married. He has taught a thousand children to swim. He cannot teach his own son, who has been afraid of deep water since his mother got sick. It is the first week of August 2023. A hurricane is passing far to the south. The weather service has raised a red flag. The wind is coming. And in the gaps between the chapters, something older than the island has started to talk. It is very patient, and it is trying to be gentle, and it is speaking to someone."
   }
 
 ];

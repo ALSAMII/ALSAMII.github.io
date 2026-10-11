@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 10 · last updated 2026-10-10 15:51 PDT
+   Version 11 · last updated 2026-10-10 17:02 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2394,7 +2394,7 @@
          rule defines Door as one of four exact things — Dose, they
          took something · Rite, they practised something · Ordeal,
          they endured something · Withholding, they went without —
-         and all 109 books are filed under one of them. The three
+         and all 110 books are filed under one of them. The three
          groups under this heading are none of those: they come from
          a field called dial, and they are Noir, Transgressive and
          Plausible, glossed "How cold it gets", "How far past comfort
@@ -2502,7 +2502,7 @@
         add.className = "ab-note-add";
         /* First, what a book costs to read. Checked rather than
            estimated: the figures run from 0.3 to 4.2 hours, the median
-           is 1.6, and 101 of the 109 come in under three. "Most" and
+           is 1.6, and 101 of the 110 come in under three. "Most" and
            "an evening" are the honest words for that, and neither goes
            stale when the next book lands — which a figure would.
 
