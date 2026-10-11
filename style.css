@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 10 · last updated 2026-10-10 15:43 PDT
+   Version 13 · last updated 2026-10-10 19:43 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -9562,13 +9562,44 @@ html #royaLibrary .mcard[data-rl-on][aria-current="true"]{border-color:var(--gol
 html #royaLibrary .ab-note:not(.ab-note--long){
   font-family: var(--book);
   font-size: 1.375rem;
-  line-height: 1.58;
+  /* Was 1.58. The 110 is set at 1.9em on line-height:0, deliberately, so
+     the figure and its painted ring hang OUT of the line box and the
+     paragraph stays exactly as tall as it would be without them. That is
+     the right trick for a paragraph in the middle of a page. It stops
+     being right on the FIRST line, where there is nothing above to lend
+     the overhang any room.
+     Measured at 1600: the ring's box ran 308 to 368 while the note's own
+     text began at 332 and .ab-lede above it ended at 311 — so the mark
+     reached 24px above its own paragraph and 2px into the sentence above.
+     The margin below is what actually clears it; the extra leading is for
+     the gap between the rows, which the ring was crowding on both sides.
+
+     The margin has to BEAT .ab-lede's own 1.3rem bottom, not match it:
+     adjacent margins collapse to the larger, so the first attempt at
+     1.25rem was swallowed whole and moved the note by nothing. 2.25rem
+     wins the collapse and leaves 36px, of which 15 are new. */
+  line-height: 1.72;
+  margin-top: 2.25rem;
   max-width: 54rem;
 }
+/* ── and the air under it, before DOOR / ROOM / KEY ──
+   .ab-terms carried 1.8rem of top margin, which collapsed against the
+   note's 1.6rem bottom and left 29px — not enough to read as a new
+   section under a four-line paragraph. The row is three icons with rules
+   between them, so it needs to start, not continue. */
+html #royaLibrary#royaLibrary .ab-terms{ margin-top: 2.9rem }
+
 /* The phone sets .ab-note to 1rem inside .mob-sec; the same eleven per
-   cent applies there. */
+   cent applies there, and the same two gaps, scaled. The ring measures
+   48px there against a 28px line, so it overhangs 19px rather than 24. */
 @media (max-width: 46rem){
-  html #royaLibrary .mob-sec .ab-note:not(.ab-note--long){ font-size: 1.1rem }
+  html #royaLibrary .mob-sec .ab-note:not(.ab-note--long){
+    font-size: 1.1rem;
+    /* Same collapse, smaller numbers: .mob-sec gives .ab-lede 1.1rem
+       below, so this has to clear 17.6px before it buys anything. */
+    margin-top: 1.75rem;
+  }
+  html #royaLibrary#royaLibrary .mob-sec .ab-terms{ margin-top: 2.1rem }
 }
 
 /* ── Recommended series, as list rows ────────────────────────
@@ -9611,6 +9642,86 @@ html #royaLibrary .ab-note:not(.ab-note--long){
    this did exactly that.
    Against the ROW the rule is simple and holds wherever the panel is
    used: below 72rem it stacks, above it the plate takes the left wall. */
+/* ══ The cover window: zooming the picture in place ══════════════
+   The window exists to look at a cover. Wanting a closer look should
+   not mean leaving it for the book's page, so the picture takes a
+   transform from script.js — wheel, pinch, drag, double-click — and
+   these are the rules that make room for it.
+
+   Nothing here fights the generated sheet. The transform is set
+   inline, which beats any stylesheet rule including the
+   `transform: none` the landscape block sets, and every rule below is
+   gated on data-rl-zoom="1", which script.js only sets while the
+   picture is actually magnified. At rest the window is exactly as it
+   was. */
+
+/* ── the shelf column keeps its place ──
+   The covers are loading="lazy", so without a declared ratio every
+   thumbnail is a zero-height box until its bytes arrive: the column has
+   no real geometry on the frame after a rebuild, offsetTop reads as
+   nearly nought for every one of them, and script.js cannot work out
+   where to put the scroll. Measured: the current cover landed offscreen
+   every time.
+
+   Every thumbnail is covers/thumb/NN.webp at 360x540, so 2/3 is not a
+   guess — it is the file. Declaring it also takes the shift out of the
+   column as the pictures arrive, which was there before and nobody had
+   named. */
+html #royaLibrary#royaLibrary .zoom-strip img{ aspect-ratio:2/3 }
+
+/* Clip to the plate. Without this a magnified cover spills across the
+   whole overlay and sits over the shelf column and the arrows. */
+html #royaLibrary#royaLibrary .zoom[data-rl-zoom="1"] .zoom-plate{ overflow:hidden }
+html #royaLibrary#royaLibrary .zoom .zoom-plate img{
+  transition:transform .13s ease-out;
+  /* The browser's own pan must not eat the drag, and a double-tap must
+     not be answered with the browser's zoom instead of ours. */
+  touch-action:none;
+  -webkit-user-select:none; user-select:none;
+  -webkit-user-drag:none;
+}
+/* A drag is a drag, not a text selection on the caption behind it. */
+html #royaLibrary#royaLibrary .zoom[data-rl-zoom="1"]{ user-select:none }
+
+/* ── the two buttons and the reading ──
+   Set as the arrows are set, because they belong to the same window:
+   the same square, the same hairline, the same ink. Bottom left, which
+   is the one corner of this overlay nothing else uses — the close mark
+   is top left, the arrows are in the shelf column at the right. */
+html #royaLibrary#royaLibrary .rl-mag{
+  position:absolute; z-index:4; left:.75rem; bottom:.75rem;
+  display:flex; align-items:center; gap:.45rem;
+  padding:.3rem .45rem;
+  background:rgba(5,4,3,.82);
+  border:1px solid rgba(199,148,61,.42);
+  border-radius:2px;
+}
+html #royaLibrary#royaLibrary .rl-mag-b{
+  width:1.65rem; height:1.65rem; display:grid; place-items:center;
+  font-family:var(--book); font-size:1.125rem; line-height:1;
+  color:var(--bone); background:none; border:1px solid rgba(199,148,61,.42);
+  border-radius:2px; cursor:pointer; padding:0;
+  transition:color .16s, border-color .16s;
+}
+html #royaLibrary#royaLibrary .rl-mag-b:hover{ color:var(--ochre); border-color:var(--ochre) }
+/* The figure is the one number here, so it is set like every other
+   small figure on the site: Jost, tracked, in the dim gold. A fixed
+   width stops the bar twitching as it runs 100 → 250 → 600. */
+html #royaLibrary#royaLibrary .rl-mag-pct{
+  min-width:3.1rem; text-align:center;
+  font-family:var(--cond); font-weight:600; font-size:.6875rem;
+  letter-spacing:.12em; color:var(--t-read);
+  font-variant-numeric:tabular-nums;
+}
+@media (max-width: 46rem), (orientation: landscape) and (max-height: 34rem){
+  /* Sideways on a handset the shelf column owns the right edge and the
+     close mark the top left, so the bar tucks into the bottom left and
+     comes down a size. */
+  html #royaLibrary#royaLibrary .rl-mag{ left:.5rem; bottom:.5rem; gap:.35rem; padding:.22rem .35rem }
+  html #royaLibrary#royaLibrary .rl-mag-b{ width:1.45rem; height:1.45rem; font-size:1rem }
+  html #royaLibrary#royaLibrary .rl-mag-pct{ min-width:2.7rem; font-size:.625rem }
+}
+
 /* ── The line under "Start here" ──────────────────────────────
    Set the way the catalogue already sets a heading and its sub-line:
    .ab-gh pairs a 2rem --book heading with a 1rem --book line in
