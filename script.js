@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 14 · last updated 2026-10-11 20:58 PDT
+   Version 15 · last updated 2026-10-12 13:41 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2538,17 +2538,23 @@
         var add = document.createElement("span");
         add.className = "ab-note-add";
         /* First, what a book costs to read. Checked rather than
-           estimated: the figures run from 0.3 to 4.2 hours, the median
-           is 1.6, and 101 of the 110 come in under three. "Most" and
-           "an evening" are the honest words for that, and neither goes
-           stale when the next book lands — which a figure would.
+           estimated: the figures run from 0.3 to 4.2 hours and the
+           median is 1.6, so "most run an hour or two" is the honest
+           words for it, and it does not go stale when the next book
+           lands — which a figure would.
+
+           It used to carry a second sentence, "None of them takes
+           longer than an evening", and that is out at ChewZ's asking.
+           It was true — the longest is 4.2 hours — but it was the
+           weaker half: the first sentence already says a book is short,
+           and the second only said it again from the far end, which on
+           a four-line note is a line spent twice.
 
            Then the signpost, in ChewZ's own words, unchanged from the
            line it used to be. It is set in the note's face and size
            now; nothing here says so, because .ab-go-link and
            .ab-go-sep both inherit. */
-        add.append(" Most run an hour or two. None of them takes longer " +
-                   "than an evening. Every cover in the ",
+        add.append(" Most run an hour or two. Every cover in the ",
                    go("library", "Library"), dot(),
                    narrated + " read aloud in ",
                    go("listening", "Listen"));
