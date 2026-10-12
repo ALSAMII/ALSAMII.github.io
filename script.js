@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 13 · last updated 2026-10-10 19:43 PDT
+   Version 14 · last updated 2026-10-11 20:58 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2091,11 +2091,17 @@
          author's choice and not always its lowest number — the
          Delgoshā runs from 68 but is entered at 75. */
       var ROWS = [
-        /* First in the section, and not by accident: the dedication closes
-           the section and has to stay directly after The Unheard House, so
-           a fifth series goes at the head rather than the foot. It also
-           reads first — it is the series that says what a door, a room and
-           a key are, which is the frame every other book here is built in. */
+        /* First in the section, and not by accident: it is the series that
+           says what a door, a room and a key are, which is the frame every
+           other book here is built in.
+
+           It used to be here for a second reason as well — that the
+           dedication closed the section, so a new series could only go at
+           the head. That is no longer true: the dedication is a band in the
+           middle now, and a row carrying `after: true` is built below it.
+           At ChewZ's asking, and it suits the page: Forough no longer has
+           to be the last thing before the catalogue listing, and the
+           section can keep growing from both ends. */
         { key: "Here Be Delos",
           art: "assets/series-delos-row-1.webp",
           eyebrow: "Stranger than we can suppose",
@@ -2172,7 +2178,28 @@
                + "that needs no explaining from the inside and cannot survive being "
                + "explained from the outside. It asks what is owed to a thing you "
                + "have recorded \u2014 and whether looking at it closely was itself the "
-               + "end of it." }
+               + "end of it." },
+
+        /* Below the dedication rather than above it. The band closes what
+           came before and this opens what comes after, which is the one
+           place a seventh row can go without making the Forough page a
+           divider between six series and one. */
+        { key: "Daughters of Anahita",
+          after: true,
+          art: "assets/series-anahita-row-1.webp",
+          eyebrow: "Nobody is bought. Nobody is threatened",
+          start: 19,
+          syn: "Anāhitā was the Persian goddess of the waters \u2014 of rivers, of "
+               + "healing, of the thing that wears stone down without ever appearing "
+               + "to hurry. Her daughters are an order of women who do not buy men "
+               + "and do not threaten them. They wait, and they have been waiting "
+               + "three thousand years. Three books across that span: the night one "
+               + "ungoverned beauty burned a kingdom to ash; a dying bathhouse in "
+               + "communist Romania, where a woman plants something that will not "
+               + "bloom until everyone in the room is dead; and a near future where "
+               + "gene-editing and ambient AI have made the waiting perfect. Each "
+               + "one asks the same uncomfortable thing \u2014 whether patience held "
+               + "that long is still patience, or something else wearing its face." }
       ];
 
       /* The series as the catalogue has it. TRILOGIES carries the Persian
@@ -2319,7 +2346,11 @@
 
         var wrap = document.createElement("div");
         wrap.className = "rs-rows";
-        ROWS.forEach(function (r) {
+        /* The dedication is no longer the last thing in the section: it is
+           a band between the rows that come before it and the ones that
+           carry `after: true`. Built in two passes rather than one so the
+           order is declared in ROWS and not in the sequence of appends. */
+        ROWS.filter(function (r) { return !r.after; }).forEach(function (r) {
           var g = groupFor(r.key);
           if (g) wrap.appendChild(buildRow(r, g));
         });
@@ -2341,6 +2372,12 @@
           band.append(bi, veil, inner);
           wrap.appendChild(band);
         }
+
+        /* and the rows that belong below her */
+        ROWS.filter(function (r) { return r.after; }).forEach(function (r) {
+          var g = groupFor(r.key);
+          if (g) wrap.appendChild(buildRow(r, g));
+        });
 
         head.after(wrap);
 
