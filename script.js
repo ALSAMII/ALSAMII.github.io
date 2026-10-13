@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 18 · last updated 2026-10-12 19:47 PDT
+   Version 25 · last updated 2026-10-12 20:47 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2147,15 +2147,16 @@
           art: "assets/series-delos-row-1.webp",
           eyebrow: "Stranger than we can suppose",
           start: 100,
-          syn: "Old mapmakers wrote \u201chere be dragons\u201d over the parts of the "
-               + "world they had never been to. These books keep the warning and "
-               + "change the creature. Delos was a Greek island that drifted, "
-               + "unfixed and too hard to find, until four pillars rose and held it "
-               + "still \u2014 and the sailors named it the one that can be seen. The "
-               + "same word sits inside psychedelic: mind, made visible. That is "
-               + "what each book does \u2014 one person, one real substance, and the "
-               + "country it opens, told mostly by people who have been there. The "
-               + "map starts as scribble. Every book fixes one more place on it." },
+          syn: "Here be is what the old mapmakers wrote where the known world "
+               + "ran out \u2014 here be dragons, here be lions. Delos is Greek for "
+               + "the one that can be seen: the back half of psychedelic. Mind, "
+               + "made visible \u2014 one mind at a time. Each book follows one "
+               + "person and one real substance \u2014 a leaf, a seed, a root, a "
+               + "mushroom, a molecule \u2014 into the country it opens, told mostly "
+               + "by people who have been there. The substance goes unnamed until "
+               + "the story has earned it; then the book turns and tells you "
+               + "everything: where it grows, who found it, what it does, what it "
+               + "costs." },
         { key: "Come In, the Water Is Lovely",
           art: "assets/series-waters-row-1.webp",
           eyebrow: "Everything got better",
