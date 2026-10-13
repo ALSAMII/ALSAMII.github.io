@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 25 · last updated 2026-10-12 20:47 PDT
+   Version 27 · last updated 2026-10-12 21:33 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2748,6 +2748,56 @@
 
         sec.append(box, foot);
         anchor.parentNode.insertBefore(sec, anchor);
+      }
+
+      var tick = 0;
+      function schedule() {
+        if (tick) return;
+        tick = requestAnimationFrame(function () { tick = 0; apply(); });
+      }
+      apply();
+      new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
+    })();
+
+    /* ---- Pick a mood: six glosses rewritten ------------------------
+       The italic line beside a title in the Pick a mood list comes from
+       PICKGLOSS in library/roya-library.js — a generated file, and one
+       this repository cannot rebuild, because build-integration.py is
+       not in it. So the lines are replaced on the rendered row instead,
+       which is the same correction made in the same place a reader sees
+       it.
+
+       Keyed on data-rec, which the Library already puts on every row,
+       so a book that moves between mood groups keeps its line. Only the
+       six listed are touched; every other row keeps what the generated
+       file gives it.
+
+       The markup is <i class="ab-gl">· <line></i>, and the dot is part
+       of the element rather than the stylesheet, so it is written back
+       with the text. */
+    (function pickGloss() {
+      var ROOT = document.getElementById("royaLibrary");
+      if (!ROOT) return;
+
+      var LINES = {
+        6:   "surface, current, riverbed — the three layers of a self",
+        7:   "it woke when we stopped narrating",
+        8:   "eight confessions, each hiding a worse one",
+        35:  "a sister who asked for nothing",
+        40:  "no damage signal, no sweat, no warning",
+        102: "declared out, still alive in the roots"
+      };
+
+      function apply() {
+        ROOT.querySelectorAll(".ab-row[data-rec]").forEach(function (row) {
+          var line = LINES[row.getAttribute("data-rec")];
+          if (!line) return;
+          var gl = row.querySelector(".ab-gl");
+          if (!gl) return;
+          var want = "· " + line;
+          if (gl.textContent === want) return;            /* idempotent */
+          gl.textContent = want;
+        });
       }
 
       var tick = 0;
