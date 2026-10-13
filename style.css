@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 22 · last updated 2026-10-13 15:56 PDT
+   Version 23 · last updated 2026-10-13 16:16 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10307,39 +10307,54 @@ html #royaLibrary#royaLibrary .hint .hint-step i{
    on its number, so renaming the row dropped it out and the plate went
    back to `cover` — too big for the row, sitting under the paragraph.
 
-   Sized to match its siblings rather than to a number. What reads as
-   "big" on a phone is the painted subject, not the plate, and this
-   painting is unusually subject-heavy — the heart fills 88% of the
-   frame's height where 102 and 26 fill about half. So the same
-   background-size gives a much larger object:
+   Sized by WIDTH, not height, and that is the whole point of the rule.
+   `auto N%` keys the plate to the art box's height, and the box is as
+   tall as the row, which is as tall as the paragraph happens to wrap.
+   So the narrower the phone, the more the text wraps, the taller the
+   row, and the BIGGER the painting — exactly backwards:
 
-     row    subject of plate   phone size   subject in row
-     102          51%           auto 70%        35.7%
-      26          52%           auto 90%        46.8%
-      35          81%           auto 70%        56.4%
-     113          88%           auto 52%        45.8%
+     width   row    plate at auto 52%
+      320    403px      628 x 209
+      360    375px      585 x 195
+      390    347px      541 x 180
+      430    347px      541 x 180
 
-   52% lands 113 at the mean of the three rows already sized, between
-   102 and 26. 60% put it at 53.0%, above every sibling — which is what
-   still read as too large on a phone after the first pass.
+   98% of the box width holds the painting at one size relative to the
+   screen, the way every `cover` row already behaves: 424 / 481 / 524 /
+   581 across the same four widths. At 390 that is 524x175 against the
+   541x180 the height rule gave, so the size settled on there is kept
+   and only the narrow widths change.
 
-   Luminance behind the paragraph, mean of the left 60% of the row,
-   lower is quieter behind the text:
+   The 5rem step-back is measured, not chosen. .ab-art is 124% of the
+   row wide and overhangs its right edge by a constant 80px at every
+   phone width, so the old 2rem stepped back from the BOX and still let
+   the painting run 48px past the visible row edge — and the subject
+   sits at 66% to 97% across the plate, so that 48px was the heart's own
+   right side. 5rem is that 80px overhang, which lands the plate's right
+   edge exactly on the row's. Nothing is cut on the right at any width.
 
-                      320    360    390    430
-     cover            32.3   27.9   26.1   23.7
-     auto 60% -2rem   24.6   21.6   22.0   22.5
+   What it costs the type. Ground directly under the paragraph with the
+   text hidden, as p90 / max:
+
+                              320        360        390        430
+     auto 52%, -2rem      11.3/52    8.3/31     6.0/24     4.3/18
+     auto 52%, -5rem      14.3/186  12.3/171   10.0/33     7.3/37
+     98%,      -5rem       6.7/33    8.0/36     9.7/33    10.0/49
+
+   The middle row is why the width rule is here and not the shift alone:
+   at 320 and 360 the ballooned plate put the lit doorway of the heart —
+   186 against a ground of 5 — directly behind a word.
 
    background-repeat is the other half, and the part not to drop.
    .ab-art never sets it, so it is `repeat` — which costs nothing while a
-   plate is `cover` and tiles the moment one is `auto N%`. The generated
+   plate is `cover` and tiles the moment one is sized. The generated
    sheet's own 26, 35 and 102 rows tile today; it does not show because
    those paintings are black at every edge, so the copies are black on
    black. Set here rather than on .ab-art, so nothing else moves. */
 @media (max-width: 760px){
   html #royaLibrary#royaLibrary .mob-sec .ab-row[data-rec="113"] .ab-art{
-    background-size:auto 52%;
-    background-position:calc(100% - 2rem) 50%;
+    background-size:98% auto;
+    background-position:calc(100% - 5rem) 50%;
     background-repeat:no-repeat;
   }
 }
