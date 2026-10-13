@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 21 · last updated 2026-10-13 15:25 PDT
+   Version 22 · last updated 2026-10-13 15:56 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10342,4 +10342,46 @@ html #royaLibrary#royaLibrary .hint .hint-step i{
     background-position:calc(100% - 2rem) 50%;
     background-repeat:no-repeat;
   }
+}
+
+/* ══ Pick a mood — the reading time and Listen below the synopsis ═══
+   The generated sheet stacks each row head, then .ab-time, then .ab-syn,
+   all three as blocks inside .ab-rowin. The meta line sat between the
+   title and the paragraph, so the eye crossed a line of 9px tracked-out
+   caps before reaching the sentence it came for.
+
+   Reordered rather than re-emitted, because .ab-rowin and its children
+   come out of build-integration.py. Flex is what makes `order` legal:
+   .ab-rowin is display:block there, and block children have no order.
+   Nothing else about the box changes — the children are stretched to the
+   container's width in a column, which is what they already did as
+   blocks, and .ab-syn keeps its own max-width.
+
+   The ::before that lays the ground back over the join between two
+   paintings is position:absolute, so it is not a flex item and does not
+   take a slot in the column. Verified, not assumed.
+
+   The margins move with the order. Block siblings here never had two
+   non-zero margins meeting, so none of them were collapsing and flex
+   costs nothing:
+
+     was   head .35rem  ->  time .6rem  ->  syn 0
+     now   head .35rem  ->  syn .62rem  ->  time 0
+
+   .62rem rather than .6rem between the paragraph and the meta line: the
+   paragraph's last line sits on a 1.48 line-height, where the head's did
+   not, so the optical gap at .6rem read a hair tighter than the one
+   above it. */
+html #royaLibrary#royaLibrary .ab-row .ab-rowin{
+  display:flex;
+  flex-direction:column;
+}
+html #royaLibrary#royaLibrary .ab-row .ab-head{ order:1; }
+html #royaLibrary#royaLibrary .ab-row .ab-syn {
+  order:2;
+  margin-bottom:.62rem;
+}
+html #royaLibrary#royaLibrary .ab-row .ab-time{
+  order:3;
+  margin-bottom:0;
 }
