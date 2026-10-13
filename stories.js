@@ -1,4 +1,4 @@
-/* Version 476 · last updated 2026-10-10 16:58 PDT*/
+/* Version 477 · last updated 2026-10-12 18:00 PDT*/
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1426,6 +1426,30 @@ const STORIES = [
     key: "Ears Under — the float he teaches every beginner: lie back, give the water your weight, and it gives it back. With your ears in the water you stop hearing the fire, and start hearing what has been talking all night",
     notes: [2, 3, 3],
     synopsis: "Lahaina sits on the dry side of Maui, between a green mountain and a blue sea. Long ago it was called Lele, and it was so full of running water that the whalers called it the Venice of the Pacific. Then the sugar planters turned the streams away to their fields. The streams stopped running. The king’s pond was filled in and a ballpark was built on top of it. When the sugar left, the old cane fields above the town filled up with tall dry grass, and nobody cut it. Kanoe cleans hotel rooms at a resort up the coast. She lives in her grandfather’s plantation house above Front Street with her mother, Tūtū, who has never in seventy-nine years gone into the sea past her knees, and her son Keola, eight, who backflips off the harbor wall every afternoon. Wes is a high-school swim coach from Ohio. He has come to Lahaina with his son Theo, nine, and with the ashes of his wife in a bag in his backpack, to give her to the sea where they were married. He has taught a thousand children to swim. He cannot teach his own son, who has been afraid of deep water since his mother got sick. It is the first week of August 2023. A hurricane is passing far to the south. The weather service has raised a red flag. The wind is coming. And in the gaps between the chapters, something older than the island has started to talk. It is very patient, and it is trying to be gentle, and it is speaking to someone."
+  },
+
+  {
+    num: 111,
+    title: "The Longest Night, the Earth Said",
+    words: "45,500 words",
+    hook: "A brickmaker, his daughter\u2019s book of Hafez, and the twelve seconds the ground took to answer",
+    door: "Ordeal",
+    room: "Under the Room He Built Her \u2014 the flat concrete roof he was proudest of, down on top of her in the dark, and a town above digging for its own with its hands",
+    key: "The F\u0101l \u2014 the book of Hafez opened at random on Yalda night to tell a stranger her fortune, and the line it gave her: lost Joseph comes back to Canaan, do not grieve",
+    notes: [2, 3, 3],
+    synopsis: "Bam is a green town at the edge of the hottest desert on Earth, kept alive for a thousand years by water carried under the sand in tunnels dug by hand. Above it, on a rock, stands the Arg: a whole city made of mud, the largest building of earth anywhere in the world. Ayoub makes the bricks. He treads the mud with his bare feet the way his father did, and lays it into the citadel\u2019s old walls where the years have worn them away. In the evenings he smokes a little opium, as men in his province do, and watches his daughter Narges read Hafez by lamplight. She is sixteen, she wants to translate the great poet into English, and last summer her father built her a modern room of her own, with a flat concrete roof. Clara has come from Germany to see the Arg. She repairs old buildings made of clay, and she has come alone, at Christmas, because her father has just died and asked her to go and see something. On the longest night of the year, Yalda, Narges invites her home and opens the book of Hafez to read the stranger her fortune. It tells her not to grieve. It is December 2003. Every day from now on will be longer \u2014 that is the whole point. On Christmas night, the ground clears its throat. And in the gaps between the chapters, something very old, which everyone in this book has walked on all their lives, has started to speak."
+  },
+
+  {
+    num: 112,
+    title: "Hold Her Under Until She Loves You",
+    words: "68,500 words",
+    hook: "A woman born without fear, and the forty frightened people who found the only leash she can wear",
+    door: "Dose",
+    room: "The Cave of the Dog \u2014 nine metres into a hill near Agnano where volcanic gas lies on the floor like an invisible lake, and the air above it, which is the whole of what she is given",
+    key: "One Breath \u2014 air heavy with carbon dioxide. The fear of not being able to breathe comes up another road, and that road is the one way into her that was never closed",
+    notes: [3, 3, 3],
+    synopsis: "Naples sits between two volcanoes, and the one under its western half is waking. Every month the ground beneath Pozzuoli rises a little higher, and every month three million people decide, once again, not to be afraid. Domenica Esposito has never had to decide. Left as a baby on the steps of a church in 1992 and taken before anyone could write her name down, she has no papers, no number and no face in any computer. She was born without fear \u2014 not with a little, or with less than most, but with none: the two small almond-shaped parts of the brain that tell the rest of us to be afraid have been stone since she was a child. A secret order raised her. The Held are forty respectable, frightened people \u2014 a notary, a banker, a priest, a pharmacist \u2014 who meet on Sunday mornings above a pharmacy by the sea, and who for three hundred and seventy years have found children like Domenica and kept them on the only leash such a child can wear. Every Sunday, in a cave where volcanic gas lies on the floor like an invisible lake, an old man named Ferrante holds her face down in the poison until her body screams, and then lifts her out into the air. She calls it love. On the other six days she goes wherever the Held send her and does whatever no one else can. Then a doctor gives her a single breath from a mask, and she recognises the feeling."
   }
 
 ];
@@ -1725,5 +1749,17 @@ const TRILOGIES = [
        does not exist. The same reasoning as From the Unsaid. */
     numbered: false,
     synopsis: "On the oldest maps the edge of the known world carried a warning. Where the mapmakers had been they drew coastlines and rivers and towns; where they had not, they wrote hic sunt leones \u2014 here are lions. On one small copper globe made around 1510 somebody wrote something stranger along the far coast of Asia: hic sunt dracones, here are dragons. These books keep the mapmaker\u2019s warning and change the creature.\n\nDelos is Greek for clear, visible, plain to see \u2014 and it is the second half of a word you already know. In 1956 a psychiatrist needed a name for a family of substances that change the mind and built one out of psyche, the mind, and delos, made visible. Psychedelic. Mind-manifesting. Not a poison and not an escape, he meant, but something that shows the mind to itself.\n\nAnd Delos is an island. The story says Hera forbade every land on earth to give Leto a place to give birth, and every land was afraid, and every land said no \u2014 but one place did not count as land. It had been drifting ever since it fell from the sky, fixed to nothing, too hard to see for anyone to find. Because it was not fixed to the earth the command could not reach it. It took her in, and there, in hiding, she gave birth to the god of light. Then four pillars rose out of the sea floor and held the island still, and the sailors gave it its name: the one that can be seen.\n\nHidden first. Then fixed, and seen. That is what every book here does. Each follows a single person and a single substance from somewhere in the world \u2014 a leaf, a seed, a root, a mushroom, a molecule \u2014 that moves through that person\u2019s life without a name, drifting, doing its work in the dark. When the story has earned it, it is named. It stops drifting.\n\nInside each book is a map of the world. It begins as scribble. Every book fixes one more place on it."
+  },
+
+  /* Three disasters, three elements, one voice underneath. The books are
+     not a sequence and do not refer to each other; what they share is a
+     shape: a real catastrophe, ordinary people inside it, and between the
+     chapters the thing it happened ON, speaking. numbered:false for that
+     reason \u2014 there is no running order to be 1 of 3 in. */
+  {
+    title: "The Old Mother Doesn\u2019t Apologize",
+    books: [102, 110, 111],
+    numbered: false,
+    synopsis: "Three disasters, three elements, and the same voice running under all of them. Each book takes something that really happened and stands close enough to watch ordinary people inside it: a fire declared out on New Year\u2019s morning that was still alive in the roots, in the hills above Los Angeles; a town on Maui burning while the people who got out of it stood in the sea for nine hours; an earthquake that took a thousand-year-old city of mud and more than thirty thousand people in about twelve seconds.\n\nAnd in the gaps between the chapters, the thing it happened on speaks. Fire, then water, then the earth itself \u2014 patient, unhurried, and talking to someone.\n\nThe title is the argument. We say the earth is angry, or cruel, or that it is punishing us, because something that kills on that scale ought to have meant it. It did not mean it. It has been doing this since long before there was anyone to be sorry to, and it will go on doing it, and it owes nobody an account of itself. What is left, once the apology is taken away, is the people: what they build, who they go back for, and what they say to each other in the dark."
   }
 ];

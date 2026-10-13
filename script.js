@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 16 · last updated 2026-10-12 17:44 PDT
+   Version 17 · last updated 2026-10-12 18:00 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2617,6 +2617,136 @@
                    narrated + " read aloud in ",
                    go("listening", "Listen"));
         note.append(add);
+      }
+
+      var tick = 0;
+      function schedule() {
+        if (tick) return;
+        tick = requestAnimationFrame(function () { tick = 0; apply(); });
+      }
+      apply();
+      new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
+    })();
+
+    /* ---- The Old Mother Doesn't Apologize: its own page ------------
+       Every series on the shelf gets a panel above its covers: a lede, a
+       device of its own, a caption, and a paragraph on what the books are
+       doing. The Library builds it from SERIES_SYN, which lives inside its
+       own IIFE in library/roya-library.js — a generated file, and one this
+       repository cannot even rebuild, because build-integration.py is not in
+       it. A series created here therefore has no entry there, seriesPanel()
+       returns an empty string for it, and the series page would show its
+       covers and nothing else.
+
+       So the panel is built here, in the same markup the generated one uses.
+       That means the whole of "#royaLibrary .sv ..." in the generated
+       stylesheet styles it — the box, the rule, the caption, the foot — and
+       nothing about how it looks is restated. When this series is next cut
+       from the sandbox with a SERIES_SYN entry of its own, the guard below
+       stands down on its own: a real .sv on the page makes this one stop.
+
+       THE DEVICE is a seismogram, and it is the one mark these three books
+       share: quiet, the P wave arriving, the S wave, the coda running down,
+       and the line back to flat. Generated from a damped trace rather than
+       copied from anywhere, so it belongs to this series and no other shelf
+       device resembles it. It is also the argument the title makes — the
+       line goes back to flat and offers nobody an explanation.
+
+       The count and the hours are read off STORIES and TRILOGIES as this
+       runs, the way every other figure on the page is, so neither can be the
+       kind of number that is right in the file and wrong on the screen. */
+    (function oldMotherPanel() {
+      var ROOT = document.getElementById("royaLibrary");
+      if (!ROOT) return;
+
+      var NAME   = "The Old Mother Doesn\u2019t Apologize";
+      var LEDE   = "Three disasters, three elements, and the same voice underneath all of them. A fire declared out on New Year\u2019s morning that was still alive in the roots, above Los Angeles; a town on Maui burning while the people who got out of it stood in the sea for nine hours; an earthquake that took a thousand-year-old city of mud, and more than thirty thousand people, in about twelve seconds:";
+      var CAP    = "twelve seconds on the paper, and then the line goes back to flat";
+      var BODY   = "Each book stands close enough to watch ordinary people inside something that really happened, and in the gaps between the chapters the thing it happened ON speaks \u2014 fire, then water, then the earth itself, patient and unhurried and talking to someone. The title is the argument. We say the earth is angry, or cruel, or that it is punishing us, because something that kills on that scale ought to have meant it. It did not mean it. It has been doing this since long before there was anyone to be sorry to, and it owes nobody an account of itself. What is left, once the apology is taken away, is the people: what they build, who they go back for, and what they say to each other in the dark.";
+      var DEVICE = "<svg viewBox=\"0 0 600 22\" preserveAspectRatio=\"none\" aria-hidden=\"true\" class=\"sv-svg\" style=\"height:22px\"><line x1=\"0\" y1=\"11\" x2=\"600\" y2=\"11\" stroke=\"var(--sv-faint)\" stroke-width=\"0.8\"/><path d=\"M0.0 10.95 L2.0 11.28 L4.0 11.27 L6.0 10.99 L8.0 10.88 L10.0 10.62 L12.0 10.93 L14.0 11.11 L16.0 11.27 L18.0 11.1 L20.0 10.76 L22.0 10.65 L24.0 10.9 L26.0 11.07 L28.0 11.29 L30.0 11.12 L32.0 10.97 L34.0 10.64 L36.0 10.81 L38.0 10.96 L40.0 11.19 L42.0 11.3 L44.0 10.95 L46.0 10.8 L48.0 10.65 L50.0 10.96 L52.0 11.13 L54.0 11.25 L56.0 11.0 L58.0 10.81 L60.0 10.75 L62.0 10.82 L64.0 11.24 L66.0 11.32 L68.0 11.24 L70.0 10.95 L72.0 10.76 L74.0 10.73 L76.0 11.19 L78.0 11.32 L80.0 11.24 L82.0 11.05 L84.0 10.72 L86.0 10.7 L88.0 11.06 L90.0 11.18 L92.0 11.19 L94.0 10.94 L96.0 10.78 L98.0 10.63 L100.0 10.82 L102.0 11.12 L104.0 11.2 L106.0 11.12 L108.0 10.84 L110.0 10.73 L112.0 10.94 L114.0 11.17 L116.0 11.25 L118.0 11.09 L120.0 10.88 L122.0 10.7 L124.0 10.72 L126.0 10.98 L128.0 11.27 L130.0 11.23 L132.0 11.04 L134.0 10.66 L136.0 10.72 L138.0 11.04 L140.0 11.31 L142.0 11.23 L144.0 11.0 L146.0 10.71 L148.0 10.66 L150.0 10.81 L152.0 11.22 L154.0 11.2 L156.0 11.19 L158.0 10.78 L160.0 10.76 L162.0 10.89 L164.0 11.17 L166.0 11.24 L168.0 11.19 L170.0 10.89 L172.0 10.79 L174.0 10.86 L176.0 11.1 L178.0 11.18 L180.0 11.27 L182.0 11.05 L184.0 10.8 L186.0 10.7 L188.0 10.97 L190.0 11.18 L192.0 11.28 L194.0 11.18 L196.0 10.93 L198.0 10.7 L200.0 10.75 L202.0 11.03 L204.0 11.28 L206.0 11.22 L208.0 10.95 L210.0 10.78 L212.0 11.26 L214.0 10.51 L216.0 10.95 L218.0 11.75 L220.0 9.68 L222.0 12.72 L224.0 10.41 L226.0 10.61 L228.0 12.64 L230.0 8.45 L232.0 13.24 L234.0 10.36 L236.0 10.33 L238.0 13.11 L240.0 8.38 L242.0 12.77 L244.0 10.61 L246.0 10.16 L248.0 12.34 L250.0 9.42 L252.0 11.92 L254.0 10.85 L256.0 10.7 L258.0 17.44 L260.0 13.7 L262.0 2.58 L264.0 16.68 L266.0 13.57 L268.0 3.17 L270.0 16.17 L272.0 12.93 L274.0 4.06 L276.0 15.68 L278.0 12.72 L280.0 4.95 L282.0 15.59 L284.0 12.46 L286.0 5.55 L288.0 14.92 L290.0 12.06 L292.0 5.89 L294.0 14.74 L296.0 12.17 L298.0 6.72 L300.0 14.47 L302.0 11.98 L304.0 6.75 L306.0 13.93 L308.0 11.71 L310.0 7.22 L312.0 13.86 L314.0 11.49 L316.0 7.84 L318.0 13.69 L320.0 11.45 L322.0 8.03 L324.0 13.29 L326.0 11.48 L328.0 8.35 L330.0 13.04 L332.0 11.28 L334.0 8.51 L336.0 13.06 L338.0 11.27 L340.0 8.99 L342.0 12.74 L344.0 11.09 L346.0 8.93 L348.0 12.91 L350.0 11.31 L352.0 9.04 L354.0 12.8 L356.0 11.06 L358.0 9.5 L360.0 12.29 L362.0 10.98 L364.0 9.38 L366.0 12.37 L368.0 10.81 L370.0 9.88 L372.0 12.41 L374.0 11.18 L376.0 9.75 L378.0 12.19 L380.0 10.79 L382.0 10.12 L384.0 12.29 L386.0 10.82 L388.0 9.94 L390.0 12.02 L392.0 11.03 L394.0 9.96 L396.0 12.16 L398.0 11.12 L400.0 10.0 L402.0 11.94 L404.0 10.96 L406.0 10.45 L408.0 11.71 L410.0 10.77 L412.0 10.41 L414.0 11.74 L416.0 11.0 L418.0 10.24 L420.0 11.94 L422.0 10.77 L424.0 10.5 L426.0 11.86 L428.0 10.72 L430.0 10.59 L432.0 11.1 L434.0 11.03 L436.0 10.65 L438.0 10.81 L440.0 11.08 L442.0 11.17 L444.0 11.31 L446.0 10.91 L448.0 10.74 L450.0 10.76 L452.0 11.03 L454.0 11.12 L456.0 11.28 L458.0 11.12 L460.0 10.91 L462.0 10.71 L464.0 10.83 L466.0 11.25 L468.0 11.33 L470.0 11.15 L472.0 10.86 L474.0 10.6 L476.0 10.85 L478.0 11.14 L480.0 11.29 L482.0 11.25 L484.0 10.97 L486.0 10.81 L488.0 10.85 L490.0 11.07 L492.0 11.27 L494.0 11.24 L496.0 10.98 L498.0 10.72 L500.0 10.68 L502.0 10.94 L504.0 11.1 L506.0 11.37 L508.0 11.04 L510.0 10.86 L512.0 10.75 L514.0 10.85 L516.0 11.03 L518.0 11.22 L520.0 11.24 L522.0 10.98 L524.0 10.81 L526.0 10.78 L528.0 11.04 L530.0 11.25 L532.0 11.2 L534.0 10.92 L536.0 10.75 L538.0 10.76 L540.0 11.04 L542.0 11.16 L544.0 11.35 L546.0 11.12 L548.0 10.88 L550.0 10.73 L552.0 10.78 L554.0 11.17 L556.0 11.28 L558.0 11.13 L560.0 10.85 L562.0 10.81 L564.0 10.81 L566.0 11.18 L568.0 11.23 L570.0 11.21 L572.0 11.03 L574.0 10.72 L576.0 10.83 L578.0 11.04 L580.0 11.23 L582.0 11.24 L584.0 11.09 L586.0 10.85 L588.0 10.81 L590.0 10.89 L592.0 11.09 L594.0 11.38 L596.0 11.04 L598.0 10.79 L600.0 10.72\" stroke=\"var(--sv-mark)\" stroke-width=\"1.3\" fill=\"none\" stroke-linejoin=\"round\" vector-effect=\"non-scaling-stroke\"/></svg>";
+
+      var BOOKS_IN = (function () {
+        var t = (typeof TRILOGIES !== "undefined" ? TRILOGIES : [])
+                  .filter(function (x) { return x.title === NAME; })[0];
+        return (t && t.books) || [];
+      })();
+
+      /* Which series the shelf is showing. The desktop bar prints
+         "<NAME> / <count>" and the phone's button prints "Series: <name>",
+         so the name is read off whichever of the two is on the page rather
+         than guessed from the rail's pressed state. */
+      function showing() {
+        var t = ROOT.querySelector(".main-bar .t");
+        if (t) return t.textContent.replace(/\s*\/\s*\d+\s*$/, "").trim();
+        var b = ROOT.querySelector(".pick-btn span");
+        if (b) return b.textContent.replace(/^\s*Series:\s*/, "").trim();
+        return "";
+      }
+
+      function tally() {
+        var mins = 0, n = 0;
+        STORIES.forEach(function (b) {
+          if (BOOKS_IN.indexOf(b.num) < 0) return;
+          n++;
+          mins += (parseInt(String(b.words).replace(/[^0-9]/g, ""), 10) || 0) / 200;
+        });
+        var h = Math.round(mins / 60 * 2) / 2;
+        return { n: n, h: h % 1 ? h.toFixed(1) : String(h) };
+      }
+
+      function apply() {
+        if (!BOOKS_IN.length) return;              /* the catalogue moved */
+        if (ROOT.querySelector(".sv")) return;     /* a generated one is up */
+        if (showing().toLowerCase() !== NAME.toLowerCase()) return;
+
+        /* The two places the generated markup puts its own panel: before the
+           desktop grid, before the phone's count line. */
+        var anchor = ROOT.querySelector(".grid")
+                  || ROOT.querySelector(".mob-count")
+                  || ROOT.querySelector(".mob-grid");
+        if (!anchor || !anchor.parentNode) return;
+
+        var c = tally();
+        var sec = document.createElement("section");
+        sec.className = "sv";
+        sec.setAttribute("aria-label", "About " + NAME);
+
+        var box = document.createElement("div");
+        box.className = "sv-box";
+
+        var p1 = document.createElement("p");
+        p1.className = "sv-p";
+        p1.textContent = LEDE;
+
+        var mark = document.createElement("div");
+        mark.className = "sv-mark";
+        var art = document.createElement("span");
+        art.className = "sv-art";
+        art.setAttribute("aria-hidden", "true");
+        art.innerHTML = DEVICE;        /* a fixed string in this file */
+        var cap = document.createElement("span");
+        cap.className = "sv-cap";
+        cap.textContent = CAP;
+        mark.append(art, cap);
+
+        var p2 = document.createElement("p");
+        p2.className = "sv-p";
+        p2.textContent = BODY;
+
+        box.append(p1, mark, p2);
+
+        var foot = document.createElement("p");
+        foot.className = "sv-foot";
+        var bb = document.createElement("b");
+        bb.textContent = c.n + (c.n === 1 ? " Story" : " Stories");
+        var ii = document.createElement("i");
+        ii.textContent = "\u00b7";
+        var sp = document.createElement("span");
+        sp.textContent = "\u2248 " + c.h + " Hours";
+        foot.append(bb, ii, sp);
+
+        sec.append(box, foot);
+        anchor.parentNode.insertBefore(sec, anchor);
       }
 
       var tick = 0;
