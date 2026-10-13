@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 17 · last updated 2026-10-12 21:51 PDT
+   Version 18 · last updated 2026-10-13 13:59 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10228,3 +10228,76 @@ html #royaLibrary#royaLibrary .mob-rights{
    evened out. It is a no-op on a single line, so every row that fits —
    all of them on a desktop — is untouched. */
 html #royaLibrary#royaLibrary .ab-head{ text-wrap:balance }
+
+/* ══ Pick a mood: the name explains itself ═══════════════════════
+   Noir, Transgressive and Plausible each carry a four-word line, and
+   nothing on the page says what the name is measuring or that every
+   book is graded on it. The name is now a hover term.
+
+   It reuses .hint — the device the Door, Room and Key terms higher up
+   already use — so everything about the panel itself comes from the
+   generated sheet and only the trigger and the scale line are set here.
+   .ab-gh-t is given position:relative because .hint is absolute with
+   left:0/right:0 and needs that block as its anchor; without it the
+   panel would stretch to the nearest positioned ancestor instead.
+
+   The underline is dotted at half the ochre rather than the solid one
+   the smaller terms use: at 2rem a full-strength dotted rule reads as
+   decoration under the heading instead of an affordance. */
+/* Anchored to the WORD, not to the header block. .hint is absolute with
+   left:0/right:0 and centres itself in its offset parent; against the
+   full-width .ab-gh-t that put the panel out to the right of "Noir",
+   over the first book's row. The generated sheet already solves this
+   for its own left-aligned case — ".keyed .hint{left:0; right:auto;
+   margin:0}" — so the same three properties are used here. */
+html #royaLibrary#royaLibrary .ab-dial-t .hint{
+  left:0; right:auto; margin:0;
+  /* width, not just max-width: with right:auto the panel shrinks to the
+     offset parent, and the parent is the word "Noir". max-content lets
+     it take the measure its own text needs, and the cap keeps it on the
+     screen at phone width. */
+  width:max-content; max-width:min(30rem, calc(100vw - 2.5rem));
+}
+
+html #royaLibrary#royaLibrary .ab-dial-t{
+  position:relative; display:inline-block; cursor:help;
+  border-bottom:1px dotted rgba(199,148,61,.5);
+  padding-bottom:.04em;
+  transition:border-color .16s, color .16s;
+}
+html #royaLibrary#royaLibrary .ab-dial-t:hover,
+html #royaLibrary#royaLibrary .ab-dial-t:focus-visible{
+  border-bottom-color:var(--ochre, #c7943d);
+}
+html #royaLibrary#royaLibrary .ab-dial-t:focus-visible{
+  outline:1px solid var(--ochre, #c7943d); outline-offset:4px;
+}
+/* The generated sheet names its triggers one by one — .ab-t, .keyed-l,
+   .dial-n — so this one has to be named too. */
+html #royaLibrary#royaLibrary .ab-dial-t:hover .hint,
+html #royaLibrary#royaLibrary .ab-dial-t:focus .hint,
+html #royaLibrary#royaLibrary .ab-dial-t:focus-visible .hint{
+  opacity:1; visibility:visible; transform:translateY(0);
+}
+
+/* The sentence, then the three readings the dial can take. */
+html #royaLibrary#royaLibrary .hint .hint-lead{
+  display:block; font-weight:400;
+}
+html #royaLibrary#royaLibrary .hint .hint-scale{
+  display:flex; flex-wrap:wrap; gap:.3rem 1.1rem;
+  margin-top:.6rem; padding-top:.55rem;
+  border-top:1px solid rgba(199,148,61,.26);
+}
+html #royaLibrary#royaLibrary .hint .hint-step{
+  display:flex; align-items:baseline; gap:.4rem; min-width:0;
+  font-family:var(--cond, Jost, Avenir, Arial, sans-serif);
+  font-size:.75rem; letter-spacing:.04em; line-height:1.35;
+  color:var(--dust, #9c9280);
+}
+html #royaLibrary#royaLibrary .hint .hint-step i{
+  flex:0 0 auto; font-style:normal; font-weight:600;
+  font-size:.625rem; letter-spacing:.1em;
+  color:var(--ochre, #c7943d);
+  font-variant-numeric:tabular-nums;
+}

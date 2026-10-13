@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 28 · last updated 2026-10-13 06:07 PDT
+   Version 29 · last updated 2026-10-13 13:59 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2466,7 +2466,7 @@
           "says which.";
         head.after(lede);
         var label = head.querySelector(".ab-mark b");
-        if (label) label.textContent = "Start here";
+        if (label) label.textContent = "Start a series";
 
         feats.forEach(function (f) { f.remove(); });
       }
@@ -2750,6 +2750,91 @@
 
         sec.append(box, foot);
         anchor.parentNode.insertBefore(sec, anchor);
+      }
+
+      var tick = 0;
+      function schedule() {
+        if (tick) return;
+        tick = requestAnimationFrame(function () { tick = 0; apply(); });
+      }
+      apply();
+      new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
+    })();
+
+    /* ---- Pick a mood: what the three names mean ---------------------
+       The groups are named Noir, Transgressive and Plausible, and under
+       each name sits a four-word line. A reader who has not met the
+       dials under a cover has no way to learn what the name is actually
+       measuring, or that the books are graded on it at all.
+
+       So the name becomes the page's own hover device. The Door, Room
+       and Key terms higher up the About page are already built this way
+       — a .hint under a term with a dotted underline and cursor:help,
+       revealed on hover and on focus, with tabindex so a tap on a phone
+       and a Tab on a keyboard both open it. This reuses that element
+       rather than inventing a second kind of tooltip, so it inherits the
+       whole of "#royaLibrary .hint ..." from the generated stylesheet
+       and nothing about how it looks is restated.
+
+       The text is NOT written here. It is read off GLOSSARY.notes in
+       stories.js — the same place the dials under every cover read it
+       from — so the explanation on the group and the explanation on the
+       dial can never drift apart. Each hint carries the scale's own
+       sentence and then its three readings in order, which is the part
+       the group header cannot show and the part that tells a reader
+       what a book's mark actually means. */
+    (function dialAbout() {
+      var ROOT = document.getElementById("royaLibrary");
+      if (!ROOT) return;
+
+      function scaleFor(name) {
+        var list = (GLOSS.notes || []);
+        for (var i = 0; i < list.length; i++) {
+          if (String(list[i].name || "").toLowerCase() === name.toLowerCase()) return list[i];
+        }
+        return null;
+      }
+
+      function apply() {
+        ROOT.querySelectorAll(".ab-gh .ab-gh-t h3").forEach(function (h3) {
+          if (h3.querySelector(".ab-dial-t")) return;          /* idempotent */
+          var name = h3.textContent.trim();
+          var sc = scaleFor(name);
+          if (!sc || !sc.about) return;
+
+          var term = document.createElement("span");
+          term.className = "ab-dial-t";
+          term.setAttribute("tabindex", "0");
+          term.textContent = name;
+
+          var hint = document.createElement("i");
+          hint.className = "hint";
+
+          var line = document.createElement("b");
+          line.className = "hint-lead";
+          line.textContent = sc.about;
+          hint.appendChild(line);
+
+          /* The three readings, in the order the dial fills them. */
+          var levels = sc.levels || [];
+          if (levels.length) {
+            var scale = document.createElement("span");
+            scale.className = "hint-scale";
+            levels.forEach(function (lv, i) {
+              var step = document.createElement("span");
+              step.className = "hint-step";
+              var n = document.createElement("i");
+              n.textContent = String(i + 1);
+              step.append(n, document.createTextNode(lv));
+              scale.appendChild(step);
+            });
+            hint.appendChild(scale);
+          }
+
+          term.appendChild(hint);
+          h3.textContent = "";
+          h3.appendChild(term);
+        });
       }
 
       var tick = 0;
