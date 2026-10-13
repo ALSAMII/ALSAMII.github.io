@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 27 · last updated 2026-10-12 21:33 PDT
+   Version 28 · last updated 2026-10-13 06:07 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2174,14 +2174,16 @@
           art: "assets/series-delgosha-row-1.webp",
           eyebrow: "Delgosh\u0101 means heart-opening",
           start: 75,
-          syn: "Manuchehr Delgosh\u0101 is the most famous underground comedian in "
-               + "the country, and nobody has seen his face. Forty basements a week, "
-               + "no byline, no fee. Then Roshanak Azimi turns up, and together they "
-               + "build the most widely read unsigned work in the language. The theme "
-               + "is authorship where a name is a liability \u2014 what a voice becomes "
-               + "when it can never be signed, and what that costs the man it belongs "
-               + "to. It asks whether work given away free and attributed to nobody "
-               + "is the larger achievement or the smaller life." },
+          syn: "Manu, Manuchehr Delgosh\u0101 to his mother, is the most widely "
+               + "read underground joke writer in Persian, and has never told "
+               + "one. His surname means heart-opening. It is also the title of "
+               + "Obeid Zakani\u2019s fourteenth-century book of anecdotes, its "
+               + "sharpest lines cut to rows of dots. He hasn\u2019t laughed in "
+               + "fifteen years when his brother says eleven of his words on a "
+               + "basement stage and is arrested. Across ten books the dots "
+               + "spread and his empire grows: a partner, a first laugh, a stage "
+               + "name famous worldwide, a machine everyone uses. On the last "
+               + "day, he\u2019s asked to speak as himself." },
         { key: "From the Unsaid",
           fa: "\u0646\u0627\u06af\u0641\u062a\u0647",
           art: "assets/series-unsaid-row-1.webp",
