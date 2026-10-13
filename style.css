@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 13 · last updated 2026-10-10 19:43 PDT
+   Version 14 · last updated 2026-10-12 17:44 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -9788,12 +9788,46 @@ html #royaLibrary .rs-body{
 html #royaLibrary .rs-col{ display:flex; flex-direction:column; min-width:0; width:100% }
 
 html #royaLibrary .rs-eyebrow{
-  margin:0 0 .5625rem; font-family:var(--cond); font-weight:600; font-size:.6875rem;
+  /* .5625rem became .4375rem: the device added a band under the name, so
+     the three lines above the paragraph close up to stay one group. */
+  margin:0 0 .4375rem; font-family:var(--cond); font-weight:600; font-size:.6875rem;
   letter-spacing:.16em; text-transform:uppercase; color:var(--t-num);
 }
 /* The name is a button for the same reason the CTA is: it opens the
-   series' own card. Styled as a heading, not as a control. */
-html #royaLibrary .rs-title{ margin:0 0 .8125rem }
+   series' own card. Styled as a heading, not as a control.
+   .8125rem became .5rem when the device came in under it: the drawing
+   belongs to the name and has to read as attached to it, not as a
+   divider floating between the name and the paragraph. */
+html #royaLibrary .rs-title{ margin:0 0 .5rem }
+
+/* ══ The series' own device ═══════════════════════════════════
+   The drawing itself is the Library's, markup and all, and so is nearly
+   all of its styling: every class inside it — sv-row, sv-dot, sv-gap,
+   sv-perf, sv-film, sv-svg — is set in library/roya-library.css at
+   "#royaLibrary .sv-row" and so on, which reaches this panel as readily
+   as it reaches the series page. Nothing of that is restated here, so a
+   change to how a device is drawn still arrives from one place.
+
+   The five colour tokens ARE restated, and only because of where the
+   generated sheet puts them: on "#royaLibrary .sv", the series-view
+   section. Nothing in this panel is inside one, so without these the
+   devices inherit nothing and draw in whatever a missing custom
+   property falls back to — which is nothing at all. The values are
+   copied from that rule verbatim, the light theme's override with them.
+
+   gap for the film strip, which is the one device that stacks. */
+html #royaLibrary .rs-dev{
+  --sv-mark:rgba(199,148,61,.6); --sv-hi:#e9d3a2;
+  --sv-soft:rgba(199,148,61,.45); --sv-faint:rgba(199,148,61,.32);
+  --sv-rule:rgba(199,148,61,.28);
+  margin:0 0 1.0625rem; width:100%; min-width:0;
+  display:flex; flex-direction:column; justify-content:center;
+}
+:root[data-lt="light-off"] html #royaLibrary .rs-dev{
+  --sv-mark:rgba(120,88,30,.72); --sv-hi:#7c5a1c;
+  --sv-soft:rgba(120,88,30,.5); --sv-faint:rgba(120,88,30,.34);
+  --sv-rule:rgba(96,76,42,.3);
+}
 /* A flex row on the baseline, which is how the old panels set the two
    names: the English runs on, the Persian sits to the right of it, and
    wrap lets the Persian drop to its own line on a narrow card rather
@@ -9917,6 +9951,10 @@ html #royaLibrary .rs-ded-in .ab-ded{ margin:0 }
   html #royaLibrary .rs-syn{ font-size:1.0625rem }
   html #royaLibrary .rs-meta{ font-size:.6875rem; letter-spacing:.18em }
   html #royaLibrary .rs-cta{ width:100%; justify-content:center }
+  /* The column is narrower here and the type is a size down with it, so
+     the device's band comes down in proportion rather than standing at
+     its desktop height over smaller words. */
+  html #royaLibrary .rs-dev{ margin-bottom:.875rem }
   html #royaLibrary .rs-ded{ height:14.75rem }
   html #royaLibrary .rs-ded-in{ padding:1.375rem }
 }
