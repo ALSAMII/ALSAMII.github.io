@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 18 · last updated 2026-10-13 13:59 PDT
+   Version 21 · last updated 2026-10-13 15:25 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10300,4 +10300,46 @@ html #royaLibrary#royaLibrary .hint .hint-step i{
   font-size:.625rem; letter-spacing:.1em;
   color:var(--ochre, #c7943d);
   font-variant-numeric:tabular-nums;
+}
+
+/* ══ No. 113 in the Transgressive row, on a phone ════════════════
+   The row this replaces was in the generated sheet's phone list, keyed
+   on its number, so renaming the row dropped it out and the plate went
+   back to `cover` — too big for the row, sitting under the paragraph.
+
+   Sized to match its siblings rather than to a number. What reads as
+   "big" on a phone is the painted subject, not the plate, and this
+   painting is unusually subject-heavy — the heart fills 88% of the
+   frame's height where 102 and 26 fill about half. So the same
+   background-size gives a much larger object:
+
+     row    subject of plate   phone size   subject in row
+     102          51%           auto 70%        35.7%
+      26          52%           auto 90%        46.8%
+      35          81%           auto 70%        56.4%
+     113          88%           auto 52%        45.8%
+
+   52% lands 113 at the mean of the three rows already sized, between
+   102 and 26. 60% put it at 53.0%, above every sibling — which is what
+   still read as too large on a phone after the first pass.
+
+   Luminance behind the paragraph, mean of the left 60% of the row,
+   lower is quieter behind the text:
+
+                      320    360    390    430
+     cover            32.3   27.9   26.1   23.7
+     auto 60% -2rem   24.6   21.6   22.0   22.5
+
+   background-repeat is the other half, and the part not to drop.
+   .ab-art never sets it, so it is `repeat` — which costs nothing while a
+   plate is `cover` and tiles the moment one is `auto N%`. The generated
+   sheet's own 26, 35 and 102 rows tile today; it does not show because
+   those paintings are black at every edge, so the copies are black on
+   black. Set here rather than on .ab-art, so nothing else moves. */
+@media (max-width: 760px){
+  html #royaLibrary#royaLibrary .mob-sec .ab-row[data-rec="113"] .ab-art{
+    background-size:auto 52%;
+    background-position:calc(100% - 2rem) 50%;
+    background-repeat:no-repeat;
+  }
 }

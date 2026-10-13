@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 29 · last updated 2026-10-13 13:59 PDT
+   Version 31 · last updated 2026-10-13 15:38 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2750,6 +2750,90 @@
 
         sec.append(box, foot);
         anchor.parentNode.insertBefore(sec, anchor);
+      }
+
+      var tick = 0;
+      function schedule() {
+        if (tick) return;
+        tick = requestAnimationFrame(function () { tick = 0; apply(); });
+      }
+      apply();
+      new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
+    })();
+
+    /* ---- Pick a mood: No. 113 takes the Transgressive slot ----------
+       PICKS, PICKGLOSS and PICKNOTE all live in library/roya-library.js —
+       generated, and not rebuildable here — so the row is converted on
+       the page instead of in the data. The 106 row inside the
+       Transgressive group is rewritten into a 113 row: the same element,
+       so every generated class, the hover scale and the delegated click
+       all keep working, and data-rec carries the new number so the card
+       that opens is the right book.
+
+       Scoped to the Transgressive group rather than to data-rec="106"
+       anywhere on the page, so a later cut that puts 106 in a second
+       group cannot have this fire on the wrong row. Naturally idempotent:
+       once converted the row is data-rec="113" and the selector no
+       longer matches it.
+
+       The reading time is read off STORIES rather than written here, so
+       it can only ever be this book's own figure. */
+    (function moodSwap() {
+      var ROOT = document.getElementById("royaLibrary");
+      if (!ROOT) return;
+
+      var FROM = "106", TO = 113, GROUP = "transgressive";
+      var ART  = "assets/start-113.webp";
+      var GLOSS_LINE = "she brought everyone back but the one she wanted";
+      var NOTE =
+        "Twenty-six years an anaesthetist, twenty thousand people under, every " +
+        "one brought back. Then her husband dies on the kitchen floor and his " +
+        "heart goes to a boy who wakes saying things only a dead man could " +
+        "know. There is a medicine in her cabinet that does more than sleep.";
+
+      function book(n) {
+        var list = (typeof STORIES !== "undefined" ? STORIES : []);
+        for (var i = 0; i < list.length; i++) if (list[i].num === n) return list[i];
+        return null;
+      }
+
+      function apply() {
+        var b = book(TO);
+        if (!b) return;                                   /* catalogue moved */
+
+        ROOT.querySelectorAll(".ab-group").forEach(function (g) {
+          var h3 = g.querySelector(".ab-gh h3");
+          if (!h3 || h3.textContent.trim().toLowerCase() !== GROUP) return;
+
+          var row = g.querySelector('.ab-row[data-rec="' + FROM + '"]');
+          if (!row) return;                                /* already swapped */
+
+          row.setAttribute("data-rec", String(TO));
+
+          var art = row.querySelector(".ab-art");
+          if (art) art.style.backgroundImage = "url('" + stamped(basePath() + ART) + "')";
+
+          var num = row.querySelector(".ab-head b");
+          if (num) num.textContent = String(TO);
+
+          var name = row.querySelector(".ab-name");
+          if (name) name.textContent = b.title;
+
+          /* The Persian line belongs to the book that was here. */
+          var fa = row.querySelector(".ab-fa");
+          if (fa) fa.remove();
+
+          var gl = row.querySelector(".ab-gl");
+          if (gl) gl.textContent = "· " + GLOSS_LINE;
+
+          /* b.rt is not on STORIES — the Library derives it. readingTime()
+             in this file is the same function, from the same words field. */
+          var time = row.querySelector(".ab-time");
+          if (time) time.textContent = readingTime(b.words).toUpperCase();
+
+          var syn = row.querySelector(".ab-syn");
+          if (syn) syn.textContent = NOTE;
+        });
       }
 
       var tick = 0;
