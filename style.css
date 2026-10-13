@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 14 · last updated 2026-10-12 17:44 PDT
+   Version 15 · last updated 2026-10-12 19:47 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -9655,6 +9655,58 @@ html #royaLibrary#royaLibrary .ab-terms{ margin-top: 2.9rem }
    picture is actually magnified. At rest the window is exactly as it
    was. */
 
+/* ── the whole figure fits the frame ──
+   The generated sheet sizes the picture against the viewport and the
+   caption against nothing:
+
+     .zoom-scroll { inset: 0 0 6.2rem }            the frame, clear of the shelf
+     .zoom-fig    { padding: 4rem 1.6rem 2.6rem; gap: .9rem }
+     .zoom.is-full .zoom-plate img { max-height: calc(100dvh - labh - 9rem) }
+
+   9rem of allowance against 6.2 + 4 + 2.6 + .9 = 13.7rem of chrome
+   before the caption has taken a single pixel. Measured at three
+   desktop sizes, the figure overflowed its frame by exactly 130px every
+   time and the title and line beneath it sat behind the shelf:
+
+     1440x900   figure 931 in a frame of 801   caption 834-890, strip from 806
+     1600x1000  figure 1031 in a frame of 901  caption 934-990, strip from 906
+     1920x1080  figure 1111 in a frame of 981  caption 1014-1070, strip from 986
+
+   Subtracting a bigger number would fix those three and break on the
+   first title that wraps to two lines, so the arithmetic is handed to
+   the layout instead: the figure is told to be exactly the frame, the
+   caption keeps its natural height whatever it is, and the picture is
+   the one part allowed to shrink into what is left. A title of any
+   length therefore pushes the picture down rather than itself off.
+
+   min-height:0 is what lets it shrink at all — a flex item will not go
+   below its content size without it, which is the whole bug in one
+   property. The 9rem floor is the point past which shrinking stops and
+   the frame scrolls, so a very short window still shows a picture.
+
+   Desktop only. The phone overlay has its own padding and its own
+   max-height:none, measured clean (scrollTopMax 0, caption above the
+   shelf), so it is left exactly as it is. */
+@media (min-width: 760px) {
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-scroll{
+    /* a flex child that is allowed to be shorter than its content */
+    align-items:stretch;
+  }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-fig{
+    height:100%; box-sizing:border-box; margin:0 auto;
+    justify-content:center; min-height:0;
+  }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-plate{
+    flex:0 1 auto; min-height:9rem; display:flex; width:100%;
+  }
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-plate img{
+    max-height:100%; height:auto; width:auto; max-width:100%;
+    object-fit:contain; margin:auto;
+  }
+  /* The caption is the fixed part now, so it must not be squeezed. */
+  html #royaLibrary#royaLibrary .zoom.is-full .zoom-cap{ flex:0 0 auto }
+}
+
 /* ── the shelf column keeps its place ──
    The covers are loading="lazy", so without a declared ratio every
    thumbnail is a zero-height box until its bytes arrive: the column has
@@ -10015,4 +10067,93 @@ html #royaLibrary .ab-go-sep{
   font-style:normal;
   margin:0 .3em 0 .36em;
   color:var(--ochre-muted);
+}
+
+/* ══ The series plates, full screen ══════════════════════════════
+   A Start here row shows its painting cropped to a 3:2 band a few
+   hundred pixels wide out of a file 1620 across, so each plate carries
+   a control that puts the whole picture on the screen.
+
+   The control is set as the cover window's own buttons are set — the
+   same square, the same hairline, the same ink — because it does the
+   same kind of work. Top left is the one corner of a plate that holds
+   nothing: the title, the eyebrow and the device all sit to the right
+   of it on a desktop and below it on a phone.
+
+   It is quiet until it is wanted: a third of the way to visible at
+   rest, full on hover or focus. On a touch screen there is no hover to
+   wait for, so it is drawn at full strength there — see the
+   hover:none block at the foot. */
+html #royaLibrary#royaLibrary .rs-max{
+  position:absolute; z-index:2; top:.5rem; left:.5rem;
+  width:1.9rem; height:1.9rem; display:grid; place-items:center;
+  padding:0; cursor:pointer;
+  color:var(--bone, #e9dfc9);
+  background:rgba(5,4,3,.58);
+  border:1px solid rgba(233,223,201,.4);
+  border-radius:2px;
+  opacity:.34; transition:opacity .16s ease, color .16s ease, border-color .16s ease;
+}
+html #royaLibrary#royaLibrary .rs-max svg{ width:.85rem; height:.85rem; display:block }
+html #royaLibrary#royaLibrary .rs-plate:hover .rs-max,
+html #royaLibrary#royaLibrary .rs-max:hover,
+html #royaLibrary#royaLibrary .rs-max:focus-visible{ opacity:1 }
+html #royaLibrary#royaLibrary .rs-max:hover,
+html #royaLibrary#royaLibrary .rs-max:focus-visible{
+  color:var(--ochre, #c7943d); border-color:var(--ochre, #c7943d);
+  background:rgba(5,4,3,.82);
+}
+html #royaLibrary#royaLibrary .rs-max:focus-visible{ outline:1px solid var(--ochre, #c7943d); outline-offset:2px }
+
+/* ── the screen it opens ──
+   Appended to <body>, not to the section, so nothing the Library sets on
+   its own containers — a transform, an overflow, a stacking context —
+   can clip it or sit over it. 90 clears the generated sheet's ceiling of
+   71 with room to spare.
+
+   object-fit:contain is what makes this a picture and not a crop: the
+   whole plate, at its own 3:2, inside whatever shape the window is. */
+.rs-full{
+  position:fixed; inset:0; z-index:90;
+  display:grid; place-items:center;
+  /* minmax(0,1fr), not the auto track a bare place-items grid gives:
+     against an auto row the picture's own max-height:100% is a cyclic
+     percentage, so the browser drops it, the row grows to the picture's
+     natural height and the picture overruns the window. Measured in a
+     1600x1000 window: a content box of 920 holding a picture 1013 tall.
+     A definite track is what max-height:100% can resolve against. */
+  grid-template-rows:minmax(0, 1fr); grid-template-columns:minmax(0, 1fr);
+  padding:clamp(.75rem, 3vw, 2.5rem);
+  background:rgba(3,2,2,.97);
+  overscroll-behavior:contain;
+  animation:rs-full-in .16s ease-out;
+}
+@keyframes rs-full-in{ from{ opacity:0 } to{ opacity:1 } }
+@media (prefers-reduced-motion: reduce){ .rs-full{ animation:none } }
+
+.rs-full-img{
+  display:block; max-width:100%; max-height:100%;
+  width:auto; height:auto; object-fit:contain;
+  box-shadow:0 26px 70px rgba(0,0,0,.9);
+}
+
+.rs-full-x{
+  position:absolute; top:clamp(.6rem, 2vw, 1.1rem); right:clamp(.6rem, 2vw, 1.1rem);
+  width:2.4rem; height:2.4rem; display:grid; place-items:center;
+  padding:0; cursor:pointer;
+  color:#e9dfc9;
+  background:rgba(5,4,3,.72);
+  border:1px solid rgba(233,223,201,.4);
+  border-radius:2px;
+}
+.rs-full-x svg{ width:1rem; height:1rem; display:block }
+.rs-full-x:hover{ color:#c7943d; border-color:#c7943d; background:rgba(5,4,3,.9) }
+.rs-full-x:focus-visible{ outline:1px solid #c7943d; outline-offset:2px }
+
+/* The page behind must not scroll under the picture. */
+html.rs-full-open, html.rs-full-open body{ overflow:hidden }
+
+/* No hover to reveal it on a touch screen, so it is simply there. */
+@media (hover: none){
+  html #royaLibrary#royaLibrary .rs-max{ opacity:.82 }
 }

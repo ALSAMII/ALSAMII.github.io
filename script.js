@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 17 · last updated 2026-10-12 18:00 PDT
+   Version 18 · last updated 2026-10-12 19:47 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2755,6 +2755,149 @@
         tick = requestAnimationFrame(function () { tick = 0; apply(); });
       }
       apply();
+      new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
+    })();
+
+    /* ---- The series plates, full screen -----------------------------
+       Every Start here row opens with a painting, and the row shows it
+       cropped to a 3:2 band a few hundred pixels wide — 565 on a desktop,
+       363 on a phone — out of a file that is 1620 across. There was no way
+       to see the rest of it.
+
+       So each plate gets a control in its top left corner, and pressing it
+       puts the picture on the whole screen at its own ratio, with nothing
+       else on it. Three ways back out, because a picture that fills the
+       screen must not feel like a trap: the mark in the corner, Escape, and
+       a press anywhere off the picture.
+
+       The control sits INSIDE .rs-plate, which the stylesheet already makes
+       position:relative with overflow:hidden, so it is clipped to the plate
+       and needs no stacking context of its own.
+
+       The Library's own keydown handler is bound on document and, with no
+       card of its own open, answers ArrowLeft and ArrowRight by stepping the
+       shelf behind this. So this listener is bound in the CAPTURE phase and
+       stops the event while the picture is up: the arrows and Escape belong
+       to whatever is in front, and nothing moves behind it. */
+    (function plateFull() {
+      var ROOT = document.getElementById("royaLibrary");
+      if (!ROOT) return;
+
+      var MAX_ICON =
+        '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+        '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" ' +
+        'stroke="currentColor" stroke-width="1.7" stroke-linecap="square"/></svg>';
+      var X_ICON =
+        '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+        '<path d="M5 5l14 14M19 5L5 19" stroke="currentColor" ' +
+        'stroke-width="1.7" stroke-linecap="square"/></svg>';
+
+      var opener = null;   /* the button pressed, to give focus back to */
+
+      /* ── the control on each plate ──────────────────────────────── */
+
+      function mark() {
+        ROOT.querySelectorAll(".rs-plate").forEach(function (plate) {
+          if (plate.querySelector(".rs-max")) return;        /* idempotent */
+          var img = plate.querySelector("img");
+          if (!img) return;
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "rs-max";
+          b.setAttribute("data-rsmax", "1");
+          /* The alt on these images is the series name. */
+          b.setAttribute("aria-label", "View the " + (img.alt || "series") +
+                                       " picture full screen");
+          b.innerHTML = MAX_ICON;
+          plate.appendChild(b);
+        });
+      }
+
+      /* ── the picture, full screen ───────────────────────────────── */
+
+      function shut() {
+        var o = document.querySelector(".rs-full");
+        if (!o) return;
+        o.remove();
+        document.documentElement.classList.remove("rs-full-open");
+        if (opener && document.contains(opener)) opener.focus();
+        opener = null;
+      }
+
+      function show(img, btn) {
+        shut();
+        opener = btn || null;
+
+        var o = document.createElement("div");
+        o.className = "rs-full";
+        o.setAttribute("role", "dialog");
+        o.setAttribute("aria-modal", "true");
+        o.setAttribute("aria-label", (img.alt || "Series") + " — full screen");
+
+        var big = document.createElement("img");
+        /* currentSrc carries the stamp the row already resolved, so this
+           cannot fetch a second, unstamped copy of the same file. */
+        big.src = img.currentSrc || img.src;
+        big.alt = img.alt || "";
+        big.className = "rs-full-img";
+
+        var x = document.createElement("button");
+        x.type = "button";
+        x.className = "rs-full-x";
+        x.setAttribute("aria-label", "Close full screen");
+        x.innerHTML = X_ICON;
+
+        o.append(big, x);
+        document.body.appendChild(o);
+        document.documentElement.classList.add("rs-full-open");
+        x.focus();
+      }
+
+      /* ── wiring, bound once ─────────────────────────────────────── */
+
+      if (!ROOT.dataset.rsmaxWired) {
+        ROOT.dataset.rsmaxWired = "1";
+
+        ROOT.addEventListener("click", function (e) {
+          var b = e.target.closest("[data-rsmax]");
+          if (!b || !ROOT.contains(b)) return;
+          var img = b.parentNode && b.parentNode.querySelector("img");
+          if (!img) return;
+          /* Nothing else on the row should hear this press. */
+          e.preventDefault();
+          e.stopPropagation();
+          show(img, b);
+        });
+      }
+
+      if (!document.documentElement.dataset.rsfullWired) {
+        document.documentElement.dataset.rsfullWired = "1";
+
+        /* The picture itself keeps the press; anything else closes. */
+        document.addEventListener("click", function (e) {
+          var o = document.querySelector(".rs-full");
+          if (!o) return;
+          if (e.target.closest(".rs-full-x")) { shut(); return; }
+          if (!o.contains(e.target)) return;
+          if (e.target.closest(".rs-full-img")) return;
+          shut();
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (!document.querySelector(".rs-full")) return;
+          if (e.key === "Escape") { e.stopPropagation(); shut(); return; }
+          /* Left and Right would step the shelf underneath. */
+          if (e.key === "ArrowLeft" || e.key === "ArrowRight" ||
+              e.key === "ArrowUp" || e.key === "ArrowDown") e.stopPropagation();
+        }, true);
+      }
+
+      var tick = 0;
+      function schedule() {
+        if (tick) return;
+        tick = requestAnimationFrame(function () { tick = 0; mark(); });
+      }
+      mark();
       new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
     })();
 
