@@ -1,4 +1,4 @@
-/* Version 477 · last updated 2026-10-12 18:00 PDT*/
+/* Version 478 · last updated 2026-10-12 22:02 PDT*/
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1450,8 +1450,26 @@ const STORIES = [
     key: "One Breath \u2014 air heavy with carbon dioxide. The fear of not being able to breathe comes up another road, and that road is the one way into her that was never closed",
     notes: [3, 3, 3],
     synopsis: "Naples sits between two volcanoes, and the one under its western half is waking. Every month the ground beneath Pozzuoli rises a little higher, and every month three million people decide, once again, not to be afraid. Domenica Esposito has never had to decide. Left as a baby on the steps of a church in 1992 and taken before anyone could write her name down, she has no papers, no number and no face in any computer. She was born without fear \u2014 not with a little, or with less than most, but with none: the two small almond-shaped parts of the brain that tell the rest of us to be afraid have been stone since she was a child. A secret order raised her. The Held are forty respectable, frightened people \u2014 a notary, a banker, a priest, a pharmacist \u2014 who meet on Sunday mornings above a pharmacy by the sea, and who for three hundred and seventy years have found children like Domenica and kept them on the only leash such a child can wear. Every Sunday, in a cave where volcanic gas lies on the floor like an invisible lake, an old man named Ferrante holds her face down in the poison until her body screams, and then lifts her out into the air. She calls it love. On the other six days she goes wherever the Held send her and does whatever no one else can. Then a doctor gives her a single breath from a mask, and she recognises the feeling."
-  }
+  },
 
+  /* Here Be Delos, the fourth. One person, one real substance: a
+     paediatric anaesthetist and the medicine in her own cabinet. The
+     book names its own door on the WHAT IT DID page — "Door: leaving
+     the body" — and the chapter that fixes the next place on the
+     series map is called THE MAPMAKER, for Edward Domino, who sat in
+     a prison in Michigan in 1964 and watched a volunteer go somewhere
+     nobody had been. */
+  {
+    num: 113,
+    title: "Count Me Down to the Quiet",
+    words: "27,000 words",
+    hook: "A woman who has sent twenty thousand people under, and the first night she goes down herself",
+    door: "Dose",
+    room: "The Waiting Room — a vast grey room where everyone who has ever died is waiting, together, patient, just past the edge she has spent twenty-six years sending children to",
+    key: "The medicine in her own cabinet — built in a laboratory in the early 1960s to put people to sleep safely, and kind enough to the breath to be given to children and to soldiers bleeding in helicopters. At a larger dose it does the other thing, and the men who first watched it had to invent a word for where it sent people",
+    notes: [2, 2, 3],
+    synopsis: "Nora Vance has put twenty thousand people to sleep and brought every one of them back. Twenty-six years a paediatric anaesthetist at a children\u2019s hospital in Los Angeles — the one the surgeons ask for by name, the one with the steady hands and the cap printed with little moons — she sends frightened children down into the dark and calls them home by their own names, and tells them afterwards the same thing she has always told them: you were asleep, sweetheart, you were just asleep. She has never once asked whether that is true. Then her husband dies on the kitchen floor on a hot night in August, and his heart is given to a boy she will never be allowed to meet. Fourteen months later a soft-spoken twelve-year-old comes in for a routine check on a transplanted heart, goes under for twenty minutes, and wakes saying things only a dead man could know. There is a medicine in her cabinet that does more than sleep, and the people who have taken it come back describing the same grey room. She knows exactly how to send a soul under. What it costs to come back is the part she never had to learn."
+  }
 ];
 
 
@@ -1742,7 +1760,7 @@ const TRILOGIES = [
        book. */
     title: "Here Be Delos",
     label: "",
-    books: [100, 107, 109],
+    books: [100, 107, 109, 113],
     /* No numbering. Each book is a different person and a different
        substance in a different part of the world; there is no reading
        order and a "1 of 1" on the row would promise a sequence that
