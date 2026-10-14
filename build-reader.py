@@ -110,6 +110,33 @@ def line_html(line):
     return "".join(out).strip()
 
 
+# Ends where the measure ran out rather than where the sentence did.
+# `full` cannot see this on a CENTRED line: a centred line never reaches
+# the right edge, so a part title or a centred italic caption that wraps
+# looks, to that test, exactly like a line that chose to stop. No. 114
+# is the book that showed it — "II. THE ONE THING YOU CAN’T" and
+# "PRACTICE" arrived as two headings, and the italic line under its
+# synopsis arrived as two lines of verse.
+UNFINISHED = re.compile(r"[.!?\u2026][\"\u201d\u2019')\]]*\s*$")
+
+
+def ends_mid_sentence(html):
+    t = re.sub("<[^>]+>", "", html).strip()
+    return bool(t) and not UNFINISHED.search(t)
+
+
+def same_case(a, b):
+    """Two heading lines that are one wrapped title are set alike. A
+       section heading and the subtitle beneath it are not: No. 113 sets
+       FROM THE CEILING over The Men with Their Eyes Open, and joining
+       those would be wrong. Caps-vs-caps or neither, measured on the
+       letters only."""
+    def caps(h):
+        t = re.sub("[^A-Za-z\u00c0-\u024f]", "", re.sub("<[^>]+>", "", h))
+        return bool(t) and t == t.upper()
+    return caps(a) == caps(b)
+
+
 def is_verse_head(text):
     return bool(re.match(r"^\s*VERSE\b", text.strip(), re.I))
 
@@ -461,8 +488,11 @@ def join_heads(blocks):
         run, k = blocks[i:j], i
         while k < j:
             line = [blocks[k]]
-            while (k + 1 < j and blocks[k].get("full")
-                   and blocks[k + 1].get("near")):
+            while (k + 1 < j and blocks[k + 1].get("near")
+                   and (blocks[k].get("full")
+                        or (ends_mid_sentence(blocks[k]["h"])
+                            and same_case(blocks[k]["h"],
+                                          blocks[k + 1]["h"])))):
                 k += 1
                 line.append(blocks[k])
             out.append({"t": "h", "h": " ".join(b["h"] for b in line)}

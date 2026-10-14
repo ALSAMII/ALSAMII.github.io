@@ -1,4 +1,4 @@
-/* Version 479 · last updated 2026-10-14 05:26 PDT*/
+/* Version 480 · last updated 2026-10-14 06:53 PDT*/
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1475,6 +1475,17 @@ const STORIES = [
     synopsis: "Nora Vance has put twenty thousand people to sleep and brought every one of them back. Twenty-six years a paediatric anaesthetist at a children\u2019s hospital in Los Angeles — the one the surgeons ask for by name, the one with the steady hands and the cap printed with little moons — she sends frightened children down into the dark and calls them home by their own names, and tells them afterwards the same thing she has always told them: you were asleep, sweetheart, you were just asleep. She has never once asked whether that is true. Then her husband dies on the kitchen floor on a hot night in August, and his heart is given to a boy she will never be allowed to meet. Fourteen months later a soft-spoken twelve-year-old comes in for a routine check on a transplanted heart, goes under for twenty minutes, and wakes saying things only a dead man could know. There is a medicine in her cabinet that does more than sleep, and the people who have taken it come back describing the same grey room. She knows exactly how to send a soul under. What it costs to come back is the part she never had to learn.",
     audio: "https://f005.backblazeb2.com/file/roya-audio/113.mp3",
     runtime: 177
+  },
+  {
+    num: 114,
+    title: "I Told Him It Was Only the Water",
+    words: "24,300 words",
+    hook: "She spent her whole life teaching frightened children the one thing she could never do herself",
+    door: "Dose",
+    room: "The Waiting One \u2014 a place out past the last of the lights where there is nothing to cast a shadow, and a standing shadow waits in it and turns its head when she comes, as though it has been waiting a very long time and knows her name",
+    key: "The Sonoran Desert toad \u2014 ten million years buried alive under the desert, up only with the summer rain; what its glands make opens a door for fifteen minutes, and does not give all of her back, and she does not get to choose which part it keeps",
+    notes: [2, 2, 3],
+    synopsis: "Tucson, Arizona. For thirty-six years Marian has taught the neighbourhood\u2019s children at the piano, and taught every frightened one of them the same thing: that there is nothing a person cannot learn to do, if they will go slowly enough, and do it again. She is sixty-four when the doctor gives her until the rains, and driving home in the gold October light she finds she is not afraid of being dead. She is afraid of the instant \u2014 the single letting-go that is the one performance nobody is ever allowed to rehearse. So she decides to rehearse it. Out past the edge of town there is a dry old man who keeps watch over the gravest creature in the desert, and a door that opens for fifteen minutes, in the rain, and closes again."
   }
 ];
 
@@ -1766,7 +1777,7 @@ const TRILOGIES = [
        book. */
     title: "Here Be Delos",
     label: "",
-    books: [100, 107, 109, 113],
+    books: [100, 107, 109, 113, 114],
     /* No numbering. Each book is a different person and a different
        substance in a different part of the world; there is no reading
        order and a "1 of 1" on the row would promise a sequence that
