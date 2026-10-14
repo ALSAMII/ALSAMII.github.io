@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 31 · last updated 2026-10-13 15:38 PDT
+   Version 32 · last updated 2026-10-14 06:07 PDT
       (first stamp on this file — it has never carried one)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2784,6 +2784,7 @@
 
       var FROM = "106", TO = 113, GROUP = "transgressive";
       var ART  = "assets/start-113.webp";
+      var LISTEN_SVG = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3.1 13.2a8.9 8.9 0 0 1 17.8 0"/><path d="M5.6 13.2a6.4 6.4 0 0 1 12.8 0"/><path d="M6.2 14.2H4.6a2.2 2.2 0 0 0-2.2 2.2v1.9a2.2 2.2 0 0 0 2.2 2.2h1.6"/><rect x="6.2" y="13.3" width="3" height="7.5" rx="1.5"/><path d="M17.8 14.2h1.6a2.2 2.2 0 0 1 2.2 2.2v1.9a2.2 2.2 0 0 1-2.2 2.2h-1.6"/><rect x="14.8" y="13.3" width="3" height="7.5" rx="1.5"/></svg>';
       var GLOSS_LINE = "she brought everyone back but the one she wanted";
       var NOTE =
         "Twenty-six years an anaesthetist, twenty thousand people under, every " +
@@ -2828,8 +2829,37 @@
 
           /* b.rt is not on STORIES — the Library derives it. readingTime()
              in this file is the same function, from the same words field. */
+          /* .ab-time carries the Listen control as well as the reading time,
+             and the generated sheet builds both together:
+
+               <span class="ab-time">RT<i class="ab-lsn-rule"></i>
+                 <i class="ab-lsn" data-listen="N">…svg…<b>Listen</b></i></span>
+
+             Setting textContent here wiped it, so No. 113 was the one row in
+             the section with a narration and no way to reach it. The row this
+             replaces had no audio of its own, so there was nothing to keep —
+             it has to be built. data-listen is picked up by the Library's own
+             delegated handler, so nothing else needs to change. */
           var time = row.querySelector(".ab-time");
-          if (time) time.textContent = readingTime(b.words).toUpperCase();
+          if (time) {
+            var rt = readingTime(b.words).toUpperCase();
+            if (b.audio) {
+              time.textContent = "";
+              time.appendChild(document.createTextNode(rt));
+              var rule = document.createElement("i");
+              rule.className = "ab-lsn-rule";
+              rule.setAttribute("aria-hidden", "true");
+              time.appendChild(rule);
+              var pill = document.createElement("i");
+              pill.className = "ab-lsn";
+              pill.setAttribute("data-listen", String(TO));
+              pill.setAttribute("aria-label", "Listen to " + b.title);
+              pill.innerHTML = LISTEN_SVG + "<b>Listen</b>";
+              time.appendChild(pill);
+            } else {
+              time.textContent = rt;
+            }
+          }
 
           var syn = row.querySelector(".ab-syn");
           if (syn) syn.textContent = NOTE;
