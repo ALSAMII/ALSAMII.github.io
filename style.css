@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 25 · last updated 2026-10-13 20:13 PDT
+   Version 26 · last updated 2026-10-13 21:51 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10331,27 +10331,32 @@ html #royaLibrary#royaLibrary .hint .hint-step i{
    the paragraph at 320, against a house range of mean 1.4-11.7 and p90
    3.0-28.3 across the other eight rows.
 
-   So: sized WIDER than the box, not narrower. At 150% the plate
+   So: sized WIDER than the box, not narrower. At 110% the plate
    overflows the box horizontally, so its left and right edges are
    cropped away exactly as `cover` crops them, and only the top and
-   bottom are on screen — where the re-rendered plate now has 31% of
-   frame above the heart and 20% below, enough for a 205px / 135px
-   smoothstep that dissolves them into the page.
+   bottom are on screen — where this plate carries 29% of frame above
+   its subject and 24% below, already faded to the frame when it
+   arrived.
 
    Measured, against the eight other rows:
 
-               heart as % of row        ground under the paragraph
-              320  360  390  430        mean         p90
-     this      31%  38%  45%  49%     6.2-9.2     12.3-20.3
-     house      -    -    -    -      1.4-11.7     3.0-28.3
+                     ground under the paragraph
+                 320        390        430
+     this     4.4/8.3    6.7/17.0   7.7/20.0     (mean / p90)
+     house    1.4-11.7 mean, 3.0-28.3 p90, across all eight
 
-   The +1rem push is for the lit doorway, not the framing: without it
-   the brightest pixel behind the paragraph runs 149 to 199 at 390 and
-   up, with it 53 to 67. It costs about 12px of the heart's soft right
-   edge at 320, which is the same crop row 40's crowd takes. */
+   It sits mid-pack, quieter than 102, 26 and 6, and its brightest
+   pixel behind the type (45 / 80 / 89) is lower than rows 7, 26, 35
+   and 102, which run 152 to 165.
+
+   110% rather than the 150% the previous plate wanted: this painting's
+   lit area is wide and reaches further left, so the same size put mean
+   18.2 and p90 47.3 behind the paragraph at 390 — outside the house
+   range on every width. The +1rem push is kept; it costs nothing here
+   because the subject ends at 90% of the frame. */
 @media (max-width: 760px){
   html #royaLibrary#royaLibrary .mob-sec .ab-row[data-rec="113"] .ab-art{
-    background-size:150% auto;
+    background-size:110% auto;
     background-position:calc(100% + 1rem) 50%;
     background-repeat:no-repeat;
   }
