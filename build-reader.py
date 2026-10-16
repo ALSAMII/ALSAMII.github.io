@@ -568,7 +568,16 @@ def book_titles(path="stories.js"):
     except OSError:
         return {}
     out = {}
-    for m in re.finditer(r"num:\s*(\d+)\s*,.*?title:\s*\"((?:[^\"\\\\]|\\\\.)*)\"",
+    # The quoted-string part is [^"\\] | \\. — any character that is not a
+    # quote or a backslash, or an escape pair. It was written with FOUR
+    # backslashes, which asks for two literal ones, so a title containing
+    # a single \uXXXX escape did not match. The regex then did not fail:
+    # .*? simply walked on to the NEXT title: in the file, so that book
+    # took the following book's name and the following book got none at
+    # all. Nothing reports it — the wrong name is simply spoken at the
+    # head of the recording. Checked across all 116 books: this spelling
+    # and the old one return identical titles for every one of them.
+    for m in re.finditer(r"num:\s*(\d+)\s*,.*?title:\s*\"((?:[^\"\\]|\\.)*)\"",
                          src, re.S):
         n = int(m.group(1))
         if n not in out:
