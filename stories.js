@@ -695,13 +695,13 @@ const STORIES = [
   {
     num: 50,
     title: "The Glow",
-    words: "40,100 words",
+    words: "30,500 words",
     hook: "No partner required. No wanting left",
     door: "Dose",
-    room: "The Loop \u2014 continuous ecstasy, and no one on the other side of it",
-    key: "The Glow \u2014 a self-replicating implant grown from thirty generations of prayer",
+    room: "Nineteen Minutes \u2014 one procedure, a fine tube, no ceremony and no theatre; what comes out is the capacity to lack, which had been doing two jobs, and the paperwork only ever mentioned one",
+    key: "The Glow \u2014 cultured from a study of women who had spent forty years learning to hold a pleasure rather than spend it, and shipped without the last instruction the old manuals left out on purpose",
     notes: [3, 2, 1],
-    synopsis: "The Glow was a practice before it was a product: thirty generations of women who learned to hold sensation rather than spend it, and one laboratory that cloned the result and shipped it without the last instruction. Under it a woman’s climax stops being an event and becomes a climate — continuous, self-supplying, requiring nobody. Within a generation there is no campaign against men and no need for one. They are not driven out or hunted down. They are simply not wanted, not chosen, not conceived, and the last of them grow old in a world that has stopped noticing the difference."
+    synopsis: "Shirin Nouri brings people into the world for a living. Mehrdād Āstāneh builds entrances — the eleven seconds in which a person stops being outside a building and starts being inside one. They have a lake, a hut and a boat that leaks, and they have never once fixed it. Then something arrives that nobody votes for. It began as a study of women who had spent forty years learning to hold a pleasure instead of spending it; copied, cultured and delivered in nineteen minutes through a fine tube, it becomes a settlement in the flesh — a continuous, costless ecstasy needing no partner, no occasion and no permission, and it does not end. It is offered first to the women for whom nothing has worked, and it works. Then to everyone, then subsidised, then expected, then administered in sleep. Shirin takes it at forty-seven with Mehrdād in the room, and he watches the woman he has loved for nineteen years become completely, permanently and genuinely well. Nobody is persecuted, nobody is lied to, and the instruments are not wrong. The old manuals mapped all of this eight hundred years before anyone could open a body and look, wrote the method down, and left out the last instruction on purpose."
   },
 
   {
