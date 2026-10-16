@@ -2824,8 +2824,12 @@
           var fa = row.querySelector(".ab-fa");
           if (fa) fa.remove();
 
+          /* No leading "·": the generated markup puts one inside .ab-gl,
+             and pickGloss() below strips it from every row in the
+             section. Writing one back here would put it on this row
+             alone until the next rAF caught it. */
           var gl = row.querySelector(".ab-gl");
-          if (gl) gl.textContent = "· " + GLOSS_LINE;
+          if (gl) gl.textContent = GLOSS_LINE;
 
           /* b.rt is not on STORIES — the Library derives it. readingTime()
              in this file is the same function, from the same words field. */
@@ -2960,7 +2964,7 @@
       new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
     })();
 
-    /* ---- Pick a mood: six glosses rewritten ------------------------
+    /* ---- Pick a mood: the glosses, and the dot in front of them -----
        The italic line beside a title in the Pick a mood list comes from
        PICKGLOSS in library/roya-library.js — a generated file, and one
        this repository cannot rebuild, because build-integration.py is
@@ -2970,12 +2974,21 @@
 
        Keyed on data-rec, which the Library already puts on every row,
        so a book that moves between mood groups keeps its line. Only the
-       six listed are touched; every other row keeps what the generated
-       file gives it.
+       six listed have their WORDS rewritten; every other row keeps what
+       the generated file gives it.
 
-       The markup is <i class="ab-gl">· <line></i>, and the dot is part
-       of the element rather than the stylesheet, so it is written back
-       with the text. */
+       The generated markup is <i class="ab-gl">· <line></i>: a middle
+       dot, then a space, then the line, all inside the element. So the
+       separator between the title and the gloss is text, not a border
+       or a ::before, and no stylesheet can reach it. It comes off here,
+       on every row in the section rather than only the six, which is
+       what makes the heads read the same from one row to the next.
+
+       The number keeps its own dot. That one is <span class="ab-dot">,
+       a real element with its own rule, and nothing below touches it.
+
+       .ab-gl carries margin-left:.5rem of its own, so the gap between
+       the title and the line survives the dot going. */
     (function pickGloss() {
       var ROOT = document.getElementById("royaLibrary");
       if (!ROOT) return;
@@ -2989,13 +3002,15 @@
         102: "declared out, still alive in the roots"
       };
 
+      /* A middle dot at the very front, with whatever spacing follows
+         it. Anchored, so a dot inside the line itself is left alone. */
+      var LEAD_DOT = /^[\s ]*[·•][\s ]*/;
+
       function apply() {
-        ROOT.querySelectorAll(".ab-row[data-rec]").forEach(function (row) {
-          var line = LINES[row.getAttribute("data-rec")];
-          if (!line) return;
-          var gl = row.querySelector(".ab-gl");
-          if (!gl) return;
-          var want = "· " + line;
+        ROOT.querySelectorAll(".ab-row[data-rec] .ab-gl").forEach(function (gl) {
+          var row = gl.closest(".ab-row[data-rec]");
+          var line = row && LINES[row.getAttribute("data-rec")];
+          var want = line || gl.textContent.replace(LEAD_DOT, "");
           if (gl.textContent === want) return;            /* idempotent */
           gl.textContent = want;
         });
