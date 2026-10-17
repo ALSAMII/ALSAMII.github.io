@@ -139,7 +139,11 @@
    320px handset lays out at 376px and the widest common one, 430px, at
    506px — 31.6rem, still inside the 34rem below. */
 @media (max-width: 34rem) {
-  #royaLibrary .rvi { margin: 1.9rem auto; }
+  /* More room under the card than over it, so it reads as belonging to
+     the paragraph above and lets the 116 paragraph start clean. The
+     margin wins the collapse against .ab-note's own top margin, so this
+     number is the gap. */
+  #royaLibrary .rvi { margin: 1.9rem auto 3rem; }
   #royaLibrary .rvi-link { gap: 0.7rem; padding: 0.55rem 0.7rem 0.55rem 0.55rem; }
   #royaLibrary .rvi-thumb { flex-basis: 6.25rem; width: 6.25rem; }
   @supports not (aspect-ratio: 16 / 9) {
