@@ -121,13 +121,21 @@
   }
 
   function apply() {
-    var abt = ROOT.querySelector(".abt");
-    if (!abt) return;
-    var lede = abt.querySelector(".ab-lede");
-    if (!lede) return;
-    /* idempotent — and it has to sit where it was put, since the panel
-       can be rebuilt around it */
-    var have = abt.querySelector(".rvi");
+    /* The opening paragraph is the anchor, NOT the panel around it. A
+       desktop wraps it in .abt and a phone in .mob-sec, so keying off the
+       wrapper meant the link simply never appeared on a phone — the
+       function returned before it got as far as looking.
+
+       Anchoring on .ab-lede works in both, and survives a window being
+       dragged across the breakpoint: the wrapper changes underneath, the
+       paragraph does not. */
+    var lede = ROOT.querySelector(".ab-lede");
+    if (!lede || !lede.parentElement) return;
+
+    /* Idempotent, and it has to still be in the right place — the panel
+       is rebuilt on every view change, and rebuilt into a different
+       wrapper when the layout flips. */
+    var have = ROOT.querySelector(".rvi");
     if (have && have.previousElementSibling === lede) return;
     if (have) have.remove();
     lede.after(build());
