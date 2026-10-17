@@ -1,0 +1,281 @@
+/* ══════════════════ THE INTRODUCTION ══════════════════
+   Styles for the small link in the About panel and the player it opens.
+
+   Everything here is namespaced .rvi (the link) and .rvp (the player), and
+   nothing in this file touches a selector that exists anywhere else on the
+   site. It can be added and removed without consequence.
+
+   Colours come from the variables already on :root in style.css, with a
+   literal fallback beside each one so this file still looks right if it is
+   ever loaded on its own.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ─────────────────────────── the link ──────────────────────────── */
+
+#royaLibrary .rvi {
+  margin: 3.1rem auto;
+  max-width: 34.5rem;
+}
+
+#royaLibrary .rvi-link {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 0.9rem 0.7rem 0.7rem;
+  text-align: left;
+  background: var(--sunk, #070504);
+  border: 1px solid rgba(216, 166, 95, 0.3);
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+#royaLibrary .rvi-link:hover,
+#royaLibrary .rvi-link:focus-visible {
+  border-color: rgba(216, 166, 95, 0.62);
+  background: var(--raised, #14100c);
+}
+
+#royaLibrary .rvi-link:focus-visible {
+  outline: 2px solid var(--ember, #d8a65f);
+  outline-offset: 2px;
+}
+
+#royaLibrary .rvi-thumb {
+  position: relative;
+  flex: 0 0 8.25rem;
+  width: 8.25rem;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: block;
+  background: #000;
+}
+
+/* aspect-ratio is wide support now, but an older browser would collapse
+   the box to nothing — this keeps it at 16:9 the old way too. */
+@supports not (aspect-ratio: 16 / 9) {
+  #royaLibrary .rvi-thumb { height: 4.65rem; }
+}
+
+#royaLibrary .rvi-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.8;
+  transition: opacity 0.18s ease;
+}
+
+#royaLibrary .rvi-link:hover .rvi-thumb img { opacity: 0.95; }
+
+#royaLibrary .rvi-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ember-lit, #f0c47e);
+}
+
+#royaLibrary .rvi-play svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.06rem;
+  border-radius: 999px;
+}
+
+#royaLibrary .rvi-play::before {
+  content: "";
+  position: absolute;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(216, 166, 95, 0.75);
+  background: rgba(5, 4, 3, 0.6);
+}
+
+#royaLibrary .rvi-play svg { position: relative; }
+
+#royaLibrary .rvi-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+#royaLibrary .rvi-kicker {
+  display: block;
+  font-family: var(--sans, "Jost", sans-serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ember, #d8a65f);
+}
+
+#royaLibrary .rvi-head {
+  display: block;
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.25rem;
+  line-height: 1.15;
+  color: var(--parchment, #e4dcc9);
+  margin-top: 0.25rem;
+}
+
+#royaLibrary .rvi-say {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--faded, #9c9280);
+  margin-top: 0.25rem;
+}
+
+#royaLibrary .rvi-exp {
+  flex: 0 0 auto;
+  width: 0.95rem;
+  height: 0.95rem;
+  color: var(--ember-dim, #b8964f);
+}
+
+#royaLibrary .rvi-foot {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-family: var(--sans, "Jost", sans-serif);
+  font-size: 0.56rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6d6558;
+}
+
+/* On a phone the row still works — the thumbnail just gives up some
+   width so the three lines of text keep their measure. */
+@media (max-width: 34rem) {
+  #royaLibrary .rvi { margin: 1.9rem auto; }
+  #royaLibrary .rvi-link { gap: 0.7rem; padding: 0.55rem 0.7rem 0.55rem 0.55rem; }
+  #royaLibrary .rvi-thumb { flex-basis: 6.25rem; width: 6.25rem; }
+  @supports not (aspect-ratio: 16 / 9) {
+    #royaLibrary .rvi-thumb { height: 3.5rem; }
+  }
+  #royaLibrary .rvi-head { font-size: 1.06rem; }
+  #royaLibrary .rvi-say  { font-size: 0.7rem; }
+  #royaLibrary .rvi-play::before { width: 1.6rem; height: 1.6rem; }
+}
+
+/* ────────────────────────── the player ─────────────────────────── */
+
+html.rvp-on, html.rvp-on body { overflow: hidden; }
+
+.rvp {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rvp[hidden] { display: none; }
+
+.rvp-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+}
+
+.rvp-stage {
+  position: relative;
+  width: min(96vw, calc(92vh * 16 / 9));
+  background: #000;
+}
+
+.rvp-v,
+.rvp-wait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+/* while the file is still being uploaded */
+.rvp-wait { position: relative; }
+.rvp-wait img { opacity: 0.35; }
+.rvp-waitline {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  text-align: center;
+  font-family: var(--serif, "Cormorant Garamond", Georgia, serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--parchment, #e4dcc9);
+}
+
+.rvp-x {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 4, 3, 0.6);
+  border: 1px solid rgba(216, 208, 192, 0.18);
+  color: #c4bba8;
+  cursor: pointer;
+  padding: 0;
+}
+
+.rvp-x svg { width: 1.1rem; height: 1.1rem; }
+.rvp-x:hover { color: var(--ember-lit, #f0c47e); }
+.rvp-x:focus-visible {
+  outline: 2px solid var(--ember, #d8a65f);
+  outline-offset: 2px;
+}
+
+/* No room above the frame on a short screen or a phone, so the button
+   comes inside the picture. */
+@media (max-height: 34rem), (max-width: 34rem) {
+  .rvp-stage { width: 100vw; }
+  .rvp-x { top: 0.5rem; right: 0.5rem; }
+}
+
+/* The browser's own full-screen view puts the stage edge to edge, so the
+   width cap has to come off or the picture sits in a box inside a box. */
+.rvp-stage:fullscreen,
+.rvp-stage:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rvp-stage:fullscreen .rvp-v,
+.rvp-stage:-webkit-full-screen .rvp-v {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  aspect-ratio: auto;
+}
+
+/* Full screen makes the stage the whole window, so the close button's
+   usual place — just above the frame — is off the top of the screen.
+   Bring it inside. Escape and the player's own controls still work, but
+   the button has to be reachable too. */
+.rvp-stage:fullscreen .rvp-x,
+.rvp-stage:-webkit-full-screen .rvp-x {
+  top: 1rem;
+  right: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #royaLibrary .rvi-link,
+  #royaLibrary .rvi-thumb img { transition: none; }
+}

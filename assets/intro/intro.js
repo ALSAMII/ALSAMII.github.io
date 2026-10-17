@@ -1,0 +1,282 @@
+/* ══════════════════ THE INTRODUCTION ══════════════════
+   A small link in the About panel, between the opening paragraph and the
+   one that counts the stories. Clicking it opens the film full screen,
+   with sound.
+
+   This file is SELF-CONTAINED on purpose. It adds nothing to script.js and
+   nothing to style.css, so it cannot disturb anything already on the site;
+   to take it off again, delete the two lines in index.html that call this
+   file and its stylesheet. Nothing else has to be unpicked.
+
+   The About panel is rebuilt out of the generated library markup every time
+   the view changes, which would wipe a one-off insertion. So the work is
+   done the way the rest of script.js does it: an idempotent apply(), a
+   rAF-debounced schedule(), and a MutationObserver on #royaLibrary.
+   ──────────────────────────────────────────────────────────────────── */
+
+(function introFilm() {
+  "use strict";
+
+  /* ───────────────────────── THE ONLY THING TO FILL IN ──────────────
+     Paste the address of the finished film between the quotes below,
+     and raise the ?v= on this file in index.html so browsers fetch it
+     again. Everything else is already set.
+
+     Leave it empty until the upload is done and nothing breaks: the link
+     still appears, and a click says the film is on its way rather than
+     opening a dead player. So this can be published before the video is
+     anywhere.
+
+     Backblaze is the right home for it, the same as the recordings — a
+     twenty-megabyte file committed to the repository is in the git history
+     for good, and it counts against the Pages bandwidth on every view.
+     A plain <video src> to a public bucket needs no CORS.             */
+
+  var FILM = {
+    src:      "",                                  /* ← the .mp4 address */
+    poster:   "assets/intro/intro-poster.jpg",
+    captions: "assets/intro/intro.vtt",            /* "" to leave them off */
+    length:   "1:08"
+  };
+
+  /* ─────────────────────────────── the copy ───────────────────────── */
+
+  var COPY = {
+    kicker:  "An introduction",
+    head:    "How to find your way around",
+    say:     "Where every cover lives, how a book opens on the page, and " +
+             "which ones you can hear read aloud.",
+    foot:    "Opens full screen, with sound",
+    waiting: "The film is being uploaded — it will be here shortly."
+  };
+
+  var ROOT = document.getElementById("royaLibrary");
+  if (!ROOT) return;
+
+  var SVG = "http://www.w3.org/2000/svg";
+  function svg(d, w) {
+    var s = document.createElementNS(SVG, "svg");
+    s.setAttribute("viewBox", "0 0 24 24");
+    s.setAttribute("aria-hidden", "true");
+    s.setAttribute("fill", "none");
+    s.setAttribute("stroke", "currentColor");
+    s.setAttribute("stroke-width", w || "1.4");
+    s.setAttribute("stroke-linecap", "round");
+    s.setAttribute("stroke-linejoin", "round");
+    var p = document.createElementNS(SVG, "path");
+    p.setAttribute("d", d);
+    s.appendChild(p);
+    return s;
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  /* ──────────────────────────── the link ──────────────────────────── */
+
+  function build() {
+    var wrap = el("div", "rvi");
+
+    var btn = el("button", "rvi-link");
+    btn.type = "button";
+
+    var thumb = el("span", "rvi-thumb");
+    var img = new Image();
+    img.src = FILM.poster;
+    img.alt = "";
+    img.loading = "lazy";
+    img.decoding = "async";
+    thumb.appendChild(img);
+
+    var play = el("span", "rvi-play");
+    var tri = document.createElementNS(SVG, "svg");
+    tri.setAttribute("viewBox", "0 0 24 24");
+    tri.setAttribute("aria-hidden", "true");
+    var tp = document.createElementNS(SVG, "path");
+    tp.setAttribute("d", "M7 4.5l12 7.5-12 7.5z");
+    tp.setAttribute("fill", "currentColor");
+    tri.appendChild(tp);
+    play.appendChild(tri);
+    thumb.appendChild(play);
+
+    var text = el("span", "rvi-text");
+    text.appendChild(el("span", "rvi-kicker", COPY.kicker + " · " + FILM.length));
+    text.appendChild(el("span", "rvi-head", COPY.head));
+    text.appendChild(el("span", "rvi-say", COPY.say));
+
+    /* the four-corner mark: the usual signal that a thing grows */
+    var exp = svg("M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7");
+    exp.setAttribute("class", "rvi-exp");
+
+    btn.appendChild(thumb);
+    btn.appendChild(text);
+    btn.appendChild(exp);
+    btn.addEventListener("click", open);
+
+    wrap.appendChild(btn);
+    wrap.appendChild(el("p", "rvi-foot", COPY.foot));
+    return wrap;
+  }
+
+  function apply() {
+    var abt = ROOT.querySelector(".abt");
+    if (!abt) return;
+    var lede = abt.querySelector(".ab-lede");
+    if (!lede) return;
+    /* idempotent — and it has to sit where it was put, since the panel
+       can be rebuilt around it */
+    var have = abt.querySelector(".rvi");
+    if (have && have.previousElementSibling === lede) return;
+    if (have) have.remove();
+    lede.after(build());
+  }
+
+  /* ─────────────────────────── the player ─────────────────────────── */
+
+  var box = null, vid = null, wasPlaying = false, lastFocus = null;
+
+  function make() {
+    if (box) return;
+
+    box = el("div", "rvp");
+    box.hidden = true;
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.setAttribute("aria-label", "An introduction to the house of Roya");
+
+    var scrim = el("div", "rvp-scrim");
+    scrim.addEventListener("click", close);
+
+    var stage = el("div", "rvp-stage");
+
+    var x = el("button", "rvp-x");
+    x.type = "button";
+    x.setAttribute("aria-label", "Close");
+    x.appendChild(svg("M6 6l12 12M18 6L6 18", "1.5"));
+    x.addEventListener("click", close);
+
+    if (FILM.src) {
+      vid = document.createElement("video");
+      vid.className = "rvp-v";
+      vid.setAttribute("playsinline", "");      /* iOS: ours, not its own */
+      vid.setAttribute("controls", "");         /* native: scrub, volume,
+                                                   captions, full screen */
+      /* The element is not built until the first click, so nothing is
+         fetched before someone asks for the film — a preload hint here
+         would only slow the start once they have. */
+      vid.setAttribute("preload", "auto");
+      vid.poster = FILM.poster;
+      vid.src = FILM.src;
+      if (FILM.captions) {
+        var tr = document.createElement("track");
+        tr.kind = "captions";
+        tr.label = "English";
+        tr.srclang = "en";
+        tr.src = FILM.captions;
+        tr.default = true;
+        vid.appendChild(tr);
+      }
+      vid.addEventListener("ended", close);
+      stage.appendChild(vid);
+    } else {
+      /* published before the upload — say so plainly */
+      var wait = el("div", "rvp-wait");
+      var pimg = new Image();
+      pimg.src = FILM.poster;
+      pimg.alt = "";
+      wait.appendChild(pimg);
+      wait.appendChild(el("p", "rvp-waitline", COPY.waiting));
+      stage.appendChild(wait);
+    }
+
+    stage.appendChild(x);
+    box.appendChild(scrim);
+    box.appendChild(stage);
+    document.body.appendChild(box);
+  }
+
+  /* The room tone, hushed while the film talks, and put back after. */
+  function hushAmbient() {
+    var a = document.getElementById("ambient");
+    wasPlaying = !!(a && !a.paused);
+    if (wasPlaying) a.pause();
+  }
+  function restoreAmbient() {
+    if (!wasPlaying) return;
+    var a = document.getElementById("ambient");
+    if (a) { var p = a.play(); if (p && p.catch) p.catch(function () {}); }
+    wasPlaying = false;
+  }
+
+  function goFull(stage, v) {
+    /* A desktop and an iPad take an element full screen. An iPhone will
+       not — it only takes the video itself, through its own player. */
+    var fn = stage.requestFullscreen || stage.webkitRequestFullscreen;
+    if (fn) { try { fn.call(stage); return; } catch (e) { /* fall through */ } }
+    if (v && v.webkitEnterFullscreen) {
+      try { v.webkitEnterFullscreen(); } catch (e) { /* the overlay will do */ }
+    }
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    make();
+    box.hidden = false;
+    document.documentElement.classList.add("rvp-on");
+    hushAmbient();
+
+    var stage = box.querySelector(".rvp-stage");
+    if (vid) {
+      /* Both of these spend the click: the sound and the full screen are
+         each allowed only because a person just pressed something. Start
+         the film FIRST — a full-screen request made first can swallow the
+         gesture on some browsers and leave the video refused and silent. */
+      vid.muted = false;                 /* the link said: with sound */
+      var pr = vid.play();
+      if (pr && pr.catch) pr.catch(function () {
+        /* Still refused. Better quiet than nothing — and the native
+           controls carry an unmute button, so it is one tap back. */
+        vid.muted = true;
+        var q = vid.play();
+        if (q && q.catch) q.catch(function () {});
+      });
+      goFull(stage, vid);
+    }
+    var x = box.querySelector(".rvp-x");
+    if (x) x.focus();
+    document.addEventListener("keydown", onKey, true);
+  }
+
+  function close() {
+    if (!box || box.hidden) return;
+    if (vid) { try { vid.pause(); vid.currentTime = 0; } catch (e) {} }
+    if (document.fullscreenElement && document.exitFullscreen) {
+      try { document.exitFullscreen(); } catch (e) {}
+    } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+      try { document.webkitExitFullscreen(); } catch (e) {}
+    }
+    box.hidden = true;
+    document.documentElement.classList.remove("rvp-on");
+    restoreAmbient();
+    document.removeEventListener("keydown", onKey, true);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === "Escape" || e.key === "Esc") { e.stopPropagation(); close(); }
+  }
+
+  /* ────────────────────── keep it in the panel ────────────────────── */
+
+  var tick = 0;
+  function schedule() {
+    if (tick) return;
+    tick = requestAnimationFrame(function () { tick = 0; apply(); });
+  }
+  apply();
+  new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
+
+})();
