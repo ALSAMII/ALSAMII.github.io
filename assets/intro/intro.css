@@ -123,13 +123,6 @@
   margin-top: 0.25rem;
 }
 
-#royaLibrary .rvi-say {
-  display: block;
-  font-size: 0.78rem;
-  line-height: 1.4;
-  color: var(--faded, #9c9280);
-  margin-top: 0.25rem;
-}
 
 #royaLibrary .rvi-exp {
   flex: 0 0 auto;
@@ -138,15 +131,6 @@
   color: var(--ember-dim, #b8964f);
 }
 
-#royaLibrary .rvi-foot {
-  margin: 0.5rem 0 0;
-  text-align: center;
-  font-family: var(--sans, "Jost", sans-serif);
-  font-size: 0.56rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #6d6558;
-}
 
 /* On a phone the row still works — the thumbnail just gives up some
    width so the three lines of text keep their measure. */
@@ -158,7 +142,6 @@
     #royaLibrary .rvi-thumb { height: 3.5rem; }
   }
   #royaLibrary .rvi-head { font-size: 1.06rem; }
-  #royaLibrary .rvi-say  { font-size: 0.7rem; }
   #royaLibrary .rvi-play::before { width: 1.6rem; height: 1.6rem; }
 }
 
@@ -180,13 +163,18 @@ html.rvp-on, html.rvp-on body { overflow: hidden; }
 .rvp-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.94);
+  background: rgba(0, 0, 0, 0.88);
 }
 
+/* A window over the darkened page, not the whole screen. Big enough to
+   read the reader's text in the film, small enough that the page is
+   still visibly behind it. */
 .rvp-stage {
   position: relative;
-  width: min(96vw, calc(92vh * 16 / 9));
+  width: min(86vw, calc(76vh * 16 / 9), 1280px);
   background: #000;
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(216, 166, 95, 0.22);
 }
 
 .rvp-v,
@@ -242,7 +230,7 @@ html.rvp-on, html.rvp-on body { overflow: hidden; }
 /* No room above the frame on a short screen or a phone, so the button
    comes inside the picture. */
 @media (max-height: 34rem), (max-width: 34rem) {
-  .rvp-stage { width: 100vw; }
+  .rvp-stage { width: 100vw; border: 0; box-shadow: none; }
   .rvp-x { top: 0.5rem; right: 0.5rem; }
 }
 

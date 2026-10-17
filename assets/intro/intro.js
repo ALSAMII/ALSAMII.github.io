@@ -38,10 +38,9 @@
      and counts against the Pages bandwidth on every view.             */
 
   var FILM = {
-    src:      "https://f005.backblazeb2.com/file/roya-audio/chewz-intro-68s-web.mp4",
+    src:      "https://f005.backblazeb2.com/file/roya-audio/chewz-intro-68s-v2.mp4",
     poster:   "assets/intro/intro-poster.jpg",
-    captions: "assets/intro/intro.vtt",            /* "" to leave them off */
-    length:   "1:08"
+    captions: ""                                   /* a .vtt here turns captions on */
   };
 
   /* ─────────────────────────────── the copy ───────────────────────── */
@@ -49,9 +48,6 @@
   var COPY = {
     kicker:  "An introduction",
     head:    "How to find your way around",
-    say:     "Where every cover lives, how a book opens on the page, and " +
-             "which ones you can hear read aloud.",
-    foot:    "Opens full screen, with sound",
     waiting: "The film is being uploaded — it will be here shortly."
   };
 
@@ -108,9 +104,8 @@
     thumb.appendChild(play);
 
     var text = el("span", "rvi-text");
-    text.appendChild(el("span", "rvi-kicker", COPY.kicker + " · " + FILM.length));
+    text.appendChild(el("span", "rvi-kicker", COPY.kicker));
     text.appendChild(el("span", "rvi-head", COPY.head));
-    text.appendChild(el("span", "rvi-say", COPY.say));
 
     /* the four-corner mark: the usual signal that a thing grows */
     var exp = svg("M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7");
@@ -122,7 +117,6 @@
     btn.addEventListener("click", open);
 
     wrap.appendChild(btn);
-    wrap.appendChild(el("p", "rvi-foot", COPY.foot));
     return wrap;
   }
 
@@ -216,15 +210,13 @@
     wasPlaying = false;
   }
 
-  function goFull(stage, v) {
-    /* A desktop and an iPad take an element full screen. An iPhone will
-       not — it only takes the video itself, through its own player. */
-    var fn = stage.requestFullscreen || stage.webkitRequestFullscreen;
-    if (fn) { try { fn.call(stage); return; } catch (e) { /* fall through */ } }
-    if (v && v.webkitEnterFullscreen) {
-      try { v.webkitEnterFullscreen(); } catch (e) { /* the overlay will do */ }
-    }
-  }
+  /* The film opens in a window over a darkened page, not full screen.
+     The player's own controls still carry a full-screen button for anyone
+     who wants it — this is just not what a click does by default.
+
+     On an iPhone the choice is not ours: iOS hands any playing video to
+     its own full-screen player whatever the page asks for. playsinline
+     asks it not to, and newer iOS obliges. */
 
   function open() {
     lastFocus = document.activeElement;
@@ -233,7 +225,6 @@
     document.documentElement.classList.add("rvp-on");
     hushAmbient();
 
-    var stage = box.querySelector(".rvp-stage");
     if (vid) {
       /* Both of these spend the click: the sound and the full screen are
          each allowed only because a person just pressed something. Start
@@ -248,7 +239,6 @@
         var q = vid.play();
         if (q && q.catch) q.catch(function () {});
       });
-      goFull(stage, vid);
     }
     var x = box.querySelector(".rvp-x");
     if (x) x.focus();
