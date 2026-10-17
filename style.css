@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 27 · last updated 2026-10-16 20:45 PDT
+   Version 27 · last updated 2026-10-16 20:55 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10706,3 +10706,11 @@ body.letter-on{ overflow:hidden }
 /* On paper the page behind is light; the scrim goes a little deeper so
    the sheet still reads as lifted off it. */
 html[data-theme="light-off"] .letter-scrim{ background:rgba(20,16,10,.62) }
+
+/* ══ The phone lockup: the mark alone ════════════════════════════
+   CHEW Z no longer sits beside the ears in the phone bar. The
+   wordmark and the ears already say whose page this is, and the name
+   is on the About panel and in every rights line; beside the mark it
+   was a second label for one thing. The desktop rail's CHEW Z, under
+   the emblem, is a different element (.side-who) and stays. */
+html #royaLibrary#royaLibrary .mob-name{ display:none }
