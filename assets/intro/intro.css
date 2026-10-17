@@ -133,7 +133,11 @@
 
 
 /* On a phone the row still works — the thumbnail just gives up some
-   width so the three lines of text keep their measure. */
+   width so the three lines of text keep their measure.
+
+   Every phone lands in here: the site asks for initial-scale=0.85, so a
+   320px handset lays out at 376px and the widest common one, 430px, at
+   506px — 31.6rem, still inside the 34rem below. */
 @media (max-width: 34rem) {
   #royaLibrary .rvi { margin: 1.9rem auto; }
   #royaLibrary .rvi-link { gap: 0.7rem; padding: 0.55rem 0.7rem 0.55rem 0.55rem; }
@@ -141,7 +145,13 @@
   @supports not (aspect-ratio: 16 / 9) {
     #royaLibrary .rvi-thumb { height: 3.5rem; }
   }
-  #royaLibrary .rvi-head { font-size: 1.06rem; }
+
+  /* The eyebrow carries wide letter-spacing, which makes it read smaller
+     than it measures. On a phone it was losing against the title under
+     it, so it gets a size of its own and room to breathe. */
+  #royaLibrary .rvi-kicker { font-size: 0.72rem; }
+  #royaLibrary .rvi-head { font-size: 1.06rem; margin-top: 0.5rem; }
+
   #royaLibrary .rvi-play::before { width: 1.6rem; height: 1.6rem; }
 }
 
