@@ -17,23 +17,28 @@
 (function introFilm() {
   "use strict";
 
-  /* ───────────────────────── THE ONLY THING TO FILL IN ──────────────
-     Paste the address of the finished film between the quotes below,
-     and raise the ?v= on this file in index.html so browsers fetch it
-     again. Everything else is already set.
+  /* ───────────────────────────── THE FILM ───────────────────────────
+     The address below is the 24 fps cut: 68.000 seconds, 1920×1080,
+     1632 frames, with the narration. Upload chewz-intro-68s-web.mp4 to the
+     roya-audio bucket and this address is already right. If you keep a
+     different filename, change it here — it is the only place it appears.
 
-     Leave it empty until the upload is done and nothing breaks: the link
-     still appears, and a click says the film is on its way rather than
-     opening a dead player. So this can be published before the video is
-     anywhere.
+     Not the 30 fps export: that one had the 24p picture conformed to a
+     30p timeline, which duplicates frames on an uneven cadence and makes
+     the pans judder. Same audio, bit for bit; steadier picture; 17 MB
+     rather than 40.
 
-     Backblaze is the right home for it, the same as the recordings — a
-     twenty-megabyte file committed to the repository is in the git history
-     for good, and it counts against the Pages bandwidth on every view.
-     A plain <video src> to a public bucket needs no CORS.             */
+     To put a different cut up: replace the address, and raise the ?v= on
+     this file in index.html so browsers fetch the change. Nothing else
+     moves. Emptying it is safe too — the link still appears and a click
+     says the film is on its way, rather than opening a dead player.
+
+     Keep it on Backblaze rather than in the repository. A forty-megabyte
+     file committed to ALSAMII.github.io sits in the git history for good
+     and counts against the Pages bandwidth on every view.             */
 
   var FILM = {
-    src:      "",                                  /* ← the .mp4 address */
+    src:      "https://f005.backblazeb2.com/file/roya-audio/chewz-intro-68s-web.mp4",
     poster:   "assets/intro/intro-poster.jpg",
     captions: "assets/intro/intro.vtt",            /* "" to leave them off */
     length:   "1:08"
