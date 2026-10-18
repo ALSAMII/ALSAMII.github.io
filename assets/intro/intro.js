@@ -46,9 +46,10 @@
   /* ─────────────────────────────── the copy ───────────────────────── */
 
   var COPY = {
-    kicker:  "An introduction",
+    kicker:  "Start with the film",
     head:    "How to find your way around",
-    waiting: "The film is being uploaded — it will be here shortly."
+    meta:    "Introduction \u00b7 01:08",   /* the cut is 68.000s exactly */
+    waiting: "The film is being uploaded \u2014 it will be here shortly."
   };
 
   var ROOT = document.getElementById("royaLibrary");
@@ -106,14 +107,14 @@
     var text = el("span", "rvi-text");
     text.appendChild(el("span", "rvi-kicker", COPY.kicker));
     text.appendChild(el("span", "rvi-head", COPY.head));
+    text.appendChild(el("span", "rvi-meta", COPY.meta));
 
-    /* the four-corner mark: the usual signal that a thing grows */
-    var exp = svg("M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7");
-    exp.setAttribute("class", "rvi-exp");
-
-    btn.appendChild(thumb);
+    /* Words first, picture second — the rule on the left belongs to the
+       words, the way it does on a mood header. The four-corner expand
+       mark is gone: the play circle on the still already says what a
+       click does, and a second mark only crowded it. */
     btn.appendChild(text);
-    btn.appendChild(exp);
+    btn.appendChild(thumb);
     btn.addEventListener("click", open);
 
     wrap.appendChild(btn);
