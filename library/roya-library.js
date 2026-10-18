@@ -873,7 +873,7 @@ const LISTENING = {
 };
 const ABOUT = {
   lede: "For years I lived inside other people\u2019s stories. I listened to them, believed them, and when they ended I left. Then one night a drug took the walls down and the story was mine \u2014 planner, participant, whole production crew. I have not been a visitor since. The stories kept coming. This is where they land.",
-  note: "{n} stories, about people who finally say it out loud. Every book works the same way \u2014 a door out of the mind, a room on the other side, and the key that opened it.",
+  note: "{n} stories. Every book works the same way \u2014 a door out of the mind, a room on the other side, and the key that opened it.",
   terms: [
     { term:"Door", def:"How they got out",
       about:"How the person got out of their own head. There are only four ways, and every book uses one: Dose, they took something \u00b7 Rite, they practised something \u00b7 Ordeal, they endured something \u00b7 Withholding, they went without something." },
