@@ -46,9 +46,9 @@
   /* ─────────────────────────────── the copy ───────────────────────── */
 
   var COPY = {
-    kicker:  "Start with the film",
+    kicker:  "Introduction",
     head:    "How to find your way around",
-    meta:    "Introduction \u00b7 01:08",   /* the cut is 68.000s exactly */
+    meta:    "01:08",                      /* the cut is 68.000s exactly */
     waiting: "The film is being uploaded \u2014 it will be here shortly."
   };
 

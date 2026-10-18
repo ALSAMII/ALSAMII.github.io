@@ -12,16 +12,19 @@
 
 /* ─────────────────────────── the link ──────────────────────────── */
 
-/* Built on the same shape as the mood headers (.ab-gh): a gold rule down
-   the left, a large serif line, a quiet line under it. The numbers below
-   are that header's own computed values, not an approximation of them —
-   2px #c7943d, 1.1rem of padding inside the rule, a 2rem heading in
-   #e3c88e. The card therefore reads as another section of About rather
-   than as a widget dropped into it.
+/* Built on the same shape as the mood headers (.ab-gh): a rule down the
+   left, a large serif line, a quiet line under it. The heading is that
+   header's own computed value rather than an approximation of it — 2rem,
+   weight 500, #e3c88e — so the card reads as another section of About
+   instead of a widget dropped into it.
+
+   The rule itself is NOT the mood headers' flat 2px border. See the
+   stroke, below.
 
    No box: the frame is gone on purpose. The old card was small and
-   bordered; this one is large and open, and the rule alone is what marks
-   it off, exactly as it does for Noir, Transgressive and Plausible. */
+   bordered; this one is large and open, and the stroke alone is what
+   marks it off, exactly as a rule does for Noir, Transgressive and
+   Plausible. */
 
 #royaLibrary .rvi {
   margin: 2.6rem 0 3rem;
@@ -33,26 +36,57 @@
   gap: 2.2rem;
   width: 100%;
   box-sizing: border-box;
-  padding: 0.55rem 0 0.55rem 1.1rem;
+  padding: 0;
   text-align: left;
   background: none;
   border: 0;
-  border-left: 2px solid #c7943d;
   color: inherit;
   font: inherit;
   cursor: pointer;
-  transition: border-color 0.18s ease;
 }
 
-#royaLibrary .rvi-link:hover,
-#royaLibrary .rvi-link:focus-visible { border-left-color: var(--ember-lit, #f0c47e); }
+/* ── the stroke ──
+   Not a CSS border. The 116 is ringed by a drawn ellipse — library/art/
+   ring.webp, used as a mask and filled with --paper-dust — so a flat
+   2px border beside it looked like a different hand entirely.
+
+   What is below IS that ellipse: the straight run along its top edge,
+   between x 560 and 900, with the curve taken out and the whole thing
+   stood on end. Same ink, same thickness variation, same ragged edge.
+   It is inlined as a data URI rather than shipped as a file, so this
+   stylesheet stays self-contained and nothing new has to be uploaded.
+
+   It runs beside the WORDS only. The still sets the height of the row,
+   and a rule drawn down the whole card bracketed the picture too. */
+
+#royaLibrary .rvi-text {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.55rem 0 0.55rem 1.15rem;
+}
+
+#royaLibrary .rvi-text::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--paper-dust, #c8ae78);
+  mask: url("data:image/webp;base64,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") center center / 100% 100% no-repeat;
+  opacity: 0.9;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+
+#royaLibrary .rvi-link:hover .rvi-text::before,
+#royaLibrary .rvi-link:focus-visible .rvi-text::before { opacity: 1; }
 
 #royaLibrary .rvi-link:focus-visible {
   outline: 2px solid var(--ember, #d8a65f);
   outline-offset: 4px;
 }
-
-#royaLibrary .rvi-text { flex: 1 1 auto; min-width: 0; }
 
 #royaLibrary .rvi-kicker {
   display: block;
@@ -150,12 +184,8 @@
    the lot, so the block still reads as one section. */
 @media (max-width: 34rem) {
   #royaLibrary .rvi { margin: 2rem 0 3rem; }
-  #royaLibrary .rvi-link {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.15rem;
-    padding: 0.4rem 0 0.4rem 0.95rem;
-  }
+  #royaLibrary .rvi-link { flex-direction: column; align-items: stretch; gap: 1.15rem; }
+  #royaLibrary .rvi-text { padding: 0.35rem 0 0.35rem 1rem; }
   #royaLibrary .rvi-head { font-size: 1.62rem; margin-top: 0.5rem; }
   #royaLibrary .rvi-meta { margin-top: 0.7rem; }
   #royaLibrary .rvi-thumb { flex: 0 0 auto; width: 100%; }
