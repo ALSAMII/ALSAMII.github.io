@@ -121,10 +121,10 @@
 /* ── the still ──
    Larger than before and no longer a thumbnail: at a desktop width it is
    roughly a quarter of the column, and on a phone it takes the whole of
-   it. A single hairline, nothing else. An offset second frame was tried
-   and cut: the still sits flush with the right edge of the column at
-   every width, so the offset had nowhere to go and read as a stray mark
-   rather than as a stacked frame. */
+   it. No frame at all: the still is its own edge against the black, the
+   way the covers are. An offset second frame was tried and cut too —
+   the still sits flush with the right edge of the column at every width,
+   so the offset had nowhere to go and read as a stray mark. */
 
 #royaLibrary .rvi-thumb {
   position: relative;
@@ -133,8 +133,6 @@
   aspect-ratio: 16 / 9;
   display: block;
   background: #000;
-  outline: 1px solid rgba(216, 166, 95, 0.30);
-  outline-offset: 0;
 }
 
 @supports not (aspect-ratio: 16 / 9) {
