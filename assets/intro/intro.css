@@ -1,4 +1,7 @@
 /* ══════════════════ THE INTRODUCTION ══════════════════
+   Version 5 · last updated 2026-10-18 16:30 PDT
+   Served as assets/intro/intro.css?v=5 — keep the two numbers equal.
+
    Styles for the small link in the About panel and the player it opens.
 
    Everything here is namespaced .rvi (the link) and .rvp (the player), and
@@ -27,13 +30,13 @@
    Plausible. */
 
 #royaLibrary .rvi {
-  margin: 2.6rem 0 3rem;
+  margin: 2.2rem 0 2.6rem;
 }
 
 #royaLibrary .rvi-link {
   display: flex;
   align-items: center;
-  gap: 2.2rem;
+  gap: 1.9rem;
   width: 100%;
   box-sizing: border-box;
   padding: 0;
@@ -91,45 +94,56 @@
 #royaLibrary .rvi-kicker {
   display: block;
   font-family: var(--sans, "Jost", sans-serif);
-  font-size: 0.72rem;
-  letter-spacing: 0.26em;
+  font-size: 0.64rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ember, #d8a65f);
 }
 
-/* the mood headers' own h3: 2rem, weight 500, #e3c88e, line-height 1.1 */
+/* The mood headers' own h3 is 2rem, weight 500, #e3c88e, line-height 1.1.
+   This sits a step below it on purpose. The card is not a mood header —
+   it is one item above them — and at 2rem the three lines were taller
+   than the still needs to be, which is what made the block expensive. */
 #royaLibrary .rvi-head {
   display: block;
-  font-size: 2rem;
+  font-size: 1.62rem;
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.12;
   color: #e3c88e;
-  margin-top: 0.55rem;
+  margin-top: 0.5rem;
   text-wrap: balance;
 }
 
 #royaLibrary .rvi-meta {
   display: block;
   font-family: var(--sans, "Jost", sans-serif);
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--faded, #9c9280);
-  margin-top: 0.9rem;
+  margin-top: 0.75rem;
 }
 
 /* ── the still ──
-   Larger than before and no longer a thumbnail: at a desktop width it is
-   roughly a quarter of the column, and on a phone it takes the whole of
-   it. No frame at all: the still is its own edge against the black, the
-   way the covers are. An offset second frame was tried and cut too —
-   the still sits flush with the right edge of the column at every width,
-   so the offset had nowhere to go and read as a stray mark. */
+   The poster is now the film's own end card — the crest, CHEWZFICTION.COM
+   and the line under it, on black. Two things follow from that.
+
+   One: it no longer has to be big. A cover render needed size to be read
+   as a picture; a wordmark reads at any size, so the still comes down to
+   about a fifth of the column and stops setting the height of the row.
+
+   Two: it no longer has to be dimmed. The 0.82 below was there to stop a
+   bright cover render shouting; against this it only took the gold off
+   the wordmark, so it goes.
+
+   The frame's own ground is rgb(8,1,0). The file shipped here is lifted
+   to a true #000 so the panel disappears into --night instead of drawing
+   a faint rectangle on it — do that again for any replacement. */
 
 #royaLibrary .rvi-thumb {
   position: relative;
-  flex: 0 0 clamp(12rem, 26%, 19rem);
-  width: clamp(12rem, 26%, 19rem);
+  flex: 0 0 clamp(9.5rem, 20.6%, 14rem);
+  width: clamp(9.5rem, 20.6%, 14rem);
   aspect-ratio: 16 / 9;
   display: block;
   background: #000;
@@ -145,11 +159,18 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  opacity: 0.82;
-  transition: opacity 0.18s ease;
+  opacity: 1;
 }
 
-#royaLibrary .rvi-link:hover .rvi-thumb img { opacity: 1; }
+/* ── the play mark ──
+   A hairline, and nothing behind it. The old mark was a 3.1rem disc with
+   a 45%-black fill, which was right over a photograph and wrong over a
+   wordmark: at the centre of this poster it covered the crest. At this
+   size and with no fill the crest reads straight through it, and the
+   mark is still unmistakably a play mark.
+
+   It is deliberately quiet at rest and comes up on hover and on keyboard
+   focus, so it never competes with the serif line beside it. */
 
 #royaLibrary .rvi-play {
   position: absolute;
@@ -157,37 +178,60 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ember-lit, #f0c47e);
+  color: rgba(227, 200, 142, 0.78);
+  transition: color 0.18s ease;
 }
 
 #royaLibrary .rvi-play::before {
   content: "";
   position: absolute;
-  width: 3.1rem;
-  height: 3.1rem;
+  width: 1.62rem;
+  height: 1.62rem;
   border-radius: 999px;
-  border: 1px solid rgba(216, 166, 95, 0.8);
-  background: rgba(5, 4, 3, 0.45);
+  border: 1px solid rgba(216, 166, 95, 0.43);
+  background: none;
+  transition: border-color 0.18s ease;
+}
+
+#royaLibrary .rvi-link:hover .rvi-play,
+#royaLibrary .rvi-link:focus-visible .rvi-play {
+  color: var(--ember-lit, #f0c47e);
+}
+
+#royaLibrary .rvi-link:hover .rvi-play::before,
+#royaLibrary .rvi-link:focus-visible .rvi-play::before {
+  border-color: rgba(216, 166, 95, 0.78);
 }
 
 #royaLibrary .rvi-play svg {
   position: relative;
-  width: 1.05rem;
-  height: 1.05rem;
-  margin-left: 0.12rem;
+  width: 0.56rem;
+  height: 0.56rem;
+  margin-left: 0.07rem;
 }
 
-/* On a phone the still goes under the words and takes the whole column,
-   which makes it bigger than it ever was beside them. The rule runs down
-   the lot, so the block still reads as one section. */
+/* On a phone the card keeps the shape it has on a desktop: words on the
+   left, still on the right, one row. It used to stack — the still went
+   under the words and took the whole column — and that cost 344px of a
+   414px-wide screen, which is most of what a reader sees at once. One
+   row costs about a quarter of that, and there is now only one layout to
+   reason about rather than two.
+
+   Nothing is hidden to get there. The eyebrow, the title and the
+   duration all stay; they are a step smaller, and the still is sized to
+   the words rather than the other way round. The title may run to two
+   lines at this size — that is fine, the row grows with it; no height is
+   fixed anywhere in this block, on purpose. */
 @media (max-width: 34rem) {
-  #royaLibrary .rvi { margin: 2rem 0 3rem; }
-  #royaLibrary .rvi-link { flex-direction: column; align-items: stretch; gap: 1.15rem; }
+  #royaLibrary .rvi { margin: 1.8rem 0 2.2rem; }
+  #royaLibrary .rvi-link { gap: 0.9rem; }
   #royaLibrary .rvi-text { padding: 0.35rem 0 0.35rem 1rem; }
-  #royaLibrary .rvi-head { font-size: 1.62rem; margin-top: 0.5rem; }
-  #royaLibrary .rvi-meta { margin-top: 0.7rem; }
-  #royaLibrary .rvi-thumb { flex: 0 0 auto; width: 100%; }
-  #royaLibrary .rvi-play::before { width: 3.4rem; height: 3.4rem; }
+  #royaLibrary .rvi-kicker { font-size: 0.6rem; letter-spacing: 0.22em; }
+  #royaLibrary .rvi-head { font-size: 1.18rem; margin-top: 0.4rem; }
+  #royaLibrary .rvi-meta { font-size: 0.6rem; margin-top: 0.45rem; }
+  #royaLibrary .rvi-thumb { flex: 0 0 9.4rem; width: 9.4rem; }
+  #royaLibrary .rvi-play::before { width: 1.38rem; height: 1.38rem; }
+  #royaLibrary .rvi-play svg { width: 0.48rem; height: 0.48rem; }
 }
 
 /* ────────────────────────── the player ─────────────────────────── */

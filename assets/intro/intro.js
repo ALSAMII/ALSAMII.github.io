@@ -1,4 +1,7 @@
 /* ══════════════════ THE INTRODUCTION ══════════════════
+   Version 4 · last updated 2026-10-18 16:30 PDT
+   Served as assets/intro/intro.js?v=4 — keep the two numbers equal.
+
    A small link in the About panel, between the opening paragraph and the
    one that counts the stories. Clicking it opens the film full screen,
    with sound.
@@ -39,7 +42,16 @@
 
   var FILM = {
     src:      "https://f005.backblazeb2.com/file/roya-audio/chewz-intro-68s-v2.mp4",
-    poster:   "assets/intro/intro-poster.jpg",
+    /* The film's own end card — the crest, CHEWZFICTION.COM and the line
+       under it, held still from 66s to the last frame — rather than a
+       cover render. Its ground is lifted to a true #000 so the panel
+       disappears into the page's black instead of cutting a rectangle
+       out of it.
+
+       This path carries no ?v=, so a changed poster needs a CHANGED
+       FILENAME. Overwriting the file in place leaves every returning
+       visitor on the old one. */
+    poster:   "assets/intro/intro-poster-end.webp",
     captions: ""                                   /* a .vtt here turns captions on */
   };
 
