@@ -677,7 +677,9 @@ const STORIES = [
     room: "Lifecycle Confidence \u2014 a death date certified, signed and filed",
     key: "The Chamber \u2014 things cooked until they fail, exactly on time",
     notes: [3, 2, 1],
-    synopsis: "Cyrus Aban is a Longevity Advocate II in the Department of Lifecycle Confidence: he cooks consumer electronics in sealed chambers until they fail, works out precisely when they were always going to fail, and signs the certificate by hand while everyone else uses a stamp. Nineteen years of certifying death dates for objects, in a country that has made an institution of knowing exactly how long a thing is meant to last \u2014 and a growing suspicion about what else is being scheduled, and by whom."
+    synopsis: "Cyrus Aban is a Longevity Advocate II in the Department of Lifecycle Confidence: he cooks consumer electronics in sealed chambers until they fail, works out precisely when they were always going to fail, and signs the certificate by hand while everyone else uses a stamp. Nineteen years of certifying death dates for objects, in a country that has made an institution of knowing exactly how long a thing is meant to last \u2014 and a growing suspicion about what else is being scheduled, and by whom.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/48.mp3",
+    runtime: 180
   },
 
   {
@@ -920,13 +922,15 @@ const STORIES = [
   {
     num: 68,
     title: "Fill in the Blanks",
-    words: "15,100 words",
+    words: "14,500 words",
     hook: "He supplies the jokes a country repeats, and has not laughed himself in fifteen years",
     door: "Rite",
     room: "The Third Hour \u2014 between three and five in the morning, when the thing arrives with the turn already in position and all he does is hold the paper",
     key: "The Joke \u2014 a sentence that travels without a sender, that no one will admit to writing, and that the body answers before its owner can rule on it",
     notes: [1, 2, 3],
-    synopsis: "Manuchehr Delgosh\u0101 is the most widely read unpublished writer in the Persian language: a satirical channel with two million subscribers, three comedians who each believe they are his only client, a state programme that pays properly and takes his teeth out. By day he subtitles pirated American sitcoms into a language that will not hold the punchlines; by night, in a chair with a broken caster, he takes dictation from something he does not care to name. It is not a novel but a notebook \u2014 eighty-four entries, some nine pages and some four lines, in the shape of a fourteenth-century treatise that has been censored in every edition printed since. A man who can see a laugh coming before the room can, and who has not laughed in fifteen years, sets down everything except the parts he cannot write, and leaves the reader to supply them."
+    synopsis: "Manuchehr Delgosh\u0101 is the most widely read unpublished writer in the Persian language: a satirical channel with two million subscribers, three comedians who each believe they are his only client, a state programme that pays properly and takes his teeth out. By day he subtitles pirated American sitcoms into a language that will not hold the punchlines; by night, in a chair with a broken caster, he takes dictation from something he does not care to name. It is not a novel but a notebook \u2014 eighty-four entries, some nine pages and some four lines, in the shape of a fourteenth-century treatise that has been censored in every edition printed since. A man who can see a laugh coming before the room can, and who has not laughed in fifteen years, sets down everything except the parts he cannot write, and leaves the reader to supply them.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/68.mp3",
+    runtime: 93
   },
 
   {
@@ -950,7 +954,9 @@ const STORIES = [
     room: "The Queue \u2014 a country's attention, which is not a courtroom but a line that moves, where something has to fall off the bottom for anything to go on the top",
     key: "The Line \u2014 eleven words built in February, on tea, given to nobody, and now the property of ninety million people, a dead poet and a shop on Vali Asr",
     notes: [1, 2, 3],
-    synopsis: "Three years after a basement in the south of the city, eleven words are still travelling: seven of them in white paint on a wall in Narmak, and the whole line on state television, slightly wrong, getting a comedian the biggest laugh of his career. Manuchehr Delgoshā wrote them and gave them to nobody, and cannot say so, because saying so requires a sentence he will not put in his own mouth. So he does the only thing his trade has taught him: he writes over it, trying to bury what he cannot correct."
+    synopsis: "Three years after a basement in the south of the city, eleven words are still travelling: seven of them in white paint on a wall in Narmak, and the whole line on state television, slightly wrong, getting a comedian the biggest laugh of his career. Manuchehr Delgoshā wrote them and gave them to nobody, and cannot say so, because saying so requires a sentence he will not put in his own mouth. So he does the only thing his trade has taught him: he writes over it, trying to bury what he cannot correct.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/70.mp3",
+    runtime: 55
   },
 
   {
@@ -1010,7 +1016,9 @@ const STORIES = [
     room: "The Hall — six hundred seats and more than that in it, chairs down the sides against the fire regulations, and thirty feet of blue vinyl saying the bright future that will be thrown away on Sunday",
     key: "Nine Minutes — a speech built for somebody else's mouth by a man who knows compression the way a locksmith knows a cylinder and has no idea how to build a room",
     notes: [1, 1, 3],
-    synopsis: "A young woman ranked ninth in the national entrance examination out of six hundred thousand is graduating top of her year at Sharif and is required to give the address. She cannot write it — not because she cannot write, but because there is nothing she is permitted to say, and she has spent four years being the proof of a system she has concluded is a machine for producing people like her and then losing them. So she finds a man who writes for other people's mouths, and takes him entirely seriously, which nobody has ever done."
+    synopsis: "A young woman ranked ninth in the national entrance examination out of six hundred thousand is graduating top of her year at Sharif and is required to give the address. She cannot write it — not because she cannot write, but because there is nothing she is permitted to say, and she has spent four years being the proof of a system she has concluded is a machine for producing people like her and then losing them. So she finds a man who writes for other people's mouths, and takes him entirely seriously, which nobody has ever done.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/75.mp3",
+    runtime: 75
   },
 
   {
@@ -1028,13 +1036,15 @@ const STORIES = [
   {
     num: 77,
     title: "Opening Act",
-    words: "11,800 words",
+    words: "11,700 words",
     hook: "At fifty-four he has begun to laugh, and it has ruined and remade him in the same movement",
     door: "Ordeal",
     room: "The Side Hall — a majles-e tarhim in a mosque: recitation, an address, tea and dates and halva, and a stranger who will not give his name stipulating three things about what is said over a woman he will not explain",
     key: "The Laugh — arriving twenty-five years late in a man who could always see one coming and never once felt it, and who is now obliged to feel what he sells before he is allowed to sell it",
     notes: [1, 1, 3],
-    synopsis: "Manuchehr Delgoshā is fifty-four and has begun laughing, and it has ruined and remade him in the same movement. For twenty-five years he could see the shape of a joke and never feel it land, and that was the whole of his gift. He can now do both at once, and is obliged for the first time to feel what he sells before he sells it. His broker of twenty-six years dies between one Tuesday and the next. And a man who will not give his name asks him for a funeral speech."
+    synopsis: "Manuchehr Delgoshā is fifty-four and has begun laughing, and it has ruined and remade him in the same movement. For twenty-five years he could see the shape of a joke and never feel it land, and that was the whole of his gift. He can now do both at once, and is obliged for the first time to feel what he sells before he sells it. His broker of twenty-six years dies between one Tuesday and the next. And a man who will not give his name asks him for a funeral speech.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/77.mp3",
+    runtime: 88
   },
 
   {
@@ -1054,13 +1064,15 @@ const STORIES = [
   {
     num: 79,
     title: "The Twelfth Minute",
-    words: "11,700 words",
+    words: "12,400 words",
     hook: "Two rooms in one night, and nobody who books her can understand a word of the real one",
     door: "Rite",
     room: "The Second Room — ten o'clock in Hässelby, four hundred Iranians in Persian who heckle in three registers and know precisely when she is lying about home",
     key: "The Twelfth Minute — the part where somebody else is doing it. It arrives about a quarter of the way in, runs ten or fourteen minutes, cannot be summoned, and does not come back with you.",
     notes: [2, 2, 3],
-    synopsis: "Roshanak Azimi is twenty-six and has built something in Europe out of night buses, other people's floors, and a working knowledge of how festivals are structured to make performers pay for the privilege of appearing. She plays two rooms in Stockholm on the same night: at eight, fifty Swedes in English who laugh in the wrong places; at ten, four hundred Iranians in a hall in Hässelby who heckle in three registers. Neither audience knows the other exists, and nobody who books her can understand a word of the second."
+    synopsis: "Roshanak Azimi is twenty-six and has built something in Europe out of night buses, other people's floors, and a working knowledge of how festivals are structured to make performers pay for the privilege of appearing. She plays two rooms in Stockholm on the same night: at eight, fifty Swedes in English who laugh in the wrong places; at ten, four hundred Iranians in a hall in Hässelby who heckle in three registers. Neither audience knows the other exists, and nobody who books her can understand a word of the second.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/79.mp3",
+    runtime: 89
   },
 
   {
@@ -1090,13 +1102,15 @@ const STORIES = [
   {
     num: 82,
     title: "Hooshang",
-    words: "9,400 words",
+    words: "9,800 words",
     hook: "Five months asking a machine for the joke he has just written, to see if it can tell",
     door: "Ordeal",
     room: "The Median — what a thing returns when it has read very nearly everything: the centre of it, in four seconds, which is also a map of exactly where a Persian audience expects the operative word",
     key: "Hooshang — a perfect model of the average, run for five months against a man whose whole trade is putting the operative word where the room is not expecting it",
     notes: [2, 1, 3],
-    synopsis: "Manuchehr Delgoshā is fifty-eight and has spent thirty-one years finding where a room expects the operative word and putting it somewhere else. That is the whole trade, and everything else is in service of it. He can now generate the expected version in four seconds by asking a machine, and he has spent five months doing exactly that, one night at a time, in the chair, with the log open beside him. At four fifty-three one morning the machine says something back that neither of them can claim."
+    synopsis: "Manuchehr Delgoshā is fifty-eight and has spent thirty-one years finding where a room expects the operative word and putting it somewhere else. That is the whole trade, and everything else is in service of it. He can now generate the expected version in four seconds by asking a machine, and he has spent five months doing exactly that, one night at a time, in the chair, with the log open beside him. At four fifty-three one morning the machine says something back that neither of them can claim.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/82.mp3",
+    runtime: 76
   },
 
   {
@@ -1150,13 +1164,15 @@ const STORIES = [
   {
     num: 87,
     title: "Homeland Security",
-    words: "10,400 words",
+    words: "10,900 words",
     hook: "The same two words are a department in one country and a charge in the other",
     door: "Ordeal",
     room: "The Boardwalk — unlicensed vendors, permits that are technically real, and an entire informal economy running beside a legal one that has decided not to see it, which is Javadiyeh with better weather",
     key: "The Accent — the thing that lets four hundred people in a hall in Hässelby catch every word, and that a room of Americans hears before it hears the joke",
     notes: [1, 1, 3],
-    synopsis: "She moves to Los Angeles and takes a room in Venice on purpose, forty minutes from the forty thousand Iranians in Westwood, because she has worked out that if she goes there in the first year she will never leave. It is not contempt. It is arithmetic. She has come from four years in a hall where four hundred people understood every word and let her get away with nothing, and she is now starting again in a language that hears her before it hears the joke."
+    synopsis: "She moves to Los Angeles and takes a room in Venice on purpose, forty minutes from the forty thousand Iranians in Westwood, because she has worked out that if she goes there in the first year she will never leave. It is not contempt. It is arithmetic. She has come from four years in a hall where four hundred people understood every word and let her get away with nothing, and she is now starting again in a language that hears her before it hears the joke.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/87.mp3",
+    runtime: 76
   },
 
   {
@@ -1200,13 +1216,15 @@ const STORIES = [
   {
     num: 91,
     title: "Pesar Khaleh",
-    words: "21,800 words",
+    words: "22,000 words",
     hook: "Forty years of savage material never once aimed at a person — and the tender pieces go in a notebook nobody will ever read",
     door: "Withholding",
     room: "The Puppet — a glove puppet bought years ago, sitting empty on his table for four months, waiting for a hand he's decided not to put in it",
     key: "The Notebook — forty years of the specific, tender material about people he loves too much to ever perform, kept and never published",
     notes: [1, 2, 3],
-    synopsis: "For forty years his rule has been simple — mock the system, never the person standing in it — and it's made him one of the country's best-loved comedians. Then a funeral hands him a nickname in front of four hundred people, built on exactly the tenderness he's never once let onstage. He starts a private notebook instead: the material about the people he loves too much to ever perform. What follows is a year spent deciding whether some things are worth keeping only for himself."
+    synopsis: "For forty years his rule has been simple — mock the system, never the person standing in it — and it's made him one of the country's best-loved comedians. Then a funeral hands him a nickname in front of four hundred people, built on exactly the tenderness he's never once let onstage. He starts a private notebook instead: the material about the people he loves too much to ever perform. What follows is a year spent deciding whether some things are worth keeping only for himself.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/91.mp3",
+    runtime: 150
   },
 
   {
