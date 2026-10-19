@@ -1,6 +1,6 @@
 /* ══════════════════ THE LISTENING ROOM'S SERIES FILTER ══════════════════
-   Version 3 · last updated 2026-10-18 19:35 PDT
-   Served as assets/lrseries/lrseries.css?v=3 — keep the two numbers equal.
+   Version 4 · last updated 2026-10-18 19:45 PDT
+   Served as assets/lrseries/lrseries.css?v=4 — keep the two numbers equal.
 
    This file is deliberately small. The control is built out of the Library's
    OWN picker classes — .pickbox, .pick-btn, .pick-list — which are already
@@ -149,19 +149,35 @@
     top: calc(100% + .4rem);
   }
 
-  #royaLibrary .lr-bar.lr-hasfilter { gap: .5rem .55rem }
-  #royaLibrary .lr-bar.lr-hasfilter .lr-sorts { flex: 0 1 auto; gap: .35rem }
-  #royaLibrary .lr-bar.lr-hasfilter .lrs { gap: .3rem }
-  #royaLibrary .lr-bar.lr-hasfilter .lr-count { font-size: 1.05rem }
+  #royaLibrary .lr-bar.lr-hasfilter { gap: .5rem .42rem }
+  #royaLibrary .lr-bar.lr-hasfilter .lr-sorts { flex: 0 1 auto; gap: .3rem }
+  #royaLibrary .lr-bar.lr-hasfilter .lrs { gap: .28rem }
+  #royaLibrary .lr-bar.lr-hasfilter .lr-count { font-size: 1rem }
   /* .lrs-lab carries .lr-sortlab too, so that the two labels are the same
      piece of type. Hide the one inside .lr-sorts, not both. */
   #royaLibrary .lr-bar.lr-hasfilter .lr-sorts .lr-sortlab { display: none }
+  /* ── the controls read a step larger than the site's .5625rem ──
+     .625rem is 10px against the 9px the sort chips carry everywhere else.
+     The room for it was bought back out of the gaps, the count and the
+     paddings rather than taken from the line: at a 358px column — a 375pt
+     handset — the bar still has 11px to spare and stays on one line.
+
+     .6875rem was measured too and does not fit: it overruns that column by
+     12px. If these ever need to be larger than this, the count has to give
+     up its size or SERIES has to go, not the line. */
   #royaLibrary .lr-bar.lr-hasfilter .lr-sort {
-    padding: .55em .6em .5em; letter-spacing: .1em; min-height: 2em;
+    font-size: .625rem;
+    padding: .5em .58em .46em; letter-spacing: .1em; min-height: 2em;
   }
   #royaLibrary .lr-bar.lr-hasfilter .lrs-btn {
+    font-size: .625rem;
     max-width: 7.5rem;
-    padding: .55em .45em .5em .62em; letter-spacing: .1em; min-height: 2em;
+    padding: .5em .42em .46em .58em; letter-spacing: .1em; min-height: 2em;
+  }
+  /* the label stays at the site's own size — it is a label, not a control,
+     and at 10px it started competing with the pill beside it */
+  #royaLibrary .lr-bar.lr-hasfilter .lrs-lab {
+    font-size: .5625rem; letter-spacing: .14em;
   }
 }
 
