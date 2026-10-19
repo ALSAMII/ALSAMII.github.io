@@ -1,6 +1,6 @@
 /* ══════════════════ THE LISTENING ROOM'S SERIES FILTER ══════════════════
-   Version 2 · last updated 2026-10-18 19:05 PDT
-   Served as assets/lrseries/lrseries.css?v=2 — keep the two numbers equal.
+   Version 3 · last updated 2026-10-18 19:35 PDT
+   Served as assets/lrseries/lrseries.css?v=3 — keep the two numbers equal.
 
    This file is deliberately small. The control is built out of the Library's
    OWN picker classes — .pickbox, .pick-btn, .pick-list — which are already
@@ -106,32 +106,74 @@
 #royaLibrary .lr-row.is-lrhid { display: none }
 
 /* ── the phone ──
-   The bar already wraps at this width: the count takes line one and the
-   sorts line two. Keeping that exactly, with Series joining the count on
-   line one, where there is room for it — pushing Sort onto a third line
-   would cost more height than the filter is worth.
+   Everything on one line:
 
-     31 recordings                          SERIES [ All ▾ ]
-     SORT  (Newest) (Shortest) (Longest)
+     31 Recordings            SERIES [ All ▾ ]  (Newest) (Shortest)
 
-   .lr-sorts is given a full-width basis so it always takes the new line
-   rather than wrapping mid-cluster, which put one chip up beside Series. */
+   The bar used to take two, and with the filter added it would have taken
+   three. Measured at a 375px column — what a 390pt handset gives at the
+   page's initial-scale of 0.85 — the pieces came to 496px against 375
+   available. The 121px came off in four places and no further:
+
+     the word SORT, and its gap              54
+     the gaps between and inside the groups  31
+     the count, 1.25rem to 1.05rem           19
+     chip padding and tracking               31
+
+   SORT is the one label that goes. Two chips reading Newest and Shortest
+   are plainly an order; a lone pill reading "All" is not plainly a series,
+   so SERIES stays. No tap target is meaningfully smaller for any of it —
+   the chips go from 26px tall to 25, and from 70 and 84 wide to 57 and 69.
+
+   This holds down to a 331px column. Below that the bar wraps to two lines
+   again on its own, which is the right failure: every piece stays legible
+   and finger-sized and the row grows, rather than overflowing. A 320pt
+   handset lands there. */
 @media (max-width: 820px) {
-  #royaLibrary .lr-bar.lr-hasfilter .lr-sorts { flex: 1 0 100%; }
-  #royaLibrary .lrs { gap: .45rem }
-  #royaLibrary .lrs-btn {
-    max-width: 10.5rem;
-    /* the sort chips grow for a finger at this width; so does this */
-    padding: .62em .8em .58em 1rem;
-    min-height: 2.2em;
+  /* ── where the menu hangs ──
+     On a desktop the control sits at the right-hand end of the bar and the
+     menu drops leftward from it. One line on a phone puts the control in
+     the MIDDLE of the bar instead, and a 272px menu dropping leftward from
+     there ran off the left edge of the screen by 13px at a 441px viewport
+     and 40px at 414.
+
+     So on a phone it stops hanging off the button at all: .lrs-box gives up
+     being the containing block, and the menu is pinned to both edges of the
+     bar, which is already positioned for the z-index above. It is then a
+     full-width sheet under the bar — the usual phone pattern — and it
+     cannot leave either edge at any width, because its edges ARE the bar's.
+     Long titles fall back to the ellipsis .pick-list already gives them. */
+  #royaLibrary .lrs-box { position: static }
+  #royaLibrary .lrs-list {
+    left: 0; right: 0; width: auto; max-width: none;
+    top: calc(100% + .4rem);
+  }
+
+  #royaLibrary .lr-bar.lr-hasfilter { gap: .5rem .55rem }
+  #royaLibrary .lr-bar.lr-hasfilter .lr-sorts { flex: 0 1 auto; gap: .35rem }
+  #royaLibrary .lr-bar.lr-hasfilter .lrs { gap: .3rem }
+  #royaLibrary .lr-bar.lr-hasfilter .lr-count { font-size: 1.05rem }
+  /* .lrs-lab carries .lr-sortlab too, so that the two labels are the same
+     piece of type. Hide the one inside .lr-sorts, not both. */
+  #royaLibrary .lr-bar.lr-hasfilter .lr-sorts .lr-sortlab { display: none }
+  #royaLibrary .lr-bar.lr-hasfilter .lr-sort {
+    padding: .55em .6em .5em; letter-spacing: .1em; min-height: 2em;
+  }
+  #royaLibrary .lr-bar.lr-hasfilter .lrs-btn {
+    max-width: 7.5rem;
+    padding: .55em .45em .5em .62em; letter-spacing: .1em; min-height: 2em;
   }
 }
 
-/* a narrow handset: the label goes and the button carries the whole meaning,
-   rather than the two of them squeezing the count off its own line */
+/* A narrower handset: SERIES goes too and the pill carries it alone. This is
+   the last thing that comes off before the bar is allowed to wrap.
+
+   416px is where the measurement put the line, not a round number: with the
+   label the bar needs a 358px column, which a 375pt handset gives (441 at
+   0.85). Below that viewport the label is what buys the last 24px. */
 @media (max-width: 26rem) {
-  #royaLibrary .lrs-lab { display: none }
-  #royaLibrary .lrs-btn { max-width: 9rem }
+  #royaLibrary .lr-bar.lr-hasfilter .lrs-lab { display: none }
+  #royaLibrary .lr-bar.lr-hasfilter .lrs-btn { max-width: 6.5rem }
 }
 
 @media (prefers-reduced-motion: reduce) {
