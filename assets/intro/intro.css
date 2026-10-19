@@ -1,6 +1,6 @@
 /* ══════════════════ THE INTRODUCTION ══════════════════
-   Version 5 · last updated 2026-10-18 16:30 PDT
-   Served as assets/intro/intro.css?v=5 — keep the two numbers equal.
+   Version 6 · last updated 2026-10-18 17:40 PDT
+   Served as assets/intro/intro.css?v=6 — keep the two numbers equal.
 
    Styles for the small link in the About panel and the player it opens.
 
@@ -165,9 +165,16 @@
 /* ── the play mark ──
    A hairline, and nothing behind it. The old mark was a 3.1rem disc with
    a 45%-black fill, which was right over a photograph and wrong over a
-   wordmark: at the centre of this poster it covered the crest. At this
-   size and with no fill the crest reads straight through it, and the
-   mark is still unmistakably a play mark.
+   wordmark: at the centre of this poster it covered the crest. At 1.95rem
+   and with no fill the crest reads straight through it, and the mark is
+   still unmistakably a play mark.
+
+   1.95rem is a ceiling, not a preference. The wordmark's cap line sits
+   about 12px below the centre of the panel at a desktop width, so a ring
+   much past this one stops clearing the type and its lower arc starts
+   cutting through CHEWZFICTION.COM. 2.12rem was tried and does exactly
+   that. If the mark ever has to be bigger than this, the poster has to
+   move, not the ring.
 
    It is deliberately quiet at rest and comes up on hover and on keyboard
    focus, so it never competes with the serif line beside it. */
@@ -185,8 +192,8 @@
 #royaLibrary .rvi-play::before {
   content: "";
   position: absolute;
-  width: 1.62rem;
-  height: 1.62rem;
+  width: 1.95rem;
+  height: 1.95rem;
   border-radius: 999px;
   border: 1px solid rgba(216, 166, 95, 0.43);
   background: none;
@@ -205,9 +212,9 @@
 
 #royaLibrary .rvi-play svg {
   position: relative;
-  width: 0.56rem;
-  height: 0.56rem;
-  margin-left: 0.07rem;
+  width: 0.68rem;
+  height: 0.68rem;
+  margin-left: 0.08rem;
 }
 
 /* On a phone the card keeps the shape it has on a desktop: words on the
@@ -230,8 +237,8 @@
   #royaLibrary .rvi-head { font-size: 1.18rem; margin-top: 0.4rem; }
   #royaLibrary .rvi-meta { font-size: 0.6rem; margin-top: 0.45rem; }
   #royaLibrary .rvi-thumb { flex: 0 0 9.4rem; width: 9.4rem; }
-  #royaLibrary .rvi-play::before { width: 1.38rem; height: 1.38rem; }
-  #royaLibrary .rvi-play svg { width: 0.48rem; height: 0.48rem; }
+  #royaLibrary .rvi-play::before { width: 1.66rem; height: 1.66rem; }
+  #royaLibrary .rvi-play svg { width: 0.58rem; height: 0.58rem; }
 }
 
 /* ────────────────────────── the player ─────────────────────────── */
