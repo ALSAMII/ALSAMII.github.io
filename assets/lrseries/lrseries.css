@@ -1,6 +1,6 @@
 /* ══════════════════ THE LISTENING ROOM'S SERIES FILTER ══════════════════
-   Version 1 · last updated 2026-10-18 18:05 PDT
-   Served as assets/lrseries/lrseries.css?v=1 — keep the two numbers equal.
+   Version 2 · last updated 2026-10-18 19:05 PDT
+   Served as assets/lrseries/lrseries.css?v=2 — keep the two numbers equal.
 
    This file is deliberately small. The control is built out of the Library's
    OWN picker classes — .pickbox, .pick-btn, .pick-list — which are already
@@ -21,10 +21,34 @@
    right, against the count on the left — so the bar packs from the left and
    the Series box takes the slack.
 
-   Guarded by :has() so the bar is untouched if this file ever loads without
-   its script, or before it runs. */
-#royaLibrary .lr-bar:has(.lrs) { justify-content: flex-start; }
+   Everything here hangs off .lr-hasfilter, a class the script puts on the
+   bar. Nothing depends on :has() being supported, and the bar is untouched
+   on any page where the script has not run. */
+#royaLibrary .lr-bar.lr-hasfilter { justify-content: flex-start; }
 #royaLibrary .lr-bar .lrs { margin-left: auto; }
+
+/* ── letting the menu out of the bar ──
+   On a desktop the Listening Room is drawn inside .abt, and
+   roya-library.css line 1209 says:
+
+     #royaLibrary .abt > :not(.ab-marg){position:relative; z-index:1}
+
+   — which makes EVERY direct child of .abt its own stacking context at
+   z-index 1. .lr-bar is one of those and .lr-list is another; they tie on
+   z-index, so the list wins on document order and paints over the bar. The
+   menu's own z-index:14 is sealed inside the bar's context and cannot reach
+   past it, so the page's titles and synopses showed straight through an
+   opaque panel.
+
+   Raising the BAR is the fix, not the menu: the menu can only ever rise
+   within whatever context its ancestor occupies. 40 clears .lr-list's 1 and
+   sits above the 30 .abt gives .ab-terms, which is the highest neighbour
+   this file's scale knows about.
+
+   position is restated because the bar is only positioned when it is a
+   direct child of .abt; on a phone it sits in .mob-sec and is not, and
+   z-index on a static box does nothing. */
+#royaLibrary .lr-bar.lr-hasfilter { position: relative; z-index: 40; }
 
 #royaLibrary .lrs {
   display: inline-flex;
@@ -34,6 +58,13 @@
 }
 
 #royaLibrary .lrs-lab { margin-right: 0 }
+
+/* ── the sort chips ──
+   Two of them now — "Longest" is removed by the script — and they stay on
+   one line together at every width. The bar's own wrap is what puts Sort
+   below the count on a phone; this stops the chips wrapping among
+   THEMSELVES, which is what split "Longest" onto a line of its own. */
+#royaLibrary .lr-bar.lr-hasfilter .lr-sorts { flex-wrap: nowrap }
 
 /* ── the control ──
    .pickbox is flex:1 1 auto and .pick-btn is width:100% because in the phone
@@ -86,7 +117,7 @@
    .lr-sorts is given a full-width basis so it always takes the new line
    rather than wrapping mid-cluster, which put one chip up beside Series. */
 @media (max-width: 820px) {
-  #royaLibrary .lr-bar:has(.lrs) .lr-sorts { flex: 1 0 100%; }
+  #royaLibrary .lr-bar.lr-hasfilter .lr-sorts { flex: 1 0 100%; }
   #royaLibrary .lrs { gap: .45rem }
   #royaLibrary .lrs-btn {
     max-width: 10.5rem;
