@@ -1,0 +1,138 @@
+/* ══════════════ OVERRIDES FOR THE GENERATED LIBRARY STYLESHEET ══════════════
+   Version 1 · last updated 2026-10-19 20:25 PDT
+   Served as assets/overrides/library-overrides.css?v=1 — keep the two equal.
+
+   WHY THIS FILE EXISTS.
+
+   library/roya-library.css is GENERATED — "Cut from the sandbox by
+   build-integration.py. Do not hand-edit: the next build overwrites it, and
+   the sandbox is the source." The build script is not in this repository, so
+   an edit made there could not be regenerated and would be reverted, without
+   warning, the next time anything else was built.
+
+   So changes to what that stylesheet draws are made from outside it, in a
+   file that loads after it. This is that file. It survives a rebuild of the
+   library, and deleting its one line from index.html puts everything in it
+   back exactly as the generator drew it.
+
+   WHAT BELONGS HERE, AND WHAT DOES NOT.
+
+   A rule belongs here when it changes the generated library and has no other
+   owner. A rule does NOT belong here when some other feature caused it and
+   should take it away again on removal: the Farsi hand in the left margin is
+   switched off in assets/intro/intro.css, because the introduction card is
+   what collided with it and deleting that card's stylesheet should bring the
+   hand back. Keep that distinction — it is the difference between an override
+   you can reason about and a pile of them.
+
+   Everything here is scoped to #royaLibrary, as the generated file is.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── the rail's story count ──
+   The sidebar read:
+
+     ─────────────
+        CHEW Z
+     ─────────────
+       117 STORIES
+     ─────────────
+     BROWSE BY SERIES
+
+   The count is gone. Two elements go with it, not one: .side-count itself,
+   and the <hr> immediately after it — otherwise the wordmark's own
+   border-bottom and that rule end up about two pixels apart and read as a
+   printing fault rather than as a frame.
+
+   The adjacent-sibling selector is deliberate. There are three <hr>s in the
+   rail and only this one belongs to the count; targeting it by position
+   would break the moment anything above it moves.
+
+   The number is not lost from the rail — "All stories · 117" is the first row
+   of the list directly beneath, and it stays correct on its own as the
+   catalogue grows.
+
+   No media query, on purpose. roya-library.js builds the rail only when
+   matchMedia("(max-width: 46rem)") does NOT match, so .side exists on the
+   desktop layout and nowhere else; wrapping this in a width query would
+   suggest the rail has a phone form that this rule has to avoid, and it has
+   not. */
+#royaLibrary .side-count,
+#royaLibrary .side-count + hr { display: none; }
+
+/* With the count and its rule gone, BROWSE BY SERIES sat 7px under the
+   wordmark's border — measured, not guessed. The wordmark carries no bottom
+   margin of its own; the air used to come from the count's margins and the
+   rule between them. 1.05rem restores 24px, which holds the frame around
+   CHEW Z and keeps the rail shorter than it was, which was the point. */
+#royaLibrary .side-who { margin-bottom: 1.05rem; }
+
+/* ── the close mark ──
+   Four controls close something, and they were four different buttons:
+
+     .rl-close  2.4rem box, 1rem glyph   closes the Library
+     .zoom-x    2.6rem box, 1.05rem      closes the enlarged cover (2.1rem on a phone)
+     .rdr-x     2.2rem box, .95rem       closes the reader
+     .lsn-x     2rem box,  .85rem        closes the Listen panel
+
+   All four draw the same SVG — DICON.close — so the only thing that made
+   them different was the box around it. They are one mark now: a 2rem
+   circle with a 1.02rem glyph at every one of them.
+
+   SMALLER, BUT NOT BY SHRINKING THE X. The X itself only spans 45% of its
+   own 24-unit viewBox, so at these sizes its arms are about 7px long. Taking
+   the glyph down as well would have left a stub inside a ring. What comes
+   down is the BOX — 2.6 and 2.4rem to 2rem, a fifth off the largest — while
+   the arms stay the length they were and the stroke goes from 1.6 to 1.25.
+   A finer line at the same length is what reads as smaller and sharper; a
+   shorter line at the same weight just reads as blunt.
+
+   ROUND, NOT SQUARE. Nothing else on this site closes a shape with a
+   rectangle: the count is a drawn ellipse, the play mark is a circle, the
+   sort chips are pills. The square boxes were the odd ones out.
+
+   Each keeps its own hover colour — bone in the Library, reader and zoom;
+   gold in the Listen panel, which sits on a warmer ground — because those
+   belong to the surfaces they sit on. What is shared is a faint ring that
+   comes up under the pointer and on keyboard focus, so the mark answers
+   without changing its colour scheme.
+
+   .phone-over .zoom-x is listed by name on purpose. It carries one more
+   class than the others, so it outranks a plain .zoom-x rule however late
+   this file loads, and without it the phone would keep the old 2.1rem box. */
+#royaLibrary .rl-close,
+#royaLibrary .zoom-x,
+#royaLibrary .phone-over .zoom-x,
+#royaLibrary .rdr-x,
+#royaLibrary .lsn-x {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  transition: color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+#royaLibrary .rl-close svg,
+#royaLibrary .zoom-x svg,
+#royaLibrary .rdr-x svg,
+#royaLibrary .lsn-x svg {
+  width: 1.02rem;
+  height: 1.02rem;
+  stroke-width: 1.25;
+}
+
+#royaLibrary .rl-close:hover,
+#royaLibrary .zoom-x:hover,
+#royaLibrary .rdr-x:hover,
+#royaLibrary .lsn-x:hover,
+#royaLibrary .rl-close:focus-visible,
+#royaLibrary .zoom-x:focus-visible,
+#royaLibrary .rdr-x:focus-visible,
+#royaLibrary .lsn-x:focus-visible {
+  box-shadow: 0 0 0 3px rgba(199, 148, 61, .13);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #royaLibrary .rl-close,
+  #royaLibrary .zoom-x,
+  #royaLibrary .rdr-x,
+  #royaLibrary .lsn-x { transition: none; }
+}
