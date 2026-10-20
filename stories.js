@@ -1528,6 +1528,17 @@ const STORIES = [
     key: "Sacred datura \u2014 momoy to the people who were on this coast first, who tell her as an old widow who did not die in the Flood but became the plant. This door does not announce itself: it leaves you in your own kitchen, gives you back your dead, and asks only that you not notice. The forgetting is the fare",
     notes: [2, 2, 3],
     synopsis: "The canyon above Santa Barbara. Milo is fifty-four and mends old films for a living \u2014 a scratch is a thing you can take out, a faded face a thing you can bring up again, patient frame by patient frame \u2014 when he comes home to look after a mother who is losing her memory. The house and its wild garden are exactly as he left them, down to the big white flowers that open only after dark. On the good days she knows him and is wholly herself. On the others she drifts, and burns the pots, and asks when his father, dead forty years, is coming home; and every night, when the flowers open, she goes out into them and talks to someone who is not there. Hunting the name she keeps saying, he uncovers a brother he never knew he had \u2014 a boy dead the same summer he himself was born, never once spoken of in fifty-four years \u2014 and a door at the bottom of the garden that his mother has walked through, alone, every night for fifty years. To learn what she chose, and who she chose it over, he decides to walk through it himself."
+  },
+  {
+    num: 117,
+    title: "A Madness We Kept Warm",
+    words: "32,800 words",
+    hook: "A deer in the road on an ordinary spring night, and what the hospital sent them home with afterwards",
+    door: "Dose",
+    room: "The Warm Room \u2014 where pain is not reduced but deposed, still there and governing nothing; where the committee that stands behind a person\u2019s shoulder calling them a fraud falls silent at last; and where two people thirty years married are held by something that appears to want nothing from them",
+    key: "The poppy \u2014 ten thousand years of relief in one flower, met first as a small amber bottle from a kind, tired doctor and later as the cheaper, nearer thing. In time it lifts nobody to heaven; it only returns them to ordinary, and ordinary can be reached no other way",
+    notes: [3, 3, 3],
+    synopsis: "Clare and Daniel met over a sentence and have spent the thirty years since putting the world into words \u2014 badly paid, perfectly matched, two writers whose first books were good and whose second ones will not come. When the city they built that life in grows too expensive to go on writing in, they do a brave and foolish thing: they sell what they have and buy a cheap, beautiful house at the end of the world, a dying coal town in the West Virginia mountains. For almost two years, in the gold light and the quiet, it works. They are happy. The work returns, better than it has ever been. Then, at the end of a March Thursday that was the best day they had had there, driving home over the mountain in the long gold light, a deer steps into the road. What the hospital sends them home with, for the long mending and the pain that will not fully leave, comes into the house looking exactly like mercy. One of them lives to set the whole of it down, nine years on, at the old desk: the warmth, the work it seemed to open, and the single night it closed."
   }
 ];
 
@@ -1819,7 +1830,7 @@ const TRILOGIES = [
        book. */
     title: "Here Be Delos",
     label: "",
-    books: [100, 107, 109, 113, 114, 116],
+    books: [100, 107, 109, 113, 114, 116, 117],
     /* No numbering. Each book is a different person and a different
        substance in a different part of the world; there is no reading
        order and a "1 of 1" on the row would promise a sequence that
