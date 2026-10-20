@@ -1,6 +1,14 @@
 /* ══════════════ OVERRIDES FOR THE GENERATED LIBRARY STYLESHEET ══════════════
-   Version 1 · last updated 2026-10-19 20:25 PDT
-   Served as assets/overrides/library-overrides.css?v=1 — keep the two equal.
+   Version 2 · last updated 2026-10-19 20:50 PDT
+   Served as assets/overrides/library-overrides.css?v=2 — keep the two equal.
+
+   ⚠ v1 and v2 are the SAME CSS. The stamp moved for one reason: index.html
+   shipped asking for ?v=1 before this file existed, so every browser that
+   visited in that window cached a 404 against that exact address and had
+   nothing to make it ask again. A new number is the only thing that reaches
+   those readers. If a stylesheet is ever added like this again, upload the
+   file FIRST, or raise the stamp afterwards — a link to a file that is not
+   there yet is not harmless, it poisons the address.
 
    WHY THIS FILE EXISTS.
 
