@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 28 · last updated 2026-10-19 21:36 PDT
+   Version 29 · last updated 2026-10-20 05:45 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10771,3 +10771,92 @@ html[data-theme="light-off"] .letter-scrim{ background:rgba(20,16,10,.62) }
    was a second label for one thing. The desktop rail's CHEW Z, under
    the emblem, is a different element (.side-who) and stays. */
 html #royaLibrary#royaLibrary .mob-name{ display:none }
+
+/* ══ The Author's Notes: two columns on a desktop, hinges on a phone ══
+   notesBody() in the generated library/roya-library.js emits the six
+   paragraphs as a flat run of .ab-note--long, one size, one measure,
+   stacked. That is a wall: every sentence asks for the same attention
+   and none of them gets any — while the writing itself runs long, long,
+   long, one line, long, one line. Two of those six ARE pull-quotes.
+   These rules say so.
+
+   notesShape() in script.js does the three things CSS cannot do to a
+   flat run: it wraps the notes in .ab-notes-flow so columns have
+   something to flow inside, and it marks the two one-line paragraphs
+   .ab-note--short by LENGTH rather than position, so adding or
+   reordering a note cannot land the treatment on the wrong one.
+
+   Why it is here rather than in the generated sheet: that file is cut
+   from the sandbox by build-integration.py and must not be hand-edited.
+   This one loads after it. */
+
+/* ── desktop: two columns, the opening spanning as a lede ──
+   72rem (1152px) is the floor. Below it two columns of this measure
+   would each fall under 24rem, which is where a serif at 1.1875rem
+   starts breaking badly on the long words this text is full of
+   ("interrogation", "transgressive"). The flow is capped at 62rem so
+   the pair never runs wider than the eye can return across.
+
+   column-span on the first paragraph keeps it inside the wrapper
+   rather than asking script.js to lift it out: one element less to
+   move, and the lede still spans the rule. */
+@media (min-width: 72rem){
+  html #royaLibrary .abt .ab-notes-flow{
+    max-width:62rem; margin:0 auto;
+    column-count:2; column-gap:4.5rem;
+    column-rule:1px solid var(--hairline);
+  }
+  html #royaLibrary .abt .ab-notes-flow .ab-note--long{
+    max-width:none; margin:0 0 1.1rem;
+    font-size:1.1875rem; line-height:1.7;
+    /* a paragraph split across the rule loses the thread; there is
+       room here to keep every one whole. */
+    break-inside:avoid;
+  }
+  html #royaLibrary .abt .ab-notes-flow .ab-note--long:first-child{
+    column-span:all;
+    max-width:44rem; margin:0 auto 1.9rem;
+    text-align:center;
+    font-family:"Cormorant Garamond","EB Garamond",Georgia,serif;
+    font-weight:500; font-size:1.85rem; line-height:1.4;
+    color:var(--bone);
+  }
+  /* The two hinges. No rules above and below them here — a horizontal
+     rule inside a column reads as the end of the column. The face, the
+     slant and the gold are enough at this size. */
+  html #royaLibrary .abt .ab-notes-flow .ab-note--short{
+    font-family:"Cormorant Garamond","EB Garamond",Georgia,serif;
+    font-style:italic; font-weight:500;
+    font-size:1.5rem; line-height:1.45;
+    color:var(--gold-lt);
+    /* Both hinges are two lines here and both ended with one word
+       alone on the second - "it." under eight words. balance evens the
+       lines instead, and on a browser without it the text simply wraps
+       as it did. */
+    text-wrap:balance;
+  }
+  /* The signature was set to the old 39rem measure, which now ends
+     two-thirds of the way across the flow. Centre it under the pair. */
+  html #royaLibrary#royaLibrary .abt .ab-sig{
+    max-width:62rem; text-align:center;
+  }
+}
+
+/* ── phone: the two hinges break the measure ──
+   One column here, so the rules CAN be drawn, and they are what makes
+   the break read as a break rather than as a paragraph that happens to
+   be short. .mob-sec only exists on a phone, so this needs no second
+   gate of its own; the query is kept so the rule says where it acts. */
+@media (max-width: 46rem){
+  html #royaLibrary .mob-sec .ab-note--short{
+    max-width:none; margin:1.9rem 0; padding:1.1rem 0;
+    border-top:1px solid var(--hairline);
+    border-bottom:1px solid var(--hairline);
+    text-align:center;
+    font-family:"Cormorant Garamond","EB Garamond",Georgia,serif;
+    font-style:italic; font-weight:500;
+    font-size:1.4rem; line-height:1.36;
+    color:var(--gold-lt);
+    text-wrap:balance;
+  }
+}

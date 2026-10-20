@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 33 · last updated 2026-10-16 20:05 PDT
+   Version 34 · last updated 2026-10-20 05:45 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2867,6 +2867,86 @@
 
           var syn = row.querySelector(".ab-syn");
           if (syn) syn.textContent = NOTE;
+        });
+      }
+
+      var tick = 0;
+      function schedule() {
+        if (tick) return;
+        tick = requestAnimationFrame(function () { tick = 0; apply(); });
+      }
+      apply();
+      new MutationObserver(schedule).observe(ROOT, { childList: true, subtree: true });
+    })();
+
+    /* ---- Author's Notes: two columns on a desktop, hinges on a phone --
+       notesBody() in the generated library/roya-library.js emits the six
+       paragraphs as a flat run of <p class="ab-note ab-note--long">, with
+       the eyebrow before them and the signature after. Three things a
+       stylesheet cannot do to a flat run are done here, and nothing else.
+
+       1 - THE TWO CUTS. Two sentences were dropped from the notes. The
+       text lives in NOTES inside the generated file, which is cut from the
+       sandbox by build-integration.py and must not be hand-edited, so the
+       trim is applied to the rendered paragraph instead. The second copy
+       of these notes, the static one in index.html under #panel-notes, was
+       edited directly and already reads correctly.
+
+       THIS STEP IS A BRIDGE, NOT A FEATURE. Make the same two cuts in the
+       sandbox source, rebuild, and delete CUTS and the loop that applies
+       it. Everything else here stays. Exact-match and idempotent: once a
+       sentence is gone, indexOf returns -1 and nothing happens.
+
+       2 - THE SHORT ONES. Two of the six are a single line - "Nothing here
+       resolves..." and "Bring your ugliest thought..." - and they are the
+       page's hinges. They get .ab-note--short so the stylesheet can set
+       them apart. Chosen by LENGTH, not by position: the two hinges are 51
+       and 59 characters and the next shortest note is 110, so a threshold
+       of 90 separates them with room on both sides, and adding or
+       reordering a note cannot put the treatment on the wrong paragraph.
+
+       3 - THE WRAPPER. CSS columns need an element to flow inside and the
+       generator emits none, so the run is wrapped in .ab-notes-flow. It is
+       inert until the desktop breakpoint picks it up, and it holds only
+       the notes: the eyebrow stays above it and the signature below.
+
+       Idempotent throughout and re-run on mutation, the same shape as
+       moodSwap above, because the Library rebuilds its panel whenever the
+       view changes. */
+    (function notesShape() {
+      var ROOT = document.getElementById("royaLibrary");
+      if (!ROOT) return;
+
+      /* [cut, what replaces it]. The first ends a sentence that has to
+         keep its full stop; the second is a whole trailing sentence and
+         takes its leading space with it. */
+      var CUTS = [
+        [" \u2014 which is why nothing here gets settled by one. An ordeal is the only interrogation that works on a witness who doesn\u2019t talk.", "."],
+        [" I let myself bend one thing about the world per book \u2014 never two \u2014 and everything else stays exactly as ordinary as it already is.", ""]
+      ];
+      var SHORT = 90;
+
+      function apply() {
+        ROOT.querySelectorAll(".abt, .mob-sec").forEach(function (wrap) {
+          var notes = wrap.querySelectorAll(".ab-note--long");
+          if (!notes.length) return;
+
+          notes.forEach(function (p) {
+            var t = p.textContent, i, at;
+            for (i = 0; i < CUTS.length; i++) {
+              at = t.indexOf(CUTS[i][0]);
+              if (at !== -1) t = t.slice(0, at) + CUTS[i][1] + t.slice(at + CUTS[i][0].length);
+            }
+            if (t !== p.textContent) p.textContent = t;
+            p.classList.toggle("ab-note--short", p.textContent.trim().length <= SHORT);
+          });
+
+          var first = notes[0];
+          if (first.parentNode && first.parentNode.classList.contains("ab-notes-flow")) return;
+          var flow = document.createElement("div");
+          flow.className = "ab-notes-flow";
+          first.parentNode.insertBefore(flow, first);
+          notes.forEach(function (p) { flow.appendChild(p); });
         });
       }
 
