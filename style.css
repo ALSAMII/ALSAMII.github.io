@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 27 · last updated 2026-10-16 20:55 PDT
+   Version 28 · last updated 2026-10-19 21:36 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10352,13 +10352,70 @@ html #royaLibrary#royaLibrary .hint .hint-step i{
    110% rather than the 150% the previous plate wanted: this painting's
    lit area is wide and reaches further left, so the same size put mean
    18.2 and p90 47.3 behind the paragraph at 390 — outside the house
-   range on every width. The +1rem push is kept; it costs nothing here
-   because the subject ends at 90% of the frame. */
+   range on every width.
+
+   THE PUSH IS NOW A PULL (2026-10-19). The plate behind this row was
+   replaced: a body on a table with the figure rising out of it, in place
+   of the corridor. It is 3:1 like the one before it, but it is composed
+   much further right. Brightest column at 82.1% against the corridor's
+   67.1% — and, more to the point, it goes on having content long after
+   the brightest part: by column maximum it runs to 98.3%, where the
+   corridor stopped at 90.9%. The right end of the table and the outer
+   web live in that tail.
+
+   That tail is what the old +1rem push cost. The art box already
+   overhangs the row's right edge by 80px on its own; the push added 16
+   more, and everything past 93% of the plate fell off the screen — the
+   figure's head at the top of the column, the right end of the table at
+   the bottom. The comment this replaces said the push "costs nothing
+   here because the subject ends at 90% of the frame", which was true of
+   the corridor and is not true of this plate.
+
+   -4rem pulls the plate back by 5rem in all. The visible window becomes
+   23.3-96.6% of the plate at 320, 24.0-97.3% at 390 and 24.2-97.5% at
+   430, so the whole composition is in frame at every width; what is
+   given up is the left quarter, which is unlit web.
+
+   An earlier cut at -2.5rem was measured and rejected: it reached only
+   91.6-93.9%, which recovers the head but still clips the table.
+
+   Re-measured on the new plate at -4rem, the ground under the paragraph
+   is still QUIETER than the corridor was, at every width:
+
+                     ground under the paragraph
+                 320        390        430
+     this     2.4/4.0    3.6/7.0    4.2/9.0     (mean / p90)
+     before   4.4/8.3    6.7/17.0   7.7/20.0
+     house    1.4-11.7 mean, 3.0-28.3 p90, across all eight
+
+   The desktop rule is untouched: there the box is filled by `cover` and
+   anchored right, the window is 28.1-100%, and the plate sits correctly
+   as it is. */
 @media (max-width: 760px){
   html #royaLibrary#royaLibrary .mob-sec .ab-row[data-rec="113"] .ab-art{
     background-size:110% auto;
-    background-position:calc(100% + 1rem) 50%;
+    background-position:calc(100% - 4rem) 50%;
     background-repeat:no-repeat;
+  }
+
+  /* THE GLOSS ON ITS OWN LINE. .ab-gl is an inline span that follows the
+     title inside .ab-head, so on a phone it begins wherever the title
+     happens to end. For this row that left the word "she" stranded on the
+     end of the title line, with "brought everyone back but the one she
+     wanted" starting the next — the phrase broken after its first word.
+
+     display:block starts it on a line of its own and lets it wrap on its
+     own terms; margin-left:0 drops the .5rem indent the inline version
+     needs, so it sets flush with the title above it. Nothing else about
+     the gloss changes: the size still comes from the sheet's own
+     .mob-sec .ab-gl rule, and the text shadow is untouched.
+
+     Scoped to this row rather than to .mob-sec .ab-gl, because every
+     other row's gloss is short enough to sit where it is and this is not
+     the moment to re-line eight of them. */
+  html #royaLibrary#royaLibrary .mob-sec .ab-row[data-rec="113"] .ab-gl{
+    display:block;
+    margin-left:0;
   }
 }
 
