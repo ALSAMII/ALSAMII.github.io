@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 680 · last updated 2026-10-20 05:45 PDT
+<!-- Version 681 · last updated 2026-10-23 12:35 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -163,10 +163,10 @@
 
      The four ?v= further up — the two share images and the two
      preloads — are separate and lag deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=647">
+<link rel="stylesheet" href="style.css?v=648">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=647">
+<link rel="stylesheet" href="library/roya-library.css?v=648">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -1180,8 +1180,8 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=647"></script>
-<script src="script.js?v=647"></script>
+<script src="stories.js?v=648"></script>
+<script src="script.js?v=648"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1197,7 +1197,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=647"></script>
+<script src="library/roya-library.js?v=648"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox
