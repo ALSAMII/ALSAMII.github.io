@@ -1551,6 +1551,18 @@ const STORIES = [
     key: "The knock on the pipes \u2014 four, a pause, two, at eleven every night, which the whole street has heard for twenty years and taken for the house settling. It is Morse, spelled into Persian, and it is the longest conversation in the house; anyone who troubles to listen can learn it, and in twenty years nobody above the floor has troubled",
     notes: [3, 3, 3],
     synopsis: "Nasrin is twenty-two and from the part of Tehran the money never reached. The job is in the part it did \u2014 nanny to a six-year-old in a walled house on Fereshteh Street, for three times what the salon paid. The old man who owns it looks at her once and then at the wall. The cook, Touran, has been there thirty years and sets one plate more than the house can eat. There is a photograph of three boys that nobody explains. And every night at eleven the pipes knock \u2014 four, a pause, two \u2014 and the child says it is the house saying goodnight. The maids on the street have a name for the place; they have heard it for years, and the owners have never once asked. What Nasrin finds at the end of the back corridor has been there since 2004, and what she decodes from it, one knock at a time, is older and stranger than a secret: it is the thing that has been holding the house up. Then a poor woman who has found the holiest thing a rich family owns does what poor women do. She names a price."
+  },
+
+  {
+    num: 119,
+    title: "The Light Is Yours to Take",
+    words: "32,500 words",
+    hook: "A pianist in a flooded warehouse, thousands of bulbs standing in the black water, and one tune that no light has ever answered",
+    door: "Withholding",
+    room: "The Warehouse \u2014 a flooded hall in Los Angeles where thousands of small glass bulbs stand in black water on stems and a hundred strangers a night sit above the surface in the dark; a stage, a piano, three empty chairs, and a room that answers whatever it recognises with light and goes dark again when the music lets go",
+    key: "The room itself \u2014 the machine built to answer memory with light, which brings up a handful of bulbs for anything it knows and drops them when the music does. It gives back only what it was given, which is why the one tune it cannot answer is the only thing in the hall telling the truth",
+    notes: [2, 2, 3],
+    synopsis: "A pianist plays in a flooded warehouse in Los Angeles. Thousands of small glass bulbs stand in the black water on stems, and a hundred strangers a night sit above the surface in the dark. When he plays something the room remembers, a light comes on \u2014 he plays short things, a few seconds each, something once hummed at a sink, and each one brings up its handful of lights and lets them go. Nobody who leaves can remember a single bulb. Around the fiftieth minute, the room weeps. He believes he built it for his mother, and that she is sitting in the chair behind him tonight, eighty years old, with a blanket on her knees and a woman\u2019s hand on her shoulder. Tonight is the last night, and for the first time he has chosen the order: her memories newest first, back through the years to the bottom of the house she grew up in, to a courtyard in Tehran and a pool under a green canvas that nobody ever explained. Two people who have known the producer since school watch from a platform over the water, told only that the room was made for someone. Then his hands drift into a tune the room does not know, and no light answers, and a woman who has not spoken all night begins to hum."
   }
 ];
 
