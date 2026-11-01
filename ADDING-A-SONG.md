@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-31 23:00 PDT — written with the Record Room. 3 albums, 17 songs.
+<!-- Updated 2026-11-01 01:00 PDT — written with the Record Room. 3 albums, 17 songs.
      The house standard for the object itself is roya-recordings-format.md. -->
 # Adding a song
 
@@ -103,6 +103,13 @@ highlights). `x` is the line.
   zero-width non-joiner** where it belongs — `می‌دونم`, not `میدونم`.
   Direction is set by the `fa` flag, not by marks in the text.
 - A long instrumental is one `mark`, not a run of empties.
+
+**The sheet is read, not followed.** The theatre shows the whole lyric
+and the reader scrolls it; no line lights and nothing seeks. The `t`
+values are still stored — a read-along can be switched back on in
+`renderLyrics()`/`onTime()` in `script.js` once the times are real —
+but until then they need only be in order. Do not spend effort timing
+them.
 
 **A song may ship without a sheet.** The player shows a stated empty
 state and still plays. Omit the `lyric` field rather than pointing at a

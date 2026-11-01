@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 40 · last updated 2026-11-01 00:35 PDT
+   Version 41 · last updated 2026-11-01 00:55 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11244,7 +11244,7 @@ body.rec-on .to-top { display: none !important; }
 }
 .rec-th-body, #royaLibrary .rec-th-body{
   position: relative; height: 100%; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; text-align: center;
+  align-items: center; justify-content: flex-start; text-align: center;
   padding: clamp(1.25rem, 4vw, 3.5rem);
   padding-top: calc(clamp(1.25rem, 4vw, 3.5rem) + env(safe-area-inset-top, 0px));
   padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
@@ -11265,29 +11265,31 @@ body.rec-on .to-top { display: none !important; }
 /* A real scroller. The reader can move through the whole lyric; the
    song pulls the view back to the verse being sung when they stop. The
    inner padding lets the first and last verse sit at the centre line. */
+/* The sheet fills what is left of the screen under the title and above
+   the dock, and the reader scrolls it. Nothing lights, nothing follows. */
 .rec-lyr, #royaLibrary .rec-lyr{
-  position: relative; width: 100%; max-width: 40rem;
-  height: clamp(13rem, 46vh, 24rem); overflow-y: auto; overflow-x: hidden;
-  overscroll-behavior: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent 100%);
-          mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent 100%);
+  position: relative; width: 100%; max-width: 44rem;
+  flex: 1 1 auto; min-height: 10rem; overflow-y: auto; overflow-x: hidden;
+  overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--hairline) transparent;
+  -webkit-overflow-scrolling: touch;
+  -webkit-mask-image: linear-gradient(transparent, #000 6%, #000 94%, transparent 100%);
+          mask-image: linear-gradient(transparent, #000 6%, #000 94%, transparent 100%);
 }
-.rec-lyr::-webkit-scrollbar, #royaLibrary .rec-lyr::-webkit-scrollbar{ display: none; }
-.rec-lyr-in, #royaLibrary .rec-lyr-in{ padding: 40% 0 45%; }
+.rec-lyr::-webkit-scrollbar, #royaLibrary .rec-lyr::-webkit-scrollbar{ width: 4px; }
+.rec-lyr::-webkit-scrollbar-thumb, #royaLibrary .rec-lyr::-webkit-scrollbar-thumb{ background: var(--hairline); border-radius: 2px; }
+.rec-lyr-in, #royaLibrary .rec-lyr-in{ padding: 1rem 0 2.5rem; }
 .rec-ln, #royaLibrary .rec-ln{
-  display: block; width: 100%; background: none; border: 0; cursor: pointer;
+  display: block; width: 100%; margin: 0; background: none; border: 0;
   font-family: var(--serif); font-weight: 500; text-align: center;
-  font-size: clamp(1.15rem, 2.4vw, 1.5rem); line-height: 1.3;
-  color: rgba(156, 146, 128, 0.7); padding: 0.32rem 0;
-  transition: color 0.3s ease;
+  font-size: clamp(1.05rem, 1.9vw, 1.3rem); line-height: 1.45;
+  color: var(--parchment); padding: 0.14rem 0;
 }
-.rec-ln:hover, #royaLibrary .rec-ln:hover{ color: var(--parchment); }
 .rec-ln.past, #royaLibrary .rec-ln.past{ color: rgba(156, 146, 128, 0.38); }
 /* The whole verse lights, not the line: every line of the section being
    sung is .cur; the line itself is .now, a shade brighter. */
 .rec-ln.cur, #royaLibrary .rec-ln.cur{ color: var(--parchment); }
 .rec-ln.now, #royaLibrary .rec-ln.now{ color: var(--ember-lit); }
-.rec-ln.mark, #royaLibrary .rec-ln.mark{
+.rec-ln.mark, #royaLibrary .rec-ln.mark{ margin-top: 1.1rem;
   font-family: var(--sans); font-size: 0.58rem !important; letter-spacing: 0.24em;
   text-transform: uppercase; color: var(--faded); font-weight: 400;
 }

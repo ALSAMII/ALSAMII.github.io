@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 42 · last updated 2026-11-01 00:35 PDT
+   Version 43 · last updated 2026-11-01 00:55 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5230,66 +5230,19 @@
       box.append(e);
       return;
     }
+    /* The sheet is for READING. No line is lit, nothing follows the
+       song, nothing seeks: the reader scrolls through the whole lyric
+       at their own pace while the record plays. (The sheets still
+       carry times, so a read-along can come back later if wanted.) */
     rows.forEach(function (r) {
-      var b = el("button", "rec-ln" + (r.k === "mark" ? " mark" : "") + (s && s.fa ? " fa" : ""), r.x);
-      b.type = "button";
-      b.addEventListener("click", function () { readerAt = 0; audio.currentTime = r.t + 0.15; });
+      var b = el("p", "rec-ln" + (r.k === "mark" ? " mark" : "") + (s && s.fa ? " fa" : ""), r.x);
       box.append(b);
       lines.push({ t: r.t, node: b });
     });
   }
 
-  function onTime() {
-    paintTransport();
-    if (!lines.length) return;
-    var t = audio.currentTime, i = -1;
-    for (var k = 0; k < lines.length; k++) { if (lines[k].t <= t) i = k; else break; }
-    if (i === lineIdx) return;
-    lineIdx = i;
-    /* The section being sung lights as a block: from the last mark at or
-       before the current line to the next mark after it. The line itself
-       is "now" on top of that. Everything before the block is "past". */
-    var from = 0, to = lines.length;
-    for (var a = i; a >= 0; a--) { if (lines[a].node.classList.contains("mark")) { from = a; break; } }
-    for (var z = i + 1; z < lines.length; z++) { if (lines[z].node.classList.contains("mark")) { to = z; break; } }
-    for (var j = 0; j < lines.length; j++) {
-      var inBlock = i >= 0 && j >= from && j < to;
-      lines[j].node.classList.toggle("cur", inBlock);
-      lines[j].node.classList.toggle("now", j === i);
-      lines[j].node.classList.toggle("past", i >= 0 && j < from);
-    }
-    var cl = document.getElementById("recCur");
-    if (cl) cl.textContent = i >= 0 ? lines[i].node.textContent : "";
-    if (i >= 0) follow(i, from, to, false);
-  }
+  function onTime() { paintTransport(); }
 
-  /* The sheet is a real scroller: the reader can wheel or drag through
-     the whole lyric at any time. The song pulls the view back to the
-     verse being sung only when the reader has not touched the sheet
-     for a few seconds; a tap on any line is a seek, and re-syncs. */
-  var readerAt = 0;
-  function reading() { return Date.now() - readerAt < 5000; }
-  function follow(i, from, to, force) {
-    var wrap = document.getElementById("recLyr");
-    if (!wrap || (!force && reading())) return;
-    var n = lines[i].node, first = lines[from].node, last = lines[to - 1].node;
-    var bTop = first.offsetTop, bH = (last.offsetTop + last.offsetHeight) - bTop;
-    var top = bH < wrap.clientHeight * 0.8
-      ? bTop - (wrap.clientHeight / 2) + (bH / 2)
-      : n.offsetTop - (wrap.clientHeight / 2) + (n.offsetHeight / 2);
-    try { wrap.scrollTo({ top: Math.max(0, top), behavior: "smooth" }); }
-    catch (x) { wrap.scrollTop = Math.max(0, top); }
-  }
-  (function readerScroll() {
-    var wrap = document.getElementById("recLyr");
-    if (!wrap) return;
-    ["wheel", "touchstart", "touchmove", "pointerdown"].forEach(function (ev) {
-      wrap.addEventListener(ev, function () { readerAt = Date.now(); }, { passive: true });
-    });
-    wrap.addEventListener("keydown", function (e) {
-      if (/^(Arrow|Page|Home|End)/.test(e.key)) readerAt = Date.now();
-    });
-  })();
   /* ── painting ───────────────────────────────────────────────── */
   function paintDock() {
     if (!cur) return;
@@ -5416,8 +5369,8 @@
   function openTheatre() {
     theatre.hidden = false;
     requestAnimationFrame(function () { theatre.classList.add("show"); });
-    readerAt = 0; lineIdx = -2;         /* force a fresh pass that also scrolls */
-    onTime();
+    var wrap = document.getElementById("recLyr");
+    if (wrap) wrap.scrollTop = 0;
   }
   function closeTheatre() {
     theatre.classList.remove("show");
