@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 50 · last updated 2026-11-01 06:15 PDT
+   Version 51 · last updated 2026-11-01 06:18 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11215,13 +11215,13 @@ body.rec-on .to-top { display: none !important; }
 .rec-dock-x svg, #royaLibrary .rec-dock-x svg{ width: 13px; height: 13px; }
 .rec-dock-x:hover, #royaLibrary .rec-dock-x:hover{ color: var(--ember-lit); }
 .rec-dock-lyr, #royaLibrary .rec-dock-lyr{
-  margin-right: 0.6rem; gap: 0.45rem; border-radius: 999px;
-  padding: 0.5rem 0.95rem 0.5rem 0.8rem;
+  margin-right: 0.6rem; gap: 0.35rem; border-radius: 999px;
+  padding: 0.32rem 0.7rem 0.32rem 0.58rem; font-size: 0.55rem;
   border-color: var(--ember-soft); color: var(--ember);
-  background: rgba(216, 166, 95, 0.08); letter-spacing: 0.22em;
+  background: rgba(216, 166, 95, 0.08); letter-spacing: 0.2em;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-.rec-dock-lyr svg, #royaLibrary .rec-dock-lyr svg{ width: 14px; height: 14px; }
+.rec-dock-lyr svg, #royaLibrary .rec-dock-lyr svg{ width: 11px; height: 11px; }
 .rec-dock-lyr:hover, #royaLibrary .rec-dock-lyr:hover{
   background: rgba(216, 166, 95, 0.18); border-color: var(--ember); color: var(--ember-lit);
 }
