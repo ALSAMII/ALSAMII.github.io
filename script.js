@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 47 · last updated 2026-11-01 03:50 PDT
+   Version 48 · last updated 2026-11-01 05:50 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5260,15 +5260,6 @@
     }
     var t = document.getElementById("recDockTtl");
     if (t) { t.textContent = cur.title; t.className = "rec-dock-ttl" + (cur.fa ? " fa" : ""); }
-    var sub = document.getElementById("recDockSub");
-    /* A title track carries its album's name, so printing both reads as a
-       stutter. Where they match, say where it sits on the record instead. */
-    if (sub) {
-      sub.textContent = cur.book ? (a.title + " · No. " + cur.book)
-        : (cur.title === a.title
-            ? ("Track " + cur.track + " of " + a._songs.length)
-            : a.title);
-    }
     var th = document.getElementById("recThTtl");
     if (th) { th.textContent = cur.title; th.className = "rec-th-ttl" + (cur.fa ? " fa" : ""); }
     var thn = document.getElementById("recThNow");

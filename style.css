@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 47 · last updated 2026-11-01 03:30 PDT
+   Version 48 · last updated 2026-11-01 05:50 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11188,16 +11188,12 @@ body.rec-on .to-top { display: none !important; }
   width: 40px; height: 40px; flex: none; border: 1px solid var(--hairline);
   object-fit: cover; display: block;
 }
-.rec-dock-id, #royaLibrary .rec-dock-id{ min-width: 0; width: 12rem; flex: none; }
+.rec-dock-id, #royaLibrary .rec-dock-id{ min-width: 0; width: 15rem; flex: none; }
 .rec-dock-ttl, #royaLibrary .rec-dock-ttl{
-  display: block; font-family: var(--serif-read); font-size: 0.83rem;
+  display: block; font-family: var(--serif-read); font-size: 1.1rem; line-height: 1.25;
   color: var(--parchment); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.rec-dock-ttl.fa, #royaLibrary .rec-dock-ttl.fa{ text-align: left; }
-.rec-dock-sub, #royaLibrary .rec-dock-sub{
-  display: block; font-family: var(--sans); font-size: 0.55rem;
-  letter-spacing: 0.17em; text-transform: uppercase; color: var(--faded); margin-top: 0.1rem;
-}
+.rec-dock-ttl.fa, #royaLibrary .rec-dock-ttl.fa{ text-align: left; font-size: 1.2rem; }
 .rec-cur, #royaLibrary .rec-cur{
   flex: 1; min-width: 0; text-align: center; font-family: var(--serif);
   font-weight: 500; font-size: 1rem; color: var(--ember-lit);
@@ -11391,7 +11387,6 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   #recNow, #royaLibrary #recNow{ grid-area: now; }
   .rec-scrub, #royaLibrary .rec-scrub{ grid-area: scrub; }
   #recTot, #royaLibrary #recTot{ grid-area: tot; }
-  .rec-dock-sub, #royaLibrary .rec-dock-sub{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .rec-th-dl, #royaLibrary .rec-th-dl{ top: 0.7rem; left: 0.7rem; }
   .rec-th-close, #royaLibrary .rec-th-close{ top: 0.7rem; right: 0.7rem; width: 2.2rem; height: 2.2rem; }
   .rec-th-body, #royaLibrary .rec-th-body{ padding-top: calc(3.4rem + env(safe-area-inset-top, 0px)); }
