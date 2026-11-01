@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 44 · last updated 2026-11-01 02:05 PDT
+   Version 45 · last updated 2026-11-01 02:20 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11265,8 +11265,18 @@ body.rec-on .to-top { display: none !important; }
   padding-top: calc(clamp(1.25rem, 4vw, 3.5rem) + env(safe-area-inset-top, 0px));
   padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
 }
-.rec-th-acts, #royaLibrary .rec-th-acts{ position: absolute; top: 1rem; right: 1.1rem; z-index: 3; display: flex; gap: 0.5rem; }
-.rec-th-acts .rec-btn.busy, #royaLibrary .rec-th-acts .rec-btn.busy{ opacity: 0.4; pointer-events: none; }
+/* Download at the top-left, the close — a ring with an × — at the top-right */
+.rec-th-dl, #royaLibrary .rec-th-dl{ position: absolute; top: 1rem; left: 1.1rem; z-index: 3; }
+.rec-th-dl.busy, #royaLibrary .rec-th-dl.busy{ opacity: 0.4; pointer-events: none; }
+.rec-th-close, #royaLibrary .rec-th-close{
+  position: absolute; top: 1rem; right: 1.1rem; z-index: 3;
+  appearance: none; background: rgba(0,0,0,0.35); border: 1px solid var(--hairline);
+  color: var(--parchment); width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; padding: 0;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.rec-th-close svg, #royaLibrary .rec-th-close svg{ width: 15px; height: 15px; }
+.rec-th-close:hover, #royaLibrary .rec-th-close:hover{ border-color: var(--ember-soft); color: var(--ember-lit); }
 /* while the dock is up, the page keeps room for it under the last row */
 body.rec-dock-on #recBody { padding-bottom: 7rem; }
 body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem; }
@@ -11375,7 +11385,8 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   .rec-scrub, #royaLibrary .rec-scrub{ grid-area: scrub; }
   #recTot, #royaLibrary #recTot{ grid-area: tot; }
   .rec-dock-sub, #royaLibrary .rec-dock-sub{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .rec-th-acts, #royaLibrary .rec-th-acts{ top: 0.7rem; right: 0.7rem; }
+  .rec-th-dl, #royaLibrary .rec-th-dl{ top: 0.7rem; left: 0.7rem; }
+  .rec-th-close, #royaLibrary .rec-th-close{ top: 0.7rem; right: 0.7rem; width: 2.2rem; height: 2.2rem; }
   .rec-th-body, #royaLibrary .rec-th-body{ padding-top: calc(3.4rem + env(safe-area-inset-top, 0px)); }
   .rec-cur, #royaLibrary .rec-cur{ display: none; }
   .rec-dock-art, #royaLibrary .rec-dock-art{ width: 32px; height: 32px; }
