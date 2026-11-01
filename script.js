@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 53 · last updated 2026-11-01 07:15 PDT
+   Version 54 · last updated 2026-11-01 11:10 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5215,15 +5215,20 @@
   audio.addEventListener("pause", paintTransport);
   audio.addEventListener("timeupdate", onTime);
   audio.addEventListener("loadedmetadata", paintTransport);
-  audio.addEventListener("ended", function () {
-    /* whatever is lined up comes first */
+  /* What comes after this song: whatever is lined up in Up next first,
+     otherwise the album's next track. Shared by the end of a song and
+     the next button in the bar. At the end of an album the song's own
+     ending stops the player; the button rolls round to track one. */
+  function playNext(fromButton) {
+    if (!cur) return;
     if (queue.length) { var nx = queue.shift(); paintQueue(); load(nx, true); return; }
-    /* otherwise roll on to the next track of the album, then stop */
     var list = BY_ALBUM[cur.album]._songs;
     var i = list.indexOf(cur);
     if (i > -1 && i + 1 < list.length) load(list[i + 1].cat, true);
+    else if (fromButton && list.length) load(list[0].cat, true);
     else paintTransport();
-  });
+  }
+  audio.addEventListener("ended", function () { playNext(false); });
   audio.addEventListener("error", function () {
     var n = document.getElementById("recCur");
     if (n) n.textContent = "This one would not load";
@@ -5294,9 +5299,9 @@
     });
     var d = cur ? (isFinite(audio.duration) ? audio.duration : cur.dur) : 0;
     var p = d ? (audio.currentTime / d) * 100 : 0;
-    var now = document.getElementById("recNow"), tot = document.getElementById("recTot");
-    if (now) now.textContent = mmss(audio.currentTime);
-    if (tot) tot.textContent = mmss(d);
+    /* one time in the bar, on the right, counting down to the end */
+    var tot = document.getElementById("recTot");
+    if (tot) tot.textContent = "\u2212" + mmss(Math.max(0, d - audio.currentTime));
     var sc = document.getElementById("recScrub");
     if (sc) {
       sc.querySelector(".rec-fill").style.width = p + "%";
@@ -5641,6 +5646,7 @@
     var act = b.dataset.act;
     if (act === "play")  { togglePlay(); return; }
     if (act === "back")  { audio.currentTime = 0; return; }
+    if (act === "skip")  { playNext(true); return; }
     if (act === "fwd")   { if (cur) audio.currentTime = Math.min((audio.duration || cur.dur) - 0.5, audio.currentTime + 15); return; }
     if (act === "dockclose") { audio.pause(); queueShow(false); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
     if (act === "queue") { queueShow(qPanel && qPanel.hidden); return; }
