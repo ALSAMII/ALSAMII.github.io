@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 37 · last updated 2026-10-31 23:40 PDT
+   Version 40 · last updated 2026-11-01 00:35 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10982,16 +10982,24 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
 .rec-h1:focus, #royaLibrary .rec-h1:focus{ outline: none; box-shadow: none; }
 /* no "back to the top" while the room is open: it belongs to the page behind */
 body.rec-on .to-top { display: none !important; }
+/* The ambient-sound toggle at the top of the desktop rail is gone, at
+   ChewZ's asking. It is the Library's own control (generated), so it is
+   hidden here rather than removed. The phone's copy is untouched. */
+#royaLibrary .lib .side-sound { display: none !important; }
+/* The dock no longer echoes the line being sung — the sheet does that */
+.rec-cur, #royaLibrary .rec-cur { display: none !important; }
 /* the magnifier: the page's own .series-zoom look, placed by script.js
    on the lower-right of the centre sleeve */
 .rec-zoom-btn, #royaLibrary .rec-zoom-btn{
-  top: auto; right: auto; z-index: 3; width: 1.8rem; height: 1.8rem;
-  opacity: 0; transition: opacity 0.3s ease;
+  top: auto; right: auto; z-index: 3; width: 2.1rem; height: 2.1rem;
+  background: rgba(0,0,0,0.55); border: 1px solid var(--ember-soft); color: var(--ember-lit);
+  border-radius: 50%; opacity: 0; transition: opacity 0.3s ease, background 0.2s ease;
 }
+.rec-zoom-btn:hover, #royaLibrary .rec-zoom-btn:hover{ background: var(--ember); color: var(--night); }
 .rec-zoom-btn.on, #royaLibrary .rec-zoom-btn.on{ opacity: 1; }
-.rec-zoom-btn svg, #royaLibrary .rec-zoom-btn svg{ width: 0.9rem; height: 0.9rem; }
+.rec-zoom-btn svg, #royaLibrary .rec-zoom-btn svg{ width: 1rem; height: 1rem; }
 #recZoom, #royaLibrary #recZoom{ z-index: 67; }
-.rec-zoom .lightbox-img, #royaLibrary .rec-zoom .lightbox-img{ max-height: min(86vh, 1200px); max-width: min(92vw, 1200px); }
+.rec-zoom .lightbox-img, #royaLibrary .rec-zoom .lightbox-img{ max-height: min(88vh, 1024px); max-width: min(94vw, 1536px); }
 /* a book named in a synopsis is a way into the Library */
 .rec-booklink, #royaLibrary .rec-booklink{
   color: var(--ember-lit); text-decoration: none;
@@ -11125,14 +11133,17 @@ body.rec-on .to-top { display: none !important; }
 /* the lyrics button: a small labelled pill right after the title, so it
    is plainly a thing to press and not a decoration */
 .rec-trk-ly, #royaLibrary .rec-trk-ly{
-  appearance: none; background: none; border: 1px solid var(--hairline); border-radius: 999px;
-  padding: 0.22rem 0.6rem 0.2rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem;
-  font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--faded); margin-left: 0.7rem; vertical-align: middle; position: relative; top: -1px;
+  appearance: none; background: none; border: 0; padding: 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.3rem; vertical-align: middle;
+  margin-left: 0.75rem; position: relative; top: -0.05em;
+  font-family: var(--sans); font-size: 0.54rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ember); line-height: 1; border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
-.rec-trk-name, #royaLibrary .rec-trk-name{ vertical-align: middle; }
-.rec-trk-ly svg, #royaLibrary .rec-trk-ly svg{ width: 12px; height: 12px; }
-.rec-trk-ly:hover, #royaLibrary .rec-trk-ly:hover, .rec-trk.on .rec-trk-ly, #royaLibrary .rec-trk.on .rec-trk-ly{ color: var(--ember-lit); border-color: var(--ember-soft); }
+.rec-trk-ly svg, #royaLibrary .rec-trk-ly svg{ width: 11px; height: 11px; }
+.rec-trk-ly:hover, #royaLibrary .rec-trk-ly:hover, .rec-trk.on .rec-trk-ly, #royaLibrary .rec-trk.on .rec-trk-ly{ color: var(--ember-lit); border-bottom-color: var(--ember-soft); }
+/* a Persian title sets larger and taller; the label keeps to its middle */
+.rec-trk-t.fa .rec-trk-ly, #royaLibrary .rec-trk-t.fa .rec-trk-ly{ top: 0.02em; margin-left: 0.85rem; }
 .rec-trk-sh, .rec-trk-dl, #royaLibrary .rec-trk-sh, #royaLibrary .rec-trk-dl{
   appearance: none; background: none; border: 0; padding: 0.2rem; cursor: pointer;
   color: var(--faded); display: grid; place-items: center; text-decoration: none;
@@ -11321,7 +11332,7 @@ body.rec-on .to-top { display: none !important; }
   
   .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.3rem 1.5rem 1fr auto auto; gap: 0.45rem; }
   .rec-trk-ly span, #royaLibrary .rec-trk-ly span{ display: none; }
-  .rec-trk-ly, #royaLibrary .rec-trk-ly{ padding: 0.3rem 0.45rem; }
+  .rec-trk-ly, #royaLibrary .rec-trk-ly{ margin-left: 0.55rem; }
   .rec-nub.prev, #royaLibrary .rec-nub.prev{ left: 0.4rem; }
   .rec-nub.next, #royaLibrary .rec-nub.next{ right: 0.4rem; }
   .rec-nub, #royaLibrary .rec-nub{ width: 2.2rem; height: 2.2rem; }

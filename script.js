@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 41 · last updated 2026-10-31 23:40 PDT
+   Version 42 · last updated 2026-11-01 00:35 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -4958,8 +4958,7 @@
     edges();
     placeZoom(on, reel, mid - c);
   }
-  /* The magnifier sits on the lower-right of the centre SLEEVE. The
-     hero is 3:2 with the sleeve on its left two-thirds, so the point is
+  /* The magnifier sits at the top-right of the centre record's picture,
      measured off the item, not the reel. */
   function placeZoom(on, reel, tx) {
     var z = document.getElementById("recZoomBtn");
@@ -4967,8 +4966,9 @@
     var art = on.firstElementChild;
     var left = on.offsetLeft + tx, top = art.offsetTop + reel.querySelector(".rec-shelf").offsetTop;
     var w = on.offsetWidth, h = art.offsetHeight;
-    z.style.left = Math.round(left + w * 0.60) + "px";
-    z.style.top  = Math.round(top + h * 0.80) + "px";
+    /* top-right of the picture, where the backdrop is dark */
+    z.style.left = Math.round(left + w - z.offsetWidth - w * 0.03) + "px";
+    z.style.top  = Math.round(top + h * 0.05) + "px";
     z.classList.add("on");
   }
   function edges() {
@@ -5394,7 +5394,8 @@
   function openZoom() {
     if (!zoomBox || !curAlbum) return;
     var img = document.getElementById("recZoomImg"), cap = document.getElementById("recZoomCap");
-    img.src = stamped("albums/flat/" + pad2(curAlbum.num) + ".jpg");
+    /* the 3-D render itself — the full 1536 × 1024 hero, not the flat face */
+    img.src = heroSrc(curAlbum);
     img.alt = curAlbum.title + " — album cover";
     if (cap) cap.textContent = curAlbum.title + " · Chew Z";
     zoomBox.hidden = false;
