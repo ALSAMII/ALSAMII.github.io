@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 48 · last updated 2026-11-01 05:50 PDT
+   Version 50 · last updated 2026-11-01 06:25 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5263,7 +5263,7 @@
     var th = document.getElementById("recThTtl");
     if (th) { th.textContent = cur.title; th.className = "rec-th-ttl" + (cur.fa ? " fa" : ""); }
     var thn = document.getElementById("recThNow");
-    if (thn) thn.textContent = a.title;
+    if (thn) { thn.textContent = a.title; thn.className = "rec-th-now" + (a.fa ? " fa" : ""); }
     var bg = document.getElementById("recThBg");
     if (bg) bg.style.backgroundImage = "url(" + flatSrc(a) + ")";
     var note = document.getElementById("recThNote");
@@ -5579,9 +5579,21 @@
        puts the reader back where they were. */
     function goToRecords() { open(); }
 
+    /* One line under each heading. The Library's own four captions are
+       baked into the generated roya-library.js (never edited by hand),
+       so they are re-set here after every draw. */
+    var CAPTION = { about: "The world of Roya", library: "Every cover",
+                    listening: "Read aloud", songs: "Music from Roya",
+                    notes: "Author\u2019s notes" };
+    function recaption(nav) {
+      nav.querySelectorAll("[data-view]").forEach(function (b) {
+        var i = b.querySelector("i"), c = CAPTION[b.dataset.view];
+        if (i && c && i.textContent !== c) i.textContent = c;
+      });
+    }
     function apply() {
-      [["dnav", "<b>Songs</b><i>The music beside the books</i>"],
-       ["mob-nav", "Songs<span></span><i>The music beside the books</i>"]]
+      [["dnav", "<b>Songs</b><i>Music from Roya</i>"],
+       ["mob-nav", "Songs<span></span><i>Music from Roya</i>"]]
       .forEach(function (pair) {
         var nav = LIB.querySelector("nav." + pair[0]);
         if (!nav || nav.querySelector('[data-view="songs"]')) return;
@@ -5596,6 +5608,7 @@
         var notes = nav.querySelector('[data-view="notes"]');
         if (notes) nav.insertBefore(b, notes); else nav.append(b);
       });
+      LIB.querySelectorAll("nav.dnav, nav.mob-nav").forEach(recaption);
     }
 
     var tick = 0;
