@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 1 · last updated 2026-10-31 19:15 PDT
+   Version 2 · last updated 2026-10-31 20:30 PDT
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -35,7 +35,8 @@ const ALBUMS = [
   {
     num: 3,
     title: "آروم همین‌جاست",
-    translit: "Aroom hamin-jast",
+    translit: "Aroom hamin-jast",       /* slug only — permanent, in the share URL */
+    en: "Calm Is Right Here",
     fa: true,
     order: 2,
     songs: 5,
@@ -111,31 +112,31 @@ const SONGS = [
 
   /* ─── Album 3 · آروم همین‌جاست ───────────────────────────────── */
   { cat: "03-01", album: 3, track: 1, title: "آروم همین‌جاست", fa: true,
-    translit: "Aroom hamin-jast", dur: 359,
+    translit: "Aroom hamin-jast", en: "Calm Is Right Here", dur: 359,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-01.mp3",
     lyric: "songs/03-01.json",
     note: "The city is a map drawn wrong, every alley a door promising calm, and behind none of them a home. He drew the map himself, and he's the dragon on it too — the calm turns out to be in the breath he was holding." },
 
   { cat: "03-02", album: 3, track: 2, title: "بسوزونم", fa: true,
-    translit: "Besoozoonam", dur: 359,
+    translit: "Besoozoonam", en: "Let Me Burn", dur: 359,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-02.mp3",
     lyric: "songs/03-02.json",
     note: "It opens where Rumi opens, with the reed cut from the reed bed, crying because it was cut. Being pulled out of the soil and planted in the wind, and a voice that only becomes a voice through the separation that made it." },
 
   { cat: "03-03", album: 3, track: 3, title: "تا شب تموم نشه", fa: true,
-    translit: "Ta shab tamoom nashe", dur: 306,
+    translit: "Ta shab tamoom nashe", en: "Don't Let the Night End", dur: 306,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-03.mp3",
     lyric: "songs/03-03.json",
     note: "Two people asking the night not to finish, looking for somewhere the day can't reach and nobody's hand can find them. The most straightforwardly romantic song in the catalogue, and the most frightened underneath." },
 
   { cat: "03-04", album: 3, track: 4, title: "ساکت نباش", fa: true,
-    translit: "Saket nabash", dur: 239,
+    translit: "Saket nabash", en: "Don't Be Silent", dur: 239,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-04.mp3",
     lyric: "songs/03-04.json",
     note: "Addressed to a wall, because there's nobody else to address. A child left in the morning and didn't come back at night, and the song's whole argument is in its title and its last line: say it loud — I'll remember." },
 
   { cat: "03-05", album: 3, track: 5, title: "هنوز", fa: true,
-    translit: "Hanooz", dur: 284,
+    translit: "Hanooz", en: "Still", dur: 284,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-05.mp3",
     lyric: "songs/03-05.json",
     note: "A glance, a second longer than it needed to be, a warmer hello, two chairs and a table between. Nothing happened, and it is still happening." },

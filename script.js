@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 35 · last updated 2026-10-31 19:55 PDT
+   Version 37 · last updated 2026-10-31 21:05 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -4926,11 +4926,35 @@
     shelf.addEventListener("scroll", edges);
   }
 
+  /* ── the reel ───────────────────────────────────────────────
+     The strip is translated so the chosen record's centre sits on the
+     reel's centre line. Measured, not assumed: item widths come from
+     the CSS and change with the viewport. Each item carries data-off
+     (its distance from the selection) for anything that wants to
+     grade by it. */
+  function layoutReel() {
+    var reel = document.getElementById("recReel");
+    if (!reel || !shelf.children.length) return;
+    var i = SHELF.indexOf(curAlbum);
+    var on = shelf.children[Math.max(0, i)];
+    [].forEach.call(shelf.children, function (b, k) { b.dataset.off = String(k - i); });
+    var mid = reel.clientWidth / 2;
+    var c = on.offsetLeft + on.offsetWidth / 2;
+    shelf.style.transform = "translateX(" + Math.round(mid - c) + "px)";
+    edges();
+  }
   function edges() {
     var L = document.getElementById("recPrev"), R = document.getElementById("recNext");
-    if (L) L.disabled = shelf.scrollLeft <= 2;
-    if (R) R.disabled = shelf.scrollLeft >= shelf.scrollWidth - shelf.clientWidth - 2;
+    var i = SHELF.indexOf(curAlbum);
+    if (L) L.disabled = i <= 0;
+    if (R) R.disabled = i >= SHELF.length - 1;
   }
+  function stepAlbum(d) {
+    var i = SHELF.indexOf(curAlbum) + d;
+    if (i < 0 || i >= SHELF.length) return;
+    pickAlbum(SHELF[i].num);
+  }
+  window.addEventListener("resize", function () { layoutReel(); }, { passive: true });
 
   /* ── the album panel under the shelf ────────────────────────── */
   function pickAlbum(num, quiet) {
@@ -4939,10 +4963,9 @@
     curAlbum = a;
 
     [].forEach.call(shelf.children, function (b) {
-      var on = Number(b.dataset.album) === num;
-      b.setAttribute("aria-selected", String(on));
-      if (on && !quiet) b.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      b.setAttribute("aria-selected", String(Number(b.dataset.album) === num));
     });
+    layoutReel();
 
     pane.textContent = "";
 
@@ -4950,7 +4973,10 @@
     var left = el("div");
     var h = el("h3", "rec-pane-ttl" + (a.fa ? " fa" : ""), a.title);
     left.append(h);
-    if (a.translit) left.append(el("p", "rec-pane-translit", a.translit + " · Persian"));
+    /* The English meaning, not the transliteration. The transliteration
+       still exists on the record (it is the share slug) but it is for
+       machines; a reader wants to know what the words mean. */
+    if (a.en) left.append(el("p", "rec-pane-translit", a.en + " · Persian"));
     left.append(el("p", "rec-pane-syn", a.syn));
     head.append(left);
 
@@ -4969,7 +4995,10 @@
     head.append(acts);
     pane.append(head);
 
-    var ul = el("ul", "rec-tl" + (a.fa ? " rtl" : ""));
+    /* The list is never mirrored. A Persian title orders its own glyphs
+       right-to-left by itself; the row — number, play, title, length —
+       reads left-to-right like every other row on the site. */
+    var ul = el("ul", "rec-tl");
     a._songs.forEach(function (s, i) {
       ul.append(trackRow(s, i + 1));
     });
@@ -4994,7 +5023,7 @@
 
     var t = el("span", "rec-trk-t" + (s.fa ? " fa" : ""));
     t.append(document.createTextNode(s.title));
-    var sub = s.book ? ("No. " + s.book) : (s.translit || "");
+    var sub = s.book ? ("No. " + s.book) : (s.en || "");
     if (sub) t.append(el("small", null, sub));
     li.append(t);
 
@@ -5239,35 +5268,87 @@
     setTimeout(function () { theatre.hidden = true; }, 260);
   }
 
-  /* ── open / close the section ───────────────────────────────── */
+  /* ── the section as a view of the Library ─────────────────────
+     The Library overlay is HOME and cannot be closed, and it draws its
+     own header — About · Library · Listen · Notes — from SECTIONS inside
+     a generated file. Songs is added to that header by libraryNavLink()
+     below. For the section to look like the others (same header, this
+     one underlined), #recBody is MOUNTED into the Library's own page:
+     after nav.dnav on a desktop, after .mob-head on a phone; the
+     .rec-view class on #royaLibrary hides the Library's own body for
+     the duration. The Library redraws its whole stage on many actions
+     (a sort, a search, the sound toggle), which throws the body out —
+     so on every mutation, while the view is on, it is put back. */
+  var LIB = document.getElementById("royaLibrary");
+  var body = document.getElementById("recBody");
+  var songsOn = false;
+
+  function libNav() {
+    return LIB && (LIB.querySelector("nav.dnav") || LIB.querySelector("nav.mob-nav"));
+  }
+  function mount() {
+    if (!LIB || !body) return false;
+    var nav = libNav();
+    if (!nav) return false;
+    var anchor = nav.classList.contains("mob-nav") ? (nav.closest(".mob-head") || nav) : nav;
+    if (body.parentNode !== anchor.parentNode || body.previousElementSibling !== anchor) {
+      anchor.parentNode.insertBefore(body, anchor.nextSibling);
+    }
+    LIB.classList.add("rec-view");
+    [].forEach.call(LIB.querySelectorAll("[data-view]"), function (btn) {
+      btn.setAttribute("aria-current", String(btn.dataset.view === "songs"));
+    });
+    return true;
+  }
+  function unmount() {
+    if (!LIB) return;
+    LIB.classList.remove("rec-view");
+    [].forEach.call(LIB.querySelectorAll("[data-view]"), function (btn) {
+      /* the Library's real view is the one it pressed in its own draw() */
+      btn.setAttribute("aria-current", String(btn.getAttribute("aria-pressed") === "true"));
+    });
+    if (body && root && body.parentNode !== root) root.appendChild(body);
+  }
+  function scrollTop() {
+    var ph = LIB && LIB.querySelector(".phone");
+    [ph, LIB, document.scrollingElement].forEach(function (el) { if (el) el.scrollTop = 0; });
+  }
+
   var lastFocus = null;
   function open(quiet) {
     lastFocus = document.activeElement;
-    root.hidden = false;
-    document.body.classList.add("gallery-on");
-    requestAnimationFrame(function () { root.classList.add("show"); });
-    if (!quiet) {
-      var c = document.getElementById("recordsClose");
-      if (c) c.focus();
+    songsOn = true;
+    if (!mount()) {
+      /* no Library on the page (it is HOME, so this is the old page
+         alone): fall back to showing the body where it is parked */
+      root.hidden = false; root.style.display = "block";
     }
-    edges();
+    scrollTop();
+    requestAnimationFrame(layoutReel);
+    if (!quiet) { var h = body.querySelector(".rec-h1"); if (h) { h.tabIndex = -1; h.focus(); } }
   }
   function close() {
-    root.classList.remove("show");
-    document.body.classList.remove("gallery-on");
-    setTimeout(function () { root.hidden = true; }, 300);
+    songsOn = false;
+    unmount();
+    root.hidden = true; root.style.display = "";
     if (!theatre.hidden) closeTheatre();
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
+  /* Any press on the Library's own chrome — a header, the series rail,
+     the search, the mark — is the reader leaving. Presses inside the
+     section, on the Songs header, and on the sound toggle are not. */
+  if (LIB) LIB.addEventListener("click", function (e) {
+    if (!songsOn) return;
+    if (body.contains(e.target)) return;
+    var t = e.target.closest && e.target.closest("[data-view], [data-soundswap]");
+    if (t && (t.dataset.view === "songs" || t.hasAttribute("data-soundswap"))) return;
+    close();
+  }, true);
 
   openBtn.addEventListener("click", function () { open(); });
-  var closeBtn = document.getElementById("recordsClose");
-  if (closeBtn) closeBtn.addEventListener("click", close);
-  root.addEventListener("click", function (e) { if (e.target === root) close(); });
   document.addEventListener("keydown", function (e) {
-    if (e.key !== "Escape" || root.hidden) return;
+    if (e.key !== "Escape" || !songsOn) return;
     if (!theatre.hidden) { closeTheatre(); e.stopPropagation(); }
-    else { close(); e.stopPropagation(); }
   }, true);
 
   /* ── controls ───────────────────────────────────────────────── */
@@ -5280,12 +5361,20 @@
     if (act === "lyr")   { theatre.hidden ? openTheatre() : closeTheatre(); return; }
     if (act === "thclose") { closeTheatre(); return; }
     if (act === "share" && cur) { share("song", cur); return; }
-    if (act === "prev" || act === "next") {
-      shelf.scrollBy({ left: shelf.clientWidth * 0.7 * (act === "next" ? 1 : -1), behavior: "smooth" });
-      setTimeout(edges, 420);
-      return;
-    }
+    if (act === "prev" || act === "next") { stepAlbum(act === "next" ? 1 : -1); return; }
   });
+
+  (function swiping() {
+    var reel = document.getElementById("recReel");
+    if (!reel) return;
+    var x0 = null;
+    reel.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    reel.addEventListener("touchend", function (e) {
+      if (x0 == null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) stepAlbum(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  })();
 
   (function scrubbing() {
     var sc = document.getElementById("recScrub");
@@ -5378,7 +5467,15 @@
     var tick = 0;
     function schedule() {
       if (tick) return;
-      tick = requestAnimationFrame(function () { tick = 0; apply(); });
+      tick = requestAnimationFrame(function () {
+        tick = 0; apply();
+        if (songsOn && mount()) {
+          /* first mount after the Library's own draw (it loads after
+             this file): hide the parking spot and start at the top */
+          if (root.style.display) { root.style.display = ""; root.hidden = true; scrollTop(); }
+          layoutReel();
+        }
+      });
     }
     apply();
     new MutationObserver(schedule).observe(LIB, { childList: true, subtree: true });
