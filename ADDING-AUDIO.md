@@ -1,6 +1,15 @@
-<!-- Updated 2026-10-06 17:38 PDT — audio on Backblaze B2; uploads must set Content-Disposition;
-     runtime and the stale-copy hazard documented -->
+<!-- Updated 2026-10-31 20:20 PDT — audio on Backblaze B2; uploads must set Content-Disposition;
+     runtime and the stale-copy hazard documented. SONGS ARE A DIFFERENT THING —
+     see ADDING-A-SONG.md. -->
 # Adding a narration
+
+**This page is a book's reading voice, not a song.** A narration is mono,
+32 kbps, lives at `NN.mp3` in the root of the `roya-audio` bucket, and
+attaches to a book through `stories.js`. A song is stereo, 192 kbps,
+lives under `songs/` in the same bucket, and belongs to `songs.js` — see
+[ADDING-A-SONG.md](ADDING-A-SONG.md). They share a bucket and nothing
+else; do not reuse these encode settings for music, or the bass and the
+room go first.
 
 Two things a book can have, independently of each other:
 

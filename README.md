@@ -1,8 +1,9 @@
-<!-- Updated 2026-10-11 06:47 PDT — 110 books; the Roya Library is the landing view; narrations on Backblaze B2 -->
+<!-- Updated 2026-10-31 20:20 PDT — 119 books; the Record Room (3 albums, 17 songs); the Roya Library is the landing view; narrations and songs on Backblaze B2 -->
 # Chew Z — Short Fiction
 
-**110 dark noir novellas, free to read, under the Roya Publication
-imprint. Live at <https://www.chewzfiction.com>.**
+**119 dark noir novellas, free to read, under the Roya Publication
+imprint — and, in the Record Room, three albums of songs written
+beside them. Live at <https://www.chewzfiction.com>.**
 
 Every book works the same way — a door out of the mind, a room on the
 other side, and the key that opened it — and the whole site is built
@@ -127,6 +128,13 @@ the synced read-along that highlights the sentence being spoken, and the
 script that builds it. Independent of adding the book; a book can gain a
 recording years later.
 
+**[ADDING-A-SONG.md](ADDING-A-SONG.md)** — the Record Room: the
+catalogue number and why it is permanent, encoding at 192 kbps (not the
+narration's 32), the lyric-sheet schema, `songs.js`, and the share
+pages. The house standard for the artwork and the sleeve itself is
+`roya-recordings-format.md`, which lives with the production notes
+rather than here.
+
 **[CUSTOMISING.md](CUSTOMISING.md)** — everything else: backdrops and
 their sizes, series and their banners, bilingual titles, the cover
 window, the door filter and the three dials, the About panel's sections,
@@ -172,7 +180,7 @@ build-reader.py       pulls the reading text out of the PDFs
 build-audio-sync.py   aligns a recording to that text; see ADDING-AUDIO.md
 optimize-art.py       makes the .webp twin of every picture (needs --write)
 
-pdfs/                 the novellas: 01.pdf … 110.pdf
+pdfs/                 the novellas: 01.pdf … 119.pdf
 covers/NN.jpg         800x1200 flat front — large views, and the share image
 covers/NN.webp        its twin, asked for first. Made by optimize-art.py
 covers/thumb/NN.webp  360x540 flat front — the shelf rows and the cover shelf
@@ -183,7 +191,17 @@ assets/audio/         empty and gitignored — the narrations are NOT here
 library/              the Roya Library: two GENERATED files and its pictures
 read/NN.json          the novella as text, for reading on the site
 read/NN.sync.json     beside it when the book has a narration
-share/                one small page per book, so shared links show covers
+share/                one small page per book, album and song, so shared
+                      links show a picture. NN-slug.html is a book;
+                      album-AA-slug.html and song-AA-TT-slug.html are
+                      the recordings
+songs.js              the recordings catalogue — albums, songs, B2 urls
+songs/AA-TT.json      a song's lyric sheet: {t, k, x} per line
+albums/NN.{jpg,webp}  1536x1024 album hero — the shelf and the album page
+albums/flat/NN.webp   560x560 sleeve front — the dock chip and the backdrop
+albums/flat/NN.jpg    1200x1200 square master
+albums/card/NN.jpg    1200x630 LANDSCAPE — the share card, and only that
+build-song-shares.js  rebuilds the album and song share pages
 feed.xml              generated — don't edit by hand
 sitemap.xml           generated — don't edit by hand
 CNAME                 the custom domain. NEVER DELETE THIS FILE
@@ -344,9 +362,11 @@ reword them by hand and update `SCALE` in both scripts.
 
 ## Cache-busting
 
-**Ten** lines in `index.html` end in `?v=` and a number — five near the
-top for the share and preloaded images, five at the foot for the two
-stylesheets and the three scripts:
+**Eighteen** lines in `index.html` end in `?v=` and a number. Five near
+the top are the share and preloaded images; a few more belong to the
+intro, the series rail and the overrides, and all of those are separate
+and lag deliberately. The six that matter sit at the foot — the two
+stylesheets and the four scripts:
 
 ```
 near the top                      (these lag deliberately)
@@ -359,12 +379,13 @@ at the foot                       (these move together, always)
   style.css?v=
   library/roya-library.css?v=
   stories.js?v=
+  songs.js?v=
   script.js?v=
   library/roya-library.js?v=
 ```
 
-**The five at the foot are kept on one shared number.** Raise it
-whenever any of those five files changes — including a pure
+**The six at the foot are kept on one shared number.** Raise it
+whenever any of those six files changes — including a pure
 version-stamp edit, which is cheaper to raise than to think about. Never
 move it backwards.
 

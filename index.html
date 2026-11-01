@@ -151,18 +151,21 @@
      hard; changing the number makes each one a new address, so a
      returning reader always gets the current version.
 
-     FIVE files carry it — style.css, library/roya-library.css,
-     stories.js, script.js and library/roya-library.js — and they are
-     kept on ONE shared number. Raise all five together whenever any of
-     them changes.
+     SIX files carry it — style.css, library/roya-library.css,
+     stories.js, songs.js, script.js and library/roya-library.js — and
+     they are kept on ONE shared number. Raise all six together whenever
+     any of them changes. (songs.js joined them with the Record Room;
+     it was five before that.)
 
      That same number also feeds every picture on the site: script.js
      reads it off its own src (see ASSET_V) and stamps every image URL
      it builds. So a REPLACED cover needs this raised too, or the old
      one goes on being served out of the reader's cache.
 
-     The four ?v= further up — the two share images and the two
-     preloads — are separate and lag deliberately. See README.md. -->
+     The ?v= numbers further up — the three share images and the two
+     preloads — and the handful further down on assets/intro, assets/
+     lrseries and assets/overrides are all separate, and lag
+     deliberately. See README.md. -->
 <link rel="stylesheet" href="style.css?v=652">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->

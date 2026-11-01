@@ -1,6 +1,7 @@
-<!-- Updated 2026-10-06 17:38 PDT — narration on Backblaze B2, not in the repo, and its
-     upload must set Content-Disposition; runtime documented; check-book.js is step 0;
-     counts refreshed to 105 books. -->
+<!-- Updated 2026-10-31 20:20 PDT — 119 books; the shared cache stamp now covers SIX files,
+     songs.js having joined it with the Record Room. See ADDING-A-SONG.md for songs.
+     Narration on Backblaze B2, not in the repo; its upload must set Content-Disposition;
+     runtime documented; check-book.js is step 0. -->
 # Adding a book
 
 Everything that has to happen when a new novella joins the site, in
@@ -28,7 +29,7 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
 6. **Run `node check-book.js NN` and fix whatever it reports**
 5b. *If it has a narration:* `python3 build-audio-sync.py NN rec.mp3`,
    upload the mp3 to the B2 bucket, then add `audio:` to the book's block
-6. Raise the `?v=` number in `index.html` — all five at the foot
+6. Raise the `?v=` number in `index.html` — all six at the foot
 7. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
    the `share/` folder, `read/NN.json`, the new PDF, all the covers
 
@@ -39,7 +40,7 @@ all — they say "Over a hundred", which stays true to 199. Step 3 checks
 that rather than rewriting it. See "The shelf count" in
 [README.md](README.md).
 
-Everything after this is the same steps, explained. There are 105 books
+Everything after this is the same steps, explained. There are 119 books
 as this is written; the two lettered steps are the ones most often
 skipped.
 
@@ -148,9 +149,9 @@ glass zoom. 3:2 landscape; older ones are 2496 × 1664 and newer ones
 reach into `covers/pairs/`, and the Roya Library asks for
 `covers/pairs/NN.webp` *first* — so without it, every Library view of
 that book spends a failed request before falling back to the `.jpg`.
-Only 28 of the 105 books have the webp today, which is why the other
-seventy-seven each spend one 404 on that panel before the fallback chain
-in roya-library.js serves the .jpg. It costs a request; it breaks nothing.
+Every one of the 119 pairs has its webp today, so the fallback chain in
+roya-library.js is no longer exercised — keep it that way. A missing one
+costs a request on every Library view; it breaks nothing.
 
 Skipping the pair render altogether isn't a mistake the way skipping the
 plain cover is: the shelf's zoom falls back to `covers/NN.jpg`, and the
@@ -519,9 +520,11 @@ arithmetic, which is closer to the limit than it looks.
 
 ## 6. Raise the cache-buster
 
-In `index.html`, **nine** lines end in `?v=` and a number — four near
-the top for the share and preloaded images, five at the foot for the two
-stylesheets and the three scripts:
+In `index.html`, **eighteen** lines end in `?v=` and a number. Six of
+them are the shared set; the rest are separate and lag deliberately.
+Of the separate ones, five sit near
+the top for the share and preloaded images. The six at the foot are the
+two stylesheets and the four scripts:
 
 ```html
 <meta property="og:image"   content=".../assets/og-roya.png?v=374">
@@ -535,11 +538,12 @@ stylesheets and the three scripts:
 <script src="library/roya-library.js?v=517"></script>
 ```
 
-**The five at the foot move together, on one shared number.** They were
+**The six at the foot move together, on one shared number.** They were
 designed as independent counters and technically still are, but every
-change now raises all five at once — it costs nothing, and it removes a
+change now raises all six at once — it costs nothing, and it removes a
 whole class of mistake. Adding a book always changes `stories.js`, so
-the number always has to move; raise all five and stop thinking about it.
+the number always has to move; raise all six and stop thinking about it.
+(`songs.js` is the sixth; it joined with the Record Room.)
 
 **That same number is what feeds every picture on the site.**
 `script.js` reads the version off its own `src` — see `ASSET_V` at the

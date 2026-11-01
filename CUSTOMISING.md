@@ -1,4 +1,5 @@
-<!-- Updated 2026-10-06 17:38 PDT — audited against the code. 105 books, 15 series;
+<!-- Updated 2026-10-31 20:20 PDT — audited against the code. 119 books, 15 series;
+     the Record Room added (songs.js is now stamped alongside the other five);
      the Roya Library's own theme and tokens documented; several files
      this page described as present are recorded as missing. -->
 # Customising the site
@@ -8,8 +9,9 @@ see [ADDING-A-BOOK.md](ADDING-A-BOOK.md).
 
 Nothing here needs a build step unless it says so. Raise the `?v=`
 number in `index.html` after any change to `style.css`, `script.js`,
-`stories.js`, `library/roya-library.css` or `library/roya-library.js` —
-all five are stamped, and they are kept on one shared number, so raise
+`stories.js`, `songs.js`, `library/roya-library.css` or
+`library/roya-library.js` — all six are stamped, and they are kept on
+one shared number, so raise
 them together. Every picture on the site is stamped with that same
 number too, so **a replaced image also needs it**. Returning readers
 keep seeing the old version otherwise.
@@ -810,11 +812,11 @@ Almost everything is a file the repository already has:
 | the narration, where a book has one | `https://f005.backblazeb2.com/file/roya-audio/NN.mp3` — hosted off the repo; a *Narrated* panel offering Listen here or a download |
 | back to the top | the page's own `#toTop`, raised above the section while it is open |
 
-⚠ **The pair render is asked for as `.webp` first**, and only 28 of
-the 105 books have one — so seventy-seven of them spend a failed request on
-every Library view before falling back to the `.jpg`. Making
-`covers/pairs/NN.webp` is a hand step; `optimize-art.py` does not reach
-that folder.
+**The pair render is asked for as `.webp` first.** Every one of the 119
+pairs has one now, so nothing falls back; the ⚠ that used to sit here
+described seventy-seven missing twins and is cleared. Making
+`covers/pairs/NN.webp` is still a hand step — `optimize-art.py` does not
+reach that folder — so a new book needs it made deliberately.
 
 Its own pictures are the ground plates (`library/bg-desk.webp`,
 `library/bg-mob.webp`), the two 9-slice frames (`library/frame.png` for
