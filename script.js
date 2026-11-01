@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 50 · last updated 2026-11-01 06:25 PDT
+   Version 51 · last updated 2026-11-01 06:45 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5582,7 +5582,7 @@
     /* One line under each heading. The Library's own four captions are
        baked into the generated roya-library.js (never edited by hand),
        so they are re-set here after every draw. */
-    var CAPTION = { about: "The world of Roya", library: "Every cover",
+    var CAPTION = { about: "World of Roya", library: "Every cover",
                     listening: "Read aloud", songs: "Music from Roya",
                     notes: "Author\u2019s notes" };
     function recaption(nav) {
