@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 52 · last updated 2026-11-01 07:05 PDT
+   Version 53 · last updated 2026-11-01 07:15 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5366,6 +5366,20 @@
       g.setAttribute("role", "button");
       g.setAttribute("aria-label", "Move " + s.title + " — drag, or use the arrow keys");
       li.append(g);
+      /* on a phone the grip gives way to arrows — a finger cannot drag
+         inside a scrolling panel with any precision */
+      var ud = el("span", "rec-q-ud");
+      var upb = el("button", "rec-q-up"), dnb = el("button", "rec-q-dn");
+      upb.type = dnb.type = "button";
+      upb.dataset.act = "qup"; dnb.dataset.act = "qdn";
+      upb.dataset.cat = dnb.dataset.cat = cat;
+      upb.setAttribute("aria-label", "Move " + s.title + " up");
+      dnb.setAttribute("aria-label", "Move " + s.title + " down");
+      upb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
+      dnb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+      upb.disabled = i === 0; dnb.disabled = i === queue.length - 1;
+      ud.append(upb, dnb);
+      li.append(ud);
       li.append(el("span", "rec-q-num", String(i + 1)));
       var t = el("button", "rec-q-t" + (s.fa ? " fa" : ""));
       t.type = "button";
@@ -5395,8 +5409,12 @@
     if (i < 0 || j < 0 || j >= queue.length) return;
     queue.splice(i, 1); queue.splice(j, 0, cat);
     paintQueue();
-    var g = qList && qList.children[j] && qList.children[j].querySelector(".rec-q-grip");
-    if (g) g.focus();
+    var row = qList && qList.children[j];
+    if (!row) return;
+    var want = row.querySelector(delta < 0 ? ".rec-q-up" : ".rec-q-dn");
+    var g = row.querySelector(".rec-q-grip");
+    var f = (want && !want.disabled && want.offsetParent) ? want : (g && g.offsetParent ? g : null);
+    if (f) f.focus();
   }
   if (qList) {
     /* dragging a grip carries its row; the row above or below slides
@@ -5627,6 +5645,8 @@
     if (act === "dockclose") { audio.pause(); queueShow(false); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
     if (act === "queue") { queueShow(qPanel && qPanel.hidden); return; }
     if (act === "qclear") { queue = []; paintQueue(); return; }
+    if (act === "qup") { moveInQueue(b.dataset.cat, -1); return; }
+    if (act === "qdn") { moveInQueue(b.dataset.cat, 1); return; }
     if (act === "qrm") { var qi = queue.indexOf(b.dataset.cat); if (qi > -1) queue.splice(qi, 1); paintQueue(); return; }
     if (act === "qplay") { var qj = queue.indexOf(b.dataset.cat); if (qj > -1) queue.splice(qj, 1); paintQueue(); load(b.dataset.cat, true); return; }
     if (act === "lyr")   { theatre.hidden ? openTheatre() : closeTheatre(); return; }
