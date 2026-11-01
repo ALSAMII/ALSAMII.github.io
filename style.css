@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 33 · last updated 2026-10-31 21:05 PDT
+   Version 34 · last updated 2026-10-31 22:05 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10962,15 +10962,21 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
   gap: 1rem; flex-wrap: wrap; margin: 0 0 0.4rem;
   padding-top: 1.6rem; border-top: 1px solid var(--hairline);
 }
-.rec-nubs, #royaLibrary .rec-nubs{ display: flex; gap: 0.5rem; }
+/* the arrows stand either side of the record, on the reel itself */
 .rec-nub, #royaLibrary .rec-nub{
-  appearance: none; background: none; border: 1px solid var(--hairline);
-  color: var(--parchment); width: 2rem; height: 2rem; border-radius: 50%;
-  display: grid; place-items: center; cursor: pointer; flex: none;
-  font-family: var(--sans); font-size: 1rem; line-height: 1; padding-bottom: 2px;
+  position: absolute; top: 44%; z-index: 3; transform: translateY(-50%);
+  appearance: none; background: rgba(0,0,0,0.55); border: 1px solid var(--ember-soft);
+  color: var(--ember-lit); width: 2.6rem; height: 2.6rem; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer;
+  font-family: var(--sans); font-size: 1.35rem; line-height: 1; padding-bottom: 3px;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
-.rec-nub:hover, #royaLibrary .rec-nub:hover{ border-color: var(--ember-soft); color: var(--ember-lit); }
-.rec-nub[disabled], #royaLibrary .rec-nub[disabled]{ opacity: 0.3; cursor: default; }
+.rec-nub.prev, #royaLibrary .rec-nub.prev{ left: calc(50% - clamp(10rem, 22vw, 19rem) - 2.2rem); }
+.rec-nub.next, #royaLibrary .rec-nub.next{ right: calc(50% - clamp(10rem, 22vw, 19rem) - 2.2rem); }
+.rec-nub:hover, #royaLibrary .rec-nub:hover{ background: var(--ember); color: var(--night); }
+.rec-nub[disabled], #royaLibrary .rec-nub[disabled]{ opacity: 0.25; cursor: default; }
+.rec-nub[disabled]:hover, #royaLibrary .rec-nub[disabled]:hover{ background: rgba(0,0,0,0.55); color: var(--ember-lit); }
 
 .rec-reel, #royaLibrary .rec-reel{
   position: relative; overflow: hidden; margin: 0 -1.3rem;
@@ -11005,7 +11011,14 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
 }
 .rec-item:focus-visible, #royaLibrary .rec-item:focus-visible{ outline: 2px solid var(--ember-lit); outline-offset: 6px; }
 .rec-item-art, #royaLibrary .rec-item-art{ display: block; width: 100%; aspect-ratio: 3 / 2; }
-.rec-item-art img, #royaLibrary .rec-item-art img{ width: 100%; height: 100%; object-fit: contain; display: block; }
+.rec-item-art img, #royaLibrary .rec-item-art img{
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  /* The render has its own grey studio floor and backdrop, which read as
+     a box on the black page. Fade its edges out so only the sleeve, the
+     record and the pool of floor under them remain. */
+  -webkit-mask-image: radial-gradient(ellipse 60% 58% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 72%, transparent 100%);
+          mask-image: radial-gradient(ellipse 60% 58% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 72%, transparent 100%);
+}
 .rec-item.no-art .rec-item-art, #royaLibrary .rec-item.no-art .rec-item-art{ background: var(--raised); border: 1px solid var(--hairline); }/* captions belong to the chosen record only; the others are covers */
 
 .rec-item-cap, #royaLibrary .rec-item-cap{
@@ -11086,12 +11099,24 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
   font-family: var(--sans); font-size: 0.71rem; color: var(--faded);
   font-variant-numeric: tabular-nums;
 }
+/* the lyrics button: a small labelled pill right after the title, so it
+   is plainly a thing to press and not a decoration */
+.rec-trk-ly, #royaLibrary .rec-trk-ly{
+  appearance: none; background: none; border: 1px solid var(--hairline); border-radius: 999px;
+  padding: 0.22rem 0.6rem 0.2rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--faded); margin-left: 0.7rem; vertical-align: middle; position: relative; top: -1px;
+}
+.rec-trk-name, #royaLibrary .rec-trk-name{ vertical-align: middle; }
+.rec-trk-ly svg, #royaLibrary .rec-trk-ly svg{ width: 12px; height: 12px; }
+.rec-trk-ly:hover, #royaLibrary .rec-trk-ly:hover, .rec-trk.on .rec-trk-ly, #royaLibrary .rec-trk.on .rec-trk-ly{ color: var(--ember-lit); border-color: var(--ember-soft); }
 .rec-trk-sh, .rec-trk-dl, #royaLibrary .rec-trk-sh, #royaLibrary .rec-trk-dl{
   appearance: none; background: none; border: 0; padding: 0.2rem; cursor: pointer;
   color: var(--faded); display: grid; place-items: center; text-decoration: none;
 }
 .rec-trk-sh:hover, .rec-trk-dl:hover, #royaLibrary .rec-trk-sh:hover, #royaLibrary .rec-trk-dl:hover{ color: var(--ember-lit); }
 .rec-trk-sh svg, .rec-trk-dl svg, #royaLibrary .rec-trk-sh svg, #royaLibrary .rec-trk-dl svg{ width: 14px; height: 14px; }
+.rec-trk-dl.busy, #royaLibrary .rec-trk-dl.busy{ opacity: 0.4; pointer-events: none; }
 .rec-eq, #royaLibrary .rec-eq{ display: inline-flex; gap: 2px; align-items: flex-end; height: 11px; }
 .rec-eq i, #royaLibrary .rec-eq i{ width: 2px; background: var(--ember); animation: recEq 1s ease-in-out infinite; }
 .rec-eq i:nth-child(1), #royaLibrary .rec-eq i:nth-child(1){ height: 40%; animation-delay: -0.2s; }
@@ -11219,7 +11244,10 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
 }
 .rec-ln:hover, #royaLibrary .rec-ln:hover{ color: var(--parchment); }
 .rec-ln.past, #royaLibrary .rec-ln.past{ color: rgba(156, 146, 128, 0.38); }
-.rec-ln.cur, #royaLibrary .rec-ln.cur{ color: var(--ember-lit); }
+/* The whole verse lights, not the line: every line of the section being
+   sung is .cur; the line itself is .now, a shade brighter. */
+.rec-ln.cur, #royaLibrary .rec-ln.cur{ color: var(--parchment); }
+.rec-ln.now, #royaLibrary .rec-ln.now{ color: var(--ember-lit); }
 .rec-ln.mark, #royaLibrary .rec-ln.mark{
   font-family: var(--sans); font-size: 0.58rem !important; letter-spacing: 0.24em;
   text-transform: uppercase; color: var(--faded); font-weight: 400;
@@ -11264,6 +11292,11 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
      people do from a phone, and the file is a tap away on the row. */
   
   .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.3rem 1.5rem 1fr auto auto; gap: 0.45rem; }
+  .rec-trk-ly span, #royaLibrary .rec-trk-ly span{ display: none; }
+  .rec-trk-ly, #royaLibrary .rec-trk-ly{ padding: 0.3rem 0.45rem; }
+  .rec-nub.prev, #royaLibrary .rec-nub.prev{ left: 0.4rem; }
+  .rec-nub.next, #royaLibrary .rec-nub.next{ right: 0.4rem; }
+  .rec-nub, #royaLibrary .rec-nub{ width: 2.2rem; height: 2.2rem; }
   .rec-trk-dl, #royaLibrary .rec-trk-dl{ display: none; }
   /* Two rows on a phone: who is playing above, the transport below.
      In one flex row the scrubber was squeezing the title to "Do…". */
@@ -11275,8 +11308,8 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
   .rec-dock-art, #royaLibrary .rec-dock-art{ grid-area: art; }
   .rec-dock-id, #royaLibrary .rec-dock-id{ grid-area: id; width: auto; }
   .rec-dock-bar > .rec-btn, #royaLibrary .rec-dock-bar > .rec-btn{ grid-area: lyr; }
-  .rec-tbtn[data-rec="back"], #royaLibrary .rec-tbtn[data-rec="back"]{ grid-area: back; }
-  .rec-tbtn[data-rec="play"], #royaLibrary .rec-tbtn[data-rec="play"]{ grid-area: play; }
+  .rec-tbtn[data-act="back"], #royaLibrary .rec-tbtn[data-act="back"]{ grid-area: back; }
+  .rec-tbtn[data-act="play"], #royaLibrary .rec-tbtn[data-act="play"]{ grid-area: play; }
   #recNow, #royaLibrary #recNow{ grid-area: now; }
   .rec-scrub, #royaLibrary .rec-scrub{ grid-area: scrub; }
   #recTot, #royaLibrary #recTot{ grid-area: tot; }

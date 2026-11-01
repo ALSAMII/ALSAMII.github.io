@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-31 20:20 PDT — written with the Record Room. 3 albums, 17 songs.
+<!-- Updated 2026-10-31 22:20 PDT — written with the Record Room. 3 albums, 17 songs.
      The house standard for the object itself is roya-recordings-format.md. -->
 # Adding a song
 
@@ -123,8 +123,24 @@ from parts. `note` is one or two sentences on what the song is; it is
 also what the share card uses as its description, so write it to be read
 cold by someone who has never heard it.
 
-A Persian song also takes `fa: true` and a `translit`. A song drawn from
-a book takes `book: 119`.
+A Persian song also takes `fa: true`, a `translit` and an `en`:
+
+```js
+title: "بسوزونم", fa: true, translit: "Besoozoonam", en: "Let Me Burn",
+```
+
+The `translit` is **for machines** — it becomes the share slug
+(`share/song-03-02-besoozoonam.html`) and is permanent for the same
+reason the catalogue number is. The `en` is **for readers** — the
+English meaning, shown under the title in the tracklist and under the
+album title on its page. Nothing on the page shows the transliteration.
+A Persian album takes the same three fields.
+
+Persian text is never mirrored. The glyphs order themselves right-to-left
+inside the line; the line itself sits at the left like every English one,
+and the row — number, play, title, length — reads left-to-right.
+
+A song drawn from a book takes `book: 119`.
 
 **Then update the album's `songs` and `dur`.** They are the sum of its
 tracks, and §10 checks them.
@@ -190,10 +206,43 @@ them whenever the number changes.
 ## Three things that will catch you
 
 **The Library is the home screen and cannot be closed.** `closeLibrary()`
-begins `if (HOME && !force) return`, and the overlay is `z-index: 60`. The
-Record Room opens *over* it at 62 and is painted opaque rather than
-veiled, because at the usual 93 % a grid of 119 covers ghosts through the
-words.
+begins `if (HOME && !force) return`. So the Record Room is not a panel
+over the Library — it is mounted *inside* it, as a view of its own.
+`#records` in `index.html` is only a parking spot: `script.js` lifts
+`#recBody` out of it and inserts it straight after the Library's own
+nav (`nav.dnav` on a desktop, after `.mob-head` on a phone), and puts
+the `rec-view` class on `#royaLibrary`, which hides the Library's own
+body for the duration. That is why the reader sees the same header on
+Songs as on About or Listen, with Songs underlined. Any press on the
+Library's own chrome — a header, the series rail, the search — is the
+reader leaving, and the body goes back to its parking spot. The
+Library redraws its whole stage on many actions (a sort, the sound
+toggle); the MutationObserver puts the body back each time.
+
+One consequence: inside the Library, `#royaLibrary button { font:
+inherit; text-align: left }` outranks any single-class rule. Every
+`.rec-*` selector in `style.css` is therefore written twice, once plain
+and once as `#royaLibrary .rec-*`, so the section's own styling wins
+whichever side of the Library it is on. Keep doing that for new rules.
+
+**Never put `data-rec` on anything.** The Library's own click handler
+treats every `[data-rec]` on the page as a book card (`data-rec="${b.n}"`)
+and redraws itself for book `NaN` — which threw the Record Room out of
+the page, reset the scroll and left the page unable to scroll at all.
+The section's controls are `data-act`. Before adding any `data-` name,
+grep `library/roya-library.js` for `closest("[data-…]")`; it claims
+thirty-odd of them.
+
+**The download button needs a CORS rule on the bucket.** The `download`
+attribute is ignored across origins, and B2 refuses
+`b2ContentDisposition` on a public url. So the button fetches the file
+and hands the browser a blob to save, named for the song — and a fetch
+from chewzfiction.com is only allowed if the bucket says so. In the B2
+console: **Buckets → roya-audio → Bucket Settings → CORS Rules**, allow
+downloads from `https://www.chewzfiction.com` and
+`https://chewzfiction.com` (or "all origins"). Until that is set the
+fetch fails and the button falls back to opening the file in a new tab,
+as it did before.
 
 **The fifth nav header is injected at runtime.** About, Library, Listen
 and Notes come from `SECTIONS` inside `library/roya-library.js`, which is

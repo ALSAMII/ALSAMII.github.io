@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 37 · last updated 2026-10-31 21:05 PDT
+   Version 38 · last updated 2026-10-31 22:05 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2026,7 +2026,7 @@
         var cards = ROOT.querySelectorAll(".bcard[data-rec], .mcard[data-sheet]");
         for (var i = 0; i < cards.length; i++) {
           var c = cards[i];
-          mark(c, Number(c.classList.contains("mcard") ? c.dataset.sheet : c.dataset.rec), c, false);
+          mark(c, Number(c.classList.contains("mcard") ? c.dataset.sheet : c.dataset.act), c, false);
         }
         /* The Listening Room row is a flex ROW — cover beside text — so its
            bar belongs inside the text side, under the Listen control. */
@@ -4864,6 +4864,7 @@
 
   var I_PLAY  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
   var I_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5.5" width="4" height="13" rx=".75"/><rect x="14" y="5.5" width="4" height="13" rx=".75"/></svg>';
+  var I_LY    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h10M5 17h7"/></svg>';
   var I_DL    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></svg>';
   var I_SH    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3"/></svg>';
   var I_BACK  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20.3 3.8v4.4h-4.4"/></svg>';
@@ -4967,6 +4968,10 @@
     });
     layoutReel();
 
+    /* Emptying the pane shrinks the page for one frame, and the scroller
+       clamps to the shorter height — a visible jump when switching album
+       from low on the page. Hold the height until the new list is in. */
+    pane.style.minHeight = pane.offsetHeight + "px";
     pane.textContent = "";
 
     var head = el("div", "rec-pane-head");
@@ -5005,6 +5010,7 @@
     pane.append(ul);
 
     if (!quiet) { pane.classList.remove("swap"); void pane.offsetWidth; pane.classList.add("swap"); }
+    requestAnimationFrame(function () { pane.style.minHeight = ""; });
     paintRows();
     edges();
   }
@@ -5022,7 +5028,22 @@
     li.append(pb);
 
     var t = el("span", "rec-trk-t" + (s.fa ? " fa" : ""));
-    t.append(document.createTextNode(s.title));
+    t.append(el("span", "rec-trk-name", s.title));
+
+    /* LYRICS, on the title line itself, so it is plainly something to
+       press. It loads the song (without starting it, if it is not the
+       one playing) and opens the theatre. */
+    var ly = el("button", "rec-trk-ly");
+    ly.type = "button";
+    ly.setAttribute("aria-label", "Lyrics for " + s.title);
+    ly.innerHTML = I_LY + "<span>Lyrics</span>";
+    ly.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (!cur || cur.cat !== s.cat) load(s.cat, false);
+      openTheatre();
+    });
+    t.append(ly);
+
     var sub = s.book ? ("No. " + s.book) : (s.en || "");
     if (sub) t.append(el("small", null, sub));
     li.append(t);
@@ -5037,18 +5058,41 @@
     shb.addEventListener("click", function (e) { e.stopPropagation(); share("song", s); });
     li.append(shb);
 
-    /* A real link, so it can be opened in a new tab and saved the way
-       any file is. Not a script-driven download: the audio is on
-       another origin and a scripted save would be blocked anyway. */
+    /* A download that is a download. The "download" attribute is ignored
+       across origins, so a bare link OPENED the mp3 and played it in a
+       tab — which read as "it points at the song playing". And B2
+       refuses a content-disposition override on a public url. So the
+       file is fetched here and handed to the browser as a save, named
+       for the song. That needs the bucket to allow this origin (a CORS
+       rule on roya-audio); until it does, the fetch fails and the link
+       falls back to opening the file in a new tab, as before. */
     var dl = document.createElement("a");
     dl.className = "rec-trk-dl";
     dl.href = s.audio;
-    dl.setAttribute("download", "");
+    dl.target = "_blank";
     dl.rel = "noopener";
     dl.setAttribute("aria-label", "Download " + s.title);
     dl.title = "Download";
     dl.innerHTML = I_DL;
-    dl.addEventListener("click", function (e) { e.stopPropagation(); });
+    var fname = "Chew Z - " + (s.en || s.title).replace(/[\\/:*?"<>|]/g, "") + ".mp3";
+    dl.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (!window.fetch || !window.URL || !URL.createObjectURL) return;   /* plain link */
+      e.preventDefault();
+      dl.classList.add("busy");
+      fetch(s.audio).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.blob();
+      }).then(function (blob) {
+        var u = URL.createObjectURL(blob);
+        var a2 = document.createElement("a");
+        a2.href = u; a2.download = fname;
+        document.body.appendChild(a2); a2.click(); a2.remove();
+        setTimeout(function () { URL.revokeObjectURL(u); }, 4000);
+      }).catch(function () {
+        window.open(s.audio, "_blank", "noopener");
+      }).then(function () { dl.classList.remove("busy"); });
+    });
     li.append(dl);
 
     li.addEventListener("click", function () {
@@ -5142,17 +5186,28 @@
     for (var k = 0; k < lines.length; k++) { if (lines[k].t <= t) i = k; else break; }
     if (i === lineIdx) return;
     lineIdx = i;
+    /* The section being sung lights as a block: from the last mark at or
+       before the current line to the next mark after it. The line itself
+       is "now" on top of that. Everything before the block is "past". */
+    var from = 0, to = lines.length;
+    for (var a = i; a >= 0; a--) { if (lines[a].node.classList.contains("mark")) { from = a; break; } }
+    for (var z = i + 1; z < lines.length; z++) { if (lines[z].node.classList.contains("mark")) { to = z; break; } }
     for (var j = 0; j < lines.length; j++) {
-      lines[j].node.classList.toggle("cur", j === i);
-      lines[j].node.classList.toggle("past", j < i);
+      var inBlock = i >= 0 && j >= from && j < to;
+      lines[j].node.classList.toggle("cur", inBlock);
+      lines[j].node.classList.toggle("now", j === i);
+      lines[j].node.classList.toggle("past", i >= 0 && j < from);
     }
     var cl = document.getElementById("recCur");
     if (cl) cl.textContent = i >= 0 ? lines[i].node.textContent : "";
     if (i >= 0) {
       var box = document.getElementById("recLyrIn"), wrap = document.getElementById("recLyr");
       if (box && wrap) {
-        var n = lines[i].node;
-        var off = n.offsetTop - (wrap.clientHeight / 2) + (n.offsetHeight / 2);
+        var n = lines[i].node, first = lines[from].node, last = lines[to - 1].node;
+        var bTop = first.offsetTop, bH = (last.offsetTop + last.offsetHeight) - bTop;
+        var off = bH < wrap.clientHeight * 0.8
+          ? bTop - (wrap.clientHeight / 2) + (bH / 2)
+          : n.offsetTop - (wrap.clientHeight / 2) + (n.offsetHeight / 2);
         box.style.transform = "translateY(" + (-Math.max(0, off)) + "px)";
       }
     }
@@ -5324,11 +5379,16 @@
       root.hidden = false; root.style.display = "block";
     }
     scrollTop();
+    if (cur) { dock.hidden = false; paintTransport(); }
     requestAnimationFrame(layoutReel);
     if (!quiet) { var h = body.querySelector(".rec-h1"); if (h) { h.tabIndex = -1; h.focus(); } }
   }
   function close() {
     songsOn = false;
+    /* The music is part of this room. Leaving it for the Library pauses
+       the record and puts the dock away, so nothing from here plays or
+       sits over the books; coming back finds it where it was. */
+    if (cur) { audio.pause(); dock.hidden = true; }
     unmount();
     root.hidden = true; root.style.display = "";
     if (!theatre.hidden) closeTheatre();
@@ -5353,9 +5413,9 @@
 
   /* ── controls ───────────────────────────────────────────────── */
   document.addEventListener("click", function (e) {
-    var b = e.target.closest && e.target.closest("[data-rec]");
+    var b = e.target.closest && e.target.closest("[data-act]");
     if (!b) return;
-    var act = b.dataset.rec;
+    var act = b.dataset.act;
     if (act === "play")  { togglePlay(); return; }
     if (act === "back")  { audio.currentTime = 0; return; }
     if (act === "lyr")   { theatre.hidden ? openTheatre() : closeTheatre(); return; }
@@ -5404,8 +5464,13 @@
      cold and from inside the site. Nothing auto-plays: browsers
      refuse it without a gesture, and a page that starts making noise
      on arrival is its own problem. */
-  function fromHash() {
-    var h = (location.hash || "").slice(1);
+  function fromHash(e) {
+    /* Read the hash off the EVENT when there is one. The page's older
+       pin code also listens for hashchange, runs first, and strips a
+       hash it does not know with replaceState — so by the time this
+       runs, location.hash is already empty. The event still carries
+       the url the reader actually asked for. */
+    var h = (e && e.newURL ? (e.newURL.split("#")[1] || "") : (location.hash || "").slice(1));
     var m = h.match(/^album-(\d{2})$/);
     if (m) {
       var a = BY_ALBUM[Number(m[1])];
@@ -5423,7 +5488,7 @@
       if (row) setTimeout(function () { row.scrollIntoView({ block: "center", behavior: "smooth" }); }, 120);
     }
   }
-  window.addEventListener("hashchange", fromHash);
+  window.addEventListener("hashchange", function (e) { fromHash(e); });
 
   /* ── a Songs link inside the Library overlay ───────────────────
      The Library's own nav is drawn by library/roya-library.js from its
