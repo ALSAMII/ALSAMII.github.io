@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 58 · last updated 2026-11-01 11:10 PDT
+   Version 59 · last updated 2026-11-01 11:40 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11217,6 +11217,7 @@ body.rec-on .to-top { display: none !important; }
   font-weight: 500; font-size: 1rem; color: var(--ember-lit);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+.rec-dock-sc, #royaLibrary .rec-dock-sc{ display: contents; }
 .rec-tbtn, #royaLibrary .rec-tbtn{
   appearance: none; background: none; border: 1px solid var(--hairline);
   color: var(--parchment); width: 2.05rem; height: 2.05rem; border-radius: 50%;
@@ -11250,11 +11251,24 @@ body.rec-on .to-top { display: none !important; }
 }
 /* a list, not a table: on wide screens it keeps to a readable column */
 .rec-q > *, #royaLibrary .rec-q > *{ max-width: 44rem; }
-.rec-q-head, #royaLibrary .rec-q-head{ display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 0.35rem; }
+.rec-q-head, #royaLibrary .rec-q-head{ display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem; }
+.rec-q-head > span, #royaLibrary .rec-q-head > span{ margin-left: auto; }
+/* shuffle and repeat — pills in the Up next header, lit when on */
+.rec-mode, #royaLibrary .rec-mode{
+  appearance: none; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;
+  background: none; border: 1px solid var(--hairline); border-radius: 999px; padding: 0.3rem 0.7rem;
+  font-family: var(--sans); font-weight: 600; font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--faded); line-height: 1; position: relative;
+}
+.rec-mode svg, #royaLibrary .rec-mode svg{ width: 12px; height: 12px; }
+.rec-mode span, #royaLibrary .rec-mode span{ font: inherit; letter-spacing: inherit; color: inherit; }
+.rec-mode:hover, #royaLibrary .rec-mode:hover{ color: var(--ember-lit); border-color: var(--ember-soft); }
+.rec-mode.on, #royaLibrary .rec-mode.on{ color: var(--ember); border-color: var(--ember-soft); background: rgba(216, 166, 95, 0.08); }
+.rec-mode-1, #royaLibrary .rec-mode-1{ font-size: 0.5rem; margin-left: -0.15rem; font-style: normal; }
 .rec-q-head b, #royaLibrary .rec-q-head b{ font-family: var(--sans); font-weight: 600; font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ember); }
 .rec-q-head span, #royaLibrary .rec-q-head span{ font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faded); }
 .rec-q-clear, #royaLibrary .rec-q-clear{
-  margin-left: auto; appearance: none; background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
+  appearance: none; background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
   font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faded);
   border-bottom: 1px solid transparent;
 }
@@ -11467,23 +11481,34 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   /* Two rows on a phone: who is playing above, the transport below.
      In one flex row the scrubber was squeezing the title to "Do…". */
   .rec-dock-bar, #royaLibrary .rec-dock-bar{
-    display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto auto auto;
-    grid-template-areas: "art id id id id id id" "back play skip scrub tot fwd q";
-    column-gap: 0.6rem; row-gap: 0.55rem; align-items: center;
+    display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "art id id id id" "prev play skip sc q";
+    column-gap: 0.75rem; row-gap: 0.6rem; align-items: center;
   }
   .rec-dock-art, #royaLibrary .rec-dock-art{ grid-area: art; }
   .rec-dock-id, #royaLibrary .rec-dock-id{ grid-area: id; max-width: none; margin-right: 2.6rem; }
   .rec-dock-lyr, #royaLibrary .rec-dock-lyr{ margin-right: 0; }
-  .rec-tbtn[data-act="fwd"], #royaLibrary .rec-tbtn[data-act="fwd"]{ grid-area: fwd; }
+  /* the 15-second hop is a desktop control; a finger has the scrubber */
+  .rec-tbtn[data-act="fwd"], #royaLibrary .rec-tbtn[data-act="fwd"]{ display: none; }
+  /* thumb-sized rings: 44px, play 56px */
+  .rec-tbtn, #royaLibrary .rec-tbtn{ width: 2.75rem; height: 2.75rem; }
+  .rec-tbtn svg, #royaLibrary .rec-tbtn svg{ width: 16px; height: 16px; }
+  .rec-tbtn.big, #royaLibrary .rec-tbtn.big{ width: 3.5rem; height: 3.5rem; }
+  .rec-tbtn.big svg, #royaLibrary .rec-tbtn.big svg{ width: 20px; height: 20px; }
+  .rec-dock-sc, #royaLibrary .rec-dock-sc{ grid-area: sc; display: flex; flex-direction: column; align-items: stretch; gap: 0.22rem; min-width: 0; padding: 0 0.2rem; }
+  .rec-dock-sc .rec-tm, #royaLibrary .rec-dock-sc .rec-tm{ align-self: flex-end; font-size: 0.6rem; line-height: 1; }
+  .rec-mode span, #royaLibrary .rec-mode span{ display: none; }
+  .rec-mode, #royaLibrary .rec-mode{ padding: 0.45rem 0.6rem; }
+  .rec-mode svg, #royaLibrary .rec-mode svg{ width: 15px; height: 15px; }
   .rec-dock-q, #royaLibrary .rec-dock-q{ grid-area: q; }
   .rec-q-grip, #royaLibrary .rec-q-grip{ display: none; }
   .rec-q-ud, #royaLibrary .rec-q-ud{ display: flex; }
   .rec-q-row, #royaLibrary .rec-q-row{ padding: 0.45rem 0; }
-  .rec-tbtn[data-act="back"], #royaLibrary .rec-tbtn[data-act="back"]{ grid-area: back; }
+  .rec-tbtn[data-act="prevsong"], #royaLibrary .rec-tbtn[data-act="prevsong"]{ grid-area: prev; }
   .rec-tbtn[data-act="play"], #royaLibrary .rec-tbtn[data-act="play"]{ grid-area: play; }
   .rec-tbtn[data-act="skip"], #royaLibrary .rec-tbtn[data-act="skip"]{ grid-area: skip; }
-  .rec-scrub, #royaLibrary .rec-scrub{ grid-area: scrub; }
-  #recTot, #royaLibrary #recTot{ grid-area: tot; }
+  .rec-scrub, #royaLibrary .rec-scrub{ flex: none; min-width: 0; height: 18px; }
+  .rec-dock-sc .rec-tm, #royaLibrary .rec-dock-sc .rec-tm{ order: -1; }
   .rec-th-dl, #royaLibrary .rec-th-dl{ top: 0.7rem; left: 0.7rem; }
   .rec-th-close, #royaLibrary .rec-th-close{ top: 0.7rem; right: 0.7rem; width: 2.2rem; height: 2.2rem; }
   .rec-th-body, #royaLibrary .rec-th-body{ padding-top: calc(3.4rem + env(safe-area-inset-top, 0px)); }

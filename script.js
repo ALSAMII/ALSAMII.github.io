@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 54 · last updated 2026-11-01 11:10 PDT
+   Version 55 · last updated 2026-11-01 11:40 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -4893,6 +4893,11 @@
 
   var cur = null;                  /* the song playing, or loaded and paused */
   var queue = [];                  /* cats lined up to play after cur, in order */
+  var played = [];                 /* cats actually heard, in order — what "previous" walks back through */
+  var shuf = false;                /* shuffle: the album's next track is drawn at random */
+  var rep = 0;                     /* repeat: 0 off, 1 the album, 2 this song */
+  var pendingT = 0;                /* a saved position to seek to once the file's metadata is in */
+  var ready = false;               /* saved state is read before this is set; nothing is written until it is */
   var curAlbum = SHELF[0];
   var lyrics = {};                 /* cat -> array, fetched once */
   var lines = [];                  /* the rendered lyric buttons for cur */
@@ -5183,15 +5188,23 @@
   }
 
   /* ── loading and playing ────────────────────────────────────── */
-  function load(cat, andPlay) {
+  /* Point the one audio element at a song without showing or playing
+     anything. load() builds on it; the resume on arrival uses it alone. */
+  function cue(s) {
+    cur = s;
+    audio.src = s.audio;          /* never stamped — see the note above */
+    lineIdx = -1;
+    getLyrics(s.cat);
+  }
+  function load(cat, andPlay, noHistory) {
     var s = BY_CAT[cat];
     if (!s) return;
     if (!cur || cur.cat !== cat) {
-      cur = s;
-      audio.src = s.audio;          /* never stamped — see the note above */
+      if (cur && !noHistory) { played.push(cur.cat); if (played.length > 60) played.shift(); }
+      pendingT = 0;
+      cue(s);
       audio.preload = "metadata";
-      lineIdx = -1;
-      getLyrics(cat);
+      saveState();
     }
     dockShow(true);
     if (andPlay) {
@@ -5221,13 +5234,75 @@
      ending stops the player; the button rolls round to track one. */
   function playNext(fromButton) {
     if (!cur) return;
-    if (queue.length) { var nx = queue.shift(); paintQueue(); load(nx, true); return; }
+    /* from the button a paused player stays paused; at the end of a song it plays on */
+    var go = fromButton ? !audio.paused : true;
+    if (!fromButton && rep === 2) { audio.currentTime = 0; audio.play(); return; }
+    if (queue.length) { var nx = queue.shift(); paintQueue(); load(nx, go); return; }
     var list = BY_ALBUM[cur.album]._songs;
+    if (shuf && list.length > 1) {
+      /* a track not heard lately: leave out the ones in the last lap
+         through the album, so nothing comes round twice before the rest */
+      var recent = played.slice(-(list.length - 1)).concat(cur.cat);
+      var pool = list.filter(function (t) { return recent.indexOf(t.cat) < 0; });
+      if (!pool.length) pool = list.filter(function (t) { return t !== cur; });
+      load(pool[Math.floor(Math.random() * pool.length)].cat, go);
+      return;
+    }
     var i = list.indexOf(cur);
-    if (i > -1 && i + 1 < list.length) load(list[i + 1].cat, true);
-    else if (fromButton && list.length) load(list[0].cat, true);
+    if (i > -1 && i + 1 < list.length) load(list[i + 1].cat, go);
+    else if ((fromButton || rep === 1) && list.length) load(list[0].cat, go);
     else paintTransport();
   }
+  /* Previous: more than three seconds in, it restarts the song (press
+     again for the one before). Otherwise it walks back through what was
+     actually heard, so after a queued song or a shuffle it returns to
+     the song you were listening to, not the album's prior track. */
+  function playPrev() {
+    if (!cur) return;
+    if (audio.currentTime > 3) { audio.currentTime = 0; return; }
+    var go = !audio.paused;
+    if (played.length) { load(played.pop(), go, true); return; }
+    var list = BY_ALBUM[cur.album]._songs, i = list.indexOf(cur);
+    if (i > 0) load(list[i - 1].cat, go, true);
+    else audio.currentTime = 0;
+  }
+  function paintModes() {
+    var sb = dock.querySelector('[data-act="shuf"]'), rb = dock.querySelector('[data-act="rep"]');
+    if (sb) { sb.classList.toggle("on", shuf); sb.setAttribute("aria-pressed", shuf ? "true" : "false"); }
+    if (rb) {
+      rb.classList.toggle("on", rep > 0);
+      rb.setAttribute("aria-label", ["Repeat off", "Repeating the album", "Repeating this song"][rep]);
+      var one = rb.querySelector(".rec-mode-1"); if (one) one.hidden = rep !== 2;
+    }
+  }
+  /* ── resume ───────────────────────────────────────────────────
+     What was playing, where it was, what was lined up and the two
+     modes, kept in localStorage so the next visit picks up where this
+     one left off. Written on every change and every few seconds of
+     play; read once, before anything is drawn. */
+  var ST_KEY = "recState", lastSave = 0;
+  function saveState(force) {
+    if (!ready) return;
+    var now = Date.now();
+    if (!force && now - lastSave < 3000) return;
+    lastSave = now;
+    try {
+      localStorage.setItem(ST_KEY, JSON.stringify({
+        cat: cur ? cur.cat : null,
+        t: cur && !audio.ended ? Math.floor(audio.currentTime || pendingT || 0) : 0,
+        q: queue, shuf: shuf, rep: rep
+      }));
+    } catch (e) { /* private mode */ }
+  }
+  function readState() {
+    try { return JSON.parse(localStorage.getItem(ST_KEY) || "null"); } catch (e) { return null; }
+  }
+  audio.addEventListener("loadedmetadata", function () {
+    if (pendingT > 0 && pendingT < (audio.duration || Infinity) - 2) { try { audio.currentTime = pendingT; } catch (e) {} }
+    pendingT = 0;
+  });
+  audio.addEventListener("pause", function () { saveState(true); });
+  window.addEventListener("pagehide", function () { saveState(true); });
   audio.addEventListener("ended", function () { playNext(false); });
   audio.addEventListener("error", function () {
     var n = document.getElementById("recCur");
@@ -5268,7 +5343,7 @@
     });
   }
 
-  function onTime() { paintTransport(); }
+  function onTime() { paintTransport(); saveState(); }
 
   /* ── painting ───────────────────────────────────────────────── */
   function paintDock() {
@@ -5298,16 +5373,17 @@
       b.setAttribute("aria-label", playing ? "Pause" : "Play");
     });
     var d = cur ? (isFinite(audio.duration) ? audio.duration : cur.dur) : 0;
-    var p = d ? (audio.currentTime / d) * 100 : 0;
+    var t = audio.currentTime || pendingT || 0;
+    var p = d ? (t / d) * 100 : 0;
     /* one time in the bar, on the right, counting down to the end */
     var tot = document.getElementById("recTot");
-    if (tot) tot.textContent = "\u2212" + mmss(Math.max(0, d - audio.currentTime));
+    if (tot) tot.textContent = "\u2212" + mmss(Math.max(0, d - t));
     var sc = document.getElementById("recScrub");
     if (sc) {
       sc.querySelector(".rec-fill").style.width = p + "%";
       sc.querySelector(".rec-knob").style.left = p + "%";
       sc.setAttribute("aria-valuenow", Math.round(p));
-      sc.setAttribute("aria-valuetext", mmss(audio.currentTime) + " of " + mmss(d));
+      sc.setAttribute("aria-valuetext", mmss(t) + " of " + mmss(d));
     }
     paintRows();
   }
@@ -5408,6 +5484,7 @@
     if (empty) empty.hidden = queue.length > 0;
     var clr = qPanel && qPanel.querySelector(".rec-q-clear");
     if (clr) clr.hidden = !queue.length;
+    saveState(true);
   }
   function moveInQueue(cat, delta) {
     var i = queue.indexOf(cat), j = i + delta;
@@ -5645,8 +5722,10 @@
     if (!b) return;
     var act = b.dataset.act;
     if (act === "play")  { togglePlay(); return; }
-    if (act === "back")  { audio.currentTime = 0; return; }
+    if (act === "prevsong") { playPrev(); return; }
     if (act === "skip")  { playNext(true); return; }
+    if (act === "shuf")  { shuf = !shuf; paintModes(); saveState(true); toast(shuf ? "Shuffle on" : "Shuffle off"); return; }
+    if (act === "rep")   { rep = (rep + 1) % 3; paintModes(); saveState(true); toast(["Repeat off", "Repeating the album", "Repeating this song"][rep]); return; }
     if (act === "fwd")   { if (cur) audio.currentTime = Math.min((audio.duration || cur.dur) - 0.5, audio.currentTime + 15); return; }
     if (act === "dockclose") { audio.pause(); queueShow(false); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
     if (act === "queue") { queueShow(qPanel && qPanel.hidden); return; }
@@ -5805,7 +5884,24 @@
   window.recordRoom = { open: function () { open(); } };
 
   /* ── go ─────────────────────────────────────────────────────── */
+  var saved = readState();
+  if (saved) {
+    queue = (saved.q || []).filter(function (c) { return !!BY_CAT[c]; });
+    shuf = !!saved.shuf;
+    rep = [0, 1, 2].indexOf(saved.rep) > -1 ? saved.rep : 0;
+    if (BY_CAT[saved.cat]) {
+      /* cued, not shown: the dock appears when the reader comes to Songs
+         (open() shows it whenever a song is cued), and nothing is fetched
+         until they do — preload stays at none */
+      pendingT = Number(saved.t) || 0;
+      cue(BY_CAT[saved.cat]);
+      curAlbum = BY_ALBUM[cur.album] || curAlbum;
+      paintDock();
+    }
+  }
+  ready = true;
   buildShelf();
   pickAlbum(curAlbum.num, true);
+  paintModes();
   fromHash();
 })();

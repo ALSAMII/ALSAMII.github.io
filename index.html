@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 718 · last updated 2026-11-01 11:10 PDT
+<!-- Version 719 · last updated 2026-11-01 11:40 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -166,10 +166,10 @@
      preloads — and the handful further down on assets/intro, assets/
      lrseries and assets/overrides are all separate, and lag
      deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=685">
+<link rel="stylesheet" href="style.css?v=686">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=685">
+<link rel="stylesheet" href="library/roya-library.css?v=686">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -1244,6 +1244,13 @@
          it travels with the player; opens above the bar. -->
     <section class="rec-q" id="recQueue" hidden aria-label="Up next">
       <header class="rec-q-head">
+        <!-- the two modes live here, not in the bar: they decide what plays next -->
+        <button class="rec-mode" data-act="shuf" type="button" aria-pressed="false" aria-label="Shuffle" title="Shuffle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3l4 4-4 4"/><path d="M4 7h4l3 4"/><path d="M4 17h4l8-10h4"/><path d="M16 21l4-4-4 4"/><path d="M14 15l2 2h4"/></svg><span>Shuffle</span>
+        </button>
+        <button class="rec-mode" data-act="rep" type="button" aria-label="Repeat off" title="Repeat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg><span>Repeat</span><b class="rec-mode-1" hidden>1</b>
+        </button>
         <span id="recQMeta"></span>
         <button class="rec-q-clear" data-act="qclear" type="button">Clear</button>
       </header>
@@ -1256,18 +1263,22 @@
         <b class="rec-dock-ttl" id="recDockTtl">&mdash;</b>
         <button class="rec-btn rec-dock-lyr" data-act="lyr" type="button" aria-label="Lyrics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h10M5 17h7"/></svg><span>Lyrics</span></button>
       </span>
-      <button class="rec-tbtn" data-act="back" type="button" aria-label="Back to the beginning" title="Back to the beginning">
+      <button class="rec-tbtn" data-act="prevsong" type="button" aria-label="Previous song" title="Previous song">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2v14H6zM18 5.5v13L9 12z"/></svg>
       </button>
       <button class="rec-tbtn big rec-play" data-act="play" type="button" aria-label="Play"></button>
       <button class="rec-tbtn" data-act="skip" type="button" aria-label="Next song" title="Next song">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 5h2v14h-2zM6 5.5v13l9-6.5z"/></svg>
       </button>
-      <div class="rec-scrub" id="recScrub" role="slider" tabindex="0"
-           aria-label="Playback position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <div class="rec-rail"><div class="rec-fill"></div><div class="rec-knob"></div></div>
+      <!-- scrubber and the time left: side by side on a desktop, the
+           time above the rail on a phone -->
+      <div class="rec-dock-sc">
+        <div class="rec-scrub" id="recScrub" role="slider" tabindex="0"
+             aria-label="Playback position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="rec-rail"><div class="rec-fill"></div><div class="rec-knob"></div></div>
+        </div>
+        <span class="rec-tm" id="recTot">&minus;0:00</span>
       </div>
-      <span class="rec-tm" id="recTot">&minus;0:00</span>
       <button class="rec-tbtn" data-act="fwd" type="button" aria-label="Skip forward fifteen seconds" title="Forward 15 seconds">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M15.8 6A7.6 7.6 0 1 0 19.1 15"/><path d="M12.4 2.9l3.4 3.1-3.4 3.1"/>
@@ -1322,9 +1333,9 @@
   <p class="rec-toast" id="recToast" role="status" hidden></p>
   <input class="rec-share-out" id="recShareOut" readonly hidden aria-label="Share link">
 
-<script src="stories.js?v=685"></script>
-<script src="songs.js?v=685"></script>
-<script src="script.js?v=685"></script>
+<script src="stories.js?v=686"></script>
+<script src="songs.js?v=686"></script>
+<script src="script.js?v=686"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1340,7 +1351,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=685"></script>
+<script src="library/roya-library.js?v=686"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox
