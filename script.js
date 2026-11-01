@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 51 · last updated 2026-11-01 06:45 PDT
+   Version 52 · last updated 2026-11-01 07:05 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -4881,6 +4881,9 @@
   var I_DL    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></svg>';
   var I_SH    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3"/></svg>';
   var I_BACK  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20.3 3.8v4.4h-4.4"/></svg>';
+  var I_ADD   = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  var I_TICK  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var I_GRIP  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></svg>';
   var I_CHEV  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
 
   /* ── the one audio element ──────────────────────────────────── */
@@ -4889,6 +4892,7 @@
   audio.crossOrigin = null;        /* B2 sends no CORS headers; <audio> does not need them */
 
   var cur = null;                  /* the song playing, or loaded and paused */
+  var queue = [];                  /* cats lined up to play after cur, in order */
   var curAlbum = SHELF[0];
   var lyrics = {};                 /* cat -> array, fetched once */
   var lines = [];                  /* the rendered lyric buttons for cur */
@@ -5068,6 +5072,7 @@
     if (!quiet) { pane.classList.remove("swap"); void pane.offsetWidth; pane.classList.add("swap"); }
     requestAnimationFrame(function () { pane.style.minHeight = ""; });
     paintRows();
+    if (typeof paintQueue === "function") paintQueue();
     edges();
   }
 
@@ -5128,6 +5133,15 @@
     li.append(t);
 
     li.append(el("span", "rec-trk-d", mmss(s.dur)));
+
+    /* + lines the song up in Up next; pressed again, takes it out */
+    var ab = el("button", "rec-trk-add");
+    ab.type = "button";
+    ab.setAttribute("aria-label", "Add " + s.title + " to Up next");
+    ab.title = "Add to Up next";
+    ab.innerHTML = I_ADD;
+    ab.addEventListener("click", function (e) { e.stopPropagation(); toggleQueued(s.cat); });
+    li.append(ab);
 
     var shb = el("button", "rec-trk-sh");
     shb.type = "button";
@@ -5202,7 +5216,9 @@
   audio.addEventListener("timeupdate", onTime);
   audio.addEventListener("loadedmetadata", paintTransport);
   audio.addEventListener("ended", function () {
-    /* roll on to the next track of the album, then stop */
+    /* whatever is lined up comes first */
+    if (queue.length) { var nx = queue.shift(); paintQueue(); load(nx, true); return; }
+    /* otherwise roll on to the next track of the album, then stop */
     var list = BY_ALBUM[cur.album]._songs;
     var i = list.indexOf(cur);
     if (i > -1 && i + 1 < list.length) load(list[i + 1].cat, true);
@@ -5301,6 +5317,131 @@
         ? '<span class="rec-eq"><i></i><i></i><i></i></span>' : I_PLAY;
     });
   }
+
+  /* ── Up next ─────────────────────────────────────────────────
+     A list of cats. + on a row adds (or removes); the panel above the
+     player shows them in order, each with a grip to drag it elsewhere
+     (pointer events, so a finger works as well as a mouse) and a × to
+     take it out. When a song ends, the first one waiting plays. The
+     list lives only for the visit. */
+  var qPanel = document.getElementById("recQueue");
+  var qList  = document.getElementById("recQList");
+  function toggleQueued(cat) {
+    var i = queue.indexOf(cat);
+    if (i > -1) { queue.splice(i, 1); toast("Taken out of Up next"); }
+    else { queue.push(cat); toast(queue.length === 1 ? "Lined up next" : "Lined up — " + queue.length + " waiting"); }
+    paintQueue();
+  }
+  function queueShow(on) {
+    if (!qPanel) return;
+    qPanel.hidden = !on;
+    var b = dock.querySelector(".rec-dock-q");
+    if (b) b.setAttribute("aria-expanded", on ? "true" : "false");
+  }
+  function paintQueue() {
+    var n = document.getElementById("recQn");
+    var qb = dock.querySelector(".rec-dock-q");
+    if (n) { n.textContent = String(queue.length); n.hidden = !queue.length; }
+    if (qb) qb.classList.toggle("has", queue.length > 0);
+    /* the + on the rows */
+    [].forEach.call(pane.querySelectorAll(".rec-trk"), function (li) {
+      var b = li.querySelector(".rec-trk-add"), inq = queue.indexOf(li.dataset.cat) > -1;
+      if (!b) return;
+      b.classList.toggle("queued", inq);
+      b.innerHTML = inq ? I_TICK : I_ADD;
+      b.title = inq ? "Take out of Up next" : "Add to Up next";
+    });
+    if (!qList) return;
+    var meta = document.getElementById("recQMeta"), empty = document.getElementById("recQEmpty");
+    var secs = 0;
+    qList.innerHTML = "";
+    queue.forEach(function (cat, i) {
+      var s = BY_CAT[cat]; if (!s) return;
+      secs += s.dur || 0;
+      var li = el("li", "rec-q-row");
+      li.dataset.cat = cat;
+      var g = el("span", "rec-q-grip");
+      g.innerHTML = I_GRIP;
+      g.tabIndex = 0;
+      g.setAttribute("role", "button");
+      g.setAttribute("aria-label", "Move " + s.title + " — drag, or use the arrow keys");
+      li.append(g);
+      li.append(el("span", "rec-q-num", String(i + 1)));
+      var t = el("button", "rec-q-t" + (s.fa ? " fa" : ""));
+      t.type = "button";
+      t.dataset.act = "qplay"; t.dataset.cat = cat;
+      t.title = "Play now";
+      t.append(el("span", "rec-q-name", s.title));
+      var a = BY_ALBUM[s.album];
+      if (a) t.append(el("small", a.fa ? "fa" : "", a.title));
+      li.append(t);
+      li.append(el("span", "rec-q-d", mmss(s.dur)));
+      var x = el("button", "rec-q-x");
+      x.type = "button"; x.dataset.act = "qrm"; x.dataset.cat = cat;
+      x.setAttribute("aria-label", "Take " + s.title + " out of Up next");
+      x.innerHTML = "&times;";
+      li.append(x);
+      qList.append(li);
+    });
+    if (meta) meta.textContent = queue.length
+      ? (queue.length + (queue.length === 1 ? " song" : " songs") + " · " + Math.max(1, Math.round(secs / 60)) + " min")
+      : "";
+    if (empty) empty.hidden = queue.length > 0;
+    var clr = qPanel && qPanel.querySelector(".rec-q-clear");
+    if (clr) clr.hidden = !queue.length;
+  }
+  function moveInQueue(cat, delta) {
+    var i = queue.indexOf(cat), j = i + delta;
+    if (i < 0 || j < 0 || j >= queue.length) return;
+    queue.splice(i, 1); queue.splice(j, 0, cat);
+    paintQueue();
+    var g = qList && qList.children[j] && qList.children[j].querySelector(".rec-q-grip");
+    if (g) g.focus();
+  }
+  if (qList) {
+    /* dragging a grip carries its row; the row above or below slides
+       out of the way as the pointer crosses its middle */
+    qList.addEventListener("pointerdown", function (e) {
+      var g = e.target.closest(".rec-q-grip"); if (!g) return;
+      var row = g.closest(".rec-q-row"); if (!row) return;
+      e.preventDefault();
+      row.classList.add("drag");
+      try { g.setPointerCapture(e.pointerId); } catch (x) {}
+      function move(ev) {
+        var y = ev.clientY, rows = [].slice.call(qList.children), target = null;
+        for (var k = 0; k < rows.length; k++) {
+          if (rows[k] === row) continue;
+          var b = rows[k].getBoundingClientRect();
+          if (y < b.top + b.height / 2) { target = rows[k]; break; }
+        }
+        if (target) { if (target !== row.nextSibling) qList.insertBefore(row, target); }
+        else if (qList.lastElementChild !== row) qList.append(row);
+      }
+      function up() {
+        document.removeEventListener("pointermove", move);
+        document.removeEventListener("pointerup", up);
+        document.removeEventListener("pointercancel", up);
+        row.classList.remove("drag");
+        queue = [].map.call(qList.children, function (r) { return r.dataset.cat; });
+        paintQueue();
+      }
+      /* listened for on the document: the row (and its grip) moves in
+         the DOM mid-drag, and pointer capture does not always follow */
+      document.addEventListener("pointermove", move);
+      document.addEventListener("pointerup", up);
+      document.addEventListener("pointercancel", up);
+    });
+    qList.addEventListener("keydown", function (e) {
+      var g = e.target.closest && e.target.closest(".rec-q-grip"); if (!g) return;
+      var cat = g.closest(".rec-q-row").dataset.cat;
+      if (e.key === "ArrowUp")   { e.preventDefault(); moveInQueue(cat, -1); }
+      if (e.key === "ArrowDown") { e.preventDefault(); moveInQueue(cat, 1); }
+    });
+  }
+  /* a press anywhere outside the player folds the list away */
+  document.addEventListener("click", function (e) {
+    if (qPanel && !qPanel.hidden && !(e.target.closest && e.target.closest("#recDock"))) queueShow(false);
+  }, true);
 
   /* ── share ──────────────────────────────────────────────────── */
   function shareUrl(kind, o) {
@@ -5471,6 +5612,7 @@
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape" || !songsOn) return;
     if (zoomBox && !zoomBox.hidden) { closeZoom(); e.stopPropagation(); return; }
+    if (qPanel && !qPanel.hidden) { queueShow(false); e.stopPropagation(); return; }
     if (!theatre.hidden) { closeTheatre(); e.stopPropagation(); }
   }, true);
 
@@ -5482,7 +5624,11 @@
     if (act === "play")  { togglePlay(); return; }
     if (act === "back")  { audio.currentTime = 0; return; }
     if (act === "fwd")   { if (cur) audio.currentTime = Math.min((audio.duration || cur.dur) - 0.5, audio.currentTime + 15); return; }
-    if (act === "dockclose") { audio.pause(); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
+    if (act === "dockclose") { audio.pause(); queueShow(false); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
+    if (act === "queue") { queueShow(qPanel && qPanel.hidden); return; }
+    if (act === "qclear") { queue = []; paintQueue(); return; }
+    if (act === "qrm") { var qi = queue.indexOf(b.dataset.cat); if (qi > -1) queue.splice(qi, 1); paintQueue(); return; }
+    if (act === "qplay") { var qj = queue.indexOf(b.dataset.cat); if (qj > -1) queue.splice(qj, 1); paintQueue(); load(b.dataset.cat, true); return; }
     if (act === "lyr")   { theatre.hidden ? openTheatre() : closeTheatre(); return; }
     if (act === "thclose") { closeTheatre(); return; }
     if (act === "share" && cur) { share("song", cur); return; }

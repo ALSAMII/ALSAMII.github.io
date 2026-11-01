@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 54 · last updated 2026-11-01 06:40 PDT
+   Version 55 · last updated 2026-11-01 07:05 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11119,7 +11119,7 @@ body.rec-on .to-top { display: none !important; }
 
 .rec-tl, #royaLibrary .rec-tl{ margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hairline); }
 .rec-trk, #royaLibrary .rec-trk{
-  display: grid; grid-template-columns: 1.7rem 1.8rem 1fr auto auto auto;
+  display: grid; grid-template-columns: 1.7rem 1.8rem 1fr auto auto auto auto;
   gap: 0.7rem; align-items: center; padding: 0.58rem 0.3rem;
   border-bottom: 1px solid var(--hairline); cursor: pointer;
 }
@@ -11161,12 +11161,13 @@ body.rec-on .to-top { display: none !important; }
 .rec-trk-ly:hover, #royaLibrary .rec-trk-ly:hover, .rec-trk.on .rec-trk-ly, #royaLibrary .rec-trk.on .rec-trk-ly{ color: var(--ember-lit); border-bottom-color: var(--ember-soft); }
 /* a Persian title sets larger and taller; the label keeps to its middle */
 .rec-trk-t.fa .rec-trk-ly, #royaLibrary .rec-trk-t.fa .rec-trk-ly{ top: 0.02em; margin-left: 0.85rem; }
-.rec-trk-sh, .rec-trk-dl, #royaLibrary .rec-trk-sh, #royaLibrary .rec-trk-dl{
+.rec-trk-sh, .rec-trk-dl, .rec-trk-add, #royaLibrary .rec-trk-sh, #royaLibrary .rec-trk-dl, #royaLibrary .rec-trk-add{
   appearance: none; background: none; border: 0; padding: 0.2rem; cursor: pointer;
   color: var(--faded); display: grid; place-items: center; text-decoration: none;
 }
-.rec-trk-sh:hover, .rec-trk-dl:hover, #royaLibrary .rec-trk-sh:hover, #royaLibrary .rec-trk-dl:hover{ color: var(--ember-lit); }
-.rec-trk-sh svg, .rec-trk-dl svg, #royaLibrary .rec-trk-sh svg, #royaLibrary .rec-trk-dl svg{ width: 14px; height: 14px; }
+.rec-trk-sh:hover, .rec-trk-dl:hover, .rec-trk-add:hover, #royaLibrary .rec-trk-sh:hover, #royaLibrary .rec-trk-dl:hover, #royaLibrary .rec-trk-add:hover{ color: var(--ember-lit); }
+.rec-trk-sh svg, .rec-trk-dl svg, .rec-trk-add svg, #royaLibrary .rec-trk-sh svg, #royaLibrary .rec-trk-dl svg, #royaLibrary .rec-trk-add svg{ width: 14px; height: 14px; }
+.rec-trk-add.queued, #royaLibrary .rec-trk-add.queued{ color: var(--ember); }
 .rec-trk-dl.busy, #royaLibrary .rec-trk-dl.busy{ opacity: 0.4; pointer-events: none; }
 .rec-eq, #royaLibrary .rec-eq{ display: inline-flex; gap: 2px; align-items: flex-end; height: 11px; }
 .rec-eq i, #royaLibrary .rec-eq i{ width: 2px; background: var(--ember); animation: recEq 1s ease-in-out infinite; }
@@ -11191,6 +11192,7 @@ body.rec-on .to-top { display: none !important; }
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .rec-dock-bar, #royaLibrary .rec-dock-bar{
+  position: relative;   /* the × pins to the bar, not to the list above it */
   display: flex; align-items: center; gap: 1rem;
   padding: 0.72rem clamp(1.25rem, 4vw, 3.5rem);
   padding-left: max(clamp(1.25rem, 4vw, 3.5rem), env(safe-area-inset-left, 0px));
@@ -11229,6 +11231,59 @@ body.rec-on .to-top { display: none !important; }
 }
 .rec-dock-x svg, #royaLibrary .rec-dock-x svg{ width: 13px; height: 13px; }
 .rec-dock-x:hover, #royaLibrary .rec-dock-x:hover{ color: var(--ember-lit); }
+/* ── Up next ─────────────────────────────────────────────── */
+.rec-dock-q, #royaLibrary .rec-dock-q{ position: relative; }
+.rec-dock-q.has, #royaLibrary .rec-dock-q.has{ border-color: var(--ember-soft); color: var(--ember); }
+.rec-dock-q[aria-expanded="true"], #royaLibrary .rec-dock-q[aria-expanded="true"]{ background: rgba(216, 166, 95, 0.12); border-color: var(--ember); color: var(--ember-lit); }
+.rec-q-n, #royaLibrary .rec-q-n{
+  position: absolute; top: -0.3rem; right: -0.3rem; min-width: 1rem; height: 1rem; padding: 0 0.28rem;
+  border-radius: 0.5rem; background: var(--ember); color: var(--night);
+  font-family: var(--sans); font-weight: 600; font-size: 0.6rem; line-height: 1rem; text-align: center;
+}
+.rec-q, #royaLibrary .rec-q{
+  max-height: 50vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 0.9rem clamp(1.25rem, 4vw, 3.5rem) 0.5rem;
+  padding-left: max(clamp(1.25rem, 4vw, 3.5rem), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(1.25rem, 4vw, 3.5rem), env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--hairline);
+}
+/* a list, not a table: on wide screens it keeps to a readable column */
+.rec-q > *, #royaLibrary .rec-q > *{ max-width: 44rem; }
+.rec-q-head, #royaLibrary .rec-q-head{ display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 0.35rem; }
+.rec-q-head b, #royaLibrary .rec-q-head b{ font-family: var(--sans); font-weight: 600; font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ember); }
+.rec-q-head span, #royaLibrary .rec-q-head span{ font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faded); }
+.rec-q-clear, #royaLibrary .rec-q-clear{
+  margin-left: auto; appearance: none; background: none; border: 0; padding: 0.2rem 0; cursor: pointer;
+  font-family: var(--sans); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faded);
+  border-bottom: 1px solid transparent;
+}
+.rec-q-clear:hover, #royaLibrary .rec-q-clear:hover{ color: var(--ember-lit); border-bottom-color: var(--ember-soft); }
+.rec-q-list, #royaLibrary .rec-q-list{ list-style: none; margin: 0; padding: 0; }
+.rec-q-row, #royaLibrary .rec-q-row{
+  display: grid; grid-template-columns: 1rem 1.1rem 1fr auto auto; gap: 0.7rem; align-items: center;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--hairline);
+}
+.rec-q-row:last-child, #royaLibrary .rec-q-row:last-child{ border-bottom: 0; }
+.rec-q-row.drag, #royaLibrary .rec-q-row.drag{ background: var(--field); opacity: 0.75; }
+.rec-q-grip, #royaLibrary .rec-q-grip{ color: var(--faded); cursor: grab; touch-action: none; display: grid; place-items: center; width: 1rem; height: 1.4rem; border-radius: 2px; }
+.rec-q-grip:hover, .rec-q-grip:focus-visible, #royaLibrary .rec-q-grip:hover, #royaLibrary .rec-q-grip:focus-visible{ color: var(--ember); outline: none; }
+.rec-q-grip svg, #royaLibrary .rec-q-grip svg{ width: 14px; height: 14px; }
+.rec-q-row.drag .rec-q-grip, #royaLibrary .rec-q-row.drag .rec-q-grip{ cursor: grabbing; }
+.rec-q-num, #royaLibrary .rec-q-num{ font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--ember); }
+.rec-q-t, #royaLibrary .rec-q-t{
+  appearance: none; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; min-width: 0;
+  font-family: var(--serif-read); font-size: 0.98rem; color: var(--parchment); line-height: 1.25;
+}
+.rec-q-t:hover .rec-q-name, #royaLibrary .rec-q-t:hover .rec-q-name{ color: var(--ember-lit); }
+.rec-q-name, #royaLibrary .rec-q-name{ display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rec-q-t.fa, #royaLibrary .rec-q-t.fa{ font-size: 1.08rem; }
+.rec-q-t small, #royaLibrary .rec-q-t small{ display: block; margin-top: 0.2rem; font-family: var(--sans); font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faded); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rec-q-t small.fa, #royaLibrary .rec-q-t small.fa{ font-family: var(--serif-read); font-size: 0.78rem; letter-spacing: 0; text-transform: none; }
+.rec-q-d, #royaLibrary .rec-q-d{ font-family: var(--sans); font-weight: 300; font-size: 0.8rem; color: var(--faded); font-variant-numeric: tabular-nums; }
+.rec-q-x, #royaLibrary .rec-q-x{ appearance: none; background: none; border: 0; padding: 0 0.2rem; cursor: pointer; color: var(--faded); font-family: var(--sans); font-weight: 300; font-size: 1.15rem; line-height: 1; }
+.rec-q-x:hover, #royaLibrary .rec-q-x:hover{ color: var(--ember-lit); }
+.rec-q-empty, #royaLibrary .rec-q-empty{ margin: 0.3rem 0 0.4rem; font-family: var(--serif-read); font-style: italic; font-size: 0.9rem; color: var(--faded); }
+.rec-q-empty i, #royaLibrary .rec-q-empty i{ font-style: normal; color: var(--ember); }
 .rec-dock-lyr, #royaLibrary .rec-dock-lyr{
   flex: none; margin-right: 0.6rem; gap: 0.35rem; border-radius: 999px;
   padding: 0.32rem 0.7rem 0.32rem 0.58rem; font-size: 0.55rem;
@@ -11388,7 +11443,7 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   .rec-pane-ttl, #royaLibrary .rec-pane-ttl{ font-size: 1.45rem; }/* The share button stays and the download goes: sharing is what
      people do from a phone, and the file is a tap away on the row. */
   
-  .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.5rem 1.8rem 1fr auto auto; gap: 0.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.5rem 1.8rem 1fr auto auto auto; gap: 0.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
   /* the list reads at arm's length on a phone */
   .rec-trk-t, #royaLibrary .rec-trk-t{ font-size: 1.08rem; }
   .rec-trk-t.fa, #royaLibrary .rec-trk-t.fa{ font-size: 1.18rem; }
@@ -11404,14 +11459,15 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   /* Two rows on a phone: who is playing above, the transport below.
      In one flex row the scrubber was squeezing the title to "Do…". */
   .rec-dock-bar, #royaLibrary .rec-dock-bar{
-    display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto auto;
-    grid-template-areas: "art id id id id id" "back play now scrub tot fwd";
+    display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto auto auto;
+    grid-template-areas: "art id id id id id id" "back play now scrub tot fwd q";
     column-gap: 0.6rem; row-gap: 0.55rem; align-items: center;
   }
   .rec-dock-art, #royaLibrary .rec-dock-art{ grid-area: art; }
   .rec-dock-id, #royaLibrary .rec-dock-id{ grid-area: id; max-width: none; margin-right: 2.6rem; }
   .rec-dock-lyr, #royaLibrary .rec-dock-lyr{ margin-right: 0; }
   .rec-tbtn[data-act="fwd"], #royaLibrary .rec-tbtn[data-act="fwd"]{ grid-area: fwd; }
+  .rec-dock-q, #royaLibrary .rec-dock-q{ grid-area: q; }
   .rec-tbtn[data-act="back"], #royaLibrary .rec-tbtn[data-act="back"]{ grid-area: back; }
   .rec-tbtn[data-act="play"], #royaLibrary .rec-tbtn[data-act="play"]{ grid-area: play; }
   #recNow, #royaLibrary #recNow{ grid-area: now; }

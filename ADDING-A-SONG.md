@@ -1,4 +1,4 @@
-<!-- Updated 2026-11-01 01:30 PDT — written with the Record Room. 3 albums, 17 songs.
+<!-- Updated 2026-11-01 07:15 PDT — written with the Record Room. 3 albums, 17 songs.
      The house standard for the object itself is roya-recordings-format.md. -->
 # Adding a song
 
@@ -225,6 +225,19 @@ them whenever the number changes.
 - [ ] `#album-AA` and `#song-AA-TT` both open the right thing **from a cold load**, not just from inside the site.
 - [ ] Rendered at 1440 and 393: no broken requests, no horizontal scroll.
 - [ ] The dock survives a view change.
+
+## Up next (the queue)
+
+Nothing to add per song — it comes for free. Every tracklist row has a
+`+` (`.rec-trk-add`) that lines the song up; the player bar's last
+button (`.rec-dock-q`, right of +15) opens the **Up next** panel above
+the bar, with a count badge. Rows there have a six-dot grip (drag with
+a mouse or a finger; arrow keys when the grip has focus), a × to take
+the song out, and the title plays it at once. When a song ends the
+first one waiting plays; when the list is empty the album rolls on as
+before. The list lives in `queue` (an array of `cat`s) inside the
+Records IIFE in `script.js`, for the visit only. The panel is part of
+`#recDock`, so it travels with the player and closes with it.
 
 ## Three things that will catch you
 
