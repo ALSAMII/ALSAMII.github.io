@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 55 · last updated 2026-11-01 11:40 PDT
+   Version 56 · last updated 2026-11-01 11:52 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5048,6 +5048,9 @@
        machines; a reader wants to know what the words mean. */
     if (a.en) left.append(el("p", "rec-pane-translit", a.en + " · Persian"));
     left.append(synopsis(a.syn));
+    /* who did what — the words are Chew Z's, the recordings were made
+       with Suno. Said plainly on every album, under the synopsis. */
+    left.append(el("p", "rec-pane-credit", "Lyrics by Chew Z \u00b7 produced with Suno"));
     head.append(left);
 
     var acts = el("div", "rec-pane-acts");
