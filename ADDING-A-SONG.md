@@ -1,4 +1,4 @@
-<!-- Updated 2026-11-01 01:00 PDT — written with the Record Room. 3 albums, 17 songs.
+<!-- Updated 2026-11-01 01:30 PDT — written with the Record Room. 3 albums, 17 songs.
      The house standard for the object itself is roya-recordings-format.md. -->
 # Adding a song
 
@@ -103,6 +103,11 @@ highlights). `x` is the line.
   zero-width non-joiner** where it belongs — `می‌دونم`, not `میدونم`.
   Direction is set by the `fa` flag, not by marks in the text.
 - A long instrumental is one `mark`, not a run of empties.
+- **Brackets in Persian lines are stored in logical order** — `(` first,
+  then the words, then `)` — exactly as you would type them. Text lifted
+  out of a PDF comes the other way round (the PDF holds the glyphs as
+  drawn), and rendered right-to-left it then shows backwards. Swap them
+  before shipping; every Persian sheet has been.
 
 **The sheet is read, not followed.** The theatre shows the whole lyric
 and the reader scrolls it; no line lights and nothing seeks. The `t`
@@ -160,6 +165,10 @@ the book's card; the share pages print the words alone.
 tracks, and §10 checks them.
 
 ## 5. Generate the share page
+
+A shared song opens **on its lyrics**: `#song-AA-TT` loads the song into
+the dock and opens the theatre, where the reader can read, press play,
+or download. A shared album opens on the album.
 
 ```
 node build-song-shares.js

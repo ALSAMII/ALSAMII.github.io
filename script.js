@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 43 · last updated 2026-11-01 00:55 PDT
+   Version 44 · last updated 2026-11-01 01:25 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5071,6 +5071,25 @@
     edges();
   }
 
+  /* Fetch the file and hand it to the browser as a save, named for the
+     song; if the fetch is refused (no CORS rule), open it instead. */
+  function downloadSong(s, btn) {
+    var fname = "Chew Z - " + (s.en || s.title).replace(/[\\/:*?"<>|]/g, "") + ".mp3";
+    if (btn) btn.classList.add("busy");
+    fetch(s.audio).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.blob();
+    }).then(function (blob) {
+      var u = URL.createObjectURL(blob);
+      var a2 = document.createElement("a");
+      a2.href = u; a2.download = fname;
+      document.body.appendChild(a2); a2.click(); a2.remove();
+      setTimeout(function () { URL.revokeObjectURL(u); }, 4000);
+    }).catch(function () {
+      window.open(s.audio, "_blank", "noopener");
+    }).then(function () { if (btn) btn.classList.remove("busy"); });
+  }
+
   function trackRow(s, n) {
     var li = el("li", "rec-trk");
     li.dataset.cat = s.cat;
@@ -5134,24 +5153,11 @@
     dl.setAttribute("aria-label", "Download " + s.title);
     dl.title = "Download";
     dl.innerHTML = I_DL;
-    var fname = "Chew Z - " + (s.en || s.title).replace(/[\\/:*?"<>|]/g, "") + ".mp3";
     dl.addEventListener("click", function (e) {
       e.stopPropagation();
       if (!window.fetch || !window.URL || !URL.createObjectURL) return;   /* plain link */
       e.preventDefault();
-      dl.classList.add("busy");
-      fetch(s.audio).then(function (r) {
-        if (!r.ok) throw new Error(r.status);
-        return r.blob();
-      }).then(function (blob) {
-        var u = URL.createObjectURL(blob);
-        var a2 = document.createElement("a");
-        a2.href = u; a2.download = fname;
-        document.body.appendChild(a2); a2.click(); a2.remove();
-        setTimeout(function () { URL.revokeObjectURL(u); }, 4000);
-      }).catch(function () {
-        window.open(s.audio, "_blank", "noopener");
-      }).then(function () { dl.classList.remove("busy"); });
+      downloadSong(s, dl);
     });
     li.append(dl);
 
@@ -5173,7 +5179,7 @@
       lineIdx = -1;
       getLyrics(cat);
     }
-    dock.hidden = false;
+    dockShow(true);
     if (andPlay) {
       var p = audio.play();
       if (p && p.catch) p.catch(function () { paintTransport(); });
@@ -5423,6 +5429,13 @@
     [ph, LIB, document.scrollingElement].forEach(function (el) { if (el) el.scrollTop = 0; });
   }
 
+  /* The dock is fixed at the foot and would cover the last rows of a
+     list; while it is up, the body carries room for it underneath. */
+  function dockShow(on) {
+    dock.hidden = !on;
+    document.body.classList.toggle("rec-dock-on", !!on);
+  }
+
   var lastFocus = null;
   function open(quiet) {
     lastFocus = document.activeElement;
@@ -5436,7 +5449,7 @@
       root.hidden = false; root.style.display = "block";
     }
     scrollTop();
-    if (cur) { dock.hidden = false; paintTransport(); }
+    if (cur) { dockShow(true); paintTransport(); }
     requestAnimationFrame(layoutReel);
     if (!quiet) { var h = body.querySelector(".rec-h1"); if (h) { h.tabIndex = -1; try { h.focus({ preventScroll: true }); } catch (x) { h.focus(); } } }
   }
@@ -5446,7 +5459,7 @@
     /* The music is part of this room. Leaving it for the Library pauses
        the record and puts the dock away, so nothing from here plays or
        sits over the books; coming back finds it where it was. */
-    if (cur) { audio.pause(); dock.hidden = true; }
+    if (cur) { audio.pause(); dockShow(false); }
     unmount();
     root.hidden = true; root.style.display = "";
     if (!theatre.hidden) closeTheatre();
@@ -5482,6 +5495,7 @@
     if (act === "share" && cur) { share("song", cur); return; }
     if (act === "prev" || act === "next") { stepAlbum(act === "next" ? 1 : -1); return; }
     if (act === "zoom") { openZoom(); return; }
+    if (act === "thdl" && cur) { downloadSong(cur, b); return; }
     if (act === "zoomclose") { closeZoom(); return; }
   });
 
@@ -5545,8 +5559,9 @@
       pickAlbum(s.album, true);
       open(true);
       load(s.cat, false);
-      var row = pane.querySelector('.rec-trk[data-cat="' + s.cat + '"]');
-      if (row) setTimeout(function () { row.scrollIntoView({ block: "center", behavior: "smooth" }); }, 120);
+      /* a shared song opens on its lyrics, with the record cued in the
+         dock — the browser will not start sound without a press */
+      openTheatre();
     }
   }
   window.addEventListener("hashchange", function (e) { fromHash(e); });

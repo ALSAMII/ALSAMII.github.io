@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 41 · last updated 2026-11-01 00:55 PDT
+   Version 42 · last updated 2026-11-01 01:25 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10897,7 +10897,9 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
 #royaLibrary.rec-view .mob > :not(.mob-head):not(#recBody) { display: none !important; }
 #royaLibrary.rec-view .mob-head > :not(.mob-bar):not(.mob-nav) { display: none !important; }
 #royaLibrary.rec-view #recBody { padding: 1.6rem 0 3rem; min-width: 0; }
-#royaLibrary.rec-view .mob > #recBody { padding: 1.2rem 1rem 3rem; }/* ── the head ─────────────────────────────────────────────
+#royaLibrary.rec-view .mob > #recBody { padding: 1.2rem 1rem 3rem; }
+
+/* ── the head ─────────────────────────────────────────────
    Set the way the Library sets its About opening: EB Garamond, centred,
    a long measure — the same voice as the rest of the house, so the
    section reads as a room in it. The one sentence that matters is
@@ -11249,7 +11251,11 @@ body.rec-on .to-top { display: none !important; }
   padding-top: calc(clamp(1.25rem, 4vw, 3.5rem) + env(safe-area-inset-top, 0px));
   padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
 }
-.rec-th-close, #royaLibrary .rec-th-close{ position: absolute; top: 1rem; right: 1.1rem; z-index: 3; }
+.rec-th-acts, #royaLibrary .rec-th-acts{ position: absolute; top: 1rem; right: 1.1rem; z-index: 3; display: flex; gap: 0.5rem; }
+.rec-th-acts .rec-btn.busy, #royaLibrary .rec-th-acts .rec-btn.busy{ opacity: 0.4; pointer-events: none; }
+/* while the dock is up, the page keeps room for it under the last row */
+body.rec-dock-on #recBody { padding-bottom: 7rem; }
+body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem; }
 .rec-th-now, #royaLibrary .rec-th-now{
   font-family: var(--sans); font-size: 0.59rem; letter-spacing: 0.3em;
   text-transform: uppercase; color: var(--ember); margin: 0 0 0.3rem;
@@ -11355,6 +11361,8 @@ body.rec-on .to-top { display: none !important; }
   .rec-scrub, #royaLibrary .rec-scrub{ grid-area: scrub; }
   #recTot, #royaLibrary #recTot{ grid-area: tot; }
   .rec-dock-sub, #royaLibrary .rec-dock-sub{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rec-th-acts, #royaLibrary .rec-th-acts{ top: 0.7rem; right: 0.7rem; }
+  .rec-th-body, #royaLibrary .rec-th-body{ padding-top: calc(3.4rem + env(safe-area-inset-top, 0px)); }
   .rec-cur, #royaLibrary .rec-cur{ display: none; }
   .rec-dock-art, #royaLibrary .rec-dock-art{ width: 32px; height: 32px; }
   .rec-dock-bar, #royaLibrary .rec-dock-bar{ gap: 0.6rem; padding-top: 0.6rem; padding-bottom: 0.6rem; }
