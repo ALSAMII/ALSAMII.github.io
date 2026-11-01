@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 42 · last updated 2026-11-01 01:25 PDT
+   Version 43 · last updated 2026-11-01 01:45 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10992,12 +10992,15 @@ body.rec-on .to-top { display: none !important; }
 .rec-cur, #royaLibrary .rec-cur { display: none !important; }
 /* the magnifier: the page's own .series-zoom look, placed by script.js
    on the lower-right of the centre sleeve */
+/* the same glass the book covers carry — its own colours, not the gold */
 .rec-zoom-btn, #royaLibrary .rec-zoom-btn{
   top: auto; right: auto; z-index: 3; width: 2.1rem; height: 2.1rem;
-  background: rgba(0,0,0,0.55); border: 1px solid var(--ember-soft); color: var(--ember-lit);
-  border-radius: 50%; opacity: 0; transition: opacity 0.3s ease, background 0.2s ease;
+  opacity: 0; transition: opacity 0.3s ease;
+  /* restated at this specificity because the Library's own button
+     reset (#royaLibrary button) otherwise strips the disc and the ring */
+  background: rgba(11, 9, 7, 0.55); border: 1px solid rgba(233, 223, 201, 0.35);
+  border-radius: 50%; color: var(--parchment);
 }
-.rec-zoom-btn:hover, #royaLibrary .rec-zoom-btn:hover{ background: var(--ember); color: var(--night); }
 .rec-zoom-btn.on, #royaLibrary .rec-zoom-btn.on{ opacity: 1; }
 .rec-zoom-btn svg, #royaLibrary .rec-zoom-btn svg{ width: 1rem; height: 1rem; }
 #recZoom, #royaLibrary #recZoom{ z-index: 67; }
