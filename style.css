@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 60 · last updated 2026-11-01 11:52 PDT
+   Version 61 · last updated 2026-11-01 11:56 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10935,6 +10935,8 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
   font-size: clamp(1rem, 1.3vw, 1.18rem); color: var(--faded); font-style: italic;
   max-width: 60ch;
 }
+/* the credit closes the genre line — same sentence, a shade quieter */
+.rec-lede-credit, #royaLibrary .rec-lede-credit{ white-space: nowrap; opacity: 0.8; }
 .rec-rule, #royaLibrary .rec-rule{
   display: flex; align-items: center; justify-content: center; gap: 0.7rem;
   margin: 1.4rem auto 1rem; max-width: 22rem;

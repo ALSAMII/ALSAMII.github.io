@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 720 · last updated 2026-11-01 11:52 PDT
+<!-- Version 721 · last updated 2026-11-01 11:56 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -166,10 +166,10 @@
      preloads — and the handful further down on assets/intro, assets/
      lrseries and assets/overrides are all separate, and lag
      deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=687">
+<link rel="stylesheet" href="style.css?v=688">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=687">
+<link rel="stylesheet" href="library/roya-library.css?v=688">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -1209,7 +1209,7 @@
       <p class="rec-lede">Every Roya story is about the same thing: a mind
         that has become a locked room, and the door out of it that nobody
         can see. <em>These songs are the sound of looking for the key.</em></p>
-      <p class="rec-lede rec-lede-2">Dark reggae for the room, downtempo house for the door.</p>
+      <p class="rec-lede rec-lede-2">Dark reggae for the room, downtempo house for the door. <span class="rec-lede-credit">Lyrics by Chew&nbsp;Z &middot; produced with Suno.</span></p>
       <div class="rec-rule" aria-hidden="true"><i></i><b></b><i></i></div>
       <div class="rec-meta">
         <span>3 albums</span><i>&middot;</i><span>17 songs</span><i>&middot;</i>
@@ -1333,9 +1333,9 @@
   <p class="rec-toast" id="recToast" role="status" hidden></p>
   <input class="rec-share-out" id="recShareOut" readonly hidden aria-label="Share link">
 
-<script src="stories.js?v=687"></script>
-<script src="songs.js?v=687"></script>
-<script src="script.js?v=687"></script>
+<script src="stories.js?v=688"></script>
+<script src="songs.js?v=688"></script>
+<script src="script.js?v=688"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1351,7 +1351,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=687"></script>
+<script src="library/roya-library.js?v=688"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox
