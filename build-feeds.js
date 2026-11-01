@@ -86,6 +86,19 @@ ${items}
 
 fs.writeFileSync("feed.xml", feed);
 
+/* ---- the recordings, if songs.js is present ---------------------
+   Optional on purpose: this generator predates the Record Room and
+   must still run in a tree that has no songs.js. */
+let ALBUMS = [], SONGS = [];
+try {
+  const songSrc = fs.readFileSync("songs.js", "utf8");
+  const box = {};
+  new Function("exports", songSrc + "\nexports.ALBUMS=ALBUMS;exports.SONGS=SONGS;")(box);
+  ALBUMS = box.ALBUMS || [];
+  SONGS = box.SONGS || [];
+} catch (e) { /* no recordings in this tree */ }
+const pad2 = (n) => ("0" + n).slice(-2);
+
 /* ---- sitemap.xml ---------------------------------------------- */
 
 const today = new Date().toISOString().slice(0, 10);
@@ -103,6 +116,17 @@ const urls = [
   ...STORIES.map(
     (s) =>
       `  <url><loc>${SITE}/pdfs/${String(s.num).padStart(2, "0")}.pdf</loc><lastmod>${today}</lastmod><priority>0.7</priority></url>`
+  ),
+  /* The recordings. The anchors are what a share link points at, so
+     they are what a crawler should be given — not the share pages
+     themselves, which only redirect. */
+  ...ALBUMS.map(
+    (a) =>
+      `  <url><loc>${SITE}/#album-${pad2(a.num)}</loc><lastmod>${today}</lastmod><priority>0.7</priority></url>`
+  ),
+  ...SONGS.map(
+    (s) =>
+      `  <url><loc>${SITE}/#song-${s.cat}</loc><lastmod>${today}</lastmod><priority>0.6</priority></url>`
   ),
 ].join("\n");
 
@@ -166,6 +190,7 @@ if (!html.includes(SCALE)) {
 
 console.log(
   `feed.xml: ${STORIES.length} items\n` +
-  `sitemap.xml: ${STORIES.length * 2 + TRILOGIES.length + 1} urls\n` +
+  `sitemap.xml: ${STORIES.length * 2 + TRILOGIES.length + 1 + ALBUMS.length + SONGS.length} urls` +
+  `${ALBUMS.length ? ` (incl. ${ALBUMS.length} albums + ${SONGS.length} songs)` : ""}\n` +
   scaleNote
 );

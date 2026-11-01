@@ -1,0 +1,412 @@
+[
+ {
+  "t": 8.0,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 10.9,
+  "k": "lyric",
+  "x": "Warm"
+ },
+ {
+  "t": 13.9,
+  "k": "lyric",
+  "x": "Everything's warm"
+ },
+ {
+  "t": 16.8,
+  "k": "lyric",
+  "x": "The room is a bath"
+ },
+ {
+  "t": 19.8,
+  "k": "lyric",
+  "x": "And the world is far"
+ },
+ {
+  "t": 22.7,
+  "k": "lyric",
+  "x": "I'm not here"
+ },
+ {
+  "t": 25.6,
+  "k": "lyric",
+  "x": "Nothing hurts here"
+ },
+ {
+  "t": 28.6,
+  "k": "lyric",
+  "x": "I can hear my mother laughing"
+ },
+ {
+  "t": 31.5,
+  "k": "lyric",
+  "x": "From a kitchen that burned down years ago"
+ },
+ {
+  "t": 34.4,
+  "k": "lyric",
+  "x": "And I'm not scared"
+ },
+ {
+  "t": 37.4,
+  "k": "lyric",
+  "x": "And I'm not scared"
+ },
+ {
+  "t": 40.3,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 43.3,
+  "k": "lyric",
+  "x": "Don't wake me"
+ },
+ {
+  "t": 46.2,
+  "k": "lyric",
+  "x": "Don't wake me"
+ },
+ {
+  "t": 49.1,
+  "k": "lyric",
+  "x": "Let me stay"
+ },
+ {
+  "t": 52.1,
+  "k": "lyric",
+  "x": "Where it's warm"
+ },
+ {
+  "t": 55.0,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 58.0,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 60.9,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 63.8,
+  "k": "lyric",
+  "x": "Where the water's warm"
+ },
+ {
+  "t": 66.8,
+  "k": "lyric",
+  "x": "And I don't remember"
+ },
+ {
+  "t": 69.7,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 72.6,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 75.6,
+  "k": "lyric",
+  "x": "I know what it costs"
+ },
+ {
+  "t": 78.5,
+  "k": "lyric",
+  "x": "I know what it costs"
+ },
+ {
+  "t": 81.5,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 84.4,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 87.3,
+  "k": "lyric",
+  "x": "Cold"
+ },
+ {
+  "t": 90.3,
+  "k": "lyric",
+  "x": "Everything's cold"
+ },
+ {
+  "t": 93.2,
+  "k": "lyric",
+  "x": "Day three and my skin"
+ },
+ {
+  "t": 96.1,
+  "k": "lyric",
+  "x": "Is trying to leave my bones"
+ },
+ {
+  "t": 99.1,
+  "k": "lyric",
+  "x": "My legs won't stop"
+ },
+ {
+  "t": 102.0,
+  "k": "lyric",
+  "x": "My stomach's a fist"
+ },
+ {
+  "t": 105.0,
+  "k": "lyric",
+  "x": "I'm sweating through the sheets"
+ },
+ {
+  "t": 107.9,
+  "k": "lyric",
+  "x": "And praying to a god"
+ },
+ {
+  "t": 110.8,
+  "k": "lyric",
+  "x": "I only talk to"
+ },
+ {
+  "t": 113.8,
+  "k": "lyric",
+  "x": "When I'm like this"
+ },
+ {
+  "t": 116.7,
+  "k": "lyric",
+  "x": "Like this"
+ },
+ {
+  "t": 119.7,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 122.6,
+  "k": "lyric",
+  "x": "Don't let me"
+ },
+ {
+  "t": 125.5,
+  "k": "lyric",
+  "x": "Don't let me"
+ },
+ {
+  "t": 128.5,
+  "k": "lyric",
+  "x": "I'm begging you"
+ },
+ {
+  "t": 131.4,
+  "k": "lyric",
+  "x": "Don't let me"
+ },
+ {
+  "t": 134.3,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 137.3,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 140.2,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 143.2,
+  "k": "lyric",
+  "x": "Where the water's warm"
+ },
+ {
+  "t": 146.1,
+  "k": "lyric",
+  "x": "And I don't remember"
+ },
+ {
+  "t": 149.0,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 152.0,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 154.9,
+  "k": "lyric",
+  "x": "I know what it costs"
+ },
+ {
+  "t": 157.9,
+  "k": "lyric",
+  "x": "I know what it costs"
+ },
+ {
+  "t": 160.8,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 163.7,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 166.7,
+  "k": "lyric",
+  "x": "My body's crying out loud"
+ },
+ {
+  "t": 169.6,
+  "k": "lyric",
+  "x": "It's screaming in a language"
+ },
+ {
+  "t": 172.5,
+  "k": "lyric",
+  "x": "I taught it myself"
+ },
+ {
+  "t": 175.5,
+  "k": "lyric",
+  "x": "Every bone a bell"
+ },
+ {
+  "t": 178.4,
+  "k": "lyric",
+  "x": "Every nerve a wire"
+ },
+ {
+  "t": 181.4,
+  "k": "lyric",
+  "x": "And I'm standing at the door"
+ },
+ {
+  "t": 184.3,
+  "k": "lyric",
+  "x": "With my hand on the handle"
+ },
+ {
+  "t": 187.2,
+  "k": "lyric",
+  "x": "Like I'm standing at the edge"
+ },
+ {
+  "t": 190.2,
+  "k": "lyric",
+  "x": "Of the only thing that ever loved me back"
+ },
+ {
+  "t": 193.1,
+  "k": "lyric",
+  "x": "And it never loved me"
+ },
+ {
+  "t": 196.0,
+  "k": "lyric",
+  "x": "It never loved me"
+ },
+ {
+  "t": 199.0,
+  "k": "lyric",
+  "x": "It never did"
+ },
+ {
+  "t": 201.9,
+  "k": "mark",
+  "x": "Final Chorus"
+ },
+ {
+  "t": 204.9,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 207.8,
+  "k": "lyric",
+  "x": "Hold me under"
+ },
+ {
+  "t": 210.7,
+  "k": "lyric",
+  "x": "Where the water's warm"
+ },
+ {
+  "t": 213.7,
+  "k": "lyric",
+  "x": "And I don't remember"
+ },
+ {
+  "t": 216.6,
+  "k": "lyric",
+  "x": "Hold me up"
+ },
+ {
+  "t": 219.6,
+  "k": "lyric",
+  "x": "Hold me up"
+ },
+ {
+  "t": 222.5,
+  "k": "lyric",
+  "x": "I know what it costs"
+ },
+ {
+  "t": 225.4,
+  "k": "lyric",
+  "x": "I know what it costs"
+ },
+ {
+  "t": 228.4,
+  "k": "lyric",
+  "x": "Somebody"
+ },
+ {
+  "t": 231.3,
+  "k": "lyric",
+  "x": "Hold me up"
+ },
+ {
+  "t": 234.2,
+  "k": "mark",
+  "x": "Outro"
+ },
+ {
+  "t": 237.2,
+  "k": "lyric",
+  "x": "Hold me up"
+ },
+ {
+  "t": 240.1,
+  "k": "mark",
+  "x": "End"
+ },
+ {
+  "t": 243.1,
+  "k": "lyric",
+  "x": "Here Be No Dragons_Slowed"
+ },
+ {
+  "t": 246.0,
+  "k": "mark",
+  "x": "Intro"
+ }
+]

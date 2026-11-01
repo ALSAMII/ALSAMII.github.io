@@ -1,0 +1,352 @@
+[
+ {
+  "t": 12.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 16.9,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 21.7,
+  "k": "lyric",
+  "x": "Been running from the same old game since I was young"
+ },
+ {
+  "t": 26.6,
+  "k": "lyric",
+  "x": "Cat chasing mouse, and the mouse never done"
+ },
+ {
+  "t": 31.5,
+  "k": "lyric",
+  "x": "Every suit in the building got a glass in his hand"
+ },
+ {
+  "t": 36.3,
+  "k": "lyric",
+  "x": "Then he writes me a sentence for a seed in the sand"
+ },
+ {
+  "t": 41.2,
+  "k": "lyric",
+  "x": "I don’t wanna shoot the man who’s flying the plane"
+ },
+ {
+  "t": 46.1,
+  "k": "lyric",
+  "x": "But I’m tired of the rules that keep changing the lane"
+ },
+ {
+  "t": 51.0,
+  "k": "lyric",
+  "x": "Lose your paper for the smoke you had the night before"
+ },
+ {
+  "t": 55.8,
+  "k": "lyric",
+  "x": "Tell me who that law is for"
+ },
+ {
+  "t": 60.7,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 65.6,
+  "k": "lyric",
+  "x": "Rules can bend, help the lost, don’t shame"
+ },
+ {
+  "t": 70.4,
+  "k": "lyric",
+  "x": "Stop the blame, stop the chain"
+ },
+ {
+  "t": 75.3,
+  "k": "lyric",
+  "x": "World gon’ break if we don’t make"
+ },
+ {
+  "t": 80.2,
+  "k": "lyric",
+  "x": "A little peace, for peace’s sake"
+ },
+ {
+  "t": 85.0,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 89.9,
+  "k": "lyric",
+  "x": "Give us a minister of calm"
+ },
+ {
+  "t": 94.8,
+  "k": "lyric",
+  "x": "Aye aye aye, aye aye aye"
+ },
+ {
+  "t": 99.7,
+  "k": "lyric",
+  "x": "For the ones who can’t put it down"
+ },
+ {
+  "t": 104.5,
+  "k": "lyric",
+  "x": "High high high, high high high"
+ },
+ {
+  "t": 109.4,
+  "k": "lyric",
+  "x": "There’s only one side to stand on"
+ },
+ {
+  "t": 114.3,
+  "k": "lyric",
+  "x": "High high high, high high high"
+ },
+ {
+  "t": 119.1,
+  "k": "lyric",
+  "x": "A minister of calm"
+ },
+ {
+  "t": 124.0,
+  "k": "lyric",
+  "x": "Aye aye aye, aye aye aye"
+ },
+ {
+  "t": 128.9,
+  "k": "lyric",
+  "x": "Give us a minister of calm"
+ },
+ {
+  "t": 133.7,
+  "k": "mark",
+  "x": "Dub Breakdown"
+ },
+ {
+  "t": 138.6,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 143.5,
+  "k": "lyric",
+  "x": "Nobody born with a bottle in his hand"
+ },
+ {
+  "t": 148.3,
+  "k": "lyric",
+  "x": "Job and a wife and a mortgage on the land"
+ },
+ {
+  "t": 153.2,
+  "k": "lyric",
+  "x": "Every answer they give us is a maze with no door"
+ },
+ {
+  "t": 158.1,
+  "k": "lyric",
+  "x": "Every leader in the mirror is the one we saw before"
+ },
+ {
+  "t": 163.0,
+  "k": "lyric",
+  "x": "I don’t wanna shoot the man who’s flying the plane"
+ },
+ {
+  "t": 167.8,
+  "k": "lyric",
+  "x": "But look me in the eye and tell me who’s to blame"
+ },
+ {
+  "t": 172.7,
+  "k": "lyric",
+  "x": "Fed up with the fact that leader means hypocrite"
+ },
+ {
+  "t": 177.6,
+  "k": "lyric",
+  "x": "When the ego’s in the room you can’t fool it, you can’t tool it"
+ },
+ {
+  "t": 182.4,
+  "k": "lyric",
+  "x": "That’s why I gotta share it"
+ },
+ {
+  "t": 187.3,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 192.2,
+  "k": "lyric",
+  "x": "Rules can bend, help the lost, don’t shame"
+ },
+ {
+  "t": 197.0,
+  "k": "lyric",
+  "x": "Stop the blame, stop the chain"
+ },
+ {
+  "t": 201.9,
+  "k": "lyric",
+  "x": "World gon’ break if we don’t make"
+ },
+ {
+  "t": 206.8,
+  "k": "lyric",
+  "x": "A little peace, for peace’s sake"
+ },
+ {
+  "t": 211.7,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 216.5,
+  "k": "lyric",
+  "x": "Give us a minister of calm"
+ },
+ {
+  "t": 221.4,
+  "k": "lyric",
+  "x": "Aye aye aye, aye aye aye"
+ },
+ {
+  "t": 226.3,
+  "k": "lyric",
+  "x": "For the ones who can’t put it down"
+ },
+ {
+  "t": 231.1,
+  "k": "lyric",
+  "x": "High high high, high high high"
+ },
+ {
+  "t": 236.0,
+  "k": "lyric",
+  "x": "There’s only one side to stand on"
+ },
+ {
+  "t": 240.9,
+  "k": "lyric",
+  "x": "High high high, high high high"
+ },
+ {
+  "t": 245.7,
+  "k": "lyric",
+  "x": "A minister of calm"
+ },
+ {
+  "t": 250.6,
+  "k": "lyric",
+  "x": "Aye aye aye, aye aye aye"
+ },
+ {
+  "t": 255.5,
+  "k": "lyric",
+  "x": "Give us a minister of calm"
+ },
+ {
+  "t": 260.3,
+  "k": "mark",
+  "x": "Instrumental"
+ },
+ {
+  "t": 265.2,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 270.1,
+  "k": "lyric",
+  "x": "Old ways never last"
+ },
+ {
+  "t": 275.0,
+  "k": "lyric",
+  "x": "Holding to the past"
+ },
+ {
+  "t": 279.8,
+  "k": "lyric",
+  "x": "Street full of dust, power breeds no trust"
+ },
+ {
+  "t": 284.7,
+  "k": "lyric",
+  "x": "Make it safe, or bust"
+ },
+ {
+  "t": 289.6,
+  "k": "mark",
+  "x": "Final Chorus"
+ },
+ {
+  "t": 294.4,
+  "k": "lyric",
+  "x": "Give us a minister of calm (minister of calm)"
+ },
+ {
+  "t": 299.3,
+  "k": "lyric",
+  "x": "Aye aye aye, aye aye aye"
+ },
+ {
+  "t": 304.2,
+  "k": "lyric",
+  "x": "For the ones who can’t put it down"
+ },
+ {
+  "t": 309.0,
+  "k": "lyric",
+  "x": "High high high, high high high"
+ },
+ {
+  "t": 313.9,
+  "k": "lyric",
+  "x": "There’s only one side to stand on"
+ },
+ {
+  "t": 318.8,
+  "k": "lyric",
+  "x": "High high high, high high high"
+ },
+ {
+  "t": 323.7,
+  "k": "lyric",
+  "x": "A minister of calm"
+ },
+ {
+  "t": 328.5,
+  "k": "lyric",
+  "x": "Aye aye aye, aye aye aye"
+ },
+ {
+  "t": 333.4,
+  "k": "lyric",
+  "x": "Give us a minister of calm"
+ },
+ {
+  "t": 338.3,
+  "k": "lyric",
+  "x": "Minister of calm"
+ },
+ {
+  "t": 343.1,
+  "k": "lyric",
+  "x": "Minister of calm"
+ },
+ {
+  "t": 348.0,
+  "k": "mark",
+  "x": "Outro"
+ }
+]

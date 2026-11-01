@@ -1,0 +1,342 @@
+[
+ {
+  "t": 8.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 12.2,
+  "k": "lyric",
+  "x": "Mi hear every door a-call mi name"
+ },
+ {
+  "t": 16.3,
+  "k": "lyric",
+  "x": "Every one a-whisper the same"
+ },
+ {
+  "t": 20.5,
+  "k": "lyric",
+  "x": "Come find the quiet, come lay it down"
+ },
+ {
+  "t": 24.7,
+  "k": "lyric",
+  "x": "Only one of dem ever keep it sound"
+ },
+ {
+  "t": 28.8,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 33.0,
+  "k": "lyric",
+  "x": "Moon pon the water, cold and low"
+ },
+ {
+  "t": 37.1,
+  "k": "lyric",
+  "x": "Say come inside, let the heavy go"
+ },
+ {
+  "t": 41.3,
+  "k": "lyric",
+  "x": "It open warm, it open wide"
+ },
+ {
+  "t": 45.5,
+  "k": "lyric",
+  "x": "But the peace it sell mi nah live inside"
+ },
+ {
+  "t": 49.6,
+  "k": "lyric",
+  "x": "Mi walk through the honey, walk through the grey"
+ },
+ {
+  "t": 53.8,
+  "k": "lyric",
+  "x": "Everything it promise, it take away"
+ },
+ {
+  "t": 58.0,
+  "k": "lyric",
+  "x": "Countin’ mi self down into the deep"
+ },
+ {
+  "t": 62.1,
+  "k": "lyric",
+  "x": "Wake in the morning with nothing to keep"
+ },
+ {
+  "t": 66.3,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 70.5,
+  "k": "lyric",
+  "x": "So mi lay down the map that a stranger drew"
+ },
+ {
+  "t": 74.6,
+  "k": "lyric",
+  "x": "Every road pon it a-circle back to you"
+ },
+ {
+  "t": 78.8,
+  "k": "lyric",
+  "x": "Peace of mind, oh, peace of mind"
+ },
+ {
+  "t": 83.0,
+  "k": "lyric",
+  "x": "You never live behind no door"
+ },
+ {
+  "t": 87.1,
+  "k": "lyric",
+  "x": "You was never that unkind"
+ },
+ {
+  "t": 91.3,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 95.4,
+  "k": "lyric",
+  "x": "Tek the long way, tek the long way to quiet"
+ },
+ {
+  "t": 99.6,
+  "k": "lyric",
+  "x": "Where the only thing yuh leave is the pain"
+ },
+ {
+  "t": 103.8,
+  "k": "lyric",
+  "x": "Tek the long way, no shortcut gonna buy it"
+ },
+ {
+  "t": 107.9,
+  "k": "lyric",
+  "x": "No warm little lie gonna wash out the stain"
+ },
+ {
+  "t": 112.1,
+  "k": "lyric",
+  "x": "Oh, the quiet, oh, the quiet"
+ },
+ {
+  "t": 116.3,
+  "k": "lyric",
+  "x": "It was in mi the whole long way"
+ },
+ {
+  "t": 120.4,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 124.6,
+  "k": "lyric",
+  "x": "Dem draw a bridge from the here to the gone"
+ },
+ {
+  "t": 128.8,
+  "k": "lyric",
+  "x": "Tell mi the dark is a place to belong"
+ },
+ {
+  "t": 132.9,
+  "k": "lyric",
+  "x": "Mi bury a friend who believe that lie"
+ },
+ {
+  "t": 137.1,
+  "k": "lyric",
+  "x": "Still hear him laughin’ in the lullaby"
+ },
+ {
+  "t": 141.3,
+  "k": "lyric",
+  "x": "Mi carry a heart that nah all mine"
+ },
+ {
+  "t": 145.4,
+  "k": "lyric",
+  "x": "Beatin’ out the hours, keepin’ better time"
+ },
+ {
+  "t": 149.6,
+  "k": "lyric",
+  "x": "Daylight a door too, nobody try it"
+ },
+ {
+  "t": 153.7,
+  "k": "lyric",
+  "x": "Harder than the rest — that’s the reason, mi know it"
+ },
+ {
+  "t": 157.9,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 162.1,
+  "k": "lyric",
+  "x": "Lay down the warmth that was never warm"
+ },
+ {
+  "t": 166.2,
+  "k": "lyric",
+  "x": "Lay down the shelter, walk into the storm"
+ },
+ {
+  "t": 170.4,
+  "k": "lyric",
+  "x": "Peace of mind, oh, peace of mind"
+ },
+ {
+  "t": 174.6,
+  "k": "lyric",
+  "x": "Not a thing yuh swallow down"
+ },
+ {
+  "t": 178.7,
+  "k": "lyric",
+  "x": "It’s a thing yuh haffi find"
+ },
+ {
+  "t": 182.9,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 187.1,
+  "k": "lyric",
+  "x": "Tek the long way, tek the long way to quiet"
+ },
+ {
+  "t": 191.2,
+  "k": "lyric",
+  "x": "Where the only thing yuh leave is the pain"
+ },
+ {
+  "t": 195.4,
+  "k": "lyric",
+  "x": "Tek the long way, no shortcut gonna buy it"
+ },
+ {
+  "t": 199.6,
+  "k": "lyric",
+  "x": "No warm little lie gonna wash out the stain"
+ },
+ {
+  "t": 203.7,
+  "k": "lyric",
+  "x": "Oh, the quiet, oh, the quiet"
+ },
+ {
+  "t": 207.9,
+  "k": "lyric",
+  "x": "It was in mi the whole long way"
+ },
+ {
+  "t": 212.0,
+  "k": "mark",
+  "x": "Build"
+ },
+ {
+  "t": 216.2,
+  "k": "lyric",
+  "x": "Count mi down, count mi down"
+ },
+ {
+  "t": 220.4,
+  "k": "lyric",
+  "x": "Count mi down to the real sound"
+ },
+ {
+  "t": 224.5,
+  "k": "lyric",
+  "x": "Not the hush of the closin’ door"
+ },
+ {
+  "t": 228.7,
+  "k": "lyric",
+  "x": "The hush of a man who nah need it no more"
+ },
+ {
+  "t": 232.9,
+  "k": "lyric",
+  "x": "Count mi down, count mi down"
+ },
+ {
+  "t": 237.0,
+  "k": "lyric",
+  "x": "To the one room left standin’ on solid ground"
+ },
+ {
+  "t": 241.2,
+  "k": "mark",
+  "x": "Drop"
+ },
+ {
+  "t": 245.4,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 249.5,
+  "k": "lyric",
+  "x": "Mi lose plenty down the easy road"
+ },
+ {
+  "t": 253.7,
+  "k": "lyric",
+  "x": "Mi carry them with mi, that’s the load"
+ },
+ {
+  "t": 257.9,
+  "k": "lyric",
+  "x": "And the quiet mi was beggin’ every door to sell"
+ },
+ {
+  "t": 262.0,
+  "k": "lyric",
+  "x": "Was waitin’ in the hard way all this while — mi can tell"
+ },
+ {
+  "t": 266.2,
+  "k": "mark",
+  "x": "Outro"
+ },
+ {
+  "t": 270.3,
+  "k": "lyric",
+  "x": "Every door swear it’s the quiet"
+ },
+ {
+  "t": 274.5,
+  "k": "lyric",
+  "x": "Mi find the long way home"
+ },
+ {
+  "t": 278.7,
+  "k": "lyric",
+  "x": "And the quiet was already there"
+ },
+ {
+  "t": 282.8,
+  "k": "lyric",
+  "x": "Oh... the long way home"
+ },
+ {
+  "t": 287.0,
+  "k": "lyric",
+  "x": "Already there"
+ }
+]

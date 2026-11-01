@@ -1,0 +1,337 @@
+[
+ {
+  "t": 12.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 17.1,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 22.2,
+  "k": "lyric",
+  "x": "Lost the hold on the wheel"
+ },
+ {
+  "t": 27.3,
+  "k": "lyric",
+  "x": "Half a heartbeat and the ground was gone"
+ },
+ {
+  "t": 32.4,
+  "k": "lyric",
+  "x": "Felt the open hand close"
+ },
+ {
+  "t": 37.5,
+  "k": "lyric",
+  "x": "Felt it tighten into something strong"
+ },
+ {
+  "t": 42.5,
+  "k": "lyric",
+  "x": "Every signal reading red"
+ },
+ {
+  "t": 47.6,
+  "k": "lyric",
+  "x": "Every dial spinning past the line"
+ },
+ {
+  "t": 52.7,
+  "k": "lyric",
+  "x": "If the ship won’t answer me"
+ },
+ {
+  "t": 57.8,
+  "k": "lyric",
+  "x": "Then I’ll move with it one more time"
+ },
+ {
+  "t": 62.9,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 68.0,
+  "k": "lyric",
+  "x": "Don’t fight the drift, no"
+ },
+ {
+  "t": 73.1,
+  "k": "lyric",
+  "x": "Lean in, lean in"
+ },
+ {
+  "t": 78.2,
+  "k": "lyric",
+  "x": "Don’t fight the drift, no"
+ },
+ {
+  "t": 83.3,
+  "k": "lyric",
+  "x": "Lean in"
+ },
+ {
+  "t": 88.4,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 93.5,
+  "k": "lyric",
+  "x": "Out of orbit, out of orbit"
+ },
+ {
+  "t": 98.5,
+  "k": "lyric",
+  "x": "Let the engine carry me higher"
+ },
+ {
+  "t": 103.6,
+  "k": "lyric",
+  "x": "Out of orbit, out of orbit"
+ },
+ {
+  "t": 108.7,
+  "k": "lyric",
+  "x": "Turn the panic into fire"
+ },
+ {
+  "t": 113.8,
+  "k": "lyric",
+  "x": "Count it down, one more round"
+ },
+ {
+  "t": 118.9,
+  "k": "lyric",
+  "x": "I’m not landing, I’m not slowing"
+ },
+ {
+  "t": 124.0,
+  "k": "lyric",
+  "x": "Out of orbit, out of orbit"
+ },
+ {
+  "t": 129.1,
+  "k": "lyric",
+  "x": "Let it go, keep going"
+ },
+ {
+  "t": 134.2,
+  "k": "mark",
+  "x": "Dub Breakdown"
+ },
+ {
+  "t": 139.3,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 144.4,
+  "k": "lyric",
+  "x": "Message coming through the static"
+ },
+ {
+  "t": 149.5,
+  "k": "lyric",
+  "x": "Said my brother’s on the line"
+ },
+ {
+  "t": 154.5,
+  "k": "lyric",
+  "x": "Said grab the rudder, pull it steady"
+ },
+ {
+  "t": 159.6,
+  "k": "lyric",
+  "x": "Said it’s your turn now, not mine"
+ },
+ {
+  "t": 164.7,
+  "k": "lyric",
+  "x": "Power dive and the gravity"
+ },
+ {
+  "t": 169.8,
+  "k": "lyric",
+  "x": "Pressing on my chest like stone"
+ },
+ {
+  "t": 174.9,
+  "k": "lyric",
+  "x": "A thousand reasons to let go"
+ },
+ {
+  "t": 180.0,
+  "k": "lyric",
+  "x": "A thousand and one to hold"
+ },
+ {
+  "t": 185.1,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 190.2,
+  "k": "lyric",
+  "x": "Don’t fight the drift, no"
+ },
+ {
+  "t": 195.3,
+  "k": "lyric",
+  "x": "Lean in, lean in"
+ },
+ {
+  "t": 200.4,
+  "k": "lyric",
+  "x": "Don’t fight the drift, no"
+ },
+ {
+  "t": 205.5,
+  "k": "lyric",
+  "x": "Lean in"
+ },
+ {
+  "t": 210.5,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 215.6,
+  "k": "lyric",
+  "x": "Out of orbit, out of orbit"
+ },
+ {
+  "t": 220.7,
+  "k": "lyric",
+  "x": "Let the engine carry me higher"
+ },
+ {
+  "t": 225.8,
+  "k": "lyric",
+  "x": "Out of orbit, out of orbit"
+ },
+ {
+  "t": 230.9,
+  "k": "lyric",
+  "x": "Turn the panic into fire"
+ },
+ {
+  "t": 236.0,
+  "k": "lyric",
+  "x": "Count it down, one more round"
+ },
+ {
+  "t": 241.1,
+  "k": "lyric",
+  "x": "I’m not landing, I’m not slowing"
+ },
+ {
+  "t": 246.2,
+  "k": "lyric",
+  "x": "Out of orbit, out of orbit"
+ },
+ {
+  "t": 251.3,
+  "k": "lyric",
+  "x": "Let it go, keep going"
+ },
+ {
+  "t": 256.4,
+  "k": "mark",
+  "x": "Instrumental"
+ },
+ {
+  "t": 261.5,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 266.5,
+  "k": "lyric",
+  "x": "You don’t negotiate with the dark"
+ },
+ {
+  "t": 271.6,
+  "k": "lyric",
+  "x": "You don’t bargain with the burn"
+ },
+ {
+  "t": 276.7,
+  "k": "lyric",
+  "x": "You ride it"
+ },
+ {
+  "t": 281.8,
+  "k": "lyric",
+  "x": "Thrusters off, hands off, heart on"
+ },
+ {
+  "t": 286.9,
+  "k": "lyric",
+  "x": "You ride it"
+ },
+ {
+  "t": 292.0,
+  "k": "mark",
+  "x": "Final Chorus"
+ },
+ {
+  "t": 297.1,
+  "k": "lyric",
+  "x": "Out of orbit (out of orbit)"
+ },
+ {
+  "t": 302.2,
+  "k": "lyric",
+  "x": "Let the engine carry me higher"
+ },
+ {
+  "t": 307.3,
+  "k": "lyric",
+  "x": "Out of orbit (out of orbit)"
+ },
+ {
+  "t": 312.4,
+  "k": "lyric",
+  "x": "Turn the panic into fire"
+ },
+ {
+  "t": 317.5,
+  "k": "lyric",
+  "x": "Count it down, one more round"
+ },
+ {
+  "t": 322.5,
+  "k": "lyric",
+  "x": "I’m not landing, I’m not slowing"
+ },
+ {
+  "t": 327.6,
+  "k": "lyric",
+  "x": "Out of orbit, out of orbit"
+ },
+ {
+  "t": 332.7,
+  "k": "lyric",
+  "x": "Let it go, keep going"
+ },
+ {
+  "t": 337.8,
+  "k": "lyric",
+  "x": "Keep going, keep going"
+ },
+ {
+  "t": 342.9,
+  "k": "lyric",
+  "x": "Keep going"
+ },
+ {
+  "t": 348.0,
+  "k": "mark",
+  "x": "Outro"
+ }
+]

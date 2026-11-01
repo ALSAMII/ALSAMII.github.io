@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 34 · last updated 2026-10-20 05:45 PDT
+   Version 35 · last updated 2026-10-31 19:55 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -4784,4 +4784,608 @@
     paint();
   });
 
+})();
+
+/* ══════════════════════════════════════════════════════════════════
+   THE RECORD ROOM
+   The recordings section. Opened from "Songs" in the masthead, the
+   same way "Library" opens the covers overlay.
+
+   Everything it needs is in songs.js. It touches nothing else on the
+   page and nothing else on the page knows it is here, so if songs.js
+   fails to load this whole block stands down and the rest of the
+   site is unaffected.
+
+   Deliberately NOT written into library/roya-library.js — that file
+   is cut from the sandbox by build-integration.py and anything added
+   to it is gone at the next build.
+
+   Audio is streamed from Backblaze, the same bucket the narrations
+   use. Lyric sheets are fetched from songs/ on first play and kept.
+   ══════════════════════════════════════════════════════════════════ */
+(function records() {
+  "use strict";
+
+  if (typeof ALBUMS === "undefined" || typeof SONGS === "undefined") return;
+
+  var openBtn = document.getElementById("recordsOpen");
+  var root    = document.getElementById("records");
+  if (!openBtn || !root) return;
+
+  /* The shared cache stamp, read off whichever stamped script tag is
+     on the page — the same trick script.js uses on its own src. It is
+     only ever applied to artwork; the B2 audio is not stamped and must
+     not be (a revised recording goes up under a new path instead). */
+  var ASSET_V = (function () {
+    var s = document.querySelector('script[src*="songs.js?v="]')
+         || document.querySelector('script[src*="script.js?v="]');
+    var m = s && s.src.match(/[?&]v=(\d+)/);
+    return m ? m[1] : "";
+  })();
+  function stamped(u) {
+    if (!ASSET_V || !u || /^(data:|https?:)/.test(u)) return u;
+    return u + (u.indexOf("?") === -1 ? "?v=" : "&v=") + ASSET_V;
+  }
+
+  var SITE = "https://www.chewzfiction.com";
+
+  /* ── the catalogue, indexed ─────────────────────────────────── */
+  var BY_CAT = {}, BY_ALBUM = {};
+  SONGS.forEach(function (s) { BY_CAT[s.cat] = s; });
+  ALBUMS.forEach(function (a) {
+    BY_ALBUM[a.num] = a;
+    a._songs = SONGS.filter(function (s) { return s.album === a.num; })
+                    .sort(function (x, y) { return x.track - y.track; });
+  });
+  /* Shelf order is its own field. The album NUMBER is an identity —
+     it is in the B2 path and in the share URL and never moves — so
+     the order they appear in is set here, not by the number. */
+  var SHELF = ALBUMS.slice().sort(function (a, b) { return a.order - b.order; });
+
+  function mmss(s) {
+    s = Math.max(0, Math.floor(s || 0));
+    return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2);
+  }
+  function hm(s) {
+    var m = Math.round(s / 60);
+    return m >= 60 ? (Math.floor(m / 60) + " hr " + (m % 60) + " min") : (m + " min");
+  }
+  function el(t, c, x) {
+    var n = document.createElement(t);
+    if (c) n.className = c;
+    if (x != null) n.textContent = x;
+    return n;
+  }
+  function slug(s) {
+    return String(s).toLowerCase().replace(/[‘’']/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "x";
+  }
+  function pad2(n) { return ("0" + n).slice(-2); }
+
+  var I_PLAY  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+  var I_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5.5" width="4" height="13" rx=".75"/><rect x="14" y="5.5" width="4" height="13" rx=".75"/></svg>';
+  var I_DL    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></svg>';
+  var I_SH    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3"/></svg>';
+  var I_BACK  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20.3 3.8v4.4h-4.4"/></svg>';
+  var I_CHEV  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
+
+  /* ── the one audio element ──────────────────────────────────── */
+  var audio = new Audio();
+  audio.preload = "none";          /* nothing is fetched until asked for */
+  audio.crossOrigin = null;        /* B2 sends no CORS headers; <audio> does not need them */
+
+  var cur = null;                  /* the song playing, or loaded and paused */
+  var curAlbum = SHELF[0];
+  var lyrics = {};                 /* cat -> array, fetched once */
+  var lines = [];                  /* the rendered lyric buttons for cur */
+  var lineIdx = -1;
+
+  /* ── the shell ──────────────────────────────────────────────── */
+  var body    = document.getElementById("recBody");
+  var shelf   = document.getElementById("recShelf");
+  var pane    = document.getElementById("recPane");
+  var dock    = document.getElementById("recDock");
+  var theatre = document.getElementById("recTheatre");
+  if (!body || !shelf || !pane || !dock || !theatre) return;
+
+  /* ── artwork ────────────────────────────────────────────────── */
+  function heroSrc(a) { return stamped("albums/" + pad2(a.num) + ".jpg"); }
+  function flatSrc(a) { return stamped("albums/flat/" + pad2(a.num) + ".webp"); }
+
+  /* ── the shelf ──────────────────────────────────────────────── */
+  function buildShelf() {
+    shelf.textContent = "";
+    SHELF.forEach(function (a) {
+      var b = el("button", "rec-item");
+      b.type = "button";
+      b.setAttribute("role", "tab");
+      b.dataset.album = a.num;
+      b.setAttribute("aria-selected", String(a === curAlbum));
+
+      var fr = el("span", "rec-item-art");
+      var img = document.createElement("img");
+      img.src = heroSrc(a);
+      img.alt = a.title + " — album cover";
+      img.loading = "lazy";
+      img.addEventListener("error", function () { b.classList.add("no-art"); });
+      fr.append(img);
+      b.append(fr);
+
+      var cap = el("span", "rec-item-cap" + (a.fa ? " fa" : ""), a.title);
+      b.append(cap);
+      b.append(el("span", "rec-item-sub", a._songs.length + " songs · " + hm(a.dur)));
+
+      b.addEventListener("click", function () { pickAlbum(a.num); });
+      b.addEventListener("keydown", function (e) {
+        var i = SHELF.indexOf(a);
+        if (e.key === "ArrowRight") { pickAlbum(SHELF[(i + 1) % SHELF.length].num); e.preventDefault(); }
+        if (e.key === "ArrowLeft")  { pickAlbum(SHELF[(i - 1 + SHELF.length) % SHELF.length].num); e.preventDefault(); }
+      });
+      shelf.append(b);
+    });
+    shelf.addEventListener("scroll", edges);
+  }
+
+  function edges() {
+    var L = document.getElementById("recPrev"), R = document.getElementById("recNext");
+    if (L) L.disabled = shelf.scrollLeft <= 2;
+    if (R) R.disabled = shelf.scrollLeft >= shelf.scrollWidth - shelf.clientWidth - 2;
+  }
+
+  /* ── the album panel under the shelf ────────────────────────── */
+  function pickAlbum(num, quiet) {
+    var a = BY_ALBUM[num];
+    if (!a) return;
+    curAlbum = a;
+
+    [].forEach.call(shelf.children, function (b) {
+      var on = Number(b.dataset.album) === num;
+      b.setAttribute("aria-selected", String(on));
+      if (on && !quiet) b.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    });
+
+    pane.textContent = "";
+
+    var head = el("div", "rec-pane-head");
+    var left = el("div");
+    var h = el("h3", "rec-pane-ttl" + (a.fa ? " fa" : ""), a.title);
+    left.append(h);
+    if (a.translit) left.append(el("p", "rec-pane-translit", a.translit + " · Persian"));
+    left.append(el("p", "rec-pane-syn", a.syn));
+    head.append(left);
+
+    var acts = el("div", "rec-pane-acts");
+    var play = el("button", "rec-btn", "Play album");
+    play.type = "button";
+    play.addEventListener("click", function () {
+      if (cur && cur.album === a.num) togglePlay();
+      else load(a._songs[0].cat, true);
+    });
+    var sh = el("button", "rec-btn ghost");
+    sh.type = "button";
+    sh.innerHTML = I_SH + " Share";
+    sh.addEventListener("click", function () { share("album", a); });
+    acts.append(play, sh);
+    head.append(acts);
+    pane.append(head);
+
+    var ul = el("ul", "rec-tl" + (a.fa ? " rtl" : ""));
+    a._songs.forEach(function (s, i) {
+      ul.append(trackRow(s, i + 1));
+    });
+    pane.append(ul);
+
+    if (!quiet) { pane.classList.remove("swap"); void pane.offsetWidth; pane.classList.add("swap"); }
+    paintRows();
+    edges();
+  }
+
+  function trackRow(s, n) {
+    var li = el("li", "rec-trk");
+    li.dataset.cat = s.cat;
+
+    li.append(el("span", "rec-trk-n", String(n)));
+
+    var pb = el("button", "rec-trk-play");
+    pb.type = "button";
+    pb.setAttribute("aria-label", "Play " + s.title);
+    pb.innerHTML = I_PLAY;
+    li.append(pb);
+
+    var t = el("span", "rec-trk-t" + (s.fa ? " fa" : ""));
+    t.append(document.createTextNode(s.title));
+    var sub = s.book ? ("No. " + s.book) : (s.translit || "");
+    if (sub) t.append(el("small", null, sub));
+    li.append(t);
+
+    li.append(el("span", "rec-trk-d", mmss(s.dur)));
+
+    var shb = el("button", "rec-trk-sh");
+    shb.type = "button";
+    shb.setAttribute("aria-label", "Share " + s.title);
+    shb.title = "Share this song";
+    shb.innerHTML = I_SH;
+    shb.addEventListener("click", function (e) { e.stopPropagation(); share("song", s); });
+    li.append(shb);
+
+    /* A real link, so it can be opened in a new tab and saved the way
+       any file is. Not a script-driven download: the audio is on
+       another origin and a scripted save would be blocked anyway. */
+    var dl = document.createElement("a");
+    dl.className = "rec-trk-dl";
+    dl.href = s.audio;
+    dl.setAttribute("download", "");
+    dl.rel = "noopener";
+    dl.setAttribute("aria-label", "Download " + s.title);
+    dl.title = "Download";
+    dl.innerHTML = I_DL;
+    dl.addEventListener("click", function (e) { e.stopPropagation(); });
+    li.append(dl);
+
+    li.addEventListener("click", function () {
+      if (cur && cur.cat === s.cat) togglePlay();
+      else load(s.cat, true);
+    });
+    return li;
+  }
+
+  /* ── loading and playing ────────────────────────────────────── */
+  function load(cat, andPlay) {
+    var s = BY_CAT[cat];
+    if (!s) return;
+    if (!cur || cur.cat !== cat) {
+      cur = s;
+      audio.src = s.audio;          /* never stamped — see the note above */
+      audio.preload = "metadata";
+      lineIdx = -1;
+      getLyrics(cat);
+    }
+    dock.hidden = false;
+    if (andPlay) {
+      var p = audio.play();
+      if (p && p.catch) p.catch(function () { paintTransport(); });
+    }
+    paintDock();
+    paintRows();
+    paintTransport();
+  }
+
+  function togglePlay() {
+    if (!cur) return;
+    if (audio.paused) {
+      var p = audio.play();
+      if (p && p.catch) p.catch(function () { paintTransport(); });
+    } else audio.pause();
+  }
+
+  audio.addEventListener("play",  paintTransport);
+  audio.addEventListener("pause", paintTransport);
+  audio.addEventListener("timeupdate", onTime);
+  audio.addEventListener("loadedmetadata", paintTransport);
+  audio.addEventListener("ended", function () {
+    /* roll on to the next track of the album, then stop */
+    var list = BY_ALBUM[cur.album]._songs;
+    var i = list.indexOf(cur);
+    if (i > -1 && i + 1 < list.length) load(list[i + 1].cat, true);
+    else paintTransport();
+  });
+  audio.addEventListener("error", function () {
+    var n = document.getElementById("recCur");
+    if (n) n.textContent = "This one would not load";
+  });
+
+  /* ── lyrics ─────────────────────────────────────────────────── */
+  function getLyrics(cat) {
+    var s = BY_CAT[cat];
+    if (!s || !s.lyric) { renderLyrics(cat, null); return; }
+    if (lyrics[cat]) { renderLyrics(cat, lyrics[cat]); return; }
+    fetch(stamped(s.lyric))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { lyrics[cat] = j; if (cur && cur.cat === cat) renderLyrics(cat, j); })
+      .catch(function () { if (cur && cur.cat === cat) renderLyrics(cat, null); });
+  }
+
+  function renderLyrics(cat, rows) {
+    var box = document.getElementById("recLyrIn");
+    if (!box) return;
+    box.textContent = "";
+    lines = [];
+    lineIdx = -1;
+    var s = BY_CAT[cat];
+    if (!rows || !rows.length) {
+      var e = el("p", "rec-lyr-empty", "No lyric sheet for this one yet");
+      box.append(e);
+      return;
+    }
+    rows.forEach(function (r) {
+      var b = el("button", "rec-ln" + (r.k === "mark" ? " mark" : "") + (s && s.fa ? " fa" : ""), r.x);
+      b.type = "button";
+      b.addEventListener("click", function () { audio.currentTime = r.t + 0.15; });
+      box.append(b);
+      lines.push({ t: r.t, node: b });
+    });
+  }
+
+  function onTime() {
+    paintTransport();
+    if (!lines.length) return;
+    var t = audio.currentTime, i = -1;
+    for (var k = 0; k < lines.length; k++) { if (lines[k].t <= t) i = k; else break; }
+    if (i === lineIdx) return;
+    lineIdx = i;
+    for (var j = 0; j < lines.length; j++) {
+      lines[j].node.classList.toggle("cur", j === i);
+      lines[j].node.classList.toggle("past", j < i);
+    }
+    var cl = document.getElementById("recCur");
+    if (cl) cl.textContent = i >= 0 ? lines[i].node.textContent : "";
+    if (i >= 0) {
+      var box = document.getElementById("recLyrIn"), wrap = document.getElementById("recLyr");
+      if (box && wrap) {
+        var n = lines[i].node;
+        var off = n.offsetTop - (wrap.clientHeight / 2) + (n.offsetHeight / 2);
+        box.style.transform = "translateY(" + (-Math.max(0, off)) + "px)";
+      }
+    }
+  }
+
+  /* ── painting ───────────────────────────────────────────────── */
+  function paintDock() {
+    if (!cur) return;
+    var a = BY_ALBUM[cur.album];
+    var img = document.getElementById("recDockArt");
+    if (img && img.getAttribute("src") !== flatSrc(a)) {
+      img.src = flatSrc(a);
+      img.alt = a.title + " — cover";
+    }
+    var t = document.getElementById("recDockTtl");
+    if (t) { t.textContent = cur.title; t.className = "rec-dock-ttl" + (cur.fa ? " fa" : ""); }
+    var sub = document.getElementById("recDockSub");
+    /* A title track carries its album's name, so printing both reads as a
+       stutter. Where they match, say where it sits on the record instead. */
+    if (sub) {
+      sub.textContent = cur.book ? (a.title + " · No. " + cur.book)
+        : (cur.title === a.title
+            ? ("Track " + cur.track + " of " + a._songs.length)
+            : a.title);
+    }
+    var th = document.getElementById("recThTtl");
+    if (th) { th.textContent = cur.title; th.className = "rec-th-ttl" + (cur.fa ? " fa" : ""); }
+    var thn = document.getElementById("recThNow");
+    if (thn) thn.textContent = a.title;
+    var bg = document.getElementById("recThBg");
+    if (bg) bg.style.backgroundImage = "url(" + flatSrc(a) + ")";
+    var note = document.getElementById("recThNote");
+    if (note) note.textContent = cur.note || "";
+  }
+
+  function paintTransport() {
+    var playing = !audio.paused && !audio.ended;
+    [].forEach.call(document.querySelectorAll(".rec-play"), function (b) {
+      b.innerHTML = playing ? I_PAUSE : I_PLAY;
+      b.setAttribute("aria-label", playing ? "Pause" : "Play");
+    });
+    var d = cur ? (isFinite(audio.duration) ? audio.duration : cur.dur) : 0;
+    var p = d ? (audio.currentTime / d) * 100 : 0;
+    var now = document.getElementById("recNow"), tot = document.getElementById("recTot");
+    if (now) now.textContent = mmss(audio.currentTime);
+    if (tot) tot.textContent = mmss(d);
+    var sc = document.getElementById("recScrub");
+    if (sc) {
+      sc.querySelector(".rec-fill").style.width = p + "%";
+      sc.querySelector(".rec-knob").style.left = p + "%";
+      sc.setAttribute("aria-valuenow", Math.round(p));
+      sc.setAttribute("aria-valuetext", mmss(audio.currentTime) + " of " + mmss(d));
+    }
+    paintRows();
+  }
+
+  function paintRows() {
+    var playing = !audio.paused && !audio.ended;
+    [].forEach.call(pane.querySelectorAll(".rec-trk"), function (li) {
+      var on = cur && li.dataset.cat === cur.cat;
+      li.classList.toggle("on", !!on);
+      var b = li.querySelector(".rec-trk-play");
+      if (b) b.innerHTML = (on && playing)
+        ? '<span class="rec-eq"><i></i><i></i><i></i></span>' : I_PLAY;
+    });
+  }
+
+  /* ── share ──────────────────────────────────────────────────── */
+  function shareUrl(kind, o) {
+    return kind === "album"
+      ? SITE + "/share/album-" + pad2(o.num) + "-" + slug(o.translit || o.title) + ".html"
+      : SITE + "/share/song-" + o.cat + "-" + slug(o.translit || o.title) + ".html";
+  }
+  function share(kind, o) {
+    var url = shareUrl(kind, o);
+    var done = function (msg) { toast(msg); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        function () { done("Link copied"); },
+        function () { pick(url); }
+      );
+    } else pick(url);
+  }
+  /* Clipboard refused — put the link on screen and select it, so the
+     reader can copy it themselves rather than being told nothing. */
+  function pick(url) {
+    var n = document.getElementById("recShareOut");
+    if (!n) return;
+    n.hidden = false;
+    n.value = url;
+    n.focus();
+    n.select();
+    toast("Copy this link");
+  }
+  var toastT = 0;
+  function toast(msg) {
+    var n = document.getElementById("recToast");
+    if (!n) return;
+    n.textContent = msg;
+    n.hidden = false;
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { n.hidden = true; }, 2200);
+  }
+
+  /* ── the lyric theatre ──────────────────────────────────────── */
+  function openTheatre() {
+    theatre.hidden = false;
+    requestAnimationFrame(function () { theatre.classList.add("show"); });
+    onTime();
+  }
+  function closeTheatre() {
+    theatre.classList.remove("show");
+    setTimeout(function () { theatre.hidden = true; }, 260);
+  }
+
+  /* ── open / close the section ───────────────────────────────── */
+  var lastFocus = null;
+  function open(quiet) {
+    lastFocus = document.activeElement;
+    root.hidden = false;
+    document.body.classList.add("gallery-on");
+    requestAnimationFrame(function () { root.classList.add("show"); });
+    if (!quiet) {
+      var c = document.getElementById("recordsClose");
+      if (c) c.focus();
+    }
+    edges();
+  }
+  function close() {
+    root.classList.remove("show");
+    document.body.classList.remove("gallery-on");
+    setTimeout(function () { root.hidden = true; }, 300);
+    if (!theatre.hidden) closeTheatre();
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  openBtn.addEventListener("click", function () { open(); });
+  var closeBtn = document.getElementById("recordsClose");
+  if (closeBtn) closeBtn.addEventListener("click", close);
+  root.addEventListener("click", function (e) { if (e.target === root) close(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape" || root.hidden) return;
+    if (!theatre.hidden) { closeTheatre(); e.stopPropagation(); }
+    else { close(); e.stopPropagation(); }
+  }, true);
+
+  /* ── controls ───────────────────────────────────────────────── */
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-rec]");
+    if (!b) return;
+    var act = b.dataset.rec;
+    if (act === "play")  { togglePlay(); return; }
+    if (act === "back")  { audio.currentTime = 0; return; }
+    if (act === "lyr")   { theatre.hidden ? openTheatre() : closeTheatre(); return; }
+    if (act === "thclose") { closeTheatre(); return; }
+    if (act === "share" && cur) { share("song", cur); return; }
+    if (act === "prev" || act === "next") {
+      shelf.scrollBy({ left: shelf.clientWidth * 0.7 * (act === "next" ? 1 : -1), behavior: "smooth" });
+      setTimeout(edges, 420);
+      return;
+    }
+  });
+
+  (function scrubbing() {
+    var sc = document.getElementById("recScrub");
+    if (!sc) return;
+    var down = false;
+    function to(x) {
+      if (!cur) return;
+      var d = isFinite(audio.duration) ? audio.duration : cur.dur;
+      var r = sc.querySelector(".rec-rail").getBoundingClientRect();
+      audio.currentTime = Math.max(0, Math.min(1, (x - r.left) / r.width)) * d;
+    }
+    sc.addEventListener("pointerdown", function (e) { down = true; sc.setPointerCapture(e.pointerId); to(e.clientX); });
+    sc.addEventListener("pointermove", function (e) { if (down) to(e.clientX); });
+    sc.addEventListener("pointerup", function () { down = false; });
+    sc.addEventListener("keydown", function (e) {
+      if (!cur) return;
+      if (e.key === "ArrowRight") { audio.currentTime += 5; e.preventDefault(); }
+      if (e.key === "ArrowLeft")  { audio.currentTime -= 5; e.preventDefault(); }
+      if (e.key === "Home")       { audio.currentTime = 0;  e.preventDefault(); }
+    });
+  })();
+
+  /* ── deep links ─────────────────────────────────────────────────
+     #album-AA opens the section at that album.
+     #song-AA-TT opens it there with that song loaded and its row in
+     view. Read on load and on hashchange, so a share link works from
+     cold and from inside the site. Nothing auto-plays: browsers
+     refuse it without a gesture, and a page that starts making noise
+     on arrival is its own problem. */
+  function fromHash() {
+    var h = (location.hash || "").slice(1);
+    var m = h.match(/^album-(\d{2})$/);
+    if (m) {
+      var a = BY_ALBUM[Number(m[1])];
+      if (a) { pickAlbum(a.num, true); open(true); }
+      return;
+    }
+    m = h.match(/^song-(\d{2}-\d{2})$/);
+    if (m) {
+      var s = BY_CAT[m[1]];
+      if (!s) return;
+      pickAlbum(s.album, true);
+      open(true);
+      load(s.cat, false);
+      var row = pane.querySelector('.rec-trk[data-cat="' + s.cat + '"]');
+      if (row) setTimeout(function () { row.scrollIntoView({ block: "center", behavior: "smooth" }); }, 120);
+    }
+  }
+  window.addEventListener("hashchange", fromHash);
+
+  /* ── a Songs link inside the Library overlay ───────────────────
+     The Library's own nav is drawn by library/roya-library.js from its
+     SECTIONS array, and that file is cut from the sandbox — anything
+     added to it is gone at the next build. So the fifth link is added
+     here instead, in the same markup each nav uses, exactly the way
+     script.js already adds the Old Mother series panel to that overlay.
+
+     Both navs are rebuilt whenever the view changes, so this runs again
+     on mutation. The guard is the data-view: if the sandbox ever ships a
+     Songs section of its own, this stands down on its own. */
+  (function libraryNavLink() {
+    var LIB = document.getElementById("royaLibrary");
+    if (!LIB) return;
+
+    /* The Library is the site's home screen — closeLibrary() begins
+       "if (HOME && !force) return", so it cannot be dismissed. The
+       Record Room therefore opens over the top of it, and closing it
+       puts the reader back where they were. */
+    function goToRecords() { open(); }
+
+    function apply() {
+      [["dnav", "<b>Songs</b><i>The music beside the books</i>"],
+       ["mob-nav", "Songs<span></span><i>The music beside the books</i>"]]
+      .forEach(function (pair) {
+        var nav = LIB.querySelector("nav." + pair[0]);
+        if (!nav || nav.querySelector('[data-view="songs"]')) return;
+        var b = document.createElement("button");
+        b.type = "button";
+        b.dataset.view = "songs";
+        b.setAttribute("aria-current", "false");
+        b.innerHTML = pair[1];
+        b.addEventListener("click", function (e) {
+          e.preventDefault(); e.stopPropagation(); goToRecords();
+        });
+        var notes = nav.querySelector('[data-view="notes"]');
+        if (notes) nav.insertBefore(b, notes); else nav.append(b);
+      });
+    }
+
+    var tick = 0;
+    function schedule() {
+      if (tick) return;
+      tick = requestAnimationFrame(function () { tick = 0; apply(); });
+    }
+    apply();
+    new MutationObserver(schedule).observe(LIB, { childList: true, subtree: true });
+  })();
+
+  /* ── go ─────────────────────────────────────────────────────── */
+  buildShelf();
+  pickAlbum(curAlbum.num, true);
+  fromHash();
 })();

@@ -1,0 +1,357 @@
+[
+ {
+  "t": 12.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 16.4,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 20.7,
+  "k": "lyric",
+  "x": "I’ve been chasing the horizon since I knew my name"
+ },
+ {
+  "t": 25.1,
+  "k": "lyric",
+  "x": "Every border just a doorway to another plane"
+ },
+ {
+  "t": 29.5,
+  "k": "lyric",
+  "x": "Had a hundred rooms with nothing on the walls"
+ },
+ {
+  "t": 33.9,
+  "k": "lyric",
+  "x": "Had a hundred phones and nobody to call"
+ },
+ {
+  "t": 38.2,
+  "k": "lyric",
+  "x": "Looked back on the dust my boots left behind"
+ },
+ {
+  "t": 42.6,
+  "k": "lyric",
+  "x": "Every suitcase was a promise I forgot to sign"
+ },
+ {
+  "t": 47.0,
+  "k": "lyric",
+  "x": "Sorrow for the road is the salt in my eye"
+ },
+ {
+  "t": 51.3,
+  "k": "lyric",
+  "x": "But the sweetness is you"
+ },
+ {
+  "t": 55.7,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 60.1,
+  "k": "lyric",
+  "x": "Nothing left to find"
+ },
+ {
+  "t": 64.5,
+  "k": "lyric",
+  "x": "No map, no sign"
+ },
+ {
+  "t": 68.8,
+  "k": "lyric",
+  "x": "Just the ground under feet"
+ },
+ {
+  "t": 73.2,
+  "k": "lyric",
+  "x": "And your heart keeping time"
+ },
+ {
+  "t": 77.6,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 81.9,
+  "k": "lyric",
+  "x": "Stay with me, stay with me"
+ },
+ {
+  "t": 86.3,
+  "k": "lyric",
+  "x": "Nowhere I’d rather be"
+ },
+ {
+  "t": 90.7,
+  "k": "lyric",
+  "x": "Come and drift with me"
+ },
+ {
+  "t": 95.1,
+  "k": "lyric",
+  "x": "Stay with me, stay with me"
+ },
+ {
+  "t": 99.4,
+  "k": "lyric",
+  "x": "All I need to see"
+ },
+ {
+  "t": 103.8,
+  "k": "lyric",
+  "x": "Come and sing with me"
+ },
+ {
+  "t": 108.2,
+  "k": "lyric",
+  "x": "Stay with me, stay with me"
+ },
+ {
+  "t": 112.5,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 116.9,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 121.3,
+  "k": "mark",
+  "x": "Dub Breakdown"
+ },
+ {
+  "t": 125.7,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 130.0,
+  "k": "lyric",
+  "x": "Sometimes I look forward and the road gets thin"
+ },
+ {
+  "t": 134.4,
+  "k": "lyric",
+  "x": "The busy in my head won’t let the quiet in"
+ },
+ {
+  "t": 138.8,
+  "k": "lyric",
+  "x": "Doubt is the shadow walking at my heel"
+ },
+ {
+  "t": 143.1,
+  "k": "lyric",
+  "x": "Darkness making everything a little less real"
+ },
+ {
+  "t": 147.5,
+  "k": "lyric",
+  "x": "I hear so many voices, I’ve got so many doors"
+ },
+ {
+  "t": 151.9,
+  "k": "lyric",
+  "x": "But the only one I never fear is yours"
+ },
+ {
+  "t": 156.3,
+  "k": "lyric",
+  "x": "Calling me home when I’m halfway gone"
+ },
+ {
+  "t": 160.6,
+  "k": "lyric",
+  "x": "Calling me home"
+ },
+ {
+  "t": 165.0,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 169.4,
+  "k": "lyric",
+  "x": "Nothing left to find"
+ },
+ {
+  "t": 173.7,
+  "k": "lyric",
+  "x": "No map, no sign"
+ },
+ {
+  "t": 178.1,
+  "k": "lyric",
+  "x": "Just the ground under feet"
+ },
+ {
+  "t": 182.5,
+  "k": "lyric",
+  "x": "And your heart keeping time"
+ },
+ {
+  "t": 186.9,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 191.2,
+  "k": "lyric",
+  "x": "Stay with me, stay with me"
+ },
+ {
+  "t": 195.6,
+  "k": "lyric",
+  "x": "Nowhere I’d rather be"
+ },
+ {
+  "t": 200.0,
+  "k": "lyric",
+  "x": "Come and drift with me"
+ },
+ {
+  "t": 204.3,
+  "k": "lyric",
+  "x": "Stay with me, stay with me"
+ },
+ {
+  "t": 208.7,
+  "k": "lyric",
+  "x": "All I need to see"
+ },
+ {
+  "t": 213.1,
+  "k": "lyric",
+  "x": "Come and sing with me"
+ },
+ {
+  "t": 217.5,
+  "k": "lyric",
+  "x": "Stay with me, stay with me"
+ },
+ {
+  "t": 221.8,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 226.2,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 230.6,
+  "k": "mark",
+  "x": "Instrumental"
+ },
+ {
+  "t": 234.9,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 239.3,
+  "k": "lyric",
+  "x": "Been so many places"
+ },
+ {
+  "t": 243.7,
+  "k": "lyric",
+  "x": "Seen so many faces"
+ },
+ {
+  "t": 248.1,
+  "k": "lyric",
+  "x": "Filled up all the empty spaces"
+ },
+ {
+  "t": 252.4,
+  "k": "lyric",
+  "x": "And still I was gone"
+ },
+ {
+  "t": 256.8,
+  "k": "lyric",
+  "x": "Till you"
+ },
+ {
+  "t": 261.2,
+  "k": "mark",
+  "x": "Final Chorus"
+ },
+ {
+  "t": 265.5,
+  "k": "lyric",
+  "x": "Stay with me (stay with me), stay with me"
+ },
+ {
+  "t": 269.9,
+  "k": "lyric",
+  "x": "Nowhere I’d rather be"
+ },
+ {
+  "t": 274.3,
+  "k": "lyric",
+  "x": "Come and drift with me"
+ },
+ {
+  "t": 278.7,
+  "k": "lyric",
+  "x": "Stay with me (stay with me), stay with me"
+ },
+ {
+  "t": 283.0,
+  "k": "lyric",
+  "x": "All I need to see"
+ },
+ {
+  "t": 287.4,
+  "k": "lyric",
+  "x": "Come and sing with me"
+ },
+ {
+  "t": 291.8,
+  "k": "lyric",
+  "x": "Stay with me, stay with me"
+ },
+ {
+  "t": 296.1,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 300.5,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 304.9,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 309.3,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 313.6,
+  "k": "lyric",
+  "x": "Right where we are"
+ },
+ {
+  "t": 318.0,
+  "k": "mark",
+  "x": "Outro"
+ }
+]

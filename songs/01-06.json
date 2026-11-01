@@ -1,0 +1,332 @@
+[
+ {
+  "t": 12.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 16.2,
+  "k": "lyric",
+  "x": "Dem tell mi the world is a thing yuh can hold"
+ },
+ {
+  "t": 20.5,
+  "k": "lyric",
+  "x": "A box yuh can measure, a story been told"
+ },
+ {
+  "t": 24.7,
+  "k": "lyric",
+  "x": "But it stranger than that, stranger than mi suppose"
+ },
+ {
+  "t": 29.0,
+  "k": "lyric",
+  "x": "Stranger than any of we will ever know"
+ },
+ {
+  "t": 33.2,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 37.5,
+  "k": "lyric",
+  "x": "Mi spend half mi life tryin’ to figure the plan"
+ },
+ {
+  "t": 41.7,
+  "k": "lyric",
+  "x": "Hold the whole ocean in the cup of mi hand"
+ },
+ {
+  "t": 46.0,
+  "k": "lyric",
+  "x": "Every door mi force open, every lock mi did pick"
+ },
+ {
+  "t": 50.2,
+  "k": "lyric",
+  "x": "Only show mi how little mi know, and how quick"
+ },
+ {
+  "t": 54.5,
+  "k": "lyric",
+  "x": "So mi stop the countin’, stop the fightin’ the tide"
+ },
+ {
+  "t": 58.7,
+  "k": "lyric",
+  "x": "Let the strange come in, let it sit by mi side"
+ },
+ {
+  "t": 63.0,
+  "k": "lyric",
+  "x": "And the fear that was ridin’ mi back all along"
+ },
+ {
+  "t": 67.2,
+  "k": "lyric",
+  "x": "Lay down soft in the middle of the song"
+ },
+ {
+  "t": 71.4,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 75.7,
+  "k": "lyric",
+  "x": "Mi nah need to understand it to let it be"
+ },
+ {
+  "t": 79.9,
+  "k": "lyric",
+  "x": "Nah need to hold the mystery to set it free"
+ },
+ {
+  "t": 84.2,
+  "k": "lyric",
+  "x": "Peace of mind, oh, peace of mind"
+ },
+ {
+  "t": 88.4,
+  "k": "lyric",
+  "x": "Not in knowin’ every answer"
+ },
+ {
+  "t": 92.7,
+  "k": "lyric",
+  "x": "It’s in lovin’ what yuh find"
+ },
+ {
+  "t": 96.9,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 101.2,
+  "k": "lyric",
+  "x": "It’s stranger than we suppose, so let it be strange"
+ },
+ {
+  "t": 105.4,
+  "k": "lyric",
+  "x": "Open up yuh hand, let the wonder rearrange"
+ },
+ {
+  "t": 109.7,
+  "k": "lyric",
+  "x": "Find the calm in the current, find the love in the unknown"
+ },
+ {
+  "t": 113.9,
+  "k": "lyric",
+  "x": "We was never meant to solve it"
+ },
+ {
+  "t": 118.2,
+  "k": "lyric",
+  "x": "Only meant to call it home"
+ },
+ {
+  "t": 122.4,
+  "k": "lyric",
+  "x": "Oh, call it home, call it home"
+ },
+ {
+  "t": 126.6,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 130.9,
+  "k": "lyric",
+  "x": "The moon pull the water and nobody know why"
+ },
+ {
+  "t": 135.1,
+  "k": "lyric",
+  "x": "The heart keep a-beatin’ with no reason or try"
+ },
+ {
+  "t": 139.4,
+  "k": "lyric",
+  "x": "Two stranger souls in a room meet and burn"
+ },
+ {
+  "t": 143.6,
+  "k": "lyric",
+  "x": "That’s a map with no border, a bridge with no return"
+ },
+ {
+  "t": 147.9,
+  "k": "lyric",
+  "x": "Mi used to want the quiet like a thing yuh could buy"
+ },
+ {
+  "t": 152.1,
+  "k": "lyric",
+  "x": "Now mi find it in a morning, in a lover’s good eye"
+ },
+ {
+  "t": 156.4,
+  "k": "lyric",
+  "x": "In the wonder mi stop runnin’ from, finally still"
+ },
+ {
+  "t": 160.6,
+  "k": "lyric",
+  "x": "Not a peace that mi conquer — a peace that mi feel"
+ },
+ {
+  "t": 164.9,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 169.1,
+  "k": "lyric",
+  "x": "Mi nah need to understand it to let it be"
+ },
+ {
+  "t": 173.4,
+  "k": "lyric",
+  "x": "Nah need to cage the mystery to set it free"
+ },
+ {
+  "t": 177.6,
+  "k": "lyric",
+  "x": "Peace of mind, oh, peace of mind"
+ },
+ {
+  "t": 181.8,
+  "k": "lyric",
+  "x": "Not in holdin’ every answer"
+ },
+ {
+  "t": 186.1,
+  "k": "lyric",
+  "x": "It’s in lovin’ what yuh find"
+ },
+ {
+  "t": 190.3,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 194.6,
+  "k": "lyric",
+  "x": "It’s stranger than we suppose, so let it be strange"
+ },
+ {
+  "t": 198.8,
+  "k": "lyric",
+  "x": "Open up yuh hand, let the wonder rearrange"
+ },
+ {
+  "t": 203.1,
+  "k": "lyric",
+  "x": "Find the calm in the current, find the love in the unknown"
+ },
+ {
+  "t": 207.3,
+  "k": "lyric",
+  "x": "We was never meant to solve it"
+ },
+ {
+  "t": 211.6,
+  "k": "lyric",
+  "x": "Only meant to call it home"
+ },
+ {
+  "t": 215.8,
+  "k": "lyric",
+  "x": "Oh, call it home, call it home"
+ },
+ {
+  "t": 220.1,
+  "k": "mark",
+  "x": "Build"
+ },
+ {
+  "t": 224.3,
+  "k": "lyric",
+  "x": "Let it be strange, let it be strange"
+ },
+ {
+  "t": 228.6,
+  "k": "lyric",
+  "x": "Everything yuh fear is just a thing yuh cyan arrange"
+ },
+ {
+  "t": 232.8,
+  "k": "lyric",
+  "x": "Let it be strange, let it be strange"
+ },
+ {
+  "t": 237.0,
+  "k": "lyric",
+  "x": "Lay down the map, feel the whole thing change"
+ },
+ {
+  "t": 241.3,
+  "k": "mark",
+  "x": "Drop"
+ },
+ {
+  "t": 245.5,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 249.8,
+  "k": "lyric",
+  "x": "Mi was lookin’ for the shore mi was standin’ on"
+ },
+ {
+  "t": 254.0,
+  "k": "lyric",
+  "x": "Beggin’ for the peace that was never gone"
+ },
+ {
+  "t": 258.3,
+  "k": "lyric",
+  "x": "The world stay stranger than mi ever suppose"
+ },
+ {
+  "t": 262.5,
+  "k": "lyric",
+  "x": "And mi love it now — eyes open, hand unclose"
+ },
+ {
+  "t": 266.8,
+  "k": "mark",
+  "x": "Outro"
+ },
+ {
+  "t": 271.0,
+  "k": "lyric",
+  "x": "Stranger than we suppose"
+ },
+ {
+  "t": 275.3,
+  "k": "lyric",
+  "x": "Stranger than we know"
+ },
+ {
+  "t": 279.5,
+  "k": "lyric",
+  "x": "Mi stop tryin’ to hold it"
+ },
+ {
+  "t": 283.8,
+  "k": "lyric",
+  "x": "And mi finally let it glow"
+ },
+ {
+  "t": 288.0,
+  "k": "lyric",
+  "x": "Let it glow... let it glow"
+ }
+]

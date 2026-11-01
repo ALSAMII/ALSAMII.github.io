@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 684 · last updated 2026-10-26 19:44 PDT
+<!-- Version 685 · last updated 2026-10-31 19:55 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -163,10 +163,10 @@
 
      The four ?v= further up — the two share images and the two
      preloads — are separate and lag deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=651">
+<link rel="stylesheet" href="style.css?v=652">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=651">
+<link rel="stylesheet" href="library/roya-library.css?v=652">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -373,6 +373,12 @@
           <span class="nav-label">
             <span class="nav-txt">Library</span>
             <span class="nav-sub">Explore every cover</span>
+          </span>
+        </button>
+        <button class="linklike" id="recordsOpen" type="button">
+          <span class="nav-label">
+            <span class="nav-txt">Songs</span>
+            <span class="nav-sub">The music beside the books</span>
           </span>
         </button>
         <a href="#" data-stage="notes">
@@ -1180,8 +1186,95 @@
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<script src="stories.js?v=651"></script>
-<script src="script.js?v=651"></script>
+<!-- ══════════════════ THE RECORD ROOM ══════════════════
+     The recordings. Borrows the All Covers overlay shell — same
+     .gallery and .gallery-bar — so the veil, the blur and the fade
+     are shared rather than restated. Everything inside is built by
+     the records() block in script.js from songs.js. -->
+<div class="gallery" id="records" role="dialog" aria-modal="true"
+     aria-labelledby="recordsTitle" hidden>
+  <div class="gallery-bar">
+    <p class="caps" id="recordsTitle">The Record Room</p>
+    <button class="gallery-close" id="recordsClose" type="button"
+            aria-label="Close the recordings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="recBody">
+    <div class="rec-head">
+      <p class="rec-eyebrow">Roya Publication &middot; Recordings</p>
+      <h1 class="rec-h1">The Record Room</h1>
+      <p class="rec-lede">The books came first and the songs came out of the same
+        rooms. I would finish a chapter and find a line still going &mdash; four
+        notes a character cannot stop hearing, a verse somebody sings at a door
+        nobody opens &mdash; and the only way to put it down was to record it.</p>
+      <p class="rec-lede">Dark reggae underneath. Downtempo house from three
+        coasts over it. A voice that is not a singer&rsquo;s.
+        <b>Seventeen songs across three albums</b>, every one written beside a
+        book, and two lifted straight out of one.</p>
+      <div class="rec-meta">
+        <span>3 albums</span><i>&middot;</i><span>17 songs</span><i>&middot;</i>
+        <span>1 hr 28 min</span><i>&middot;</i><span>Stream or download</span>
+      </div>
+    </div>
+
+    <div class="rec-shelf-head">
+      <p class="rec-eyebrow" style="margin:0">The shelf &mdash; scroll, then pick one</p>
+      <div class="rec-nubs">
+        <button class="rec-nub" id="recPrev" data-rec="prev" type="button" aria-label="Scroll left">&lsaquo;</button>
+        <button class="rec-nub" id="recNext" data-rec="next" type="button" aria-label="Scroll right">&rsaquo;</button>
+      </div>
+    </div>
+    <div class="rec-shelf" id="recShelf" role="tablist" aria-label="Albums"></div>
+    <div class="rec-pane" id="recPane"></div>
+  </div>
+
+  <!-- the player, fixed at the foot; shown once something is loaded -->
+  <div class="rec-dock" id="recDock" hidden>
+    <div class="rec-dock-bar">
+      <img class="rec-dock-art" id="recDockArt" alt="" width="40" height="40">
+      <span class="rec-dock-id">
+        <b class="rec-dock-ttl" id="recDockTtl">&mdash;</b>
+        <span class="rec-dock-sub" id="recDockSub"></span>
+      </span>
+      <button class="rec-tbtn" data-rec="back" type="button" aria-label="Back to the beginning"></button>
+      <button class="rec-tbtn big rec-play" data-rec="play" type="button" aria-label="Play"></button>
+      <span class="rec-tm" id="recNow">0:00</span>
+      <div class="rec-scrub" id="recScrub" role="slider" tabindex="0"
+           aria-label="Playback position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="rec-rail"><div class="rec-fill"></div><div class="rec-knob"></div></div>
+      </div>
+      <span class="rec-tm" id="recTot">0:00</span>
+      <span class="rec-cur" id="recCur"></span>
+      <button class="rec-btn ghost" data-rec="lyr" type="button">Lyrics</button>
+    </div>
+  </div>
+
+  <!-- the lyric theatre, over everything -->
+  <div class="rec-theatre" id="recTheatre" role="dialog" aria-modal="true"
+       aria-label="Lyrics" hidden>
+    <div class="rec-th-bg" id="recThBg" aria-hidden="true"></div>
+    <div class="rec-th-veil" aria-hidden="true"></div>
+    <button class="rec-btn ghost rec-th-close" data-rec="thclose" type="button">Close</button>
+    <div class="rec-th-body">
+      <p class="rec-th-now" id="recThNow"></p>
+      <h2 class="rec-th-ttl" id="recThTtl"></h2>
+      <p class="rec-th-note" id="recThNote"></p>
+      <div class="rec-lyr" id="recLyr"><div class="rec-lyr-in" id="recLyrIn"></div></div>
+    </div>
+  </div>
+
+  <p class="rec-toast" id="recToast" role="status" hidden></p>
+  <input class="rec-share-out" id="recShareOut" readonly hidden aria-label="Share link">
+</div>
+
+<script src="stories.js?v=652"></script>
+<script src="songs.js?v=652"></script>
+<script src="script.js?v=652"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1197,7 +1290,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=651"></script>
+<script src="library/roya-library.js?v=652"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox

@@ -1,0 +1,367 @@
+[
+ {
+  "t": 8.0,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 11.1,
+  "k": "lyric",
+  "x": "Stranger"
+ },
+ {
+  "t": 14.1,
+  "k": "lyric",
+  "x": "Leaning on a rusted-out Camaro"
+ },
+ {
+  "t": 17.2,
+  "k": "lyric",
+  "x": "Eyes like a town with no tomorrow"
+ },
+ {
+  "t": 20.2,
+  "k": "lyric",
+  "x": "Mm, I know that look"
+ },
+ {
+  "t": 23.3,
+  "k": "lyric",
+  "x": "I wore it last year"
+ },
+ {
+  "t": 26.3,
+  "k": "lyric",
+  "x": "I wore it last week"
+ },
+ {
+  "t": 29.4,
+  "k": "lyric",
+  "x": "Don’t need your name"
+ },
+ {
+  "t": 32.4,
+  "k": "lyric",
+  "x": "Don’t need your reasons"
+ },
+ {
+  "t": 35.5,
+  "k": "lyric",
+  "x": "I got a full tank"
+ },
+ {
+  "t": 38.6,
+  "k": "lyric",
+  "x": "And a bad feeling"
+ },
+ {
+  "t": 41.6,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 44.7,
+  "k": "lyric",
+  "x": "I’ve been leaving places my whole life"
+ },
+ {
+  "t": 47.7,
+  "k": "lyric",
+  "x": "Never once looked in the mirror"
+ },
+ {
+  "t": 50.8,
+  "k": "lyric",
+  "x": "Never once said goodbye"
+ },
+ {
+  "t": 53.8,
+  "k": "lyric",
+  "x": "Get in, or don’t"
+ },
+ {
+  "t": 56.9,
+  "k": "lyric",
+  "x": "Either way I’m gone by sunrise"
+ },
+ {
+  "t": 59.9,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 63.0,
+  "k": "lyric",
+  "x": "We could be two ghosts on a highway"
+ },
+ {
+  "t": 66.1,
+  "k": "lyric",
+  "x": "Nobody looking for us"
+ },
+ {
+  "t": 69.1,
+  "k": "lyric",
+  "x": "Two ghosts with the windows down"
+ },
+ {
+  "t": 72.2,
+  "k": "lyric",
+  "x": "Running from the sound of our own names"
+ },
+ {
+  "t": 75.2,
+  "k": "lyric",
+  "x": "There’s nothing back there"
+ },
+ {
+  "t": 78.3,
+  "k": "lyric",
+  "x": "Nothing back there for me"
+ },
+ {
+  "t": 81.3,
+  "k": "lyric",
+  "x": "Nothing back there for me"
+ },
+ {
+  "t": 84.4,
+  "k": "lyric",
+  "x": "But I’m tired of running alone"
+ },
+ {
+  "t": 87.4,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 90.5,
+  "k": "lyric",
+  "x": "Stranger"
+ },
+ {
+  "t": 93.6,
+  "k": "lyric",
+  "x": "Don’t ask me where I’m going"
+ },
+ {
+  "t": 96.6,
+  "k": "lyric",
+  "x": "I stopped knowing"
+ },
+ {
+  "t": 99.7,
+  "k": "lyric",
+  "x": "Somewhere past Nevada"
+ },
+ {
+  "t": 102.7,
+  "k": "lyric",
+  "x": "Mm, you got a heart"
+ },
+ {
+  "t": 105.8,
+  "k": "lyric",
+  "x": "That’s been held wrong"
+ },
+ {
+  "t": 108.8,
+  "k": "lyric",
+  "x": "I got one too"
+ },
+ {
+  "t": 111.9,
+  "k": "lyric",
+  "x": "We can hold ’em wrong together"
+ },
+ {
+  "t": 114.9,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 118.0,
+  "k": "lyric",
+  "x": "I’ve been leaving places my whole life"
+ },
+ {
+  "t": 121.1,
+  "k": "lyric",
+  "x": "Never once looked in the mirror"
+ },
+ {
+  "t": 124.1,
+  "k": "lyric",
+  "x": "Never once said goodbye"
+ },
+ {
+  "t": 127.2,
+  "k": "lyric",
+  "x": "Get in, or don’t"
+ },
+ {
+  "t": 130.2,
+  "k": "lyric",
+  "x": "Either way I’m gone by sunrise"
+ },
+ {
+  "t": 133.3,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 136.3,
+  "k": "lyric",
+  "x": "We could be two ghosts on a highway"
+ },
+ {
+  "t": 139.4,
+  "k": "lyric",
+  "x": "Nobody looking for us"
+ },
+ {
+  "t": 142.4,
+  "k": "lyric",
+  "x": "Two ghosts with the windows down"
+ },
+ {
+  "t": 145.5,
+  "k": "lyric",
+  "x": "Running from the sound of our own names"
+ },
+ {
+  "t": 148.6,
+  "k": "lyric",
+  "x": "There’s nothing back there"
+ },
+ {
+  "t": 151.6,
+  "k": "lyric",
+  "x": "Nothing back there for me"
+ },
+ {
+  "t": 154.7,
+  "k": "lyric",
+  "x": "Nothing back there for me"
+ },
+ {
+  "t": 157.7,
+  "k": "lyric",
+  "x": "But I’m tired of running alone"
+ },
+ {
+  "t": 160.8,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 163.8,
+  "k": "lyric",
+  "x": "I don’t know how to stay"
+ },
+ {
+  "t": 166.9,
+  "k": "lyric",
+  "x": "Nobody ever showed me"
+ },
+ {
+  "t": 169.9,
+  "k": "lyric",
+  "x": "I only know the road"
+ },
+ {
+  "t": 173.0,
+  "k": "lyric",
+  "x": "And the road don’t love you back"
+ },
+ {
+  "t": 176.1,
+  "k": "lyric",
+  "x": "So if you’re staying"
+ },
+ {
+  "t": 179.1,
+  "k": "lyric",
+  "x": "Teach me"
+ },
+ {
+  "t": 182.2,
+  "k": "lyric",
+  "x": "And if you’re going"
+ },
+ {
+  "t": 185.2,
+  "k": "lyric",
+  "x": "Go slow"
+ },
+ {
+  "t": 188.3,
+  "k": "lyric",
+  "x": "Go slow"
+ },
+ {
+  "t": 191.3,
+  "k": "mark",
+  "x": "Final Chorus"
+ },
+ {
+  "t": 194.4,
+  "k": "lyric",
+  "x": "We could be two ghosts on a highway"
+ },
+ {
+  "t": 197.4,
+  "k": "lyric",
+  "x": "Nobody looking for us"
+ },
+ {
+  "t": 200.5,
+  "k": "lyric",
+  "x": "Two ghosts with the windows down"
+ },
+ {
+  "t": 203.6,
+  "k": "lyric",
+  "x": "Running from the sound of our own names"
+ },
+ {
+  "t": 206.6,
+  "k": "lyric",
+  "x": "There’s nothing back there"
+ },
+ {
+  "t": 209.7,
+  "k": "lyric",
+  "x": "Nothing back there for me"
+ },
+ {
+  "t": 212.7,
+  "k": "lyric",
+  "x": "Nothing back there for me"
+ },
+ {
+  "t": 215.8,
+  "k": "lyric",
+  "x": "But I don’t wanna run alone"
+ },
+ {
+  "t": 218.8,
+  "k": "lyric",
+  "x": "I don’t wanna run alone"
+ },
+ {
+  "t": 221.9,
+  "k": "mark",
+  "x": "Outro"
+ },
+ {
+  "t": 224.9,
+  "k": "lyric",
+  "x": "Go slow"
+ },
+ {
+  "t": 228.0,
+  "k": "mark",
+  "x": "End"
+ }
+]

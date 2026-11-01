@@ -1,0 +1,437 @@
+[
+ {
+  "t": 8.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 10.9,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 13.8,
+  "k": "lyric",
+  "x": "Wash yuh hair"
+ },
+ {
+  "t": 16.7,
+  "k": "lyric",
+  "x": "Like mi did back then"
+ },
+ {
+  "t": 19.6,
+  "k": "lyric",
+  "x": "Yuh never let mi"
+ },
+ {
+  "t": 22.5,
+  "k": "lyric",
+  "x": "Now yuh let mi again"
+ },
+ {
+  "t": 25.4,
+  "k": "lyric",
+  "x": "Fight mi, baby"
+ },
+ {
+  "t": 28.3,
+  "k": "lyric",
+  "x": "Fight mi like yuh did"
+ },
+ {
+  "t": 31.3,
+  "k": "lyric",
+  "x": "Push mi hand away"
+ },
+ {
+  "t": 34.2,
+  "k": "lyric",
+  "x": "Be mi stubborn kid"
+ },
+ {
+  "t": 37.1,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 40.0,
+  "k": "lyric",
+  "x": "Dem say him hear yuh"
+ },
+ {
+  "t": 42.9,
+  "k": "lyric",
+  "x": "So mi here"
+ },
+ {
+  "t": 45.8,
+  "k": "lyric",
+  "x": "Mi here"
+ },
+ {
+  "t": 48.7,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 51.6,
+  "k": "lyric",
+  "x": "Tap, tap, tap pon di table"
+ },
+ {
+  "t": 54.5,
+  "k": "lyric",
+  "x": "Dat was yuh"
+ },
+ {
+  "t": 57.4,
+  "k": "lyric",
+  "x": "Tap, tap, tap pon di machine"
+ },
+ {
+  "t": 60.3,
+  "k": "lyric",
+  "x": "Dat nuh yuh"
+ },
+ {
+  "t": 63.2,
+  "k": "lyric",
+  "x": "Wake, wake, wake up"
+ },
+ {
+  "t": 66.1,
+  "k": "lyric",
+  "x": "Mi nah ask heaven"
+ },
+ {
+  "t": 69.0,
+  "k": "lyric",
+  "x": "Mi ask yuh"
+ },
+ {
+  "t": 72.0,
+  "k": "lyric",
+  "x": "Late, late, late"
+ },
+ {
+  "t": 74.9,
+  "k": "lyric",
+  "x": "Yuh always late"
+ },
+ {
+  "t": 77.8,
+  "k": "lyric",
+  "x": "So be late"
+ },
+ {
+  "t": 80.7,
+  "k": "lyric",
+  "x": "Mi still a wait"
+ },
+ {
+  "t": 83.6,
+  "k": "lyric",
+  "x": "Mi still a wait"
+ },
+ {
+  "t": 86.5,
+  "k": "mark",
+  "x": "Dub Break"
+ },
+ {
+  "t": 89.4,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 92.3,
+  "k": "lyric",
+  "x": "Daddy inna di car"
+ },
+ {
+  "t": 95.2,
+  "k": "lyric",
+  "x": "Him can’t come in"
+ },
+ {
+  "t": 98.1,
+  "k": "lyric",
+  "x": "So mi hold yuh hand"
+ },
+ {
+  "t": 101.0,
+  "k": "lyric",
+  "x": "For both of dem"
+ },
+ {
+  "t": 103.9,
+  "k": "lyric",
+  "x": "Mi say him here"
+ },
+ {
+  "t": 106.8,
+  "k": "lyric",
+  "x": "Mi say it twice"
+ },
+ {
+  "t": 109.7,
+  "k": "lyric",
+  "x": "One of wi haffi"
+ },
+ {
+  "t": 112.7,
+  "k": "lyric",
+  "x": "Tell yuh nice lies"
+ },
+ {
+  "t": 115.6,
+  "k": "lyric",
+  "x": "Yuh used to tap"
+ },
+ {
+  "t": 118.5,
+  "k": "lyric",
+  "x": "When yuh get vex"
+ },
+ {
+  "t": 121.4,
+  "k": "lyric",
+  "x": "Tap for mi now"
+ },
+ {
+  "t": 124.3,
+  "k": "lyric",
+  "x": "Tap once, dat’s all"
+ },
+ {
+  "t": 127.2,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 130.1,
+  "k": "lyric",
+  "x": "Dem say him hear yuh"
+ },
+ {
+  "t": 133.0,
+  "k": "lyric",
+  "x": "So mi here"
+ },
+ {
+  "t": 135.9,
+  "k": "lyric",
+  "x": "Mi here"
+ },
+ {
+  "t": 138.8,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 141.7,
+  "k": "lyric",
+  "x": "Tap, tap, tap pon di table"
+ },
+ {
+  "t": 144.6,
+  "k": "lyric",
+  "x": "Dat was yuh"
+ },
+ {
+  "t": 147.5,
+  "k": "lyric",
+  "x": "Tap, tap, tap pon di machine"
+ },
+ {
+  "t": 150.4,
+  "k": "lyric",
+  "x": "Dat nuh yuh"
+ },
+ {
+  "t": 153.3,
+  "k": "lyric",
+  "x": "Wake, wake, wake up"
+ },
+ {
+  "t": 156.3,
+  "k": "lyric",
+  "x": "Mi nah ask heaven"
+ },
+ {
+  "t": 159.2,
+  "k": "lyric",
+  "x": "Mi ask yuh"
+ },
+ {
+  "t": 162.1,
+  "k": "lyric",
+  "x": "Late, late, late"
+ },
+ {
+  "t": 165.0,
+  "k": "lyric",
+  "x": "Yuh always late"
+ },
+ {
+  "t": 167.9,
+  "k": "lyric",
+  "x": "So be late"
+ },
+ {
+  "t": 170.8,
+  "k": "lyric",
+  "x": "Mi still a wait"
+ },
+ {
+  "t": 173.7,
+  "k": "lyric",
+  "x": "Mi still a wait"
+ },
+ {
+  "t": 176.6,
+  "k": "mark",
+  "x": "Bridge"
+ },
+ {
+  "t": 179.5,
+  "k": "lyric",
+  "x": "Nine months mi carry yuh"
+ },
+ {
+  "t": 182.4,
+  "k": "lyric",
+  "x": "Every stair, every flight"
+ },
+ {
+  "t": 185.3,
+  "k": "lyric",
+  "x": "Mi can carry yuh out"
+ },
+ {
+  "t": 188.2,
+  "k": "lyric",
+  "x": "Mi can carry yuh tonight"
+ },
+ {
+  "t": 191.1,
+  "k": "lyric",
+  "x": "Give mi yuh weight"
+ },
+ {
+  "t": 194.0,
+  "k": "lyric",
+  "x": "Give mi yuh weight"
+ },
+ {
+  "t": 197.0,
+  "k": "lyric",
+  "x": "Mi strong enough"
+ },
+ {
+  "t": 199.9,
+  "k": "lyric",
+  "x": "Mi a yuh mother"
+ },
+ {
+  "t": 202.8,
+  "k": "lyric",
+  "x": "Give mi yuh weight"
+ },
+ {
+  "t": 205.7,
+  "k": "mark",
+  "x": "Final Chorus"
+ },
+ {
+  "t": 208.6,
+  "k": "lyric",
+  "x": "Tap, tap, tap pon di table"
+ },
+ {
+  "t": 211.5,
+  "k": "lyric",
+  "x": "Dat was yuh"
+ },
+ {
+  "t": 214.4,
+  "k": "lyric",
+  "x": "Tap, tap, tap pon di machine"
+ },
+ {
+  "t": 217.3,
+  "k": "lyric",
+  "x": "Dat nuh yuh"
+ },
+ {
+  "t": 220.2,
+  "k": "lyric",
+  "x": "Wake, wake, wake up"
+ },
+ {
+  "t": 223.1,
+  "k": "lyric",
+  "x": "Mi nah ask heaven"
+ },
+ {
+  "t": 226.0,
+  "k": "lyric",
+  "x": "Mi ask yuh"
+ },
+ {
+  "t": 228.9,
+  "k": "lyric",
+  "x": "Late, late, late"
+ },
+ {
+  "t": 231.8,
+  "k": "lyric",
+  "x": "Yuh always late"
+ },
+ {
+  "t": 234.7,
+  "k": "lyric",
+  "x": "So be late"
+ },
+ {
+  "t": 237.7,
+  "k": "lyric",
+  "x": "Mi still a wait"
+ },
+ {
+  "t": 240.6,
+  "k": "lyric",
+  "x": "Mi still a wait"
+ },
+ {
+  "t": 243.5,
+  "k": "lyric",
+  "x": "Mi a wait"
+ },
+ {
+  "t": 246.4,
+  "k": "mark",
+  "x": "Outro"
+ },
+ {
+  "t": 249.3,
+  "k": "lyric",
+  "x": "Tap, tap, tap"
+ },
+ {
+  "t": 252.2,
+  "k": "lyric",
+  "x": "Dat nuh yuh"
+ },
+ {
+  "t": 255.1,
+  "k": "lyric",
+  "x": "Mi still a wait"
+ },
+ {
+  "t": 258.0,
+  "k": "mark",
+  "x": "End"
+ }
+]

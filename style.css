@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 29 · last updated 2026-10-20 05:45 PDT
+   Version 30 · last updated 2026-10-31 19:55 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10859,4 +10859,362 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
     color:var(--gold-lt);
     text-wrap:balance;
   }
+}
+
+/* ============================================================
+   THE RECORD ROOM
+   The recordings section. Reuses the .gallery overlay shell and
+   .gallery-bar from All Covers, so the chrome, the veil, the blur
+   and the fade are shared rather than restated. Everything below
+   styles only what sits inside it.
+
+   All colour comes from the page's own tokens, so the section
+   follows the theme with no second palette and no [data-theme]
+   rules of its own.
+   ============================================================ */
+
+/* The Library overlay is the site's home screen: it sits at z-index 60
+   and, being HOME, declines to close at all. So the Record Room opens
+   ON TOP of it rather than in place of it, and closing it returns the
+   reader to the Library underneath — which is where they were. 62 is
+   the smallest number that clears the Library; the book reader at 70
+   deliberately still wins, since that is a different kind of reading. */
+#records {
+  z-index: 62;
+  /* Opaque, not the usual veil. All Covers floats over the quiet
+     masthead page, where a 93% veil reads as depth. This one opens
+     over the Library — a grid of 119 covers — and at the same opacity
+     they ghost through the words. The Library is also HOME and cannot
+     be closed behind it, so this is a page in its own right and is
+     painted like one. */
+  background: var(--night);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ── the head ─────────────────────────────────────────────── */
+.rec-head { max-width: 46rem; margin: 0 0 2.2rem; }
+.rec-eyebrow {
+  font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--ember); margin: 0 0 0.7rem;
+}
+.rec-h1 {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(1.9rem, 4.2vw, 3rem); line-height: 1.1;
+  margin: 0 0 1rem; color: var(--parchment); text-wrap: balance;
+}
+.rec-lede {
+  font-family: var(--serif-read); font-size: 1.02rem; line-height: 1.76;
+  color: var(--faded); margin: 0 0 0.9rem;
+}
+.rec-lede b { color: var(--parchment); font-weight: 400; }
+.rec-meta {
+  display: flex; gap: 0.9rem; flex-wrap: wrap; align-items: center;
+  font-family: var(--sans); font-size: 0.65rem; letter-spacing: 0.17em;
+  text-transform: uppercase; color: var(--faded); margin-top: 1.3rem;
+}
+.rec-meta i { font-style: normal; color: var(--ember-soft); }
+
+/* ── the shelf ────────────────────────────────────────────── */
+.rec-shelf-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; margin: 0 0 0.9rem;
+  padding-top: 1.6rem; border-top: 1px solid var(--hairline);
+}
+.rec-nubs { display: flex; gap: 0.5rem; }
+.rec-nub {
+  appearance: none; background: none; border: 1px solid var(--hairline);
+  color: var(--parchment); width: 2rem; height: 2rem; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; flex: none;
+  font-family: var(--sans); font-size: 1rem; line-height: 1; padding-bottom: 2px;
+}
+.rec-nub:hover { border-color: var(--ember-soft); color: var(--ember-lit); }
+.rec-nub[disabled] { opacity: 0.3; cursor: default; }
+
+.rec-shelf {
+  display: flex; gap: 2rem; overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding: 0.5rem 0.2rem 1.3rem; -webkit-overflow-scrolling: touch;
+  margin: 0; list-style: none;
+}
+.rec-shelf::-webkit-scrollbar { height: 5px; }
+.rec-shelf::-webkit-scrollbar-track { background: transparent; }
+.rec-shelf::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 3px; }
+
+.rec-item {
+  flex: 0 0 auto; width: 19rem; scroll-snap-align: center;
+  background: none; border: 0; padding: 0; text-align: left; color: inherit;
+  cursor: pointer; opacity: 0.52; transform: scale(0.93);
+  transform-origin: 50% 100%;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.rec-item:hover { opacity: 0.8; }
+.rec-item[aria-selected="true"] { opacity: 1; transform: scale(1); }
+.rec-item:focus-visible { outline: 2px solid var(--ember-lit); outline-offset: 6px; }
+.rec-item-art { display: block; width: 100%; aspect-ratio: 3 / 2; }
+.rec-item-art img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+}
+.rec-item.no-art .rec-item-art { background: var(--raised); border: 1px solid var(--hairline); }
+/* The caption aligns to the SLEEVE, not to the item box. The hero is
+   3:2 to leave room for the record, so a caption on the full width
+   floats away from the artwork — and a right-to-left title would
+   right-align into the record's empty space. */
+.rec-item-cap, .rec-item-sub { width: 68.5%; }
+.rec-item-cap {
+  display: block; margin: 0.85rem 0 0; font-family: var(--display);
+  font-weight: 400; font-size: 1.1rem; line-height: 1.2; color: var(--parchment);
+}
+.rec-item-cap.fa { direction: rtl; text-align: right; font-size: 1.2rem; }
+.rec-item-sub {
+  display: block; margin: 0.2rem 0 0; font-family: var(--sans);
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--faded);
+}
+.rec-item[aria-selected="true"] .rec-item-sub { color: var(--ember); }
+
+/* ── the album panel ──────────────────────────────────────── */
+.rec-pane { border-top: 1px solid var(--hairline); padding-top: 1.5rem; }
+.rec-pane.swap { animation: recSwap 0.34s ease; }
+@keyframes recSwap { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+.rec-pane-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1rem;
+}
+.rec-pane-ttl {
+  margin: 0; font-family: var(--display); font-weight: 300;
+  font-size: 1.75rem; line-height: 1.15; color: var(--parchment);
+}
+.rec-pane-ttl.fa { direction: rtl; font-size: 1.6rem; }
+.rec-pane-translit {
+  margin: 0.3rem 0 0; font-family: var(--sans); font-size: 0.59rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--ember);
+}
+.rec-pane-syn {
+  margin: 0.45rem 0 0; font-family: var(--serif-read); font-size: 0.92rem;
+  line-height: 1.64; color: var(--faded); max-width: 34rem;
+}
+.rec-pane-acts { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+
+.rec-btn {
+  appearance: none; display: inline-flex; align-items: center; gap: 0.5rem;
+  background: transparent; border: 1px solid var(--ember-soft); color: var(--ember-lit);
+  font-family: var(--sans); font-size: 0.63rem; letter-spacing: 0.17em;
+  text-transform: uppercase; padding: 0.48rem 0.82rem; border-radius: 2px; cursor: pointer;
+}
+.rec-btn:hover { background: var(--ember); border-color: var(--ember); color: var(--night); }
+.rec-btn.ghost { border-color: var(--hairline); color: var(--faded); }
+.rec-btn.ghost:hover { border-color: var(--ember-soft); background: transparent; color: var(--ember-lit); }
+.rec-btn svg { width: 13px; height: 13px; flex: none; }
+
+/* ── the tracklist ────────────────────────────────────────── */
+.rec-tl { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hairline); }
+.rec-tl.rtl { direction: rtl; }
+.rec-tl.rtl .rec-trk-n { text-align: left; }
+.rec-tl.rtl .rec-trk-d { direction: ltr; }
+.rec-trk {
+  display: grid; grid-template-columns: 1.7rem 1.8rem 1fr auto auto auto;
+  gap: 0.7rem; align-items: center; padding: 0.58rem 0.3rem;
+  border-bottom: 1px solid var(--hairline); cursor: pointer;
+}
+.rec-trk:hover, .rec-trk.on { background: var(--field); }
+.rec-trk-n {
+  font-family: var(--sans); font-size: 0.67rem; color: var(--faded);
+  font-variant-numeric: tabular-nums; text-align: right;
+}
+.rec-trk.on .rec-trk-n { color: var(--ember); }
+.rec-trk-play {
+  appearance: none; background: none; border: 1px solid transparent; padding: 0;
+  cursor: pointer; width: 1.8rem; height: 1.8rem; display: grid; place-items: center;
+  color: var(--faded); border-radius: 50%;
+}
+.rec-trk:hover .rec-trk-play, .rec-trk.on .rec-trk-play { color: var(--ember-lit); border-color: var(--ember-soft); }
+.rec-trk-play svg { width: 11px; height: 11px; }
+.rec-trk-t { font-family: var(--serif-read); font-size: 0.92rem; color: var(--parchment); min-width: 0; }
+.rec-trk.on .rec-trk-t { color: var(--ember-lit); }
+.rec-trk-t.fa { direction: rtl; text-align: right; }
+.rec-trk-t small {
+  display: block; font-family: var(--sans); font-size: 0.56rem;
+  letter-spacing: 0.17em; text-transform: uppercase; color: var(--faded); margin-top: 0.12rem;
+}
+.rec-trk-d {
+  font-family: var(--sans); font-size: 0.71rem; color: var(--faded);
+  font-variant-numeric: tabular-nums;
+}
+.rec-trk-sh, .rec-trk-dl {
+  appearance: none; background: none; border: 0; padding: 0.2rem; cursor: pointer;
+  color: var(--faded); display: grid; place-items: center; text-decoration: none;
+}
+.rec-trk-sh:hover, .rec-trk-dl:hover { color: var(--ember-lit); }
+.rec-trk-sh svg, .rec-trk-dl svg { width: 14px; height: 14px; }
+.rec-eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 11px; }
+.rec-eq i { width: 2px; background: var(--ember); animation: recEq 1s ease-in-out infinite; }
+.rec-eq i:nth-child(1) { height: 40%; animation-delay: -0.2s; }
+.rec-eq i:nth-child(2) { height: 95%; animation-delay: -0.55s; }
+.rec-eq i:nth-child(3) { height: 62%; animation-delay: -0.85s; }
+@keyframes recEq { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+
+/* ── the dock ─────────────────────────────────────────────────
+   Fixed to the foot of the overlay rather than sitting in its
+   scroll, so it stays put while the shelf and the list move. */
+.rec-dock {
+  position: fixed; left: 0; right: 0;
+  bottom: 0;
+  /* Above the lyric theatre (65), not below it. Reading the words and
+     being unable to pause or scrub is the wrong trade — the theatre
+     already leaves a gap at its foot for exactly this. */
+  z-index: 66;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid var(--ember-soft);
+  background: var(--veil);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.rec-dock-bar {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.72rem clamp(1.25rem, 4vw, 3.5rem);
+  padding-left: max(clamp(1.25rem, 4vw, 3.5rem), env(safe-area-inset-left, 0px));
+  padding-right: max(clamp(1.25rem, 4vw, 3.5rem), env(safe-area-inset-right, 0px));
+}
+.rec-dock-art {
+  width: 40px; height: 40px; flex: none; border: 1px solid var(--hairline);
+  object-fit: cover; display: block;
+}
+.rec-dock-id { min-width: 0; width: 12rem; flex: none; }
+.rec-dock-ttl {
+  display: block; font-family: var(--serif-read); font-size: 0.83rem;
+  color: var(--parchment); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rec-dock-ttl.fa { direction: rtl; text-align: right; }
+.rec-dock-sub {
+  display: block; font-family: var(--sans); font-size: 0.55rem;
+  letter-spacing: 0.17em; text-transform: uppercase; color: var(--faded); margin-top: 0.1rem;
+}
+.rec-cur {
+  flex: 1; min-width: 0; text-align: center; font-family: var(--serif);
+  font-weight: 500; font-size: 1rem; color: var(--ember-lit);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rec-tbtn {
+  appearance: none; background: none; border: 1px solid var(--hairline);
+  color: var(--parchment); width: 2.05rem; height: 2.05rem; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer; flex: none;
+}
+.rec-tbtn:hover { border-color: var(--ember-soft); color: var(--ember-lit); }
+.rec-tbtn svg { width: 12px; height: 12px; }
+.rec-tbtn.big { width: 2.7rem; height: 2.7rem; border-color: var(--ember-soft); color: var(--ember-lit); }
+.rec-tbtn.big svg { width: 15px; height: 15px; }
+.rec-tbtn.big:hover { background: var(--ember); color: var(--night); }
+.rec-scrub { flex: 1; min-width: 6rem; height: 22px; display: flex; align-items: center; cursor: pointer; }
+.rec-rail { height: 2px; width: 100%; background: var(--hairline); position: relative; border-radius: 2px; }
+.rec-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ember); border-radius: 2px; width: 0; }
+.rec-knob {
+  position: absolute; top: 50%; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--ember-lit); transform: translate(-50%, -50%); left: 0;
+  opacity: 0; transition: opacity 0.18s ease;
+}
+.rec-scrub:hover .rec-knob, .rec-scrub:focus-visible .rec-knob { opacity: 1; }
+.rec-tm {
+  font-family: var(--sans); font-size: 0.67rem; color: var(--faded);
+  font-variant-numeric: tabular-nums; white-space: nowrap; flex: none;
+}
+
+/* ── the lyric theatre ────────────────────────────────────── */
+.rec-theatre {
+  position: fixed; inset: 0; z-index: 65; background: var(--night);
+  opacity: 0; transition: opacity 0.26s ease; overflow: hidden;
+}
+.rec-theatre.show { opacity: 1; }
+.rec-th-bg {
+  position: absolute; inset: -16%; background-size: cover; background-position: center;
+  filter: blur(54px) saturate(1.5); opacity: 0.8;
+}
+.rec-th-veil {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 42%, transparent 2%, var(--veil) 86%);
+}
+.rec-th-body {
+  position: relative; height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: clamp(1.25rem, 4vw, 3.5rem);
+  padding-top: calc(clamp(1.25rem, 4vw, 3.5rem) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+.rec-th-close { position: absolute; top: 1rem; right: 1.1rem; z-index: 3; }
+.rec-th-now {
+  font-family: var(--sans); font-size: 0.59rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--ember); margin: 0 0 0.3rem;
+}
+.rec-th-ttl {
+  font-family: var(--display); font-weight: 300; font-size: clamp(1.35rem, 3vw, 1.8rem);
+  margin: 0 0 0.6rem; color: var(--parchment);
+}
+.rec-th-note {
+  font-family: var(--serif-read); font-size: 0.82rem; line-height: 1.6;
+  color: var(--faded); max-width: 34rem; margin: 0 auto 1.4rem;
+}
+.rec-lyr {
+  position: relative; width: 100%; max-width: 40rem;
+  height: clamp(13rem, 42vh, 20rem); overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent 100%);
+          mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent 100%);
+}
+.rec-lyr-in { transition: transform 0.5s cubic-bezier(0.3, 0.8, 0.3, 1); }
+.rec-ln {
+  display: block; width: 100%; background: none; border: 0; cursor: pointer;
+  font-family: var(--serif); font-weight: 500; text-align: center;
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem); line-height: 1.3;
+  color: rgba(156, 146, 128, 0.7); padding: 0.32rem 0;
+  transition: color 0.3s ease;
+}
+.rec-ln:hover { color: var(--parchment); }
+.rec-ln.past { color: rgba(156, 146, 128, 0.38); }
+.rec-ln.cur { color: var(--ember-lit); }
+.rec-ln.mark {
+  font-family: var(--sans); font-size: 0.58rem !important; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--faded); font-weight: 400;
+}
+.rec-ln.mark.cur { color: var(--ember); }
+.rec-ln.fa { direction: rtl; line-height: 1.75; }
+.rec-lyr-empty {
+  font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.17em;
+  text-transform: uppercase; color: var(--faded); text-align: center; padding: 4rem 0;
+}
+
+/* ── share feedback ───────────────────────────────────────── */
+.rec-toast {
+  position: fixed; left: 50%; bottom: 6.5rem; transform: translateX(-50%);
+  z-index: 80; background: var(--raised); border: 1px solid var(--ember-soft);
+  color: var(--ember-lit); font-family: var(--sans); font-size: 0.65rem;
+  letter-spacing: 0.17em; text-transform: uppercase; padding: 0.6rem 0.95rem;
+  border-radius: 2px;
+}
+.rec-share-out {
+  position: fixed; left: 50%; bottom: 9.5rem; transform: translateX(-50%);
+  z-index: 80; width: min(90vw, 32rem); font-family: var(--sans); font-size: 0.75rem;
+  padding: 0.55rem 0.7rem; background: var(--raised); color: var(--parchment);
+  border: 1px solid var(--ember-soft); border-radius: 2px;
+}
+
+/* ── phone ────────────────────────────────────────────────── */
+@media (max-width: 46rem) {
+  .rec-item { width: 13.5rem; }
+  .rec-shelf { gap: 1.4rem; }
+  .rec-h1 { font-size: 1.7rem; }
+  .rec-lede { font-size: 0.93rem; }
+  .rec-pane-ttl { font-size: 1.45rem; }
+  /* The share button stays and the download goes: sharing is what
+     people do from a phone, and the file is a tap away on the row. */
+  .rec-trk { grid-template-columns: 1.3rem 1.5rem 1fr auto auto; gap: 0.45rem; }
+  .rec-trk-dl { display: none; }
+  .rec-dock-id { width: auto; flex: 1; }
+  .rec-cur { display: none; }
+  .rec-dock-art { width: 32px; height: 32px; }
+  .rec-dock-bar { gap: 0.6rem; padding-top: 0.6rem; padding-bottom: 0.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rec-item, .rec-lyr-in, .rec-ln, .rec-theatre { transition-duration: 0.001ms !important; }
+  .rec-eq i { animation: none; }
+  .rec-pane.swap { animation: none; }
+  .rec-shelf { scroll-behavior: auto; }
 }

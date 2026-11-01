@@ -1,0 +1,137 @@
+[
+ {
+  "t": 8.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 16.0,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 24.0,
+  "k": "lyric",
+  "x": "Bright mercy, bright mercy, come and lay me down —"
+ },
+ {
+  "t": 32.0,
+  "k": "lyric",
+  "x": "the world was never going to let us keep it anyway —"
+ },
+ {
+  "t": 40.0,
+  "k": "lyric",
+  "x": "so light the long white chord and watch it ring —"
+ },
+ {
+  "t": 48.0,
+  "k": "lyric",
+  "x": "we’ll all go up together, we’ll all go up singing."
+ },
+ {
+  "t": 56.0,
+  "k": "mark",
+  "x": "Hummed refrain"
+ },
+ {
+  "t": 64.0,
+  "k": "mark",
+  "x": "Verse 2"
+ },
+ {
+  "t": 72.0,
+  "k": "lyric",
+  "x": "Hush now, hush now, let the dark come near —"
+ },
+ {
+  "t": 80.0,
+  "k": "lyric",
+  "x": "the sky’s kept a secret for going on a year —"
+ },
+ {
+  "t": 88.0,
+  "k": "lyric",
+  "x": "wait now, wait now, feel it climbing slow —"
+ },
+ {
+  "t": 96.0,
+  "k": "lyric",
+  "x": "rise now, rise now, let the chorus swell —"
+ },
+ {
+  "t": 104.0,
+  "k": "mark",
+  "x": "Instrumental"
+ },
+ {
+  "t": 112.0,
+  "k": "mark",
+  "x": "Verse 3"
+ },
+ {
+  "t": 120.0,
+  "k": "lyric",
+  "x": "Bright mercy, bright mercy, come and lay me down —"
+ },
+ {
+  "t": 128.0,
+  "k": "lyric",
+  "x": "the world was never going to let us keep it anyway —"
+ },
+ {
+  "t": 136.0,
+  "k": "lyric",
+  "x": "so light the long white chord and watch it ring —"
+ },
+ {
+  "t": 144.0,
+  "k": "lyric",
+  "x": "we’ll all go up together, we’ll all go up singing."
+ },
+ {
+  "t": 152.0,
+  "k": "mark",
+  "x": "Build"
+ },
+ {
+  "t": 160.0,
+  "k": "lyric",
+  "x": "hush now, hush now, let the dark come near —"
+ },
+ {
+  "t": 168.0,
+  "k": "lyric",
+  "x": "wait now, wait now, feel it climbing slow —"
+ },
+ {
+  "t": 176.0,
+  "k": "lyric",
+  "x": "rise now, rise now, let the chorus swell —"
+ },
+ {
+  "t": 184.0,
+  "k": "lyric",
+  "x": "we’ll light the whole sky and call it our best —"
+ },
+ {
+  "t": 192.0,
+  "k": "mark",
+  "x": "Final chorus"
+ },
+ {
+  "t": 200.0,
+  "k": "lyric",
+  "x": "we’ll all go up together, we’ll all go up singing."
+ },
+ {
+  "t": 208.0,
+  "k": "lyric",
+  "x": "we’ll all go up together — we’ll all go up SINGING."
+ },
+ {
+  "t": 216.0,
+  "k": "mark",
+  "x": "Outro"
+ }
+]

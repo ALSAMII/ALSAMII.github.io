@@ -1,0 +1,402 @@
+[
+ {
+  "t": 12.0,
+  "k": "mark",
+  "x": "Intro"
+ },
+ {
+  "t": 16.3,
+  "k": "lyric",
+  "x": "(whispered) Dem draw dragons at the edge of the map"
+ },
+ {
+  "t": 20.5,
+  "k": "lyric",
+  "x": "Where the known world stop"
+ },
+ {
+  "t": 24.8,
+  "k": "lyric",
+  "x": "Mi been to that edge..."
+ },
+ {
+  "t": 29.0,
+  "k": "lyric",
+  "x": "And there was nothing there to fear"
+ },
+ {
+  "t": 33.3,
+  "k": "mark",
+  "x": "Verse 1"
+ },
+ {
+  "t": 37.5,
+  "k": "lyric",
+  "x": "Mi had the whole world clench up in mi fist"
+ },
+ {
+  "t": 41.8,
+  "k": "lyric",
+  "x": "Every name mi could lose, every one mi dismissed"
+ },
+ {
+  "t": 46.0,
+  "k": "lyric",
+  "x": "Countin’ out mi breath like a coin mi cyan spend"
+ },
+ {
+  "t": 50.3,
+  "k": "lyric",
+  "x": "So scared of the middle, more scared of the end"
+ },
+ {
+  "t": 54.5,
+  "k": "lyric",
+  "x": "Then a grey little morning come sit on mi chest"
+ },
+ {
+  "t": 58.8,
+  "k": "lyric",
+  "x": "Didn’t ask mi to fix it, just ask mi to rest"
+ },
+ {
+  "t": 63.0,
+  "k": "lyric",
+  "x": "And the grip mi been holdin’ since mi was a child"
+ },
+ {
+  "t": 67.3,
+  "k": "lyric",
+  "x": "Open up slow... and the sorrow turn mild"
+ },
+ {
+  "t": 71.5,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 75.8,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 80.1,
+  "k": "lyric",
+  "x": "Everything yuh love, yuh haffi let it move"
+ },
+ {
+  "t": 84.3,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 88.6,
+  "k": "lyric",
+  "x": "Peace nah come to the hand that refuse"
+ },
+ {
+  "t": 92.8,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 97.1,
+  "k": "lyric",
+  "x": "So mi hold it loose, let the strange world turn"
+ },
+ {
+  "t": 101.3,
+  "k": "lyric",
+  "x": "Here be no dragons, only lessons mi learn"
+ },
+ {
+  "t": 105.6,
+  "k": "lyric",
+  "x": "Love in the open hand, calm in the unknown"
+ },
+ {
+  "t": 109.8,
+  "k": "lyric",
+  "x": "Mi was never the owner"
+ },
+ {
+  "t": 114.1,
+  "k": "lyric",
+  "x": "Only passin’ through on loan"
+ },
+ {
+  "t": 118.3,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 122.6,
+  "k": "mark",
+  "x": "Verse"
+ },
+ {
+  "t": 126.8,
+  "k": "lyric",
+  "x": "Sostengo el agua, la miro correr"
+ },
+ {
+  "t": 131.1,
+  "k": "lyric",
+  "x": "Nunca fue mía, lo vine a entender"
+ },
+ {
+  "t": 135.3,
+  "k": "lyric",
+  "x": "El mundo es más raro de lo que puedo creer"
+ },
+ {
+  "t": 139.6,
+  "k": "lyric",
+  "x": "Y aprendí a quererlo justo al perder"
+ },
+ {
+  "t": 143.8,
+  "k": "lyric",
+  "x": "Dibujan dragones donde acaba la luz"
+ },
+ {
+  "t": 148.1,
+  "k": "lyric",
+  "x": "Pero solo hay silencio, y el peso de una cruz"
+ },
+ {
+  "t": 152.4,
+  "k": "lyric",
+  "x": "Abro la mano, dejo todo partir"
+ },
+ {
+  "t": 156.6,
+  "k": "lyric",
+  "x": "Y en lo extraño, por fin, aprendo a vivir"
+ },
+ {
+  "t": 160.9,
+  "k": "mark",
+  "x": "Post-Verse"
+ },
+ {
+  "t": 165.1,
+  "k": "lyric",
+  "x": "Mmm... mmm... let it move, let it move"
+ },
+ {
+  "t": 169.4,
+  "k": "lyric",
+  "x": "Mmm... mmm... nothing left to prove"
+ },
+ {
+  "t": 173.6,
+  "k": "mark",
+  "x": "Pre-Chorus"
+ },
+ {
+  "t": 177.9,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 182.1,
+  "k": "lyric",
+  "x": "Everything yuh fear is just a thing yuh cyan use"
+ },
+ {
+  "t": 186.4,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 190.6,
+  "k": "lyric",
+  "x": "Lay it down easy, let the old grief loose"
+ },
+ {
+  "t": 194.9,
+  "k": "mark",
+  "x": "Chorus"
+ },
+ {
+  "t": 199.1,
+  "k": "lyric",
+  "x": "So mi hold it loose, let the strange world turn"
+ },
+ {
+  "t": 203.4,
+  "k": "lyric",
+  "x": "Here be no dragons, only lessons mi learn"
+ },
+ {
+  "t": 207.6,
+  "k": "lyric",
+  "x": "Love in the open hand, calm in the unknown"
+ },
+ {
+  "t": 211.9,
+  "k": "lyric",
+  "x": "Mi was never the owner"
+ },
+ {
+  "t": 216.2,
+  "k": "lyric",
+  "x": "Only passin’ through on loan"
+ },
+ {
+  "t": 220.4,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 224.7,
+  "k": "mark",
+  "x": "Build"
+ },
+ {
+  "t": 228.9,
+  "k": "lyric",
+  "x": "(whispered) One breath... let it go..."
+ },
+ {
+  "t": 233.2,
+  "k": "lyric",
+  "x": "(low, rising) Let the floor come up slow, let the sorrow glow"
+ },
+ {
+  "t": 237.4,
+  "k": "lyric",
+  "x": "Let it go, let it go, let it go"
+ },
+ {
+  "t": 241.7,
+  "k": "mark",
+  "x": "Drop"
+ },
+ {
+  "t": 245.9,
+  "k": "mark",
+  "x": "Breakdown"
+ },
+ {
+  "t": 250.2,
+  "k": "lyric",
+  "x": "When mi was holdin’ on"
+ },
+ {
+  "t": 254.4,
+  "k": "lyric",
+  "x": "Mi never once feel home"
+ },
+ {
+  "t": 258.7,
+  "k": "lyric",
+  "x": "Now mi open up mi hand"
+ },
+ {
+  "t": 262.9,
+  "k": "lyric",
+  "x": "And mi grieve, but not alone"
+ },
+ {
+  "t": 267.2,
+  "k": "lyric",
+  "x": "The world stay stranger than mi ever suppose"
+ },
+ {
+  "t": 271.4,
+  "k": "lyric",
+  "x": "And mi love it with mi eyes... and mi hands unclose"
+ },
+ {
+  "t": 275.7,
+  "k": "mark",
+  "x": "Build 2"
+ },
+ {
+  "t": 279.9,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose (male: déjalo ir)"
+ },
+ {
+  "t": 284.2,
+  "k": "lyric",
+  "x": "Let the strange world move (male: déjalo ir)"
+ },
+ {
+  "t": 288.5,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 292.7,
+  "k": "lyric",
+  "x": "Everything mi lose was everything mi choose to lose"
+ },
+ {
+  "t": 297.0,
+  "k": "mark",
+  "x": "Final Chorus"
+ },
+ {
+  "t": 301.2,
+  "k": "lyric",
+  "x": "So mi hold it loose, let the strange world turn"
+ },
+ {
+  "t": 305.5,
+  "k": "lyric",
+  "x": "Here be no dragons, only lessons mi learn"
+ },
+ {
+  "t": 309.7,
+  "k": "lyric",
+  "x": "Love in the open hand, calm in the unknown"
+ },
+ {
+  "t": 314.0,
+  "k": "lyric",
+  "x": "Mi was never the owner"
+ },
+ {
+  "t": 318.2,
+  "k": "lyric",
+  "x": "Only passin’ through on loan"
+ },
+ {
+  "t": 322.5,
+  "k": "lyric",
+  "x": "Hold it loose, hold it loose"
+ },
+ {
+  "t": 326.7,
+  "k": "mark",
+  "x": "Outro"
+ },
+ {
+  "t": 331.0,
+  "k": "lyric",
+  "x": "(whispered) Here be no dragons..."
+ },
+ {
+  "t": 335.2,
+  "k": "lyric",
+  "x": "The water still a-move"
+ },
+ {
+  "t": 339.5,
+  "k": "lyric",
+  "x": "And mi move with it now"
+ },
+ {
+  "t": 343.7,
+  "k": "lyric",
+  "x": "(male, low) Me muevo con el agua... me muevo con el agua"
+ },
+ {
+  "t": 348.0,
+  "k": "lyric",
+  "x": "Mi move with it now..."
+ }
+]
