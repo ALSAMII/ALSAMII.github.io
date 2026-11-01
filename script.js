@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 44 · last updated 2026-11-01 01:25 PDT
+   Version 45 · last updated 2026-11-01 02:05 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5490,6 +5490,7 @@
     var act = b.dataset.act;
     if (act === "play")  { togglePlay(); return; }
     if (act === "back")  { audio.currentTime = 0; return; }
+    if (act === "dockclose") { audio.pause(); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
     if (act === "lyr")   { theatre.hidden ? openTheatre() : closeTheatre(); return; }
     if (act === "thclose") { closeTheatre(); return; }
     if (act === "share" && cur) { share("song", cur); return; }

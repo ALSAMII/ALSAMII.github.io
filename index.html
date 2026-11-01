@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 697 · last updated 2026-11-01 01:45 PDT
+<!-- Version 698 · last updated 2026-11-01 02:05 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -166,10 +166,10 @@
      preloads — and the handful further down on assets/intro, assets/
      lrseries and assets/overrides are all separate, and lag
      deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=664">
+<link rel="stylesheet" href="style.css?v=665">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=664">
+<link rel="stylesheet" href="library/roya-library.css?v=665">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -1253,7 +1253,9 @@
         <b class="rec-dock-ttl" id="recDockTtl">&mdash;</b>
         <span class="rec-dock-sub" id="recDockSub"></span>
       </span>
-      <button class="rec-tbtn" data-act="back" type="button" aria-label="Back to the beginning"></button>
+      <button class="rec-tbtn" data-act="back" type="button" aria-label="Back to the beginning" title="Back to the beginning">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2v14H6zM18 5.5v13L9 12z"/></svg>
+      </button>
       <button class="rec-tbtn big rec-play" data-act="play" type="button" aria-label="Play"></button>
       <span class="rec-tm" id="recNow">0:00</span>
       <div class="rec-scrub" id="recScrub" role="slider" tabindex="0"
@@ -1264,6 +1266,11 @@
       <span class="rec-cur" id="recCur"></span>
       <button class="rec-btn ghost" data-act="lyr" type="button">Lyrics</button>
     </div>
+    <!-- put the player away: stops the record and hides the bar; the
+         song is still cued and comes back with a press on any row -->
+    <button class="rec-dock-x" data-act="dockclose" type="button" aria-label="Close the player" title="Close the player">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
   </div>
 
   <!-- the lyric theatre, over everything -->
@@ -1301,9 +1308,9 @@
   <p class="rec-toast" id="recToast" role="status" hidden></p>
   <input class="rec-share-out" id="recShareOut" readonly hidden aria-label="Share link">
 
-<script src="stories.js?v=664"></script>
-<script src="songs.js?v=664"></script>
-<script src="script.js?v=664"></script>
+<script src="stories.js?v=665"></script>
+<script src="songs.js?v=665"></script>
+<script src="script.js?v=665"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1319,7 +1326,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=664"></script>
+<script src="library/roya-library.js?v=665"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox

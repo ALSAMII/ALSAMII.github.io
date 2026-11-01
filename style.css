@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 43 · last updated 2026-11-01 01:45 PDT
+   Version 44 · last updated 2026-11-01 02:05 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11209,6 +11209,17 @@ body.rec-on .to-top { display: none !important; }
   display: grid; place-items: center; cursor: pointer; flex: none;
 }
 .rec-tbtn:hover, #royaLibrary .rec-tbtn:hover{ border-color: var(--ember-soft); color: var(--ember-lit); }
+.rec-tbtn svg, #royaLibrary .rec-tbtn svg{ width: 13px; height: 13px; }
+/* the player's own close, tucked at the top-right of the bar */
+.rec-dock-x, #royaLibrary .rec-dock-x{
+  position: absolute; top: 0.45rem; right: 0.6rem; z-index: 2;
+  appearance: none; background: none; border: 0; padding: 0.3rem; cursor: pointer;
+  color: var(--faded); line-height: 0;
+}
+.rec-dock-x svg, #royaLibrary .rec-dock-x svg{ width: 13px; height: 13px; }
+.rec-dock-x:hover, #royaLibrary .rec-dock-x:hover{ color: var(--ember-lit); }
+/* room for it beside LYRICS */
+.rec-dock-bar > .rec-btn, #royaLibrary .rec-dock-bar > .rec-btn{ margin-right: 1.6rem; }
 .rec-tbtn svg, #royaLibrary .rec-tbtn svg{ width: 12px; height: 12px; }
 .rec-tbtn.big, #royaLibrary .rec-tbtn.big{ width: 2.7rem; height: 2.7rem; border-color: var(--ember-soft); color: var(--ember-lit); }
 .rec-tbtn.big svg, #royaLibrary .rec-tbtn.big svg{ width: 15px; height: 15px; }
