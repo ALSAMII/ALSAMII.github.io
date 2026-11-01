@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 52 · last updated 2026-11-01 06:28 PDT
+   Version 53 · last updated 2026-11-01 06:32 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10990,6 +10990,16 @@ body.rec-on .to-top { display: none !important; }
 #royaLibrary .lib .side-sound { display: none !important; }
 /* one line under each heading — the captions are chosen to fit, this keeps them from folding on narrow desktops */
 #royaLibrary .dnav [data-view] i { white-space: nowrap; }
+/* Five headings now share the rail. Below ~1400px the captions were
+   wider than their columns and ran into the hairlines, so the rail gives
+   up some of its side padding and the captions step down in size. */
+@media (max-width: 1400px) {
+  #royaLibrary nav.dnav { padding-left: 1.1rem; padding-right: 1.1rem; }
+  #royaLibrary nav.dnav i { font-size: 0.95rem; }
+}
+@media (max-width: 1200px) { #royaLibrary nav.dnav i { font-size: 0.88rem; } }
+@media (max-width: 1060px) { #royaLibrary nav.dnav i { font-size: 0.8rem; } }
+}
 /* The dock no longer echoes the line being sung — the sheet does that */
 .rec-cur, #royaLibrary .rec-cur { display: none !important; }
 /* the magnifier: the page's own .series-zoom look, placed by script.js
