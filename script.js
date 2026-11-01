@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 38 · last updated 2026-10-31 22:05 PDT
+   Version 39 · last updated 2026-10-31 22:50 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -4943,6 +4943,20 @@
     var c = on.offsetLeft + on.offsetWidth / 2;
     shelf.style.transform = "translateX(" + Math.round(mid - c) + "px)";
     edges();
+    placeZoom(on, reel, mid - c);
+  }
+  /* The magnifier sits on the lower-right of the centre SLEEVE. The
+     hero is 3:2 with the sleeve on its left two-thirds, so the point is
+     measured off the item, not the reel. */
+  function placeZoom(on, reel, tx) {
+    var z = document.getElementById("recZoomBtn");
+    if (!z || !on) return;
+    var art = on.firstElementChild;
+    var left = on.offsetLeft + tx, top = art.offsetTop + reel.querySelector(".rec-shelf").offsetTop;
+    var w = on.offsetWidth, h = art.offsetHeight;
+    z.style.left = Math.round(left + w * 0.60) + "px";
+    z.style.top  = Math.round(top + h * 0.80) + "px";
+    z.classList.add("on");
   }
   function edges() {
     var L = document.getElementById("recPrev"), R = document.getElementById("recNext");
@@ -4956,6 +4970,35 @@
     pickAlbum(SHELF[i].num);
   }
   window.addEventListener("resize", function () { layoutReel(); }, { passive: true });
+
+  /* ── a book named in a synopsis is a link into the Library ─────
+     [[slug|words]] in the text becomes a link to that book's card. It
+     has to LEAVE this view first: the Library redraws itself to show
+     the card, and while the view is on, the observer would put the
+     room straight back over it. */
+  function bookLink(slug, words) {
+    var a = document.createElement("a");
+    a.className = "rec-booklink";
+    a.href = "#" + slug;
+    a.textContent = words;
+    a.addEventListener("click", function (e) {
+      e.preventDefault(); e.stopPropagation();
+      close();
+      location.hash = slug;
+    });
+    return a;
+  }
+  function synopsis(text) {
+    var p = el("p", "rec-pane-syn");
+    var re = /\[\[([^\]|]+)\|([^\]]+)\]\]/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) p.append(document.createTextNode(text.slice(last, m.index)));
+      p.append(bookLink(m[1], m[2]));
+      last = m.index + m[0].length;
+    }
+    if (last < text.length) p.append(document.createTextNode(text.slice(last)));
+    return p;
+  }
 
   /* ── the album panel under the shelf ────────────────────────── */
   function pickAlbum(num, quiet) {
@@ -4982,7 +5025,7 @@
        still exists on the record (it is the share slug) but it is for
        machines; a reader wants to know what the words mean. */
     if (a.en) left.append(el("p", "rec-pane-translit", a.en + " · Persian"));
-    left.append(el("p", "rec-pane-syn", a.syn));
+    left.append(synopsis(a.syn));
     head.append(left);
 
     var acts = el("div", "rec-pane-acts");
@@ -5045,7 +5088,11 @@
     t.append(ly);
 
     var sub = s.book ? ("No. " + s.book) : (s.en || "");
-    if (sub) t.append(el("small", null, sub));
+    if (sub) {
+      var sm = el("small");
+      if (s.book && s.bookSlug) sm.append(bookLink(s.bookSlug, sub)); else sm.textContent = sub;
+      t.append(sm);
+    }
     li.append(t);
 
     li.append(el("span", "rec-trk-d", mmss(s.dur)));
@@ -5312,6 +5359,28 @@
     toastT = setTimeout(function () { n.hidden = true; }, 2200);
   }
 
+  /* ── the album cover, full size ─────────────────────────────── */
+  var zoomBox = document.getElementById("recZoom");
+  function openZoom() {
+    if (!zoomBox || !curAlbum) return;
+    var img = document.getElementById("recZoomImg"), cap = document.getElementById("recZoomCap");
+    img.src = stamped("albums/flat/" + pad2(curAlbum.num) + ".jpg");
+    img.alt = curAlbum.title + " — album cover";
+    if (cap) cap.textContent = curAlbum.title + " · Chew Z";
+    zoomBox.hidden = false;
+    requestAnimationFrame(function () { zoomBox.classList.add("show"); });
+    var c = document.getElementById("recZoomClose"); if (c) c.focus();
+  }
+  function closeZoom() {
+    if (!zoomBox || zoomBox.hidden) return;
+    zoomBox.classList.remove("show");
+    setTimeout(function () { zoomBox.hidden = true; }, 260);
+    var z = document.getElementById("recZoomBtn"); if (z) z.focus();
+  }
+  if (zoomBox) zoomBox.addEventListener("click", function (e) {
+    if (e.target === zoomBox || e.target.id === "recZoomImg") closeZoom();
+  });
+
   /* ── the lyric theatre ──────────────────────────────────────── */
   function openTheatre() {
     theatre.hidden = false;
@@ -5381,7 +5450,7 @@
     scrollTop();
     if (cur) { dock.hidden = false; paintTransport(); }
     requestAnimationFrame(layoutReel);
-    if (!quiet) { var h = body.querySelector(".rec-h1"); if (h) { h.tabIndex = -1; h.focus(); } }
+    if (!quiet) { var h = body.querySelector(".rec-h1"); if (h) { h.tabIndex = -1; try { h.focus({ preventScroll: true }); } catch (x) { h.focus(); } } }
   }
   function close() {
     songsOn = false;
@@ -5408,6 +5477,7 @@
   openBtn.addEventListener("click", function () { open(); });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape" || !songsOn) return;
+    if (zoomBox && !zoomBox.hidden) { closeZoom(); e.stopPropagation(); return; }
     if (!theatre.hidden) { closeTheatre(); e.stopPropagation(); }
   }, true);
 
@@ -5422,6 +5492,8 @@
     if (act === "thclose") { closeTheatre(); return; }
     if (act === "share" && cur) { share("song", cur); return; }
     if (act === "prev" || act === "next") { stepAlbum(act === "next" ? 1 : -1); return; }
+    if (act === "zoom") { openZoom(); return; }
+    if (act === "zoomclose") { closeZoom(); return; }
   });
 
   (function swiping() {

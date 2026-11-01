@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 34 · last updated 2026-10-31 22:05 PDT
+   Version 35 · last updated 2026-10-31 22:50 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10977,6 +10977,27 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
 .rec-nub:hover, #royaLibrary .rec-nub:hover{ background: var(--ember); color: var(--night); }
 .rec-nub[disabled], #royaLibrary .rec-nub[disabled]{ opacity: 0.25; cursor: default; }
 .rec-nub[disabled]:hover, #royaLibrary .rec-nub[disabled]:hover{ background: rgba(0,0,0,0.55); color: var(--ember-lit); }
+/* the heading takes focus when the room opens, for the keyboard; the
+   ring the Library draws on a focused element is not wanted here */
+.rec-h1:focus, #royaLibrary .rec-h1:focus{ outline: none; box-shadow: none; }
+/* the magnifier: the page's own .series-zoom look, placed by script.js
+   on the lower-right of the centre sleeve */
+.rec-zoom-btn, #royaLibrary .rec-zoom-btn{
+  top: auto; right: auto; z-index: 3; width: 1.8rem; height: 1.8rem;
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.rec-zoom-btn.on, #royaLibrary .rec-zoom-btn.on{ opacity: 1; }
+.rec-zoom-btn svg, #royaLibrary .rec-zoom-btn svg{ width: 0.9rem; height: 0.9rem; }
+#recZoom, #royaLibrary #recZoom{ z-index: 67; }
+.rec-zoom .lightbox-img, #royaLibrary .rec-zoom .lightbox-img{ max-height: min(86vh, 1200px); max-width: min(92vw, 1200px); }
+/* a book named in a synopsis is a way into the Library */
+.rec-booklink, #royaLibrary .rec-booklink{
+  color: var(--ember-lit); text-decoration: none;
+  border-bottom: 1px solid var(--ember-soft); font-style: italic;
+}
+.rec-booklink:hover, #royaLibrary .rec-booklink:hover{ color: var(--parchment); border-bottom-color: var(--parchment); }
+.rec-trk-t small a, #royaLibrary .rec-trk-t small a{ color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+.rec-trk-t small a:hover, #royaLibrary .rec-trk-t small a:hover{ color: var(--ember-lit); border-bottom-color: var(--ember-soft); }
 
 .rec-reel, #royaLibrary .rec-reel{
   position: relative; overflow: hidden; margin: 0 -1.3rem;

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 688 · last updated 2026-10-31 22:05 PDT
+<!-- Version 689 · last updated 2026-10-31 22:50 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -166,10 +166,10 @@
      preloads — and the handful further down on assets/intro, assets/
      lrseries and assets/overrides are all separate, and lag
      deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=655">
+<link rel="stylesheet" href="style.css?v=656">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=655">
+<link rel="stylesheet" href="library/roya-library.css?v=656">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -1232,6 +1232,14 @@
       <div class="rec-shelf" id="recShelf" role="tablist" aria-label="Albums"></div>
       <button class="rec-nub prev" id="recPrev" data-act="prev" type="button" aria-label="Previous album">&lsaquo;</button>
       <button class="rec-nub next" id="recNext" data-act="next" type="button" aria-label="Next album">&rsaquo;</button>
+      <!-- the magnifier on the centre record; script.js keeps it on the sleeve -->
+      <button class="series-zoom rec-zoom-btn" id="recZoomBtn" data-act="zoom" type="button"
+              aria-label="View the album cover full size" title="View full size">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="10.3" cy="10.3" r="6.3"/><path d="M10.3 7.6v5.4M7.6 10.3h5.4"/><path d="M19.4 19.4l-4.3-4.3"/>
+        </svg>
+      </button>
     </div>
     <div class="rec-pane" id="recPane"></div>
   </div>
@@ -1272,12 +1280,25 @@
     </div>
   </div>
 
+  <!-- the album cover, full size: the page's own lightbox shape, but its
+       own element, because the page's #lightbox sits at the Library's
+       z-index and would open behind it -->
+  <div class="lightbox rec-zoom" id="recZoom" role="dialog" aria-modal="true" aria-label="Album cover" hidden>
+    <button class="lightbox-close" id="recZoomClose" data-act="zoomclose" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+    <img class="lightbox-img" id="recZoomImg" alt="">
+    <p class="lightbox-cap caps" id="recZoomCap"></p>
+  </div>
+
   <p class="rec-toast" id="recToast" role="status" hidden></p>
   <input class="rec-share-out" id="recShareOut" readonly hidden aria-label="Share link">
 
-<script src="stories.js?v=655"></script>
-<script src="songs.js?v=655"></script>
-<script src="script.js?v=655"></script>
+<script src="stories.js?v=656"></script>
+<script src="songs.js?v=656"></script>
+<script src="script.js?v=656"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1293,7 +1314,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=655"></script>
+<script src="library/roya-library.js?v=656"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox

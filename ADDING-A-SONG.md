@@ -1,4 +1,4 @@
-<!-- Updated 2026-10-31 22:20 PDT — written with the Record Room. 3 albums, 17 songs.
+<!-- Updated 2026-10-31 23:00 PDT — written with the Record Room. 3 albums, 17 songs.
      The house standard for the object itself is roya-recordings-format.md. -->
 # Adding a song
 
@@ -140,7 +140,14 @@ Persian text is never mirrored. The glyphs order themselves right-to-left
 inside the line; the line itself sits at the left like every English one,
 and the row — number, play, title, length — reads left-to-right.
 
-A song drawn from a book takes `book: 119`.
+A song drawn from a book takes `book: 119` and `bookSlug:
+"119-the-light-is-yours-to-take"` — the book's share-page name without
+`.html`. The "No. 119" under the title becomes a link to the book's
+card in the Library.
+
+**Naming a book in an album's synopsis:** write `[[slug|words]]` —
+`[[02-bright-mercy|Bright Mercy]]`. On the page the words are a link to
+the book's card; the share pages print the words alone.
 
 **Then update the album's `songs` and `dur`.** They are the sum of its
 tracks, and §10 checks them.

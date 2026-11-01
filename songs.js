@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 2 · last updated 2026-10-31 20:30 PDT
+   Version 3 · last updated 2026-10-31 22:50 PDT
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -53,7 +53,10 @@ const ALBUMS = [
     dur: 586,                        /* 9:46 */
     released: "2026-11",
     open: true,                      /* this one keeps growing */
-    syn: "The two songs taken straight out of the books. A lullaby from No. 2 that a crowd sings itself into the dark with, and what Laleh sings at the end of No. 119. This one grows as the books do."
+    /* [[slug|words]] is a link to a book's card in the Library — the slug is
+       the book's share-page name without .html. Share pages print the words
+       alone; the page makes them a link. */
+    syn: "The two songs taken straight out of the books. A lullaby from [[02-bright-mercy|Bright Mercy]], book No. 2, that a crowd sings itself into the dark with, and what Laleh sings at the end of [[119-the-light-is-yours-to-take|The Light Is Yours to Take]], book No. 119. This one grows as the books do."
   }
 ];
 
@@ -143,13 +146,13 @@ const SONGS = [
 
   /* ─── Album 2 · Roya ─────────────────────────────────────────── */
   { cat: "02-01", album: 2, track: 1, title: "Don’t Come to the Door", dur: 359,
-    book: 119,
+    book: 119, bookSlug: "119-the-light-is-yours-to-take",
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/02-01.mp3",
     lyric: "songs/02-01.json",
     note: "A mother at the piano telling a child to stay asleep, through four verses, while something happens in the courtyard she isn't hearing. The fifth verse unsays every one of the first four." },
 
   { cat: "02-02", album: 2, track: 2, title: "Bright Mercy", dur: 227,
-    book: 2,
+    book: 2, bookSlug: "02-bright-mercy",
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/02-02.mp3",
     lyric: "songs/02-02.json",
     note: "The four-note lullaby from No. 2, the one engineered to survive a listener's fear. Sung by a whole lakebed on the last night, it stops being a lullaby and becomes permission." }

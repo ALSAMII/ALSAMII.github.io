@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* ══════════════════════════════════════════════════════════════════
    build-song-shares.js
-   Version 1 · 2026-10-31
+   Version 2 · 2026-10-31
 
    Writes a share page for every album and every song, the same shape
    build-share-pages.js writes for the books: a page that exists to be
@@ -62,6 +62,10 @@ function jpegSize(file) {
   }
   return null;
 }
+
+/* [[slug|words]] in a synopsis is a link on the page; a preview card
+   gets the words alone. */
+const plain = s => String(s).replace(/\[\[[^\]|]+\|([^\]]+)\]\]/g, "$1");
 
 const esc = s => String(s)
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -157,7 +161,7 @@ ALBUMS.forEach(a => {
     albumTitle: a.title,
     fa: !!a.fa,
     title: `${a.title} — Chew Z`,
-    desc: a.syn,
+    desc: plain(a.syn),
     target: `${SITE}/#album-${pad2(a.num)}`
   }));
   written.push(name); n++;
