@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 39 · last updated 2026-10-31 22:50 PDT
+   Version 41 · last updated 2026-10-31 23:40 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -2619,6 +2619,19 @@
                    go("library", "Library"), dot(),
                    narrated + " read aloud in ",
                    go("listening", "Listen"));
+        /* And the records. Songs is not one of the Library's own views
+           — records() below mounts it — so this link must not reach the
+           Library's handler, which would take data-view="songs" as a
+           view it has and draw About with nothing underlined. The
+           count is read off ALBUMS so it cannot go stale. */
+        if (typeof ALBUMS !== "undefined" && ALBUMS.length) {
+          var songsGo = go("songs", "Songs");
+          songsGo.addEventListener("click", function (e) {
+            e.preventDefault(); e.stopPropagation();
+            if (window.recordRoom) window.recordRoom.open();
+          });
+          add.append(dot(), ALBUMS.length + " albums in ", songsGo);
+        }
         note.append(add);
       }
 
@@ -5220,7 +5233,7 @@
     rows.forEach(function (r) {
       var b = el("button", "rec-ln" + (r.k === "mark" ? " mark" : "") + (s && s.fa ? " fa" : ""), r.x);
       b.type = "button";
-      b.addEventListener("click", function () { audio.currentTime = r.t + 0.15; });
+      b.addEventListener("click", function () { readerAt = 0; audio.currentTime = r.t + 0.15; });
       box.append(b);
       lines.push({ t: r.t, node: b });
     });
@@ -5247,19 +5260,36 @@
     }
     var cl = document.getElementById("recCur");
     if (cl) cl.textContent = i >= 0 ? lines[i].node.textContent : "";
-    if (i >= 0) {
-      var box = document.getElementById("recLyrIn"), wrap = document.getElementById("recLyr");
-      if (box && wrap) {
-        var n = lines[i].node, first = lines[from].node, last = lines[to - 1].node;
-        var bTop = first.offsetTop, bH = (last.offsetTop + last.offsetHeight) - bTop;
-        var off = bH < wrap.clientHeight * 0.8
-          ? bTop - (wrap.clientHeight / 2) + (bH / 2)
-          : n.offsetTop - (wrap.clientHeight / 2) + (n.offsetHeight / 2);
-        box.style.transform = "translateY(" + (-Math.max(0, off)) + "px)";
-      }
-    }
+    if (i >= 0) follow(i, from, to, false);
   }
 
+  /* The sheet is a real scroller: the reader can wheel or drag through
+     the whole lyric at any time. The song pulls the view back to the
+     verse being sung only when the reader has not touched the sheet
+     for a few seconds; a tap on any line is a seek, and re-syncs. */
+  var readerAt = 0;
+  function reading() { return Date.now() - readerAt < 5000; }
+  function follow(i, from, to, force) {
+    var wrap = document.getElementById("recLyr");
+    if (!wrap || (!force && reading())) return;
+    var n = lines[i].node, first = lines[from].node, last = lines[to - 1].node;
+    var bTop = first.offsetTop, bH = (last.offsetTop + last.offsetHeight) - bTop;
+    var top = bH < wrap.clientHeight * 0.8
+      ? bTop - (wrap.clientHeight / 2) + (bH / 2)
+      : n.offsetTop - (wrap.clientHeight / 2) + (n.offsetHeight / 2);
+    try { wrap.scrollTo({ top: Math.max(0, top), behavior: "smooth" }); }
+    catch (x) { wrap.scrollTop = Math.max(0, top); }
+  }
+  (function readerScroll() {
+    var wrap = document.getElementById("recLyr");
+    if (!wrap) return;
+    ["wheel", "touchstart", "touchmove", "pointerdown"].forEach(function (ev) {
+      wrap.addEventListener(ev, function () { readerAt = Date.now(); }, { passive: true });
+    });
+    wrap.addEventListener("keydown", function (e) {
+      if (/^(Arrow|Page|Home|End)/.test(e.key)) readerAt = Date.now();
+    });
+  })();
   /* ── painting ───────────────────────────────────────────────── */
   function paintDock() {
     if (!cur) return;
@@ -5385,6 +5415,7 @@
   function openTheatre() {
     theatre.hidden = false;
     requestAnimationFrame(function () { theatre.classList.add("show"); });
+    readerAt = 0; lineIdx = -2;         /* force a fresh pass that also scrolls */
     onTime();
   }
   function closeTheatre() {
@@ -5419,7 +5450,7 @@
       anchor.parentNode.insertBefore(body, anchor.nextSibling);
     }
     LIB.classList.add("rec-view");
-    [].forEach.call(LIB.querySelectorAll("[data-view]"), function (btn) {
+    [].forEach.call(LIB.querySelectorAll("nav [data-view]"), function (btn) {
       btn.setAttribute("aria-current", String(btn.dataset.view === "songs"));
     });
     return true;
@@ -5427,7 +5458,7 @@
   function unmount() {
     if (!LIB) return;
     LIB.classList.remove("rec-view");
-    [].forEach.call(LIB.querySelectorAll("[data-view]"), function (btn) {
+    [].forEach.call(LIB.querySelectorAll("nav [data-view]"), function (btn) {
       /* the Library's real view is the one it pressed in its own draw() */
       btn.setAttribute("aria-current", String(btn.getAttribute("aria-pressed") === "true"));
     });
@@ -5442,6 +5473,9 @@
   function open(quiet) {
     lastFocus = document.activeElement;
     songsOn = true;
+    /* the page's own "back to the top" button keys on the page behind
+       the Library and floats over everything; it has no place here */
+    document.body.classList.add("rec-on");
     if (!mount()) {
       /* no Library on the page (it is HOME, so this is the old page
          alone): fall back to showing the body where it is parked */
@@ -5454,6 +5488,7 @@
   }
   function close() {
     songsOn = false;
+    document.body.classList.remove("rec-on");
     /* The music is part of this room. Leaving it for the Library pauses
        the record and puts the dock away, so nothing from here plays or
        sits over the books; coming back finds it where it was. */
@@ -5617,6 +5652,10 @@
     apply();
     new MutationObserver(schedule).observe(LIB, { childList: true, subtree: true });
   })();
+
+  /* the About page's signpost and anything else on the page that wants
+     to open the room without reaching into this closure */
+  window.recordRoom = { open: function () { open(); } };
 
   /* ── go ─────────────────────────────────────────────────────── */
   buildShelf();

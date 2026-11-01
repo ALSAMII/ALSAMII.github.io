@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 35 · last updated 2026-10-31 22:50 PDT
+   Version 37 · last updated 2026-10-31 23:40 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10980,6 +10980,8 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
 /* the heading takes focus when the room opens, for the keyboard; the
    ring the Library draws on a focused element is not wanted here */
 .rec-h1:focus, #royaLibrary .rec-h1:focus{ outline: none; box-shadow: none; }
+/* no "back to the top" while the room is open: it belongs to the page behind */
+body.rec-on .to-top { display: none !important; }
 /* the magnifier: the page's own .series-zoom look, placed by script.js
    on the lower-right of the centre sleeve */
 .rec-zoom-btn, #royaLibrary .rec-zoom-btn{
@@ -11249,13 +11251,18 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
   font-family: var(--serif-read); font-size: 0.82rem; line-height: 1.6;
   color: var(--faded); max-width: 34rem; margin: 0 auto 1.4rem;
 }
+/* A real scroller. The reader can move through the whole lyric; the
+   song pulls the view back to the verse being sung when they stop. The
+   inner padding lets the first and last verse sit at the centre line. */
 .rec-lyr, #royaLibrary .rec-lyr{
   position: relative; width: 100%; max-width: 40rem;
-  height: clamp(13rem, 42vh, 20rem); overflow: hidden;
+  height: clamp(13rem, 46vh, 24rem); overflow-y: auto; overflow-x: hidden;
+  overscroll-behavior: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch;
   -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent 100%);
           mask-image: linear-gradient(transparent, #000 14%, #000 80%, transparent 100%);
 }
-.rec-lyr-in, #royaLibrary .rec-lyr-in{ transition: transform 0.5s cubic-bezier(0.3, 0.8, 0.3, 1); }
+.rec-lyr::-webkit-scrollbar, #royaLibrary .rec-lyr::-webkit-scrollbar{ display: none; }
+.rec-lyr-in, #royaLibrary .rec-lyr-in{ padding: 40% 0 45%; }
 .rec-ln, #royaLibrary .rec-ln{
   display: block; width: 100%; background: none; border: 0; cursor: pointer;
   font-family: var(--serif); font-weight: 500; text-align: center;
