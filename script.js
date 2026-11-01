@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 45 · last updated 2026-11-01 02:05 PDT
+   Version 47 · last updated 2026-11-01 03:50 PDT
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5456,10 +5456,10 @@
   function close() {
     songsOn = false;
     document.body.classList.remove("rec-on");
-    /* The music is part of this room. Leaving it for the Library pauses
-       the record and puts the dock away, so nothing from here plays or
-       sits over the books; coming back finds it where it was. */
-    if (cur) { audio.pause(); dockShow(false); }
+    /* The record keeps playing when the reader goes to another header:
+       the dock stays at the foot of the page across the whole Library,
+       with its × for whoever wants quiet. (It used to pause and hide on
+       leaving; ChewZ asked for it to travel.) */
     unmount();
     root.hidden = true; root.style.display = "";
     if (!theatre.hidden) closeTheatre();
@@ -5490,6 +5490,7 @@
     var act = b.dataset.act;
     if (act === "play")  { togglePlay(); return; }
     if (act === "back")  { audio.currentTime = 0; return; }
+    if (act === "fwd")   { if (cur) audio.currentTime = Math.min((audio.duration || cur.dur) - 0.5, audio.currentTime + 15); return; }
     if (act === "dockclose") { audio.pause(); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
     if (act === "lyr")   { theatre.hidden ? openTheatre() : closeTheatre(); return; }
     if (act === "thclose") { closeTheatre(); return; }

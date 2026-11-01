@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 699 · last updated 2026-11-01 02:20 PDT
+<!-- Version 702 · last updated 2026-11-01 03:50 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -166,10 +166,10 @@
      preloads — and the handful further down on assets/intro, assets/
      lrseries and assets/overrides are all separate, and lag
      deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=666">
+<link rel="stylesheet" href="style.css?v=669">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=666">
+<link rel="stylesheet" href="library/roya-library.css?v=669">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -1205,7 +1205,6 @@
 <div id="records" hidden>
   <div id="recBody">
     <div class="rec-head">
-      <p class="rec-eyebrow">Roya Publication &middot; Recordings</p>
       <h1 class="rec-h1">The Record Room</h1>
       <p class="rec-lede">The books came first and the songs came out of the
         same rooms. I would finish a chapter and find a line still going
@@ -1253,6 +1252,7 @@
         <b class="rec-dock-ttl" id="recDockTtl">&mdash;</b>
         <span class="rec-dock-sub" id="recDockSub"></span>
       </span>
+      <button class="rec-btn ghost rec-dock-lyr" data-act="lyr" type="button">Lyrics</button>
       <button class="rec-tbtn" data-act="back" type="button" aria-label="Back to the beginning" title="Back to the beginning">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2v14H6zM18 5.5v13L9 12z"/></svg>
       </button>
@@ -1263,8 +1263,13 @@
         <div class="rec-rail"><div class="rec-fill"></div><div class="rec-knob"></div></div>
       </div>
       <span class="rec-tm" id="recTot">0:00</span>
+      <button class="rec-tbtn" data-act="fwd" type="button" aria-label="Skip forward fifteen seconds" title="Forward 15 seconds">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15.8 6A7.6 7.6 0 1 0 19.1 15"/><path d="M12.4 2.9l3.4 3.1-3.4 3.1"/>
+          <text x="12" y="15.4" text-anchor="middle" font-size="7.6" font-family="Jost, Arial, sans-serif" font-weight="600" fill="currentColor" stroke="none">15</text>
+        </svg>
+      </button>
       <span class="rec-cur" id="recCur"></span>
-      <button class="rec-btn ghost" data-act="lyr" type="button">Lyrics</button>
     </div>
     <!-- put the player away: stops the record and hides the bar; the
          song is still cued and comes back with a press on any row -->
@@ -1308,9 +1313,9 @@
   <p class="rec-toast" id="recToast" role="status" hidden></p>
   <input class="rec-share-out" id="recShareOut" readonly hidden aria-label="Share link">
 
-<script src="stories.js?v=666"></script>
-<script src="songs.js?v=666"></script>
-<script src="script.js?v=666"></script>
+<script src="stories.js?v=669"></script>
+<script src="songs.js?v=669"></script>
+<script src="script.js?v=669"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1326,7 +1331,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=666"></script>
+<script src="library/roya-library.js?v=669"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox

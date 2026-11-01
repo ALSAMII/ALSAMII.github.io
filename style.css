@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 45 · last updated 2026-11-01 02:20 PDT
+   Version 47 · last updated 2026-11-01 03:30 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11218,8 +11218,8 @@ body.rec-on .to-top { display: none !important; }
 }
 .rec-dock-x svg, #royaLibrary .rec-dock-x svg{ width: 13px; height: 13px; }
 .rec-dock-x:hover, #royaLibrary .rec-dock-x:hover{ color: var(--ember-lit); }
-/* room for it beside LYRICS */
-.rec-dock-bar > .rec-btn, #royaLibrary .rec-dock-bar > .rec-btn{ margin-right: 1.6rem; }
+.rec-dock-lyr, #royaLibrary .rec-dock-lyr{ margin-right: 0.6rem; }
+.rec-tbtn[data-act="fwd"] svg, #royaLibrary .rec-tbtn[data-act="fwd"] svg{ width: 18px; height: 18px; }
 .rec-tbtn svg, #royaLibrary .rec-tbtn svg{ width: 12px; height: 12px; }
 .rec-tbtn.big, #royaLibrary .rec-tbtn.big{ width: 2.7rem; height: 2.7rem; border-color: var(--ember-soft); color: var(--ember-lit); }
 .rec-tbtn.big svg, #royaLibrary .rec-tbtn.big svg{ width: 15px; height: 15px; }
@@ -11362,7 +11362,13 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   .rec-pane-ttl, #royaLibrary .rec-pane-ttl{ font-size: 1.45rem; }/* The share button stays and the download goes: sharing is what
      people do from a phone, and the file is a tap away on the row. */
   
-  .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.3rem 1.5rem 1fr auto auto; gap: 0.45rem; }
+  .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.5rem 1.8rem 1fr auto auto; gap: 0.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  /* the list reads at arm's length on a phone */
+  .rec-trk-t, #royaLibrary .rec-trk-t{ font-size: 1.08rem; }
+  .rec-trk-t.fa, #royaLibrary .rec-trk-t.fa{ font-size: 1.18rem; }
+  .rec-trk-n, #royaLibrary .rec-trk-n{ font-size: 0.8rem; }
+  .rec-trk-t small, #royaLibrary .rec-trk-t small{ font-size: 0.62rem; margin-top: 0.2rem; }
+  .rec-trk-d, #royaLibrary .rec-trk-d{ font-size: 0.82rem; }
   .rec-trk-ly span, #royaLibrary .rec-trk-ly span{ display: none; }
   .rec-trk-ly, #royaLibrary .rec-trk-ly{ margin-left: 0.55rem; }
   .rec-nub.prev, #royaLibrary .rec-nub.prev{ left: 0.4rem; }
@@ -11372,13 +11378,14 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   /* Two rows on a phone: who is playing above, the transport below.
      In one flex row the scrubber was squeezing the title to "Do…". */
   .rec-dock-bar, #royaLibrary .rec-dock-bar{
-    display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto;
-    grid-template-areas: "art id id id lyr" "back play now scrub tot";
+    display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "art id id lyr lyr lyr" "back play now scrub tot fwd";
     column-gap: 0.6rem; row-gap: 0.55rem; align-items: center;
   }
   .rec-dock-art, #royaLibrary .rec-dock-art{ grid-area: art; }
   .rec-dock-id, #royaLibrary .rec-dock-id{ grid-area: id; width: auto; }
-  .rec-dock-bar > .rec-btn, #royaLibrary .rec-dock-bar > .rec-btn{ grid-area: lyr; }
+  .rec-dock-lyr, #royaLibrary .rec-dock-lyr{ grid-area: lyr; justify-self: start; margin-right: 2.6rem; }
+  .rec-tbtn[data-act="fwd"], #royaLibrary .rec-tbtn[data-act="fwd"]{ grid-area: fwd; }
   .rec-tbtn[data-act="back"], #royaLibrary .rec-tbtn[data-act="back"]{ grid-area: back; }
   .rec-tbtn[data-act="play"], #royaLibrary .rec-tbtn[data-act="play"]{ grid-area: play; }
   #recNow, #royaLibrary #recNow{ grid-area: now; }
