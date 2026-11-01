@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 55 · last updated 2026-11-01 07:05 PDT
+   Version 57 · last updated 2026-11-01 07:25 PDT
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -10959,10 +10959,9 @@ html #royaLibrary#royaLibrary .mob-name{ display:none }
    scale comes from its distance to the selection, set as data-off. */
 
 
+/* now just the hairline between the introduction and the records */
 .rec-shelf-head, #royaLibrary .rec-shelf-head{
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 1rem; flex-wrap: wrap; margin: 0 0 0.4rem;
-  padding-top: 1.6rem; border-top: 1px solid var(--hairline);
+  margin: 0 0 0.6rem; height: 0; border-top: 1px solid var(--hairline);
 }
 /* the arrows stand either side of the record, on the reel itself */
 .rec-nub, #royaLibrary .rec-nub{
@@ -11010,10 +11009,12 @@ body.rec-on .to-top { display: none !important; }
   opacity: 0; transition: opacity 0.3s ease;
   /* restated at this specificity because the Library's own button
      reset (#royaLibrary button) otherwise strips the disc and the ring */
-  background: rgba(11, 9, 7, 0.55); border: 1px solid rgba(233, 223, 201, 0.35);
+  background: rgba(11, 9, 7, 0.3); border: 1px solid rgba(233, 223, 201, 0.22);
   border-radius: 50%; color: var(--parchment);
 }
-.rec-zoom-btn.on, #royaLibrary .rec-zoom-btn.on{ opacity: 1; }
+/* present but quiet; it comes up under the cursor */
+.rec-zoom-btn.on, #royaLibrary .rec-zoom-btn.on{ opacity: 0.5; }
+.rec-zoom-btn.on:hover, .rec-zoom-btn.on:focus-visible, #royaLibrary .rec-zoom-btn.on:hover, #royaLibrary .rec-zoom-btn.on:focus-visible{ opacity: 0.95; }
 .rec-zoom-btn svg, #royaLibrary .rec-zoom-btn svg{ width: 1rem; height: 1rem; }
 #recZoom, #royaLibrary #recZoom{ z-index: 67; }
 .rec-zoom .lightbox-img, #royaLibrary .rec-zoom .lightbox-img{ max-height: min(88vh, 1024px); max-width: min(94vw, 1536px); }
@@ -11043,7 +11044,7 @@ body.rec-on .to-top { display: none !important; }
   will-change: transform;
 }
 .rec-item, #royaLibrary .rec-item{
-  flex: 0 0 auto; width: clamp(20rem, 44vw, 38rem);
+  flex: 0 0 auto; width: clamp(22rem, 52vw, 46rem);
   background: none; border: 0; padding: 0; text-align: center; color: inherit;
   cursor: pointer; opacity: 0.42; transform: scale(0.72);
   transform-origin: 50% 100%;
@@ -11260,7 +11261,7 @@ body.rec-on .to-top { display: none !important; }
 .rec-q-clear:hover, #royaLibrary .rec-q-clear:hover{ color: var(--ember-lit); border-bottom-color: var(--ember-soft); }
 .rec-q-list, #royaLibrary .rec-q-list{ list-style: none; margin: 0; padding: 0; }
 .rec-q-row, #royaLibrary .rec-q-row{
-  display: grid; grid-template-columns: 1rem 1.1rem 1fr auto auto; gap: 0.7rem; align-items: center;
+  display: grid; grid-template-columns: auto 1.1rem 1fr auto auto; gap: 0.7rem; align-items: center;
   padding: 0.5rem 0; border-bottom: 1px solid var(--hairline);
 }
 .rec-q-row:last-child, #royaLibrary .rec-q-row:last-child{ border-bottom: 0; }
@@ -11269,6 +11270,13 @@ body.rec-on .to-top { display: none !important; }
 .rec-q-grip:hover, .rec-q-grip:focus-visible, #royaLibrary .rec-q-grip:hover, #royaLibrary .rec-q-grip:focus-visible{ color: var(--ember); outline: none; }
 .rec-q-grip svg, #royaLibrary .rec-q-grip svg{ width: 14px; height: 14px; }
 .rec-q-row.drag .rec-q-grip, #royaLibrary .rec-q-row.drag .rec-q-grip{ cursor: grabbing; }
+.rec-q-ud, #royaLibrary .rec-q-ud{ display: none; flex-direction: column; gap: 0.1rem; }
+.rec-q-up, .rec-q-dn, #royaLibrary .rec-q-up, #royaLibrary .rec-q-dn{
+  appearance: none; background: none; border: 0; padding: 0; cursor: pointer; color: var(--ember);
+  width: 1.7rem; height: 1.25rem; display: grid; place-items: center;
+}
+.rec-q-up svg, .rec-q-dn svg, #royaLibrary .rec-q-up svg, #royaLibrary .rec-q-dn svg{ width: 15px; height: 15px; }
+.rec-q-up:disabled, .rec-q-dn:disabled, #royaLibrary .rec-q-up:disabled, #royaLibrary .rec-q-dn:disabled{ color: var(--hairline); cursor: default; }
 .rec-q-num, #royaLibrary .rec-q-num{ font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--ember); }
 .rec-q-t, #royaLibrary .rec-q-t{
   appearance: none; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; min-width: 0;
@@ -11430,7 +11438,7 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
 @media (max-width: 46rem) {/* the reel on a phone: the chosen record fills most of the width,
      the neighbours peek in at the edges; swipe or tap to move */
   
-  .rec-item, #royaLibrary .rec-item{ width: 76vw; }
+  .rec-item, #royaLibrary .rec-item{ width: 88vw; }
   .rec-item, #royaLibrary .rec-item{ transform: scale(0.78); }
   .rec-item[aria-selected="true"], #royaLibrary .rec-item[aria-selected="true"]{ transform: scale(1); }
   .rec-shelf, #royaLibrary .rec-shelf{ gap: 0.6rem; }
@@ -11468,6 +11476,9 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   .rec-dock-lyr, #royaLibrary .rec-dock-lyr{ margin-right: 0; }
   .rec-tbtn[data-act="fwd"], #royaLibrary .rec-tbtn[data-act="fwd"]{ grid-area: fwd; }
   .rec-dock-q, #royaLibrary .rec-dock-q{ grid-area: q; }
+  .rec-q-grip, #royaLibrary .rec-q-grip{ display: none; }
+  .rec-q-ud, #royaLibrary .rec-q-ud{ display: flex; }
+  .rec-q-row, #royaLibrary .rec-q-row{ padding: 0.45rem 0; }
   .rec-tbtn[data-act="back"], #royaLibrary .rec-tbtn[data-act="back"]{ grid-area: back; }
   .rec-tbtn[data-act="play"], #royaLibrary .rec-tbtn[data-act="play"]{ grid-area: play; }
   #recNow, #royaLibrary #recNow{ grid-area: now; }

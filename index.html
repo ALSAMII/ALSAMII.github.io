@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 714 · last updated 2026-11-01 07:05 PDT
+<!-- Version 716 · last updated 2026-11-01 07:25 PDT
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -166,10 +166,10 @@
      preloads — and the handful further down on assets/intro, assets/
      lrseries and assets/overrides are all separate, and lag
      deliberately. See README.md. -->
-<link rel="stylesheet" href="style.css?v=681">
+<link rel="stylesheet" href="style.css?v=683">
 <!-- The Roya Library. Loaded after style.css: every rule in it is scoped
      to #royaLibrary, so it cannot reach the page around it. -->
-<link rel="stylesheet" href="library/roya-library.css?v=681">
+<link rel="stylesheet" href="library/roya-library.css?v=683">
 <link rel="stylesheet" href="assets/intro/intro.css?v=9">
 <!-- The Listening Room's series filter. Loaded after roya-library.css
      because it leans on that file's own picker rules (.pickbox, .pick-btn,
@@ -1217,9 +1217,7 @@
       </div>
     </div>
 
-    <div class="rec-shelf-head">
-      <p class="rec-eyebrow" style="margin:0">The shelf &mdash; pick a record</p>
-    </div>
+    <div class="rec-shelf-head" aria-hidden="true"></div>
     <!-- the reel: the chosen record stands centre and large, the others
          step back either side, the way the Library's own cover reel does.
          The arrows sit on the reel itself, either side of the record. -->
@@ -1246,7 +1244,7 @@
          it travels with the player; opens above the bar. -->
     <section class="rec-q" id="recQueue" hidden aria-label="Up next">
       <header class="rec-q-head">
-        <b>Up next</b><span id="recQMeta"></span>
+        <span id="recQMeta"></span>
         <button class="rec-q-clear" data-act="qclear" type="button">Clear</button>
       </header>
       <ol class="rec-q-list" id="recQList"></ol>
@@ -1322,9 +1320,9 @@
   <p class="rec-toast" id="recToast" role="status" hidden></p>
   <input class="rec-share-out" id="recShareOut" readonly hidden aria-label="Share link">
 
-<script src="stories.js?v=681"></script>
-<script src="songs.js?v=681"></script>
-<script src="script.js?v=681"></script>
+<script src="stories.js?v=683"></script>
+<script src="songs.js?v=683"></script>
+<script src="script.js?v=683"></script>
 <!-- Stage 3. This one line is what points the nav item at the Roya Library
      instead of the old All Covers overlay. Remove it and the section goes
      back to being reachable only at ?library=1; the overlay is still in the
@@ -1340,7 +1338,7 @@
      Delete this one line and the site is exactly as it was: the old page
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
-<script src="library/roya-library.js?v=681"></script>
+<script src="library/roya-library.js?v=683"></script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox
