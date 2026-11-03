@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 64 · last updated 2026-11-02 17:00 PST
+   Version 65 · last updated 2026-11-02 17:20 PST
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11633,4 +11633,12 @@ html #royaLibrary .mob-sec .ab-notes-flow .ab-note--long:first-child{
     grid-template-areas: "id id id id id id" "sc sc sc sc sc sc" "prev play skip fwd . q"; }
   .rec-dock-id, #royaLibrary .rec-dock-id{ align-items: center; gap: 0.9rem; }
   .rec-dock-ttl, #royaLibrary .rec-dock-ttl{ line-height: 1.15; }
+}
+
+/* ── Persian titles in the phone dock ──
+   Persian letters are smaller on the line than Latin caps at the same
+   size, and their ink sits low in the line box, so the title read small
+   and below the Lyrics pill. Larger, and lifted onto the pill's middle. */
+@media (max-width: 46rem){
+  .rec-dock-ttl.fa, #royaLibrary .rec-dock-ttl.fa{ font-size: 1.5rem; line-height: 1.3; position: relative; top: -0.14em; }
 }
