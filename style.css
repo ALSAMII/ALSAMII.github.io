@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 63 · last updated 2026-11-02 14:15 PST
+   Version 64 · last updated 2026-11-02 17:00 PST
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11599,4 +11599,38 @@ html #royaLibrary .mob-sec .ab-notes-flow .ab-note--long:first-child{
   .rec-dock .rec-rail, #royaLibrary .rec-dock .rec-rail{ height: 4px; border-radius: 2px; }
   .rec-dock .rec-knob, #royaLibrary .rec-dock .rec-knob{ width: 14px; height: 14px; opacity: 1; }
   .rec-dock .rec-tm, #royaLibrary .rec-dock .rec-tm{ font-size: 0.8rem; }
+}
+
+/* ── the shelf arrows stand clear of the record ──
+   The arrows were placed by their own measure (22vw from centre) while
+   the record is sized by another (52vw wide, so 26vw each side), which
+   left them 36-70px inside the picture. They now take the record's own
+   half-width and stand 0.8rem beyond it, in the gap before the
+   neighbouring records. Phones keep their edge-of-screen arrows: the
+   record fills 88% of the width there and its faded edge is the gap. */
+@media (min-width: 46.01rem){
+  .rec-nub.prev, #royaLibrary .rec-nub.prev{ left: max(0.4rem, calc(50% - clamp(11rem, 26vw, 23rem) - 3.4rem)); }
+  .rec-nub.next, #royaLibrary .rec-nub.next{ right: max(0.4rem, calc(50% - clamp(11rem, 26vw, 23rem) - 3.4rem)); }
+}
+
+/* ── the 15-second button back on phones ──
+   An older phone rule hid it to make room in a two-row bar. The
+   three-row bar has room, so it takes the free slot after Next. */
+@media (max-width: 46rem){
+  .rec-dock-bar, #royaLibrary .rec-dock-bar{ grid-template-columns: auto auto auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "art id id id id id" "sc sc sc sc sc sc" "prev play skip fwd . q"; }
+  .rec-tbtn[data-act="fwd"], #royaLibrary .rec-tbtn[data-act="fwd"]{ display: grid; grid-area: fwd; }
+  .rec-tbtn[data-act="fwd"] svg, #royaLibrary .rec-tbtn[data-act="fwd"] svg{ width: 24px; height: 24px; }
+}
+
+/* ── phone dock: no thumbnail, title to the left edge ──
+   The album art made the first row start a thumb's width in. Without it
+   the title starts at the bar's own edge, and the Lyrics pill sits on
+   the title's centre line rather than its text box. */
+@media (max-width: 46rem){
+  .rec-dock-art, #royaLibrary .rec-dock-art{ display: none; }
+  .rec-dock-bar, #royaLibrary .rec-dock-bar{
+    grid-template-areas: "id id id id id id" "sc sc sc sc sc sc" "prev play skip fwd . q"; }
+  .rec-dock-id, #royaLibrary .rec-dock-id{ align-items: center; gap: 0.9rem; }
+  .rec-dock-ttl, #royaLibrary .rec-dock-ttl{ line-height: 1.15; }
 }
