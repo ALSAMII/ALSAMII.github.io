@@ -1,6 +1,6 @@
 /* ══════════════════ THE LISTENING ROOM'S SERIES FILTER ══════════════════
-   Version 4 · last updated 2026-10-18 19:45 PDT
-   Served as assets/lrseries/lrseries.css?v=4 — keep the two numbers equal.
+   Version 5 · last updated 2026-11-02 23:10 PST
+   Served as assets/lrseries/lrseries.css?v=5 — keep the two numbers equal.
 
    This file is deliberately small. The control is built out of the Library's
    OWN picker classes — .pickbox, .pick-btn, .pick-list — which are already
@@ -49,6 +49,18 @@
    direct child of .abt; on a phone it sits in .mob-sec and is not, and
    z-index on a static box does nothing. */
 #royaLibrary .lr-bar.lr-hasfilter { position: relative; z-index: 40; }
+
+/* ── and the phone's overlays above it ──
+   On a phone the Listening Room is drawn inside the phone frame, and the
+   Listen box, the enlarged cover, the reader and the mobile sheet are all
+   drawn in .phone-over — a sibling layer at z-index 20
+   (roya-library.css line 347). The 40 above lifted the bar over that whole
+   layer, so "31 Recordings", Series and the sort chips printed across the
+   middle of the Listen box. The overlay layer goes one above the bar.
+   It is transparent and lets clicks through (pointer-events:none on the
+   layer, auto on what it holds), so raising it while empty changes
+   nothing on screen. 41 stays under the record panel's 42. */
+#royaLibrary .phone-over { z-index: 41; }
 
 #royaLibrary .lrs {
   display: inline-flex;
