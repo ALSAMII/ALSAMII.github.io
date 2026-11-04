@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 57 · last updated 2026-11-03 21:40 PST
+   Version 58 · last updated 2026-11-04 06:40 PST
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5185,7 +5185,11 @@
     li.append(dl);
 
     li.addEventListener("click", function () {
-      if (cur && cur.cat === s.cat) togglePlay();
+      if (cur && cur.cat === s.cat) {
+        /* the cued song chosen again after the dock was closed: bring it back */
+        if (dock.hidden) { dockClosed = false; saveState(true); dockShow(true); paintTransport(); }
+        togglePlay();
+      }
       else load(s.cat, true);
     });
     return li;
@@ -5210,6 +5214,7 @@
       audio.preload = "metadata";
       saveState();
     }
+    if (dockClosed) { dockClosed = false; saveState(true); }
     dockShow(true);
     if (andPlay) {
       var p = audio.play();
@@ -5285,6 +5290,11 @@
      one left off. Written on every change and every few seconds of
      play; read once, before anything is drawn. */
   var ST_KEY = "recState", lastSave = 0;
+  /* Closed with its ✕, the dock stays closed — across a refresh, and when
+     the reader comes back to Songs — until they choose a song again.
+     Before this, coming to Songs (which a refresh on Songs does) showed it
+     again whenever a song was cued, so the ✕ never held. */
+  var dockClosed = false;
   function saveState(force) {
     if (!ready) return;
     var now = Date.now();
@@ -5294,7 +5304,7 @@
       localStorage.setItem(ST_KEY, JSON.stringify({
         cat: cur ? cur.cat : null,
         t: cur && !audio.ended ? Math.floor(audio.currentTime || pendingT || 0) : 0,
-        q: queue, shuf: shuf, rep: rep
+        q: queue, shuf: shuf, rep: rep, closed: dockClosed
       }));
     } catch (e) { /* private mode */ }
   }
@@ -5306,6 +5316,9 @@
     pendingT = 0;
   });
   audio.addEventListener("pause", function () { saveState(true); });
+  /* playing again by any route (the lock screen's controls included)
+     means the dock is wanted again next time */
+  audio.addEventListener("play", function () { if (dockClosed) { dockClosed = false; saveState(true); } });
   window.addEventListener("pagehide", function () { saveState(true); });
   audio.addEventListener("ended", function () { playNext(false); });
   audio.addEventListener("error", function () {
@@ -5701,7 +5714,7 @@
       root.hidden = false; root.style.display = "block";
     }
     scrollTop();
-    if (cur) { dockShow(true); paintTransport(); }
+    if (cur && !dockClosed) { dockShow(true); paintTransport(); }
     requestAnimationFrame(layoutReel);
     if (!quiet) { var h = body.querySelector(".rec-h1"); if (h) { h.tabIndex = -1; try { h.focus({ preventScroll: true }); } catch (x) { h.focus(); } } }
   }
@@ -5748,7 +5761,7 @@
     if (act === "shuf")  { shuf = !shuf; paintModes(); saveState(true); toast(shuf ? "Shuffle on" : "Shuffle off"); return; }
     if (act === "rep")   { rep = (rep + 1) % 3; paintModes(); saveState(true); toast(["Repeat off", "Repeating the album", "Repeating this song"][rep]); return; }
     if (act === "fwd")   { if (cur) audio.currentTime = Math.min((audio.duration || cur.dur) - 0.5, audio.currentTime + 15); return; }
-    if (act === "dockclose") { audio.pause(); queueShow(false); dockShow(false); if (!theatre.hidden) closeTheatre(); return; }
+    if (act === "dockclose") { audio.pause(); queueShow(false); dockShow(false); if (!theatre.hidden) closeTheatre(); dockClosed = true; saveState(true); return; }
     if (act === "queue") { queueShow(qPanel && qPanel.hidden); return; }
     if (act === "qclear") { queue = []; paintQueue(); return; }
     if (act === "qup") { moveInQueue(b.dataset.cat, -1); return; }
@@ -5910,6 +5923,7 @@
     queue = (saved.q || []).filter(function (c) { return !!BY_CAT[c]; });
     shuf = !!saved.shuf;
     rep = [0, 1, 2].indexOf(saved.rep) > -1 ? saved.rep : 0;
+    dockClosed = !!saved.closed;
     if (BY_CAT[saved.cat]) {
       /* cued, not shown: the dock appears when the reader comes to Songs
          (open() shows it whenever a song is cued), and nothing is fetched
