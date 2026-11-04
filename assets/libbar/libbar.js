@@ -1,6 +1,6 @@
 /* ══════════════════ THE LIBRARY'S CONTROL BAR ══════════════════
-   Version 3 · last updated 2026-11-04 06:30 PST
-   Served as assets/libbar/libbar.js?v=3 — keep the two numbers equal.
+   Version 4 · last updated 2026-11-04 06:32 PST
+   Served as assets/libbar/libbar.js?v=4 — keep the two numbers equal.
 
    Gives the Library the same opening Listen has: one line, then one bar.
 
@@ -194,14 +194,34 @@
   }
 
   /* where the frozen band above the bar ends */
-  function measure() {
-    var head = ROOT.querySelector(".mob-head") || ROOT.querySelector(".dnav");
-    if (!head) return;
+  /* The phone header is not a fixed height: once the page scrolls, its logo
+     row folds down (and the imprint line goes), so it ends ~35px higher than
+     it does at the top. Measured once, the bar stuck where the tall header
+     ended and cards showed through the gap. A ResizeObserver on the header
+     re-measures every time it changes height, folding and unfolding included;
+     the header is re-drawn with the stage, so the observer moves to the new one. */
+  var watched = null;
+  var ro = window.ResizeObserver ? new ResizeObserver(function () { setTop(); }) : null;
+  function setTop() {
+    var head = watched;
+    if (!head || !head.isConnected) return;
     var top = parseFloat(getComputedStyle(head).top) || 0;
     var v = Math.round(top + head.getBoundingClientRect().height) + "px";
     if (ROOT.style.getPropertyValue("--lb-top") !== v) ROOT.style.setProperty("--lb-top", v);
   }
+  function measure() {
+    var head = ROOT.querySelector(".mob-head") || ROOT.querySelector(".dnav");
+    if (!head) return;
+    if (head !== watched) {
+      if (ro && watched) ro.unobserve(watched);
+      watched = head;
+      if (ro) ro.observe(head);
+    }
+    setTop();
+  }
   window.addEventListener("resize", measure);
+  /* belt and braces where ResizeObserver is missing: check on scroll too */
+  if (!ro) ROOT.addEventListener("scroll", setTop, { passive: true });
 
   function run() {
     if (busy) return;
