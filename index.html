@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 732 · last updated 2026-11-03 20:05 PST
+<!-- Version 733 · last updated 2026-11-03 21:25 PST
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -232,6 +232,23 @@
   cursor: pointer;
 }
 .lightbox-close svg { display: block; width: 1.4rem; height: 1.4rem; }
+</style>
+<!-- No flash of the old page. The site's front door is the Roya Library,
+     which library/roya-library.js draws over the original page once every
+     script has arrived — on a phone that is a moment after the original
+     page has already painted, so every load and refresh showed the old
+     site for a beat, then the Library fading in over it. Until the Library
+     is up, everything in <body> except the Library is kept invisible and the
+     Library skips its fade-in. The script at the foot of <body> lifts this
+     once the Library is open; the timer here lifts it regardless after four
+     seconds, so a failed script can never leave a blank screen. -->
+<script>
+  document.documentElement.classList.add("rl-boot");
+  setTimeout(function () { document.documentElement.classList.remove("rl-boot"); }, 4000);
+</script>
+<style>
+  html.rl-boot body > :not(#royaLibrary) { visibility: hidden !important; }
+  html.rl-boot #royaLibrary { transition: none !important; }
 </style>
 </head>
 
@@ -1352,6 +1369,14 @@
      first, with the Library one click away under ROYA LIBRARY in the nav. -->
 <script>window.ROYA_LIBRARY_HOME = true;</script>
 <script src="library/roya-library.js?v=697"></script>
+<script>
+  /* The Library is open now (it opens as the line above runs). Give it two
+     frames to paint, then show the rest of the page again — the reader,
+     the player and everything else that sits above the Library. */
+  requestAnimationFrame(function () { requestAnimationFrame(function () {
+    document.documentElement.classList.remove("rl-boot");
+  }); });
+</script>
 <script src="assets/intro/intro.js?v=4" defer></script>
 <!-- The Listening Room's series filter. It adds a control to a section that
      library/roya-library.js draws, and that file is generated from a sandbox
