@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 56 · last updated 2026-11-01 11:52 PDT
+   Version 57 · last updated 2026-11-03 21:40 PST
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5027,6 +5027,7 @@
     var a = BY_ALBUM[num];
     if (!a) return;
     curAlbum = a;
+    if (songsOn) rememberOpen(true);   /* a refresh comes back to this album */
 
     [].forEach.call(shelf.children, function (b) {
       b.setAttribute("aria-selected", String(Number(b.dataset.album) === num));
@@ -5648,6 +5649,7 @@
     [].forEach.call(LIB.querySelectorAll("nav [data-view]"), function (btn) {
       btn.setAttribute("aria-current", String(btn.dataset.view === "songs"));
     });
+    document.documentElement.classList.remove("rec-pending");
     return true;
   }
   function unmount() {
@@ -5671,10 +5673,25 @@
     document.body.classList.toggle("rec-dock-on", !!on);
   }
 
+  /* Songs is not one of the Library's own views, so the Library's memory
+     of "where the reader was" (localStorage royaLibrary1) never learns
+     about it — a refresh on Songs put the reader back on whichever of the
+     Library's own sections they had last been on. Songs keeps its own
+     note: set while it is open (with the album on the shelf), cleared
+     when the reader leaves for another header, read once at start-up. */
+  var OPEN_KEY = "recRoomOpen";
+  function rememberOpen(on) {
+    try {
+      if (on) localStorage.setItem(OPEN_KEY, JSON.stringify({ album: curAlbum ? curAlbum.num : null }));
+      else localStorage.removeItem(OPEN_KEY);
+    } catch (e) { /* private mode — Songs just isn't remembered */ }
+  }
+
   var lastFocus = null;
   function open(quiet) {
     lastFocus = document.activeElement;
     songsOn = true;
+    rememberOpen(true);
     /* the page's own "back to the top" button keys on the page behind
        the Library and floats over everything; it has no place here */
     document.body.classList.add("rec-on");
@@ -5690,6 +5707,7 @@
   }
   function close() {
     songsOn = false;
+    rememberOpen(false);
     document.body.classList.remove("rec-on");
     /* The record keeps playing when the reader goes to another header:
        the dock stays at the foot of the page across the whole Library,
@@ -5907,4 +5925,16 @@
   pickAlbum(curAlbum.num, true);
   paintModes();
   fromHash();
+  /* back on Songs after a refresh — unless the address names somewhere
+     else (a shared song or album already opened it above; a book link
+     belongs to the Library) */
+  if (!songsOn && !(location.hash || "").replace("#", "")) {
+    var wasOpen = null;
+    try { wasOpen = JSON.parse(localStorage.getItem(OPEN_KEY) || "null"); } catch (e) {}
+    if (wasOpen) {
+      document.documentElement.classList.add("rec-pending");
+      if (wasOpen.album && BY_ALBUM[wasOpen.album]) pickAlbum(wasOpen.album, true);
+      open(true);
+    }
+  }
 })();
