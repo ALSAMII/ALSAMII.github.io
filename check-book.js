@@ -1,10 +1,11 @@
-// Version 1 · last updated 2026-10-06 17:06 PDT
+// Version 2 · last updated 2026-11-03 20:40 PST
 /*
    CHECKS THAT A BOOK IS ACTUALLY FINISHED — every file on disk, every
    generated page rebuilt, every field filled.
 
        node check-book.js 105      # one book
        node check-book.js          # every book in stories.js
+       node check-book.js --offline   # skip asking the audio host (step 6)
 
    Run it as the last step of ADDING-A-BOOK.md, before committing, and
    again after the Pages build if you want to be sure.
@@ -182,8 +183,49 @@ function checkBook(s) {
   }
 }
 
+/* 6. what the audio host actually sends. The address being right is not
+   enough. "Download the recording" is a cross-origin link, and browsers
+   ignore a cross-origin link's download attribute — whether a tap SAVES the
+   file or PLAYS it in a bare tab is decided entirely by the
+   Content-Disposition header the host sends with it. On B2 that is set when
+   the file is uploaded, and the B2 website has no way to set it. Nos. 107,
+   108 and 113 went up through the website on 2026-10-14 and played instead
+   of downloading until a reader-side test caught it on 2026-11-03. This asks
+   the bucket itself, so a file uploaded without it fails here, before
+   anyone taps it.
+
+   Needs the network. In a Codespace or on your own machine it works; from a
+   sandbox that blocks Backblaze it reports WARN "could not reach" rather
+   than failing, so the rest of the run still counts. */
+async function checkAudioHost(books) {
+  const withAudio = books.filter(s => /^https?:\/\//.test(String(s.audio || "")));
+  if (!withAudio.length) return;
+  console.log(`\n── what the audio host sends (${withAudio.length} recording(s))`);
+  if (typeof fetch !== "function") {
+    warn(false, `this Node has no fetch() — use Node 18 or later to check the host`);
+    return;
+  }
+  for (const s of withAudio) {
+    let r;
+    try { r = await fetch(s.audio, { method: "HEAD", redirect: "follow" }); }
+    catch (e) { warn(false, `No. ${s.num}: could not reach ${s.audio} (${e.message}) — run this in a Codespace`); continue; }
+    const fromB2 = [...r.headers.keys()].some(k => k.startsWith("x-bz-"));
+    if (!fromB2 && r.status !== 200) {
+      warn(false, `No. ${s.num}: could not reach the bucket from here (HTTP ${r.status}) — run this in a Codespace`);
+      continue;
+    }
+    const ct = r.headers.get("content-type") || "";
+    const cd = r.headers.get("content-disposition") || "";
+    check(r.status === 200, `No. ${s.num}: the recording is there (HTTP ${r.status})`);
+    check(/^audio\/mpeg/i.test(ct), `No. ${s.num}: sent as audio/mpeg (${ct || "none"})`);
+    check(/^attachment/i.test(cd),
+          `No. ${s.num}: Download SAVES the file — Content-Disposition: ${cd || "MISSING. It will play in the browser instead. Fix: bash upload-audio.sh --fix " + s.num}`);
+  }
+}
+
 /* ── run ─────────────────────────────────────────────────────────────── */
-const arg = process.argv[2];
+const OFFLINE = process.argv.includes("--offline");
+const arg = process.argv.slice(2).find(a => !a.startsWith("--"));
 const list = arg ? STORIES.filter(s => String(s.num) === String(+arg)) : STORIES;
 if (arg && !list.length) { console.error(`No. ${arg} is not in stories.js.`); process.exit(1); }
 
@@ -213,10 +255,13 @@ const nums = STORIES.map(s => s.num);
 check(new Set(nums).size === nums.length, `no duplicate numbers`);
 check(nums.every((v, i) => i === 0 || v > nums[i-1]), `numbers run in order`);
 
-console.log(`\n${failures ? "✗" : "✓"} ${list.length} book(s): ` +
-            `${failures} failure(s), ${warnings} warning(s).`);
-if (failures) {
-  console.log(`\nNothing here is cosmetic — every failure above is a thing a reader
+(async () => {
+  if (!OFFLINE) await checkAudioHost(list);
+  console.log(`\n${failures ? "✗" : "✓"} ${list.length} book(s): ` +
+              `${failures} failure(s), ${warnings} warning(s).`);
+  if (failures) {
+    console.log(`\nNothing here is cosmetic — every failure above is a thing a reader
 would hit. Fix them, then run this again before committing.`);
-}
-process.exit(failures ? 1 : 0);
+  }
+  process.exit(failures ? 1 : 0);
+})();

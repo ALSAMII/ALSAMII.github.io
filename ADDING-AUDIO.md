@@ -1,4 +1,5 @@
-<!-- Updated 2026-10-31 20:20 PDT — audio on Backblaze B2; uploads must set Content-Disposition;
+<!-- Version 2 · last updated 2026-11-03 20:50 PST — uploads go through bash upload-audio.sh; check-book.js now asks the bucket for Content-Disposition.
+     Earlier: audio on Backblaze B2; uploads must set Content-Disposition;
      runtime and the stale-copy hazard documented. SONGS ARE A DIFFERENT THING —
      see ADDING-A-SONG.md. -->
 # Adding a narration
@@ -32,9 +33,20 @@ Two things a book can have, independently of each other:
 Neither is tied to publishing the book. A novella that went up two years
 ago can gain a recording tomorrow, and nothing else about it changes.
 
-**When you are done, run `node check-book.js NN`.** It verifies the address
-is a whole URL rather than a repo path, which is the one failure here that
-is completely silent.
+**Upload with `bash upload-audio.sh NN`, never through the Backblaze website.**
+The website cannot set `Content-Disposition`, and a file without it makes
+**Download the recording** play the book in a browser tab instead of saving
+it. That is how Nos. 107, 108 and 113 shipped on 2026-10-14; nobody noticed
+until 2026-11-03. The script always sets the header and reads it back from
+the bucket before it reports done. A file already in the bucket without it
+is repaired in place, with no re-upload, by `bash upload-audio.sh --fix NN`.
+
+**When you are done, run `node check-book.js NN` in a Codespace.** It
+verifies the address is a whole URL rather than a repo path, and then asks
+the bucket what it actually sends: `audio/mpeg`, and `Content-Disposition:
+attachment`. Both failures are silent on the page, so this is the only place
+they show. From a machine that cannot reach Backblaze it reports a WARN
+rather than a pass; that is not a pass, so run it where the network works.
 
 ## Where it shows up
 
@@ -408,7 +420,17 @@ that the catalogue stops being uniform.
 
 ## Uploading to the bucket
 
-One file, from anywhere:
+One file, from a Codespace terminal:
+
+```
+bash upload-audio.sh NN
+```
+
+It asks for the key ID and the application key one at a time (the key is
+**31 characters**; the script refuses anything else, which is what a short
+copy looks like), uploads with the right type and disposition, and reads
+the header back from the bucket. The command it runs, if you ever need it
+by hand:
 
 ```
 b2 file upload --content-type audio/mpeg \
@@ -422,11 +444,11 @@ when you are done — it ends up in shell history.
 
 Older versions of the CLI spell this `b2 upload-file --contentType ...`.
 
-Browser upload through the B2 console sets `audio/mpeg` from the extension
-but gives you **no way to set the content disposition**, so a file uploaded
-that way plays instead of downloading. Use it only to get a file up in a
-hurry, and re-upload it with the CLI command above before relying on the
-download control.
+**Do not upload through the B2 website.** It sets `audio/mpeg` from the
+extension but gives you **no way to set the content disposition**, so a file
+uploaded that way plays instead of downloading. If one ever goes up that way,
+`bash upload-audio.sh --fix NN` repairs it in place, and `node check-book.js NN`
+will keep failing until it has.
 
 ## ⚠ numpy 2.x breaks the aligner
 
