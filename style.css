@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 65 · last updated 2026-11-02 17:20 PST
+   Version 66 · last updated 2026-11-03 18:40 PST
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11641,4 +11641,23 @@ html #royaLibrary .mob-sec .ab-notes-flow .ab-note--long:first-child{
    and below the Lyrics pill. Larger, and lifted onto the pill's middle. */
 @media (max-width: 46rem){
   .rec-dock-ttl.fa, #royaLibrary .rec-dock-ttl.fa{ font-size: 1.5rem; line-height: 1.3; position: relative; top: -0.14em; }
+}
+
+/* ── the Lyrics pill on a phone: slim and outlined ──
+   The thumb-sized pass made the pill as big as the buttons, and next to
+   the title it read as a second headline. On a phone it goes back to
+   the desktop's proportions — small caps, hairline outline, no fill —
+   and the tap area is widened invisibly (the ::after below) so it stays
+   about 44pt to a thumb while drawing at half that. */
+@media (max-width: 46rem){
+  .rec-dock-lyr, #royaLibrary .rec-dock-lyr{
+    position: relative; background: none; border: 1px solid var(--ember-soft);
+    padding: 0.28rem 0.62rem 0.28rem 0.52rem; gap: 0.32rem;
+    font-size: 0.54rem; letter-spacing: 0.2em; }
+  .rec-dock-lyr svg, #royaLibrary .rec-dock-lyr svg{ width: 11px; height: 11px; }
+  .rec-dock-lyr::after, #royaLibrary .rec-dock-lyr::after{
+    content: ""; position: absolute; inset: -0.75rem -0.4rem; }
+  .rec-dock-lyr:hover, #royaLibrary .rec-dock-lyr:hover,
+  .rec-dock-lyr:active, #royaLibrary .rec-dock-lyr:active{
+    background: rgba(216, 166, 95, 0.12); }
 }
