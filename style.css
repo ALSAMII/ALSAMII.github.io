@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 66 · last updated 2026-11-03 18:40 PST
+   Version 67 · last updated 2026-11-03 19:45 PST
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11660,4 +11660,15 @@ html #royaLibrary .mob-sec .ab-notes-flow .ab-note--long:first-child{
   .rec-dock-lyr:hover, #royaLibrary .rec-dock-lyr:hover,
   .rec-dock-lyr:active, #royaLibrary .rec-dock-lyr:active{
     background: rgba(216, 166, 95, 0.12); }
+}
+
+/* ── the Songs introduction on a phone: margin to margin ──
+   It was held to 34ch (and the genre line to 40ch) inside 1rem of side
+   padding, so on a phone it stood as a narrow column well inside the
+   rule beneath it. It now runs the full text width — the same edges as
+   that rule and the record below. */
+@media (max-width: 46rem){
+  .rec-head, #royaLibrary .rec-head{ padding-left: 0; padding-right: 0; }
+  .rec-lede, #royaLibrary .rec-lede,
+  .rec-lede-2, #royaLibrary .rec-lede-2{ max-width: none; }
 }
