@@ -1,6 +1,6 @@
 /* ══════════════════ THE LIBRARY'S CONTROL BAR ══════════════════
-   Version 2 · last updated 2026-11-04 06:08 PST
-   Served as assets/libbar/libbar.js?v=2 — keep the two numbers equal.
+   Version 3 · last updated 2026-11-04 06:30 PST
+   Served as assets/libbar/libbar.js?v=3 — keep the two numbers equal.
 
    Gives the Library the same opening Listen has: one line, then one bar.
 
@@ -24,6 +24,16 @@
    desktop series menu's rows carry data-filter — the library's own
    document-level handlers act on both. Nothing here keeps a copy of the
    library's state; it reads it back off the page after every draw.
+
+   WHAT STAYS ON SCREEN WHEN YOU SCROLL
+
+   Only the bar (and the section tabs above it, as on every page). The
+   opening line scrolls away. On a phone the library froze its whole
+   header — logo, tabs, opening line and controls, over 380px of a
+   852px screen — so the opening line and the bar are lifted out of that
+   frozen block to sit just under it, the way Listen's do, and the bar
+   sticks on its own at the foot of the tabs. --lb-top is where that
+   foot is, measured, because the tabs' height follows the screen width.
 
    HOW IT SURVIVES A REDRAW
 
@@ -170,14 +180,28 @@
     if (tog) { tog.classList.add("lb-view"); ctrls.appendChild(tog); }
 
     bar.appendChild(ctrls);
+    /* phone: out of the frozen header, to sit under it */
+    var head = phone && lede.parentElement.classList.contains("mob-head") ? lede.parentElement : null;
+    if (head) head.after(lede);
     lede.after(bar);
     ROOT.classList.add("lb-on");
+    measure();
 
     if (hadFocus) {
       search.focus({ preventScroll: true });
       try { search.setSelectionRange(s0, s1); } catch (e) {}
     }
   }
+
+  /* where the frozen band above the bar ends */
+  function measure() {
+    var head = ROOT.querySelector(".mob-head") || ROOT.querySelector(".dnav");
+    if (!head) return;
+    var top = parseFloat(getComputedStyle(head).top) || 0;
+    var v = Math.round(top + head.getBoundingClientRect().height) + "px";
+    if (ROOT.style.getPropertyValue("--lb-top") !== v) ROOT.style.setProperty("--lb-top", v);
+  }
+  window.addEventListener("resize", measure);
 
   function run() {
     if (busy) return;
