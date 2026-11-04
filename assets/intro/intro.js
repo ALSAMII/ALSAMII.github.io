@@ -1,6 +1,6 @@
 /* ══════════════════ THE INTRODUCTION ══════════════════
-   Version 4 · last updated 2026-10-18 16:30 PDT
-   Served as assets/intro/intro.js?v=4 — keep the two numbers equal.
+   Version 5 · last updated 2026-11-04 06:25 PST
+   Served as assets/intro/intro.js?v=5 — keep the two numbers equal.
 
    A small link in the About panel, between the opening paragraph and the
    one that counts the stories. Clicking it opens the film full screen,
@@ -144,6 +144,15 @@
        paragraph does not. */
     var lede = ROOT.querySelector(".ab-lede");
     if (!lede || !lede.parentElement) return;
+
+    /* About only. Listen opens on an .ab-lede too ("Some books are better
+       said than read."), so the film was landing there as well. Listen is
+       the one view with the recordings bar under its opening line. */
+    if (lede.parentElement.querySelector(".lr-bar")) {
+      var stray = ROOT.querySelector(".rvi");
+      if (stray) stray.remove();
+      return;
+    }
 
     /* Idempotent, and it has to still be in the right place — the panel
        is rebuilt on every view change, and rebuilt into a different

@@ -1,0 +1,110 @@
+/* ══════════════════ THE LIBRARY'S CONTROL BAR ══════════════════
+   Version 2 · last updated 2026-11-04 06:12 PST
+   Served as assets/libbar/libbar.css?v=2 — keep the two numbers equal.
+
+   The Library's bar in Listen's dress. The count, the SORT and SERIES
+   labels and the sort pills ARE Listen's classes (.lr-count, .lr-sortlab,
+   .lr-sort, .lrs) so they are styled by the same rules and cannot drift;
+   what is here is the bar's own layout, the search pill, and hiding the
+   library's old header pieces once their contents have been moved.
+   Everything is scoped to #royaLibrary and named .lb-something.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── what the bar replaces ──
+   The eyebrow ("The complete collection / 119"), the rule, the old sort
+   dropdown and the phone's "Showing 119 of 119". The search box, the
+   series picker and the grid/list toggle were moved OUT of these before
+   they were hidden. */
+#royaLibrary.lb-on .main-bar,
+#royaLibrary.lb-on .mob-h,
+#royaLibrary.lb-on .mob-ctrl,
+#royaLibrary.lb-on .mob-count { display: none !important; }
+
+/* the opening line breaks into two even lines, not a long one and a stub */
+#royaLibrary .lib-lede { text-wrap: balance; margin-bottom: 2.1rem; }
+
+/* ── the bar: Listen's .lr-bar, line for line ── */
+#royaLibrary .lb-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: .9rem 1.4rem;
+  margin: 0 0 1.6rem; padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(199,148,61,.2);
+  position: relative; z-index: 40;        /* menus clear the cards below */
+}
+#royaLibrary .lb-ctrls {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: .7rem 1.1rem; justify-content: flex-end; margin-left: auto; min-width: 0;
+}
+#royaLibrary .lb-sorts { flex-wrap: nowrap; }
+
+/* ── the search pill ──
+   The library's own box (input, magnifier, and ✕ when there is a query),
+   reshaped to the pills beside it: same hairline, same radius, same height. */
+#royaLibrary .lb-search {
+  position: relative; display: flex; align-items: center;
+  width: 15rem; max-width: 100%; margin: 0; padding: 0;
+}
+#royaLibrary .lb-search input {
+  width: 100%; margin: 0;
+  padding: .52em 2.2em .5em 1.05em;
+  border: 1px solid rgba(199,148,61,.3); border-radius: 999px;
+  background: transparent; color: var(--bone, #ddd2bf);
+  font-family: var(--book, "EB Garamond", Georgia, serif); font-size: .95rem; line-height: 1.2;
+  -webkit-appearance: none; appearance: none; outline: none;
+  transition: border-color .18s ease;
+}
+#royaLibrary .lb-search input::placeholder { color: var(--t-quiet, #8f8676); opacity: 1; }
+#royaLibrary .lb-search input:focus { border-color: #c8ae78; }
+#royaLibrary .lb-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+#royaLibrary .lb-search svg {
+  position: absolute; right: .85em; top: 50%; transform: translateY(-50%);
+  width: .95rem; height: .95rem; stroke: var(--ochre, #c7943d); fill: none; stroke-width: 1.6;
+  pointer-events: none;
+}
+#royaLibrary .lb-search .side-clear {
+  position: absolute; right: .55em; top: 50%; transform: translateY(-50%);
+  background: none; border: 0; color: var(--ochre, #c7943d); cursor: pointer;
+  font-size: .8rem; padding: .3em .35em;
+}
+
+/* the grid / list pair sits at the end, after a hairline, as it did */
+#royaLibrary .lb-view {
+  display: flex; gap: .55rem; padding-left: 1.1rem;
+  border-left: 1px solid rgba(199,148,61,.35);
+}
+
+/* the desktop menu drops from the right edge of its pill, like Listen's */
+#royaLibrary .lb-series .pick-list { z-index: 45; }
+
+/* ── a narrower desktop: controls take their own line under the count ── */
+@media (min-width: 46.01rem) and (max-width: 74rem) {
+  #royaLibrary .lb-ctrls { width: 100%; justify-content: flex-start; margin-left: 0; }
+}
+
+/* ── the phone ──
+     119 Stories                         ▦ ☰
+     [ Search titles…                    🔍 ]
+     SERIES [All ▾]   SORT (Newest)(Number)(Shortest)
+*/
+@media (max-width: 46rem) {
+  /* the opening line runs the full width, at the size of About's and
+     Songs' openings, so it reads as two lines like Songs' does */
+  #royaLibrary .lib-lede { max-width: none; margin: 0 .7rem 1.9rem;
+    font-size: 1.25rem; line-height: 1.48; text-wrap: balance; }
+  /* the phone's own header margin (.7rem, as the search and controls had)
+     and no line of its own: the sticky header already draws one under it */
+  #royaLibrary .lb-bar { display: grid; grid-template-columns: 1fr auto; gap: .8rem .6rem;
+    margin: 0 .7rem; padding-bottom: .85rem; border-bottom: 0; }
+  #royaLibrary .lb-ctrls { display: contents; }
+  #royaLibrary .lb-count { grid-column: 1; grid-row: 1; align-self: center; }
+  #royaLibrary .lb-view  { grid-column: 2; grid-row: 1; justify-self: end; border-left: 0; padding-left: 0; }
+  #royaLibrary .lb-search { grid-column: 1 / -1; grid-row: 2; width: 100%; }
+  #royaLibrary .lb-search input { font-size: 1.05rem; padding: .62em 2.4em .6em 1.1em; }
+  #royaLibrary .lb-series { grid-column: 1 / -1; grid-row: 3; justify-self: start; }
+  #royaLibrary .lb-sorts  { grid-column: 1 / -1; grid-row: 3; justify-self: end; }
+  #royaLibrary .lb-series .pick-list { left: 0; right: auto; }
+}
+
+/* the light page, if it is ever switched back on */
+:root[data-lt="light-off"] #royaLibrary .lb-search input { border-color: rgba(138,101,36,.34); color: #1d1710; }
+:root[data-lt="light-off"] #royaLibrary .lb-bar { border-bottom-color: rgba(138,101,36,.3); }
