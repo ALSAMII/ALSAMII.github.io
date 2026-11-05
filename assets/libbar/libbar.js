@@ -1,6 +1,6 @@
 /* ══════════════════ THE LIBRARY'S CONTROL BAR ══════════════════
-   Version 4 · last updated 2026-11-04 06:32 PST
-   Served as assets/libbar/libbar.js?v=4 — keep the two numbers equal.
+   Version 5 · last updated 2026-11-04 21:20 PST
+   Served as assets/libbar/libbar.js?v=5 — keep the two numbers equal.
 
    Gives the Library the same opening Listen has: one line, then one bar.
 
@@ -180,6 +180,9 @@
     if (tog) { tog.classList.add("lb-view"); ctrls.appendChild(tog); }
 
     bar.appendChild(ctrls);
+    /* a plain class for "a series is chosen", so the phone layout does not
+       depend on :has(), which older iPhones do not understand */
+    if (bar.querySelector(".lb-series.is-set")) bar.classList.add("lb-set");
     /* phone: out of the frozen header, to sit under it */
     var head = phone && lede.parentElement.classList.contains("mob-head") ? lede.parentElement : null;
     if (head) head.after(lede);
