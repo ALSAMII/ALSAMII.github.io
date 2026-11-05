@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 741 · last updated 2026-11-04 12:08 PST
+<!-- Version 742 · last updated 2026-11-04 21:20 PST
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -179,7 +179,7 @@
 <!-- The Library's control bar (count, search, series, sort pills, grid/list)
      in Listen's dress. Rearranges what library/roya-library.js draws from
      outside; delete this line and its script below to take it off. -->
-<link rel="stylesheet" href="assets/libbar/libbar.css?v=5">
+<link rel="stylesheet" href="assets/libbar/libbar.css?v=6">
 <!-- Overrides for library/roya-library.css, which is generated from a sandbox
      the repository does not carry and must not be hand-edited. Loaded last of
      our stylesheets so it wins; deleting this line puts the generated styles
@@ -1379,7 +1379,7 @@
 <script src="library/roya-library.js?v=700"></script>
 <!-- not deferred: it has to be watching before the first paint, or the
      Library's own header would show for a frame before the bar replaces it -->
-<script src="assets/libbar/libbar.js?v=4"></script>
+<script src="assets/libbar/libbar.js?v=5"></script>
 <script>
   /* The Library is open now (it opens as the line above runs). Give it two
      frames to paint, then show the rest of the page again — the reader,
