@@ -1,6 +1,6 @@
 /* ══════════════════ THE INTRODUCTION ══════════════════
-   Version 10 · last updated 2026-11-06 04:30 PST
-   Served as assets/intro/intro.css?v=10 — keep the two numbers equal.
+   Version 11 · last updated 2026-11-06 06:00 PST
+   Served as assets/intro/intro.css?v=11 — keep the two numbers equal.
 
    WHY 8 WAS SKIPPED. Version 8 of this file was written but never uploaded,
    while the index.html that asked for ?v=8 did go up. For a day the address
@@ -269,7 +269,16 @@ html.rvp-on, html.rvp-on body { overflow: hidden; }
 .rvp-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.88);
+  /* near-black, with the page blurred out behind it: at .88 the gold type
+     and the sound bar still read through on a phone and pulled the eye
+     away from the film */
+  background: rgba(0, 0, 0, 0.965);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+/* a phone gives the film the full width of the screen */
+@media (max-width: 46rem) {
+  .rvp-stage { width: 100vw; border-left: 0; border-right: 0; }
 }
 
 /* A window over the darkened page, not the whole screen. Big enough to
