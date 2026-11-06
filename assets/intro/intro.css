@@ -1,6 +1,6 @@
 /* ══════════════════ THE INTRODUCTION ══════════════════
-   Version 9 · last updated 2026-10-19 21:05 PDT
-   Served as assets/intro/intro.css?v=9 — keep the two numbers equal.
+   Version 10 · last updated 2026-11-06 04:30 PST
+   Served as assets/intro/intro.css?v=10 — keep the two numbers equal.
 
    WHY 8 WAS SKIPPED. Version 8 of this file was written but never uploaded,
    while the index.html that asked for ?v=8 did go up. For a day the address
@@ -407,3 +407,31 @@ html.rvp-on, html.rvp-on body { overflow: hidden; }
 @media (min-width: 1700px) {
   #royaLibrary .ab-marg { display: none; }
 }
+
+
+/* ═══════ THE CARD IN LIBRARY, LISTEN AND SONGS (Version 10) ═══════
+   About's card, unchanged, under the opening line of the other three
+   sections. It gets its own room: a clear gap after the line and a wider
+   one before the bar or shelf that follows, so it never sits on top of the
+   controls. The column is capped so the still does not run off to the far
+   edge on a wide screen. */
+#royaLibrary .rvi.rvi-sec { max-width: 46rem; margin: 2.4rem auto 3.2rem; }
+#royaLibrary .rec-head .rvi.rvi-sec { margin: 2.6rem auto .4rem; text-align: left; }
+#royaLibrary .lib-lede + .rvi-sec { margin-top: 1rem; }
+#royaLibrary .ab-lede + .rvi-sec { margin-top: 1rem; }
+
+/* desktop: Songs' opening lines run the width of the column */
+@media (min-width: 46.01rem) {
+  #royaLibrary .rec-head { max-width: none; }
+  #royaLibrary .rec-lede, #royaLibrary .rec-lede.rec-lede-2 { max-width: none; }
+}
+
+@media (max-width: 46rem) {
+  #royaLibrary .rvi.rvi-sec { margin: 1.6rem .7rem 2.4rem; }
+  #royaLibrary .lib-lede + .rvi-sec, #royaLibrary .ab-lede + .rvi-sec { margin-top: .8rem; }
+  #royaLibrary .rec-head .rvi.rvi-sec { margin: 1.9rem 0 .2rem; }
+}
+
+/* one player, two kinds of content (the full film or a section clip):
+   whichever is not in use is hidden */
+.rvp-v[hidden], .rvp-wait[hidden] { display: none !important; }

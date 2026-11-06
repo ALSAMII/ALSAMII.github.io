@@ -1,6 +1,6 @@
 /* ══════════════════ THE LIBRARY'S CONTROL BAR ══════════════════
-   Version 6 · last updated 2026-11-04 21:20 PST
-   Served as assets/libbar/libbar.css?v=6 — keep the two numbers equal.
+   Version 8 · last updated 2026-11-06 04:30 PST
+   Served as assets/libbar/libbar.css?v=8 — keep the two numbers equal.
 
    The Library's bar in Listen's dress. The count, the SORT and SERIES
    labels and the sort pills ARE Listen's classes (.lr-count, .lr-sortlab,
@@ -22,6 +22,10 @@
 
 /* the opening line breaks into two even lines, not a long one and a stub */
 #royaLibrary .lib-lede { text-wrap: balance; margin-bottom: 2.1rem; }
+/* desktop: the line runs the width of the column, as the Listen and About
+   lines do, rather than a 52ch block in the middle of it */
+@media (min-width: 46.01rem) { #royaLibrary .lib-lede { max-width: none; } }
+/* the film card under the line brings its own space (assets/intro/intro.css) */
 
 /* ── the bar: Listen's .lr-bar, line for line ── */
 #royaLibrary .lb-bar {
@@ -109,20 +113,21 @@
   #royaLibrary .lb-view  { grid-column: 2; grid-row: 1; justify-self: end; border-left: 0; padding-left: 0; }
   #royaLibrary .lb-search { grid-column: 1 / -1; grid-row: 2; width: 100%; }
   #royaLibrary .lb-search input { font-size: 1.05rem; padding: .62em 2.4em .6em 1.1em; }
-  /* Series and Sort share the third row in two columns, so a long series
-     name gets the room left of the pills and no more — it ends in "…"
-     instead of running under NEWEST. (They used to sit in one shared cell,
-     each pushed to its own end, and overlapped once a series was chosen.) */
-  #royaLibrary .lb-series { grid-column: 1; grid-row: 3; justify-self: start;
+  /* Series on its own line, Sort on the line under it, both at a size that
+     reads on a phone. One line for both held them at 9px; the series name
+     also gets the whole width this way, so a long one never meets the pills. */
+  #royaLibrary .lb-series { grid-column: 1 / -1; grid-row: 3; justify-self: start;
     min-width: 0; max-width: 100%; }
-  #royaLibrary .lb-sorts  { grid-column: 2; grid-row: 3; justify-self: end; }
+  #royaLibrary .lb-sorts  { grid-column: 1 / -1; grid-row: 4; justify-self: start; }
   #royaLibrary .lb-series .lrs-box { min-width: 0; }
   #royaLibrary .lb-series .lrs-btn { max-width: 100%; min-width: 0; }
-  /* Once a series is chosen its name needs more room than the space left of
-     the pills ("THE OLD …" is no use), so it takes the whole third row and
-     Sort moves to a fourth. With no series chosen the row stays as it was. */
-  #royaLibrary .lb-bar.lb-set .lb-series { grid-column: 1 / -1; }
-  #royaLibrary .lb-bar.lb-set .lb-sorts  { grid-column: 1 / -1; grid-row: 4; justify-self: start; }
+  #royaLibrary .lb-bar .lr-sort,
+  #royaLibrary .lb-bar .lb-series .lrs-btn {
+    font-size: .75rem; letter-spacing: .14em; padding: .55em .9em .5em; }
+  #royaLibrary .lb-bar .lb-series .lrs-btn svg { width: .85rem; height: .85rem; }
+  #royaLibrary .lb-bar .lr-sortlab { font-size: .6875rem; letter-spacing: .16em; }
+  /* the two labels share one width, so SERIES' pill and SORT's first pill line up */
+  #royaLibrary .lb-bar .lr-sortlab { min-width: 3.9rem; }
   #royaLibrary .lb-series .lrs-btn > span {
     min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #royaLibrary .lb-series .pick-list { left: 0; right: auto; }

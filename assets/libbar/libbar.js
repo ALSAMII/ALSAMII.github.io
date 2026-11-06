@@ -1,6 +1,6 @@
 /* ══════════════════ THE LIBRARY'S CONTROL BAR ══════════════════
-   Version 5 · last updated 2026-11-04 21:20 PST
-   Served as assets/libbar/libbar.js?v=5 — keep the two numbers equal.
+   Version 6 · last updated 2026-11-06 04:30 PST
+   Served as assets/libbar/libbar.js?v=6 — keep the two numbers equal.
 
    Gives the Library the same opening Listen has: one line, then one bar.
 
@@ -153,7 +153,9 @@
     var desk = !!ROOT.querySelector(".main-bar");
     if (!lede || (!phone && !desk)) { ROOT.classList.remove("lb-on"); return; }
     if (lede.textContent !== LEDE) lede.textContent = LEDE;
-    if (lede.nextElementSibling && lede.nextElementSibling.classList.contains("lb-bar")) return;
+    /* the film card (assets/intro) sits between the line and the bar */
+    var after = lede.nextElementSibling && lede.nextElementSibling.classList.contains("rvi-sec") ? lede.nextElementSibling : lede;
+    if (after.nextElementSibling && after.nextElementSibling.classList.contains("lb-bar")) return;
 
     var search = document.getElementById("libSearch");
     var hadFocus = search && document.activeElement === search;
@@ -185,8 +187,8 @@
     if (bar.querySelector(".lb-series.is-set")) bar.classList.add("lb-set");
     /* phone: out of the frozen header, to sit under it */
     var head = phone && lede.parentElement.classList.contains("mob-head") ? lede.parentElement : null;
-    if (head) head.after(lede);
-    lede.after(bar);
+    if (head) { head.after(lede); if (after !== lede) lede.after(after); }
+    after.after(bar);
     ROOT.classList.add("lb-on");
     measure();
 
