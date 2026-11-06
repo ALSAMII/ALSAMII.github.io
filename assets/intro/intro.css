@@ -1,6 +1,6 @@
 /* ══════════════════ THE INTRODUCTION ══════════════════
-   Version 11 · last updated 2026-11-06 06:00 PST
-   Served as assets/intro/intro.css?v=11 — keep the two numbers equal.
+   Version 12 · last updated 2026-11-06 09:10 PST
+   Served as assets/intro/intro.css?v=12 — keep the two numbers equal.
 
    WHY 8 WAS SKIPPED. Version 8 of this file was written but never uploaded,
    while the index.html that asked for ?v=8 did go up. For a day the address
@@ -321,32 +321,44 @@ html.rvp-on, html.rvp-on body { overflow: hidden; }
 
 .rvp-x {
   position: absolute;
-  top: -3rem;
+  top: -2.7rem;
   right: 0;
-  width: 2.6rem;
-  height: 2.6rem;
+  /* a small ring rather than a square: the same thin gold edge as the
+     card's play mark, so it reads as part of the house, not the browser */
+  width: 2.1rem;
+  height: 2.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(5, 4, 3, 0.6);
-  border: 1px solid rgba(216, 208, 192, 0.18);
-  color: #c4bba8;
+  border-radius: 50%;
+  background: rgba(5, 4, 3, 0.55);
+  border: 1px solid rgba(216, 166, 95, 0.45);
+  color: #d8c9ab;
   cursor: pointer;
   padding: 0;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
 }
 
-.rvp-x svg { width: 1.1rem; height: 1.1rem; }
-.rvp-x:hover { color: var(--ember-lit, #f0c47e); }
+.rvp-x svg { width: .72rem; height: .72rem; stroke-width: 1.6; }
+.rvp-x:hover { color: #0b0906; background: #d8a65f; border-color: #d8a65f; }
 .rvp-x:focus-visible {
-  outline: 2px solid var(--ember, #d8a65f);
-  outline-offset: 2px;
+  outline: 1px solid rgba(216, 166, 95, 0.5);
+  outline-offset: 3px;
 }
 
 /* No room above the frame on a short screen or a phone, so the button
    comes inside the picture. */
 @media (max-height: 34rem), (max-width: 34rem) {
-  .rvp-stage { width: 100vw; border: 0; box-shadow: none; }
-  .rvp-x { top: 0.5rem; right: 0.5rem; }
+  /* the whole picture fits the screen either way up (a phone on its side
+     is wider than 16:9 is tall), and the ring sits in the screen's corner */
+  .rvp-stage { width: min(100vw, calc(100vh * 16 / 9)); border: 0; box-shadow: none; }
+  .rvp-x { position: fixed; top: max(0.6rem, env(safe-area-inset-top, 0px)); right: max(0.6rem, env(safe-area-inset-right, 0px));
+    width: 1.9rem; height: 1.9rem; background: rgba(5,4,3,.5); z-index: 2; }
+}
+/* an upright phone has room above the picture: the ring sits just over its
+   top right corner, as on a desktop, not up in the corner of the screen */
+@media (max-width: 34rem) and (min-height: 34.01rem) {
+  .rvp-x { position: absolute; top: -2.6rem; right: max(0.6rem, env(safe-area-inset-right, 0px)); }
 }
 
 /* The browser's own full-screen view puts the stage edge to edge, so the
@@ -426,7 +438,9 @@ html.rvp-on, html.rvp-on body { overflow: hidden; }
    edge on a wide screen. */
 #royaLibrary .rvi.rvi-sec { max-width: 46rem; margin: 2.4rem auto 3.2rem; }
 #royaLibrary .rec-head .rvi.rvi-sec { margin: 2.6rem auto .4rem; text-align: left; }
-#royaLibrary .lib-lede + .rvi-sec { margin-top: 1rem; }
+/* Library: more air between the line and the card, a little less between
+   the card and the "119 Stories" bar */
+#royaLibrary .lib-lede + .rvi-sec { margin-top: 2.3rem; margin-bottom: 2.2rem; }
 #royaLibrary .ab-lede + .rvi-sec { margin-top: 1rem; }
 
 /* desktop: Songs' opening lines run the width of the column */
@@ -437,7 +451,8 @@ html.rvp-on, html.rvp-on body { overflow: hidden; }
 
 @media (max-width: 46rem) {
   #royaLibrary .rvi.rvi-sec { margin: 1.6rem .7rem 2.4rem; }
-  #royaLibrary .lib-lede + .rvi-sec, #royaLibrary .ab-lede + .rvi-sec { margin-top: .8rem; }
+  #royaLibrary .ab-lede + .rvi-sec { margin-top: .8rem; }
+  #royaLibrary .lib-lede + .rvi-sec { margin-top: 1.7rem; margin-bottom: 1.5rem; }
   #royaLibrary .rec-head .rvi.rvi-sec { margin: 1.9rem 0 .2rem; }
 }
 
