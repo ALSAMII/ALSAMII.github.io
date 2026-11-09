@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 4 · last updated 2026-11-09 05:55 PST
+   Version 4 · last updated 2026-11-09 06:15 PST
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -42,7 +42,7 @@ const ALBUMS = [
     songs: 6,
     dur: 1817,                       /* 30:17 */
     released: "2026-11",
-    syn: "Six songs in Persian for the things the English ones couldn't carry. A city drawn wrong, a reed cut from its bed, a night asked not to end, a wall addressed instead of a person, one second that never stopped, and a turn that hands every grief to the earth but one."
+    syn: "Six songs in Persian for the things the English ones couldn't carry. A night asked not to end, a reed cut from its bed, a turn that hands every grief to the earth but one, one second that never stopped, a city drawn wrong, and a wall addressed instead of a person."
   },
   {
     num: 2,
@@ -114,11 +114,11 @@ const SONGS = [
     note: "Two strangers at a petrol station, each wearing a look the other recognises because they wore it last week. Neither wants to go back and neither wants to run alone." },
 
   /* ─── Album 3 · آروم همین‌جاست ───────────────────────────────── */
-  { cat: "03-01", album: 3, track: 1, title: "آروم همین‌جاست", fa: true,
-    translit: "Aroom hamin-jast", en: "Calm Is Right Here", dur: 359,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-01.mp3",
-    lyric: "songs/03-01.json",
-    note: "The city is a map drawn wrong, every alley a door promising calm, and behind none of them a home. He drew the map himself, and he's the dragon on it too — the calm turns out to be in the breath he was holding." },
+  { cat: "03-03", album: 3, track: 1, title: "تا شب تموم نشه", fa: true,
+    translit: "Ta shab tamoom nashe", en: "Don't Let the Night End", dur: 306,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-03.mp3",
+    lyric: "songs/03-03.json",
+    note: "Two people asking the night not to finish, looking for somewhere the day can't reach and nobody's hand can find them. The most straightforwardly romantic song in the catalogue, and the most frightened underneath." },
 
   { cat: "03-02", album: 3, track: 2, title: "بسوزونم", fa: true,
     translit: "Besoozoonam", en: "Let Me Burn", dur: 359,
@@ -126,29 +126,29 @@ const SONGS = [
     lyric: "songs/03-02.json",
     note: "It opens where Rumi opens, with the reed cut from the reed bed, crying because it was cut. Being pulled out of the soil and planted in the wind, and a voice that only becomes a voice through the separation that made it." },
 
-  { cat: "03-03", album: 3, track: 3, title: "تا شب تموم نشه", fa: true,
-    translit: "Ta shab tamoom nashe", en: "Don't Let the Night End", dur: 306,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-03.mp3",
-    lyric: "songs/03-03.json",
-    note: "Two people asking the night not to finish, looking for somewhere the day can't reach and nobody's hand can find them. The most straightforwardly romantic song in the catalogue, and the most frightened underneath." },
+  { cat: "03-06", album: 3, track: 3, title: "غم بقیه، خاک من", fa: true,
+    translit: "Gham-e baghiye, khak-e man", en: "Everyone Else's Grief, My Earth", dur: 270,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-06.mp3",
+    lyric: "songs/03-06.json",
+    note: "A dervish's turn: left foot on the earth, head to the right, one hand taking from the sky and the other giving to the ground. Everyone else's grief passes through the dancer into the soil — all but one, which stays, and turns with them." },
 
-  { cat: "03-04", album: 3, track: 4, title: "ساکت نباش", fa: true,
-    translit: "Saket nabash", en: "Don't Be Silent", dur: 239,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-04.mp3",
-    lyric: "songs/03-04.json",
-    note: "Addressed to a wall, because there's nobody else to address. A child left in the morning and didn't come back at night, and the song's whole argument is in its title and its last line: say it loud — I'll remember." },
-
-  { cat: "03-05", album: 3, track: 5, title: "هنوز", fa: true,
+  { cat: "03-05", album: 3, track: 4, title: "هنوز", fa: true,
     translit: "Hanooz", en: "Still", dur: 284,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-05.mp3",
     lyric: "songs/03-05.json",
     note: "A glance, a second longer than it needed to be, a warmer hello, two chairs and a table between. Nothing happened, and it is still happening." },
 
-  { cat: "03-06", album: 3, track: 6, title: "غم بقیه، خاک من", fa: true,
-    translit: "Gham-e baghiye, khak-e man", en: "Everyone Else's Grief, My Earth", dur: 270,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-06.mp3",
-    lyric: "songs/03-06.json",
-    note: "A dervish's turn: left foot on the earth, head to the right, one hand taking from the sky and the other giving to the ground. Everyone else's grief passes through him into the soil — all but one, which stays, and which he keeps turning with." },
+  { cat: "03-01", album: 3, track: 5, title: "آروم همین‌جاست", fa: true,
+    translit: "Aroom hamin-jast", en: "Calm Is Right Here", dur: 359,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-01.mp3",
+    lyric: "songs/03-01.json",
+    note: "The city is a map drawn wrong, every alley a door promising calm, and behind none of them a home. He drew the map himself, and he's the dragon on it too — the calm turns out to be in the breath he was holding." },
+
+  { cat: "03-04", album: 3, track: 6, title: "ساکت نباش", fa: true,
+    translit: "Saket nabash", en: "Don't Be Silent", dur: 239,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-04.mp3",
+    lyric: "songs/03-04.json",
+    note: "Addressed to a wall, because there's nobody else to address. A child left in the morning and didn't come back at night, and the song's whole argument is in its title and its last line: say it loud — I'll remember." },
 
   /* ─── Album 2 · Roya ─────────────────────────────────────────── */
   { cat: "02-01", album: 2, track: 1, title: "Don’t Come to the Door", dur: 359,
