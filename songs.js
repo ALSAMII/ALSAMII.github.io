@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 3 · last updated 2026-10-31 22:50 PDT
+   Version 4 · last updated 2026-11-09 05:55 PST
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -39,10 +39,10 @@ const ALBUMS = [
     en: "Calm Is Right Here",
     fa: true,
     order: 2,
-    songs: 5,
-    dur: 1547,                       /* 25:47 */
+    songs: 6,
+    dur: 1817,                       /* 30:17 */
     released: "2026-11",
-    syn: "Five songs in Persian for the things the English ones couldn't carry. A city drawn wrong, a reed cut from its bed, a night asked not to end, a wall addressed instead of a person, and one second that never stopped."
+    syn: "Six songs in Persian for the things the English ones couldn't carry. A city drawn wrong, a reed cut from its bed, a night asked not to end, a wall addressed instead of a person, one second that never stopped, and a turn that hands every grief to the earth but one."
   },
   {
     num: 2,
@@ -143,6 +143,12 @@ const SONGS = [
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-05.mp3",
     lyric: "songs/03-05.json",
     note: "A glance, a second longer than it needed to be, a warmer hello, two chairs and a table between. Nothing happened, and it is still happening." },
+
+  { cat: "03-06", album: 3, track: 6, title: "غم بقیه، خاک من", fa: true,
+    translit: "Gham-e baghiye, khak-e man", en: "Everyone Else's Grief, My Earth", dur: 270,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-06.mp3",
+    lyric: "songs/03-06.json",
+    note: "A dervish's turn: left foot on the earth, head to the right, one hand taking from the sky and the other giving to the ground. Everyone else's grief passes through him into the soil — all but one, which stays, and which he keeps turning with." },
 
   /* ─── Album 2 · Roya ─────────────────────────────────────────── */
   { cat: "02-01", album: 2, track: 1, title: "Don’t Come to the Door", dur: 359,
