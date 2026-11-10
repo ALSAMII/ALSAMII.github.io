@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 68 · last updated 2026-11-03 20:05 PST
+   Version 69 · last updated 2026-11-10 09:00 PST
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11125,7 +11125,7 @@ body.rec-on .to-top { display: none !important; }
 
 .rec-tl, #royaLibrary .rec-tl{ margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hairline); }
 .rec-trk, #royaLibrary .rec-trk{
-  display: grid; grid-template-columns: 1.7rem 1.8rem 1fr auto auto auto auto;
+  display: grid; grid-template-columns: 1.7rem 2.4rem 1fr auto auto auto auto;
   gap: 0.7rem; align-items: center; padding: 0.58rem 0.3rem;
   border-bottom: 1px solid var(--hairline); cursor: pointer;
 }
@@ -11137,11 +11137,11 @@ body.rec-on .to-top { display: none !important; }
 .rec-trk.on .rec-trk-n, #royaLibrary .rec-trk.on .rec-trk-n{ color: var(--ember); }
 .rec-trk-play, #royaLibrary .rec-trk-play{
   appearance: none; background: none; border: 1px solid transparent; padding: 0;
-  cursor: pointer; width: 1.8rem; height: 1.8rem; display: grid; place-items: center;
+  cursor: pointer; width: 2.4rem; height: 2.4rem; display: grid; place-items: center;
   color: var(--faded); border-radius: 50%;
 }
 .rec-trk:hover .rec-trk-play, .rec-trk.on .rec-trk-play, #royaLibrary .rec-trk:hover .rec-trk-play, #royaLibrary .rec-trk.on .rec-trk-play{ color: var(--ember-lit); border-color: var(--ember-soft); }
-.rec-trk-play svg, #royaLibrary .rec-trk-play svg{ width: 11px; height: 11px; }
+.rec-trk-play svg, #royaLibrary .rec-trk-play svg{ width: 17px; height: 17px; }
 .rec-trk-t, #royaLibrary .rec-trk-t{ font-family: var(--serif-read); font-size: 0.92rem; color: var(--parchment); min-width: 0; }
 .rec-trk.on .rec-trk-t, #royaLibrary .rec-trk.on .rec-trk-t{ color: var(--ember-lit); }
 .rec-trk-t.fa, #royaLibrary .rec-trk-t.fa{ text-align: left; }
@@ -11469,7 +11469,7 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem;
   .rec-pane-ttl, #royaLibrary .rec-pane-ttl{ font-size: 1.45rem; }/* The share button stays and the download goes: sharing is what
      people do from a phone, and the file is a tap away on the row. */
   
-  .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.5rem 1.8rem 1fr auto auto auto; gap: 0.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.5rem 2.4rem 1fr auto auto auto; gap: 0.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
   /* the list reads at arm's length on a phone */
   .rec-trk-t, #royaLibrary .rec-trk-t{ font-size: 1.08rem; }
   .rec-trk-t.fa, #royaLibrary .rec-trk-t.fa{ font-size: 1.18rem; }

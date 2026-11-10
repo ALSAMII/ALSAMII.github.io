@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 58 · last updated 2026-11-04 06:40 PST
+   Version 59 · last updated 2026-11-10 09:00 PST
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5777,17 +5777,9 @@
     if (act === "zoomclose") { closeZoom(); return; }
   });
 
-  (function swiping() {
-    var reel = document.getElementById("recReel");
-    if (!reel) return;
-    var x0 = null;
-    reel.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-    reel.addEventListener("touchend", function (e) {
-      if (x0 == null) return;
-      var dx = e.changedTouches[0].clientX - x0; x0 = null;
-      if (Math.abs(dx) > 40) stepAlbum(dx < 0 ? 1 : -1);
-    }, { passive: true });
-  })();
+  /* Albums change only with the ‹ › arrows. A sideways swipe on the shelf
+     used to change them too, but it fired on ordinary scrolls down the page
+     (v59), so it is gone. */
 
   (function scrubbing() {
     var sc = document.getElementById("recScrub");
