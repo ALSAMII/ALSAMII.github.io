@@ -1,4 +1,5 @@
 /* ============================================================
+   Version 2 · last updated 2026-11-11 06:40 PST
    REBUILDS feed.xml AND sitemap.xml FROM stories.js
 
    Search engines and feed readers can't run your JavaScript, so
@@ -113,10 +114,8 @@ const urls = [
     (t) =>
       `  <url><loc>${SITE}/#${trioSlug(t)}</loc><lastmod>${today}</lastmod><priority>0.6</priority></url>`
   ),
-  ...STORIES.map(
-    (s) =>
-      `  <url><loc>${SITE}/pdfs/${String(s.num).padStart(2, "0")}.pdf</loc><lastmod>${today}</lastmod><priority>0.7</priority></url>`
-  ),
+  /* No PDF entries: the PDFs live on Backblaze since Nov 2026, and a
+     sitemap may only list this site's own addresses. */
   /* The recordings. The anchors are what a share link points at, so
      they are what a crawler should be given — not the share pages
      themselves, which only redirect. */
@@ -133,6 +132,7 @@ const urls = [
 fs.writeFileSync(
   "sitemap.xml",
   `<?xml version="1.0" encoding="UTF-8"?>
+<!-- Version ${today} · written by build-feeds.js -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls}
 </urlset>

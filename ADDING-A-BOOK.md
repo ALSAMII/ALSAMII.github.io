@@ -1,4 +1,6 @@
-<!-- Updated 2026-10-31 20:20 PDT — 119 books; the shared cache stamp now covers SIX files,
+<!-- Version 2 · last updated 2026-11-11 06:40 PST — the book PDFs now live on Backblaze
+     (roya-audio/pdfs/NN.pdf), not in the repo; see assets/pdfs/pdfs.js.
+     Before: Updated 2026-10-31 20:20 PDT — 119 books; the shared cache stamp now covers SIX files,
      songs.js having joined it with the Record Room. See ADDING-A-SONG.md for songs.
      Narration on Backblaze B2, not in the repo; its upload must set Content-Disposition;
      runtime documented; check-book.js is step 0. -->
@@ -19,7 +21,9 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
 
 ## The short version
 
-1. Add `pdfs/NN.pdf`, `covers/NN.jpg` and `library/covers/NN.webp`
+1. Put `NN.pdf` in your working `pdfs/` folder (the build scripts read it there)
+   and upload it to Backblaze as `roya-audio/pdfs/NN.pdf`; add `covers/NN.jpg`
+   and `library/covers/NN.webp`
 2. Add the book's block to `stories.js`
 2b. Run `python3 optimize-art.py --write` → writes `covers/NN.webp`
 3. Run `node build-feeds.js` → `feed.xml`, `sitemap.xml`, the counts
@@ -31,7 +35,8 @@ filter, the dials, the newsletter — see [CUSTOMISING.md](CUSTOMISING.md).
    upload the mp3 to the B2 bucket, then add `audio:` to the book's block
 6. Raise the `?v=` number in `index.html` — all six at the foot
 7. Upload: `stories.js`, `index.html`, `feed.xml`, `sitemap.xml`,
-   the `share/` folder, `read/NN.json`, the new PDF, all the covers
+   the `share/` folder, `read/NN.json`, all the covers — the PDF goes to
+   Backblaze, never to GitHub
 
 **The count looks after itself.** Nowhere on the site do you type how
 many stories there are: everything on the page counts `STORIES` as it
@@ -93,7 +98,8 @@ All named by the book's number, padded to two digits. The site finds
 them on its own — nothing points at them by name.
 
 ```
-pdfs/41.pdf              the novella itself
+pdfs/41.pdf              the novella itself — kept in your working copy for the
+                         build scripts, published on Backblaze (roya-audio/pdfs/41.pdf)
 covers/41.jpg            its cover, as the shelf shows it
 library/covers/41.webp   the flat front, as the Roya Library shows it
 ```
@@ -575,12 +581,12 @@ it before went on being served the old text out of their own cache, with
 nothing to tell either side. If you replace a book's text, raise the
 number.
 
-**`pdfs/NN.pdf` and the narration are NOT covered.** The PDF is linked at
-its bare path, and `stamped()` returns the narration's absolute address
-untouched by design. For a new book that is fine — there is no cached
-version to displace — but **replacing a published PDF or recording will
-not reach anyone who has already opened it.** For a PDF that is usually
-tolerable; for a recording, upload it under a new filename. See
+**The PDF and the narration are NOT covered.** The PDF is on Backblaze,
+which tells browsers to keep it for 30 days. For a new book that is fine —
+there is no cached version to displace — but **replacing a published PDF
+means raising `V` in `assets/pdfs/pdfs.js`** (and that file's `?v=` in
+`index.html`), or readers who opened it before keep the old copy. For a
+recording, upload it under a new filename. See
 [ADDING-AUDIO.md](ADDING-AUDIO.md).
 
 ---
@@ -596,11 +602,13 @@ feed.xml            rebuilt in step 3
 sitemap.xml         rebuilt in step 3
 share/              the whole folder, rebuilt in step 4
 read/41.json        the reading text, built in step 5
-pdfs/41.pdf         the new file only
 covers/41.jpg       the new file only
 covers/pairs/41.jpg the new file only, if a pair render exists
 library/covers/41.webp   the flat front, the new file only
 ```
+
+**The PDF does not go to GitHub.** Upload it to Backblaze, bucket
+`roya-audio`, folder `pdfs` → `roya-audio/pdfs/41.pdf`.
 
 **Never delete `CNAME`.** It's a one-line file at the root holding the
 custom domain. If it goes, the site silently reverts to

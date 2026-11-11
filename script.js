@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 59 · last updated 2026-11-10 09:00 PST
+   Version 60 · last updated 2026-11-11 06:40 PST
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -8,7 +8,8 @@
    What it does:
    1. Builds the sidebar list from the STORIES array.
       Files are found by each book's series number: book 27
-      uses pdfs/27.pdf and covers/27.jpg (zero-padded under 10).
+      uses covers/27.jpg (zero-padded under 10) and the PDF 27.pdf,
+      which lives on Backblaze — see pdfUrl() and assets/pdfs/pdfs.js.
    2. Hovering a book shows its synopsis under the list and its
       cover LARGE in the middle of the page; moving away brings
       the theme text back. (On phones, tapping the title expands
@@ -31,6 +32,12 @@
 
 (function () {
   "use strict";
+
+  /* A book's PDF. The PDFs live on Backblaze B2, not in the repo (v60);
+     assets/pdfs/pdfs.js holds the address and loads before this file. */
+  function pdfUrl(n) {
+    return window.CHEWZ_PDF ? window.CHEWZ_PDF.href(n) : "pdfs/" + n + ".pdf";
+  }
 
   /* ---- 1. Build the list from stories.js ------------------- */
 
@@ -584,7 +591,7 @@
     if (pinned.kind === "trio") { showTrilogy(pinned.data); return; }
     var s = pinned.data;
     var n = String(s.num).padStart(2, "0");
-    showFeature(s, n, s.pdf || "pdfs/" + n + ".pdf", s.cover || coverFor(s.num));
+    showFeature(s, n, s.pdf || pdfUrl(n), s.cover || coverFor(s.num));
   }
 
   function markPinned() {
@@ -878,7 +885,7 @@
     var s = entry.story;
 
     var num   = String(s.num || i + 1).padStart(2, "0");
-    var pdf   = s.pdf   || "pdfs/" + num + ".pdf";
+    var pdf   = s.pdf   || pdfUrl(num);
     var cover = s.cover || "covers/" + num + ".jpg";
 
     var li = document.createElement("li");
@@ -4395,7 +4402,7 @@
         readerAudioBar.hidden = true;
         readerPage.innerHTML =
           '<p class="r-wait">This one isn\u2019t set for reading here yet. ' +
-          '<a href="' + (s.pdf || "pdfs/" + n + ".pdf") + '" target="_blank" rel="noopener">' +
+          '<a href="' + (s.pdf || pdfUrl(n)) + '" target="_blank" rel="noopener">' +
           "Open the PDF instead.</a></p>";
       });
   }
