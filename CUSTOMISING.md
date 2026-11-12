@@ -1,4 +1,5 @@
-<!-- Updated 2026-10-31 20:20 PDT — audited against the code. 119 books, 15 series;
+<!-- Version 2 · last updated 2026-11-11 19:50 PST — PDFs now on Backblaze (roya-audio/pdfs/).
+     Before: Updated 2026-10-31 20:20 PDT — audited against the code. 119 books, 15 series;
      the Record Room added (songs.js is now stamped alongside the other five);
      the Roya Library's own theme and tokens documented; several files
      this page described as present are recorded as missing. -->
@@ -808,7 +809,8 @@ Almost everything is a file the repository already has:
 | the nine About scene paintings | `assets/start-NN.webp` — eight of them |
 | the three series features | `assets/series-delgosha-cover.webp`, `assets/series-unsaid-wide-5.webp` (with `series-unsaid-tall-3.webp` for narrow), `assets/forough.webp` |
 | the imprint, top of the rail and the phone bar | `assets/roya.png`, cropped in CSS — no second copy ships |
-| PDF, Read and Share | `pdfs/NN.pdf`, `read/NN.json`, `share/NN-slug.html` |
+| PDF | `https://f005.backblazeb2.com/file/roya-audio/pdfs/NN.pdf` — hosted off the repo; the address lives in `assets/pdfs/pdfs.js` |
+| Read and Share | `read/NN.json`, `share/NN-slug.html` |
 | the narration, where a book has one | `https://f005.backblazeb2.com/file/roya-audio/NN.mp3` — hosted off the repo; a *Narrated* panel offering Listen here or a download |
 | back to the top | the page's own `#toTop`, raised above the section while it is open |
 

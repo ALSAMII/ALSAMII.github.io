@@ -1,4 +1,5 @@
-<!-- Updated 2026-10-31 20:20 PDT — 119 books; the Record Room (3 albums, 17 songs); the Roya Library is the landing view; narrations and songs on Backblaze B2 -->
+<!-- Version 2 · last updated 2026-11-11 19:50 PST — the book PDFs moved to Backblaze B2 (roya-audio/pdfs/), beside the narrations and songs.
+     Before: Updated 2026-10-31 20:20 PDT — 119 books; the Record Room (3 albums, 17 songs); the Roya Library is the landing view; narrations and songs on Backblaze B2 -->
 # Chew Z — Short Fiction
 
 **119 dark noir novellas, free to read, under the Roya Publication
@@ -108,8 +109,10 @@ panorama would claim more continuity than there is.
 
 ### Everything else fed in
 
-- **`pdfs/NN.pdf`** — the novella itself, and the source the reading
-  text and the flat cover are both lifted from
+- **`NN.pdf`** — the novella itself, and the source the reading text and
+  the flat cover are both lifted from. **Published on Backblaze, not in
+  the repo:** readers get `roya-audio/pdfs/NN.pdf`, and the copy in your
+  working `pdfs/` folder is only what the build scripts read
 - **the cover art** — four flat sizes and one pair render per book (see
   *What's in the folder*)
 - **`index.html`** — the page's own prose: the About and Author's Notes
@@ -154,7 +157,7 @@ book's own figure.** It compares the stated `words` against the real
 word count of `read/NN.json`, because a card once showed a whole
 series' six hours over a two-hour book.
 
-It also checks the PDF, all the cover sizes, the reader file, the share
+It also checks that the PDF is on Backblaze and sent as a PDF, all the cover sizes, the reader file, the share
 page, the feed, the sitemap, every required field, that `door` is one
 of the four, that `room` and `key` carry their em dash, and that the
 numbers still run in order.
@@ -180,7 +183,10 @@ build-reader.py       pulls the reading text out of the PDFs
 build-audio-sync.py   aligns a recording to that text; see ADDING-AUDIO.md
 optimize-art.py       makes the .webp twin of every picture (needs --write)
 
-pdfs/                 the novellas: 01.pdf … 119.pdf
+pdfs/                 NOT IN THE REPO. Your working copy of the novellas
+                      (01.pdf … 119.pdf) for build-reader.py; readers get
+                      them from Backblaze — see "Where the PDFs live"
+assets/pdfs/pdfs.js   the one place the PDFs' Backblaze address lives
 covers/NN.jpg         800x1200 flat front — large views, and the share image
 covers/NN.webp        its twin, asked for first. Made by optimize-art.py
 covers/thumb/NN.webp  360x540 flat front — the shelf rows and the cover shelf
@@ -253,6 +259,35 @@ Two things make that practical:
 
 ---
 
+## Where the PDFs live
+
+**On Backblaze B2, in the public bucket `roya-audio`, folder `pdfs/`** —
+`https://f005.backblazeb2.com/file/roya-audio/pdfs/NN.pdf` — beside the
+narrations and the songs. Moved off GitHub on 2026-11-11: Pages re-sends
+the whole site on every deploy, and the PDFs were 183 MB of about 490,
+which is what had started deploys timing out.
+
+- **`assets/pdfs/pdfs.js`** holds the address. Every PDF button goes
+  through it: `script.js` asks it directly, and the Library (generated,
+  never hand-edited) still writes `pdfs/NN.pdf`, which it corrects as the
+  links are drawn.
+- **`404.html`** forwards an old `chewzfiction.com/pdfs/NN.pdf` address —
+  a bookmark, a search result — to the same book on Backblaze.
+- **The sitemap lists no PDFs**: a sitemap may only list this site's own
+  addresses.
+- **Replacing a PDF:** upload it to Backblaze under the same name, then
+  raise `V` in `assets/pdfs/pdfs.js` and that file's `?v=` in `index.html`.
+  Backblaze tells browsers to keep a PDF for 30 days, so without the bump
+  readers who opened it before keep the old one. The bucket keeps only the
+  last version of a file (Lifecycle setting), so a replaced PDF costs
+  nothing extra to store.
+- **Never put a PDF back in the repo.** It would deploy and work, and
+  quietly undo the reason for the move.
+- **Safari's own download arrow** (in its PDF viewer) does not save a PDF
+  opened from the site's buttons. That was tested on 2026-11-11 and was
+  equally true of the old GitHub copies, so it is Safari, not the move.
+  Readers save from the viewer's Share menu, or File → Save As.
+
 ## The generated things
 
 None is written by hand:
@@ -260,7 +295,7 @@ None is written by hand:
 ```
 node build-feeds.js         → feed.xml, sitemap.xml      (reads stories.js)
 node build-share-pages.js   → share/                     (reads stories.js)
-python3 build-reader.py NN  → read/NN.json               (reads pdfs/)
+python3 build-reader.py NN  → read/NN.json               (reads your working pdfs/)
 python3 optimize-art.py     → the .webp twin of every picture  (--write)
 python3 build-audio-sync.py → read/NN.sync.json + a staged mp3 to upload
 ```

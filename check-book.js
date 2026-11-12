@@ -1,11 +1,11 @@
-// Version 2 · last updated 2026-11-03 20:40 PST
+// Version 3 · last updated 2026-11-11 19:50 PST
 /*
    CHECKS THAT A BOOK IS ACTUALLY FINISHED — every file on disk, every
    generated page rebuilt, every field filled.
 
        node check-book.js 105      # one book
        node check-book.js          # every book in stories.js
-       node check-book.js --offline   # skip asking the audio host (step 6)
+       node check-book.js --offline   # skip asking Backblaze (steps 6 and 7)
 
    Run it as the last step of ADDING-A-BOOK.md, before committing, and
    again after the Pages build if you want to be sure.
@@ -82,7 +82,13 @@ function checkBook(s) {
   console.log(`\n── No. ${n} · ${s.title}`);
 
   /* 1. the files on disk */
-  check(exists(`pdfs/${p}.pdf`),           `pdfs/${p}.pdf`);
+  /* The PDF is published on Backblaze, not in the repo (since 2026-11-11):
+     step 7 asks the bucket for it. A copy in the working folder is still
+     what build-reader.py and the flat cover are made from, but a fresh
+     clone of the repo will not have one, so its absence only warns. */
+  warn (exists(`pdfs/${p}.pdf`),
+        `pdfs/${p}.pdf — the working copy build-reader.py reads (not published; ` +
+        `the reader gets roya-audio/pdfs/${p}.pdf on Backblaze)`);
   check(exists(`covers/${p}.jpg`),         `covers/${p}.jpg`);
   warn (exists(`covers/${p}.webp`),        `covers/${p}.webp`);
   /* The flat front. It is never a file anybody has to go and find: page 1
@@ -92,7 +98,7 @@ function checkBook(s) {
      rather than in a document somebody would have to already know to
      read. */
   check(exists(`library/covers/${p}.webp`),
-        `library/covers/${p}.webp — 560x840 flat front. Page 1 of pdfs/${p}.pdf ` +
+        `library/covers/${p}.webp — 560x840 flat front. Page 1 of the book's PDF ` +
         `is this picture: extract it and resize.`);
   check(exists(`read/${p}.json`),          `read/${p}.json`);
 
@@ -223,6 +229,38 @@ async function checkAudioHost(books) {
   }
 }
 
+/* 7. the PDF on Backblaze. Every PDF button builds its address from
+   assets/pdfs/pdfs.js, so a book whose PDF was never uploaded to the bucket
+   — or uploaded to the wrong folder — shows a working button that opens an
+   error page. This asks the bucket for each book's PDF as a reader would.
+   Same network caveat as step 6. */
+async function checkPdfHost(books) {
+  const cfg = exists("assets/pdfs/pdfs.js") ? fs.readFileSync("assets/pdfs/pdfs.js", "utf8") : "";
+  const m = /var BASE = "([^"]+)"/.exec(cfg);
+  console.log(`\n── the PDFs on Backblaze (${books.length} book(s))`);
+  check(!!m, `assets/pdfs/pdfs.js gives the PDF address (BASE)`);
+  if (!m) return;
+  if (typeof fetch !== "function") {
+    warn(false, `this Node has no fetch() — use Node 18 or later to check the host`);
+    return;
+  }
+  for (const s of books) {
+    const url = m[1] + pad(s.num) + ".pdf";
+    let r;
+    try { r = await fetch(url, { method: "HEAD", redirect: "follow" }); }
+    catch (e) { warn(false, `No. ${s.num}: could not reach ${url} (${e.message}) — run this in a Codespace`); continue; }
+    const fromB2 = [...r.headers.keys()].some(k => k.startsWith("x-bz-"));
+    if (!fromB2 && r.status !== 200) {
+      warn(false, `No. ${s.num}: could not reach the bucket from here (HTTP ${r.status}) — run this in a Codespace`);
+      continue;
+    }
+    const ct = r.headers.get("content-type") || "";
+    check(r.status === 200,
+          `No. ${s.num}: the PDF is on Backblaze (HTTP ${r.status}) — upload it as roya-audio/pdfs/${pad(s.num)}.pdf`);
+    check(/^application\/pdf/i.test(ct), `No. ${s.num}: sent as application/pdf (${ct || "none"})`);
+  }
+}
+
 /* ── run ─────────────────────────────────────────────────────────────── */
 const OFFLINE = process.argv.includes("--offline");
 const arg = process.argv.slice(2).find(a => !a.startsWith("--"));
@@ -256,7 +294,7 @@ check(new Set(nums).size === nums.length, `no duplicate numbers`);
 check(nums.every((v, i) => i === 0 || v > nums[i-1]), `numbers run in order`);
 
 (async () => {
-  if (!OFFLINE) await checkAudioHost(list);
+  if (!OFFLINE) { await checkAudioHost(list); await checkPdfHost(list); }
   console.log(`\n${failures ? "✗" : "✓"} ${list.length} book(s): ` +
               `${failures} failure(s), ${warnings} warning(s).`);
   if (failures) {
