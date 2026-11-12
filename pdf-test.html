@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Version 1 · last updated 2026-11-11 19:35 PST
+<!-- Version 2 · last updated 2026-11-11 19:40 PST
      TEMPORARY: a test page for the Safari PDF download arrow. Not linked
      from anywhere, not in the sitemap, hidden from search. Delete it once
      the test is done. -->
@@ -36,24 +36,31 @@
   <li><button type="button" id="dl">5 · Download button (no viewer)</button>
       <small>Saves 12.pdf straight to Downloads, the way song downloads work.</small>
       <span id="st"></span></li>
+  <li><button type="button" id="dl2">6 · Download button, fresh copy</button>
+      <small>Same as 5, but asks Backblaze for a fresh copy instead of the one Safari already has stored.</small>
+      <span id="st2"></span></li>
 </ol>
 </main>
 <script>
-document.getElementById("dl").addEventListener("click", function () {
-  var st = document.getElementById("st");
-  st.textContent = " fetching…";
-  fetch("https://f005.backblazeb2.com/file/roya-audio/pdfs/12.pdf?v=1")
-    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.blob(); })
-    .then(function (b) {
-      var u = URL.createObjectURL(new Blob([b], { type: "application/pdf" }));
-      var a = document.createElement("a");
-      a.href = u; a.download = "12.pdf";
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(function () { URL.revokeObjectURL(u); }, 60000);
-      st.textContent = " done — check Downloads";
-    })
-    .catch(function (e) { st.textContent = " failed: " + e.message; });
-});
+function save(btn, out, url, opts) {
+  document.getElementById(btn).addEventListener("click", function () {
+    var st = document.getElementById(out);
+    st.textContent = " fetching…";
+    fetch(url, opts)
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.blob(); })
+      .then(function (b) {
+        var u = URL.createObjectURL(new Blob([b], { type: "application/pdf" }));
+        var a = document.createElement("a");
+        a.href = u; a.download = "12.pdf";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(u); }, 60000);
+        st.textContent = " done — check Downloads";
+      })
+      .catch(function (e) { st.textContent = " failed: " + (e && e.message || e); });
+  });
+}
+save("dl",  "st",  "https://f005.backblazeb2.com/file/roya-audio/pdfs/12.pdf?v=1", {});
+save("dl2", "st2", "https://f005.backblazeb2.com/file/roya-audio/pdfs/12.pdf?v=1&dl=1", { cache: "no-store", mode: "cors" });
 </script>
 </body>
 </html>
