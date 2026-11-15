@@ -1,4 +1,4 @@
-/* Version 480 · last updated 2026-10-14 06:53 PDT*/
+/* Version 481 · last updated 2026-11-15 07:40 PST — Nos. 120 and 121 added */
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1563,6 +1563,30 @@ const STORIES = [
     key: "The room itself \u2014 the machine built to answer memory with light, which brings up a handful of bulbs for anything it knows and drops them when the music does. It gives back only what it was given, which is why the one tune it cannot answer is the only thing in the hall telling the truth",
     notes: [2, 2, 3],
     synopsis: "A pianist plays in a flooded warehouse in Los Angeles. Thousands of small glass bulbs stand in the black water on stems, and a hundred strangers a night sit above the surface in the dark. When he plays something the room remembers, a light comes on \u2014 he plays short things, a few seconds each, something once hummed at a sink, and each one brings up its handful of lights and lets them go. Nobody who leaves can remember a single bulb. Around the fiftieth minute, the room weeps. He believes he built it for his mother, and that she is sitting in the chair behind him tonight, eighty years old, with a blanket on her knees and a woman\u2019s hand on her shoulder. Tonight is the last night, and for the first time he has chosen the order: her memories newest first, back through the years to the bottom of the house she grew up in, to a courtyard in Tehran and a pool under a green canvas that nobody ever explained. Two people who have known the producer since school watch from a platform over the water, told only that the room was made for someone. Then his hands drift into a tune the room does not know, and no light answers, and a woman who has not spoken all night begins to hum."
+  },
+
+  {
+    num: 120,
+    title: "Its Branches in the Sky",
+    words: "25,500 words",
+    hook: "A father who could answer every question his daughter asked, until the one an office answers kindly, on a number that never rings out",
+    door: "Withholding",
+    room: "The Hall \u2014 a room on the southern coast with chairs borrowed from another school, where ninety parents became sixty and each week hands round the four minutes they have left of a child, until a father can no longer tell which of his daughter\u2019s minutes are his",
+    key: "The Exercise Book \u2014 a thin book of squared paper kept in the driest drawer in the yard, with the outboard manuals: her name lettered against a ruler, a composition about a tree, eighteen out of twenty, and four words in the margin in a dead woman\u2019s hand. The whole of what he can prove about her",
+    notes: [3, 3, 3],
+    synopsis: "A man on the southern coast of Iran mends the outboard motors of other men\u2019s boats. He is fifty-one, he has never been further than Bandar Abbas, and his middle daughter is nine. She asks him questions \u2014 why the sea is a different colour out there, whether fish sleep, what the mud is for \u2014 and he can answer every one, which he takes to be the whole of what a father is for. It is the last winter before the war. Then four days: a market stall that does not open, a girl of twelve at her parents\u2019 door at two in the morning, a Friday on the water with all three children, and a Saturday when her mother walks her down to the school gate, fourteen minutes there and fourteen back. Afterwards the questions are her father\u2019s. He asks them of an office that answers kindly and correctly, on a number that never once rings out \u2014 until a journalist comes up from the coast with a permit, two recorders and a rate per word."
+  },
+
+  {
+    num: 121,
+    title: "Fifty-One Minutes in Full Sun",
+    words: "11,800 words",
+    hook: "Forty million Americans take his tablet every Thursday, and the woman filming his apology has not said a word",
+    door: "Dose",
+    room: "The Long Room \u2014 the back room of his house: one chair, one table, one light and a grey cloth over the window, where every Thursday a red lamp comes on and a man who feels nothing about anything he has done says all of it, in order, to a camera",
+    key: "Nepentra \u2014 the white box with the blue band, one tablet once a week with a full glass of water, which leaves every memory exactly where it was and takes away only what it weighs",
+    notes: [3, 3, 2],
+    synopsis: "Rostam Bina makes one medicine. Forty million Americans take it every Thursday with a glass of water, and so does he. His company is worth more than every airline in the country, most of it held in the retirement funds of teachers and nurses, and for twenty years the magazines have called him the calm man. Then a newspaper prints a photograph of him at the door of a house on the coast with a woman who is not his wife, and ninety billion dollars are gone in a morning. The board wants an apology on film. Thirty-five takes in a studio come out smooth, correct and sorry about nothing. So the crew is sent home, and one camera operator comes to his house instead, on one condition: no script. Every Thursday he will sit down and say what he did, from the beginning, in his own words. He agrees. It seems efficient. She has not told him why she asked for the job."
   }
 ];
 
