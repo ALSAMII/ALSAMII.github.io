@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 60 · last updated 2026-11-11 06:40 PST
+   Version 61 · last updated 2026-11-16 21:15 PST
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5013,9 +5013,34 @@
     a.addEventListener("click", function (e) {
       e.preventDefault(); e.stopPropagation();
       close();
+      /* the same address twice raises no hashchange, so the card would
+         not open; clear it first */
+      if (location.hash === "#" + slug && history.replaceState) {
+        history.replaceState(null, "", location.pathname + location.search);
+      }
       location.hash = slug;
     });
     return a;
+  }
+
+  /* ── the line under a song's note that names its book ──────────
+     `from` (inspired by) or `book` (taken from) on the song. The title
+     and the slug are read from stories.js with the same rule the shelf
+     uses, so the link lands on the book's card and follows a rename. */
+  function bookSlugOf(b) {
+    return String(b.num).padStart(2, "0") + "-" +
+      b.title.toLowerCase()
+        .replace(/['\u2019]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+  }
+  function bookCredit(s) {
+    var num = s && (s.from || s.book);
+    if (!num || typeof STORIES === "undefined") return null;
+    var b = STORIES.filter(function (x) { return x.num === num; })[0];
+    if (!b) return null;
+    var words = (s.from ? "Inspired by" : "From") + " Roya No. " + num + " \u2014 " + b.title;
+    return bookLink(s.bookSlug || bookSlugOf(b), words);
   }
   function synopsis(text) {
     var p = el("p", "rec-pane-syn");
@@ -5388,6 +5413,13 @@
     if (bg) bg.style.backgroundImage = "url(" + flatSrc(a) + ")";
     var note = document.getElementById("recThNote");
     if (note) note.textContent = cur.note || "";
+    var cr = document.getElementById("recThBook");
+    if (cr) {
+      cr.textContent = "";
+      var link = bookCredit(cur);
+      if (link) cr.append(link);
+      cr.hidden = !link;
+    }
   }
 
   function paintTransport() {

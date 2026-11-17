@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 6 · last updated 2026-11-16 19:52 PST
+   Version 8 · last updated 2026-11-16 21:21 PST
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -17,6 +17,13 @@
 
    `audio` is the full URL, exactly as stories.js stores a narration.
    Nothing here builds a URL from parts.
+
+   `from` is the number of the book a song was inspired by. The lyric
+   page prints "Inspired by Roya No. N — Title" under the note and
+   makes it a link to that book's card. The title and the address are
+   read from stories.js, so they follow the book if it is ever
+   renamed. (`book` + `bookSlug` are for songs taken straight out of
+   a book; those get "From Roya No. N — Title" instead.)
    ──────────────────────────────────────────────────────────────── */
 
 const ALBUMS = [
@@ -99,11 +106,13 @@ const SONGS = [
     note: "An island child steps off the plane into a bright city where everybody is running from the clock. Full tables and slow evenings traded for a place where everyone has arrived and nobody is present." },
 
   { cat: "01-08", album: 1, track: 8, title: "Just Don’t Be Gone", dur: 269,
+    from: 118,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-08.mp3",
     lyric: "songs/01-08.json",
     note: "Washing someone's hair, waiting for a tap on the pipes, asking to be fought with the way they used to fight. A vigil at a bedside, told entirely in small physical requests rather than grief." },
 
   { cat: "01-09", album: 1, track: 9, title: "Hold Me Under", dur: 257,
+    from: 117,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-09.mp3",
     lyric: "songs/01-09.json",
     note: "The warm room where nothing hurts and a mother laughs from a kitchen that burned down years ago. It's the inside of going under, and the last thing it says is “hold me up”." },
@@ -114,6 +123,7 @@ const SONGS = [
     note: "Two strangers at a petrol station, each wearing a look the other recognises because they wore it last week. Neither wants to go back and neither wants to run alone." },
 
   { cat: "01-11", album: 1, track: 11, title: "Whose Is This", dur: 269,
+    from: 121,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-11.mp3",
     lyric: "songs/01-11.json",
     note: "A whisper over a music box, going back through what a calm man did, one white tablet at a time: the phone he let ring, the blue cup, the minutes counted in full sun. Then the last memory comes back with all of its weight." },
@@ -133,6 +143,7 @@ const SONGS = [
 
   { cat: "03-06", album: 3, track: 3, title: "غم بقیه، خاک من", fa: true,
     translit: "Gham-e baghiye, khak-e man", en: "Everyone Else's Grief, My Earth", dur: 270,
+    from: 12,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-06.mp3",
     lyric: "songs/03-06.json",
     note: "A dervish's turn: left foot on the earth, head to the right, one hand taking from the sky and the other giving to the ground. Everyone else's grief passes through the dancer into the soil — all but one, which stays, and turns with them." },
@@ -151,12 +162,14 @@ const SONGS = [
 
   { cat: "03-04", album: 3, track: 6, title: "ساکت نباش", fa: true,
     translit: "Saket nabash", en: "Don't Be Silent", dur: 239,
+    from: 78,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-04.mp3",
     lyric: "songs/03-04.json",
     note: "Addressed to a wall, because there's nobody else to address. A child left in the morning and didn't come back at night, and the song's whole argument is in its title and its last line: say it loud — I'll remember." },
 
   { cat: "03-07", album: 3, track: 7, title: "درختِ پاک", fa: true,
     translit: "Derakht-e pak", en: "The Pure Tree", dur: 300,
+    from: 120,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-07.mp3",
     lyric: "songs/03-07.json",
     note: "A morning in Minab like a thousand others: a schoolbag, a red apple, a plait coming loose, a hand let go at the school gate with “come home soon.” Then the bombs fell on the school. A mother runs back the same nine minutes and knows her daughter by one shoe. The school was named for the Goodly Tree, root in the earth and branches in the sky, and a root has no hands to reach with." },
