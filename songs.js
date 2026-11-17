@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 5 · last updated 2026-11-16 19:20 PST
+   Version 6 · last updated 2026-11-16 19:52 PST
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -159,7 +159,7 @@ const SONGS = [
     translit: "Derakht-e pak", en: "The Pure Tree", dur: 300,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-07.mp3",
     lyric: "songs/03-07.json",
-    note: "A morning like a thousand others: a schoolbag, a red apple, a plait coming loose, and a hand let go at the school door. The school was named for the pure tree, branches in the sky and roots in the earth, and a root has no hands to reach with." },
+    note: "A morning in Minab like a thousand others: a schoolbag, a red apple, a plait coming loose, a hand let go at the school gate with “come home soon.” Then the bombs fell on the school. A mother runs back the same nine minutes and knows her daughter by one shoe. The school was named for the Goodly Tree, root in the earth and branches in the sky, and a root has no hands to reach with." },
 
   /* ─── Album 2 · Roya ─────────────────────────────────────────── */
   { cat: "02-01", album: 2, track: 1, title: "Don’t Come to the Door", dur: 359,
