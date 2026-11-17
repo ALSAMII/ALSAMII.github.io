@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 4 · last updated 2026-11-09 06:15 PST
+   Version 5 · last updated 2026-11-16 19:20 PST
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -27,10 +27,10 @@ const ALBUMS = [
     /* Where it sits on the shelf. Separate from `num` on purpose:
        the number is an identity, the order is a presentation. */
     order: 1,
-    songs: 10,
-    dur: 3128,                       /* 52:08 — the sum of its songs */
+    songs: 11,
+    dur: 3397,                       /* 56:37 — the sum of its songs */
     released: "2026-11",
-    syn: "Ten songs about letting go of the wheel. Everyone on this record has run somewhere to find peace — another country, another door, the far edge of the map — and every one of them arrives to learn it was never out there. Dark reggae underneath, downtempo house over it, and a title track that asks for an official of quiet because nobody else is handing it out."
+    syn: "Eleven songs about letting go of the wheel. Everyone on this record has run somewhere to find peace — another country, another door, the far edge of the map — and every one of them arrives to learn it was never out there. Dark reggae underneath, downtempo house over it, and a title track that asks for an official of quiet because nobody else is handing it out."
   },
   {
     num: 3,
@@ -39,10 +39,10 @@ const ALBUMS = [
     en: "Calm Is Right Here",
     fa: true,
     order: 2,
-    songs: 6,
-    dur: 1817,                       /* 30:17 */
+    songs: 7,
+    dur: 2117,                       /* 35:17 */
     released: "2026-11",
-    syn: "Six songs in Persian for the things the English ones couldn't carry. A night asked not to end, a reed cut from its bed, a turn that hands every grief to the earth but one, one second that never stopped, a city drawn wrong, and a wall addressed instead of a person."
+    syn: "Seven songs in Persian for the things the English ones couldn't carry. A night asked not to end, a reed cut from its bed, a turn that hands every grief to the earth but one, one second that never stopped, a city drawn wrong, a wall addressed instead of a person, and a school named for a tree."
   },
   {
     num: 2,
@@ -113,6 +113,11 @@ const SONGS = [
     lyric: "songs/01-10.json",
     note: "Two strangers at a petrol station, each wearing a look the other recognises because they wore it last week. Neither wants to go back and neither wants to run alone." },
 
+  { cat: "01-11", album: 1, track: 11, title: "Whose Is This", dur: 269,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-11.mp3",
+    lyric: "songs/01-11.json",
+    note: "A whisper over a music box, going back through what a calm man did, one white tablet at a time: the phone he let ring, the blue cup, the minutes counted in full sun. Then the last memory comes back with all of its weight." },
+
   /* ─── Album 3 · آروم همین‌جاست ───────────────────────────────── */
   { cat: "03-03", album: 3, track: 1, title: "تا شب تموم نشه", fa: true,
     translit: "Ta shab tamoom nashe", en: "Don't Let the Night End", dur: 306,
@@ -149,6 +154,12 @@ const SONGS = [
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-04.mp3",
     lyric: "songs/03-04.json",
     note: "Addressed to a wall, because there's nobody else to address. A child left in the morning and didn't come back at night, and the song's whole argument is in its title and its last line: say it loud — I'll remember." },
+
+  { cat: "03-07", album: 3, track: 7, title: "درختِ پاک", fa: true,
+    translit: "Derakht-e pak", en: "The Pure Tree", dur: 300,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-07.mp3",
+    lyric: "songs/03-07.json",
+    note: "A morning like a thousand others: a schoolbag, a red apple, a plait coming loose, and a hand let go at the school door. The school was named for the pure tree, branches in the sky and roots in the earth, and a root has no hands to reach with." },
 
   /* ─── Album 2 · Roya ─────────────────────────────────────────── */
   { cat: "02-01", album: 2, track: 1, title: "Don’t Come to the Door", dur: 359,
