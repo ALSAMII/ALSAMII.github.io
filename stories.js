@@ -1,4 +1,4 @@
-/* Version 481 · last updated 2026-11-15 07:40 PST — Nos. 120 and 121 added */
+/* Version 482 · last updated 2026-11-17 06:40 PST — No. 122 added (Here Be Delos) */
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1587,6 +1587,18 @@ const STORIES = [
     key: "Nepentra \u2014 the white box with the blue band, one tablet once a week with a full glass of water, which leaves every memory exactly where it was and takes away only what it weighs",
     notes: [3, 3, 2],
     synopsis: "Rostam Bina makes one medicine. Forty million Americans take it every Thursday with a glass of water, and so does he. His company is worth more than every airline in the country, most of it held in the retirement funds of teachers and nurses, and for twenty years the magazines have called him the calm man. Then a newspaper prints a photograph of him at the door of a house on the coast with a woman who is not his wife, and ninety billion dollars are gone in a morning. The board wants an apology on film. Thirty-five takes in a studio come out smooth, correct and sorry about nothing. So the crew is sent home, and one camera operator comes to his house instead, on one condition: no script. Every Thursday he will sit down and say what he did, from the beginning, in his own words. He agrees. It seems efficient. She has not told him why she asked for the job."
+  },
+
+  {
+    num: 122,
+    title: "She Sang and the House Went Dark",
+    words: "24,300 words",
+    hook: "A man with nine years of stories he never wrote, a jar from a party, and a voice in the dark garage that knows every one of them",
+    door: "Dose",
+    room: "The Garage \u2014 a mat between the car and the paint cans, the lamp switched off, and a low canvas chair that creaks in the dark, where someone is waiting who knows every story on his list and tells them back to him until morning",
+    key: "The Holy Children \u2014 dried mushrooms in a jar pressed into his hand at a party, which quiet the part of the mind that narrates, so that the maker comes through and every voice in the room sounds like a stranger\u2019s",
+    notes: [3, 3, 3],
+    synopsis: "Leila\u2019s father sang at weddings in Tehran until the year weddings stopped having singers. He had a saying about the rare ones, which she has kept and uses about anything she loves \u2014 a tree in flower, a boy with a hairbrush for a microphone: when she sang, the house went dark. It means that while it is happening, nobody can see anything else. Her husband has heard her say it a hundred times, and has never once heard her sing. Los Angeles, May 2026. Kian Rahimi is forty and has spent eleven years on the 405, seventy minutes each way to a job in Irvine he can do in his sleep. He is a happy man: a wife who says look at that about trees, a boy of eight who runs a radio station out of a dishwasher box, a dog who has eaten a sock. If he is missing anything, it lives in the car \u2014 the audiobooks he listens to on the drive, and a list on his phone, nine years long, of every place a story he loved pulled its punch. He has the dark version of all of them in his head. He has never written a word. One night in June he takes a jar out to the garage, lies down in the dark and turns off the lamp. Someone is waiting there. She knows the list. She tells the stories back to him, and he writes them down, and by morning he has finished the first thing in his life. It is the best thing he has ever made. He doesn\u2019t ask who is telling him."
   }
 ];
 
@@ -1878,7 +1890,7 @@ const TRILOGIES = [
        book. */
     title: "Here Be Delos",
     label: "",
-    books: [100, 107, 109, 113, 114, 116, 117],
+    books: [100, 107, 109, 113, 114, 116, 117, 122],
     /* No numbering. Each book is a different person and a different
        substance in a different part of the world; there is no reading
        order and a "1 of 1" on the row would promise a sequence that

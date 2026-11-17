@@ -1,4 +1,4 @@
-// Version 3 · last updated 2026-11-11 19:50 PST
+// Version 4 · last updated 2026-11-17 06:50 PST
 /*
    CHECKS THAT A BOOK IS ACTUALLY FINISHED — every file on disk, every
    generated page rebuilt, every field filled.
@@ -107,6 +107,12 @@ function checkBook(s) {
      the .webp and has NO fallback — a missing .webp is a broken image on
      the page, not a graceful degrade. So having one without the other is
      always a mistake. */
+  /* No script makes the thumbnail, and nothing breaks without it — the
+     shelf falls back to covers/NN.jpg — so it was forgotten for Nos. 120
+     and 121 until a phone showed the 404s. */
+  warn (exists(`covers/thumb/${p}.webp`),
+        `covers/thumb/${p}.webp — 360x540, made by hand from covers/${p}.jpg; ` +
+        `the shelf rows ask for it first (without it: a 404, then the 800px cover)`);
   const pj = exists(`covers/pairs/${p}.jpg`), pw = exists(`covers/pairs/${p}.webp`);
   if (pj || pw) {
     check(pj, `covers/pairs/${p}.jpg — the shelf asks for this one`);
