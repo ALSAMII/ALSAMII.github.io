@@ -1,4 +1,4 @@
-/* Version 482 · last updated 2026-11-17 06:40 PST — No. 122 added (Here Be Delos) */
+/* Version 483 · last updated 2026-11-18 05:30 PST — Nos. 120 and 121 republished: new word counts */
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1568,7 +1568,7 @@ const STORIES = [
   {
     num: 120,
     title: "Its Branches in the Sky",
-    words: "25,500 words",
+    words: "26,800 words"  /* the text is 26,899: 26,900 would round the card up to 2.5 hours */,
     hook: "A father who could answer every question his daughter asked, until the one an office answers kindly, on a number that never rings out",
     door: "Withholding",
     room: "The Hall \u2014 a room on the southern coast with chairs borrowed from another school, where ninety parents became sixty and each week hands round the four minutes they have left of a child, until a father can no longer tell which of his daughter\u2019s minutes are his",
@@ -1580,7 +1580,7 @@ const STORIES = [
   {
     num: 121,
     title: "Fifty-One Minutes in Full Sun",
-    words: "11,800 words",
+    words: "16,800 words",
     hook: "Forty million Americans take his tablet every Thursday, and the woman filming his apology has not said a word",
     door: "Dose",
     room: "The Long Room \u2014 the back room of his house: one chair, one table, one light and a grey cloth over the window, where every Thursday a red lamp comes on and a man who feels nothing about anything he has done says all of it, in order, to a camera",

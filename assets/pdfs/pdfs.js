@@ -1,6 +1,6 @@
 /* ══════════════════ WHERE THE BOOK PDFs LIVE ══════════════════
-   Version 1 · last updated 2026-11-11 06:40 PST
-   Served as assets/pdfs/pdfs.js?v=1 — keep the two numbers equal.
+   Version 2 · last updated 2026-11-18 05:30 PST
+   Served as assets/pdfs/pdfs.js?v=2 — keep the two numbers equal.
 
    The 119 novella PDFs moved off GitHub to Backblaze B2, beside the
    narration and the songs:
@@ -34,7 +34,7 @@
   "use strict";
 
   var BASE = "https://f005.backblazeb2.com/file/roya-audio/pdfs/";
-  var V = "1";                                  /* raise when a PDF is replaced */
+  var V = "2";                                  /* raise when a PDF is replaced */
   var OLD = /(?:^|\/)pdfs\/(\d{1,3})\.pdf(?:[?#].*)?$/i;
 
   function href(n) {
