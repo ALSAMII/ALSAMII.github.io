@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 70 · last updated 2026-11-16 21:15 PST
+   Version 72 · last updated 2026-11-18 19:45 PST
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11383,6 +11383,11 @@ body.rec-on .to-top { display: none !important; }
 /* while the dock is up, the page keeps room for it under the last row */
 body.rec-dock-on #recBody { padding-bottom: 7rem; }
 body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: 9.5rem; }
+/* the album page's own padding (#royaLibrary.rec-view #recBody, 3rem) is more
+   specific than the rule above, so on desktop it won and the last song sat
+   under the bar — this restates the room at the same weight */
+body.rec-dock-on #royaLibrary.rec-view #recBody { padding-bottom: calc(9rem + env(safe-area-inset-bottom, 0px)); }
+body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: calc(9.5rem + env(safe-area-inset-bottom, 0px)); }
 .rec-th-now, #royaLibrary .rec-th-now{
   font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.3em;
   text-transform: uppercase; color: var(--ember); margin: 0 0 0.35rem;
@@ -11590,7 +11595,8 @@ html #royaLibrary .mob-sec .ab-notes-flow .ab-note--long:first-child{
   .rec-dock-x, #royaLibrary .rec-dock-x{ top: 0.3rem; right: 0.3rem; padding: 0.6rem; }
   .rec-dock-x svg, #royaLibrary .rec-dock-x svg{ width: 19px; height: 19px; }
   .rec-q-n, #royaLibrary .rec-q-n{ min-width: 1.25rem; height: 1.25rem; line-height: 1.25rem; border-radius: 0.65rem; font-size: 0.7rem; }
-  body.rec-dock-on #royaLibrary.rec-view .mob > #recBody{ padding-bottom: 13.5rem; }
+  /* + the home-bar inset: the bar grows by it (.rec-dock), so the room must too */
+  body.rec-dock-on #royaLibrary.rec-view .mob > #recBody{ padding-bottom: calc(13.5rem + env(safe-area-inset-bottom, 0px)); }
   .rec-th-body, #royaLibrary .rec-th-body{ padding-bottom: calc(12.5rem + env(safe-area-inset-bottom, 0px)); }
 }
 /* A touch screen wider than a phone (a tablet, a phone held sideways)
