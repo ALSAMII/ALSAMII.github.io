@@ -1,4 +1,4 @@
-<!-- Updated 2026-11-01 11:12 PDT — written with the Record Room. 3 albums, 17 songs.
+<!-- Updated 2026-11-20 06:05 PST — album 2 (Roya) retired; its number is not reused.
      The house standard for the object itself is roya-recordings-format.md. -->
 # Adding a song
 
@@ -30,8 +30,9 @@ album afterwards does not renumber anything — the running order on the
 page comes from the `track` field, and the shelf order from `order` on
 the album.
 
-The same goes for album numbers. Album 2 is *Roya* and shows third on
-the shelf; that is deliberate, not a mistake to tidy up.
+The same goes for album numbers. Album 2 (*Roya*) was retired on
+2026-11-20, so the shelf runs 1, 3; that gap is deliberate, not a
+mistake to tidy up, and 2 is never given to a new album.
 
 ---
 
