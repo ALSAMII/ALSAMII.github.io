@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 8 · last updated 2026-11-16 21:21 PST
+   Version 9 · last updated 2026-11-19 20:55 PST
 
    Hand-edited, like stories.js. Nothing generates this file.
    The house standard for everything in it is roya-recordings-format.md.
@@ -34,10 +34,10 @@ const ALBUMS = [
     /* Where it sits on the shelf. Separate from `num` on purpose:
        the number is an identity, the order is a presentation. */
     order: 1,
-    songs: 11,
-    dur: 3397,                       /* 56:37 — the sum of its songs */
+    songs: 12,
+    dur: 3661,                       /* 61:01 — the sum of its songs */
     released: "2026-11",
-    syn: "Eleven songs about letting go of the wheel. Everyone on this record has run somewhere to find peace — another country, another door, the far edge of the map — and every one of them arrives to learn it was never out there. Dark reggae underneath, downtempo house over it, and a title track that asks for an official of quiet because nobody else is handing it out."
+    syn: "Twelve songs about letting go of the wheel. Everyone on this record has run somewhere to find peace — another country, another door, the far edge of the map — and every one of them arrives to learn it was never out there. Dark reggae underneath, downtempo house over it, and a title track that asks for an official of quiet because nobody else is handing it out."
   },
   {
     num: 3,
@@ -127,6 +127,12 @@ const SONGS = [
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-11.mp3",
     lyric: "songs/01-11.json",
     note: "A whisper over a music box, going back through what a calm man did, one white tablet at a time: the phone he let ring, the blue cup, the minutes counted in full sun. Then the last memory comes back with all of its weight." },
+
+  { cat: "01-12", album: 1, track: 12, title: "Food for the Gods", dur: 264,
+    from: 122,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-12.mp3",
+    lyric: "songs/01-12.json",
+    note: "A whisper from the bottom of a well to a man lying on a garage floor in the dark, promising gold for every hour he feeds it. Upstairs the phone rings, the bread goes cold, and a voice keeps calling his name from the light." },
 
   /* ─── Album 3 · آروم همین‌جاست ───────────────────────────────── */
   { cat: "03-03", album: 3, track: 1, title: "تا شب تموم نشه", fa: true,
