@@ -1,5 +1,5 @@
 /* Roya Library — the section that replaces All Covers.
-   Version 161 · last updated 2026-10-08 07:46 PDT
+   Version 162 · last updated 2026-11-19 20:45 PST — No. 119 replaces No. 26 in Pick a door · Noir (hand edit; carry it over if this file is regenerated)
    This is the v67 arrangement restored. v68 laid the section out at a fixed
    1800px and scaled it with CSS zoom; the scale did not take in the reader's
    browser while the 1800px width did, so the page ran wider than the window
@@ -2440,6 +2440,18 @@
    row and the paint reaches the same pixel either way, so there is nothing to
    gain by disturbing it. */
 #royaLibrary .mob-sec .ab-row[data-rec="52"] .ab-art{background-position:97% 50%}
+/* 119 took 26's Noir slot (2026-11-19). Its plate is wide: the bulbs run out
+   across the water toward the text, and at cover the piano sat under the
+   paragraph. Rendered at cover, 70, 60, 55 and 50 against 1 to 3.5 rem at 360,
+   390 and 430: 55% held 1.5 rem in keeps the piano, the chairs and the lit
+   water to the right of the text at 390 and 430, and only grazes the line ends
+   at 360. The stray bulbs that remain under the words are small and dim.
+   The plate was then repainted darker, with the stage further right in its
+   frame, so 70% now holds it clear of the paragraph at 390 and 430 with the
+   piano larger; at 360 it reaches the ends of two lines. */
+#royaLibrary .mob-sec .ab-row[data-rec="119"] .ab-art{
+  background-size:auto 70%;
+  background-position:calc(100% - 1.5rem) 55%}
 /* 94 stays hard right, where the page steps it back to 84%: the page's file
    stops short of its own right edge and 84% closes the strip that leaves,
    while the copy the section carries is the shifted painting — it already
