@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 72 · last updated 2026-11-18 19:45 PST
+   Version 73 · last updated 2026-11-21 07:05 PST
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11174,6 +11174,20 @@ body.rec-on .to-top { display: none !important; }
 .rec-trk-sh:hover, .rec-trk-dl:hover, .rec-trk-add:hover, #royaLibrary .rec-trk-sh:hover, #royaLibrary .rec-trk-dl:hover, #royaLibrary .rec-trk-add:hover{ color: var(--ember-lit); }
 .rec-trk-sh svg, .rec-trk-dl svg, .rec-trk-add svg, #royaLibrary .rec-trk-sh svg, #royaLibrary .rec-trk-dl svg, #royaLibrary .rec-trk-add svg{ width: 14px; height: 14px; }
 .rec-trk-add.queued, #royaLibrary .rec-trk-add.queued{ color: var(--ember); }
+/* The + was a bare 14px glyph a hair from Share — too small to hit on a
+   phone and easy to share by mistake. It is a ringed button now, so it
+   reads as something to press, with Share given the same-size target. */
+.rec-trk-add, #royaLibrary .rec-trk-add{
+  width: 2.2rem; height: 2.2rem; padding: 0; border: 1px solid var(--hairline); border-radius: 50%;
+  color: var(--parchment); transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.rec-trk-add:hover, #royaLibrary .rec-trk-add:hover{ border-color: var(--ember-soft); }
+.rec-trk-add.queued, #royaLibrary .rec-trk-add.queued{ border-color: var(--ember-soft); background: rgba(216, 166, 95, 0.08); }
+.rec-trk-add svg, #royaLibrary .rec-trk-add svg{ width: 15px; height: 15px; }
+.rec-trk-sh, #royaLibrary .rec-trk-sh{ width: 2.2rem; height: 2.2rem; padding: 0; }
+.rec-trk-sh svg, #royaLibrary .rec-trk-sh svg{ width: 16px; height: 16px; }
+.rec-trk-dl, #royaLibrary .rec-trk-dl{ width: 2.2rem; height: 2.2rem; padding: 0; }
+.rec-trk-d, #royaLibrary .rec-trk-d{ margin-right: 0.35rem; }
 .rec-trk-dl.busy, #royaLibrary .rec-trk-dl.busy{ opacity: 0.4; pointer-events: none; }
 .rec-eq, #royaLibrary .rec-eq{ display: inline-flex; gap: 2px; align-items: flex-end; height: 11px; }
 .rec-eq i, #royaLibrary .rec-eq i{ width: 2px; background: var(--ember); animation: recEq 1s ease-in-out infinite; }
@@ -11481,6 +11495,21 @@ body.rec-dock-on #royaLibrary.rec-view .mob > #recBody { padding-bottom: calc(9.
      people do from a phone, and the file is a tap away on the row. */
   
   .rec-trk, #royaLibrary .rec-trk{ grid-template-columns: 1.5rem 2.4rem 1fr auto auto auto; gap: 0.6rem; padding-top: 0.75rem; padding-bottom: 0.75rem; }
+  /* Queue and Share each get a full fingertip (44px). To make the room,
+     the length moves under the title instead of taking its own column. */
+  .rec-trk, #royaLibrary .rec-trk{
+    grid-template-columns: 1.5rem 2.4rem minmax(0, 1fr) 2.75rem 2.75rem;
+    grid-template-areas: "n play t add sh" "n play d add sh";
+    column-gap: 0.4rem; row-gap: 0;
+  }
+  .rec-trk-n, #royaLibrary .rec-trk-n{ grid-area: n; }
+  .rec-trk-play, #royaLibrary .rec-trk-play{ grid-area: play; }
+  .rec-trk-t, #royaLibrary .rec-trk-t{ grid-area: t; align-self: end; margin-left: 0.2rem; }
+  .rec-trk-d, #royaLibrary .rec-trk-d{ grid-area: d; align-self: start; margin: 0.3rem 0 0 0.2rem; }
+  .rec-trk-add, #royaLibrary .rec-trk-add{ grid-area: add; width: 2.75rem; height: 2.75rem; }
+  .rec-trk-add svg, #royaLibrary .rec-trk-add svg{ width: 18px; height: 18px; }
+  .rec-trk-sh, #royaLibrary .rec-trk-sh{ grid-area: sh; width: 2.75rem; height: 2.75rem; }
+  .rec-trk-sh svg, #royaLibrary .rec-trk-sh svg{ width: 18px; height: 18px; }
   /* the list reads at arm's length on a phone */
   .rec-trk-t, #royaLibrary .rec-trk-t{ font-size: 1.08rem; }
   .rec-trk-t.fa, #royaLibrary .rec-trk-t.fa{ font-size: 1.18rem; }
