@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 61 · last updated 2026-11-16 21:15 PST
+   Version 62 · last updated 2026-11-21 10:05 PST
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5234,6 +5234,7 @@
     cur = s;
     audio.src = s.audio;          /* never stamped — see the note above */
     lineIdx = -1;
+    if (typeof msMeta === "function") msMeta();
     getLyrics(s.cat);
   }
   function load(cat, andPlay, noHistory) {
@@ -5269,6 +5270,56 @@
   audio.addEventListener("pause", paintTransport);
   audio.addEventListener("timeupdate", onTime);
   audio.addEventListener("loadedmetadata", paintTransport);
+
+  /* ── playing on with the page out of sight ──────────────────────
+     Nothing here ever paused the music on purpose, but a phone treats
+     a page that has not told it what is playing as noise it may stop.
+     The Media Session gives the phone the song, the album and its
+     sleeve, so it shows them on the lock screen, in Control Centre and
+     in the Android notification, with play, pause, next, previous and
+     seeking that drive this same player. The element also goes into
+     the page, inline, because iOS keeps a detached one on a shorter
+     lead. */
+  audio.setAttribute("playsinline", "");
+  audio.setAttribute("aria-hidden", "true");
+  audio.hidden = true;
+  (document.body || document.documentElement).appendChild(audio);
+
+  var MS = ("mediaSession" in navigator) ? navigator.mediaSession : null;
+  function msAct(name, fn) { try { MS.setActionHandler(name, fn); } catch (e) { /* not offered here */ } }
+  function msMeta() {
+    if (!MS || !cur || typeof MediaMetadata === "undefined") return;
+    var a = BY_ALBUM[cur.album], art = [];
+    if (a) {
+      var base = "albums/flat/" + pad2(a.num);
+      art = [
+        { src: new URL(stamped(base + ".webp"), location.href).href, sizes: "560x560",   type: "image/webp" },
+        { src: new URL(stamped(base + ".jpg"),  location.href).href, sizes: "1200x1200", type: "image/jpeg" }
+      ];
+    }
+    try {
+      MS.metadata = new MediaMetadata({ title: cur.title, artist: "Chew Z", album: a ? a.title : "", artwork: art });
+    } catch (e) { /* an old browser's MediaMetadata — the music still plays */ }
+  }
+  function msPos() {
+    if (!MS || !MS.setPositionState) return;
+    var d = audio.duration;
+    if (!isFinite(d) || d <= 0) return;
+    try { MS.setPositionState({ duration: d, playbackRate: audio.playbackRate || 1, position: Math.min(audio.currentTime, d) }); } catch (e) {}
+  }
+  if (MS) {
+    audio.addEventListener("play",  function () { msMeta(); MS.playbackState = "playing"; msPos(); });
+    audio.addEventListener("pause", function () { MS.playbackState = "paused"; msPos(); });
+    audio.addEventListener("loadedmetadata", msPos);
+    audio.addEventListener("seeked", msPos);
+    msAct("play",  function () { if (cur) { var p = audio.play(); if (p && p.catch) p.catch(function () {}); } });
+    msAct("pause", function () { audio.pause(); });
+    msAct("previoustrack", function () { playPrev(); });
+    msAct("nexttrack",     function () { playNext(true); });
+    msAct("seekbackward", function (d) { audio.currentTime = Math.max(0, audio.currentTime - ((d && d.seekOffset) || 10)); });
+    msAct("seekforward",  function (d) { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + ((d && d.seekOffset) || 10)); });
+    msAct("seekto", function (d) { if (d && isFinite(d.seekTime)) audio.currentTime = d.seekTime; });
+  }
   /* What comes after this song: whatever is lined up in Up next first,
      otherwise the album's next track. Shared by the end of a song and
      the next button in the bar. At the end of an album the song's own
