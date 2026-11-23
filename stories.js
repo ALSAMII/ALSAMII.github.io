@@ -1,4 +1,4 @@
-/* Version 483 · last updated 2026-11-18 05:30 PST — Nos. 120 and 121 republished: new word counts */
+/* Version 484 · last updated 2026-11-22 20:45 PST — No. 123 added to Here Be Delos; narrations for Nos. 4, 106, 117 and 119 */
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -113,13 +113,15 @@ const STORIES = [
   {
     num: 4,
     title: "The Weeping Hour",
-    words: "11,200 words",
+    words: "11,400 words",
     hook: "One second the machine cannot account for",
     door: "Dose",
     room: "The Second They Took \u2014 the moment the machine edited out of you",
     key: "Kairos \u2014 felt time, dripped into the eyes drop by drop",
     notes: [2, 2, 1],
-    synopsis: "In Vellum, a machine curates every citizen's day down to the mood they wake into. One unaccounted-for second sends Daniel Voss to a dealer selling Kairos \u2014 felt time, drop by drop through the eyes \u2014 and toward the one truth the machine's mercy was built to spare him."
+    synopsis: "In Vellum, a machine curates every citizen's day down to the mood they wake into. One unaccounted-for second sends Daniel Voss to a dealer selling Kairos \u2014 felt time, drop by drop through the eyes \u2014 and toward the one truth the machine's mercy was built to spare him.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/04.mp3",
+    runtime: 71
   },
 
   {
@@ -1397,7 +1399,9 @@ const STORIES = [
     room: "Pattern of Life — forty-one mornings of being learned by heart, until the ordinary thing you do every day is the thing that marks you",
     key: "The pigeons — let go from a roof at first light, every morning of his life, by a man the sky has been studying from seven and a half thousand miles away",
     notes: [3, 3, 3],
-    synopsis: "Every morning at first light, Nasim Nazari climbs to the roof of his house in Maidan Shahr, an hour west of Kabul, and lets his pigeons go. He fixes radios and telephones in the bazaar. He has a wife who sews dresses and invents proverbs, and a daughter of eight who will not take off her pink sandals. High above the town there is a thin, patient buzzing that never stops. Nasim believes it is looking for somebody else. Seven and a half thousand miles away, in a cold metal trailer in the Nevada desert, Kayla Rourke works the night shift. She is a sensor operator: she points the camera of an unmanned Reaper, and when the order comes she holds the laser. She has been watching one house in Wardak for forty-one days. She knows the mulberry tree, the blue door that sticks, and the man who climbs to the roof every dawn and looks straight up at the sky. She writes it down in block capitals so that nobody can misread it — possible awareness of surveillance. The military has a phrase for what she is doing. Pattern of life: you watch a person long enough to learn what is ordinary for them, so that anything strange will stand out. The book follows them both through one morning that cannot be taken back, and the long years after it, from a roof in Afghanistan to a casino floor in Las Vegas where the eye in the sky is a dome of black glass. A man waiting for his bird is the most innocent thing in it. It is also the habit that marked him. From above, the two look exactly the same."
+    synopsis: "Every morning at first light, Nasim Nazari climbs to the roof of his house in Maidan Shahr, an hour west of Kabul, and lets his pigeons go. He fixes radios and telephones in the bazaar. He has a wife who sews dresses and invents proverbs, and a daughter of eight who will not take off her pink sandals. High above the town there is a thin, patient buzzing that never stops. Nasim believes it is looking for somebody else. Seven and a half thousand miles away, in a cold metal trailer in the Nevada desert, Kayla Rourke works the night shift. She is a sensor operator: she points the camera of an unmanned Reaper, and when the order comes she holds the laser. She has been watching one house in Wardak for forty-one days. She knows the mulberry tree, the blue door that sticks, and the man who climbs to the roof every dawn and looks straight up at the sky. She writes it down in block capitals so that nobody can misread it — possible awareness of surveillance. The military has a phrase for what she is doing. Pattern of life: you watch a person long enough to learn what is ordinary for them, so that anything strange will stand out. The book follows them both through one morning that cannot be taken back, and the long years after it, from a roof in Afghanistan to a casino floor in Las Vegas where the eye in the sky is a dome of black glass. A man waiting for his bird is the most innocent thing in it. It is also the habit that marked him. From above, the two look exactly the same.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/106.mp3",
+    runtime: 254
   },
 
   {
@@ -1538,7 +1542,9 @@ const STORIES = [
     room: "The Warm Room \u2014 where pain is not reduced but deposed, still there and governing nothing; where the committee that stands behind a person\u2019s shoulder calling them a fraud falls silent at last; and where two people thirty years married are held by something that appears to want nothing from them",
     key: "The poppy \u2014 ten thousand years of relief in one flower, met first as a small amber bottle from a kind, tired doctor and later as the cheaper, nearer thing. In time it lifts nobody to heaven; it only returns them to ordinary, and ordinary can be reached no other way",
     notes: [3, 3, 3],
-    synopsis: "Clare and Daniel met over a sentence and have spent the thirty years since putting the world into words \u2014 badly paid, perfectly matched, two writers whose first books were good and whose second ones will not come. When the city they built that life in grows too expensive to go on writing in, they do a brave and foolish thing: they sell what they have and buy a cheap, beautiful house at the end of the world, a dying coal town in the West Virginia mountains. For almost two years, in the gold light and the quiet, it works. They are happy. The work returns, better than it has ever been. Then, at the end of a March Thursday that was the best day they had had there, driving home over the mountain in the long gold light, a deer steps into the road. What the hospital sends them home with, for the long mending and the pain that will not fully leave, comes into the house looking exactly like mercy. One of them lives to set the whole of it down, nine years on, at the old desk: the warmth, the work it seemed to open, and the single night it closed."
+    synopsis: "Clare and Daniel met over a sentence and have spent the thirty years since putting the world into words \u2014 badly paid, perfectly matched, two writers whose first books were good and whose second ones will not come. When the city they built that life in grows too expensive to go on writing in, they do a brave and foolish thing: they sell what they have and buy a cheap, beautiful house at the end of the world, a dying coal town in the West Virginia mountains. For almost two years, in the gold light and the quiet, it works. They are happy. The work returns, better than it has ever been. Then, at the end of a March Thursday that was the best day they had had there, driving home over the mountain in the long gold light, a deer steps into the road. What the hospital sends them home with, for the long mending and the pain that will not fully leave, comes into the house looking exactly like mercy. One of them lives to set the whole of it down, nine years on, at the old desk: the warmth, the work it seemed to open, and the single night it closed.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/117.mp3",
+    runtime: 207
   },
 
   {
@@ -1562,7 +1568,9 @@ const STORIES = [
     room: "The Warehouse \u2014 a flooded hall in Los Angeles where thousands of small glass bulbs stand in black water on stems and a hundred strangers a night sit above the surface in the dark; a stage, a piano, three empty chairs, and a room that answers whatever it recognises with light and goes dark again when the music lets go",
     key: "The room itself \u2014 the machine built to answer memory with light, which brings up a handful of bulbs for anything it knows and drops them when the music does. It gives back only what it was given, which is why the one tune it cannot answer is the only thing in the hall telling the truth",
     notes: [2, 2, 3],
-    synopsis: "A pianist plays in a flooded warehouse in Los Angeles. Thousands of small glass bulbs stand in the black water on stems, and a hundred strangers a night sit above the surface in the dark. When he plays something the room remembers, a light comes on \u2014 he plays short things, a few seconds each, something once hummed at a sink, and each one brings up its handful of lights and lets them go. Nobody who leaves can remember a single bulb. Around the fiftieth minute, the room weeps. He believes he built it for his mother, and that she is sitting in the chair behind him tonight, eighty years old, with a blanket on her knees and a woman\u2019s hand on her shoulder. Tonight is the last night, and for the first time he has chosen the order: her memories newest first, back through the years to the bottom of the house she grew up in, to a courtyard in Tehran and a pool under a green canvas that nobody ever explained. Two people who have known the producer since school watch from a platform over the water, told only that the room was made for someone. Then his hands drift into a tune the room does not know, and no light answers, and a woman who has not spoken all night begins to hum."
+    synopsis: "A pianist plays in a flooded warehouse in Los Angeles. Thousands of small glass bulbs stand in the black water on stems, and a hundred strangers a night sit above the surface in the dark. When he plays something the room remembers, a light comes on \u2014 he plays short things, a few seconds each, something once hummed at a sink, and each one brings up its handful of lights and lets them go. Nobody who leaves can remember a single bulb. Around the fiftieth minute, the room weeps. He believes he built it for his mother, and that she is sitting in the chair behind him tonight, eighty years old, with a blanket on her knees and a woman\u2019s hand on her shoulder. Tonight is the last night, and for the first time he has chosen the order: her memories newest first, back through the years to the bottom of the house she grew up in, to a courtyard in Tehran and a pool under a green canvas that nobody ever explained. Two people who have known the producer since school watch from a platform over the water, told only that the room was made for someone. Then his hands drift into a tune the room does not know, and no light answers, and a woman who has not spoken all night begins to hum.",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/119.mp3",
+    runtime: 206
   },
 
   {
@@ -1599,6 +1607,17 @@ const STORIES = [
     key: "The Holy Children \u2014 dried mushrooms in a jar pressed into his hand at a party, which quiet the part of the mind that narrates, so that the maker comes through and every voice in the room sounds like a stranger\u2019s",
     notes: [3, 3, 3],
     synopsis: "Leila\u2019s father sang at weddings in Tehran until the year weddings stopped having singers. He had a saying about the rare ones, which she has kept and uses about anything she loves \u2014 a tree in flower, a boy with a hairbrush for a microphone: when she sang, the house went dark. It means that while it is happening, nobody can see anything else. Her husband has heard her say it a hundred times, and has never once heard her sing. Los Angeles, May 2026. Kian Rahimi is forty and has spent eleven years on the 405, seventy minutes each way to a job in Irvine he can do in his sleep. He is a happy man: a wife who says look at that about trees, a boy of eight who runs a radio station out of a dishwasher box, a dog who has eaten a sock. If he is missing anything, it lives in the car \u2014 the audiobooks he listens to on the drive, and a list on his phone, nine years long, of every place a story he loved pulled its punch. He has the dark version of all of them in his head. He has never written a word. One night in June he takes a jar out to the garage, lies down in the dark and turns off the lamp. Someone is waiting there. She knows the list. She tells the stories back to him, and he writes them down, and by morning he has finished the first thing in his life. It is the best thing he has ever made. He doesn\u2019t ask who is telling him."
+  },
+  {
+    num: 123,
+    title: "The One You Love Is Right Here",
+    words: "28,300 words",
+    hook: "A careful man, a stranger\u2019s tin on the shortest night of the year, and the first true thing he has said in two years",
+    door: "Dose",
+    room: "The Room at Ojai \u2014 a plain room at the back of an old ranch house, facing the mountain: a long low couch under a grey blanket, a clock that ticks, an old rug on the floor, and an old woman in a wooden chair who says nothing at all",
+    key: "A capsule the colour of sand \u2014 a molecule first made in a German laboratory in 1912, made rather than grown, which shows a person nothing that is not there. It switches off the fear, and takes away the reason not to tell the truth",
+    notes: [2, 2, 3],
+    synopsis: "Every morning at nine, on Westwood Boulevard, an old man raises the steel shutter of his rug shop by hand, and as it rattles up into its drum he sings one line of an eight-hundred-year-old poem. O you who went away on pilgrimage, where are you, where are you? Everybody who knows that line knows the one that comes after it. He never sings it. It says: the one you love is right here. Everybody lies. Mostly not the big lies. The small ones that hold a face in place, a dozen times a day: I\u2019m fine. It\u2019s going up. Nothing, just menus. And underneath all of them, older and quieter than the rest, the first lie of all, the one a person tells himself so early and so often that it stops sounding like a voice at all and starts sounding like silence. Farzad Karimi breaks airplane parts for a living. He loads them, slowly, until they fail, and writes down exactly where they were weakest. He is a careful man, living in a borrowed house in Mar Vista under the paper-bark trees, three streets from the hill where on a clear evening you can see the sea, and the dead man who owned that house asked him to look after its money. There is an envelope at the bottom of the kitchen drawer now, under the takeout menus. Nobody else has read it. Then the shortest night of the year, a neighbour\u2019s wild garden under a net of little lights, and a kind stranger holding out a tin. For a few hours the fear switches off, a fear he never knew he was carrying, and in the silence it leaves behind he hears his own voice telling the truth for the first time in his life. It is the first true thing he has said in two years. It will not be the last. It will not be the worst."
   }
 ];
 
@@ -1890,7 +1909,7 @@ const TRILOGIES = [
        book. */
     title: "Here Be Delos",
     label: "",
-    books: [100, 107, 109, 113, 114, 116, 117, 122],
+    books: [100, 107, 109, 113, 114, 116, 117, 122, 123],
     /* No numbering. Each book is a different person and a different
        substance in a different part of the world; there is no reading
        order and a "1 of 1" on the row would promise a sequence that
