@@ -1,4 +1,4 @@
-/* Version 484 · last updated 2026-11-22 20:45 PST — No. 123 added to Here Be Delos; narrations for Nos. 4, 106, 117 and 119 */
+/* Version 485 · last updated 2026-11-22 21:40 PST — Nos. 117 and 119: re-edited narrations under new file names (117-v2, 119-v2) */
 /* AUDIO IS HOSTED OFF THE REPO.
    Backblaze B2, public bucket "roya-audio". Every "audio:" below is a whole
    address, and both script.js and library/roya-library.js pass a whole address
@@ -1543,7 +1543,7 @@ const STORIES = [
     key: "The poppy \u2014 ten thousand years of relief in one flower, met first as a small amber bottle from a kind, tired doctor and later as the cheaper, nearer thing. In time it lifts nobody to heaven; it only returns them to ordinary, and ordinary can be reached no other way",
     notes: [3, 3, 3],
     synopsis: "Clare and Daniel met over a sentence and have spent the thirty years since putting the world into words \u2014 badly paid, perfectly matched, two writers whose first books were good and whose second ones will not come. When the city they built that life in grows too expensive to go on writing in, they do a brave and foolish thing: they sell what they have and buy a cheap, beautiful house at the end of the world, a dying coal town in the West Virginia mountains. For almost two years, in the gold light and the quiet, it works. They are happy. The work returns, better than it has ever been. Then, at the end of a March Thursday that was the best day they had had there, driving home over the mountain in the long gold light, a deer steps into the road. What the hospital sends them home with, for the long mending and the pain that will not fully leave, comes into the house looking exactly like mercy. One of them lives to set the whole of it down, nine years on, at the old desk: the warmth, the work it seemed to open, and the single night it closed.",
-    audio: "https://f005.backblazeb2.com/file/roya-audio/117.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/117-v2.mp3",
     runtime: 207
   },
 
@@ -1569,7 +1569,7 @@ const STORIES = [
     key: "The room itself \u2014 the machine built to answer memory with light, which brings up a handful of bulbs for anything it knows and drops them when the music does. It gives back only what it was given, which is why the one tune it cannot answer is the only thing in the hall telling the truth",
     notes: [2, 2, 3],
     synopsis: "A pianist plays in a flooded warehouse in Los Angeles. Thousands of small glass bulbs stand in the black water on stems, and a hundred strangers a night sit above the surface in the dark. When he plays something the room remembers, a light comes on \u2014 he plays short things, a few seconds each, something once hummed at a sink, and each one brings up its handful of lights and lets them go. Nobody who leaves can remember a single bulb. Around the fiftieth minute, the room weeps. He believes he built it for his mother, and that she is sitting in the chair behind him tonight, eighty years old, with a blanket on her knees and a woman\u2019s hand on her shoulder. Tonight is the last night, and for the first time he has chosen the order: her memories newest first, back through the years to the bottom of the house she grew up in, to a courtyard in Tehran and a pool under a green canvas that nobody ever explained. Two people who have known the producer since school watch from a platform over the water, told only that the room was made for someone. Then his hands drift into a tune the room does not know, and no light answers, and a woman who has not spoken all night begins to hum.",
-    audio: "https://f005.backblazeb2.com/file/roya-audio/119.mp3",
+    audio: "https://f005.backblazeb2.com/file/roya-audio/119-v2.mp3",
     runtime: 206
   },
 
