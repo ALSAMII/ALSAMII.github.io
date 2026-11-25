@@ -1,6 +1,6 @@
 /* ══════════════════ THE LISTENING ROOM: STAGE AND STRIP ══════════════════
-   Version 1 · last updated 2026-11-25 06:55 PST
-   Served as assets/lrstage/lrstage.css?v=1. Goes with lrstage.js; see that
+   Version 3 · last updated 2026-11-25 07:10 PST — soft vignette: the covers fade into the black
+   Served as assets/lrstage/lrstage.css?v=3. Goes with lrstage.js; see that
    file for what this is. Every selector is scoped to #royaLibrary and named
    .lst-something, except where it sets the library's own row parts
    (.lr-syn, .lr-acts, .lr-read) inside the stage — and only inside it.
@@ -37,6 +37,11 @@
 #royaLibrary .lst-slide img {
   display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
   user-select: none; -webkit-user-select: none;
+  /* the soft vignette: every edge of the render dissolves into the page's
+     black in an oval, so the books float in the dark instead of sitting on
+     it as a lit rectangle — the lit shelf and the wood floor go first */
+  -webkit-mask-image: radial-gradient(ellipse 72% 68% at 50% 47%, #000 52%, transparent 100%);
+          mask-image: radial-gradient(ellipse 72% 68% at 50% 47%, #000 52%, transparent 100%);
 }
 
 /* the arrows, desktop only; a phone swipes */
@@ -65,7 +70,7 @@
 
 /* ── the strip ── */
 #royaLibrary .lst-strip {
-  display: flex; gap: .85rem;
+  display: flex; gap: 1.5rem;
   overflow-x: auto; scroll-snap-type: x proximity;
   padding: 1.5rem 0 1.8rem;
   scrollbar-width: thin; scrollbar-color: rgba(199, 148, 61, .35) transparent;
@@ -78,16 +83,19 @@
 #royaLibrary .lst-th:hover, #royaLibrary .lst-th.is-on { opacity: 1 }
 #royaLibrary .lst-th img {
   display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
-  border-radius: 2px; outline: 1px solid transparent; outline-offset: 3px;
+  /* the same vignette, a touch gentler at this size */
+  -webkit-mask-image: radial-gradient(ellipse 75% 72% at 50% 48%, #000 55%, transparent 100%);
+          mask-image: radial-gradient(ellipse 75% 72% at 50% 48%, #000 55%, transparent 100%);
 }
-#royaLibrary .lst-th.is-on img { outline-color: var(--gold-lt) }
 #royaLibrary .lst-cap {
   display: block; margin-top: .5rem;
   font-family: var(--cond); font-size: .75rem; letter-spacing: .03em; line-height: 1.3;
   color: var(--dust); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 #royaLibrary .lst-cap b { color: var(--gold-num); font-weight: 500; margin-right: .35em }
-#royaLibrary .lst-th.is-on .lst-cap { color: var(--bone) }
+/* with no frame to draw round a faded picture, the chosen book is marked by
+   its caption: full strength, in gold */
+#royaLibrary .lst-th.is-on .lst-cap { color: var(--gold-lt) }
 
 /* ── the phone: stage, then the words, then the strip ──
    The Listen pill and the running time step down here. The row sets them both
@@ -100,7 +108,7 @@
   #royaLibrary .lst-info .lr-syn { -webkit-line-clamp: 5; line-clamp: 5 }
   #royaLibrary .lst-info .lr-acts { font-size: .6875rem; gap: .9rem }
   #royaLibrary .lst-info .lr-read { font-size: .95rem }
-  #royaLibrary .lst-strip { gap: .65rem; padding: 1.2rem 0 1.4rem }
+  #royaLibrary .lst-strip { gap: 1rem; padding: 1.2rem 0 1.4rem }
   #royaLibrary .lst-th { flex-basis: 6.6rem; width: 6.6rem }
   #royaLibrary .lst-cap { font-size: .6875rem }
 }
@@ -110,5 +118,4 @@
   background: rgba(243, 234, 214, .85); border-color: rgba(138, 101, 36, .4); color: #3b3122;
 }
 :root[data-lt="light-off"] #royaLibrary .lst-arw:hover { background: #f3ead6; border-color: #8a6524 }
-:root[data-lt="light-off"] #royaLibrary .lst-th.is-on img { outline-color: #8a6524 }
 :root[data-lt="light-off"] #royaLibrary .lst-rail:focus-visible { box-shadow: 0 0 0 1px #8a6524 }
