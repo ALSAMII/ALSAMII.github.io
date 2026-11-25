@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<!-- Version 766 · last updated 2026-11-22 21:40 PST
+<!-- Version 767 · last updated 2026-11-25 07:00 PST
 <!-- The page opens zoomed out a little, so a phone shows a whole card —
      picture, title and summary — instead of most of one. 0.85 is the
      dial: 1 is the browser's own scale, lower shows more and sets the
@@ -176,6 +176,11 @@
      .pick-list) and overrides a handful of them; every selector in it is
      scoped to #royaLibrary and named .lrs-something. -->
 <link rel="stylesheet" href="assets/lrseries/lrseries.css?v=5">
+<!-- The Listening Room as a stage and a strip: one book large, every
+     recording in a strip beneath that scrolls sideways. Rearranges the list
+     library/roya-library.js draws, from outside; delete this line and its
+     script below to put the list back. -->
+<link rel="stylesheet" href="assets/lrstage/lrstage.css?v=1">
 <!-- The Library's control bar (count, search, series, sort pills, grid/list)
      in Listen's dress. Rearranges what library/roya-library.js draws from
      outside; delete this line and its script below to take it off. -->
@@ -1398,5 +1403,8 @@
      survives the next build of the library. Deleting this line and its
      stylesheet above takes it off again; nothing else has to be unpicked. -->
 <script src="assets/lrseries/lrseries.js?v=2" defer></script>
+<!-- The Listening Room's stage and strip (see the stylesheet above). After
+     the series filter, so it reads the rows that filter leaves. -->
+<script src="assets/lrstage/lrstage.js?v=1" defer></script>
 </body>
 </html>
