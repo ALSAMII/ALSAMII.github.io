@@ -1,6 +1,7 @@
 /* ══════════════════ THE LISTENING ROOM: STAGE AND STRIP ══════════════════
-   Version 1 · last updated 2026-11-25 06:55 PST
-   Served as assets/lrstage/lrstage.js?v=1 — keep the two numbers equal.
+   Version 3 · last updated 2026-11-25 07:50 PST — Share on the stage; a shared link
+   (#listen-NN-slug) opens Listen with that book on stage
+   Served as assets/lrstage/lrstage.js?v=3 — keep the two numbers equal.
 
    The Listening Room used to be a column of rows: a standing 3D cover on the
    left, the words on the right, one book under another. This turns it into
@@ -59,6 +60,51 @@
 
   var sel = null;          /* the book on stage, by number; kept across redraws */
 
+  /* ── sharing a recording ──
+     The address handed out is a real page, share/listen-NN-slug.html, made by
+     build-share-pages.js beside the book's own share/NN-slug.html. It carries
+     the same cover in its preview, and sends whoever opens it to
+     #listen-NN-slug, which this file answers by opening Listen with that book
+     on the stage. The slug is built exactly as the library and script.js
+     build theirs, so the three cannot drift apart. */
+  var SHARE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.4 10.8l7.2-4.2M8.4 13.2l7.2 4.2"/></svg>';
+  var STORY = {};
+  if (typeof STORIES !== "undefined" && Array.isArray(STORIES)) {
+    STORIES.forEach(function (b) { if (b) STORY[b.num] = b; });
+  }
+  function slugFor(b) {
+    return pad(b.num) + "-" + String(b.title).toLowerCase()
+      .replace(/['\u2019]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+  function listenShareUrl(n) {
+    var b = STORY[n];
+    if (!b) return location.origin + location.pathname;
+    var base = location.pathname.replace(/[^\/]*$/, "");
+    return location.origin + base + "share/listen-" + slugFor(b) + ".html";
+  }
+  function shareListen(n, el) {
+    var b = STORY[n], url = listenShareUrl(n);
+    var say = function (word) {
+      if (!el) return;
+      el.setAttribute("data-said", word);
+      clearTimeout(el._t);
+      el._t = setTimeout(function () { el.removeAttribute("data-said"); }, 1600);
+    };
+    if (navigator.share) {
+      navigator.share({ title: (b ? b.title + " \u2014 read aloud" : "Listen") + " \u00b7 Chew Z", url: url })
+        .catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { say("Link copied"); })
+        .catch(function () { say("Copy failed"); });
+      return;
+    }
+    window.open(url, "_blank", "noopener");
+  }
+
   var ARW_L = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
   var ARW_R = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
 
@@ -99,10 +145,12 @@
           '<button type="button" class="lst-arw lst-prev" data-lststep="-1" aria-label="Previous recording">' + ARW_L + "</button>" +
           '<button type="button" class="lst-arw lst-next" data-lststep="1" aria-label="Next recording">' + ARW_R + "</button>" +
           '<span class="lst-zoomslot"></span>' +
+          '<button type="button" class="lst-share" data-lstshare="1" aria-label="Share this recording" title="Share">' + SHARE_ICON + "</button>" +
         "</div>" +
         '<div class="lst-info" aria-live="polite"></div>' +
       "</div>" +
-      '<div class="lst-strip">' + thumbs + "</div>";
+      '<div class="lst-strip">' + thumbs + "</div>" +
+      '<div class="lst-dots" role="group" aria-label="Pages of the strip"></div>';
     return st;
   }
 
@@ -142,7 +190,11 @@
       if (me) on = b;
       if (b.getAttribute("aria-current") !== String(me)) b.setAttribute("aria-current", String(me));
     });
-    if (on) {
+    /* only when the choice has just changed: a redraw elsewhere on the page
+       must not pull the strip back from wherever the reader scrolled it */
+    var moved = st.getAttribute("data-shown") !== String(sel);
+    if (moved) st.setAttribute("data-shown", String(sel));
+    if (on && (moved || instant)) {
       var pad = 16, l = on.offsetLeft - pad, r = on.offsetLeft + on.offsetWidth + pad - strip.clientWidth;
       if (strip.scrollLeft > l) strip.scrollTo({ left: l, behavior: instant ? "auto" : "smooth" });
       else if (strip.scrollLeft < r) strip.scrollTo({ left: r, behavior: instant ? "auto" : "smooth" });
@@ -152,11 +204,41 @@
     if (prev.disabled !== (i === 0)) prev.disabled = i === 0;
     if (next.disabled !== (i === nums.length - 1)) next.disabled = i === nums.length - 1;
 
+    dots(st);
+
     if (instant) {
       var rail = st.querySelector(".lst-rail");
       var slide = rail.children[i];
       if (slide) rail.scrollLeft = slide.offsetLeft;
     }
+  }
+
+  /* ── the dots under the strip ──
+     One per strip-width of books, not one per book: thirty-five dots would
+     be wider than a phone. The lit one is the stretch of the strip on show;
+     a tap on a dot scrolls the strip to that stretch. Rebuilt only when the
+     number of pages changes, so scrolling just moves the light. */
+  function dots(st) {
+    var strip = st.querySelector(".lst-strip"), box = st.querySelector(".lst-dots");
+    if (!strip || !box) return;
+    var w = strip.clientWidth || 1;
+    var pages = Math.max(1, Math.ceil((strip.scrollWidth - 2) / w));
+    if (pages < 2) { if (box.childElementCount) box.innerHTML = ""; if (!box.hidden) box.hidden = true; return; }
+    if (box.hidden) box.hidden = false;
+    if (box.childElementCount !== pages) {
+      var h = "";
+      for (var p = 0; p < pages; p++) {
+        h += '<button type="button" class="lst-dot" data-lstpage="' + p + '" aria-label="Page ' + (p + 1) + " of " + pages + '"></button>';
+      }
+      box.innerHTML = h;
+    }
+    var max = strip.scrollWidth - w;
+    var cur = max > 0 ? Math.round(strip.scrollLeft / max * (pages - 1)) : 0;
+    [].forEach.call(box.children, function (d, i) {
+      setOn(d, i === cur);
+      var a = i === cur ? "true" : "false";
+      if (d.getAttribute("aria-current") !== a) d.setAttribute("aria-current", a);
+    });
   }
 
   function go(st, n, smooth) {
@@ -181,6 +263,43 @@
         if (n !== sel) { sel = n; paint(st, shownRows(), false); }
       });
     }, { passive: true });
+    /* A trackpad. Two fingers sideways on the stage fire a stream of small
+       wheel events, and letting the browser scroll a snapping row with them
+       fought the snap — a judder, then a jump. Taken over here instead: the
+       sideways part of the gesture is added up, and one push past the
+       threshold moves exactly one book, then the rest of that gesture is
+       ignored. It also stops the push reaching the browser, which on a Mac
+       otherwise reads a rightward swipe at the first book as "go Back". */
+    var acc = 0, lock = 0;
+    rail.addEventListener("wheel", function (e) {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;   /* page scroll */
+      e.preventDefault();
+      var now = Date.now();
+      if (now < lock) { lock = now + 180; return; }          /* same gesture */
+      acc += e.deltaX;
+      if (Math.abs(acc) > 40) {
+        step(st, acc > 0 ? 1 : -1);
+        acc = 0;
+        lock = now + 350;
+      }
+    }, { passive: false });
+
+    /* The strip scrolls freely, but a sideways push past either end goes
+       nowhere rather than on to the browser's Back and Forward. */
+    var strip = st.querySelector(".lst-strip");
+    strip.addEventListener("wheel", function (e) {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      var max = strip.scrollWidth - strip.clientWidth;
+      if ((e.deltaX < 0 && strip.scrollLeft <= 0) || (e.deltaX > 0 && strip.scrollLeft >= max - 1)) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    var dt = 0;
+    strip.addEventListener("scroll", function () {
+      cancelAnimationFrame(dt);
+      dt = requestAnimationFrame(function () { dots(st); });
+    }, { passive: true });
+
     rail.addEventListener("keydown", function (e) {
       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
       e.preventDefault();
@@ -249,9 +368,48 @@
     if (!st) return;
     var th = e.target.closest("[data-lstn]");
     if (th && st.contains(th)) { go(st, +th.getAttribute("data-lstn"), true); return; }
+    var dp = e.target.closest("[data-lstpage]");
+    if (dp && st.contains(dp)) {
+      var strip = st.querySelector(".lst-strip"), pages = st.querySelector(".lst-dots").childElementCount;
+      var max = strip.scrollWidth - strip.clientWidth;
+      strip.scrollTo({ left: pages > 1 ? max * (+dp.getAttribute("data-lstpage")) / (pages - 1) : 0, behavior: "smooth" });
+      return;
+    }
+    var sh = e.target.closest("[data-lstshare]");
+    if (sh && st.contains(sh)) { shareListen(sel, sh); return; }
     var sp = e.target.closest("[data-lststep]");
     if (sp && st.contains(sp)) { step(st, +sp.getAttribute("data-lststep")); }
   });
+
+  /* ── arriving from a shared recording ──
+     #listen-NN-slug (or just #listen-NN): open Listen with that book on the
+     stage, and bring the stage into view. The library draws Listen when its
+     own Listen tab is pressed, so that is what is pressed; then the stage is
+     waited for, because it is built a frame or two after the library draws. */
+  function fromHash() {
+    var m = /^#listen-0*(\d+)/.exec(String(location.hash));
+    if (!m) return false;
+    var n = +m[1];
+    if (!STORY[n] || !STORY[n].audio) return false;
+    sel = n;
+    var tries = 0;
+    (function wait() {
+      var tab = ROOT.querySelector('[data-view="listening"]');
+      var st = ROOT.querySelector(".lst");
+      if (!st || !ROOT.querySelector(".lr-list")) {
+        if (tab && !ROOT.querySelector(".lr-list")) tab.click();
+        if (++tries < 80) setTimeout(wait, 100);
+        return;
+      }
+      paint(st, shownRows(), true);
+      var y = st.getBoundingClientRect().top + window.pageYOffset - 90;
+      window.scrollTo(0, Math.max(0, y));
+      st.scrollIntoView && st.scrollIntoView({ block: "center" });
+    })();
+    return true;
+  }
+  fromHash();
+  window.addEventListener("hashchange", fromHash);
 
   /* A resize changes the slide width; put the chosen book back on stage. */
   var rz = 0;

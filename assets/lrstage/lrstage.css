@@ -1,6 +1,7 @@
 /* ══════════════════ THE LISTENING ROOM: STAGE AND STRIP ══════════════════
-   Version 3 · last updated 2026-11-25 07:10 PST — soft vignette: the covers fade into the black
-   Served as assets/lrstage/lrstage.css?v=3. Goes with lrstage.js; see that
+   Version 6 · last updated 2026-11-25 08:05 PST — Read instead to the right margin;
+   the zoom on the cover's top-left corner, Share alone on the right
+   Served as assets/lrstage/lrstage.css?v=6. Goes with lrstage.js; see that
    file for what this is. Every selector is scoped to #royaLibrary and named
    .lst-something, except where it sets the library's own row parts
    (.lr-syn, .lr-acts, .lr-read) inside the stage — and only inside it.
@@ -61,20 +62,74 @@
 #royaLibrary .lst-next { right: .75rem }
 
 /* the library's own zoom button, sat on the stage's corner */
-#royaLibrary .lst-zoomslot .lr-zoom { top: .6rem; right: .6rem; z-index: 2 }
+#royaLibrary .lst-zoomslot .lr-zoom { top: .6rem; left: .6rem; right: auto; z-index: 2 }
+
+/* Share, beside the zoom: the same round mark, so the two read as a pair */
+#royaLibrary .lst-share {
+  position: absolute; top: .6rem; right: .6rem; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  width: 1.5rem; height: 1.5rem; padding: 0; border-radius: 50%;
+  background: rgba(11, 9, 7, .55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  border: 1px solid rgba(233, 223, 201, .35); color: #e9dfc9; cursor: pointer;
+  transition: background .25s ease, border-color .25s ease;
+}
+#royaLibrary .lst-share svg { width: .75rem; height: .75rem; display: block; fill: none;
+  stroke: currentColor; stroke-width: 1.6 }
+#royaLibrary .lst-share:hover { background: rgba(11, 9, 7, .8); border-color: var(--gold-lt) }
+/* "Link copied", where there is no share sheet: a word under the button */
+#royaLibrary .lst-share[data-said]::after {
+  content: attr(data-said); position: absolute; top: calc(100% + .45rem); right: 0;
+  white-space: nowrap; padding: .3rem .55rem; border-radius: 3px;
+  background: rgba(11, 9, 7, .9); border: 1px solid rgba(233, 223, 201, .25);
+  font-family: var(--cond); font-size: .6875rem; letter-spacing: .08em; color: var(--bone);
+}
 
 /* ── the words: the row's own parts, given the room the stage leaves ── */
 #royaLibrary .lst-info { display: flex; flex-direction: column; gap: .7rem; min-width: 0 }
 #royaLibrary .lst-info .lr-syn { -webkit-line-clamp: 8; line-clamp: 8; margin: 0 }
-#royaLibrary .lst-info .lr-acts { margin-top: .3rem }
+#royaLibrary .lst-info .lr-acts { margin-top: .3rem; align-items: center; row-gap: .8rem }
+/* the running time beside the Listen mark rather than under it, on the same
+   line; Read instead follows on that line if it fits and drops under the
+   pill if it does not, which is what the row's own flex-wrap does */
+#royaLibrary .lst-info .lr-lsn { flex-direction: row; align-items: center; gap: .85em }
+/* Read instead runs out to the column's right margin: margin-left:auto takes
+   whatever the line has left, so it sits flush right on the line it shares
+   with Listen, and flush right on its own line if it has to wrap */
+#royaLibrary .lst-info .lr-read { margin-top: 0; margin-left: auto }
 
 /* ── the strip ── */
 #royaLibrary .lst-strip {
   display: flex; gap: 1.5rem;
   overflow-x: auto; scroll-snap-type: x proximity;
-  padding: 1.5rem 0 1.8rem;
-  scrollbar-width: thin; scrollbar-color: rgba(199, 148, 61, .35) transparent;
+  padding: 1.5rem 0 .4rem;
+  /* no scroll bar: the dots below say where you are. contain keeps a
+     sideways swipe at either end from becoming the browser's Back. */
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
 }
+#royaLibrary .lst-strip::-webkit-scrollbar { display: none }
+/* a trackpad or mouse scrolls the strip freely; snapping is for fingers,
+   where it helps, and on a trackpad it fights the glide */
+@media (hover: hover) and (pointer: fine) {
+  #royaLibrary .lst-strip { scroll-snap-type: none }
+}
+
+/* ── the dots ── */
+#royaLibrary .lst-dots {
+  display: flex; justify-content: center; gap: .55rem;
+  padding: 1.1rem 0 1.9rem;
+}
+#royaLibrary .lst-dots[hidden] { display: none }
+#royaLibrary .lst-dot {
+  width: .45rem; height: .45rem; padding: 0; border: 0; border-radius: 999px;
+  background: rgba(221, 210, 191, .22); cursor: pointer;
+  transition: width .25s ease, background-color .25s ease;
+}
+#royaLibrary .lst-dot:hover { background: rgba(221, 210, 191, .45) }
+#royaLibrary .lst-dot.is-on { width: 1.35rem; background: var(--gold-lt) }
+/* a bigger target than the mark: the dot is small, the finger is not */
+#royaLibrary .lst-dot { position: relative }
+#royaLibrary .lst-dot::after { content: ""; position: absolute; inset: -.6rem -.25rem }
 #royaLibrary .lst-th {
   flex: 0 0 10.5rem; width: 10.5rem; min-width: 0; scroll-snap-align: start;
   background: none; border: 0; padding: 0; cursor: pointer; text-align: left;
@@ -106,9 +161,11 @@
   #royaLibrary .lst-arw { display: none }
   #royaLibrary .lst-info { gap: .55rem }
   #royaLibrary .lst-info .lr-syn { -webkit-line-clamp: 5; line-clamp: 5 }
-  #royaLibrary .lst-info .lr-acts { font-size: .6875rem; gap: .9rem }
+  #royaLibrary .lst-info .lr-acts { font-size: .6875rem; gap: .9rem 1.1rem }
+  #royaLibrary .lst-share { width: 1.75rem; height: 1.75rem }
   #royaLibrary .lst-info .lr-read { font-size: .95rem }
-  #royaLibrary .lst-strip { gap: 1rem; padding: 1.2rem 0 1.4rem }
+  #royaLibrary .lst-strip { gap: 1rem; padding: 1.2rem 0 .3rem }
+  #royaLibrary .lst-dots { padding: 1rem 0 1.6rem }
   #royaLibrary .lst-th { flex-basis: 6.6rem; width: 6.6rem }
   #royaLibrary .lst-cap { font-size: .6875rem }
 }
