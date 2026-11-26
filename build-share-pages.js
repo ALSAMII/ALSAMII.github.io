@@ -20,6 +20,14 @@
 
    Then commit the /share folder. (build-feeds.js still handles feed.xml
    and sitemap.xml — this is a separate step.)
+
+   Recordings, too — added 2026-11-25
+   ----------------------------------
+   Every book with a recording (an audio: field in stories.js) also gets
+   /share/listen-<slug>.html: the same cover in its preview, a title that
+   says it is read aloud, and a redirect to  #listen-<slug> , which
+   assets/lrstage/lrstage.js answers by opening Listen with that book on
+   the stage. Add a narration and rerun this; its page appears.
    ============================================================ */
 
 const fs = require("fs");
@@ -99,7 +107,15 @@ function coverSize(file) {
   return null;
 }
 
-function page(s) {
+/* " · 3h 26m", from stories.js' runtime (whole minutes), or nothing. */
+function runtime(s) {
+  const m = +s.runtime;
+  if (!m) return "";
+  const h = Math.floor(m / 60), r = m % 60;
+  return " · " + (h ? `${h}h ${String(r).padStart(2, "0")}m` : `${r}m`);
+}
+
+function page(s, listen) {
   const slug = slugFor(s);
   const coverFile = path.join("covers", pad(s.num) + ".jpg");
   const cover = `${SITE}/covers/${pad(s.num)}.jpg`;
@@ -108,9 +124,9 @@ function page(s) {
     ? `<meta property="og:image:width" content="${size.width}">\n` +
       `<meta property="og:image:height" content="${size.height}">\n`
     : "";
-  const target = `${SITE}/#${slug}`;
-  const title = `${s.title} — Chew Z`;
-  const desc = blurb(s);
+  const target = listen ? `${SITE}/#listen-${slug}` : `${SITE}/#${slug}`;
+  const title = listen ? `${s.title} — read aloud · Chew Z` : `${s.title} — Chew Z`;
+  const desc = listen ? `Read aloud${runtime(s)}. ${blurb(s)}` : blurb(s);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -184,4 +200,12 @@ for (const s of STORIES) {
   written++;
 }
 
-console.log(`Wrote ${written} share pages into /${OUT}`);
+let heard = 0;
+for (const s of STORIES) {
+  if (!s.audio) continue;
+  const file = path.join(OUT, "listen-" + slugFor(s) + ".html");
+  fs.writeFileSync(file, page(s, true));
+  heard++;
+}
+
+console.log(`Wrote ${written} share pages into /${OUT}, and ${heard} for recordings (listen-*.html)`);

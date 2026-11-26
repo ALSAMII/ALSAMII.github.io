@@ -1,7 +1,7 @@
 /* ══════════════════ THE LISTENING ROOM: STAGE AND STRIP ══════════════════
-   Version 3 · last updated 2026-11-25 07:50 PST — Share on the stage; a shared link
-   (#listen-NN-slug) opens Listen with that book on stage
-   Served as assets/lrstage/lrstage.js?v=3 — keep the two numbers equal.
+   Version 4 · last updated 2026-11-26 07:30 PST — Share is a word beside the title,
+   no longer an icon on the cover; the header's foot measured for the bar
+   Served as assets/lrstage/lrstage.js?v=4 — keep the two numbers equal.
 
    The Listening Room used to be a column of rows: a standing 3D cover on the
    left, the words on the right, one book under another. This turns it into
@@ -67,7 +67,6 @@
      #listen-NN-slug, which this file answers by opening Listen with that book
      on the stage. The slug is built exactly as the library and script.js
      build theirs, so the three cannot drift apart. */
-  var SHARE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.4 10.8l7.2-4.2M8.4 13.2l7.2 4.2"/></svg>';
   var STORY = {};
   if (typeof STORIES !== "undefined" && Array.isArray(STORIES)) {
     STORIES.forEach(function (b) { if (b) STORY[b.num] = b; });
@@ -145,7 +144,6 @@
           '<button type="button" class="lst-arw lst-prev" data-lststep="-1" aria-label="Previous recording">' + ARW_L + "</button>" +
           '<button type="button" class="lst-arw lst-next" data-lststep="1" aria-label="Next recording">' + ARW_R + "</button>" +
           '<span class="lst-zoomslot"></span>' +
-          '<button type="button" class="lst-share" data-lstshare="1" aria-label="Share this recording" title="Share">' + SHARE_ICON + "</button>" +
         "</div>" +
         '<div class="lst-info" aria-live="polite"></div>' +
       "</div>" +
@@ -171,7 +169,20 @@
     if (info.getAttribute("data-n") !== String(sel)) {
       info.setAttribute("data-n", String(sel));
       info.innerHTML = "";
-      [".lr-t", ".lr-syn", ".lr-acts"].forEach(function (q) {
+      /* the title, with Share beside it as a word in the Read instead face */
+      var head = document.createElement("div");
+      head.className = "lst-head";
+      var t = row.querySelector(".lr-t");
+      if (t) head.appendChild(t.cloneNode(true));
+      var sh = document.createElement("button");
+      sh.type = "button";
+      sh.className = "lst-sharetxt";
+      sh.setAttribute("data-lstshare", "1");
+      sh.setAttribute("aria-label", "Share this recording");
+      sh.textContent = "Share";
+      head.appendChild(sh);
+      info.appendChild(head);
+      [".lr-syn", ".lr-acts"].forEach(function (q) {
         var el = row.querySelector(q);
         if (el) info.appendChild(el.cloneNode(true));
       });
@@ -322,6 +333,7 @@
   function apply() {
     var list = ROOT.querySelector(".lr-list");
     if (!list) return;
+    watchHead();
     var rows = shownRows();
     var st = ROOT.querySelector(".lst");
     if (!rows.length) {
@@ -342,6 +354,35 @@
     wire(st);
     paint(st, rows, true);
   }
+
+  /* ── where the header ends, for the bar that locks under it ──
+     The phone header folds down by about 40px once the page scrolls (its logo
+     row shrinks), so its foot is measured live, not once: a ResizeObserver on
+     the header re-measures every time it changes height, and moves to the new
+     header when the library redraws one. The figure goes in --lst-top, which
+     lrstage.css uses to hold the Recordings bar at that foot. (The Library's
+     own bar does the same with --lb-top, but that observer stays on the
+     Library's header and goes stale once Listen is drawn.) */
+  var headSeen = null;
+  var headRO = window.ResizeObserver ? new ResizeObserver(function () { headTop(); }) : null;
+  function headTop() {
+    var h = headSeen;
+    if (!h || !h.isConnected) return;
+    var t = parseFloat(getComputedStyle(h).top) || 0;
+    var v = Math.round(t + h.getBoundingClientRect().height) + "px";
+    if (ROOT.style.getPropertyValue("--lst-top") !== v) ROOT.style.setProperty("--lst-top", v);
+  }
+  function watchHead() {
+    var h = ROOT.querySelector(".mob-head") || ROOT.querySelector(".dnav");
+    if (!h) return;
+    if (h !== headSeen) {
+      if (headRO && headSeen) headRO.unobserve(headSeen);
+      headSeen = h;
+      if (headRO) headRO.observe(h);
+    }
+    headTop();
+  }
+  if (!headRO) ROOT.addEventListener("scroll", headTop, { passive: true, capture: true });
 
   var queued = false;
   function schedule() {
