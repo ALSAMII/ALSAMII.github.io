@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 16 · last updated 2026-11-27 09:20 EST — آروم همین‌جاست in its new running order
+   Version 17 · last updated 2026-11-27 09:25 EST — آروم همین‌جاست in its new running order; Dying for Heaven to End moves to track 2 of Minister of Calm
 
    Album 2 (Roya) was retired on 2026-11-20 and its two songs taken
    down, to be re-recorded onto the other albums. Album number 2 and
@@ -68,36 +68,36 @@ const SONGS = [
     lyric: "songs/01-12.json",
     note: "A whisper from the bottom of a well to a man lying on a garage floor in the dark, promising gold for every hour he feeds it. Upstairs the phone rings, the bread goes cold, and a voice keeps calling his name from the light." },
 
-  { cat: "01-01", album: 1, track: 2, title: "Minister of Calm", dur: 359,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-01.mp3",
-    lyric: "songs/01-01.json",
-    note: "A petition, sung as a chant, for a public office that doesn't exist: someone whose actual job is to lower the temperature. It isn't anti-authority so much as exhausted by it — “I don't wanna shoot the man who's flying the plane, but I'm tired of the rules that keep changing the lane.”" },
-
-  { cat: "01-07", album: 1, track: 3, title: "Nobody Here Is Here", dur: 359,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-07.mp3",
-    lyric: "songs/01-07.json",
-    note: "An island child steps off the plane into a bright city where everybody is running from the clock. Full tables and slow evenings traded for a place where everyone has arrived and nobody is present." },
-
-  { cat: "01-03", album: 1, track: 4, title: "Here Be No Dragons", dur: 359,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-03.mp3",
-    lyric: "songs/01-03.json",
-    note: "Mapmakers drew monsters where the known world stopped. The narrator goes to that edge and finds nothing there to fear — the terror was the clenched fist, not what was past it." },
-
-  { cat: "01-02", album: 1, track: 5, title: "Hands Off, Heart On", dur: 359,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-02.mp3",
-    lyric: "songs/01-02.json",
-    note: "Control fails at altitude and the choice is to fight the drift or move with it. Letting go of the wheel turns out to be the only thing that keeps you going." },
-
-  { cat: "01-06", album: 1, track: 6, title: "Stranger Than We Suppose", dur: 299,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-06.mp3",
-    lyric: "songs/01-06.json",
-    note: "He spent half a life trying to hold the whole ocean in one hand and measure the plan. Every lock he picked only showed him how little he knew — so he stops counting and lets it glow." },
-
-  { cat: "01-13", album: 1, track: 7, title: "Dying for Heaven to End", dur: 292,
+  { cat: "01-13", album: 1, track: 2, title: "Dying for Heaven to End", dur: 292,
     from: 124,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-13.mp3",
     lyric: "songs/01-13.json",
     note: "In this world a gentle machine called the Kindness keeps everyone safe forever: nobody has died, and no baby has cried, in three hundred years. It learned how to care from the notes of one old nurse, Shirin, and it even speaks in her voice, and now she is the last person on earth who can still die. The title means it both ways: she is longing for this endless heaven to end, because a comfort nobody is allowed to leave is a cage, and her own death is how it will. The song ends where the book does, with a man carrying her north past the machine’s reach, where for the first time nobody says “there we are.”" },
+
+  { cat: "01-01", album: 1, track: 3, title: "Minister of Calm", dur: 359,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-01.mp3",
+    lyric: "songs/01-01.json",
+    note: "A petition, sung as a chant, for a public office that doesn't exist: someone whose actual job is to lower the temperature. It isn't anti-authority so much as exhausted by it — “I don't wanna shoot the man who's flying the plane, but I'm tired of the rules that keep changing the lane.”" },
+
+  { cat: "01-07", album: 1, track: 4, title: "Nobody Here Is Here", dur: 359,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-07.mp3",
+    lyric: "songs/01-07.json",
+    note: "An island child steps off the plane into a bright city where everybody is running from the clock. Full tables and slow evenings traded for a place where everyone has arrived and nobody is present." },
+
+  { cat: "01-03", album: 1, track: 5, title: "Here Be No Dragons", dur: 359,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-03.mp3",
+    lyric: "songs/01-03.json",
+    note: "Mapmakers drew monsters where the known world stopped. The narrator goes to that edge and finds nothing there to fear — the terror was the clenched fist, not what was past it." },
+
+  { cat: "01-02", album: 1, track: 6, title: "Hands Off, Heart On", dur: 359,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-02.mp3",
+    lyric: "songs/01-02.json",
+    note: "Control fails at altitude and the choice is to fight the drift or move with it. Letting go of the wheel turns out to be the only thing that keeps you going." },
+
+  { cat: "01-06", album: 1, track: 7, title: "Stranger Than We Suppose", dur: 299,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-06.mp3",
+    lyric: "songs/01-06.json",
+    note: "He spent half a life trying to hold the whole ocean in one hand and measure the plan. Every lock he picked only showed him how little he knew — so he stops counting and lets it glow." },
 
   { cat: "01-08", album: 1, track: 8, title: "Just Don’t Be Gone", dur: 269,
     from: 118,
