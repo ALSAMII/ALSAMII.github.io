@@ -1,5 +1,5 @@
 /* ============================================================
-   Version 62 · last updated 2026-11-21 10:05 PST
+   Version 63 · last updated 2026-11-27 09:25 EST — the song note is also written inside the lyric sheet (#recThNoteIn) for the phone layout
       (v32 was the first stamp on this file)
    This file builds the story list from stories.js and runs
    the page's behaviour. You should never need to edit it —
@@ -5464,6 +5464,10 @@
     if (bg) bg.style.backgroundImage = "url(" + flatSrc(a) + ")";
     var note = document.getElementById("recThNote");
     if (note) note.textContent = cur.note || "";
+    /* the same note again inside the lyric sheet: on a phone this copy is the
+       one shown, so it scrolls away with the lyrics (style.css hides the other) */
+    var noteIn = document.getElementById("recThNoteIn");
+    if (noteIn) noteIn.textContent = cur.note || "";
     var cr = document.getElementById("recThBook");
     if (cr) {
       cr.textContent = "";

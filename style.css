@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 73 · last updated 2026-11-21 07:05 PST
+   Version 74 · last updated 2026-11-27 09:25 EST — phone lyric theatre: only the album, title and Inspired-by line stay pinned; the note scrolls with the lyrics, which are larger
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11724,4 +11724,28 @@ html #royaLibrary .mob-sec .ab-notes-flow .ab-note--long:first-child{
 @media (max-width: 46rem){
   .rec-lede, #royaLibrary .rec-lede{ font-size: 1.25rem; line-height: 1.48; text-wrap: wrap; }
   .rec-lede.rec-lede-2, #royaLibrary .rec-lede.rec-lede-2{ font-size: 1rem; line-height: 1.5; text-wrap: wrap; }
+}
+
+/* ── the phone lyric theatre: only the album, the title and the Inspired-by
+   line stay pinned. The song note moves into the lyric sheet (a copy,
+   #recThNoteIn, written by script.js), sits there in a quiet box and
+   scrolls away with the first verse, so the lyrics get the screen and
+   can be set larger. Desktop keeps the note pinned as before. ── */
+.rec-th-note-in, #royaLibrary .rec-th-note-in{ display: none; }
+@media (max-width: 46rem){
+  #recThNote{ display: none; }
+  .rec-th-note-in, #royaLibrary .rec-th-note-in{
+    display: block; max-width: 34rem; margin: 0.6rem auto 1.4rem;
+    padding: 0.85rem 1rem; border: 1px solid var(--hairline); border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    font-family: var(--serif-read); font-style: italic; font-size: 0.86rem; line-height: 1.65;
+    color: var(--faded); text-align: center;
+  }
+  .rec-th-note-in:empty, #royaLibrary .rec-th-note-in:empty{ display: none; }
+  /* the Inspired-by line now sits straight under the title, with room
+     between it and the lyrics */
+  .rec-th-book, #royaLibrary .rec-th-book{ margin: 0.2rem auto 1.25rem; }
+  .rec-th-ttl, #royaLibrary .rec-th-ttl{ margin-bottom: 0.3rem; }
+  .rec-ln, #royaLibrary .rec-ln{ font-size: 1.44rem; line-height: 1.42; padding: 0.18rem 0; }
+  .rec-ln.fa, #royaLibrary .rec-ln.fa{ line-height: 1.7; }
 }
