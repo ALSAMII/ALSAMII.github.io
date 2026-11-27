@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 11 · last updated 2026-11-20 06:05 PST
+   Version 12 · last updated 2026-11-26 20:40 EST — 01-13 Dying for Heaven to End joins Minister of Calm
 
    Album 2 (Roya) was retired on 2026-11-20 and its two songs taken
    down, to be re-recorded onto the other albums. Album number 2 and
@@ -39,10 +39,10 @@ const ALBUMS = [
     /* Where it sits on the shelf. Separate from `num` on purpose:
        the number is an identity, the order is a presentation. */
     order: 1,
-    songs: 12,
-    dur: 3661,                       /* 61:01 — the sum of its songs */
+    songs: 13,
+    dur: 3953,                       /* 65:53 — the sum of its songs */
     released: "2026-11",
-    syn: "Twelve songs about letting go of the wheel. Everyone on this record has run somewhere to find peace — another country, another door, the far edge of the map — and every one of them arrives to learn it was never out there. Dark reggae underneath, downtempo house over it, and a title track that asks for an official of quiet because nobody else is handing it out."
+    syn: "Thirteen songs about letting go of the wheel. Everyone on this record has run somewhere to find peace — another country, another door, the far edge of the map — and every one of them arrives to learn it was never out there. Dark reggae underneath, downtempo house over it, and a title track that asks for an official of quiet because nobody else is handing it out."
   },
   {
     num: 3,
@@ -124,6 +124,12 @@ const SONGS = [
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-11.mp3",
     lyric: "songs/01-11.json",
     note: "A whisper over a music box, going back through what a calm man did, one white tablet at a time: the phone he let ring, the blue cup, the minutes counted in full sun. Then the last memory comes back with all of its weight." },
+
+  { cat: "01-13", album: 1, track: 13, title: "Dying for Heaven to End", dur: 292,
+    from: 124,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-13.mp3",
+    lyric: "songs/01-13.json",
+    note: "An old nurse who sat with the dying for sixty years, in a world that has made everyone else too safe to die, asks who will weep for her. A smoky croon turned snarl over a looping nylon guitar, until a boy carries her north and somebody finally comes." },
 
   /* ─── Album 3 · آروم همین‌جاست ───────────────────────────────── */
   { cat: "03-06", album: 3, track: 1, title: "غم بقیه، خاک من", fa: true,
