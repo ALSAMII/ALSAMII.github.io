@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 14 · last updated 2026-11-26 21:10 EST — Minister of Calm in its new running order (01-13 at track 7) and a new note for 01-13
+   Version 15 · last updated 2026-11-27 09:10 EST — 03-08 لعنت به این جنگ joins آروم همین‌جاست at track 2; new sleeves for both albums
 
    Album 2 (Roya) was retired on 2026-11-20 and its two songs taken
    down, to be re-recorded onto the other albums. Album number 2 and
@@ -51,10 +51,10 @@ const ALBUMS = [
     en: "Calm Is Right Here",
     fa: true,
     order: 2,
-    songs: 7,
-    dur: 2117,                       /* 35:17 */
+    songs: 8,
+    dur: 2407,                       /* 40:07 */
     released: "2026-11",
-    syn: "Seven songs in Persian for the things the English ones couldn't carry. A night asked not to end, a reed cut from its bed, a turn that hands every grief to the earth but one, one second that never stopped, a city drawn wrong, a wall addressed instead of a person, and a school named for a tree."
+    syn: "Eight songs in Persian for the things the English ones couldn't carry. A night asked not to end, a war cursed by the generation it took, a reed cut from its bed, a turn that hands every grief to the earth but one, one second that never stopped, a city drawn wrong, a wall addressed instead of a person, and a school named for a tree."
   }
 ];
 
@@ -140,38 +140,45 @@ const SONGS = [
     lyric: "songs/03-06.json",
     note: "A dervish's turn: left foot on the earth, head to the right, one hand taking from the sky and the other giving to the ground. Everyone else's grief passes through the dancer into the soil — all but one, which stays, and turns with them." },
 
-  { cat: "03-03", album: 3, track: 2, title: "تا شب تموم نشه", fa: true,
+  { cat: "03-08", album: 3, track: 2, title: "لعنت به این جنگ", fa: true,
+    translit: "La'nat be in jang", en: "Damn This War", dur: 290,
+    from: 26,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-08.mp3",
+    lyric: "songs/03-08.json",
+    note: "Born out of No. 26 and the gassed marshes of 1984, but it's about every war: twenty-year-olds handed to old men who never fight, spent on a crooked line for the comfort of the wealthy, and left as a name on an empty stone. Forty years on, with Iran under bombs again, nothing has changed, and in the last verse the curse turns on the boy who went without asking why." },
+
+  { cat: "03-03", album: 3, track: 3, title: "تا شب تموم نشه", fa: true,
     translit: "Ta shab tamoom nashe", en: "Don't Let the Night End", dur: 306,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-03.mp3",
     lyric: "songs/03-03.json",
     note: "Two people asking the night not to finish, looking for somewhere the day can't reach and nobody's hand can find them. The most straightforwardly romantic song in the catalogue, and the most frightened underneath." },
 
-  { cat: "03-07", album: 3, track: 3, title: "درختِ پاک", fa: true,
+  { cat: "03-07", album: 3, track: 4, title: "درختِ پاک", fa: true,
     translit: "Derakht-e pak", en: "The Pure Tree", dur: 300,
     from: 120,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-07.mp3",
     lyric: "songs/03-07.json",
     note: "A morning in Minab like a thousand others: a schoolbag, a red apple, a plait coming loose, a hand let go at the school gate with “come home soon.” Then the bombs fell on the school. A mother runs back the same nine minutes and knows her daughter by one shoe. The school was named for the Goodly Tree, root in the earth and branches in the sky, and a root has no hands to reach with." },
 
-  { cat: "03-05", album: 3, track: 4, title: "هنوز", fa: true,
+  { cat: "03-05", album: 3, track: 5, title: "هنوز", fa: true,
     translit: "Hanooz", en: "Still", dur: 284,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-05.mp3",
     lyric: "songs/03-05.json",
     note: "A glance, a second longer than it needed to be, a warmer hello, two chairs and a table between. Nothing happened, and it is still happening." },
 
-  { cat: "03-02", album: 3, track: 5, title: "بسوزونم", fa: true,
+  { cat: "03-02", album: 3, track: 6, title: "بسوزونم", fa: true,
     translit: "Besoozoonam", en: "Let Me Burn", dur: 359,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-02.mp3",
     lyric: "songs/03-02.json",
     note: "It opens where Rumi opens, with the reed cut from the reed bed, crying because it was cut. Being pulled out of the soil and planted in the wind, and a voice that only becomes a voice through the separation that made it." },
 
-  { cat: "03-01", album: 3, track: 6, title: "آروم همین‌جاست", fa: true,
+  { cat: "03-01", album: 3, track: 7, title: "آروم همین‌جاست", fa: true,
     translit: "Aroom hamin-jast", en: "Calm Is Right Here", dur: 359,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-01.mp3",
     lyric: "songs/03-01.json",
     note: "The city is a map drawn wrong, every alley a door promising calm, and behind none of them a home. He drew the map himself, and he's the dragon on it too — the calm turns out to be in the breath he was holding." },
 
-  { cat: "03-04", album: 3, track: 7, title: "ساکت نباش", fa: true,
+  { cat: "03-04", album: 3, track: 8, title: "ساکت نباش", fa: true,
     translit: "Saket nabash", en: "Don't Be Silent", dur: 239,
     from: 78,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/03-04.mp3",
