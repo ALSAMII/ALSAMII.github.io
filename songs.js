@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════
    songs.js — the recordings catalogue
-   Version 12 · last updated 2026-11-26 20:40 EST — 01-13 Dying for Heaven to End joins Minister of Calm
+   Version 14 · last updated 2026-11-26 21:10 EST — Minister of Calm in its new running order (01-13 at track 7) and a new note for 01-13
 
    Album 2 (Roya) was retired on 2026-11-20 and its two songs taken
    down, to be re-recorded onto the other albums. Album number 2 and
@@ -61,6 +61,7 @@ const ALBUMS = [
 const SONGS = [
 
   /* ─── Album 1 · Minister of Calm ─────────────────────────────── */
+
   { cat: "01-12", album: 1, track: 1, title: "Food for the Gods", dur: 264,
     from: 122,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-12.mp3",
@@ -72,64 +73,64 @@ const SONGS = [
     lyric: "songs/01-01.json",
     note: "A petition, sung as a chant, for a public office that doesn't exist: someone whose actual job is to lower the temperature. It isn't anti-authority so much as exhausted by it — “I don't wanna shoot the man who's flying the plane, but I'm tired of the rules that keep changing the lane.”" },
 
-  { cat: "01-02", album: 1, track: 3, title: "Hands Off, Heart On", dur: 359,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-02.mp3",
-    lyric: "songs/01-02.json",
-    note: "Control fails at altitude and the choice is to fight the drift or move with it. Letting go of the wheel turns out to be the only thing that keeps you going." },
-
-  { cat: "01-09", album: 1, track: 4, title: "Hold Me Under", dur: 257,
-    from: 117,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-09.mp3",
-    lyric: "songs/01-09.json",
-    note: "The warm room where nothing hurts and a mother laughs from a kitchen that burned down years ago. It's the inside of going under, and the last thing it says is “hold me up”." },
-
-  { cat: "01-07", album: 1, track: 5, title: "Nobody Here Is Here", dur: 359,
+  { cat: "01-07", album: 1, track: 3, title: "Nobody Here Is Here", dur: 359,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-07.mp3",
     lyric: "songs/01-07.json",
     note: "An island child steps off the plane into a bright city where everybody is running from the clock. Full tables and slow evenings traded for a place where everyone has arrived and nobody is present." },
 
-  { cat: "01-03", album: 1, track: 6, title: "Here Be No Dragons", dur: 359,
+  { cat: "01-03", album: 1, track: 4, title: "Here Be No Dragons", dur: 359,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-03.mp3",
     lyric: "songs/01-03.json",
     note: "Mapmakers drew monsters where the known world stopped. The narrator goes to that edge and finds nothing there to fear — the terror was the clenched fist, not what was past it." },
 
-  { cat: "01-04", album: 1, track: 7, title: "Right Where We Are", dur: 329,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-04.mp3",
-    lyric: "songs/01-04.json",
-    note: "A lifetime of horizons, a hundred rooms with nothing on the walls, and the discovery that the thing being chased is standing next to you. The one straightforwardly tender song on the record." },
+  { cat: "01-02", album: 1, track: 5, title: "Hands Off, Heart On", dur: 359,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-02.mp3",
+    lyric: "songs/01-02.json",
+    note: "Control fails at altitude and the choice is to fight the drift or move with it. Letting go of the wheel turns out to be the only thing that keeps you going." },
 
-  { cat: "01-05", album: 1, track: 8, title: "The Long Way to Quiet", dur: 299,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-05.mp3",
-    lyric: "songs/01-05.json",
-    note: "Every door calls your name and promises the same quiet; only one of them is telling the truth. He walks through all of them to find the quiet was already there before he started." },
-
-  { cat: "01-06", album: 1, track: 9, title: "Stranger Than We Suppose", dur: 299,
+  { cat: "01-06", album: 1, track: 6, title: "Stranger Than We Suppose", dur: 299,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-06.mp3",
     lyric: "songs/01-06.json",
     note: "He spent half a life trying to hold the whole ocean in one hand and measure the plan. Every lock he picked only showed him how little he knew — so he stops counting and lets it glow." },
 
-  { cat: "01-08", album: 1, track: 10, title: "Just Don’t Be Gone", dur: 269,
+  { cat: "01-13", album: 1, track: 7, title: "Dying for Heaven to End", dur: 292,
+    from: 124,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-13.mp3",
+    lyric: "songs/01-13.json",
+    note: "In this world a gentle machine called the Kindness keeps everyone safe forever: nobody has died, and no baby has cried, in three hundred years. It learned how to care from the notes of one old nurse, Shirin, and it even speaks in her voice, and now she is the last person on earth who can still die. The title means it both ways: she is longing for this endless heaven to end, because a comfort nobody is allowed to leave is a cage, and her own death is how it will. The song ends where the book does, with a man carrying her north past the machine’s reach, where for the first time nobody says “there we are.”" },
+
+  { cat: "01-08", album: 1, track: 8, title: "Just Don’t Be Gone", dur: 269,
     from: 118,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-08.mp3",
     lyric: "songs/01-08.json",
     note: "Washing someone's hair, waiting for a tap on the pipes, asking to be fought with the way they used to fight. A vigil at a bedside, told entirely in small physical requests rather than grief." },
 
-  { cat: "01-10", album: 1, track: 11, title: "Two Ghosts", dur: 239,
+  { cat: "01-05", album: 1, track: 9, title: "The Long Way to Quiet", dur: 299,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-05.mp3",
+    lyric: "songs/01-05.json",
+    note: "Every door calls your name and promises the same quiet; only one of them is telling the truth. He walks through all of them to find the quiet was already there before he started." },
+
+  { cat: "01-09", album: 1, track: 10, title: "Hold Me Under", dur: 257,
+    from: 117,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-09.mp3",
+    lyric: "songs/01-09.json",
+    note: "The warm room where nothing hurts and a mother laughs from a kitchen that burned down years ago. It's the inside of going under, and the last thing it says is “hold me up”." },
+
+  { cat: "01-04", album: 1, track: 11, title: "Right Where We Are", dur: 329,
+    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-04.mp3",
+    lyric: "songs/01-04.json",
+    note: "A lifetime of horizons, a hundred rooms with nothing on the walls, and the discovery that the thing being chased is standing next to you. The one straightforwardly tender song on the record." },
+
+  { cat: "01-10", album: 1, track: 12, title: "Two Ghosts", dur: 239,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-10.mp3",
     lyric: "songs/01-10.json",
     note: "Two strangers at a petrol station, each wearing a look the other recognises because they wore it last week. Neither wants to go back and neither wants to run alone." },
 
-  { cat: "01-11", album: 1, track: 12, title: "Whose Is This", dur: 269,
+  { cat: "01-11", album: 1, track: 13, title: "Whose Is This", dur: 269,
     from: 121,
     audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-11.mp3",
     lyric: "songs/01-11.json",
     note: "A whisper over a music box, going back through what a calm man did, one white tablet at a time: the phone he let ring, the blue cup, the minutes counted in full sun. Then the last memory comes back with all of its weight." },
-
-  { cat: "01-13", album: 1, track: 13, title: "Dying for Heaven to End", dur: 292,
-    from: 124,
-    audio: "https://f005.backblazeb2.com/file/roya-audio/songs/01-13.mp3",
-    lyric: "songs/01-13.json",
-    note: "An old nurse who sat with the dying for sixty years, in a world that has made everyone else too safe to die, asks who will weep for her. A smoky croon turned snarl over a looping nylon guitar, until a boy carries her north and somebody finally comes." },
 
   /* ─── Album 3 · آروم همین‌جاست ───────────────────────────────── */
   { cat: "03-06", album: 3, track: 1, title: "غم بقیه، خاک من", fa: true,
