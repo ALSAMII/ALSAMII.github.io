@@ -1,6 +1,6 @@
 /* ============================================================
    CHEW Z — Short Fiction
-   Version 74 · last updated 2026-11-27 09:25 EST — phone lyric theatre: only the album, title and Inspired-by line stay pinned; the note scrolls with the lyrics, which are larger
+   Version 75 · last updated 2026-11-27 09:45 EST — the Songs records' edge mask loosened (it was darkening the sleeve corners); Version 74, 09:25 EST — phone lyric theatre: only the album, title and Inspired-by line stay pinned; the note scrolls with the lyrics, which are larger
    One dark screen: story list on the left, a "stage" in the
    middle that shows the theme text, the author's notes, or —
    while you hover a story — that story's synopsis.
@@ -11062,11 +11062,12 @@ body.rec-on .to-top { display: none !important; }
 .rec-item-art, #royaLibrary .rec-item-art{ display: block; width: 100%; aspect-ratio: 3 / 2; }
 .rec-item-art img, #royaLibrary .rec-item-art img{
   width: 100%; height: 100%; object-fit: contain; display: block;
-  /* The render has its own grey studio floor and backdrop, which read as
-     a box on the black page. Fade its edges out so only the sleeve, the
-     record and the pool of floor under them remain. */
-  -webkit-mask-image: radial-gradient(ellipse 60% 58% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 72%, transparent 100%);
-          mask-image: radial-gradient(ellipse 60% 58% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 72%, transparent 100%);
+  /* The renders now carry their own fade to black at every edge, so the
+     page only adds a last, gentle softening at the outer rim. (Before
+     2026-11-27 this mask was tight, 60% x 58%, for renders that had a grey
+     studio backdrop; on the new sleeves it darkened the sleeve's corners.) */
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 75%, transparent 100%);
+          mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 75%, transparent 100%);
 }
 .rec-item.no-art .rec-item-art, #royaLibrary .rec-item.no-art .rec-item-art{ background: var(--raised); border: 1px solid var(--hairline); }/* captions belong to the chosen record only; the others are covers */
 
