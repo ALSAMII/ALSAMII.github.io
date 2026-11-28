@@ -1,6 +1,8 @@
 /* ══════════════════ THE LIBRARY'S CONTROL BAR ══════════════════
-   Version 8 · last updated 2026-11-06 04:30 PST
-   Served as assets/libbar/libbar.css?v=8 — keep the two numbers equal.
+   Version 9 · last updated 2026-11-27 10:00 EST — phone: the search sits
+   beside Series, shorter, so the bar is one line less and more of the
+   covers show under it
+   Served as assets/libbar/libbar.css?v=9 — keep the two numbers equal.
 
    The Library's bar in Listen's dress. The count, the SORT and SERIES
    labels and the sort pills ARE Listen's classes (.lr-count, .lr-sortlab,
@@ -93,9 +95,10 @@
 }
 
 /* ── the phone ──
-     119 Stories                         ▦ ☰
-     [ Search titles…                    🔍 ]
-     SERIES [All ▾]   SORT (Newest)(Number)(Shortest)
+     124 Stories                         ▦ ☰
+     SERIES [All ▾]          [ Search…   🔍 ]
+     SORT (Newest)(Number)(Shortest)
+   (until 2026-11-27 the search had a full-width line of its own)
 */
 @media (max-width: 46rem) {
   /* the opening line runs the full width, at the size of About's and
@@ -111,14 +114,21 @@
   #royaLibrary .lb-ctrls { display: contents; }
   #royaLibrary .lb-count { grid-column: 1; grid-row: 1; align-self: center; }
   #royaLibrary .lb-view  { grid-column: 2; grid-row: 1; justify-self: end; border-left: 0; padding-left: 0; }
-  #royaLibrary .lb-search { grid-column: 1 / -1; grid-row: 2; width: 100%; }
-  #royaLibrary .lb-search input { font-size: 1.05rem; padding: .62em 2.4em .6em 1.1em; }
+  /* the search shares Series' line, on the right, at the height of the
+     pills beside it */
+  #royaLibrary .lb-search { grid-column: 2; grid-row: 2; justify-self: end; align-self: center;
+    width: 9.5rem; max-width: 42vw; }
+  /* exactly the Series pill's height (32.3px: .75rem type, .55em/.5em
+     padding, 1px hairline), so the two share a top and bottom edge */
+  #royaLibrary .lb-search input { box-sizing: border-box; height: 2.02rem;
+    font-size: .95rem; line-height: 1; padding: 0 2.1em 0 .95em; }
+  #royaLibrary .lb-search svg { width: .85rem; height: .85rem; right: .8em; }
   /* Series on its own line, Sort on the line under it, both at a size that
      reads on a phone. One line for both held them at 9px; the series name
      also gets the whole width this way, so a long one never meets the pills. */
-  #royaLibrary .lb-series { grid-column: 1 / -1; grid-row: 3; justify-self: start;
+  #royaLibrary .lb-series { grid-column: 1; grid-row: 2; justify-self: start; align-self: center;
     min-width: 0; max-width: 100%; }
-  #royaLibrary .lb-sorts  { grid-column: 1 / -1; grid-row: 4; justify-self: start; }
+  #royaLibrary .lb-sorts  { grid-column: 1 / -1; grid-row: 3; justify-self: start; }
   #royaLibrary .lb-series .lrs-box { min-width: 0; }
   #royaLibrary .lb-series .lrs-btn { max-width: 100%; min-width: 0; }
   #royaLibrary .lb-bar .lr-sort,
